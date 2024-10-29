@@ -33,6 +33,7 @@ directCommands:
                            [--enable-acs]
                            [--enable-api-portal]
                            [--enable-gateway]
+                           [--enable-java-agent {false, true}]
                            [--enable-service-registry]
                            [--gateway-instance-count]
                            [--location]
@@ -128,6 +129,12 @@ directCommands:
     summary: |-
       (Enterprise Tier Only) Enable Spring Cloud Gateway.
     isPreview: true
+  - name: --enable-java-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Java in process agent is now GA-ed and used by default when Application Insights enabled. This parameter is no longer needed and will be removed in future release.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-java-agent' has been deprecated and will be removed in a future release.
   - name: --enable-service-registry --enable-sr
     defaultValue: "False"
     summary: |-
@@ -295,7 +302,10 @@ directCommands:
   syntax: >-
     az spring-cloud update --name
                            --resource-group
+                           [--app-insights]
+                           [--app-insights-key]
                            [--build-pool-size {S1, S2, S3, S4, S5}]
+                           [--disable-app-insights {false, true}]
                            [--no-wait]
                            [--sku {Basic, Enterprise, Standard}]
                            [--tags]
@@ -316,11 +326,27 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --app-insights
+    summary: |-
+      Name of the existing Application Insights in the same Resource Group. Or Resource ID of the existing Application Insights in a different Resource Group.
+    isDeprecated: true
+    deprecateInfo: Argument 'az spring-cloud update --app-insights' has been deprecated and will be removed in a future release. Use 'az spring-cloud app-insights update --app-insights' instead.
+  - name: --app-insights-key
+    summary: |-
+      Connection string (recommended) or Instrumentation key of the existing Application Insights.
+    isDeprecated: true
+    deprecateInfo: Argument 'az spring-cloud update --app-insights-key' has been deprecated and will be removed in a future release. Use 'az spring-cloud app-insights update --app-insights-key' instead.
   - name: --build-pool-size
     parameterValueGroup: "S1, S2, S3, S4, S5"
     summary: |-
       (Enterprise Tier Only) Size of build agent pool. See aka.ms/azure-spring-cloud-build-service-docs for size info.
     isPreview: true
+  - name: --disable-app-insights
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable Application Insights, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
+    isDeprecated: true
+    deprecateInfo: Argument 'az spring-cloud update --disable-app-insights' has been deprecated and will be removed in a future release. Use 'az spring-cloud app-insights update --disable' instead.
   - name: --no-wait
     defaultValue: "False"
     summary: |-

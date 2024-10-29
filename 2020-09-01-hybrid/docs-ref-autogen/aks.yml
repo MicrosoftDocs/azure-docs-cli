@@ -144,6 +144,9 @@ directCommands:
     az aks create --name
                   --resource-group
                   [--aad-admin-group-object-ids]
+                  [--aad-client-app-id]
+                  [--aad-server-app-id]
+                  [--aad-server-app-secret]
                   [--aad-tenant-id]
                   [--aci-subnet-name]
                   [--admin-username]
@@ -176,6 +179,7 @@ directCommands:
                   [--disable-snapshot-controller]
                   [--dns-name-prefix]
                   [--dns-service-ip]
+                  [--docker-bridge-address]
                   [--edge-zone]
                   [--enable-aad]
                   [--enable-addons]
@@ -282,6 +286,7 @@ directCommands:
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
                   [--tags]
                   [--tier {free, premium, standard}]
+                  [--uptime-sla]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -414,6 +419,27 @@ directCommands:
   - name: --aad-admin-group-object-ids
     summary: |-
       Comma-separated list of aad group object IDs that will be set as cluster admin.
+  - name: --aad-client-app-id
+    summary: |-
+      The ID of an Azure Active Directory client application of type "Native". This application is for user login via kubectl.
+    description: |-
+      --aad-client-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-client-app-id' has been deprecated and will be removed in a future release.
+  - name: --aad-server-app-id
+    summary: |-
+      The ID of an Azure Active Directory server application of type "Web app/API". This application represents the managed cluster's apiserver (Server application).
+    description: |-
+      --aad-server-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-server-app-id' has been deprecated and will be removed in a future release.
+  - name: --aad-server-app-secret
+    summary: |-
+      The secret of an Azure Active Directory server application.
+    description: |-
+      --aad-server-app-secret is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-server-app-secret' has been deprecated and will be removed in a future release.
   - name: --aad-tenant-id
     summary: |-
       The ID of an Azure Active Directory tenant.
@@ -522,6 +548,13 @@ directCommands:
       An IP address assigned to the Kubernetes DNS service.
     description: |-
       This address must be within the Kubernetes service address range specified by "--service-cidr". For example, 10.0.0.10.
+  - name: --docker-bridge-address
+    summary: |-
+      A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
+    description: |-
+      This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
+    isDeprecated: true
+    deprecateInfo: Option '--docker-bridge-address' has been deprecated and will be removed in a future release.
   - name: --edge-zone
     summary: |-
       The name of the Edge Zone.
@@ -978,6 +1011,12 @@ directCommands:
     parameterValueGroup: "free, premium, standard"
     summary: |-
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
+  - name: --uptime-sla
+    defaultValue: "False"
+    summary: |-
+      --uptime-sla is deprecated. Please use '--tier standard' instead.
+    isDeprecated: true
+    deprecateInfo: Option '--uptime-sla' has been deprecated and will be removed in a future release.
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet. Defaults to 'VirtualMachineScaleSets'.
@@ -1029,6 +1068,9 @@ directCommands:
     az aks create --name
                   --resource-group
                   [--aad-admin-group-object-ids]
+                  [--aad-client-app-id]
+                  [--aad-server-app-id]
+                  [--aad-server-app-secret]
                   [--aad-tenant-id]
                   [--aci-subnet-name]
                   [--admin-username]
@@ -1070,7 +1112,9 @@ directCommands:
                   [--disk-driver-version {v1, v2}]
                   [--dns-name-prefix]
                   [--dns-service-ip]
+                  [--dns-zone-resource-id]
                   [--dns-zone-resource-ids]
+                  [--docker-bridge-address]
                   [--edge-zone]
                   [--enable-aad]
                   [--enable-acns]
@@ -1087,7 +1131,9 @@ directCommands:
                   [--enable-azure-monitor-app-monitoring]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
+                  [--enable-azuremonitormetrics]
                   [--enable-blob-driver]
+                  [--enable-cilium-dataplane]
                   [--enable-cluster-autoscaler]
                   [--enable-cost-analysis]
                   [--enable-custom-ca-trust]
@@ -1106,6 +1152,7 @@ directCommands:
                   [--enable-oidc-issuer]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
+                  [--enable-pod-security-policy]
                   [--enable-private-cluster]
                   [--enable-secret-rotation]
                   [--enable-secure-boot]
@@ -1205,6 +1252,7 @@ directCommands:
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
                   [--tags]
                   [--tier {free, premium, standard}]
+                  [--uptime-sla]
                   [--vm-set-type]
                   [--vm-sizes]
                   [--vnet-subnet-id]
@@ -1345,6 +1393,27 @@ directCommands:
   - name: --aad-admin-group-object-ids
     summary: |-
       Comma-separated list of aad group object IDs that will be set as cluster admin.
+  - name: --aad-client-app-id
+    summary: |-
+      The ID of an Azure Active Directory client application of type "Native". This application is for user login via kubectl.
+    description: |-
+      --aad-client-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-client-app-id' has been deprecated and will be removed in a future release.
+  - name: --aad-server-app-id
+    summary: |-
+      The ID of an Azure Active Directory server application of type "Web app/API". This application represents the managed cluster's apiserver (Server application).
+    description: |-
+      --aad-server-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-server-app-id' has been deprecated and will be removed in a future release.
+  - name: --aad-server-app-secret
+    summary: |-
+      The secret of an Azure Active Directory server application.
+    description: |-
+      --aad-server-app-secret is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-server-app-secret' has been deprecated and will be removed in a future release.
   - name: --aad-tenant-id
     summary: |-
       The ID of an Azure Active Directory tenant.
@@ -1504,10 +1573,22 @@ directCommands:
       An IP address assigned to the Kubernetes DNS service.
     description: |-
       This address must be within the Kubernetes service address range specified by "--service-cidr". For example, 10.0.0.10.
+  - name: --dns-zone-resource-id
+    summary: |-
+      The resource ID of the DNS zone resource to use with the web_application_routing addon.
+    isDeprecated: true
+    deprecateInfo: Option '--dns-zone-resource-id' has been deprecated and will be removed in a future release. Use '--dns-zone-resource-ids' instead.
   - name: --dns-zone-resource-ids
     summary: |-
       A comma separated list of resource IDs of the DNS zone resource to use with the web_application_routing addon.
     isPreview: true
+  - name: --docker-bridge-address
+    summary: |-
+      A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
+    description: |-
+      This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
+    isDeprecated: true
+    deprecateInfo: Option '--docker-bridge-address' has been deprecated and will be removed in a future release.
   - name: --edge-zone
     summary: |-
       The name of edge zone.
@@ -1586,9 +1667,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure RBAC to control authorization checks on cluster.
+  - name: --enable-azuremonitormetrics
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor Metrics Profile.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-azuremonitormetrics' has been deprecated and will be removed in a future release. Use '--enable-azure-monitor-metrics' instead.
   - name: --enable-blob-driver
     summary: |-
       Enable AzureBlob CSI Driver.
+  - name: --enable-cilium-dataplane
+    defaultValue: "False"
+    summary: |-
+      Use Cilium as the networking dataplane for the Kubernetes cluster.
+    description: |-
+      Used together with the "azure" network plugin.
+      Requires either --pod-subnet-id or --network-plugin-mode=overlay.
+      This flag is deprecated in favor of --network-dataplane=cilium.
+    isDeprecated: true
+    isPreview: true
+    deprecateInfo: Option '--enable-cilium-dataplane' has been deprecated and will be removed in a future release. Use '--network-dataplane' instead.
   - name: --enable-cluster-autoscaler
     defaultValue: "False"
     summary: |-
@@ -1668,6 +1766,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Enable pod identity addon for cluster using Kubnet network plugin.
+  - name: --enable-pod-security-policy
+    defaultValue: "False"
+    summary: |-
+      Enable pod security policy.
+    description: |-
+      --enable-pod-security-policy is deprecated. See https://aka.ms/aks/psp for details.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-pod-security-policy' has been deprecated and will be removed in a future release.
   - name: --enable-private-cluster
     defaultValue: "False"
     summary: |-
@@ -2089,6 +2195,12 @@ directCommands:
     parameterValueGroup: "free, premium, standard"
     summary: |-
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
+  - name: --uptime-sla
+    defaultValue: "False"
+    summary: |-
+      --uptime-sla is deprecated. Please use '--tier standard' instead.
+    isDeprecated: true
+    deprecateInfo: Option '--uptime-sla' has been deprecated and will be removed in a future release. Use '--tier' instead.
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
@@ -2436,8 +2548,10 @@ directCommands:
                          [--appgw-name]
                          [--appgw-subnet-cidr]
                          [--appgw-subnet-id]
+                         [--appgw-subnet-prefix]
                          [--appgw-watch-namespace]
                          [--data-collection-settings]
+                         [--dns-zone-resource-id]
                          [--dns-zone-resource-ids]
                          [--enable-high-log-scale-mode {false, true}]
                          [--enable-msi-auth-for-monitoring {false, true}]
@@ -2491,6 +2605,11 @@ directCommands:
   - name: --appgw-subnet-id
     summary: |-
       Resource Id of an existing Subnet used to deploy the Application Gateway. Use with ingress-azure addon.
+  - name: --appgw-subnet-prefix
+    summary: |-
+      Subnet Prefix to use for a new subnet created to deploy the Application Gateway. Use with ingress-azure addon.
+    isDeprecated: true
+    deprecateInfo: Argument 'appgw_subnet_prefix' has been deprecated and will be removed in a future release. Use '--appgw-subnet-cidr' instead.
   - name: --appgw-watch-namespace
     summary: |-
       Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces. Use with ingress-azure addon.
@@ -2498,6 +2617,11 @@ directCommands:
     summary: |-
       Path to JSON file containing data collection settings for Monitoring addon.
     isPreview: true
+  - name: --dns-zone-resource-id
+    summary: |-
+      The resource ID of the DNS zone resource to use with the web_application_routing addon.
+    isDeprecated: true
+    deprecateInfo: Option '--dns-zone-resource-id' has been deprecated and will be removed in a future release. Use '--dns-zone-resource-ids' instead.
   - name: --dns-zone-resource-ids
     summary: |-
       A comma separated list of resource IDs of the DNS zone resource to use with the web_application_routing addon.
@@ -3386,6 +3510,7 @@ directCommands:
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
                   [--network-policy {azure, calico, cilium, none}]
+                  [--no-uptime-sla]
                   [--no-wait]
                   [--node-os-upgrade-channel]
                   [--nodepool-labels]
@@ -3402,6 +3527,7 @@ directCommands:
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
                   [--upgrade-override-until]
+                  [--uptime-sla]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -3853,6 +3979,12 @@ directCommands:
         - "calico" for open-source network and network security solution founded by Tigera,
         - "none" to uninstall Network Policy Engine (Azure Network Policy Manager or Calico).
       Defaults to "none" (network policy disabled).
+  - name: --no-uptime-sla
+    defaultValue: "False"
+    summary: |-
+      Change a standard managed cluster to a free one. --no-uptime-sla is deprecated. Please use '--tier free' instead.
+    isDeprecated: true
+    deprecateInfo: Option '--no-uptime-sla' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -3911,6 +4043,12 @@ directCommands:
   - name: --upgrade-override-until
     summary: |-
       Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
+  - name: --uptime-sla
+    defaultValue: "False"
+    summary: |-
+      Enable a standard managed cluster service with a financially backed SLA. --uptime-sla is deprecated. Please use '--tier standard' instead.
+    isDeprecated: true
+    deprecateInfo: Option '--uptime-sla' has been deprecated and will be removed in a future release.
   - name: --windows-admin-password
     summary: |-
       User account password to use on windows node VMs.
@@ -3974,6 +4112,7 @@ directCommands:
                   [--disable-azure-monitor-app-monitoring]
                   [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
+                  [--disable-azuremonitormetrics]
                   [--disable-blob-driver]
                   [--disable-cluster-autoscaler]
                   [--disable-cost-analysis]
@@ -4009,6 +4148,7 @@ directCommands:
                   [--enable-azure-monitor-app-monitoring]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
+                  [--enable-azuremonitormetrics]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-cost-analysis]
@@ -4026,6 +4166,7 @@ directCommands:
                   [--enable-oidc-issuer]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
+                  [--enable-pod-security-policy]
                   [--enable-private-cluster]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
@@ -4064,6 +4205,7 @@ directCommands:
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
                   [--network-policy]
+                  [--no-uptime-sla]
                   [--no-wait]
                   [--node-init-taints]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
@@ -4088,6 +4230,7 @@ directCommands:
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
                   [--upgrade-override-until]
+                  [--uptime-sla]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -4329,6 +4472,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure RBAC to control authorization checks on cluster.
+  - name: --disable-azuremonitormetrics
+    defaultValue: "False"
+    summary: |-
+      Disable Azure Monitor Metrics Profile. This will delete all DCRA's associated with the cluster, any linked DCRs with the data stream = prometheus-stream and the recording rule groups created by the addon for this AKS cluster.
+    isDeprecated: true
+    deprecateInfo: Option '--disable-azuremonitormetrics' has been deprecated and will be removed in a future release. Use '--disable-azure-monitor-metrics' instead.
   - name: --disable-blob-driver
     summary: |-
       Disable AzureBlob CSI Driver.
@@ -4481,6 +4630,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure RBAC to control authorization checks on cluster.
+  - name: --enable-azuremonitormetrics
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor Metrics Profile.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-azuremonitormetrics' has been deprecated and will be removed in a future release. Use '--enable-azure-monitor-metrics' instead.
   - name: --enable-blob-driver
     summary: |-
       Enable AzureBlob CSI Driver.
@@ -4550,6 +4705,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Enable pod identity addon for cluster using Kubnet network plugin.
+  - name: --enable-pod-security-policy
+    defaultValue: "False"
+    summary: |-
+      Enable pod security policy.
+    description: |-
+      --enable-pod-security-policy is deprecated. See https://aka.ms/aks/psp for details.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-pod-security-policy' has been deprecated and will be removed in a future release.
   - name: --enable-private-cluster
     defaultValue: "False"
     summary: |-
@@ -4718,6 +4881,12 @@ directCommands:
     description: |-
       Specify "azure" for Azure network policy manager, "cilium" for Azure CNI Overlay powered by Cilium.
       Defaults to "" (network policy disabled).
+  - name: --no-uptime-sla
+    defaultValue: "False"
+    summary: |-
+      Change a standard managed cluster to a free one. --no-uptime-sla is deprecated. Please use '--tier free' instead.
+    isDeprecated: true
+    deprecateInfo: Option '--no-uptime-sla' has been deprecated and will be removed in a future release. Use '--tier' instead.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -4815,6 +4984,12 @@ directCommands:
     summary: |-
       Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
     isPreview: true
+  - name: --uptime-sla
+    defaultValue: "False"
+    summary: |-
+      Enable a standard managed cluster service with a financially backed SLA. --uptime-sla is deprecated. Please use '--tier standard' instead.
+    isDeprecated: true
+    deprecateInfo: Option '--uptime-sla' has been deprecated and will be removed in a future release. Use '--tier' instead.
   - name: --windows-admin-password
     summary: |-
       User account password to use on windows node VMs.
@@ -4843,8 +5018,13 @@ directCommands:
   syntax: >-
     az aks update-credentials --name
                               --resource-group
+                              [--aad-client-app-id]
+                              [--aad-server-app-id]
+                              [--aad-server-app-secret]
+                              [--aad-tenant-id]
                               [--client-secret]
                               [--no-wait]
+                              [--reset-aad]
                               [--reset-service-principal]
                               [--service-principal]
   examples:
@@ -4861,6 +5041,32 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --aad-client-app-id
+    summary: |-
+      The ID of an Azure Active Directory client application. This argument is required if `--reset-aad` is specified.
+    description: |-
+      --aad-client-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-client-app-id' has been deprecated and will be removed in a future release.
+  - name: --aad-server-app-id
+    summary: |-
+      The ID of an Azure Active Directory server application. This argument is required if `--reset-aad` is specified.
+    description: |-
+      --aad-server-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-server-app-id' has been deprecated and will be removed in a future release.
+  - name: --aad-server-app-secret
+    summary: |-
+      The secret of an Azure Active Directory server application. This argument is required if `--reset-aad` is specified.
+    description: |-
+      --aad-server-app-secret is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-server-app-secret' has been deprecated and will be removed in a future release.
+  - name: --aad-tenant-id
+    summary: |-
+      Tenant ID associated with Azure Active Directory.
+    isDeprecated: true
+    deprecateInfo: Option '--aad-tenant-id' has been deprecated and will be removed in a future release.
   - name: --client-secret
     summary: |-
       Secret associated with the service principal. This argument is required if `--service-principal` is specified.
@@ -4868,6 +5074,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --reset-aad
+    defaultValue: "False"
+    summary: |-
+      Reset Azure Active Directory configuration for a managed cluster.
+    description: |-
+      --reset-aad is deprecated. See https://aka.ms/aks/aad-legacy for details.
+    isDeprecated: true
+    deprecateInfo: Option '--reset-aad' has been deprecated and will be removed in a future release.
   - name: --reset-service-principal
     defaultValue: "False"
     summary: |-
