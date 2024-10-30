@@ -10,8 +10,7 @@ ms.custom: devx-track-azurecli
 
 # Upcoming breaking changes in Azure CLI
 
-The breaking changes listed in this article are planned for the next major release of the Azure CLI unless otherwise noted. Per our [Support lifecycle](./azure-cli-support-lifecycle.md), breaking changes in Azure CLI occur twice
-a year.
+The breaking changes listed in this article are planned for the next major release of the Azure CLI unless otherwise noted. Per our [Support lifecycle](./azure-cli-support-lifecycle.md), breaking changes in Azure CLI Core reference groups occur twice a year.
 
 ## dla
 
