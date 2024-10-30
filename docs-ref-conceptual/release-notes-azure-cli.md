@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 10/01/2024
+ms.date: 11/05/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,118 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## November 05, 2024
+
+Version 2.66.0
+
+### AKS
+
+* `az aks create`: Add Trusted Launch options `--enable-vtpm` and `--enable-secure-boot`
+* `az aks nodepool add/update`: Add Trusted Launch options `--enable-vtpm` and `--enable-secure-boot`
+* `az aks create/update`: Update the VM SKU details from backend for validations during Azure Container Storage operations
+
+### App Service
+
+* `az functionapp create`: Add `--zone-redundant` parameter to support zone redundant for Functions Flex SKU
+* `az functionapp plan update`: Do not show warning message with `--set` in command
+
+### ARM
+
+* `az bicep publish`: Remove preview flag from `--with-source` parameter
+* `az data-boundary show`: Add command to support getting the data boundary at a specified scope
+* `az data-boundary show-tenant`: Add command to support getting the data boundary at a tenant level
+* `az data-boundary create`: Add command to support creating tenant to data boundary
+* `az bicep generate-params`: Fix the help message for `--include-params` parameter
+* `az bicep/deployment/stack`: Conditionally enable invariant globalization for Bicep running inside the Azure CLI docker image
+
+### Backup
+
+* `az backup restore restore-disks`: Add support for enabling Disk access settings for managed VM restores
+
+### Compute
+
+* `az vmss create/update`: Add new parameter `--skuprofile-vmsizes` to specify a list of VM sizes to use with VMSS Instance Mix
+* `az vmss create/update`: Add new parameter `--skuprofile-allocation-strategy` to update the allocation strategy for VMSS Instance Mix
+
+### Container app
+
+* Fix #30053: `az containerapp update`: Fix polling
+* `az containerapp env create`: Hide `--dapr-instrumentation-key` parameter
+* `az containerapp env update`: Support to update `--dapr-connection-string`
+
+### Extension
+
+* `az extension add/update`: Pre-announcement default value change from `true` to `false` for `--allow-preview`
+
+### MySQL
+
+* `az mysql flexible-server create/update`: Add `--maintenance-policy-patch-strategy`
+* `az mysql flexible-server create/restore`: Add `--database-port`
+* `az mysql flexible-server replica create`: Add `--database-port`
+
+### NetAppFiles
+
+* [BREAKING CHANGE] `az netappfiles volume create`: Parameters `backup-id` and `snapshot-id` now accept only full Azure ResourceIds and no longer support GUIDs
+* [BREAKING CHANGE] `az netappfiles account create`: Parameter `--kdc-ip` now only accepts a single ip address not a list
+* [BREAKING CHANGE] `az netappfiles account update`: Parameter `--kdc-ip` now only accepts a single ip address not a list
+* [BREAKING CHANGE] `az netappfiles account ad add`: Parameter `--kdc-ip` now only accepts a single ip address not a list
+* [BREAKING CHANGE] `az netappfiles account ad update`: Parameter `--kdc-ip` now only accepts a single ip address not a list
+* `az netappfiles volume create`: Fix a bug where parameter `--allowed-clients` was not passed along in the request
+* `az netappfiles check-file-path-availability`: Add new parameter `--availability-zone`
+* `az netappfiles volume replication`: Add new commands `peer-external-cluster`, `authorize-external-replication`, `perform-replication-transfer`, `finalize-external-replication`
+* `az netappfiles volume create`: Add new parameters `--external-host-name` ,`--external-server-name`, `--external-volume-name`
+* `az netappfiles volume update`: Add new parameters `--external-host-name` ,`--external-server-name`, `--external-volume-name`
+* `az netappfiles volume update`: Parameters `--backup-id` and `--snapshot-id` now accept only full Azure ResourceIds and no longer support GUIDs
+
+### Network
+
+* `az network vnet`: Add `--private-endpoint-vnet-policies` parameter
+* `az network private-link-service`: Add `--destination-ip-address` parameter
+* `az network application-gateway waf-policy managed-rule rule-set add/update`: Support sensitivity for `--rule` parameter
+* `az network private-dns link vnet`: Support resolution policy for virtual network link
+* `az network application-gateway waf-policy managed-rule rule-set add/update`: Add allowed value `1.1` for `--version`
+* Fix #29911: `az network public-ip update`: IP tags crash with AttributeError
+
+### Profile
+
+* `az login`: Passing the service principal certificate with `--password` is deprecated and will be removed by version 2.74. Please use `--certificate` instead.
+
+### RDBMS
+
+* `az postgres flexible-server replica create`: Add support for `--tags` parameter
+* `az postgres flexible-server replica create`: Allow read replica create from storage auto-grow enabled primary server flexible server
+* `az postgres flexible-server backup create/delete`: New commands to support creating and deleting backups on PostgreSql Flex Server
+
+### Service Bus
+
+* `az servicebus namespace replica`: Add new command group to manage servicebus namespace replicas
+
+### Service Connector
+
+* `az aks connection create appconfig`: Add `--use-appconfig-extension`
+* `az webapp connection create fabric-sql`: Add fabric sql target support
+
+### SignalR
+
+* `az signalr start/stop`: Add signalr command start or stop an existing SignalR service
+* `az signalr replica start/stop/restart`: Add signalr command start, stop or start an existing SignalR service
+* `az signalr network-rule ip-rule add/remove`: Add signalr command add or remove ip-rule of an SignalR service
+* `az signalr update client-cert-enabled/disable-local-auth/region-endpoint-enabled`: Toggle clientCertificate, disableLocalAuth, enableRegionEndpoint
+* `az signalr replica update region-endpoint-enabled/unit-count`: Toggle enableRegionEndpoint and change unitCount
+
+### SQL
+
+* `az sql geo-backup`: Remove preview tag
+* `az sql failover-group create/update`: Add parameter `--secondary-type` to support geo/standby replica on partner server
+
+### Storage
+
+* `az storage blob copy start/start-batch`: Fix `--auth-mode login`
+
+### Upgrade
+
+* `az upgrade`: Pre-announcement default value change from `true` to `false` for `--allow-preview`
 
 ## October 01, 2024
 
