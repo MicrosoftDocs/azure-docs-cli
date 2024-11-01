@@ -114,6 +114,7 @@ directCommands:
     az iot ops create --cluster
                       --name
                       --resource-group
+                      --sr-resource-id
                       [--add-insecure-listener {false, true}]
                       [--bp]
                       [--br]
@@ -128,22 +129,30 @@ directCommands:
                       [--description]
                       [--df-profile-instances]
                       [--enable-rsync {false, true}]
+                      [--kubernetes-distro {K3s, K8s, MicroK8s}]
                       [--location]
                       [--no-progress {false, true}]
+                      [--ops-config]
+                      [--ops-version]
+                      [--runtime-socket]
                       [--tags]
+                      [--trust-settings]
   examples:
   - summary: |-
       Create the target instance with minimum input.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID
   - summary: |-
       The following example adds customization to the default broker instance resource as well as an instance description and tags.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --broker-mem-profile High --broker-backend-workers 4 --description 'Contoso Factory' --tags tier=testX1
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --broker-mem-profile High --broker-backend-workers 4 --description 'Contoso Factory' --tags tier=testX1
   - summary: |-
       This example shows deploying an additional insecure (no authn or authz) broker listener configured for port 1883 of service type load balancer. Useful for testing and/or demos. Do not use the insecure option in production.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --add-insecure-listener
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --add-insecure-listener
   - summary: |-
       This form shows how to enable resource sync for the instance deployment. To enable resource sync role assignment write is necessary on the target resource group.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --enable-rsync
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --enable-rsync
+  - summary: |-
+      This example highlights trust settings for a user provided cert-manager config. Note that the cluster must have been initialized with `--user-trust` and a user cert-manager deployment must be present.
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --trust-settings configMapName=example-bundle configMapKey=trust-bundle.pem issuerKind=ClusterIssuer issuerName=trust-manager-selfsigned-issuer
   requiredParameters:
   - isRequired: true
     name: --cluster
@@ -157,6 +166,10 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --sr-resource-id
+    summary: |-
+      The schema registry resource Id to use with IoT Operations.
   optionalParameters:
   - name: --add-insecure-listener
     parameterValueGroup: "false, true"
@@ -213,6 +226,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Resource sync rules will be included in the IoT Operations deployment.
+  - name: --kubernetes-distro
+    defaultValue: "K8s"
+    parameterValueGroup: "K3s, K8s, MicroK8s"
+    summary: |-
+      The Kubernetes distro to use for Akri configuration. The selected distro implies the default container runtime socket path when no --runtime-socket value is provided.
   - name: --location
     summary: |-
       The region that will be used for provisioned resource collateral. If not provided the connected cluster location will be used.
@@ -220,9 +238,23 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Disable visual representation of work.
+  - name: --ops-config
+    summary: |-
+      IoT Operations arc extension custom configuration. Format is space-separated key=value pairs. --ops-config can be used one or more times. For advanced use cases.
+  - name: --ops-version
+    summary: |-
+      Use to override the built-in IoT Operations arc extension version.
+    isDeprecated: true
+    deprecateInfo: Argument 'ops_version' has been deprecated and will be removed in a future release.
+  - name: --runtime-socket
+    summary: |-
+      The default node path of the container runtime socket. If not provided (default), the socket path is determined by --kubernetes-distro.
   - name: --tags
     summary: |-
       Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
+  - name: --trust-settings
+    summary: |-
+      Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `configMapKey`, `configMapName`, `issuerName`, `issuerKind`. If not used, a system provided self-signed trust bundle is configured.
 - uid: az_iot_ops_delete
   name: az iot ops delete
   summary: |-
@@ -309,25 +341,20 @@ directCommands:
   syntax: >-
     az iot ops init --cluster
                     --resource-group
-                    --sr-resource-id
                     [--enable-fault-tolerance {false, true}]
                     [--ensure-latest {false, true}]
-                    [--kubernetes-distro {K3s, K8s, MicroK8s}]
                     [--no-progress {false, true}]
-                    [--ops-config]
-                    [--ops-version]
-                    [--runtime-socket]
-                    [--trust-settings]
+                    [--user-trust {false, true}]
   examples:
   - summary: |-
       Usage with minimum input. This form will deploy the IoT Operations foundation layer.
-    syntax: az iot ops init --cluster mycluster -g myresourcegroup --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup
   - summary: |-
       Similar to the prior example but with Arc Container Storage fault-tolerance enabled (requires at least 3 nodes).
-    syntax: az iot ops init --cluster mycluster -g myresourcegroup --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --enable-fault-tolerance
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --enable-fault-tolerance
   - summary: |-
-      This example highlights trust settings for a user provided cert manager config.
-    syntax: az iot ops init --cluster mycluster -g myresourcegroup --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --trust-settings configMapName=example-bundle configMapKey=trust-bundle.pem issuerKind=ClusterIssuer issuerName=trust-manager-selfsigned-issuer
+      This example highlights enabling user trust settings for a custom cert-manager config. This will skip deployment of the system cert-manager and trust-manager.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --user-trust
   requiredParameters:
   - isRequired: true
     name: --cluster
@@ -337,10 +364,6 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --sr-resource-id
-    summary: |-
-      The schema registry resource Id to use with IoT Operations.
   optionalParameters:
   - name: --enable-fault-tolerance
     parameterValueGroup: "false, true"
@@ -350,29 +373,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Ensure the latest IoT Ops CLI is being used, raising an error if an upgrade is available.
-  - name: --kubernetes-distro
-    defaultValue: "K8s"
-    parameterValueGroup: "K3s, K8s, MicroK8s"
-    summary: |-
-      The Kubernetes distro to use for Akri configuration. The selected distro implies the default container runtime socket path when no --runtime-socket value is provided.
   - name: --no-progress
     parameterValueGroup: "false, true"
     summary: |-
       Disable visual representation of work.
-  - name: --ops-config
+  - name: --user-trust --ut
+    parameterValueGroup: "false, true"
     summary: |-
-      IoT Operations arc extension custom configuration. Format is space-separated key=value pairs. --ops-config can be used one or more times. For advanced use cases.
-  - name: --ops-version
-    summary: |-
-      Use to override the built-in IoT Operations arc extension version.
-    isDeprecated: true
-    deprecateInfo: Argument 'ops_version' has been deprecated and will be removed in a future release.
-  - name: --runtime-socket
-    summary: |-
-      The default node path of the container runtime socket. If not provided (default), the socket path is determined by --kubernetes-distro.
-  - name: --trust-settings
-    summary: |-
-      Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerKind`, `issuerName`, `configMapName`, `configMapKey`. If not used, a system provided self-signed trust bundle is configured.
+      Skip the deployment of the system cert-manager and trust-manager in favor of a user-provided configuration.
 - uid: az_iot_ops_list
   name: az iot ops list
   summary: |-
@@ -404,6 +412,7 @@ directCommands:
     Show an IoT Operations instance.
   description: |-
     Optionally the command can output a tree structure of associated resources representing the IoT Operations deployment against the backing cluster.
+    If this command fails, please use `az iot ops upgrade` to upgrade your instance to the latest version before continuing.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -438,7 +447,7 @@ directCommands:
   summary: |-
     Update an IoT Operations instance.
   description: |-
-    Currently instance tags and description can be updated.
+    Currently instance tags and description can be updated. If you want to upgrade your instance to a newer version, please use `az iot ops upgrade` instead.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -474,6 +483,58 @@ directCommands:
   - name: --tags
     summary: |-
       Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
+- uid: az_iot_ops_upgrade
+  name: az iot ops upgrade
+  summary: |-
+    Upgrade an IoT Operations instance to the latest version.
+  description: |-
+    WARNING: This command may fail and require you to delete and re-create your cluster and instance.
+
+    Upgrade an IoT Operations instance, including updating the extensions to the latest versions.
+    Use this command if `az iot ops show` or similiar commands are failing.
+
+    Schema registry resource Id is an optional parameter and may be required in specific scenarios.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops upgrade --name
+                       --resource-group
+                       [--no-progress {false, true}]
+                       [--sr-resource-id]
+                       [--yes {false, true}]
+  examples:
+  - summary: |-
+      Upgrade the instance with minimal inputs.
+    syntax: az iot ops upgrade --name myinstance -g myresourcegroup
+  - summary: |-
+      Skip the conformation prompt during instance upgrade.
+    syntax: az iot ops upgrade --name myinstance -g myresourcegroup -y
+  - summary: |-
+      Upgrade the instance and specify the schema registry resource Id.
+    syntax: az iot ops upgrade --name myinstance -g myresourcegroup --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --no-progress
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable visual representation of work.
+  - name: --sr-resource-id
+    summary: |-
+      The schema registry resource Id to use with IoT Operations. Required if the schema registry resource Id is no longer found within IoT Operations.
+  - name: --yes -y
+    parameterValueGroup: "false, true"
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
 - uid: az_iot_ops_verify-host
   name: az iot ops verify-host
   summary: |-
@@ -538,6 +599,14 @@ commands:
 - az_iot_ops_broker_show
 - az_iot_ops_broker_stats
 - az_iot_ops_check
+- az_iot_ops_connector
+- az_iot_ops_connector_opcua
+- az_iot_ops_connector_opcua_client
+- az_iot_ops_connector_opcua_client_add
+- az_iot_ops_connector_opcua_issuer
+- az_iot_ops_connector_opcua_issuer_add
+- az_iot_ops_connector_opcua_trust
+- az_iot_ops_connector_opcua_trust_add
 - az_iot_ops_create
 - az_iot_ops_dataflow
 - az_iot_ops_dataflow_endpoint
@@ -556,19 +625,30 @@ commands:
 - az_iot_ops_init
 - az_iot_ops_list
 - az_iot_ops_schema
+- az_iot_ops_schema_create
+- az_iot_ops_schema_delete
+- az_iot_ops_schema_list
 - az_iot_ops_schema_registry
 - az_iot_ops_schema_registry_create
 - az_iot_ops_schema_registry_delete
 - az_iot_ops_schema_registry_list
 - az_iot_ops_schema_registry_show
+- az_iot_ops_schema_show
+- az_iot_ops_schema_show-dataflow-refs
+- az_iot_ops_schema_version
+- az_iot_ops_schema_version_add
+- az_iot_ops_schema_version_list
+- az_iot_ops_schema_version_remove
+- az_iot_ops_schema_version_show
 - az_iot_ops_secretsync
 - az_iot_ops_secretsync_disable
 - az_iot_ops_secretsync_enable
-- az_iot_ops_secretsync_show
+- az_iot_ops_secretsync_list
 - az_iot_ops_show
 - az_iot_ops_support
 - az_iot_ops_support_create-bundle
 - az_iot_ops_update
+- az_iot_ops_upgrade
 - az_iot_ops_verify-host
 globalParameters:
 - name: --debug
