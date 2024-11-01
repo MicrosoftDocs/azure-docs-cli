@@ -12,6 +12,15 @@ ms.custom: devx-track-azurecli
 
 The breaking changes listed in this article are planned for the next major release of the Azure CLI unless otherwise noted. Per our [Support lifecycle](./azure-cli-support-lifecycle.md), breaking changes in Azure CLI Core reference groups occur twice a year.
 
+## aks
+
+[Link to aks reference group](/cli/azure/aks)
+
+### `az aks create`
+
+- Argument '--no-uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier free' instead.
+- Argument '--uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier standard' instead.
+
 ## dla
 
 [Link to dla reference group](/cli/azure/dla)
