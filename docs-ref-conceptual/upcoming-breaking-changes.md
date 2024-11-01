@@ -16,7 +16,7 @@ The breaking changes listed in this article are planned for the next major relea
 
 [Link to aks reference group](/cli/azure/aks)
 
-### `az aks create`
+### `aks create`
 
 - Argument '--no-uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier free' instead.
 - Argument '--uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier standard' instead.
