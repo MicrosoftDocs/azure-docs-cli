@@ -12,6 +12,29 @@ ms.custom: devx-track-azurecli
 
 The breaking changes listed in this article are planned for the next major release of the Azure CLI unless otherwise noted. Per our [Support lifecycle](./azure-cli-support-lifecycle.md), breaking changes in Azure CLI Core reference groups occur twice a year.
 
+## aks
+
+[Link to aks reference group](/cli/azure/aks)
+
+### `aks create`
+
+- Argument '--no-uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier free' instead.
+- Argument '--uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier standard' instead.
+
+## db-up
+
+The [db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) extension will be retired on November 20, 2024. Use the `create` command associated with the respective database instead. This retirement affects the following reference commands:
+
+* [az mysql up](/cli/azure/mysql#az-mysql-up)
+* [az mysql down](/cli/azure/mysql#az-mysql-down)
+* [az my sql show-connection-string](/cli/azure/mysql#az-mysql-show-connection-string)
+* [az postgres up](/cli/azure/postgres#az-postgres-up)
+* [az postgres down](/cli/azure/postgres#az-postgres-down)
+* [az postgres show-connection-string](/cli/azure/postgres#az-postgres-show-connection-string)
+* [az sql up](/cli/azure/sql#az-sql-up)
+* [az sql down](/cli/azure/sql#az-sql-down)
+* [az sql show-connection-string](/cli/azure/sql#az-sql-show-connection-string)
+
 ## dla
 
 [Link to dla reference group](/cli/azure/dla)
