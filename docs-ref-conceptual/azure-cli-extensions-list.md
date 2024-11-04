@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/31/2024
+ms.date: 11/03/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -57,7 +57,7 @@ You will be prompted to install an extension on first use.
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.1](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.61.0 | Manage Azure Firewall resources. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.46.0 | The Azure IoT extension for Azure CLI. | GA | [0.25.0](https://github.com/azure/azure-iot-cli-extension) |
-|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.53.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.7.0b2](https://github.com/azure/azure-iot-ops-cli-extension) |
+|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.53.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.8.0b1](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.1](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.57.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
@@ -216,7 +216,7 @@ You will be prompted to install an extension on first use.
 |[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.61.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap/HISTORY.rst) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.55.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
-|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [1.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
+|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.54.0 | Azure VMware Solution commands. | GA | [7.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.56.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
