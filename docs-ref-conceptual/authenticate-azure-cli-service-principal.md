@@ -28,8 +28,12 @@ Note two important facts when working with service principals and the Azure CLI:
 * If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./azure-cli-sp-tutorial-3.md#work-with-azure-key-vault).
 
 ```azurecli-interactive
-az login --service-principal -u <app-id> -c <certificate> --tenant <tenant>
+az login --service-principal --username <app-id> --certificate <certificate> --tenant <tenant>
 ```
+
+> [!NOTE]
+>
+> Passing the service principal certificate with --password is deprecated and will be removed in a future release.
 
 ## See also
 

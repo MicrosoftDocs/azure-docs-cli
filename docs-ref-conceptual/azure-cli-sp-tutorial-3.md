@@ -10,9 +10,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Use an Azure service principal with certificate-based authentication
 
-When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. 
-
-We recommend using certificate-based authentication due to the security restrictions of password-based authentication. Certificate-based authentication enables you to adopt a phishing resistant authentication by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects Azure resources. To learn more about why certificate-based authentication is more secure, see [Microsoft Entra certificate-based authentication](/azure/active-directory/authentication/concept-certificate-based-authentication).
+Certificate-based authentication enables you to adopt a phishing resistant authentication by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects Azure resources. To learn more about why certificate-based authentication is more secure, see [Microsoft Entra certificate-based authentication](/azure/active-directory/authentication/concept-certificate-based-authentication).
 
 This step in the tutorial explains how to use a service principal certificate to access an Azure resource.
 
@@ -131,7 +129,6 @@ Certificate expires yyyy-mm-dd hh:mm:ss+00:00. Adjusting key credential end date
 The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https://aka.ms/azadsp-cli
 {
   "appId": "myServicePrincipalID",
-  "password": null,
   "tenant": "myOrganizationTenantID"
 }
 ```
@@ -146,6 +143,10 @@ az login --service-principal \
          --tenant myOwnerOrganizationId \
          --certificate /path/to/cert
 ```
+
+> [!NOTE]
+>
+> Passing the service principal certificate with --password is deprecated and will be removed in a future release. Therefore this tutorial does not cover service principal password-based authentication.
 
 ## Next Steps
 
