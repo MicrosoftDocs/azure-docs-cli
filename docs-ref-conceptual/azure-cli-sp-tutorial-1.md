@@ -16,7 +16,6 @@ In this tutorial, you learn how to:
 > [!div class="checklist"]
 >
 > * Create a service principal
-> * Sign in using a service principal and password
 > * Sign in using a service principal and certificate
 > * Manage service principal roles
 > * Create an Azure resource using a service principal
@@ -42,7 +41,6 @@ Output console:
 {
   "appId": "myAppId",
   "displayName": "myServicePrincipalName",
-  "password": "myServicePrincipalPassword",
   "tenant": "myTentantId"
 }
 ```
@@ -51,7 +49,6 @@ If you aren't adhering to resource naming conventions and plan to create a role 
 
 When you create a service principal without parameters, also complete these steps:
 
-* Record your system-assigned password as you can't retrieve it again. If you lose the password, reset it using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) as explained in [Reset service principal credentials](./azure-cli-sp-tutorial-7.md).
 * Set the role assignment for your new service principal by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) as explained in [Manage service principal roles](./azure-cli-sp-tutorial-5.md).
 
 > [!NOTE]
@@ -179,7 +176,7 @@ For a complete list of service principal properties, use [az ad sp list](/cli/az
 
 ## Next Steps
 
-Now that you've learned how to create an Azure service principal, proceed to the next step to learn how to use service principals with password-based authentication.
+Now that you've learned how to create an Azure service principal, proceed to the next step to learn how to use service principals with certificate-based authentication.
 
 > [!div class="nextstepaction"]
-> [Use password-based authentication](./azure-cli-sp-tutorial-2.md)
+> [Use certificate-based authentication](./azure-cli-sp-tutorial-3.md)

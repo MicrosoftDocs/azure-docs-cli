@@ -8,7 +8,7 @@ ms.custom: devx-track-azurecli
 #customer intent: As an app developer, I need to security automate authentication to Azure using a service principal. 
 ---
 
-# Sign into Azure with a service principal using the Azure CLI 
+# Sign into Azure with a service principal using the Azure CLI
 
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 predefined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
@@ -18,7 +18,7 @@ about service principals, see [Work with Azure service principals using the Azur
 To sign in with a service principal, you need:
 
 * The URL or name associated with the service principal
-* The service principal password, or the X509 certificate used to create the service principal in PEM format
+* The X509 certificate used to create the service principal in PEM format
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 Note two important facts when working with service principals and the Azure CLI:
@@ -28,23 +28,8 @@ Note two important facts when working with service principals and the Azure CLI:
 * If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./azure-cli-sp-tutorial-3.md#work-with-azure-key-vault).
 
 ```azurecli-interactive
-az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
+az login --service-principal -u <app-id> -c <certificate> --tenant <tenant>
 ```
-
-> [!IMPORTANT]
-> If you want to avoid displaying your password on console and are using `az login` interactively,
-> use the `read -s` command under `bash`.
->
-> ```bash
-> read -sp "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-id> -p $AZ_PASS --tenant <tenant>
-> ```
->
-> Under PowerShell, use the `Get-Credential` cmdlet.
->
-> ```powershell
-> $AzCred = Get-Credential -UserName <app-id>
-> az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
-> ```
 
 ## See also
 

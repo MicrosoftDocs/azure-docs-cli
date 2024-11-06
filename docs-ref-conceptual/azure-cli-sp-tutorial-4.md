@@ -95,7 +95,6 @@ When you get a list of service principals using `az ad sp list`, there are many 
         "value": "user_impersonation"
       }
     ],
-    "passwordCredentials": [],
     "preferredSingleSignOnMode": null,
     "preferredTokenSigningKeyThumbprint": null,
     "replyUrls": [],

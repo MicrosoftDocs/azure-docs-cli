@@ -46,10 +46,6 @@ If you have specified an invalid resource group name, you see the error message 
 
 If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Microsoft Entra administrator to manage roles.
 
-### Interactive authentication is needed
-
- When signing in with password authentication, error message "...Interactive authentication is needed..." occurs if your organization requires multifactor authentication. Switch to certificate-based authentication, or consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
-
 ### Compliant device required
 
 If you try to create a service principal using a device that is not compliant with your organizations access policies, you will receive message "...Conditional Access policy requires a compliant device...". Switch to a computer that meets your organization's access policies.

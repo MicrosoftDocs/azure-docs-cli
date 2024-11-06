@@ -34,7 +34,6 @@ Console output:
   "appId": "myServicePrincipalID",
   "displayName": "myServicePrincipalName",
   "fileWithCertAndPrivateKey": "certFilePath\certFileName.pem",
-  "password": null,
   "tenant": "myOrganizationTenantID"
 }
 ```
@@ -145,7 +144,7 @@ To sign in with a certificate, the certificate must be available locally as a PE
 az login --service-principal \
          --username myServicePrincipalID \
          --tenant myOwnerOrganizationId \
-         --password /path/to/cert
+         --certificate /path/to/cert
 ```
 
 ## Next Steps
