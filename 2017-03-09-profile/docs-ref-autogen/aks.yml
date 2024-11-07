@@ -67,7 +67,6 @@ directCommands:
                   [--aad-tenant-id]
                   [--aci-subnet-name]
                   [--admin-username]
-                  [--advanced-networking-observability-tls-management {Managed, None}]
                   [--aks-custom-headers]
                   [--ampls-resource-id]
                   [--api-server-authorized-ip-ranges]
@@ -96,6 +95,8 @@ directCommands:
                   [--crg-id]
                   [--data-collection-settings]
                   [--defender-config]
+                  [--disable-acns-observability]
+                  [--disable-acns-security]
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-local-accounts]
@@ -113,7 +114,6 @@ directCommands:
                   [--enable-acns]
                   [--enable-addon-autoscaling]
                   [--enable-addons]
-                  [--enable-advanced-network-observability]
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
@@ -133,7 +133,6 @@ directCommands:
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
-                  [--enable-fqdn-policy]
                   [--enable-high-log-scale-mode {false, true}]
                   [--enable-image-cleaner]
                   [--enable-image-integrity]
@@ -395,12 +394,6 @@ directCommands:
     defaultValue: "azureuser"
     summary: |-
       User account to create on node VMs for SSH access.
-  - name: --advanced-networking-observability-tls-management
-    defaultValue: "Managed"
-    parameterValueGroup: "Managed, None"
-    summary: |-
-      Management of TLS certificates for querying network flow logs via the flow log endpoint for Advanced Networking observability clusters. Valid values are "Managed" and "None". If not specified, the default is Managed.
-    isPreview: true
   - name: --aks-custom-headers
     summary: |-
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
@@ -509,6 +502,14 @@ directCommands:
   - name: --defender-config
     summary: |-
       Path to JSON file containing Microsoft Defender profile configurations.
+  - name: --disable-acns-observability
+    summary: |-
+      Used to disable advanced networking observability features on a clusters when enabling advanced networking features with "--enable-acns".
+    isPreview: true
+  - name: --disable-acns-security
+    summary: |-
+      Used to disable advanced networking security features on a clusters when enabling advanced networking features with "--enable-acns".
+    isPreview: true
   - name: --disable-disk-driver
     defaultValue: "False"
     summary: |-
@@ -569,7 +570,7 @@ directCommands:
       Enable managed AAD feature for cluster.
   - name: --enable-acns
     summary: |-
-      Enable advanced network functionalities on a cluster. Note that enabling this will incur additional costs.
+      Enable advanced network functionalities on a cluster. Enabling this will incur additional costs.
     isPreview: true
   - name: --enable-addon-autoscaling
     defaultValue: "False"
@@ -591,10 +592,6 @@ directCommands:
       - gitops                          : enable GitOps (PREVIEW).
       - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
       - web_application_routing         : enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
-  - name: --enable-advanced-network-observability
-    summary: |-
-      Enable advanced network observability functionalities on a cluster. Note that enabling this will incur additional costs.
-    isPreview: true
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
@@ -684,10 +681,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Use FIPS-enabled OS on agent nodes.
-  - name: --enable-fqdn-policy
-    summary: |-
-      Enable advanced network security FQDN functionalities on a cluster. Note that enabling this will incur additional costs.
-    isPreview: true
   - name: --enable-high-log-scale-mode
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -1831,7 +1824,6 @@ directCommands:
                   --resource-group
                   [--aad-admin-group-object-ids]
                   [--aad-tenant-id]
-                  [--advanced-networking-observability-tls-management {Managed, None}]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
                   [--apiserver-subnet-id]
@@ -1853,8 +1845,9 @@ directCommands:
                   [--defender-config]
                   [--detach-acr]
                   [--disable-acns]
+                  [--disable-acns-observability]
+                  [--disable-acns-security]
                   [--disable-addon-autoscaling]
-                  [--disable-advanced-network-observability]
                   [--disable-ahub]
                   [--disable-ai-toolchain-operator]
                   [--disable-azure-container-storage {all, azureDisk, elasticSan, ephemeralDisk}]
@@ -1870,7 +1863,6 @@ directCommands:
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-force-upgrade]
-                  [--disable-fqdn-policy]
                   [--disable-image-cleaner]
                   [--disable-image-integrity]
                   [--disable-imds-restriction]
@@ -1889,7 +1881,6 @@ directCommands:
                   [--enable-aad]
                   [--enable-acns]
                   [--enable-addon-autoscaling]
-                  [--enable-advanced-network-observability]
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
@@ -1906,7 +1897,6 @@ directCommands:
                   [--enable-disk-driver]
                   [--enable-file-driver]
                   [--enable-force-upgrade]
-                  [--enable-fqdn-policy]
                   [--enable-image-cleaner]
                   [--enable-image-integrity]
                   [--enable-imds-restriction]
@@ -2094,11 +2084,6 @@ directCommands:
   - name: --aad-tenant-id
     summary: |-
       The ID of an Azure Active Directory tenant.
-  - name: --advanced-networking-observability-tls-management
-    parameterValueGroup: "Managed, None"
-    summary: |-
-      Management of TLS certificates for querying network flow logs via the flow log endpoint for Advanced Networking observability clusters. Valid values are "Managed" and "None". If not specified, the default is Managed.
-    isPreview: true
   - name: --aks-custom-headers
     summary: |-
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
@@ -2179,16 +2164,20 @@ directCommands:
       Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
   - name: --disable-acns
     summary: |-
-      Disable advanced network functionalities on a cluster.
+      Disable all advanced networking functionalities on a cluster.
+    isPreview: true
+  - name: --disable-acns-observability
+    summary: |-
+      Used to disable advanced networking observability features on a clusters when enabling advanced networking features with "--enable-acns".
+    isPreview: true
+  - name: --disable-acns-security
+    summary: |-
+      Used to disable advanced networking security features on a clusters when enabling advanced networking features with "--enable-acns".
     isPreview: true
   - name: --disable-addon-autoscaling
     defaultValue: "False"
     summary: |-
       Disable addon autoscaling for cluster.
-    isPreview: true
-  - name: --disable-advanced-network-observability
-    summary: |-
-      Disable advanced network observability functionalities on a cluster.
     isPreview: true
   - name: --disable-ahub
     defaultValue: "False"
@@ -2253,10 +2242,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable forceUpgrade cluster upgrade settings override.
-  - name: --disable-fqdn-policy
-    summary: |-
-      Disable advanced network security FQDN functionalities on a cluster.
-    isPreview: true
   - name: --disable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -2332,16 +2317,12 @@ directCommands:
       Enable managed AAD feature for cluster.
   - name: --enable-acns
     summary: |-
-      Enable advanced network functionalities on a cluster. Note that enabling this will incur additional costs.
+      Enable advanced network functionalities on a cluster. Enabling this will incur additional costs.
     isPreview: true
   - name: --enable-addon-autoscaling
     defaultValue: "False"
     summary: |-
       Enable addon autoscaling for cluster.
-    isPreview: true
-  - name: --enable-advanced-network-observability
-    summary: |-
-      Enable advanced network observability functionalities on a cluster. Note that enabling this will incur additional costs.
     isPreview: true
   - name: --enable-ahub
     defaultValue: "False"
@@ -2411,10 +2392,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable forceUpgrade cluster upgrade settings override.
-  - name: --enable-fqdn-policy
-    summary: |-
-      Enable advanced network security FQDN functionalities on a cluster. Note that enabling this will incur additional costs.
-    isPreview: true
   - name: --enable-image-cleaner
     defaultValue: "False"
     summary: |-
