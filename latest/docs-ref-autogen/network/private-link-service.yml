@@ -14,14 +14,15 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
-    az network private-link-service create --lb-frontend-ip-configs
-                                           --name
+    az network private-link-service create --name
                                            --resource-group
                                            --subnet
                                            [--auto-approval]
+                                           [--destination-ip-address]
                                            [--edge-zone]
                                            [--enable-proxy-protocol {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--fqdns]
+                                           [--lb-frontend-ip-configs]
                                            [--lb-name]
                                            [--location]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -36,10 +37,6 @@ directCommands:
       Create a private link service
     syntax: az network private-link-service create -g MyResourceGroup -n MyPLSName --vnet-name MyVnetName --subnet MySubnet --lb-name MyLBName --lb-frontend-ip-configs LoadBalancerFrontEnd -l centralus
   requiredParameters:
-  - isRequired: true
-    name: --lb-frontend-ip-configs
-    summary: |-
-      Space-separated list of names or IDs of load balancer frontend IP configurations to link to. If names are used, also supply `--lb-name`.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - isRequired: true
     name: --name -n
     summary: |-
@@ -56,6 +53,9 @@ directCommands:
   - name: --auto-approval
     summary: |-
       Space-separated list of subscription IDs to auto-approve.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --destination-ip-address
+    summary: |-
+      The destination IP address of the private link service.
   - name: --edge-zone
     summary: |-
       The name of edge zone.
@@ -66,6 +66,9 @@ directCommands:
   - name: --fqdns
     summary: |-
       Space-separated list of FQDNs.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --lb-frontend-ip-configs
+    summary: |-
+      Space-separated list of names or IDs of load balancer frontend IP configurations to link to. If names are used, also supply `--lb-name`.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --lb-name
     summary: |-
       Name of the load balancer to retrieve frontend IP configs from. Ignored if a frontend IP configuration ID is supplied.
@@ -228,6 +231,7 @@ directCommands:
   syntax: >-
     az network private-link-service update [--add]
                                            [--auto-approval]
+                                           [--destination-ip-address]
                                            [--enable-proxy-protocol {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--fqdns]
@@ -253,6 +257,9 @@ directCommands:
   - name: --auto-approval
     summary: |-
       Space-separated list of subscription IDs to auto-approve.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --destination-ip-address
+    summary: |-
+      The destination IP address of the private link service.
   - name: --enable-proxy-protocol
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -398,5 +405,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/19/2024
+  ms.date: 10/16/2024
   description: Manage private link services.

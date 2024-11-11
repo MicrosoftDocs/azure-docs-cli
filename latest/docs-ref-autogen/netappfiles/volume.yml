@@ -103,6 +103,9 @@ directCommands:
                                  [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
                                  [--endpoint-type {dst, src}]
                                  [--export-policy-rules]
+                                 [--external-host-name]
+                                 [--external-server-name]
+                                 [--external-volume-name]
                                  [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
@@ -130,7 +133,7 @@ directCommands:
                                  [--security-style {ntfs, unix}]
                                  [--service-level {Premium, Standard, StandardZRS, Ultra}]
                                  [--smb-access-based-enumeration {Disabled, Enabled}]
-                                 [--smb-continuously-available {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--smb-ca {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--smb-encryption {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--smb-non-browsable {Disabled, Enabled}]
                                  [--snapshot-dir-visible {0, 1, f, false, n, no, t, true, y, yes}]
@@ -253,6 +256,15 @@ directCommands:
   - name: --export-policy-rules --rules
     summary: |-
       Export policy rule  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --external-host-name
+    summary: |-
+      The Path to a ONTAP Host.
+  - name: --external-server-name
+    summary: |-
+      The name of a server on the ONTAP Host.
+  - name: --external-volume-name
+    summary: |-
+      The name of a volume on the server.
   - name: --has-root-access
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -359,7 +371,7 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
-  - name: --smb-continuously-available --smb-continuously-avl
+  - name: --smb-ca --smb-continuously-available --smb-continuously-avl
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -1109,9 +1121,7 @@ directCommands:
   name: az netappfiles volume migrate-backup
   summary: |-
     Migrate the backups under volume to backup vault.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
@@ -1633,7 +1643,7 @@ directCommands:
                                  [--service-level {Premium, Standard, StandardZRS, Ultra}]
                                  [--set]
                                  [--smb-access-based-enumeration {Disabled, Enabled}]
-                                 [--smb-continuously-available {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--smb-ca {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--smb-encryption {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--smb-non-browsable {Disabled, Enabled}]
                                  [--snapshot-dir-visible {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1798,7 +1808,7 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
-  - name: --smb-continuously-available --smb-continuously-avl
+  - name: --smb-ca --smb-continuously-available --smb-continuously-avl
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enables continuously available share property for smb volume. Only applicable for SMB volume.
@@ -2281,7 +2291,12 @@ commands:
 - az_netappfiles_volume_relocate
 - az_netappfiles_volume_replication
 - az_netappfiles_volume_replication_approve
+- az_netappfiles_volume_replication_authorize-external-replication
+- az_netappfiles_volume_replication_finalize-external-replication
 - az_netappfiles_volume_replication_list
+- az_netappfiles_volume_replication_peer-external-cluster
+- az_netappfiles_volume_replication_perform-replication-transfer
+- az_netappfiles_volume_replication_populate-availability-zone
 - az_netappfiles_volume_replication_re-initialize
 - az_netappfiles_volume_replication_reestablish
 - az_netappfiles_volume_replication_remove
