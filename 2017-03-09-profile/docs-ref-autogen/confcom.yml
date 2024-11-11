@@ -10,6 +10,111 @@ summary: |-
 status: GA
 sourceType: Extension
 directCommands:
+- uid: az_confcom_acifragmentgen
+  name: az confcom acifragmentgen
+  summary: |-
+    Create a Confidential Container Policy Fragment for ACI.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az confcom acifragmentgen [--algo]
+                              [--chain]
+                              [--debug-mode]
+                              [--disable-stdio]
+                              [--feed]
+                              [--fragment-path]
+                              [--fragments-json]
+                              [--generate-import]
+                              [--image]
+                              [--input]
+                              [--key]
+                              [--minimum-svn]
+                              [--namespace]
+                              [--no-print]
+                              [--output-filename]
+                              [--outraw]
+                              [--svn]
+                              [--tar]
+                              [--upload-fragment]
+  examples:
+  - summary: |-
+      Input an image name to generate a simple fragment
+    syntax: az confcom acifragmentgen --image mcr.microsoft.com/azuredocs/aci-helloworld
+  - summary: |-
+      Input a config file to generate a fragment with a custom namespace and debug mode enabled
+    syntax: az confcom acifragmentgen --input "./config.json" --namespace "my-namespace" --debug-mode
+  - summary: |-
+      Generate an import statement for a signed local fragment
+    syntax: az confcom acifragmentgen --fragment-path "./fragment.json" --generate-import --minimum-svn 1
+  - summary: |-
+      Generate a fragment and COSE sign it with a key and chain
+    syntax: az confcom acifragmentgen --image mcr.microsoft.com/azuredocs/aci-helloworld --key "./key.pem" --chain "./chain.pem" --svn 1 --namespace contoso --no-print
+  optionalParameters:
+  - name: --algo
+    defaultValue: "ES384"
+    summary: |-
+      Algorithm used for signing the generated policy fragment. This must be used with --key and --chain.
+      Supported algorithms are ['PS256', 'PS384', 'PS512', 'ES256', 'ES384', 'ES512', 'EdDSA'].
+  - name: --chain
+    summary: |-
+      Path to .pem formatted certificate chain file to use for signing the generated policy fragment. This must be used with --key.
+  - name: --debug-mode
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated security policy adds the ability to use /bin/sh or /bin/bash to debug the container. It also enabled stdio access, ability to dump stack traces, and enables runtime logging. It is recommended to only use this option for debugging purposes.
+  - name: --disable-stdio
+    defaultValue: "False"
+    summary: |-
+      When enabled, the containers in the container group do not have access to stdio.
+  - name: --feed -f
+    summary: |-
+      Feed to use for the generated policy fragment. This is typically the same as the image name when using image-attached fragments. It is the location in the remote repository where the fragment will be stored.
+  - name: --fragment-path -p
+    summary: |-
+      Path to an existing policy fragment file to be used with --generate-import. This option allows you to create import statements for the specified fragment without needing to pull it from an OCI registry.
+  - name: --fragments-json -j
+    summary: |-
+      Path to a JSON file that will store the fragment import information generated when using --generate-import. This file can later be fed into the policy generation command (acipolicygen) to include the fragment in a new or existing policy. If not specified, the import statement will be printed to the console instead of being saved to a file.
+  - name: --generate-import -g
+    defaultValue: "False"
+    summary: |-
+      Generate an import statement for a policy fragment.
+  - name: --image
+    summary: |-
+      Image to use for the generated policy fragment.
+  - name: --input -i
+    summary: |-
+      Path to a JSON file containing the configuration for the generated policy fragment.
+  - name: --key -k
+    summary: |-
+      Path to .pem formatted key file to use for signing the generated policy fragment. This must be used with --chain.
+  - name: --minimum-svn
+    summary: |-
+      Used with --generate-import to specify the minimum SVN for the import statement.
+  - name: --namespace -n
+    summary: |-
+      Namespace to use for the generated policy fragment.
+  - name: --no-print
+    defaultValue: "False"
+    summary: |-
+      Do not print the generated policy fragment to stdout.
+  - name: --output-filename
+    summary: |-
+      Save output policy to given file path.
+  - name: --outraw
+    defaultValue: "False"
+    summary: |-
+      Output policy in clear text compact JSON instead of default pretty print format.
+  - name: --svn
+    summary: |-
+      Minimum Allowed Software Version Number for the generated policy fragment. This should be a monotonically increasing integer.
+  - name: --tar
+    summary: |-
+      Path to either a tarball containing image layers or a JSON file containing paths to tarballs of image layers.
+  - name: --upload-fragment -u
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated policy fragment will be uploaded to the registry of the image being used.
 - uid: az_confcom_acipolicygen
   name: az confcom acipolicygen
   summary: |-
@@ -21,10 +126,14 @@ directCommands:
                             [--debug-mode]
                             [--diff]
                             [--disable-stdio]
+                            [--exclude-default-fragments]
                             [--faster-hashing]
+                            [--fragments-json]
                             [--image]
+                            [--include-fragments]
                             [--infrastructure-svn]
                             [--input]
+                            [--omit-id]
                             [--outraw]
                             [--outraw-pretty-print]
                             [--parameters]
@@ -48,6 +157,9 @@ directCommands:
   - summary: |-
       Input an ARM Template file and use a tar file as the image source instead of the Docker daemon
     syntax: az confcom acipolicygen --template-file "./template.json" --tar "./image.tar"
+  - summary: |-
+      Input an ARM Template file and use a fragments JSON file to generate a policy
+    syntax: az confcom acipolicygen --template-file "./template.json" --fragments-json "./fragments.json" --include-fragments
   optionalParameters:
   - name: --approve-wildcards -y
     defaultValue: "False"
@@ -60,24 +172,39 @@ directCommands:
   - name: --diff -d
     defaultValue: "False"
     summary: |-
-      When combined with an input ARM Template, verifies the policy present in the ARM Template under "ccePolicy" and the containers within the ARM Template are compatible. If they are incompatible, a list of reasons is given and the exit status code will be 2.
+      When combined with an input ARM Template file (or YAML file for Virtual Node policy generation), verifies the policy present in the ARM Template under "ccePolicy" and the containers within the file are compatible. If they are incompatible, a list of reasons is given and the exit status code will be 2.
   - name: --disable-stdio
     defaultValue: "False"
     summary: |-
       When enabled, the containers in the container group do not have access to stdio.
+  - name: --exclude-default-fragments -e
+    defaultValue: "False"
+    summary: |-
+      When enabled, the default fragments are not included in the generated policy. This includes containers needed to mount azure files, mount secrets, mount git repos, and other common ACI features.
   - name: --faster-hashing
     defaultValue: "False"
     summary: |-
       When enabled, the hashing algorithm used to generate the policy is faster but less memory efficient.
+  - name: --fragments-json -j
+    summary: |-
+      Path to JSON file containing fragment information to use for generating a policy. This requires --include-fragments to be enabled.
   - name: --image
     summary: |-
       Input image name.
+  - name: --include-fragments -f
+    defaultValue: "False"
+    summary: |-
+      When enabled, the path specified by --fragments-json will be used to pull fragments from an OCI registry or locally and include them in the generated policy.
   - name: --infrastructure-svn
     summary: |-
       Minimum Allowed Software Version Number for Infrastructure Fragment.
   - name: --input -i
     summary: |-
       Input JSON config file.
+  - name: --omit-id
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated policy will not contain the ID field. This will keep the policy from being tied to a specific image name and tag.
   - name: --outraw
     defaultValue: "False"
     summary: |-
@@ -186,6 +313,7 @@ directCommands:
     summary: |-
       Input YAML Kubernetes file.
 commands:
+- az_confcom_acifragmentgen
 - az_confcom_acipolicygen
 - az_confcom_katapolicygen
 globalParameters:

@@ -112,6 +112,8 @@ directCommands:
 
     [WARNING] Authentication with username and password in the command line is strongly discouraged. Use one of the recommended authentication methods based on your requirements. For more details, see https://go.microsoft.com/fwlink/?linkid=2276314
 
+    [WARNING] Passing the service principal certificate with `--password` is deprecated and will be removed by version 2.74. Please use `--certificate` instead.
+
     To log in with a service principal, specify --service-principal.
 
     To log in with a managed identity, specify --identity.
@@ -122,6 +124,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/profile/_help.py
   syntax: >-
     az login [--allow-no-subscriptions]
+             [--certificate]
              [--federated-token]
              [--identity]
              [--password]
@@ -142,8 +145,8 @@ directCommands:
       Log in with a service principal using client secret. Use -p=secret if the first character of the password is '-'.
     syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 -p VerySecret --tenant contoso.onmicrosoft.com
   - summary: |-
-      Log in with a service principal using client certificate.
-    syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 -p ~/mycertfile.pem --tenant contoso.onmicrosoft.com
+      Log in with a service principal using certificate.
+    syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 --certificate ~/mycertfile.pem --tenant contoso.onmicrosoft.com
   - summary: |-
       Log in with a system-assigned managed identity.
     syntax: az login --identity
@@ -154,36 +157,39 @@ directCommands:
   - name: --allow-no-subscriptions
     defaultValue: "False"
     summary: |-
-      Support access tenants without subscriptions. It's uncommon but useful to run tenant level commands, such as 'az ad'.
+      Support accessing tenants without subscriptions. It's useful to run tenant-level commands, such as 'az ad'.
+  - name: --certificate
+    summary: |-
+      PEM file with key and public certificate.
   - name: --federated-token
     summary: |-
       Federated token that can be used for OIDC token exchange.
   - name: --identity -i
     defaultValue: "False"
     summary: |-
-      Log in using the Virtual Machine's identity.
+      Log in using managed identity.
   - name: --password -p
     summary: |-
-      Credentials like user password, or for a service principal, provide client secret or a pem file with key and public certificate. Will prompt if not given.
+      User password or service principal secret. Will prompt if not given.
   - name: --scope
     summary: |-
       Used in the /authorize request. It can cover only one static resource.
   - name: --service-principal
     summary: |-
-      The credential representing a service principal.
+      Log in with a service principal.
   - name: --tenant -t
     summary: |-
-      The AAD tenant, must provide when using service principals.
+      The Microsoft Entra tenant, must be provided when using a service principal.
   - name: --use-cert-sn-issuer
     summary: |-
-      Used with a service principal configured with Subject Name and Issuer Authentication in order to support automatic certificate rolls.
+      Use Subject Name + Issuer (SN+I) authentication in order to support automatic certificate rolls.
   - name: --use-device-code
     defaultValue: "False"
     summary: |-
-      Use CLI's old authentication flow based on device code. CLI will also use this if it can't launch a browser in your behalf, e.g. in remote SSH or Cloud Shell.
+      Use device code flow. Azure CLI will also use this if it can't launch a browser, e.g. in remote SSH or Cloud Shell.
   - name: --username -u
     summary: |-
-      User name, service principal, or managed service identity ID.
+      User name, service principal client ID, or managed identity ID.
 - uid: az_logout
   name: az logout
   summary: |-
@@ -359,6 +365,8 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Include preview packages for extension installation, if exists.
+    isDeprecated: true
+    deprecateInfo: The default value of '--allow-preview' will be changed to 'false' from 'true' in next breaking change release(2.67.0).
   - name: --yes -y
     summary: |-
       Do not prompt for checking release notes.

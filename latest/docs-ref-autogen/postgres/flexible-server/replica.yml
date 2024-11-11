@@ -27,6 +27,7 @@ directCommands:
                                                [--storage-size]
                                                [--subnet]
                                                [--subnet-prefixes]
+                                               [--tags]
                                                [--tier]
                                                [--vnet]
                                                [--yes]
@@ -42,7 +43,8 @@ directCommands:
         --source-server testserver --zone 3 --location testLocation \
         --vnet newVnet --subnet newSubnet \
         --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
-        --private-dns-zone testDNS.postgres.database.azure.com
+        --private-dns-zone testDNS.postgres.database.azure.com \
+        --tags "key=value"
   - summary: |-
       Create a read replica 'testreplicaserver' for 'testserver' with public or private access       in the specified location if available. Since zone is not passed, it will automatically pick up zone in the       replica location which is different from source server, if available, else will pick up zone same as source server       in the replica location if available, else will set the zone as None, i.e. No preference
     syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup --source-server testserver --location testLocation
@@ -100,6 +102,9 @@ directCommands:
   - name: --subnet-prefixes
     summary: |-
       The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --tier
     summary: |-
       Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.
@@ -170,7 +175,7 @@ directCommands:
     defaultValue: "standalone"
     parameterValueGroup: "standalone, switchover"
     summary: |-
-      Whether to promote read replica to an independent server or promite it as a primary server.
+      Whether to promote read replica to an independent server or promote it as a primary server.
   - name: --promote-option
     defaultValue: "planned"
     parameterValueGroup: "forced, planned"
