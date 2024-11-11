@@ -49,6 +49,16 @@ Version 2.66.0
 * `az containerapp env create`: Hide `--dapr-instrumentation-key` parameter
 * `az containerapp env update`: Support to update `--dapr-connection-string`
 
+### Core
+
+* `aaz`: Support managed identity
+* Resolve CVE-2024-6119
+* Resolve CVE-2024-5535
+* Resolve CVE-2024-4741
+* Resolve CVE-2024-4603
+* Resolve CVE-2024-2511
+* Use MSAL for Cloud Shell authentication
+
 ### Extension
 
 * `az extension add/update`: Pre-announcement default value change from `true` to `false` for `--allow-preview`
