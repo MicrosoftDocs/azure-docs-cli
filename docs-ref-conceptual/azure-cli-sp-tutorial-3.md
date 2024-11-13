@@ -10,7 +10,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Use an Azure service principal with certificate-based authentication
 
-When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. 
+When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**.
 
 We recommend using certificate-based authentication due to the security restrictions of password-based authentication. Certificate-based authentication enables you to adopt a phishing resistant authentication by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects Azure resources. To learn more about why certificate-based authentication is more secure, see [Microsoft Entra certificate-based authentication](/azure/active-directory/authentication/concept-certificate-based-authentication).
 
@@ -102,8 +102,6 @@ az keyvault secret download --file /path/to/cert.pfx \
                             --name CertName \
                             --encoding base64
 openssl pkcs12 -in cert.pfx -passin pass: -passout pass: -out cert.pem -nodes
-
-az login --service-principal -u "<myAppClientID>" -p cert.pem --tenant "<myTenantID>"
 ```
 
 ## Convert an existing PKCS12 file
@@ -142,10 +140,7 @@ The output includes credentials that you must protect. Be sure that you do not i
 To sign in with a certificate, the certificate must be available locally as a PEM or DER file in ASCII format. PKCS#12 files (.p12/.pfx) don't work. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file. You don't need to prefix the path with an `@` like you do with other az commands.
 
 ```azurecli-interactive
-az login --service-principal \
-         --username myServicePrincipalID \
-         --tenant myOwnerOrganizationId \
-         --password /path/to/cert
+az login --service-principal --username APP_ID --certificate /path/to/cert.pem --tenant TENANT_ID
 ```
 
 ## Next Steps
