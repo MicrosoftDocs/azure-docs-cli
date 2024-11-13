@@ -98,10 +98,10 @@ You can also use `winget`, Microsoft's Package manager for Windows, to install a
 > winget is available by default in Windows 11 and modern versions of Windows 10. However, it may not be installed in older versions of Windows. See the [winget documentation](/windows/package-manager/winget/) for installation instructions.
 
    ```PowerShell
-   winget install -e --id Microsoft.AzureCLI
+   winget install --exact --id Microsoft.AzureCLI
    ```
 
-The `-e` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `-v <version>` with your desired version to the command.
+The `--exact` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a <code>--version &lt;<i>version</i>&gt;</code> with your desired version to the command.
 
 # [ZIP Package](#tab/zip)
 
