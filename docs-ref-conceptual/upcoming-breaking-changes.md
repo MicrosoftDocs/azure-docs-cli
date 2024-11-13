@@ -67,7 +67,7 @@ The [db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) e
 
 ### `az login`
 
-- Passing the service principal certificate with `--password` is deprecated and will be removed in version 2.67.0. Please use `--certificate` instead.
+- The `--password` parameter will not accept service principal certificate. Use the `--certificate` parameter instead.
 
 ## sql
 
