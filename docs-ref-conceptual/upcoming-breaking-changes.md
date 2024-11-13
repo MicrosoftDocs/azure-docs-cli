@@ -63,6 +63,12 @@ The [db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) e
 
 - This command group has been deprecated and will be removed in next breaking change release(2.67.0). Use 'az network public-ip ddos-protection' instead.
 
+## profile
+
+### `az login`
+
+- The `--password` parameter will not accept service principal certificate. Use the `--certificate` parameter instead.
+
 ## sql
 
 [Link to sql mi link subgroup](/cli/azure/sql/mi/link)
