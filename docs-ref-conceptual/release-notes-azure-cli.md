@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 11/05/2024
+ms.date: 11/19/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,87 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## November 19, 2024
+
+Version 2.67.0
+
+### AKS
+
+* [BREAKING CHANGE] `az aks create/update`: Remove `--uptime-sla` and `--no-uptime-sla` parameters
+* [BREAKING CHANGE] `az aks create`: Remove `--aad-client-app-id`, `--aad-server-app-id` and `--aad-server-app-secret` parameters
+* [BREAKING CHANGE] `az aks trustedaccess rolebinding create`: Remove deprecated '-r' options
+* `az aks create/update`: Fix storage pool name validation for Azure Container Storage
+* `az aks enable-addon`: Update AGIC addon to use Network Contributor instead of Contributor
+
+### App Config
+
+* `az appconfig create/update`: Add new parameters `--arm-auth-mode` and `--enable-arm-private-network-access` to support data plane proxy settings
+
+### Compute
+
+* `az vm disk attach/detach`: Add new parameter `--disk-ids` to support setting multiple disks by disk ids
+
+### Compute Fleet
+
+* `az compute-fleet`: Add `create/update/show/delete/list/list-vmss` commands for manage Azure Compute Fleet
+
+### Container
+
+* `az container container-group-profile`: Add new command group to manage Azure Container Instance Container Group Profile(#30260)
+
+### DataLake
+
+* [BREAKING CHANGE] `az dla`: Remove dla module since it has been deprecated
+
+### DLS
+
+* [BREAKING CHANGE] `az dls account network-rule`: Remove this command group as no server support anymore
+
+### Eventhub
+
+* `az eventhubs eventhub`: Add new parameters `--timestamp-type` and `--min-compaction-lag-in-mins`
+* `az eventhubs namespace replica`: Add new commands to support adding/removing replicas
+
+### Extension
+
+* [BREAKING CHANGE] `az extension add/update`: Set default `--allow-preview` value from `True` to be `False` for extensions installation and remain `True` for extensions without stable releases
+
+### Kusto
+
+* [BREAKING CHANGE] `az kusto`: Remove kusto from CLI as it has been moved to CLI extensions
+
+### Network
+
+* [BREAKING CHANGE] `az network public-ip ddos-protection-statu`: Remove misspelled command group
+
+### Packaging
+
+* Drop Python 3.8 support
+
+### Profile
+
+* [BREAKING CHANGE] `az login`: `--password` no longer accepts a service principal certificate. Use `--certificate` to pass a service principal certificate
+
+### RDBMS
+
+* `az postgres flexible-server long-term-retention start/pre-check/list/show`: New commands to support long-term-retention backups on PostgreSql Flex Server
+* `az postgres flexible-server create`: Support provisioning postgres flexible servers with version 17
+
+### Service Connector
+
+* `az connection create mysql-flexible`: Add `--private-endpoint` parameter
+
+### SQL
+
+* [BREAKING CHANGE] `az sql mi link create`: Rename input from `--source-endpoint` to `--partner-endpoint`, `--primary-availability-group-name` to `--partner-availability-group-name`, `--secondary-availability-group-name` to `--instance-availability-group-name`, `--target-database` to `--databases`
+* [BREAKING CHANGE] `az sql mi link create/show/list/update`: Rename output from `targetDatabase`, `primaryAvailabilityGroupName`, `secondaryAvailabilityGroupNamesourceEndpoint`, `sourceReplicaId`, `targetReplicaId`, `linkState`, `lastHardenedLsn` to `databases`, `partnerAvailabilityGroupName`, `instanceAvailabilityGroupName`, `partnerEndpoint`, `distributedAvailabilityGroupName`, `instanceLinkRole`, `partnerLinkRole`, `failoverMode`, `seedingMode`
+* [BREAKING CHANGE] `az sql failover-group create`: Change default failover policy to manual
+* `az sql mi link failover`: Support performing requested failover type in this Managed Instance link
+
+### Upgrade
+
+* [BREAKING CHANGE] `az upgrade`: Set default `--allow-preview` value from `True` to be `False` for extensions installation and remain `True` for extensions without stable releases
 
 ## November 05, 2024
 
