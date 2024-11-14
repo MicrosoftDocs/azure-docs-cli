@@ -35,9 +35,12 @@ directCommands:
                                        [--location]
                                        [--max-sessions]
                                        [--memory]
+                                       [--mi-system-assigned]
+                                       [--mi-user-assigned]
                                        [--network-status {EgressDisabled, EgressEnabled}]
                                        [--no-wait]
                                        [--ready-sessions]
+                                       [--registry-identity]
                                        [--registry-password]
                                        [--registry-server]
                                        [--registry-username]
@@ -76,6 +79,22 @@ directCommands:
           --container-type CustomContainer --environment MyEnvironment --image MyImage \
           --cpu 0.5 --memory 1Gi --target-port 80 --registry-server myregistry.azurecr.io \
           --registry-username myregistry --registry-password $REGISTRY_PASSWORD \
+          --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer and Managed Identity to authenticate Azure container registry
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type CustomContainer --environment MyEnvironment --image MyImage \
+          --cpu 0.5 --memory 1Gi --target-port 80 --registry-server myregistry.azurecr.io \
+          --registry-identity  MyUserIdentityResourceId \
+          --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer with system assigned and user assigned identity.
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type CustomContainer --environment MyEnvironment --image MyImage \
+          --cpu 0.5 --memory 1Gi --target-port 80 \
+          --mi-system-assigned --mi-user-assigned MyUserIdentityResourceId \
           --location eastasia
   - summary: |-
       Create or update a Session Pool with container type CustomContainer with cooldown period 360s
@@ -130,6 +149,13 @@ directCommands:
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+  - name: --mi-system-assigned
+    defaultValue: "False"
+    summary: |-
+      Boolean indicating whether to assign system-assigned identity.
+  - name: --mi-user-assigned
+    summary: |-
+      Space-separated user identities to be assigned.
   - name: --network-status
     parameterValueGroup: "EgressDisabled, EgressEnabled"
     summary: |-
@@ -141,6 +167,9 @@ directCommands:
   - name: --ready-sessions
     summary: |-
       The number of sessions that will be ready in the session pool all the time.
+  - name: --registry-identity
+    summary: |-
+      The managed identity with which to authenticate to the Azure Container Registry (instead of username/password). Use 'system' for a system-assigned identity, use a resource ID for a user-assigned identity. The managed identity should have been assigned acrpull permissions on the ACR before deployment (use 'az role assignment create --role acrpull ...').
   - name: --registry-password
     summary: |-
       The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
