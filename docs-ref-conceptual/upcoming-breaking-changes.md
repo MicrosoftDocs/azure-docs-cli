@@ -20,6 +20,8 @@ The breaking changes listed in this article are planned for the next major relea
 * All Helm charts not stored as an OCI artifact will be deleted from Azure Container Registry on March 30th, 2025.
 * Learn how to find all Helm charts stored in a Helm repository here: [az acr helm list](/cli/azure/acr/helm/#az_acr_helm_list). If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 
+For more information on managing and deploying applications for Kubernetes, see [Push and pull Helm charts to an Azure container registry](/azure/container-registry/container-registry-helm-repos).
+
 ## aks
 
 [Link to aks reference group](/cli/azure/aks)
