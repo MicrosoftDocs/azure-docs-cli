@@ -39,25 +39,36 @@ Console output:
 }
 ```
 
-Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored. Copy the certificate to a secure location. If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored. Copy the certificate to a secure location. The certificate contains the private key and the public certificate that can be used in `az login`. If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
 The contents of a PEM file can be viewed with a text editor. Here's a PEM file example:
 
-![Screenshot of PEM file](~/docs-ref-conceptual/media/sp-tutorial/pem-file.png)
+```
+-----BEGIN PRIVATE KEY-----
+MIIEvQ...
+-----END PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+MIICoT...
+-----END CERTIFICATE-----
+```
 
 ## Create a service principal using an existing certificate
 
-Create a service principal with an existing certificate by using the `--cert` parameter. Any tool that uses this service principal must have access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the **certi897ficate** as a string, or use the `@path` format to load the certificate from a file.
-
-When you use a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
+Create a service principal with an existing certificate by using the `--cert` parameter. Any tool that uses this service principal must have access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file. When uploading a certificate, only the public certificate is needed. For optimal security, do not include the private key. The `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----` lines are optional.
 
 ```azurecli-interactive
 # create a service principal with the certificate as a string
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --cert "MIICoT..."
+
+# or provide -----BEGIN CERTIFICATE----- and -----END CERTIFICATE----- lines
+az ad sp create-for-rbac --name myServicePrincipalName \
+                         --role roleName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert "-----BEGIN CERTIFICATE-----
-...
+MIICoT...
 -----END CERTIFICATE-----"
 ```
 
@@ -67,6 +78,14 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert @/path/to/cert.pem
+```
+
+Here's a PEM file example for uploading:
+
+```
+-----BEGIN CERTIFICATE-----
+MIICoT...
+-----END CERTIFICATE-----
 ```
 
 ## Work with Azure Key Vault
