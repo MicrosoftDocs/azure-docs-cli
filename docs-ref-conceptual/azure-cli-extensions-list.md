@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/13/2024
+ms.date: 11/14/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -57,7 +57,7 @@ You will be prompted to install an extension on first use.
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.1](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.61.0 | Manage Azure Firewall resources. | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.46.0 | The Azure IoT extension for Azure CLI. | GA | [0.25.0](https://github.com/azure/azure-iot-cli-extension) |
-|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.53.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.8.0b1](https://github.com/azure/azure-iot-ops-cli-extension) |
+|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.53.0 | The Azure IoT Operations extension for Azure CLI. | GA | [1.0.0](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.1](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.57.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
@@ -76,7 +76,7 @@ You will be prompted to install an extension on first use.
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.64.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.10.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.57.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
-|[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.62.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
+|[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.62.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [1.1.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
 |[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [1.1.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.55.0 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
@@ -89,7 +89,7 @@ You will be prompted to install an extension on first use.
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
 |[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.57.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.5.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
-|[deidservice](https://github.com/Azure/azure-cli-extensions/tree/main/src/deidservice) | 2.61.0 | Microsoft Azure Command-Line Tools Deidservice Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/deidservice/HISTORY.rst) |
+|[deidservice](https://github.com/Azure/azure-cli-extensions/tree/main/src/deidservice) | 2.61.0 | Microsoft Azure Command-Line Tools Deidservice Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/deidservice) |
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
 |[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.55.0 | Microsoft Azure Command-Line Tools Desktopvirtualization Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
@@ -120,7 +120,7 @@ You will be prompted to install an extension on first use.
 |[hardware-security-modules](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules) | 2.15.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules/HISTORY.rst) |
 |[hdinsightonaks](https://github.com/Azure/azure-cli-extensions/tree/main/src/hdinsightonaks) | 2.57.0 | Microsoft Azure Command-Line Tools Hdinsightonaks Extension. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/hdinsightonaks/HISTORY.rst) |
 |[healthbot](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot/HISTORY.rst) |
-|[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.15.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
+|[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.66.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 2.3.0 | Microsoft Azure Command-Line Tools StorageCache Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache/HISTORY.rst) |
 |[hybridaks](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.2.4](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) |
 |[image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy) | 2.66.0 | Support for copying managed vm images between regions | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy/HISTORY.rst) |
