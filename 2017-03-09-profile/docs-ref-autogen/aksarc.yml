@@ -31,6 +31,9 @@ directCommands:
                      [--enable-ahub]
                      [--enable-azure-rbac]
                      [--enable-cluster-autoscaler]
+                     [--enable-oidc-issuer]
+                     [--enable-wi]
+                     [--gateway-id]
                      [--generate-ssh-keys]
                      [--kubernetes-version]
                      [--load-balancer-count]
@@ -50,7 +53,7 @@ directCommands:
   examples:
   - summary: |-
       PutProvisionedCluster
-    syntax: az aksarc create -g sample-rg --custom-location sample-cl -n sample-aksarccluster --vnet-ids "vnet-arm-id"
+    syntax: az aksarc create --resource-group sample-rg --custom-location sample-cl --name sample-aksarccluster --vnet-ids "vnet-arm-id"
   requiredParameters:
   - isRequired: true
     name: --custom-location
@@ -80,9 +83,7 @@ directCommands:
       Number of control plane nodes.
   - name: --control-plane-ip
     summary: |-
-      \Kubernetes APIServer IPAddress. The IPAddress should be routable from Azure Resource Bridge Appliance VM. 
-                  It should be part of the Network subnet being referenced. Exclude it from the IPPools to avoid duplicates.
-                  The cluster creation may fail or timeout if a non-routable IPAddress is passed.
+      Kubernetes APIServer IPAddress. The IPAddress should be routable from Azure Resource Bridge Appliance VM.It should be part of the Network subnet being referenced.The cluster creation may fail or timeout if a non-routable IPAddress is passed.
   - name: --control-plane-vm-size
     summary: |-
       VM Size of control plane.
@@ -106,6 +107,17 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable cluster auto-scaler for the provisioned cluster.
+  - name: --enable-oidc-issuer
+    defaultValue: "False"
+    summary: |-
+      Enable OIDC issuer.
+  - name: --enable-wi --enable-workload-identity
+    defaultValue: "False"
+    summary: |-
+      Enable workload identity addon.
+  - name: --gateway-id
+    summary: |-
+      Gateway Arm ID of the provisioned cluster.
   - name: --generate-ssh-keys
     defaultValue: "False"
     summary: |-
@@ -350,12 +362,14 @@ directCommands:
                      [--control-plane-count]
                      [--disable-ahub]
                      [--disable-cluster-autoscaler]
+                     [--disable-gateway]
                      [--disable-nfs-driver]
                      [--disable-smb-driver]
                      [--enable-ahub]
                      [--enable-cluster-autoscaler]
                      [--enable-nfs-driver]
                      [--enable-smb-driver]
+                     [--gateway-id]
                      [--max-count]
                      [--min-count]
                      [--tags]
@@ -400,6 +414,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable cluster auto-scaler for the provisioned cluster.
+  - name: --disable-gateway
+    defaultValue: "False"
+    summary: |-
+      Disable gateway for the provisioned cluster.
   - name: --disable-nfs-driver
     defaultValue: "False"
     summary: |-
@@ -424,6 +442,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable SMB driver for the provisioned cluster.
+  - name: --gateway-id
+    summary: |-
+      Gateway Arm ID of the provisioned cluster.
   - name: --max-count
     summary: |-
       The maximum number of nodes for auto-scaling.
