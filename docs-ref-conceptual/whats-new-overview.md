@@ -13,6 +13,17 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 
 This page highlights new features and upcoming changes for the Azure CLI.
 
+## Ignite 2024!
+
+There are several new Azure CLI features being released for Ignite 2024.
+
+* Decreased credential detection
+* New end-to-end scenarios in Azure Copilot
+* Support for Azure Linux 3.0
+* Improved Azure CLI extension management
+
+For details on the new features, see [need link to blog post]().
+
 ## Multi-factor authentication (MFA)
 
 [!INCLUDE [MFA](includes/multifactor-authentication.md)]
