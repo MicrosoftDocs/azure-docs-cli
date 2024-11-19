@@ -58,15 +58,30 @@ directCommands:
       Create using a self-signed certificate.
     syntax: az ad sp create-for-rbac --create-cert
   - summary: |-
-      Create using a self-signed certificate, and store it within KeyVault.
+      Create using an existing certificate string.
+    syntax: az ad sp create-for-rbac --cert "MIICoT..."
+  - summary: |-
+      Create using an existing certificate file.
+    syntax: >-
+      az ad sp create-for-rbac --cert "@~/cert.pem"
+
+      `cert.pem` contains the following content
+
+      -----BEGIN CERTIFICATE-----  <<< this line is optional
+
+      MIICoT...
+
+      -----END CERTIFICATE-----    <<< this line is optional
+  - summary: |-
+      Create using a self-signed certificate, and store it within Azure Key Vault.
     syntax: az ad sp create-for-rbac --keyvault MyVault --cert CertName --create-cert
   - summary: |-
-      Create using existing certificate in KeyVault.
+      Create using existing certificate in Azure Key Vault.
     syntax: az ad sp create-for-rbac --keyvault MyVault --cert CertName
   optionalParameters:
   - name: --cert
     summary: |-
-      Certificate to use for credentials. When used with `--keyvault,`, indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@{path}` to load from a file. Do not include private key info.
+      Certificate to use for credentials. When used with `--keyvault,`, indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@{path}` to load from a file. Do not include the private key.
   - name: --create-cert
     defaultValue: "False"
     summary: |-
@@ -247,5 +262,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/25/2024
+  ms.date: 11/12/2024
   description: Manage Microsoft Entra service principals.

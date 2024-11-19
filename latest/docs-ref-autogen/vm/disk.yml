@@ -27,6 +27,7 @@ directCommands:
   syntax: >-
     az vm disk attach --vm-name
                       [--caching {None, ReadOnly, ReadWrite}]
+                      [--disk-ids]
                       [--disks]
                       [--enable-write-accelerator]
                       [--ids]
@@ -57,6 +58,9 @@ directCommands:
     parameterValueGroup: "None, ReadOnly, ReadWrite"
     summary: |-
       Disk caching policy.
+  - name: --disk-ids
+    summary: |-
+      The disk IDs of the managed disk (space-delimited).
   - name: --disks
     summary: |-
       One or more names or IDs of the managed disk (space-delimited).
@@ -83,7 +87,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --size-gb -z
-    defaultValue: "1023"
     summary: |-
       Size in GB. Max size: 4095 GB (certain preview disks can be larger).
   - name: --sku
@@ -101,10 +104,11 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm disk detach --name
-                      --resource-group
+    az vm disk detach --resource-group
                       --vm-name
+                      [--disk-ids]
                       [--force-detach]
+                      [--name]
   examples:
   - summary: |-
       Detach a data disk from a VM.
@@ -114,10 +118,6 @@ directCommands:
     syntax: az vm disk detach -g MyResourceGroup --vm-name MyVm --name disk_name --force-detach
   requiredParameters:
   - isRequired: true
-    name: --name -n
-    summary: |-
-      The data disk name.
-  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -126,9 +126,15 @@ directCommands:
     summary: |-
       The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
   optionalParameters:
+  - name: --disk-ids
+    summary: |-
+      The disk IDs of the managed disk (space-delimited).
   - name: --force-detach
     summary: |-
       Force detach managed data disks from a VM.
+  - name: --name -n
+    summary: |-
+      The data disk name.
 commands:
 - az_vm_disk_attach
 - az_vm_disk_detach

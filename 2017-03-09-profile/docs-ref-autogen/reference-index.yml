@@ -112,7 +112,7 @@ directCommands:
 
     [WARNING] Authentication with username and password in the command line is strongly discouraged. Use one of the recommended authentication methods based on your requirements. For more details, see https://go.microsoft.com/fwlink/?linkid=2276314
 
-    [WARNING] Passing the service principal certificate with `--password` is deprecated and will be removed by version 2.74. Please use `--certificate` instead.
+    [WARNING] `--password` no longer accepts a service principal certificate. Use `--certificate` to pass a service principal certificate.
 
     To log in with a service principal, specify --service-principal.
 
@@ -140,13 +140,13 @@ directCommands:
     syntax: az login
   - summary: |-
       Log in with username and password. This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled. Use -p=secret if the first character of the password is '-'.
-    syntax: az login -u johndoe@contoso.com -p VerySecret
+    syntax: az login --username johndoe@contoso.com --password VerySecret
   - summary: |-
-      Log in with a service principal using client secret. Use -p=secret if the first character of the password is '-'.
-    syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 -p VerySecret --tenant contoso.onmicrosoft.com
+      Log in with a service principal using client secret. Use --password=secret if the first character of the password is '-'.
+    syntax: az login --service-principal --username APP_ID --password CLIENT_SECRET --tenant TENANT_ID
   - summary: |-
       Log in with a service principal using certificate.
-    syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 --certificate ~/mycertfile.pem --tenant contoso.onmicrosoft.com
+    syntax: az login --service-principal --username APP_ID --certificate /path/to/cert.pem --tenant TENANT_ID
   - summary: |-
       Log in with a system-assigned managed identity.
     syntax: az login --identity
@@ -365,8 +365,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Include preview packages for extension installation, if exists.
-    isDeprecated: true
-    deprecateInfo: The default value of '--allow-preview' will be changed to 'false' from 'true' in next breaking change release(2.67.0).
   - name: --yes -y
     summary: |-
       Do not prompt for checking release notes.

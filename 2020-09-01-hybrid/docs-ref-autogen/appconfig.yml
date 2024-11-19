@@ -17,8 +17,10 @@ directCommands:
     az appconfig create --location
                         --name
                         --resource-group
+                        [--arm-auth-mode {local, pass-through}]
                         [--assign-identity]
                         [--disable-local-auth {false, true}]
+                        [--enable-arm-private-network-access {false, true}]
                         [--enable-public-network {false, true}]
                         [--enable-purge-protection {false, true}]
                         [--no-replica {false, true}]
@@ -46,6 +48,12 @@ directCommands:
   - summary: |-
       Create an App Configuration store with name, location and resource group with public network access enabled and local auth disabled.
     syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --enable-public-network --disable-local-auth
+  - summary: |-
+      Create an App Configuration store with name, location and resource group with ARM authentication mode set to Pass-through.
+    syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --arm-auth-mode pass-through
+  - summary: |-
+      Create an App Configuration store with name, location and resource group with ARM authentication mode set to Pass-through and private network access via ARM Private Link enabled.
+    syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --arm-auth-mode pass-through --enable-arm-private-network-access true
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -60,6 +68,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --arm-auth-mode
+    parameterValueGroup: "local, pass-through"
+    summary: |-
+      The authentication mode for accessing the App Configuration Store via ARM. 'pass-through' (Recommended) uses Microsoft Entra ID to access the store via ARM with proper authorization.'local' uses access keys for authentication. This requires access keys to be enabled.
   - name: --assign-identity
     summary: |-
       Space-separated list of managed identities to be assigned. Use "[system]" to refer to system-assigned managed identity or a resource ID to refer to user-assigned managed identity. If this argument is provided without any value, system-assigned managed identity will be assigned by default. If this argument is not provided, no managed identities will be assigned to this App Configuration store.
@@ -67,6 +79,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Disable all authentication methods other than AAD authentication.
+  - name: --enable-arm-private-network-access
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable access to the App Configuration store via ARM Private Link if resource is restricted to private network access. Requires Pass-through ARM authentication mode.
   - name: --enable-public-network -e
     parameterValueGroup: "false, true"
     summary: |-
@@ -267,7 +283,9 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
   syntax: >-
     az appconfig update --name
+                        [--arm-auth-mode {local, pass-through}]
                         [--disable-local-auth {false, true}]
+                        [--enable-arm-private-network-access {false, true}]
                         [--enable-public-network {false, true}]
                         [--enable-purge-protection {false, true}]
                         [--encryption-key-name]
@@ -296,16 +314,30 @@ directCommands:
   - summary: |-
       Update an App Configuration store to enable public network access and disable local auth.
     syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --enable-public-network true --disable-local-auth true
+  - summary: |-
+      Update an App Configuration store to set ARM authentication mode set to Pass-through.
+    syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --arm-auth-mode pass-through
+  - summary: |-
+      Update an App Configuration store to set ARM authentication mode set to Pass-through and enable private network access via ARM Private Link.
+    syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --arm-auth-mode pass-through --enable-arm-private-network-access true
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
   optionalParameters:
+  - name: --arm-auth-mode
+    parameterValueGroup: "local, pass-through"
+    summary: |-
+      The authentication mode for accessing the App Configuration Store via ARM. 'pass-through' (Recommended) uses Microsoft Entra ID to access the store via ARM with proper authorization.'local' uses access keys for authentication. This requires access keys to be enabled.
   - name: --disable-local-auth
     parameterValueGroup: "false, true"
     summary: |-
       Disable all authentication methods other than AAD authentication.
+  - name: --enable-arm-private-network-access
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable access to the App Configuration store via ARM Private Link if resource is restricted to private network access. Requires Pass-through ARM authentication mode.
   - name: --enable-public-network -e
     parameterValueGroup: "false, true"
     summary: |-
@@ -417,5 +449,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/06/2024
+  ms.date: 11/11/2024
   description: Manage App Configurations.
