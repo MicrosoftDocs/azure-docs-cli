@@ -36,7 +36,11 @@ Version 2.67.0
 
 ### Container
 
-* `az container container-group-profile`: Add new command group to manage Azure Container Instance Container Group Profile(#30260)
+* `az container container-group-profile`: Add new command group to manage Azure Container Instance Container Group Profile
+
+### Core
+
+* PREVIEW: Support managed identity on Azure Arc-enabled Windows server
 
 ### DataLake
 
