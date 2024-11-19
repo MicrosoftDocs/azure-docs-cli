@@ -24,6 +24,10 @@ There are several new Azure CLI features being released for Ignite 2024.
 
 For details on the new features, see [need link to blog post]().
 
+## AI Shell
+
+AI Shell introduces a seamless way to access Copilot in Azure directly from your command-line interface (CLI). AI Shell allows you to generate Azure CLI commands using natural language -- right in your preferred terminal environment! For more information, see [Use Microsoft Copilot in Azure with AI Shell](/azure/copilot/ai-shell-overview).
+
 ## Multi-factor authentication (MFA)
 
 [!INCLUDE [MFA](includes/multifactor-authentication.md)]
