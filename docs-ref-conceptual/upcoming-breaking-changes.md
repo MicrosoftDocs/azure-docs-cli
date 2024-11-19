@@ -30,6 +30,13 @@ For more information on managing and deploying applications for Kubernetes, see 
 
 - Argument '--no-uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier free' instead.
 - Argument '--uptime-sla' has been deprecated and will be removed in version '2.67.0'. Use '--tier standard' instead.
+- Argument `--aad-client-app-id` has been deprecated and will be removed in version '2.67.0'. There is no replacement argument at this time.
+- Argument `--aad-server-app-id` has been deprecated and will be removed in version '2.67.0'. There is no replacement argument at this time.
+- Argument `--aad-server-app-secret` has been deprecated and will be removed in version '2.67.0'. There is no replacement argument at this time.
+
+### `aks rustedaccess rolebinding create`
+
+- The `r` options have been removed from all arguments. Use `--source-resource-id` instead.
 
 ## db-up
 
@@ -106,6 +113,12 @@ New output properties: databases, partnerAvailabilityGroupName, instanceAvailabi
 
 - The output will be changed in next breaking change release(2.67.0). Deprecated output properties: targetDatabase, primaryAvailabilityGroupName, secondaryAvailabilityGroupNamesourceEndpoint, sourceReplicaId, targetReplicaId, linkState, lastHardenedLsn.
 New output properties: databases, partnerAvailabilityGroupName, instanceAvailabilityGroupName, partnerEndpoint, distributedAvailabilityGroupName, instanceLinkRole, partnerLinkRole, failoverMode, seedingMode. To know more about the Breaking Change, please visit aka.ms/mi-link-rest-api-create-or-update.
+
+### `az sql failover-group create`
+
+[Link to az sql failover-group create](/cli/azure/sql/failover-group#az-sql-failover-group-create)
+
+The default failover policy has been changed to `manual`.
 
 ## util
 
