@@ -144,9 +144,6 @@ directCommands:
     az aks create --name
                   --resource-group
                   [--aad-admin-group-object-ids]
-                  [--aad-client-app-id]
-                  [--aad-server-app-id]
-                  [--aad-server-app-secret]
                   [--aad-tenant-id]
                   [--aci-subnet-name]
                   [--admin-username]
@@ -288,7 +285,6 @@ directCommands:
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
                   [--tags]
                   [--tier {free, premium, standard}]
-                  [--uptime-sla]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -421,27 +417,6 @@ directCommands:
   - name: --aad-admin-group-object-ids
     summary: |-
       Comma-separated list of aad group object IDs that will be set as cluster admin.
-  - name: --aad-client-app-id
-    summary: |-
-      The ID of an Azure Active Directory client application of type "Native". This application is for user login via kubectl.
-    description: |-
-      --aad-client-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
-    isDeprecated: true
-    deprecateInfo: Option '--aad-client-app-id' has been deprecated and will be removed in a future release.
-  - name: --aad-server-app-id
-    summary: |-
-      The ID of an Azure Active Directory server application of type "Web app/API". This application represents the managed cluster's apiserver (Server application).
-    description: |-
-      --aad-server-app-id is deprecated. See https://aka.ms/aks/aad-legacy for details.
-    isDeprecated: true
-    deprecateInfo: Option '--aad-server-app-id' has been deprecated and will be removed in a future release.
-  - name: --aad-server-app-secret
-    summary: |-
-      The secret of an Azure Active Directory server application.
-    description: |-
-      --aad-server-app-secret is deprecated. See https://aka.ms/aks/aad-legacy for details.
-    isDeprecated: true
-    deprecateInfo: Option '--aad-server-app-secret' has been deprecated and will be removed in a future release.
   - name: --aad-tenant-id
     summary: |-
       The ID of an Azure Active Directory tenant.
@@ -1020,12 +995,6 @@ directCommands:
     parameterValueGroup: "free, premium, standard"
     summary: |-
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: |-
-      --uptime-sla is deprecated. Please use '--tier standard' instead.
-    isDeprecated: true
-    deprecateInfo: Option '--uptime-sla' has been deprecated and will be removed in a future release.
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet. Defaults to 'VirtualMachineScaleSets'.
@@ -2228,6 +2197,7 @@ directCommands:
   syntax: >-
     az aks delete --name
                   --resource-group
+                  [--if-match]
                   [--no-wait]
                   [--yes]
   examples:
@@ -2244,6 +2214,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --if-match
+    summary: |-
+      The request should only proceed if an entity matches this string. Default value is None.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -3478,7 +3451,6 @@ directCommands:
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
                   [--network-policy {azure, calico, cilium, none}]
-                  [--no-uptime-sla]
                   [--no-wait]
                   [--node-os-upgrade-channel]
                   [--nodepool-labels]
@@ -3495,7 +3467,6 @@ directCommands:
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
                   [--upgrade-override-until]
-                  [--uptime-sla]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -3948,12 +3919,6 @@ directCommands:
         - "calico" for open-source network and network security solution founded by Tigera,
         - "none" to uninstall Network Policy Engine (Azure Network Policy Manager or Calico).
       Defaults to "none" (network policy disabled).
-  - name: --no-uptime-sla
-    defaultValue: "False"
-    summary: |-
-      Change a standard managed cluster to a free one. --no-uptime-sla is deprecated. Please use '--tier free' instead.
-    isDeprecated: true
-    deprecateInfo: Option '--no-uptime-sla' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -4012,12 +3977,6 @@ directCommands:
   - name: --upgrade-override-until
     summary: |-
       Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: |-
-      Enable a standard managed cluster service with a financially backed SLA. --uptime-sla is deprecated. Please use '--tier standard' instead.
-    isDeprecated: true
-    deprecateInfo: Option '--uptime-sla' has been deprecated and will be removed in a future release.
   - name: --windows-admin-password
     summary: |-
       User account password to use on windows node VMs.

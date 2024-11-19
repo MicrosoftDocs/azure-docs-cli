@@ -62,10 +62,14 @@ directCommands:
                         [--azure-file-volume-share-name]
                         [--cce-policy]
                         [--command-line]
+                        [--config-map]
+                        [--container-group-profile-id]
+                        [--container-group-profile-revision]
                         [--cpu]
                         [--dns-name-label]
                         [--drop-capabilities]
                         [--environment-variables]
+                        [--fail-container-group-create-on-reuse-failure]
                         [--file]
                         [--gitrepo-dir]
                         [--gitrepo-mount-path]
@@ -97,6 +101,7 @@ directCommands:
                         [--secrets-mount-path]
                         [--secure-environment-variables]
                         [--sku]
+                        [--standby-pool-profile-id]
                         [--subnet]
                         [--subnet-address-prefix]
                         [--vnet]
@@ -186,8 +191,16 @@ directCommands:
   - name: --command-line
     summary: |-
       The command line to run when the container is started, e.g. '/bin/bash -c myscript.sh'.
+  - name: --config-map
+    summary: |-
+      A list of config map key-value pairs for the container. Space-separated values in 'key=value' format.
+  - name: --container-group-profile-id
+    summary: |-
+      The reference container group profile ARM resource id.
+  - name: --container-group-profile-revision
+    summary: |-
+      The reference container group profile revision.
   - name: --cpu
-    defaultValue: "1"
     summary: |-
       The required number of CPU cores of the containers, accurate to one decimal place.
   - name: --dns-name-label
@@ -199,6 +212,10 @@ directCommands:
   - name: --environment-variables -e
     summary: |-
       A list of environment variable for the container. Space-separated values in 'key=value' format.
+  - name: --fail-container-group-create-on-reuse-failure
+    defaultValue: "False"
+    summary: |-
+      The flag indicating whether to fail the container group creation if the standby pool reuse failed.
   - name: --file -f
     summary: |-
       The path to the input file.
@@ -232,7 +249,6 @@ directCommands:
     summary: |-
       The Log Analytics workspace key.
   - name: --memory
-    defaultValue: "1.5"
     summary: |-
       The required memory of the containers in GB, accurate to one decimal place.
   - name: --name -n
@@ -243,7 +259,6 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --os-type
-    defaultValue: "Linux"
     parameterValueGroup: "Linux, Windows"
     summary: |-
       The OS type of the containers.
@@ -272,7 +287,6 @@ directCommands:
     summary: |-
       The username to log in container image registry server.
   - name: --restart-policy
-    defaultValue: "Always"
     parameterValueGroup: "Always, Never, OnFailure"
     summary: |-
       Restart policy for all containers within the container group.
@@ -304,6 +318,9 @@ directCommands:
   - name: --sku
     summary: |-
       The SKU of the container group.
+  - name: --standby-pool-profile-id
+    summary: |-
+      The standby pool profile ARM resource id from which the container will be reused.
   - name: --subnet
     summary: |-
       The name of the subnet when creating a new VNET or referencing an existing one. Can also reference an existing subnet by ID.
@@ -594,6 +611,13 @@ commands:
 - az_container_app
 - az_container_app_up
 - az_container_attach
+- az_container_container-group-profile
+- az_container_container-group-profile_create
+- az_container_container-group-profile_delete
+- az_container_container-group-profile_list
+- az_container_container-group-profile_list-revisions
+- az_container_container-group-profile_show
+- az_container_container-group-profile_show-revision
 - az_container_create
 - az_container_delete
 - az_container_exec

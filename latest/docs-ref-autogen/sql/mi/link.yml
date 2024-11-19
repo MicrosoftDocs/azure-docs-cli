@@ -9,118 +9,155 @@ directCommands:
 - uid: az_sql_mi_link_create
   name: az sql mi link create
   summary: |-
-    Creates a new instance link.
-  description: |-
-    This command creates an Azure SQL Managed Instance link by joining distributed availability group on SQL Server based on the parameters passed.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: >-
-    The output will be changed in next breaking change release(2.67.0). Deprecated output properties: targetDatabase, primaryAvailabilityGroupName, secondaryAvailabilityGroupNamesourceEndpoint, sourceReplicaId, targetReplicaId, linkState, lastHardenedLsn.
-
-    New output properties: databases, partnerAvailabilityGroupName, instanceAvailabilityGroupName, partnerEndpoint, distributedAvailabilityGroupName, instanceLinkRole, partnerLinkRole, failoverMode, seedingMode. To know more about the Breaking Change, please visit aka.ms/mi-link-rest-api-create-or-update.
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
-  syntax: >-
-    az sql mi link create --distributed-availability-group-name
-                          --instance-name
-                          --resource-group
-                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                          [--primary-ag]
-                          [--primary-availability-group-name]
-                          [--secondary-ag]
-                          [--secondary-availability-group-name]
-                          [--source-endpoint]
-                          [--target-database]
-                          [--target-db]
-  examples:
-  - summary: |-
-      Creates an instance link.
-    syntax: az sql mi link create -g 'rg1' --instance-name 'mi1' --name 'link1' --primary-availability-group-name 'primaryag1' --secondary-availability-group-name 'secondaryag1' --source-endpoint '"tcp://server1:5022" --target-database 'db1' --no-wait')
-  requiredParameters:
-  - isRequired: true
-    name: --distributed-availability-group-name --link --name -n
-    summary: |-
-      Name of the instance link.
-  - isRequired: true
-    name: --instance-name --managed-instance --managed-instance-name --mi
-    summary: |-
-      Name of Azure SQL Managed Instance.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of the resource group.
-  optionalParameters:
-  - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --primary-ag
-    summary: |-
-      Name of the primary availability group.
-  - name: --primary-availability-group-name
-    summary: |-
-      Name of the primary availability group.
-    isDeprecated: true
-    deprecateInfo: Option '--primary-availability-group-name' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--partner-availability-group-name' instead.
-  - name: --secondary-ag
-    summary: |-
-      Name of the secondary availability group.
-  - name: --secondary-availability-group-name
-    summary: |-
-      Name of the secondary availability group.
-    isDeprecated: true
-    deprecateInfo: Option '--secondary-availability-group-name' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--instance-availability-group-name' instead.
-  - name: --source-endpoint
-    summary: |-
-      IP adress of the source endpoint.
-    isDeprecated: true
-    deprecateInfo: Argument '--source-endpoint' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--partner-endpoint' instead.
-  - name: --target-database
-    summary: |-
-      Name of the target database.
-    isDeprecated: true
-    deprecateInfo: Option '--target-database' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--databases' instead.
-  - name: --target-db
-    summary: |-
-      Name of the target database.
-- uid: az_sql_mi_link_delete
-  name: az sql mi link delete
-  summary: |-
-    Removes an instance link.
-  description: |-
-    This command may cause data loss if the link is dropped and replica's LSNs are not synchronized with the primary, thus user must explicitly confirm the command when prompted, or use --yes parameter.
+    Create a Managed Instance link between Sql On-Prem and Sql Managed Instance.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link delete [--distributed-availability-group-name]
-                          [--ids]
+    az sql mi link create --instance-name
+                          --link-name
+                          --resource-group
+                          [--databases]
+                          [--failover-mode {Manual, None}]
+                          [--instance-ag-name]
+                          [--instance-link-role {Primary, Secondary}]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--partner-ag-name]
+                          [--partner-endpoint]
+                          [--seeding-mode {Automatic, Manual}]
+  examples:
+  - summary: |-
+      Create a Managed Instance link with minimal properties.
+    syntax: az sql mi link create -g testrg --mi testcl --name link1 --instance-ag-name instanceAg --partner-ag-name partnerAg --partner-endpoint TCP://SERVER:7022 --databases "[{database-name:testdb}]"
+  requiredParameters:
+  - isRequired: true
+    name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      Name of the managed instance.
+  - isRequired: true
+    name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --databases
+    summary: |-
+      Databases in the distributed availability group  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --failover-mode
+    parameterValueGroup: "Manual, None"
+    summary: |-
+      The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure.
+  - name: --instance-ag-name --instance-availability-group-name
+    summary: |-
+      Managed instance side availability group name.
+  - name: --instance-link-role
+    parameterValueGroup: "Primary, Secondary"
+    summary: |-
+      Managed instance side link role.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --partner-ag-name --partner-availability-group-name
+    summary: |-
+      SQL server side availability group name.
+  - name: --partner-endpoint
+    summary: |-
+      SQL server side endpoint - IP or DNS resolvable name.
+  - name: --seeding-mode
+    defaultValue: "Automatic"
+    parameterValueGroup: "Automatic, Manual"
+    summary: |-
+      Database seeding mode – can be Automatic (default), or Manual for supported scenarios.
+- uid: az_sql_mi_link_delete
+  name: az sql mi link delete
+  summary: |-
+    Drop a Managed Instance link between Sql On-Prem and Sql Managed Instance.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link delete [--ids]
                           [--instance-name]
+                          [--link-name]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--resource-group]
                           [--subscription]
                           [--yes]
   examples:
   - summary: |-
-      Forcefully deletes an instance link.
-    syntax: az sql mi link delete -g 'rg1' --instance-name 'mi1' -n 'link1' --yes
+      Initiate a Managed Instance link drop.
+    syntax: az sql mi link delete -g testrg --mi testcl --name link1
   optionalParameters:
-  - name: --distributed-availability-group-name --link --name -n
-    summary: |-
-      Name of the instance link.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name --managed-instance --managed-instance-name --mi
     summary: |-
-      Name of Azure SQL Managed Instance.
+      Name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
-      Name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_sql_mi_link_failover
+  name: az sql mi link failover
+  summary: |-
+    Performs requested failover type in this Managed Instance link.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link failover --failover-type {ForcedAllowDataLoss, Planned}
+                            [--ids]
+                            [--instance-name]
+                            [--link-name]
+                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                            [--resource-group]
+                            [--subscription]
+                            [--yes]
+  examples:
+  - summary: |-
+      Failover a Managed Instance link.
+    syntax: az sql mi link failover -g testrg --mi testcl --name link1 --failover-type ForcedAllowDataLoss
+  requiredParameters:
+  - isRequired: true
+    name: --failover-type
+    parameterValueGroup: "ForcedAllowDataLoss, Planned"
+    summary: |-
+      The failover type, can be ForcedAllowDataLoss or Planned.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      The name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -131,103 +168,97 @@ directCommands:
 - uid: az_sql_mi_link_list
   name: az sql mi link list
   summary: |-
-    Returns information about link feature for Azure SQL Managed Instance.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: >-
-    The output will be changed in next breaking change release(2.67.0). Deprecated output properties: targetDatabase, primaryAvailabilityGroupName, secondaryAvailabilityGroupNamesourceEndpoint, sourceReplicaId, targetReplicaId, linkState, lastHardenedLsn.
-
-    New output properties: databases, partnerAvailabilityGroupName, instanceAvailabilityGroupName, partnerEndpoint, distributedAvailabilityGroupName, instanceLinkRole, partnerLinkRole, failoverMode, seedingMode. To know more about the Breaking Change, please visit aka.ms/mi-link-rest-api-list-by-instance.
+    Get a list of Managed Instance links in instance.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
     az sql mi link list --instance-name
                         --resource-group
+                        [--max-items]
+                        [--next-token]
   examples:
   - summary: |-
-      List all instance links on a specific managed instance.
-    syntax: az sql mi link list -g {rg} --instance-name {mi}
+      Lists all Managed Instance links in instance.
+    syntax: az sql mi link list -g testrg --mi testcl
   requiredParameters:
   - isRequired: true
     name: --instance-name --managed-instance --managed-instance-name --mi
     summary: |-
-      Name of Azure SQL Managed Instance.
+      Name of the managed instance.
   - isRequired: true
     name: --resource-group -g
     summary: |-
-      Name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_sql_mi_link_show
   name: az sql mi link show
   summary: |-
-    Returns information about link feature for Azure SQL Managed Instance.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: >-
-    The output will be changed in next breaking change release(2.67.0). Deprecated output properties: targetDatabase, primaryAvailabilityGroupName, secondaryAvailabilityGroupNamesourceEndpoint, sourceReplicaId, targetReplicaId, linkState, lastHardenedLsn.
-
-    New output properties: databases, partnerAvailabilityGroupName, instanceAvailabilityGroupName, partnerEndpoint, distributedAvailabilityGroupName, instanceLinkRole, partnerLinkRole, failoverMode, seedingMode. To know more about the Breaking Change, please visit aka.ms/mi-link-rest-api-get.
+    Get a Managed Instance link info.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link show [--distributed-availability-group-name]
-                        [--ids]
+    az sql mi link show [--ids]
                         [--instance-name]
+                        [--link-name]
                         [--resource-group]
                         [--subscription]
   examples:
   - summary: |-
-      Show the information about a specific instance link
-    syntax: az sql mi link show -g 'rg1' --instance-name 'mi1' --name 'link1'
+      Gets the Managed Instance link info.
+    syntax: az sql mi link show -g testrg --mi testcl --name link1
   optionalParameters:
-  - name: --distributed-availability-group-name --link --name -n
-    summary: |-
-      Name of the instance link.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name --managed-instance --managed-instance-name --mi
     summary: |-
-      Name of Azure SQL Managed Instance.
+      Name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
   - name: --resource-group -g
     summary: |-
-      Name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_sql_mi_link_update
   name: az sql mi link update
   summary: |-
-    Updates the properties of an instance link.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: >-
-    The output will be changed in next breaking change release(2.67.0). Deprecated output properties: targetDatabase, primaryAvailabilityGroupName, secondaryAvailabilityGroupNamesourceEndpoint, sourceReplicaId, targetReplicaId, linkState, lastHardenedLsn.
-
-    New output properties: databases, partnerAvailabilityGroupName, instanceAvailabilityGroupName, partnerEndpoint, distributedAvailabilityGroupName, instanceLinkRole, partnerLinkRole, failoverMode, seedingMode. To know more about the Breaking Change, please visit aka.ms/mi-link-rest-api-create-or-update.
+    Update a Managed Instance link replication mode.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link update [--distributed-availability-group-name]
-                          [--ids]
+    az sql mi link update [--ids]
                           [--instance-name]
+                          [--link-name]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--replication-mode {Async, Sync}]
                           [--resource-group]
                           [--subscription]
   examples:
   - summary: |-
-      Change replication mode to Sync
-    syntax: az sql mi link update -g 'rg1' --mi 'mi1' -n 'link1' --replication-mode 'Sync'
+      Update a Managed Instance link replication mode.
+    syntax: az sql mi link update -g testrg --mi testcl --name link1 --replication-mode Sync
   optionalParameters:
-  - name: --distributed-availability-group-name --link --name -n
-    summary: |-
-      Name of the instance link.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name --managed-instance --managed-instance-name --mi
     summary: |-
-      Name of Azure SQL Managed Instance.
+      The name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -235,16 +266,17 @@ directCommands:
   - name: --replication-mode
     parameterValueGroup: "Async, Sync"
     summary: |-
-      Replication mode value. Possible values include 'Sync' and 'Async'.
+      Replication mode of the link.
   - name: --resource-group -g
     summary: |-
-      Name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 commands:
 - az_sql_mi_link_create
 - az_sql_mi_link_delete
+- az_sql_mi_link_failover
 - az_sql_mi_link_list
 - az_sql_mi_link_show
 - az_sql_mi_link_update
