@@ -92,10 +92,6 @@ Easily find the LTS release date by running the `az version` command. Notice the
 }  
 ```
 
-The following image illustrates the release cadence and support lifecycle of Azure CLI for STS and LTS releases.
-
-![Support Lifecycle](./media/support-lifecycle/support-lifecycle.png)
-
 The following table provides examples of how the release cadence correlates with the support
 lifecycle:
 
@@ -109,18 +105,18 @@ lifecycle:
 | 2.63.0         | July 2024        |                  | Minor        | STS          | 2.64.0                  | |
 | 2.64.0         | August 2024      |                  | Minor        | STS          | 2.65.0                  | |
 | 2.65.0         | September 2024   |                  | Minor        | STS          | 2.66.0                  | |
-| 2.66.0         | October 2024     |                  | Minor        | **LTS**      | _**2.79.0**_            | 2.66.0 |
-| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  | 2.66.x |
-| 2.68.0         | December 2024    |                  | Minor        | STS          | 2.69.0                  | 2.66.x |
-| 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  | 2.66.x |
-| 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  | 2.66.x |
-| 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  | 2.66.x |
-| 2.72.0         | April 2025       |                  | Minor        | STS          | 2.73.0                  | 2.66.x |
-| 2.73.0         | May 2025         | Yes              | Major        | STS          | 2.74.0                  | 2.66.x |
-| 2.74.0         | June 2025        |                  | Minor        | STS          | 2.75.0                  | 2.66.x |
-| 2.75.0         | July 2025        |                  | Minor        | STS          | 2.76.0                  | 2.66.x |
-| 2.76.0         | August 2025      |                  | Minor        | STS          | 2.77.0                  | 2.66.x |
-| 2.77.0         | September 2025   |                  | Minor        | STS          | 2.78.0                  | 2.66.x |
+| 2.66.0         | October 2024     |                  | Minor        | STS          | 2.67.0                  | |
+| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  | |
+| 2.68.0         | December 2024    |                  | Minor        | STS          | 2.69.0                  | |
+| 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  | |
+| 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  | |
+| 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  | |
+| 2.72.0         | April 2025       |                  | Minor        | STS          | 2.73.0                  | |
+| 2.73.0         | May 2025         | Yes              | Major        | **LTS**      | 2.74.0                  | 2.73.x |
+| 2.74.0         | June 2025        |                  | Minor        | STS          | 2.75.0                  | 2.73.x |
+| 2.75.0         | July 2025        |                  | Minor        | STS          | 2.76.0                  | 2.73.x |
+| 2.76.0         | August 2025      |                  | Minor        | STS          | 2.77.0                  | 2.73.x |
+| 2.77.0         | September 2025   |                  | Minor        | STS          | 2.78.0                  | 2.73.x |
 | 2.78.0         | October 2025     |                  | Minor        | **LTS**      | _**2.91.0**_            | 2.78.0 |
 | 2.79.0         | November 2025    | Yes              | Major        | STS          | 2.80.0                  | 2.78.x |
 | 2.80.0         | December 2025    |                  | Minor        | STS          | 2.81.0                  | 2.78.x |
