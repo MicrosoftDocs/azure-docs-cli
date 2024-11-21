@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/19/2024
+ms.date: 11/20/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -157,7 +157,7 @@ You will be prompted to install an extension on first use.
 |[neon](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon) | 2.61.0 | Microsoft Azure Command-Line Tools Neon Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview) | 2.61.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview/HISTORY.rst) |
 |[network-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics) | 2.51.0 | Microsoft Azure Command-Line Tools NetworkAnalytics Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics/HISTORY.rst) |
-|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.61.0 | Support for Azure Operator Nexus network cloud commands based on 2024-07-01 API version. | Preview | [2.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
+|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.66.0 | Support for Azure Operator Nexus network cloud commands based on 2024-07-01 API version. | Preview | [2.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
 |[new-relic](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic) | 2.57.0 | Microsoft Azure Command-Line Tools NewRelic Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic/HISTORY.rst) |
 |[next](https://github.com/Azure/azure-cli-extensions/tree/main/src/next) | 2.20.0 | Microsoft Azure Command-Line Tools Next Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/next/HISTORY.rst) |
 |[nexusidentity](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity) | 2.61.0 | Microsoft Azure Command-Line Tools Nexusidentity Extension | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity/HISTORY.rst) |
