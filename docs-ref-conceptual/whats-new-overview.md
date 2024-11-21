@@ -22,7 +22,7 @@ There are several new Azure CLI features being released for Ignite 2024.
 * Support for Azure Linux 3.0
 * Refined Azure CLI extension management
 
-For details on the new features, see [need link to blog post]().
+For details on the new features, see [Azure CLI and Azure PowerShell Ignite 2024 Announcement](https://techcommunity.microsoft.com/blog/azuretoolsblog/azure-cli-and-azure-powershell-ignite-2024-announcement/4304204).
 
 ## AI Shell
 
