@@ -19,7 +19,7 @@ There are several new Azure CLI features being released for Ignite 2024.
 
 * Improved credential protection
 * New end-to-end scenarios in Azure Copilot
-* Support for Azure Linux 3.0
+* Support for Azure CLI on Azure Linux 3.0
 * Refined Azure CLI extension management
 
 For details on the new features, see [Azure CLI and Azure PowerShell Ignite 2024 Announcement](https://techcommunity.microsoft.com/blog/azuretoolsblog/azure-cli-and-azure-powershell-ignite-2024-announcement/4304204).
