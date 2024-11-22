@@ -26,7 +26,7 @@ For details on the new features, see [Azure CLI and Azure PowerShell Ignite 2024
 
 ## AI Shell
 
-AI Shell introduces a seamless way to access Copilot in Azure directly from your command-line interface (CLI). Generate Azure CLI commands using natural language -- right in your preferred terminal environment! For more information, see [Use Microsoft Copilot in Azure with AI Shell](/azure/copilot/ai-shell-overview).
+AI Shell introduces a seamless way to obtain assistance from Copilot in Azure directly within your command-line interface (CLI). Generate Azure CLI commands using natural language -- right in your preferred terminal environment! For more information, see [Use Microsoft Copilot in Azure with AI Shell](/azure/copilot/ai-shell-overview).
 
 ## Multi-factor authentication (MFA)
 
