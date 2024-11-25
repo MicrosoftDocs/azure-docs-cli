@@ -4,7 +4,7 @@ name: az qumulo storage file-system
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **qumulo** extension for the Azure CLI (version 2.48.0 or higher). The extension will automatically install the first time you run an **az qumulo storage file-system** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **qumulo** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az qumulo storage file-system** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage qumulo storage file system.
 status: GA
@@ -13,72 +13,59 @@ directCommands:
 - uid: az_qumulo_storage_file-system_create
   name: az qumulo storage file-system create
   summary: |-
-    Create file system resource.
+    Create a FileSystemResource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az qumulo storage file-system create --admin-password
-                                         --delegated-subnet-id
-                                         --file-system-name
-                                         --initial-capacity
-                                         --marketplace-details
+    az qumulo storage file-system create --file-system-name
                                          --resource-group
-                                         --storage-sku {Performance, Standard}
-                                         --user-details
+                                         [--admin-password]
                                          [--availability-zone]
                                          [--cluster-login-url]
+                                         [--delegated-subnet-id]
                                          [--location]
+                                         [--marketplace-details]
+                                         [--mi-system-assigned]
+                                         [--mi-user-assigned]
                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--private-ips]
+                                         [--storage-sku]
                                          [--tags]
-  examples:
-  - summary: |-
-      Create file system
-    syntax: az qumulo storage file-system create -n sys_name -g rg --admin-password testadmin --delegated-subnet-id subnet-id --initial-capacity 50 --marketplace-details "{offerId:qumulo-saas-mpp,planId:qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M,publisherId:qumulo1584033880660}" --storage-sku Standard --user-details "{email:test@test.com}" --availability-zone 1
+                                         [--user-details]
   requiredParameters:
-  - isRequired: true
-    name: --admin-password
-    summary: |-
-      Initial administrator password of the resource.
-  - isRequired: true
-    name: --delegated-subnet-id
-    summary: |-
-      Delegated subnet id for Vnet injection.
   - isRequired: true
     name: --file-system-name --name -n
     summary: |-
       Name of the File System resource.
   - isRequired: true
-    name: --initial-capacity
-    summary: |-
-      Storage capacity in TB.
-  - isRequired: true
-    name: --marketplace-details
-    summary: |-
-      Marketplace details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --storage-sku
-    parameterValueGroup: "Performance, Standard"
-    summary: |-
-      Storage Sku.
-  - isRequired: true
-    name: --user-details
-    summary: |-
-      User Details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   optionalParameters:
+  - name: --admin-password
+    summary: |-
+      Initial administrator password of the resource.
   - name: --availability-zone
     summary: |-
       Availability zone.
   - name: --cluster-login-url
     summary: |-
       File system Id of the resource.
+  - name: --delegated-subnet-id
+    summary: |-
+      Delegated subnet id for Vnet injection.
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+  - name: --marketplace-details
+    summary: |-
+      Marketplace details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -86,13 +73,19 @@ directCommands:
   - name: --private-ips
     summary: |-
       Private IPs of the resource  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --storage-sku
+    summary: |-
+      Storage Sku.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --user-details
+    summary: |-
+      User Details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_qumulo_storage_file-system_delete
   name: az qumulo storage file-system delete
   summary: |-
-    Delete file system resource.
+    Delete a FileSystemResource.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -102,10 +95,6 @@ directCommands:
                                          [--resource-group]
                                          [--subscription]
                                          [--yes]
-  examples:
-  - summary: |-
-      Delete file system
-    syntax: az qumulo storage file-system delete -g rg -n sys_name
   optionalParameters:
   - name: --file-system-name --name -n
     summary: |-
@@ -133,19 +122,28 @@ directCommands:
     List file system resources.
   status: GA
   sourceType: Extension
-  syntax: az qumulo storage file-system list [--resource-group]
+  syntax: >-
+    az qumulo storage file-system list [--max-items]
+                                       [--next-token]
+                                       [--resource-group]
   examples:
   - summary: |-
       List file system by resource group
     syntax: az qumulo storage file-system list -g rg
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_qumulo_storage_file-system_show
   name: az qumulo storage file-system show
   summary: |-
-    Show file system resource.
+    Get a FileSystemResource.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -153,10 +151,6 @@ directCommands:
                                        [--ids]
                                        [--resource-group]
                                        [--subscription]
-  examples:
-  - summary: |-
-      Show file system
-    syntax: az qumulo storage file-system show -g rg -n sys_name
   optionalParameters:
   - name: --file-system-name --name -n
     summary: |-
