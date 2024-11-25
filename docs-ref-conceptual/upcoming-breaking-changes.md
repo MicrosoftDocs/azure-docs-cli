@@ -23,4 +23,4 @@ The breaking changes listed in this article are planned for the next major relea
 For more information on managing and deploying applications for Kubernetes, see [Push and pull Helm charts to an Azure container registry](/azure/container-registry/container-registry-helm-repos).
 
 > [!NOTE]
-> This article provides information on upcoming breaking changes. For previously published breaking changes, see [Azure CLI release notes](./release-notes-azure-cli).
+> This article provides information on upcoming breaking changes. For previously published breaking changes, see [Azure CLI release notes](./release-notes-azure-cli.md).
