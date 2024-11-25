@@ -30,6 +30,10 @@ with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Azure
 az login
 ```
 
+## Multi-factor authentication (MFA)
+
+[!INCLUDE [MFA](includes/multifactor-authentication.md)]
+
 ## Subscription selector
 
 Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), if you have
@@ -178,10 +182,6 @@ see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#c
 ```
 az login --scope https://management.core.windows.net//.default
 ```
-
-## Multi-factor authentication (MFA)
-
-[!INCLUDE [MFA](includes/multifactor-authentication.md)]
 
 ## Logout
 
