@@ -38,7 +38,7 @@ If you encounter a problem when installing the CLI through Homebrew, here are so
 
 ### Completion isn't working
 
-The Homebrew formula of Azure CLI installs a completion file named `az` in the Homebrew-managed completions directory (default location is `/usr/local/etc/bash_completion.d/`). To enable completion, follow Homebrew's instructions [here](https://docs.brew.sh/Shell-Completion).
+The Homebrew formula of Azure CLI installs a completion file named `az` in the Homebrew-managed completions directory (default location is `$(brew --prefix)/etc/bash_completion.d/`). To enable completion, follow Homebrew's instructions [here](https://docs.brew.sh/Shell-Completion).
 
 For Zsh, add the following two lines to the bottom of your `.zshrc` file, then save and reload your Zsh profile.
 

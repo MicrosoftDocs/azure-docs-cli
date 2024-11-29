@@ -237,3 +237,5 @@ If your proxy doesn't use basic auth, __remove__ the `[username]:[password]@` po
 In order to get the Microsoft signing key and get the package from our repository, your proxy needs to allow HTTPS connections to the following address: `https://packages.microsoft.com.
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
+
+[!INCLUDE[linux-completion.md](linux-completion.md)]
