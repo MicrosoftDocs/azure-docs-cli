@@ -76,7 +76,7 @@ The changes can be verified by listing the assigned roles:
 
 ```azurecli-interactive
 # list all role assignments for the current subscription
-az role assignment list ---output table
+az role assignment list --output table
 
 # list role assignments for a user
 az role assignment list --assignee myUserName@contoso.com
