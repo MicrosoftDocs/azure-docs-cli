@@ -113,7 +113,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 
 ### Retrieve a certificate from Azure Key Vault
 
-For a certificate stored in Azure Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) and convert it to a PEM file. In Azure Key Vault, the name of the certificate's secret is the same as the certificate name.
+For a certificate stored in Azure Key Vault, retrieve the certificate with its private key with [az keyvault secret download](/cli/azure/keyvault/secret#az-keyvault-secret-download) and convert it to a PEM file. In Azure Key Vault, the name of the certificate's secret is the same as the certificate name.
 
 ```azurecli-interactive
 az keyvault secret download --file /path/to/cert.pfx \
