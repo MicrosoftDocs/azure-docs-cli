@@ -15,9 +15,7 @@ description: |-
 
   By default IoT Operations CLI commands will periodically check to see if a new extension version is available.
   This behavior can be disabled with `az config set iotops.check_latest=false`.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+status: GA
 sourceType: Extension
 directCommands:
 - uid: az_iot_ops_check
@@ -30,15 +28,15 @@ directCommands:
     Note: Resource kind (--resources) and name (--resource-name) filtering can only be used with the '--svc' argument.
 
     {Supported service APIs}
-    - deviceregistry.microsoft.com/[v1beta2]
-    - mqttbroker.iotoperations.azure.com/[v1beta1]
+    - deviceregistry.microsoft.com/[v1]
+    - mqttbroker.iotoperations.azure.com/[v1]
     - opcuabroker.iotoperations.azure.com/[v1beta1]
-    - connectivity.iotoperations.azure.com/[v1beta1]
+    - connectivity.iotoperations.azure.com/[v1]
 
     For more information on cluster requirements, please check https://aka.ms/iot-ops-cluster-requirements.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az iot ops check [--as-object {false, true}]
@@ -106,9 +104,7 @@ directCommands:
 
     The result of the command nets an IoT Operations instance with
     a set of default resources configured for cohesive function.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az iot ops create --cluster
@@ -133,6 +129,7 @@ directCommands:
                       [--location]
                       [--no-progress {false, true}]
                       [--ops-config]
+                      [--ops-train]
                       [--ops-version]
                       [--runtime-socket]
                       [--tags]
@@ -161,7 +158,7 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      IoT Operations instance name. An instance name must be provided to deploy an instance during init orchestration.
+      IoT Operations instance name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -241,6 +238,11 @@ directCommands:
   - name: --ops-config
     summary: |-
       IoT Operations arc extension custom configuration. Format is space-separated key=value pairs. --ops-config can be used one or more times. For advanced use cases.
+  - name: --ops-train
+    summary: |-
+      Use to override the built-in IoT Operations arc extension release train.
+    isDeprecated: true
+    deprecateInfo: Argument 'ops_train' has been deprecated and will be removed in a future release.
   - name: --ops-version
     summary: |-
       Use to override the built-in IoT Operations arc extension version.
@@ -254,7 +256,7 @@ directCommands:
       Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
   - name: --trust-settings
     summary: |-
-      Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `configMapName`, `issuerName`, `configMapKey`, `issuerKind`. If not used, a system provided self-signed trust bundle is configured.
+      Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerName`, `configMapKey`, `configMapName`, `issuerKind`. If not used, a system provided self-signed trust bundle is configured.
 - uid: az_iot_ops_delete
   name: az iot ops delete
   summary: |-
@@ -265,9 +267,7 @@ directCommands:
     The operation uses Azure Resource Graph to determine correlated resources.
     Resource Graph being eventually consistent does not guarantee a synchronized state at the
     time of execution.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az iot ops delete --resource-group
@@ -334,9 +334,7 @@ directCommands:
 
     After the foundation layer has been installed the `az iot ops create` command should
     be used to deploy an instance.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az iot ops init --cluster
@@ -387,9 +385,7 @@ directCommands:
     List IoT Operations instances.
   description: |-
     Use --query with desired JMESPath syntax to query the result.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: az iot ops list [--resource-group]
   examples:
@@ -412,10 +408,7 @@ directCommands:
     Show an IoT Operations instance.
   description: |-
     Optionally the command can output a tree structure of associated resources representing the IoT Operations deployment against the backing cluster.
-    If this command fails, please use `az iot ops upgrade` to upgrade your instance to the latest version before continuing.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az iot ops show --name
@@ -447,10 +440,8 @@ directCommands:
   summary: |-
     Update an IoT Operations instance.
   description: |-
-    Currently instance tags and description can be updated. If you want to upgrade your instance to a newer version, please use `az iot ops upgrade` instead.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Currently instance tags and description can be updated.
+  status: GA
   sourceType: Extension
   syntax: >-
     az iot ops update --name
@@ -494,9 +485,9 @@ directCommands:
     Use this command if `az iot ops show` or similiar commands are failing.
 
     Schema registry resource Id is an optional parameter and may be required in specific scenarios.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: Deprecated
+  isDeprecated: true
+  deprecateInfo: This command has been deprecated and will be removed in a future release.
   sourceType: Extension
   syntax: >-
     az iot ops upgrade --name
@@ -535,23 +526,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Confirm [y]es without a prompt. Useful for CI and automation scenarios.
-- uid: az_iot_ops_verify-host
-  name: az iot ops verify-host
-  summary: |-
-    Runs a set of cluster host verifications for IoT Operations deployment compatibility.
-  description: |-
-    Intended to be run directly on a target cluster host. The command may prompt to apply a set of privileged actions such as installing a dependency. In this case the CLI must be run with elevated permissions. For example
-    `sudo AZURE_EXTENSION_DIR=~/.azure/cliextensions az iot ops verify-host`.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: az iot ops verify-host [--no-progress {false, true}]
-  optionalParameters:
-  - name: --no-progress
-    parameterValueGroup: "false, true"
-    summary: |-
-      Disable visual representation of work.
 commands:
 - az_iot_ops_asset
 - az_iot_ops_asset_create
@@ -597,16 +571,21 @@ commands:
 - az_iot_ops_broker_listener_list
 - az_iot_ops_broker_listener_show
 - az_iot_ops_broker_show
-- az_iot_ops_broker_stats
 - az_iot_ops_check
 - az_iot_ops_connector
 - az_iot_ops_connector_opcua
 - az_iot_ops_connector_opcua_client
 - az_iot_ops_connector_opcua_client_add
+- az_iot_ops_connector_opcua_client_remove
+- az_iot_ops_connector_opcua_client_show
 - az_iot_ops_connector_opcua_issuer
 - az_iot_ops_connector_opcua_issuer_add
+- az_iot_ops_connector_opcua_issuer_remove
+- az_iot_ops_connector_opcua_issuer_show
 - az_iot_ops_connector_opcua_trust
 - az_iot_ops_connector_opcua_trust_add
+- az_iot_ops_connector_opcua_trust_remove
+- az_iot_ops_connector_opcua_trust_show
 - az_iot_ops_create
 - az_iot_ops_dataflow
 - az_iot_ops_dataflow_endpoint
@@ -649,7 +628,6 @@ commands:
 - az_iot_ops_support_create-bundle
 - az_iot_ops_update
 - az_iot_ops_upgrade
-- az_iot_ops_verify-host
 globalParameters:
 - name: --debug
   summary: |-
