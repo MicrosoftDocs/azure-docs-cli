@@ -137,29 +137,37 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 Azure CLI extensions are optional and installed separately.  The Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This _aka.ms_ link points to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
 
-All extensions install with endpoint **azcliprod.blob.core.windows.net** and **azurecliextensionsync.blob.core.windows.net** with the following exceptions:
+All extensions install with endpoint **azcliprod.blob.core.windows.net** and **azcliextensionsync.blob.core.windows.net** with the following exceptions:
 
 |Extension name | Endpoint
 |-|-|
+| ai-examples | azurecliprod.blob.core.windows.net
+| aksarc | hybridaksstorage.z13.web.core.windows.net
+| akshybrid | hybridaksstorage.z13.web.core.windows.net
+| alias | azurecliprod.blob.core.windows.net
 | arcappliance | arcplatformcliextprod.blob.core.windows.net
-| customlocation |
 | arcdata | azurearcdatacli.blob.core.windows.net
 | azure-batch-cli-extensions | github.com\Azure
-| azure-devops |
-| azure-iot |
-| baremetal-infrastructure |
-| csvmware |
-| deploy-to-azure |
-| sap-hana |
 | azure-cli-ml | azurecliext.blob.core.windows.net
+| azure-devops | github.com
+| azure-iot | github.com
+| azure-iot-ops | github.com
+| azure-sphere | software-static.download.prss.microsoft.com
 | azurestackhci | hybridaksstorage.z13.web.core.windows.net
-| Hybridaks |
+| cli-translator | azurecliprod.blob.core.windows.net
+| csvmware | github.com
+| customlocation | arcplatformcliextprod.blob.core.windows.net
+| deploy-to-azure | github.com
+| dev-spaces | azurecliprod.blob.core.windows.net
+| footprint | azurecliprod.blob.core.windows.net
 | fzf | pahealyfzf.blob.core.windows.net
-|image-copy-extension | files.pythonhosted.org
-| managementpartner |
-| resource-graph |
+| hybridaks | hybridaksstorage.z13.web.core.windows.net
+| ip-group | azurecliprod.blob.core.windows.net
 | ml | azuremlsdktestpypi.blob.core.windows.net
-| qbs | qbsazcliextension.blob.core.windows.net
+| partnercenter | github.com
+| sap-hana | github.com
+| stack-hci-vm | hciarcvmsstorage.z13.web.core.windows.net
+
 
 ## See also
 
