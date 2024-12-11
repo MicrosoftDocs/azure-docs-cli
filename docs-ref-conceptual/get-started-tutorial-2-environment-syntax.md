@@ -340,13 +340,13 @@ az rest --method patch \
         --body '{"properties": {"agentUpgrade": {"enableAutomaticUpgrade": false}}}'
 ```
 
-Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
+Example of filtering for a numeric value.
 
 ```azurecli
 az vm list -g <myRG> --query "[?storageProfile.osDisk.diskSizeGb >=\`50\`].{Name:name, DiskSize:storageProfile.osDisk.diskSizeGb}"
 ```
 
-Example of filtering a boolean value using the storage account created in this tutorial.
+Example of filtering a boolean value using the storage account.
 
 ```azurecli-interactive
 az storage account list -g <myRG> --query "[?allowBlobPublicAccess == \`true\`].id"
@@ -387,7 +387,7 @@ Example of filtering for a numeric value.
 az vm list -g <myRG> --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name, DiskSize:storageProfile.osDisk.diskSizeGb}"
 ```
 
-Example of filtering a boolean value using the storage account created in this tutorial.
+Example of filtering a boolean value using the storage account.
 
 ```azurecli-interactive
 az storage account list -g <myRG> --query "[?allowBlobPublicAccess == ``true``].id"
