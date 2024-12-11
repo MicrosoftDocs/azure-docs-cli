@@ -343,16 +343,13 @@ az rest --method patch \
 Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
-az vm list --resource-group <myResourceGroup> \
-           --query "[?storageProfile.osDisk.diskSizeGb >=\`50\`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb}" \
-           --output table
+az vm list --resource-group <myResourceGroup> --query "[?storageProfile.osDisk.diskSizeGb >=\`50\`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb}"
 ```
 
 Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
-az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
-    --query "[?allowBlobPublicAccess == \`true\`].id"
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> --query "[?allowBlobPublicAccess == \`true\`].id"
 ```
 
 Examples of filtering a date using the storage account created in this tutorial.
@@ -387,16 +384,13 @@ az rest --method patch `
 Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
-az vm list --resource-group <myResourceGroup> `
-           --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" `
-           --output table
+az vm list --resource-group <myResourceGroup> --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }"
 ```
 
 Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
-az storage account list --resource-group <msdocs-tutorial-rg-00000000> `
-                       --query "[?allowBlobPublicAccess == ``true``].id"
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> --query "[?allowBlobPublicAccess == ``true``].id"
 ```
 
 Examples of filtering a date using the storage account created in this tutorial.
