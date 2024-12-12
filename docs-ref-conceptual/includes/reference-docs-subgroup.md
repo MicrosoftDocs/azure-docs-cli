@@ -2401,7 +2401,6 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Run Azure IoT Operations Preview in GitHub Codespaces with K3s](/azure/iot-operations/get-started-end-to-end-sample/quickstart-deploy)
 |  | [Manage secrets for your Azure IoT Operations Preview deployment](/azure/iot-operations/deploy-iot-ops/howto-manage-secrets)
 | [az iot ops asset](/cli/azure/iot/ops/asset) | [Manage asset configurations remotely](/azure/iot-operations/discover-manage-assets/howto-manage-assets-remotely)
-| [az iot ops asset data-point](/cli/azure/iot/ops/asset/data-point) | [Manage asset configurations remotely](/azure/iot-operations/discover-manage-assets/howto-manage-assets-remotely)
 | [az iot ops asset endpoint](/cli/azure/iot/ops/asset/endpoint) | [Manage asset configurations remotely](/azure/iot-operations/discover-manage-assets/howto-manage-assets-remotely)
 | [az iot ops asset event](/cli/azure/iot/ops/asset/event) | [Manage asset configurations remotely](/azure/iot-operations/discover-manage-assets/howto-manage-assets-remotely)
 
