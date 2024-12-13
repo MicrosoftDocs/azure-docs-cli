@@ -149,7 +149,7 @@ All extensions use endpoint **azcliprod.blob.core.windows.net** for step 2's spe
 | alias | azurecliprod.blob.core.windows.net
 | arcappliance | arcplatformcliextprod.blob.core.windows.net
 | arcdata | azurearcdatacli.blob.core.windows.net
-| azure-batch-cli-extensions | github.com\Azure
+| azure-batch-cli-extensions | github.com
 | azure-cli-ml | azurecliext.blob.core.windows.net
 | azure-devops | github.com
 | azure-iot | github.com
