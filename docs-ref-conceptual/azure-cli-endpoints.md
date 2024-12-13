@@ -137,9 +137,9 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 Azure CLI extensions are optional and installed separately and the extensions installation procedure includes two steps: 1) module searching; 2) module installation.
 
-Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions for step 1's module searching, whose endpoint is **azcliprod.blob.core.windows.net** now.  This _aka.ms_ link refers to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
+Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions for step 1's module searching, whose endpoint is **azcliextensionsync.blob.core.windows.net** now.  This _aka.ms_ link refers to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
 
-All extensions use endpoint **azcliprod.blob.core.windows.net**/**azcliextensionsync.blob.core.windows.net** for step 2's specific module installation, with the following exceptions:
+All extensions use endpoint **azcliprod.blob.core.windows.net** for step 2's specific module installation, with the following exceptions:
 
 |Extension name | Endpoint
 |-|-|
@@ -171,7 +171,7 @@ All extensions use endpoint **azcliprod.blob.core.windows.net**/**azcliextension
 | stack-hci-vm | hciarcvmsstorage.z13.web.core.windows.net
 
 
-For example, if you are installing the `azure-devops` extension, you need to add `azcliprod.blob.core.windows.net` and `github.com` to your allowlist. If you are installing extension `account` that is not in the list above, you need to allow both `azcliprod.blob.core.windows.net` and `azcliextensionsync.blob.core.windows.net`.
+For example, if you are installing the `azure-devops` extension, you need to add `azcliextensionsync.blob.core.windows.net` (for searching) and `github.com` (for installation) to your allowlist. If you are installing extension `account` that is not in the list above, you need to allow `azcliextensionsync.blob.core.windows.net` (for searching) and `azcliprod.blob.core.windows.net` (for installation).
 
 ## See also
 
