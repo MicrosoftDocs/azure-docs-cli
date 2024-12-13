@@ -135,9 +135,11 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 ## Extensions
 
-Azure CLI extensions are optional and installed separately.  The Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This _aka.ms_ link points to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
+Azure CLI extensions are optional and installed separately and the extensions installation procedure includes two steps: 1) module searching; 2) module installation. 
 
-All extensions install with endpoint **azcliprod.blob.core.windows.net** and **azcliextensionsync.blob.core.windows.net** with the following exceptions:
+Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions for module searching, whose endpoint is **azcliprod.blob.core.windows.net** now.  This _aka.ms_ link refers to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
+
+All extensions use endpoint endpoint **azcliprod.blob.core.windows.net**/**azcliextensionsync.blob.core.windows.net** for extension module installation, with the following exceptions:
 
 |Extension name | Endpoint
 |-|-|
@@ -168,6 +170,8 @@ All extensions install with endpoint **azcliprod.blob.core.windows.net** and **a
 | sap-hana | github.com
 | stack-hci-vm | hciarcvmsstorage.z13.web.core.windows.net
 
+
+For example, if you are installing the `azure-devops` extension, you only need to add `azcliprod.blob.core.windows.net` and `github.com` to your allowlist. If you are installing extension `account` that is not in the list above, you need to allow both `azcliprod.blob.core.windows.net` and `azcliextensionsync.blob.core.windows.net`.
 
 ## See also
 
