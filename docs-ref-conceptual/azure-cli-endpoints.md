@@ -171,7 +171,7 @@ All extensions use endpoint **azcliprod.blob.core.windows.net**/**azcliextension
 | stack-hci-vm | hciarcvmsstorage.z13.web.core.windows.net
 
 
-For example, if you are installing the `azure-devops` extension, you only need to add `azcliprod.blob.core.windows.net` and `github.com` to your allowlist. If you are installing extension `account` that is not in the list above, you need to allow both `azcliprod.blob.core.windows.net` and `azcliextensionsync.blob.core.windows.net`.
+For example, if you are installing the `azure-devops` extension, you need to add `azcliprod.blob.core.windows.net` and `github.com` to your allowlist. If you are installing extension `account` that is not in the list above, you need to allow both `azcliprod.blob.core.windows.net` and `azcliextensionsync.blob.core.windows.net`.
 
 ## See also
 
