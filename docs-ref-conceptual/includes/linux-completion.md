@@ -6,13 +6,13 @@ ms.topic: include
 ---
 ### Completion isn't working
 
-For Bash users, the completion script is installed in `/etc/bash_completion.d/azure-cli`. Please add the following line to your `~/.bashrc` file, then save and reload your Bash profile:
+For Bash users, the completion script is installed in `/etc/bash_completion.d/azure-cli`. Add the following line to your `~/.bashrc` file, then save and reload your Bash profile:
 
 ```bash
 source /etc/bash_completion.d/azure-cli
 ```
 
-For Zsh users, please add the following two lines in your `~/.zshrc` file, then save and reload your Zsh profile:
+For Zsh users, add the following two lines in your `~/.zshrc` file, then save and reload your Zsh profile:
 
 ```zsh
 autoload -U +X bashcompinit && bashcompinit
