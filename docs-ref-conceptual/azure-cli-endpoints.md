@@ -170,8 +170,9 @@ All extensions use endpoint **azcliprod.blob.core.windows.net** for step 2's spe
 | sap-hana | github.com
 | stack-hci-vm | hciarcvmsstorage.z13.web.core.windows.net
 
-
 For example, if you are installing the `azure-devops` extension, you need to add `azcliextensionsync.blob.core.windows.net` (for searching) and `github.com` (for installation) to your allowlist. If you are installing extension `account` that is not in the list above, you need to allow `azcliextensionsync.blob.core.windows.net` (for searching) and `azcliprod.blob.core.windows.net` (for installation).
+
+For users who rely on the dynamic extension module installation from CLI recommendations, please also add `azurecliextensionsync.blob.core.windows.net` into your allowlist for cmd indexing.
 
 ## See also
 
