@@ -22,11 +22,12 @@ directCommands:
                   [--description]
                   [--eula]
                   [--location]
+                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                   [--permissions {Community, Groups, Private}]
                   [--public-name-prefix]
-                  [--publisher-email]
+                  [--publisher-contact]
                   [--publisher-uri]
-                  [--soft-delete {false, true}]
+                  [--soft-delete {0, 1, f, false, n, no, t, true, y, yes}]
                   [--tags]
   examples:
   - summary: |-
@@ -36,7 +37,7 @@ directCommands:
   - isRequired: true
     name: --gallery-name -r
     summary: |-
-      Gallery name.
+      The name of the Shared Image Gallery to be deleted.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -50,7 +51,11 @@ directCommands:
       Community gallery publisher eula.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      Resource location  When not specified, the location of the resource group will be used.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --permissions
     parameterValueGroup: "Community, Groups, Private"
     summary: |-
@@ -58,26 +63,22 @@ directCommands:
   - name: --public-name-prefix
     summary: |-
       Community gallery public name prefix.
-  - name: --publisher-email
+  - name: --publisher-contact --publisher-email
     summary: |-
       Community gallery publisher contact email.
   - name: --publisher-uri
     summary: |-
       Community gallery publisher uri.
   - name: --soft-delete
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
-    isDeprecated: true
-    deprecateInfo: "Argument '--soft-delete' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_sig_create(image-gallery)
   name: az sig create
   extensionSuffix: image-gallery
-  summary: |-
-    Create a shared image gallery.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -92,10 +93,6 @@ directCommands:
                   [--publisher-uri]
                   [--soft-delete {false, true}]
                   [--tags]
-  examples:
-  - summary: |-
-      Create a shared image gallery
-    syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery
   requiredParameters:
   - isRequired: true
     name: --gallery-name -r
@@ -172,8 +169,17 @@ directCommands:
     List galleries under a resource group.
   status: GA
   sourceType: Core
-  syntax: az sig list [--resource-group]
+  syntax: >-
+    az sig list [--max-items]
+                [--next-token]
+                [--resource-group]
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -212,6 +218,8 @@ directCommands:
   sourceType: Core
   syntax: >-
     az sig list-shared --location
+                       [--max-items]
+                       [--next-token]
                        [--shared-to {tenant}]
   examples:
   - summary: |-
@@ -226,6 +234,12 @@ directCommands:
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --shared-to
     parameterValueGroup: "tenant"
     summary: |-
@@ -240,13 +254,13 @@ directCommands:
     az sig show [--gallery-name]
                 [--ids]
                 [--resource-group]
-                [--select]
-                [--sharing-groups]
+                [--select {Permissions}]
+                [--sharing-groups {0, 1, f, false, n, no, t, true, y, yes}]
                 [--subscription]
   optionalParameters:
   - name: --gallery-name -r
     summary: |-
-      Gallery name.
+      The name of the Shared Image Gallery to be deleted.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -254,9 +268,11 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --select
+    parameterValueGroup: "Permissions"
     summary: |-
       The select expression to apply on the operation.
   - name: --sharing-groups
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       The expand query option to query shared gallery groups.
   - name: --subscription
@@ -354,55 +370,53 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az sig update --gallery-name
-                  --resource-group
-                  [--add]
+    az sig update [--add]
                   [--eula]
-                  [--force-string]
+                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                  [--gallery-name]
+                  [--ids]
+                  [--location]
+                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                   [--permissions {Community, Groups, Private}]
                   [--public-name-prefix]
-                  [--publisher-email]
+                  [--publisher-contact]
                   [--publisher-uri]
                   [--remove]
-                  [--select]
+                  [--resource-group]
                   [--set]
-                  [--soft-delete {false, true}]
+                  [--soft-delete {0, 1, f, false, n, no, t, true, y, yes}]
+                  [--subscription]
   examples:
   - summary: |-
       Enable gallery to be shared to subscription or tenant
-    syntax: >-
-      az sig update --resource-group myResourceGroup --gallery-name myGallery \
-
-      --permissions groups
+    syntax: az sig update --resource-group myResourceGroup --gallery-name myGallery --permissions groups
   - summary: |-
       Update gallery from private to community
-    syntax: >-
-      az sig update -g myResourceGroup --gallery-name myGallery --permissions Community \
-
-      --publisher-uri myPublisherUri --publisher-email myPublisherEmail \
-
-      --eula myEula --public-name-prefix myPublicNamePrefix
-  requiredParameters:
-  - isRequired: true
-    name: --gallery-name -r
-    summary: |-
-      Gallery name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    syntax: az sig update -g myResourceGroup --gallery-name myGallery --permissions Community --publisher-uri myPublisherUri --publisher-email myPublisherEmail --eula myEula --public-name-prefix myPublicNamePrefix
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --eula
     summary: |-
       Community gallery publisher eula.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --gallery-name -r
+    summary: |-
+      The name of the Shared Image Gallery to be deleted.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --location -l
+    summary: |-
+      Resource location.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --permissions
     parameterValueGroup: "Community, Groups, Private"
     summary: |-
@@ -410,29 +424,96 @@ directCommands:
   - name: --public-name-prefix
     summary: |-
       Community gallery public name prefix.
-  - name: --publisher-email
+  - name: --publisher-contact --publisher-email
     summary: |-
       Community gallery publisher contact email.
   - name: --publisher-uri
     summary: |-
       Community gallery publisher uri.
   - name: --remove
-    defaultValue: "[]"
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
-  - name: --select
+  - name: --resource-group -g
     summary: |-
-      The select expression to apply on the operation. "Permissions" Default value is None.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
-    defaultValue: "[]"
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --soft-delete
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
-    isDeprecated: true
-    deprecateInfo: "Argument '--soft-delete' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_sig_wait
+  name: az sig wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az sig wait [--created]
+                [--custom]
+                [--deleted]
+                [--exists]
+                [--expand {SharingProfile/Groups}]
+                [--gallery-name]
+                [--ids]
+                [--interval]
+                [--resource-group]
+                [--select {Permissions}]
+                [--subscription]
+                [--timeout]
+                [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --expand
+    parameterValueGroup: "SharingProfile/Groups"
+    summary: |-
+      The expand query option to apply on the operation.
+  - name: --gallery-name -r
+    summary: |-
+      The name of the Shared Image Gallery to be deleted.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --select
+    parameterValueGroup: "Permissions"
+    summary: |-
+      The select expression to apply on the operation.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_sig_create
 - az_sig_create(image-gallery)
@@ -493,6 +574,7 @@ commands:
 - az_sig_show-community(image-gallery)
 - az_sig_show-shared
 - az_sig_update
+- az_sig_wait
 globalParameters:
 - name: --debug
   summary: |-
