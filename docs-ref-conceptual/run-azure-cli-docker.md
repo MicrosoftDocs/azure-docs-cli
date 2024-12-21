@@ -29,10 +29,10 @@ docker run -it mcr.microsoft.com/azure-cli:cbl-mariner2.0
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
-> use `-v ${HOME}/.ssh:/root/.ssh` to mount your SSH keys in the environment.
+> use `--mount type=bind,src="$HOME"/.ssh,dst=/root/.ssh` to mount your SSH keys in the environment.
 >
 > ```bash
-> docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli:cbl-mariner2.0
+> docker run -it --mount type=bind,src="$HOME"/.ssh,dst=/root/.ssh mcr.microsoft.com/azure-cli:cbl-mariner2.0
 > ```
 
 The CLI is installed on the image as the `az` command in `/usr/local/bin`.
