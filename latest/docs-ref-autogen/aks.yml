@@ -168,6 +168,8 @@ directCommands:
                   [--crg-id]
                   [--data-collection-settings]
                   [--defender-config]
+                  [--disable-acns-observability]
+                  [--disable-acns-security]
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-local-accounts]
@@ -179,6 +181,7 @@ directCommands:
                   [--docker-bridge-address]
                   [--edge-zone]
                   [--enable-aad]
+                  [--enable-acns]
                   [--enable-addons]
                   [--enable-ahub]
                   [--enable-app-routing]
@@ -264,6 +267,7 @@ directCommands:
                   [--nodepool-name]
                   [--nodepool-tags]
                   [--nodepool-taints]
+                  [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
@@ -494,6 +498,12 @@ directCommands:
   - name: --defender-config
     summary: |-
       Path to JSON file containing Microsoft Defender profile configurations.
+  - name: --disable-acns-observability
+    summary: |-
+      Used to disable advanced networking observability features on a clusters when enabling advanced networking features with "--enable-acns".
+  - name: --disable-acns-security
+    summary: |-
+      Used to disable advanced networking security features on a clusters when enabling advanced networking features with "--enable-acns".
   - name: --disable-disk-driver
     defaultValue: "False"
     summary: |-
@@ -539,6 +549,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable managed AAD feature for cluster.
+  - name: --enable-acns
+    summary: |-
+      Enable advanced network functionalities on a cluster. Enabling this will incur additional costs. For non-cilium clusters, acns security will be disabled by default until further notice.
   - name: --enable-addons -a
     summary: |-
       Enable the Kubernetes addons in a comma-separated list.
@@ -911,6 +924,12 @@ directCommands:
   - name: --nodepool-taints
     summary: |-
       The node taints for all node pool.
+  - name: --nrg-lockdown-restriction-level
+    parameterValueGroup: "ReadOnly, Unrestricted"
+    summary: |-
+      Restriction level on the managed node resource group.
+    description: |-
+      The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --os-sku
     parameterValueGroup: "AzureLinux, CBLMariner, Mariner, Ubuntu"
     summary: |-
@@ -1014,7 +1033,7 @@ directCommands:
             * Has a digit
             * Has a special character (Regex match [\W_])
           - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
-      Reference: https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
+      Reference: https://learn.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
   - name: --windows-admin-username
     summary: |-
       User account to create on windows node VMs.
@@ -1024,7 +1043,7 @@ directCommands:
           - Disallowed values: "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup", "console", "david", "guest", "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
           - Minimum-length: 1 character
           - Max-length: 20 characters
-      Reference: https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet.
+      Reference: https://learn.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet.
   - name: --workspace-resource-id
     summary: |-
       The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
@@ -3305,7 +3324,7 @@ directCommands:
   summary: |-
     Stop a managed cluster.
   description: |-
-    This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See `stopping a cluster <https://docs.microsoft.com/azure/aks/start-stop-cluster>`_ for more details about stopping a cluster.
+    This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See `stopping a cluster <https://learn.microsoft.com/azure/aks/start-stop-cluster>`_ for more details about stopping a cluster.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
@@ -3380,6 +3399,9 @@ directCommands:
                   [--ca-profile]
                   [--defender-config]
                   [--detach-acr]
+                  [--disable-acns]
+                  [--disable-acns-observability]
+                  [--disable-acns-security]
                   [--disable-ahub]
                   [--disable-azure-container-storage {all, azureDisk, elasticSan, ephemeralDisk}]
                   [--disable-azure-keyvault-kms]
@@ -3402,6 +3424,7 @@ directCommands:
                   [--disable-windows-gmsa]
                   [--disable-workload-identity]
                   [--enable-aad]
+                  [--enable-acns]
                   [--enable-ahub]
                   [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
@@ -3433,6 +3456,7 @@ directCommands:
                   [--grafana-resource-id]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
+                  [--ip-families]
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
@@ -3455,6 +3479,7 @@ directCommands:
                   [--node-os-upgrade-channel]
                   [--nodepool-labels]
                   [--nodepool-taints]
+                  [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--private-dns-zone]
@@ -3619,6 +3644,15 @@ directCommands:
   - name: --detach-acr
     summary: |-
       Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
+  - name: --disable-acns
+    summary: |-
+      Disable all advanced networking functionalities on a cluster.
+  - name: --disable-acns-observability
+    summary: |-
+      Used to disable advanced networking observability features on a clusters when enabling advanced networking features with "--enable-acns".
+  - name: --disable-acns-security
+    summary: |-
+      Used to disable advanced networking security features on a clusters when enabling advanced networking features with "--enable-acns".
   - name: --disable-ahub
     defaultValue: "False"
     summary: |-
@@ -3706,6 +3740,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable managed AAD feature for cluster.
+  - name: --enable-acns
+    summary: |-
+      Enable advanced network functionalities on a cluster. Enabling this will incur additional costs. For non-cilium clusters, acns security will be disabled by default until further notice.
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
@@ -3830,6 +3867,11 @@ directCommands:
   - name: --image-cleaner-interval-hours
     summary: |-
       ImageCleaner scanning interval.
+  - name: --ip-families
+    summary: |-
+      A comma-separated list of IP versions to use for cluster networking.
+    description: |-
+      Each IP version should be in the format IPvN. For example, IPv4.
   - name: --k8s-support-plan
     parameterValueGroup: "AKSLongTermSupport, KubernetesOfficial"
     summary: |-
@@ -3932,6 +3974,12 @@ directCommands:
   - name: --nodepool-taints
     summary: |-
       The node taints for all node pool.
+  - name: --nrg-lockdown-restriction-level
+    parameterValueGroup: "ReadOnly, Unrestricted"
+    summary: |-
+      Restriction level on the managed node resource group.
+    description: |-
+      The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --outbound-type
     parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
     summary: |-
@@ -3990,7 +4038,7 @@ directCommands:
             * Has a digit
             * Has a special character (Regex match [\W_])
           - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
-      Reference: https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
+      Reference: https://learn.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
