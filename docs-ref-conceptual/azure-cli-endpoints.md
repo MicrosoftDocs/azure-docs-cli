@@ -135,31 +135,44 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 ## Extensions
 
-Azure CLI extensions are optional and installed separately.  The Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This _aka.ms_ link points to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
+Azure CLI extensions are optional and installed separately and the extensions installation procedure includes two steps: 1) module searching; 2) module installation.
 
-All extensions install with endpoint **azcliprod.blob.core.windows.net** and **azurecliextensionsync.blob.core.windows.net** with the following exceptions:
+Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions for step 1's module searching, whose endpoint is **azcliextensionsync.blob.core.windows.net** now.
+
+All extensions use endpoint **azcliprod.blob.core.windows.net** for step 2's specific module installation, with the following exceptions:
 
 |Extension name | Endpoint
 |-|-|
+| ai-examples | azurecliprod.blob.core.windows.net
+| aksarc | hybridaksstorage.z13.web.core.windows.net
+| akshybrid | hybridaksstorage.z13.web.core.windows.net
+| alias | azurecliprod.blob.core.windows.net
 | arcappliance | arcplatformcliextprod.blob.core.windows.net
-| customlocation |
 | arcdata | azurearcdatacli.blob.core.windows.net
-| azure-batch-cli-extensions | github.com\Azure
-| azure-devops |
-| azure-iot |
-| baremetal-infrastructure |
-| csvmware |
-| deploy-to-azure |
-| sap-hana |
+| azure-batch-cli-extensions | github.com
 | azure-cli-ml | azurecliext.blob.core.windows.net
+| azure-devops | github.com
+| azure-iot | github.com
+| azure-iot-ops | github.com
+| azure-sphere | software-static.download.prss.microsoft.com
 | azurestackhci | hybridaksstorage.z13.web.core.windows.net
-| Hybridaks |
+| cli-translator | azurecliprod.blob.core.windows.net
+| csvmware | github.com
+| customlocation | arcplatformcliextprod.blob.core.windows.net
+| deploy-to-azure | github.com
+| dev-spaces | azurecliprod.blob.core.windows.net
+| footprint | azurecliprod.blob.core.windows.net
 | fzf | pahealyfzf.blob.core.windows.net
-|image-copy-extension | files.pythonhosted.org
-| managementpartner |
-| resource-graph |
+| hybridaks | hybridaksstorage.z13.web.core.windows.net
+| ip-group | azurecliprod.blob.core.windows.net
 | ml | azuremlsdktestpypi.blob.core.windows.net
-| qbs | qbsazcliextension.blob.core.windows.net
+| partnercenter | github.com
+| sap-hana | github.com
+| stack-hci-vm | hciarcvmsstorage.z13.web.core.windows.net
+
+For example, if you are installing the `azure-devops` extension, you need to add `azcliextensionsync.blob.core.windows.net` (for searching) and `github.com` (for installation) to your allowlist. If you are installing extension `account` that is not in the list above, you need to allow `azcliextensionsync.blob.core.windows.net` (for searching) and `azcliprod.blob.core.windows.net` (for installation).
+
+For users who rely on the dynamic extension module installation from CLI recommendations, please also add `azurecliextensionsync.blob.core.windows.net` into your allowlist for cmd indexing.
 
 ## See also
 
