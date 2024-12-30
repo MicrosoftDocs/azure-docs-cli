@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 12/12/2024
+ms.date: 12/30/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -44,7 +44,7 @@ You will be prompted to install an extension on first use.
 |[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.57.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.55.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | GA | [1.2.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.10](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
-|[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.51.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.3.0](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
+|[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.51.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.3.1](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.19](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[arcgateway](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway) | 2.57.0 | Microsoft Azure Command-Line Tools Arcgateway Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway/HISTORY.rst) |
 |[astronomer](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer) | 2.57.0 | Microsoft Azure Command-Line Tools Astronomer Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer/HISTORY.rst) |
