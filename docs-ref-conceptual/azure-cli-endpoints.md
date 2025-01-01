@@ -10,7 +10,7 @@ ms.date: 07/24/2024
 
 If your organization is secured with a firewall or proxy server, you must add certain IP (internet protocol) addresses and domain URLs (uniform resource locators) to the **allowlist** prior to installing the Azure CLI.
 
-Two URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.
+Two URLs are used during installation to download Python packages: `pypi.org` and `files.pythonhosted.org`.
 
 The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We don't recommend adding other Azure CLI-related URLs aside from the URLs needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
@@ -135,11 +135,11 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 ## Extensions
 
-Azure CLI extensions are optional and installed separately and the extensions installation procedure includes two steps: 1) module searching; 2) module installation.
+Azure CLI extensions are optional and installed separately. The extensions installation procedure includes two steps: **module searching** and **module installation**.
 
-Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions for step 1's module searching, whose endpoint is **azcliextensionsync.blob.core.windows.net** now.
+Azure CLI uses `https://aka.ms/azure-cli-extension-index-v1` to fetch a list of extensions for **module searching**, whose endpoint is `azcliextensionsync.blob.core.windows.net`.
 
-All extensions use endpoint **azcliprod.blob.core.windows.net** for step 2's specific module installation, with the following exceptions:
+All extensions use endpoint `azcliprod.blob.core.windows.net` for **module installation**, with the following exceptions:
 
 |Extension name | Endpoint
 |-|-|
