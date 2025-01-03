@@ -47,6 +47,7 @@ directCommands:
   syntax: >-
     az vm image list [--all]
                      [--architecture {Arm64, x64}]
+                     [--edge-zone]
                      [--location]
                      [--offer]
                      [--publisher]
@@ -70,6 +71,7 @@ directCommands:
     parameterValueGroup: "Arm64, x64"
     summary: |-
       The name of architecture.
+  - name: --edge-zone
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -85,13 +87,15 @@ directCommands:
 - uid: az_vm_image_list-offers
   name: az vm image list-offers
   summary: |-
-    List the VM image offers available in the Azure Marketplace.
+    List a list of virtual machine image offers for the specified location and publisher.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm image list-offers --location
-                            --publisher
+    az vm image list-offers [--ids]
+                            [--location]
+                            [--publisher]
+                            [--subscription]
   examples:
   - summary: |-
       List all offers from Microsoft in the West US region.
@@ -99,24 +103,30 @@ directCommands:
   - summary: |-
       List all offers from OpenLocic in the West US region.
     syntax: az vm image list-offers -l westus -p OpenLogic
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - isRequired: true
-    name: --publisher -p
+  - name: --publisher -p
     summary: |-
-      Image publisher.
-    valueFrom: az vm image list-publishers
+      A valid image publisher.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_vm_image_list-publishers
   name: az vm image list-publishers
   summary: |-
-    List the VM image publishers available in the Azure Marketplace.
+    List a list of virtual machine image publishers for the specified Azure location.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-  syntax: az vm image list-publishers --location
+  syntax: >-
+    az vm image list-publishers [--ids]
+                                [--location]
+                                [--subscription]
   examples:
   - summary: |-
       List all publishers in the West US region.
@@ -124,40 +134,49 @@ directCommands:
   - summary: |-
       List all publishers with names starting with "Open" in westus.
     syntax: az vm image list-publishers -l westus --query "[?starts_with(name, 'Open')]"
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_vm_image_list-skus
   name: az vm image list-skus
   summary: |-
-    List the VM image SKUs available in the Azure Marketplace.
+    List a list of virtual machine image SKUs for the specified location, publisher, and offer.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm image list-skus --location
-                          --offer
-                          --publisher
+    az vm image list-skus [--ids]
+                          [--location]
+                          [--offer]
+                          [--publisher]
+                          [--subscription]
   examples:
   - summary: |-
       List all skus available for CentOS published by OpenLogic in the West US region.
     syntax: az vm image list-skus -l westus -f CentOS -p OpenLogic
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - isRequired: true
-    name: --offer -f
+  - name: --offer -f
     summary: |-
-      Image offer.
-  - isRequired: true
-    name: --publisher -p
+      A valid image publisher offer.
+  - name: --publisher -p
     summary: |-
-      Image publisher.
-    valueFrom: az vm image list-publishers
+      A valid image publisher.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_vm_image_show
   name: az vm image show
   summary: |-
@@ -166,7 +185,8 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm image show [--location]
+    az vm image show [--edge-zone]
+                     [--location]
                      [--offer]
                      [--publisher]
                      [--sku]
@@ -183,6 +203,7 @@ directCommands:
       Get the details for a VM image available in the Azure Marketplace. (autogenerated)
     syntax: az vm image show --location westus --urn publisher:offer:sku:version
   optionalParameters:
+  - name: --edge-zone
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -237,5 +258,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 04/18/2024
+  ms.date: 12/31/2024
   description: Information on available virtual machine images.
