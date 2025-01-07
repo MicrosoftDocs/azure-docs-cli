@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/02/2025
+ms.date: 01/06/2025
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -204,7 +204,7 @@ You will be prompted to install an extension on first use.
 |[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.61.0 | Provides a preview for upcoming storage features. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/main/src/storagesync) | 2.55.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storagesync/HISTORY.rst) |
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.15.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
-|[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.61.0 | Microsoft Azure Command-Line Tools Subscription  Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
+|[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.61.0 | Microsoft Azure Command-Line Tools Subscription  Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
 |[support](https://github.com/azure/azure-cli-extensions/tree/main/src/support) | 2.57.0 | Microsoft Azure Command-Line Tools Support Extension | GA | [2.0.1](https://github.com/azure/azure-cli-extensions/tree/main/src/support) |
 |[terraform](https://github.com/Azure/azure-cli-extensions/tree/main/src/terraform) | 2.61.0 | Microsoft Azure Command-Line Tools Terraform Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/terraform/HISTORY.rst) |
 |[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights) | 2.50.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights/HISTORY.rst) |
