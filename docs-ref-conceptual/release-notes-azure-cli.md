@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 11/19/2024
+ms.date: 01/14/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,102 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## January 14, 2025
+
+Version 2.68.0
+
+### ACR
+
+* `az acr agentpool`: Fix delete polling
+* `az acr create`: Add validation for registry name to support domain name label
+
+### AKS
+
+* `az aks command invoke`: Add progress spinner
+* `az aks create/update`: Add `--enable-acns` parameter to support enabling advanced networking functionalities on a cluster
+* `az aks create/update`: Add `--disable-acns-observability` parameter to disable advanced networking observability features when enabling advanced networking features with `--enable-acns`
+* `az aks create/update`: Add `--disable-acns-security` parameter to disable advanced networking security features when enabling advanced networking features with `--enable-acns`
+* `az aks update`: Add `--disable-acns` parameter to support disabling advanced networking functionalities on a cluster
+* `az aks update`: Add `--ip-families` to support updating cluster network
+* `az aks create/update`: Add `--nrg-lockdown-restriction-level` parameter to support specifying restriction level on the managed node resource group
+
+### App Config
+
+* `az appconfig kv import`: Fix import mode `all` bug
+
+### Compute
+
+* [BREAKING CHANGE] `az disk`: Refine output fields to align with backend service
+* [BREAKING CHANGE] `az snapshot`: Refine output fields to align with backend service
+* Fix #30009: `az vm install-patches`: Fix errors due to typos in `install_vm_patches` function
+* `az vm/vmss create`: Fix help message for `--public-ip-address` parameter
+* Fix #30565: `az vm create`: Fix creating VM with `--patch-mode` parameter
+* Fix #30564: `az vm create`: Fix creating VM with `--enable-auto-update` parameter
+* `az vm create`: Add `--encryption-identity` parameter to use that managed identity for Azure disk encryption
+* `az vm encryption enable`: Add `--encryption-identity` parameter to update or set encryption identity for Azure disk encryption
+* `az vmss create/update`: Add new parameter `--security-posture-reference-is-overridable` to support setting security posture reference overridable
+* `az vmss create/update`: Change existing parameter `--security-posture-reference-exclude-extensions` to receive string list
+* `az vm create/update`: Add new parameter `--additional-scheduled-events` to support setting scheduled event policy
+* `az vm create/update`: Add new parameter `--enable-user-reboot-scheduled-events` to support setting scheduled event policy
+* `az vm create/update`: Add new parameter `--enable-user-redeploy-scheduled-events` to support setting scheduled event policy
+
+### Container
+
+* `az container exec`: Fix exception when stdin is not a tty
+
+### Container app
+
+* `az containerapp exec`: Fix `ResourceNotFound` error
+* `az containerapp ingress enable`: Fix issue about labels being deleted
+* Fix #29238: `az containerapp secret set`: Add description about `identityref` for parameter `--secrets`
+
+### Cosmos DB
+
+* `az cosmosdb create/update`: Add `--enable-prpp-autoscale` to enable/disable burst capacity feature
+
+### Key Vault
+
+* `az keyvault key sign/verify`: Fix `--digest` to accept base64 encoded string
+
+### Microsoft Entra ID
+
+* `az ad app create/update`: Add `--requested-access-token-version` argument
+
+### MySQL
+
+* `az mysql flexible-server create/restore/replica create/geo restore`: Add `--storage-redundancy` parameter to support HA storage with zone redundancy
+
+### Network
+
+* `az network vnet-gateway create/update`: Add parameter `--resiliency-model`
+* `az network vnet create/update`: Add parameter `--ipam-pool-prefix-allocations`
+* Fix #30535: `az network lb address-pool address add`: Address level may not have virtual network property
+
+### Profile
+
+* Drop support for old-style managed identity account created by Azure CLI <= 2.0.50. If you upgrade from one of these versions, please run `az login --identity` again.
+
+### RDBMS
+
+* `az postgres flexible-server create`: Create elastic cluster by setting `--cluster-option` to ElasticCluster
+* `az postgres flexible-server list`: Add `--show-cluster` argument to list elastic clusters
+* `az postgres flexible-server fabric-mirroring/identity`: Support system assigned managed identity and fabric mirroring of databases
+* `az postgres flexible-server update`: Add `--node-count` argument to scale up elastic clusters
+
+### Role
+
+* [BREAKING CHANGE] `az role assignment delete`: Stop deleting all role assignments by default
+
+### SQL
+
+* `az sql db ltr-policy`: Remove preview tag
+
+### Storage
+
+* `az storage account migration`: Add warning for long wait, will require confirmation in the future
+* Fix #28554: `az storage blob service-properties update`: Support cases where `--static-website false` and index and 404 documents were already set
+* Fix #29929: `az storage copy`: Fix when wildcard `*` is in `--source-file-path`
 
 ## November 19, 2024
 
