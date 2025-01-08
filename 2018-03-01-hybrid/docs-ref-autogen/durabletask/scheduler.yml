@@ -1,49 +1,47 @@
 ### YamlMime:AzureCLIGroup
-uid: az_durabletask_namespace
-name: az durabletask namespace
+uid: az_durabletask_scheduler
+name: az durabletask scheduler
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **durabletask** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az durabletask namespace** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **durabletask** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az durabletask scheduler** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage Durabletask namespaces.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: "Command group 'az durabletask' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  Commands to manage Durabletask schedulers.
+status: GA
 sourceType: Extension
 directCommands:
-- uid: az_durabletask_namespace_create
-  name: az durabletask namespace create
+- uid: az_durabletask_scheduler_create
+  name: az durabletask scheduler create
   summary: |-
-    Create a Namespace.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az durabletask namespace' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Create a Scheduler.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az durabletask namespace create --name
+    az durabletask scheduler create --name
                                     --resource-group
                                     [--ip-allowlist]
                                     [--location]
                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--sku-capacity]
+                                    [--sku-name]
                                     [--tags]
   examples:
   - summary: |-
-      Create a namespace in northcentralus
-    syntax: az durabletask namespace create -g resource-group-name -n namespace-name --location northcentralus
+      Create a scheduler in northcentralus
+    syntax: az durable-task scheduler create --resource-group testrg --scheduler-name testscheduler --location northcentralus --ip-allowlist "[0.0.0.0/0]" --sku-capacity "1", --sku-name "Dedicated" --tags "{}"
   requiredParameters:
   - isRequired: true
-    name: --name --namespace-name -n
+    name: --name --scheduler-name -n
     summary: |-
-      The name of the service.
+      The name of the Scheduler.
   - isRequired: true
     name: --resource-group -g
     summary: |-
-      The name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --ip-allowlist
     summary: |-
-      IP allow list for durable task service. Values can be Pv4, IPv6 or CIDR  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
@@ -51,19 +49,23 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --sku-capacity
+    summary: |-
+      The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy.
+  - name: --sku-name
+    summary: |-
+      The name of the SKU.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-- uid: az_durabletask_namespace_delete
-  name: az durabletask namespace delete
+- uid: az_durabletask_scheduler_delete
+  name: az durabletask scheduler delete
   summary: |-
-    Delete a Namespace.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az durabletask namespace' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Delete a Scheduler.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az durabletask namespace delete [--ids]
+    az durabletask scheduler delete [--ids]
                                     [--name]
                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--resource-group]
@@ -71,22 +73,22 @@ directCommands:
                                     [--yes]
   examples:
   - summary: |-
-      Delete a namespace
-    syntax: az durabletask namespace delete -g resource-group-name -n namespace-name
+      Delete a scheduler
+    syntax: az durable-task scheduler delete --resource-group testrg --scheduler-name testscheduler
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --namespace-name -n
+  - name: --name --scheduler-name -n
     summary: |-
-      The name of the service.
+      The name of the Scheduler.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
-      The name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -94,22 +96,20 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
-- uid: az_durabletask_namespace_list
-  name: az durabletask namespace list
+- uid: az_durabletask_scheduler_list
+  name: az durabletask scheduler list
   summary: |-
-    List Namespace resources by subscription ID.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az durabletask namespace' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    List Schedulers by subscription.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az durabletask namespace list [--max-items]
+    az durabletask scheduler list [--max-items]
                                   [--next-token]
                                   [--resource-group]
   examples:
   - summary: |-
-      List all namespaces in a resource group
-    syntax: az durabletask namespace list -g resource-group-name
+      List all schedulers in a resource group
+    syntax: az durable-task scheduler list -g testrg
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -119,47 +119,43 @@ directCommands:
       Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
-      The name of the resource group.
-- uid: az_durabletask_namespace_show
-  name: az durabletask namespace show
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_durabletask_scheduler_show
+  name: az durabletask scheduler show
   summary: |-
-    Get a Namespace.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az durabletask namespace' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Get a Scheduler.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az durabletask namespace show [--ids]
+    az durabletask scheduler show [--ids]
                                   [--name]
                                   [--resource-group]
                                   [--subscription]
   examples:
   - summary: |-
-      Show information on a particular namespace
-    syntax: az durabletask namespace show -g resource-group-name -n namespace-name
+      Show information on a particular scheduler
+    syntax: az durable-task scheduler show --resource-group testrg --scheduler-name testscheduler
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --namespace-name -n
+  - name: --name --scheduler-name -n
     summary: |-
-      The name of the namespace.
+      The name of the Scheduler.
   - name: --resource-group -g
     summary: |-
-      The name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_durabletask_namespace_update
-  name: az durabletask namespace update
+- uid: az_durabletask_scheduler_update
+  name: az durabletask scheduler update
   summary: |-
-    Update a Namespace.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az durabletask namespace' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Update a Scheduler.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az durabletask namespace update [--add]
+    az durabletask scheduler update [--add]
                                     [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--ids]
                                     [--ip-allowlist]
@@ -168,6 +164,8 @@ directCommands:
                                     [--remove]
                                     [--resource-group]
                                     [--set]
+                                    [--sku-capacity]
+                                    [--sku-name]
                                     [--subscription]
                                     [--tags]
   optionalParameters:
@@ -183,10 +181,10 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --ip-allowlist
     summary: |-
-      IP allow list for durable task service. Values can be Pv4, IPv6 or CIDR  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --name --namespace-name -n
+      IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --name --scheduler-name -n
     summary: |-
-      The name of the service.
+      The name of the Scheduler.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -196,26 +194,30 @@ directCommands:
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
-      The name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --sku-capacity
+    summary: |-
+      The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy.
+  - name: --sku-name
+    summary: |-
+      The name of the SKU.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-- uid: az_durabletask_namespace_wait
-  name: az durabletask namespace wait
+- uid: az_durabletask_scheduler_wait
+  name: az durabletask scheduler wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az durabletask namespace' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
-    az durabletask namespace wait [--created]
+    az durabletask scheduler wait [--created]
                                   [--custom]
                                   [--deleted]
                                   [--exists]
@@ -249,12 +251,12 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
-  - name: --name --namespace-name -n
+  - name: --name --scheduler-name -n
     summary: |-
-      The name of the namespace.
+      The name of the Scheduler.
   - name: --resource-group -g
     summary: |-
-      The name of the resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -267,12 +269,12 @@ directCommands:
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
 commands:
-- az_durabletask_namespace_create
-- az_durabletask_namespace_delete
-- az_durabletask_namespace_list
-- az_durabletask_namespace_show
-- az_durabletask_namespace_update
-- az_durabletask_namespace_wait
+- az_durabletask_scheduler_create
+- az_durabletask_scheduler_delete
+- az_durabletask_scheduler_list
+- az_durabletask_scheduler_show
+- az_durabletask_scheduler_update
+- az_durabletask_scheduler_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -298,4 +300,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage Durabletask namespaces.
+  description: Commands to manage Durabletask schedulers.
