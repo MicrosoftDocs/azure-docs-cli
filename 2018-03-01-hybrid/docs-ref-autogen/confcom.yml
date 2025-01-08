@@ -26,11 +26,13 @@ directCommands:
                               [--fragments-json]
                               [--generate-import]
                               [--image]
+                              [--image-target]
                               [--input]
                               [--key]
                               [--minimum-svn]
                               [--namespace]
                               [--no-print]
+                              [--omit-id]
                               [--output-filename]
                               [--outraw]
                               [--svn]
@@ -45,10 +47,16 @@ directCommands:
     syntax: az confcom acifragmentgen --input "./config.json" --namespace "my-namespace" --debug-mode
   - summary: |-
       Generate an import statement for a signed local fragment
-    syntax: az confcom acifragmentgen --fragment-path "./fragment.json" --generate-import --minimum-svn 1
+    syntax: az confcom acifragmentgen --fragment-path "./fragment.rego.cose" --generate-import --minimum-svn 1
   - summary: |-
       Generate a fragment and COSE sign it with a key and chain
-    syntax: az confcom acifragmentgen --image mcr.microsoft.com/azuredocs/aci-helloworld --key "./key.pem" --chain "./chain.pem" --svn 1 --namespace contoso --no-print
+    syntax: az confcom acifragmentgen --input "./config.json" --key "./key.pem" --chain "./chain.pem" --svn 1 --namespace contoso --no-print
+  - summary: |-
+      Generate a fragment import from an image name
+    syntax: az confcom acifragmentgen --image <my-image> --generate-import --minimum-svn 1
+  - summary: |-
+      Attach a fragment to a specified image
+    syntax: az confcom acifragmentgen --input "./config.json" --key "./key.pem" --chain "./chain.pem" --svn 1 --namespace contoso --upload-fragment --image-target <my-image>
   optionalParameters:
   - name: --algo
     defaultValue: "ES384"
@@ -82,6 +90,9 @@ directCommands:
   - name: --image
     summary: |-
       Image to use for the generated policy fragment.
+  - name: --image-target
+    summary: |-
+      Image target where the generated policy fragment is attached.
   - name: --input -i
     summary: |-
       Path to a JSON file containing the configuration for the generated policy fragment.
@@ -98,6 +109,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not print the generated policy fragment to stdout.
+  - name: --omit-id
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated policy will not contain the ID field. This will keep the policy from being tied to a specific image name and tag. This is helpful if the image being used will be present in multiple registries and used interchangeably.
   - name: --output-filename
     summary: |-
       Save output policy to given file path.
@@ -204,7 +219,7 @@ directCommands:
   - name: --omit-id
     defaultValue: "False"
     summary: |-
-      When enabled, the generated policy will not contain the ID field. This will keep the policy from being tied to a specific image name and tag.
+      When enabled, the generated policy will not contain the ID field. This will keep the policy from being tied to a specific image name and tag. This is helpful if the image being used will be present in multiple registries and used interchangeably.
   - name: --outraw
     defaultValue: "False"
     summary: |-
