@@ -15,22 +15,27 @@ keywords: Install azure cli, azure cli download, cli for windows, install azure 
 
 The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container.
 
-For Windows, the Azure CLI is installed via an MSI or a ZIP package, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
+For Windows, the Azure CLI is installed via an MSI,  a ZIP package or as a module in an existing python installation via pip. All three options give you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 When you perform an installation for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
-**There are four ways to install the Azure CLI in Windows:**
+**There are five ways to install the Azure CLI in Windows:**
 
 * [Microsoft Installer (MSI)](?tabs=azure-cli#install-or-update)
 * [Microsoft Installer (MSI) in PowerShell](?tabs=powershell#install-or-update)
 * [Windows package manager](?tabs=winget#install-or-update)
 * [ZIP package](?tabs=zip#install-or-update)
+* [Python Package Manager (pip)](?tabs=pip#install-or-update)
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
 ## Install or update
 
-The MSI and ZIP distributable are used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI updates any existing version.
+The MSI requires local admin permission and installs or updates the Azure CLI for all users. You don't need to uninstall current versions before using the MSI installer because the MSI updates any existing version. Winget installs the msi version.
+
+The Zip install is entirely manual and you need to remove the old version before replacing it.
+
+A pip install can be local or global.
 
 > [!IMPORTANT]
 > After the installation is complete, you will need to **close and reopen any active terminal window to use the Azure CLI**.
@@ -135,6 +140,29 @@ For example, to install the 64-bit ZIP of Azure CLI version 2.57.0, your URL wou
 Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The ZIP package is available from version 2.57.0. Only 64-bit is available.
 
 ---
+
+# [Python Package manager](#tab/pip)
+
+### pip
+
+Azure CLi is distributed as a python module on [PyPi](https://pypi.org/) and can therefore be installed with pip.
+
+
+> [!IMPORTANT]
+> [Currently Python 3.13 is not supported](https://github.com/Azure/azure-cli/issues/29640) so you must install Python 3.12.8 or earlier.
+> Due to path length limitations you cannot install Azure CLI as a pip module from a microsoft store installed version of python.
+
+### Getting python and verifying the python version
+
+There are many ways to install Python on your system, but the easiest way is to use the winget command `winget install Python.Python.3.12`.
+
+### Latest version
+
+Simply type `pip install azure-cli` to install python. If python is installed for all users you might need to run `pip install azure-cli --user` to install it in your user folder.
+
+### Specific version
+
+If you prefer, you can install a specific version of the Azure CLI python module by specifying it on the command line. For example to install the 2.57.0 version of the Azure ClI module you type `pip install azure-cli==2.57.0`.
 
 ## Run the Azure CLI
 
