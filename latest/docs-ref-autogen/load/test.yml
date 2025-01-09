@@ -14,6 +14,78 @@ isPreview: true
 previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
 sourceType: Extension
 directCommands:
+- uid: az_load_test_compare-to-baseline
+  name: az load test compare-to-baseline
+  summary: |-
+    Compare the sampler statistics from recent test runs with those of the baseline test run.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'load test' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az load test compare-to-baseline --load-test-resource
+                                     --test-id
+                                     [--aggregation {MAX, MEAN, MEDIAN, MIN, P75, P90, P95, P96, P98, P99, P999, P9999}]
+                                     [--resource-group]
+  examples:
+  - summary: |-
+      Compare recent test runs to baseline.
+    syntax: az load test compare-to-baseline --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id -o table
+  - summary: |-
+      Compare recent test runs to baseline with specific aggregation.
+    syntax: az load test compare-to-baseline --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id --aggregation P95 -o table
+  requiredParameters:
+  - isRequired: true
+    name: --load-test-resource --name -n
+    summary: |-
+      Name or ARM resource ID of the Load Testing resource.
+  - isRequired: true
+    name: --test-id -t
+    summary: |-
+      Test ID of the load test.
+  optionalParameters:
+  - name: --aggregation
+    defaultValue: "MEAN"
+    parameterValueGroup: "MAX, MEAN, MEDIAN, MIN, P75, P90, P95, P96, P98, P99, P999, P9999"
+    summary: |-
+      Specify the aggregation method for response time.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_load_test_convert-to-jmx
+  name: az load test convert-to-jmx
+  summary: |-
+    Convert a URL type test to JMX test.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'load test' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az load test convert-to-jmx --load-test-resource
+                                --test-id
+                                [--resource-group]
+                                [--yes]
+  examples:
+  - summary: |-
+      Convert to JMX test.
+    syntax: az load test convert-to-jmx --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id
+  requiredParameters:
+  - isRequired: true
+    name: --load-test-resource --name -n
+    summary: |-
+      Name or ARM resource ID of the Load Testing resource.
+  - isRequired: true
+    name: --test-id -t
+    summary: |-
+      Test ID of the load test.
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_load_test_create
   name: az load test create
   summary: |-
@@ -37,11 +109,13 @@ directCommands:
                         [--keyvault-reference-id]
                         [--load-test-config-file]
                         [--no-wait]
+                        [--regionwise-engines]
                         [--resource-group]
                         [--secret]
                         [--split-csv]
                         [--subnet-id]
                         [--test-plan]
+                        [--test-type {JMX, URL}]
   examples:
   - summary: |-
       Create a test with load test config file.
@@ -69,6 +143,12 @@ directCommands:
       az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --display-name "Sample Name" --autostop disable
 
       az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --display-name "Sample Name" --autostop enable
+  - summary: |-
+      Create a test with a multi-region load configuration using region names in the format accepted by Azure Resource Manager (ARM). Ensure the specified regions are supported by Azure Load Testing. Multi-region load tests are restricted to public endpoints only.
+    syntax: az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --engine-instances 3 --regionwise-engines eastus=1 westus2=1 germanywestcentral=1 --test-plan sample-jmx.jmx
+  - summary: |-
+      Create an advanced URL test with multiple HTTP requests using a JSON file.
+    syntax: az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --test-plan ~/resources/sample-url-requests.json --test-type URL
   requiredParameters:
   - isRequired: true
     name: --load-test-resource --name -n
@@ -116,6 +196,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --regionwise-engines
+    summary: |-
+      Specify the engine count for each region in the format: region1=engineCount1 region2=engineCount2 .... Use region names in the format accepted by Azure Resource Manager (ARM). Ensure the regions are supported by Azure Load Testing. Multi-region load tests can only target public endpoints.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -130,7 +213,11 @@ directCommands:
       Resource ID of the subnet to use for private load test.
   - name: --test-plan
     summary: |-
-      Path to the JMeter script.
+      Reference to the test plan file. If `testType: JMX`: path to the JMeter script. If `testType: URL`: path to the requests JSON file.
+  - name: --test-type
+    parameterValueGroup: "JMX, URL"
+    summary: |-
+      Type of the load test.
 - uid: az_load_test_delete
   name: az load test delete
   summary: |-
@@ -231,6 +318,40 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_load_test_set-baseline
+  name: az load test set-baseline
+  summary: |-
+    Set a test run as the baseline for comparison with other runs in the test.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'load test' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az load test set-baseline --load-test-resource
+                              --test-id
+                              --test-run-id
+                              [--resource-group]
+  examples:
+  - summary: |-
+      Set baseline test run.
+    syntax: az load test set-baseline --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id --test-run-id sample-associated-test-run-id
+  requiredParameters:
+  - isRequired: true
+    name: --load-test-resource --name -n
+    summary: |-
+      Name or ARM resource ID of the Load Testing resource.
+  - isRequired: true
+    name: --test-id -t
+    summary: |-
+      Test ID of the load test.
+  - isRequired: true
+    name: --test-run-id -r
+    summary: |-
+      Test run ID of the load test run.
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_load_test_show
   name: az load test show
   summary: |-
@@ -283,6 +404,7 @@ directCommands:
                         [--keyvault-reference-id]
                         [--load-test-config-file]
                         [--no-wait]
+                        [--regionwise-engines]
                         [--resource-group]
                         [--secret]
                         [--split-csv]
@@ -304,6 +426,12 @@ directCommands:
   - summary: |-
       Update the Key Vault reference identity to system assigned Managed Identity.
     syntax: az load test update --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id --keyvault-reference-id null
+  - summary: |-
+      Update autostop criteria.
+    syntax: az load test update --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id --autostop-error-rate 90 --autostop-time-window 180
+  - summary: |-
+      Update multi-region load configuration.
+    syntax: az load test update --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id --engine-instances 5 --regionwise-engines eastus=2 westus2=1 eastasia=2
   requiredParameters:
   - isRequired: true
     name: --load-test-resource --name -n
@@ -351,6 +479,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --regionwise-engines
+    summary: |-
+      Specify the engine count for each region in the format: region1=engineCount1 region2=engineCount2 .... Use region names in the format accepted by Azure Resource Manager (ARM). Ensure the regions are supported by Azure Load Testing. Multi-region load tests can only target public endpoints.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -365,12 +496,14 @@ directCommands:
       Resource ID of the subnet to use for private load test.
   - name: --test-plan
     summary: |-
-      Path to the JMeter script.
+      Reference to the test plan file. If `testType: JMX`: path to the JMeter script. If `testType: URL`: path to the requests JSON file.
 commands:
 - az_load_test_app-component
 - az_load_test_app-component_add
 - az_load_test_app-component_list
 - az_load_test_app-component_remove
+- az_load_test_compare-to-baseline
+- az_load_test_convert-to-jmx
 - az_load_test_create
 - az_load_test_delete
 - az_load_test_download-files
@@ -384,6 +517,7 @@ commands:
 - az_load_test_server-metric_add
 - az_load_test_server-metric_list
 - az_load_test_server-metric_remove
+- az_load_test_set-baseline
 - az_load_test_show
 - az_load_test_update
 globalParameters:
