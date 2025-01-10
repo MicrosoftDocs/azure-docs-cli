@@ -14,7 +14,7 @@ The Azure CLI supports several authentication methods. Restrict sign-in permissi
 
 ## Sign into Azure with Azure CLI
 
-There are five authentication options when working with the Azure CLI:
+There are four authentication options when working with the Azure CLI:
 
 | Authentication method | Advantage |
 |-|-|
