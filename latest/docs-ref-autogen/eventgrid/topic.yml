@@ -1,14 +1,10 @@
 ### YamlMime:AzureCLIGroup
 uid: az_eventgrid_topic
 name: az eventgrid topic
-importantNote: >-
-  > [!NOTE]
-
-  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure Event Grid topics.
 status: GA
-sourceType: Core and Extension
+sourceType: Core
 directCommands:
 - uid: az_eventgrid_topic_create
   name: az eventgrid topic create
@@ -127,86 +123,6 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
-- uid: az_eventgrid_topic_create(eventgrid)
-  name: az eventgrid topic create
-  extensionSuffix: eventgrid
-  summary: |-
-    Create a topic.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az eventgrid' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az eventgrid topic create --location
-                              --name
-                              --resource-group
-                              [--identity {noidentity, systemassigned}]
-                              [--inbound-ip-rules]
-                              [--input-mapping-default-values]
-                              [--input-mapping-fields]
-                              [--input-schema {cloudeventschemav1_0, customeventschema, eventgridschema}]
-                              [--public-network-access {disabled, enabled}]
-                              [--sku {basic, premium}]
-                              [--tags]
-  examples:
-  - summary: |-
-      Create a new topic.
-    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2
-  - summary: |-
-      Create a new topic with custom input mappings.
-    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=myTopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
-  - summary: |-
-      Create a new topic that accepts events published in CloudEvents V1.0 schema.
-    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema cloudeventschemav1_0
-  - summary: |-
-      Create a new topic which allows specific inbound ip rules with Basic Sku and system assigned identity
-    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2 --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --sku Basic --identity systemassigned
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the topic.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --identity
-    parameterValueGroup: "noidentity, systemassigned"
-    summary: |-
-      The identity type of the resource (e.g., topic or domain).
-  - name: --inbound-ip-rules
-    summary: |-
-      List of inbound IP rules.
-    description: |-
-      List of inbound IP rules specifying IP Address in CIDR notation e.g., 10.0.0.0/8 along with corresponding Action to perform based on the match or no match of the IpMask. Possible values include - Allow.
-  - name: --input-mapping-default-values
-    summary: |-
-      When input-schema is specified as customeventschema, this parameter can be used to specify input mappings based on default values. You can use this parameter when your custom schema does not include a field that corresponds to one of the three fields supported by this parameter. Specify space separated mappings in 'key=value' format. Allowed key names are 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the default values to be used for the mapping and they will be used only when the published event doesn't have a valid mapping for a particular field.
-  - name: --input-mapping-fields
-    summary: |-
-      When input-schema is specified as customeventschema, this parameter is used to specify input mappings based on field names. Specify space separated mappings in 'key=value' format. Allowed key names are 'id', 'topic', 'eventtime', 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the names of the fields in the custom input schema. If a mapping for either 'id' or 'eventtime' is not provided, Event Grid will auto-generate a default value for these two fields.
-  - name: --input-schema
-    defaultValue: "eventgridschema"
-    parameterValueGroup: "cloudeventschemav1_0, customeventschema, eventgridschema"
-    summary: |-
-      Schema in which incoming events will be published to this topic/domain. If you specify customeventschema as the value for this parameter, you must also provide values for at least one of --input_mapping_default_values / --input_mapping_fields.
-  - name: --public-network-access
-    parameterValueGroup: "disabled, enabled"
-    summary: |-
-      This determines if traffic is allowed over public network. By default it is enabled. You can further restrict to specific IPs by configuring.
-  - name: --sku
-    defaultValue: "Basic"
-    parameterValueGroup: "basic, premium"
-    summary: |-
-      The Sku name of the resource.
-  - name: --tags
-    summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
 - uid: az_eventgrid_topic_delete
   name: az eventgrid topic delete
   summary: |-
@@ -214,37 +130,6 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventgrid/_help.py
-  syntax: >-
-    az eventgrid topic delete [--ids]
-                              [--name]
-                              [--resource-group]
-                              [--subscription]
-  examples:
-  - summary: |-
-      Delete a topic.
-    syntax: az eventgrid topic delete -g rg1 --name topic1
-  optionalParameters:
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
-    summary: |-
-      Name of the topic.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_eventgrid_topic_delete(eventgrid)
-  name: az eventgrid topic delete
-  extensionSuffix: eventgrid
-  summary: |-
-    Delete a topic.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az eventgrid' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
   syntax: >-
     az eventgrid topic delete [--ids]
                               [--name]
@@ -297,38 +182,6 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-- uid: az_eventgrid_topic_list(eventgrid)
-  name: az eventgrid topic list
-  extensionSuffix: eventgrid
-  summary: |-
-    List available topics.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az eventgrid' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az eventgrid topic list [--odata-query]
-                            [--resource-group]
-  examples:
-  - summary: |-
-      List all topics in the current Azure subscription.
-    syntax: az eventgrid topic list
-  - summary: |-
-      List all topics in a resource group.
-    syntax: az eventgrid topic list -g rg1
-  - summary: |-
-      List all topics in a resource group whose name contains the pattern "XYZ"
-    syntax: az eventgrid topic list -g rg1 --odata-query "Contains(name, 'XYZ')"
-  - summary: |-
-      List all topics in a resource group except the domain with name "name1"
-    syntax: az eventgrid topic list -g rg1 --odata-query "NOT (name eq 'name1')"
-  optionalParameters:
-  - name: --odata-query
-    summary: |-
-      The query used to filter the results using OData syntax.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_eventgrid_topic_show
   name: az eventgrid topic show
   summary: |-
@@ -336,40 +189,6 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventgrid/_help.py
-  syntax: >-
-    az eventgrid topic show [--ids]
-                            [--name]
-                            [--resource-group]
-                            [--subscription]
-  examples:
-  - summary: |-
-      Show the details of a topic.
-    syntax: az eventgrid topic show -g rg1 -n topic1
-  - summary: |-
-      Show the details of a topic based on resource ID.
-    syntax: az eventgrid topic show --ids /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1
-  optionalParameters:
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
-    summary: |-
-      Name of the topic.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_eventgrid_topic_show(eventgrid)
-  name: az eventgrid topic show
-  extensionSuffix: eventgrid
-  summary: |-
-    Get the details of a topic.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az eventgrid' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
   syntax: >-
     az eventgrid topic show [--ids]
                             [--name]
@@ -460,65 +279,9 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
-- uid: az_eventgrid_topic_update(eventgrid)
-  name: az eventgrid topic update
-  extensionSuffix: eventgrid
-  summary: |-
-    Update a topic.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az eventgrid' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az eventgrid topic update [--identity {noidentity, systemassigned}]
-                              [--ids]
-                              [--inbound-ip-rules]
-                              [--name]
-                              [--public-network-access {disabled, enabled}]
-                              [--resource-group]
-                              [--sku {basic, premium}]
-                              [--subscription]
-                              [--tags]
-  examples:
-  - summary: |-
-      Update the properties of an existing topic with new sku, identity and public network access information.
-    syntax: az eventgrid topic update -g rg1 --name topic1 --sku Premium --identity systemassigned --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --tags Dept=IT --sku basic
-  optionalParameters:
-  - name: --identity
-    parameterValueGroup: "noidentity, systemassigned"
-    summary: |-
-      The identity type of the resource (e.g., topic or domain).
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --inbound-ip-rules
-    summary: |-
-      List of inbound IP rules specifying IP Address in CIDR notation e.g., 10.0.0.0/8 along with corresponding Action to perform based on the match or no match of the IpMask. Possible values include - Allow.
-  - name: --name -n
-    summary: |-
-      Name of the topic.
-  - name: --public-network-access
-    parameterValueGroup: "disabled, enabled"
-    summary: |-
-      This determines if traffic is allowed over public network. By default it is enabled. You can further restrict to specific IPs by configuring.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --sku
-    parameterValueGroup: "basic, premium"
-    summary: |-
-      The Sku name of the resource.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --tags
-    summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
 commands:
 - az_eventgrid_topic_create
-- az_eventgrid_topic_create(eventgrid)
 - az_eventgrid_topic_delete
-- az_eventgrid_topic_delete(eventgrid)
 - az_eventgrid_topic_event-subscription
 - az_eventgrid_topic_event-subscription_create
 - az_eventgrid_topic_event-subscription_delete
@@ -527,24 +290,10 @@ commands:
 - az_eventgrid_topic_event-subscription_update
 - az_eventgrid_topic_key
 - az_eventgrid_topic_key_list
-- az_eventgrid_topic_key_list(eventgrid)
 - az_eventgrid_topic_key_regenerate
-- az_eventgrid_topic_key_regenerate(eventgrid)
 - az_eventgrid_topic_list
-- az_eventgrid_topic_list(eventgrid)
-- az_eventgrid_topic_private-endpoint-connection
-- az_eventgrid_topic_private-endpoint-connection_approve
-- az_eventgrid_topic_private-endpoint-connection_delete
-- az_eventgrid_topic_private-endpoint-connection_list
-- az_eventgrid_topic_private-endpoint-connection_reject
-- az_eventgrid_topic_private-endpoint-connection_show
-- az_eventgrid_topic_private-link-resource
-- az_eventgrid_topic_private-link-resource_list
-- az_eventgrid_topic_private-link-resource_show
 - az_eventgrid_topic_show
-- az_eventgrid_topic_show(eventgrid)
 - az_eventgrid_topic_update
-- az_eventgrid_topic_update(eventgrid)
 globalParameters:
 - name: --debug
   summary: |-
@@ -570,4 +319,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
+  ms.date: 10/08/2022
   description: Manage Azure Event Grid topics.
