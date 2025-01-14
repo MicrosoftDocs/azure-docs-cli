@@ -101,7 +101,7 @@ directCommands:
   summary: |-
     Capture information for a stopped VM.
   description: |-
-    For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/capture-image.
+    For an end-to-end tutorial, see https://learn.microsoft.com/azure/virtual-machines/linux/capture-image.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -200,7 +200,7 @@ directCommands:
   summary: |-
     Create an Azure Virtual Machine.
   description: |-
-    For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/quick-create-cli.
+    For an end-to-end tutorial, see https://learn.microsoft.com/azure/virtual-machines/linux/quick-create-cli.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -209,6 +209,7 @@ directCommands:
                  --resource-group
                  [--accelerated-networking {false, true}]
                  [--accept-term]
+                 [--additional-events {false, true}]
                  [--admin-password]
                  [--admin-username]
                  [--asgs]
@@ -236,9 +237,12 @@ directCommands:
                  [--enable-hotpatching {false, true}]
                  [--enable-integrity-monitoring]
                  [--enable-proxy-agent {false, true}]
+                 [--enable-reboot {false, true}]
+                 [--enable-redeploy {false, true}]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
                  [--encryption-at-host {false, true}]
+                 [--encryption-identity]
                  [--ephemeral-os-disk {false, true}]
                  [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                  [--eviction-policy {Deallocate, Delete}]
@@ -336,7 +340,7 @@ directCommands:
       Create a VM by attaching to an unmanaged operating system disk from a VHD blob uri.
     syntax: az vm create -g MyResourceGroup -n MyVm --attach-os-disk https://vhd1234.blob.core.windows.net/vhds/osdisk1234.vhd --os-type linux --use-unmanaged-disk
   - summary: |-
-      Create an Debian11 VM using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init.
+      Create an Debian11 VM using a cloud-init script for configuration. See: https://learn.microsoft.com/azure/virtual-machines/linux/using-cloud-init.
     syntax: az vm create -g MyResourceGroup -n MyVm --image Debian11 --custom-data MyCloudInitScript.yml
   - summary: |-
       Create a Debian11 VM with SSH key authentication and a public DNS entry, located on an existing virtual network and availability set.
@@ -374,6 +378,9 @@ directCommands:
       Create a Debian11 VM with both system and user assigned identity.
     syntax: az vm create -n MyVm -g rg1 --image Debian11 --assign-identity [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: |-
+      Create a vm with user assigned identity and add encryption identity for Azure disk encryption
+    syntax: az vm create -n MyVm -g rg1 --image Debian11 --assign-identity myID --encryption-identity /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: |-
       Create a VM in an availability zone in the current resource group's region.
     syntax: az vm create -n MyVm -g MyResourceGroup --image CentOS85Gen2 --zone 1
   - summary: |-
@@ -402,12 +409,16 @@ directCommands:
   - name: --accept-term
     summary: |-
       Accept the license agreement and privacy statement.
+  - name: --additional-events --additional-scheduled-events
+    parameterValueGroup: "false, true"
+    summary: |-
+      The configuration parameter used while creating event grid and resource graph scheduled event setting.
   - name: --admin-password
     summary: |-
       Password for the VM if authentication type is 'Password'.
   - name: --admin-username
     summary: |-
-      Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
+      Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://learn.microsoft.com/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
   - name: --asgs
     summary: |-
       Space-separated list of existing application security groups to associate with the VM.
@@ -449,7 +460,7 @@ directCommands:
       Storage caching type for data disk(s), including 'None', 'ReadOnly', 'ReadWrite', etc. Use a singular value to apply on all disks, or use `<lun>=<vaule1> <lun>=<value2>` to configure individual disk.
   - name: --data-disk-delete-option
     summary: |-
-      Specify whether data disk should be deleted or detached upon VM deletion. If a single data disk is attached, the allowed values are Delete and Detach. For multiple data disks are attached, please use "<data_disk>=Delete <data_disk2>=Detach" to configure each disk.
+      Specify whether data disk should be deleted or detached upon VM deletion. If a single data disk is attached, the allowed values are Delete and Detach. For multiple data disks are attached, please use `<data_disk>=Delete <data_disk2>=Detach` to configure each disk.
   - name: --data-disk-encryption-sets
     summary: |-
       Names or IDs (space delimited) of disk encryption sets for data disks.
@@ -497,6 +508,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
+  - name: --enable-reboot --enable-user-reboot-scheduled-events
+    parameterValueGroup: "false, true"
+    summary: |-
+      The configuration parameter used while publishing scheduled events additional publishing targets.
+  - name: --enable-redeploy --enable-user-redeploy-scheduled-events
+    parameterValueGroup: "false, true"
+    summary: |-
+      The configuration parameter used while creating user initiated redeploy scheduled event setting creation.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -509,6 +528,9 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable Host Encryption for the VM or VMSS. This will enable the encryption for all the disks including Resource/Temp disk at host itself.
+  - name: --encryption-identity
+    summary: |-
+      Resource Id of the user managed identity which can be used for Azure disk encryption.
   - name: --ephemeral-os-disk
     parameterValueGroup: "false, true"
     summary: |-
@@ -535,7 +557,7 @@ directCommands:
     isPreview: true
   - name: --image
     summary: |-
-      The name of the operating system image as a URN alias, URN, custom image name or ID, custom image version ID, or VHD blob URI. In addition, it also supports shared gallery image. Please use the image alias including the version of the distribution you want to use. For example: please use Debian11 instead of Debian.' This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version". For more information, see https://docs.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage.
+      The name of the operating system image as a URN alias, URN, custom image name or ID, custom image version ID, or VHD blob URI. In addition, it also supports shared gallery image. Please use the image alias including the version of the distribution you want to use. For example: please use Debian11 instead of Debian.' This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version". For more information, see https://learn.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage.
     valueFrom: az sig image-version show-shared, az vm image list, az vm image show
   - name: --license-type
     parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server"
@@ -550,7 +572,7 @@ directCommands:
     isPreview: true
   - name: --nic-delete-option
     summary: |-
-      Specify what happens to the network interface when the VM is deleted. Use a singular value to apply on all resources, or use <Name>=<Value> to configure the delete behavior for individual resources. Possible options are Delete and Detach.
+      Specify what happens to the network interface when the VM is deleted. Use a singular value to apply on all resources, or use `<Name>=<Value>` to configure the delete behavior for individual resources. Possible options are Delete and Detach.
   - name: --nics
     summary: |-
       Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, VNet, public IP or NSG.
@@ -628,7 +650,7 @@ directCommands:
       Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --public-ip-address
     summary: |-
-      Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None ('""' in Azure CLI using PowerShell or --% operator). For Azure CLI using powershell core edition 7.3.4, specify  or "" (--public-ip-address  or --public-ip-address "").
+      Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" or '' for None ('""' in Azure CLI using PowerShell).
   - name: --public-ip-address-allocation
     parameterValueGroup: "dynamic, static"
   - name: --public-ip-address-dns-name
@@ -749,7 +771,7 @@ directCommands:
   summary: |-
     Deallocate a VM so that computing resources are no longer allocated (charges no longer apply). The status will change from 'Stopped' to 'Stopped (Deallocated)'.
   description: |-
-    For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/capture-image.
+    For an end-to-end tutorial, see https://learn.microsoft.com/azure/virtual-machines/linux/capture-image.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -852,7 +874,7 @@ directCommands:
   summary: |-
     Mark a VM as generalized, allowing it to be imaged for multiple deployments.
   description: |-
-    For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/capture-image.
+    For an end-to-end tutorial, see https://learn.microsoft.com/azure/virtual-machines/linux/capture-image.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -1012,7 +1034,7 @@ directCommands:
   summary: |-
     List details of Virtual Machines.
   description: |-
-    `--resource-group` can pass in an empty string as a parameter, which will output all VM information under the subscription. For more information on querying information about Virtual Machines, see https://docs.microsoft.com/cli/azure/query-az-cli2.
+    `--resource-group` can pass in an empty string as a parameter, which will output all VM information under the subscription. For more information on querying information about Virtual Machines, see https://learn.microsoft.com/cli/azure/query-az-cli2.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -1665,11 +1687,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
     az vm update [--add]
+                 [--additional-events {false, true}]
                  [--capacity-reservation-group]
                  [--disk-caching]
                  [--disk-controller-type {NVMe, SCSI}]
                  [--enable-hibernation {false, true}]
                  [--enable-proxy-agent {false, true}]
+                 [--enable-reboot {false, true}]
+                 [--enable-redeploy {false, true}]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
                  [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
@@ -1734,6 +1759,10 @@ directCommands:
     defaultValue: "[]"
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --additional-events --additional-scheduled-events
+    parameterValueGroup: "false, true"
+    summary: |-
+      The configuration parameter used while creating event grid and resource graph scheduled event setting.
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
@@ -1754,6 +1783,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
+  - name: --enable-reboot --enable-user-reboot-scheduled-events
+    parameterValueGroup: "false, true"
+    summary: |-
+      The configuration parameter used while publishing scheduled events additional publishing targets.
+  - name: --enable-redeploy --enable-user-redeploy-scheduled-events
+    parameterValueGroup: "false, true"
+    summary: |-
+      The configuration parameter used while creating user initiated redeploy scheduled event setting creation.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-

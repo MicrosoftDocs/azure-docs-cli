@@ -20,11 +20,8 @@ directCommands:
     az sig create --gallery-name
                   --resource-group
                   [--description]
-                  [--eula]
                   [--location]
-                  [--public-name-prefix]
-                  [--publisher-email]
-                  [--publisher-uri]
+                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                   [--tags]
   examples:
   - summary: |-
@@ -34,7 +31,7 @@ directCommands:
   - isRequired: true
     name: --gallery-name -r
     summary: |-
-      Gallery name.
+      The name of the Shared Image Gallery to be deleted.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -43,29 +40,19 @@ directCommands:
   - name: --description
     summary: |-
       The description of the gallery.
-  - name: --eula
-    summary: |-
-      Community gallery publisher eula.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - name: --public-name-prefix
+      Resource location  When not specified, the location of the resource group will be used.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Community gallery public name prefix.
-  - name: --publisher-email
-    summary: |-
-      Community gallery publisher contact email.
-  - name: --publisher-uri
-    summary: |-
-      Community gallery publisher uri.
+      Do not wait for the long-running operation to finish.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_sig_create(image-gallery)
   name: az sig create
   extensionSuffix: image-gallery
-  summary: |-
-    Create a shared image gallery.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -80,10 +67,6 @@ directCommands:
                   [--publisher-uri]
                   [--soft-delete {false, true}]
                   [--tags]
-  examples:
-  - summary: |-
-      Create a shared image gallery
-    syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery
   requiredParameters:
   - isRequired: true
     name: --gallery-name -r
@@ -160,8 +143,17 @@ directCommands:
     List galleries under a resource group.
   status: GA
   sourceType: Core
-  syntax: az sig list [--resource-group]
+  syntax: >-
+    az sig list [--max-items]
+                [--next-token]
+                [--resource-group]
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -175,25 +167,17 @@ directCommands:
     az sig show [--gallery-name]
                 [--ids]
                 [--resource-group]
-                [--select]
-                [--sharing-groups]
                 [--subscription]
   optionalParameters:
   - name: --gallery-name -r
     summary: |-
-      Gallery name.
+      The name of the Shared Image Gallery to be deleted.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --select
-    summary: |-
-      The select expression to apply on the operation.
-  - name: --sharing-groups
-    summary: |-
-      The expand query option to query shared gallery groups.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -229,76 +213,64 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_sig_update
-  name: az sig update
+- uid: az_sig_wait
+  name: az sig wait
   summary: |-
-    Update a share image gallery.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   syntax: >-
-    az sig update --gallery-name
-                  --resource-group
-                  [--add]
-                  [--eula]
-                  [--force-string]
-                  [--public-name-prefix]
-                  [--publisher-email]
-                  [--publisher-uri]
-                  [--remove]
-                  [--set]
-  examples:
-  - summary: |-
-      Enable gallery to be shared to subscription or tenant
-    syntax: >-
-      az sig update --resource-group myResourceGroup --gallery-name myGallery \
-
-      --permissions groups
-  - summary: |-
-      Update gallery from private to community
-    syntax: >-
-      az sig update -g myResourceGroup --gallery-name myGallery --permissions Community \
-
-      --publisher-uri myPublisherUri --publisher-email myPublisherEmail \
-
-      --eula myEula --public-name-prefix myPublicNamePrefix
-  requiredParameters:
-  - isRequired: true
-    name: --gallery-name -r
-    summary: |-
-      Gallery name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    az sig wait [--created]
+                [--custom]
+                [--deleted]
+                [--exists]
+                [--gallery-name]
+                [--ids]
+                [--interval]
+                [--resource-group]
+                [--subscription]
+                [--timeout]
+                [--updated]
   optionalParameters:
-  - name: --add
-    defaultValue: "[]"
-    summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
-  - name: --eula
-    summary: |-
-      Community gallery publisher eula.
-  - name: --force-string
+  - name: --created
     defaultValue: "False"
     summary: |-
-      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-  - name: --public-name-prefix
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
     summary: |-
-      Community gallery public name prefix.
-  - name: --publisher-email
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
     summary: |-
-      Community gallery publisher contact email.
-  - name: --publisher-uri
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
     summary: |-
-      Community gallery publisher uri.
-  - name: --remove
-    defaultValue: "[]"
+      Wait until the resource exists.
+  - name: --gallery-name -r
     summary: |-
-      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
-  - name: --set
-    defaultValue: "[]"
+      The name of the Shared Image Gallery to be deleted.
+  - name: --ids
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_sig_create
 - az_sig_create(image-gallery)
@@ -326,7 +298,7 @@ commands:
 - az_sig_share_enable-community
 - az_sig_show
 - az_sig_show-community
-- az_sig_update
+- az_sig_wait
 globalParameters:
 - name: --debug
   summary: |-
