@@ -8,7 +8,7 @@ importantNote: >-
 summary: |-
   Check if a private IP address is available for use within a virtual network.
 description: |-
-  To learn more about Virtual Networks visit https://docs.microsoft.com/azure/virtual-network/virtual-network-manage-network.
+  To learn more about Virtual Networks visit https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-network.
 status: GA
 sourceType: Core and Extension
 directCommands:
@@ -45,7 +45,7 @@ directCommands:
   summary: |-
     Create a virtual network.
   description: |-
-    You may also create a subnet at the same time by specifying a subnet name and (optionally) an address prefix. To learn about how to create a virtual network visit https://docs.microsoft.com/azure/virtual-network/manage-virtual-network#create-a-virtual-network.
+    You may also create a subnet at the same time by specifying a subnet name and (optionally) an address prefix. To learn about how to create a virtual network visit https://learn.microsoft.com/azure/virtual-network/manage-virtual-network#create-a-virtual-network.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -61,6 +61,7 @@ directCommands:
                            [--enable-encryption {0, 1, f, false, n, no, t, true, y, yes}]
                            [--encryption-enforcement-policy {AllowUnencrypted, DropUnencrypted}]
                            [--flowtimeout]
+                           [--ipam-allocations]
                            [--location]
                            [--network-security-group]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -77,6 +78,9 @@ directCommands:
   - summary: |-
       Create a virtual network.
     syntax: az network vnet create --address-prefixes 10.0.0.0/16 --name MyVirtualNetwork --resource-group MyResourceGroup --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/24
+  - summary: |-
+      Create virtual network with an IPAM pool allocation.
+    syntax: az network vnet create -g MyResourceGroup -n MyVNet --ipam-allocations [0].number-of-ip-addresses=100 [0].id=ipam-pool-resource-id
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -90,7 +94,7 @@ directCommands:
   - name: --address-prefixes
     defaultValue: "['10.0.0.0/16']"
     summary: |-
-      Space-separated list of IP address prefixes for the VNet. Default: 10.0.0.0/16.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Space-separated list of IP address prefixes for the VNet. Default: 10.0.0.0/16. If provided, --ipam-allocations should not be specified.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --bgp-community
     summary: |-
       The BGP community associated with the virtual network.
@@ -119,6 +123,9 @@ directCommands:
   - name: --flowtimeout
     summary: |-
       The FlowTimeout value (in minutes) for the Virtual Network.
+  - name: --ipam-allocations --ipam-pool-prefix-allocations
+    summary: |-
+      A list of IPAM Pools allocating IP address prefixes. If provided, --address-prefixes would be empty and should not be specified.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
       Resource location.
@@ -251,7 +258,7 @@ directCommands:
   summary: |-
     List which services support VNet service tunneling in a given region.
   description: |-
-    To learn more about service endpoints visit https://docs.microsoft.com/azure/virtual-network/virtual-network-service-endpoints-configure#azure-cli.
+    To learn more about service endpoints visit https://learn.microsoft.com/azure/virtual-network/virtual-network-service-endpoints-configure#azure-cli.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -327,6 +334,7 @@ directCommands:
                            [--flowtimeout]
                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                            [--ids]
+                           [--ipam-allocations]
                            [--name]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                            [--pe-vnet-policies {Basic, Disabled}]
@@ -351,7 +359,7 @@ directCommands:
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --address-prefixes
     summary: |-
-      Space-separated list of IP address prefixes for the VNet.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Space-separated list of IP address prefixes for the VNet. Default: 10.0.0.0/16. If provided, --ipam-allocations should not be specified.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --bgp-community
     summary: |-
       The BGP community associated with the virtual network.
@@ -383,6 +391,9 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --ipam-allocations --ipam-pool-prefix-allocations
+    summary: |-
+      A list of IPAM Pools allocating IP address prefixes. If provided, --address-prefixes would be empty and should not be specified.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --name -n
     summary: |-
       The virtual network (VNet) name.
@@ -532,4 +543,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: To learn more about Virtual Networks visit https://docs.microsoft.com/azure/virtual-network/virtual-network-manage-network.
+  description: To learn more about Virtual Networks visit https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-network.
