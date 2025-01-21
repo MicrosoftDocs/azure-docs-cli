@@ -168,6 +168,41 @@ directCommands:
   - name: --workspace-name -w
     summary: |-
       Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
+- uid: az_ml_component_prepare-for-sign
+  name: az ml component prepare-for-sign
+  summary: |-
+    Prepare a component for signing.
+  description: |-
+    Preparing a component for sign generates 2 files: catalog.json and catalog.json.sig, these files contain the SHA256 generated for each file that is present in the target folder. If the files are already present, they will be deleted and new files will be created with updated signature.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az ml component prepare-for-sign --file
+                                     [--registry-name]
+                                     [--resource-group]
+                                     [--workspace-name]
+  examples:
+  - summary: |-
+      Prepare a component from a YAML specification file for signing
+    syntax: az ml component prepare-for-sign --file my_component.yml --resource-group my-resource-group --workspace-name my-workspace
+  - summary: |-
+      Prepare a component in registry from a YAML specification file for signing
+    syntax: az ml component prepare-for-sign --file my_component.yml --registry-name my-registry-name --resource-group my-resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: |-
+      Local path to the YAML file containing the Azure ML component specification. The YAML reference docs for component can be found at: https://aka.ms/ml-cli-v2-component-command-yaml-reference.
+  optionalParameters:
+  - name: --registry-name
+    summary: |-
+      If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --workspace-name -w
+    summary: |-
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_component_restore
   name: az ml component restore
   summary: |-
@@ -316,6 +351,7 @@ commands:
 - az_ml_component_archive
 - az_ml_component_create
 - az_ml_component_list
+- az_ml_component_prepare-for-sign
 - az_ml_component_restore
 - az_ml_component_show
 - az_ml_component_update
