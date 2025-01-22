@@ -46,7 +46,7 @@ directCommands:
                      [--post {false, true}]
                      [--pre {false, true}]
                      [--resource-name]
-                     [--resources {asset, assetendpointprofile, assettype, broker, brokerlistener, dataflow, dataflowendpoint, dataflowprofile}]
+                     [--resources {asset, assetendpointprofile, assettype, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile}]
   examples:
   - summary: |-
       Basic usage. Checks overall IoT Operations health with summary output.
@@ -92,7 +92,7 @@ directCommands:
     summary: |-
       Only run checks for the specific resource name. The name is case insensitive. Glob patterns '*' and '?' are supported. Note: Only alphanumeric characters, hyphens, '?' and '*' are allowed.
   - name: --resources
-    parameterValueGroup: "asset, assetendpointprofile, assettype, broker, brokerlistener, dataflow, dataflowendpoint, dataflowprofile"
+    parameterValueGroup: "asset, assetendpointprofile, assettype, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile"
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
 - uid: az_iot_ops_create
@@ -134,6 +134,7 @@ directCommands:
                       [--runtime-socket]
                       [--tags]
                       [--trust-settings]
+                      [--yes {false, true}]
   examples:
   - summary: |-
       Create the target instance with minimum input.
@@ -256,7 +257,11 @@ directCommands:
       Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
   - name: --trust-settings
     summary: |-
-      Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerName`, `configMapName`, `issuerKind`, `configMapKey`. If not used, a system provided self-signed trust bundle is configured.
+      Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerName`, `issuerKind`, `configMapName`, `configMapKey`. If not used, a system provided self-signed trust bundle is configured.
+  - name: --yes -y
+    parameterValueGroup: "false, true"
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
 - uid: az_iot_ops_delete
   name: az iot ops delete
   summary: |-
@@ -477,34 +482,52 @@ directCommands:
 - uid: az_iot_ops_upgrade
   name: az iot ops upgrade
   summary: |-
-    Upgrade an IoT Operations instance to the latest version.
+    Upgrade an IoT Operations instance.
   description: |-
-    WARNING: This command may fail and require you to delete and re-create your cluster and instance.
-
-    Upgrade an IoT Operations instance, including updating the extensions to the latest versions.
-    Use this command if `az iot ops show` or similiar commands are failing.
-
-    Schema registry resource Id is an optional parameter and may be required in specific scenarios.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: This command has been deprecated and will be removed in a future release.
+    By default, with no options, the command will evaluate versions of the
+    deployed cluster side services that make up IoT Operations and compare them
+    with the built-in deployment that would be executed with `az iot ops init`
+    and `az iot ops create`.
+  status: GA
   sourceType: Extension
   syntax: >-
     az iot ops upgrade --name
                        --resource-group
+                       [--acs-config]
+                       [--acs-config-sync {add, full, none}]
+                       [--acs-train]
+                       [--acs-version]
                        [--no-progress {false, true}]
-                       [--sr-resource-id]
+                       [--ops-config]
+                       [--ops-config-sync {add, full, none}]
+                       [--ops-train]
+                       [--ops-version]
+                       [--osm-config]
+                       [--osm-config-sync {add, full, none}]
+                       [--osm-train]
+                       [--osm-version]
+                       [--plat-config]
+                       [--plat-config-sync {add, full, none}]
+                       [--plat-train]
+                       [--plat-version]
+                       [--ssc-config]
+                       [--ssc-config-sync {add, full, none}]
+                       [--ssc-train]
+                       [--ssc-version]
                        [--yes {false, true}]
   examples:
   - summary: |-
       Upgrade the instance with minimal inputs.
     syntax: az iot ops upgrade --name myinstance -g myresourcegroup
   - summary: |-
-      Skip the conformation prompt during instance upgrade.
+      Skip the confirmation prompt for instance upgrade. Useful for CI scenarios.
     syntax: az iot ops upgrade --name myinstance -g myresourcegroup -y
   - summary: |-
-      Upgrade the instance and specify the schema registry resource Id.
-    syntax: az iot ops upgrade --name myinstance -g myresourcegroup --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID
+      Set extension config settings that apply should be during upgrade. To remove a setting provide the key with no value.
+    syntax: az iot ops upgrade --name myinstance -g myresourcegroup --ops-config key1=value1 deletekey
+  - summary: |-
+      Provide an explicit IoT Operations version or release train to upgrade to. Not recommended for typical use cases.
+    syntax: az iot ops upgrade --name myinstance -g myresourcegroup --ops-version x.y.z --ops-train preview
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -515,13 +538,90 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acs-config
+    summary: |-
+      ContainerStorage arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+  - name: --acs-config-sync
+    defaultValue: "full"
+    parameterValueGroup: "add, full, none"
+    summary: |-
+      ContainerStorage arc extension config sync mode. This option is applicable if an upgrade is requested to a known version. Mode 'full' will alter current config to the target, 'add' will apply additive changes only, 'none' is a no-op.
+    isDeprecated: true
+    deprecateInfo: Argument 'acs_config_sync_mode' has been deprecated and will be removed in a future release.
+  - name: --acs-train
+    summary: |-
+      Use to override the built-in containerStorage arc extension release train.
+  - name: --acs-version
+    summary: |-
+      Use to override the built-in containerStorage arc extension version.
   - name: --no-progress
     parameterValueGroup: "false, true"
     summary: |-
       Disable visual representation of work.
-  - name: --sr-resource-id
+  - name: --ops-config
     summary: |-
-      The schema registry resource Id to use with IoT Operations. Required if the schema registry resource Id is no longer found within IoT Operations.
+      IotOperations arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+  - name: --ops-config-sync
+    defaultValue: "full"
+    parameterValueGroup: "add, full, none"
+    summary: |-
+      IotOperations arc extension config sync mode. This option is applicable if an upgrade is requested to a known version. Mode 'full' will alter current config to the target, 'add' will apply additive changes only, 'none' is a no-op.
+    isDeprecated: true
+    deprecateInfo: Argument 'ops_config_sync_mode' has been deprecated and will be removed in a future release.
+  - name: --ops-train
+    summary: |-
+      Use to override the built-in iotOperations arc extension release train.
+  - name: --ops-version
+    summary: |-
+      Use to override the built-in iotOperations arc extension version.
+  - name: --osm-config
+    summary: |-
+      OpenServiceMesh arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+  - name: --osm-config-sync
+    defaultValue: "full"
+    parameterValueGroup: "add, full, none"
+    summary: |-
+      OpenServiceMesh arc extension config sync mode. This option is applicable if an upgrade is requested to a known version. Mode 'full' will alter current config to the target, 'add' will apply additive changes only, 'none' is a no-op.
+    isDeprecated: true
+    deprecateInfo: Argument 'osm_config_sync_mode' has been deprecated and will be removed in a future release.
+  - name: --osm-train
+    summary: |-
+      Use to override the built-in openServiceMesh arc extension release train.
+  - name: --osm-version
+    summary: |-
+      Use to override the built-in openServiceMesh arc extension version.
+  - name: --plat-config
+    summary: |-
+      Platform arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+  - name: --plat-config-sync
+    defaultValue: "full"
+    parameterValueGroup: "add, full, none"
+    summary: |-
+      Platform arc extension config sync mode. This option is applicable if an upgrade is requested to a known version. Mode 'full' will alter current config to the target, 'add' will apply additive changes only, 'none' is a no-op.
+    isDeprecated: true
+    deprecateInfo: Argument 'plat_config_sync_mode' has been deprecated and will be removed in a future release.
+  - name: --plat-train
+    summary: |-
+      Use to override the built-in platform arc extension release train.
+  - name: --plat-version
+    summary: |-
+      Use to override the built-in platform arc extension version.
+  - name: --ssc-config
+    summary: |-
+      SecretStore arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+  - name: --ssc-config-sync
+    defaultValue: "full"
+    parameterValueGroup: "add, full, none"
+    summary: |-
+      SecretStore arc extension config sync mode. This option is applicable if an upgrade is requested to a known version. Mode 'full' will alter current config to the target, 'add' will apply additive changes only, 'none' is a no-op.
+    isDeprecated: true
+    deprecateInfo: Argument 'ssc_config_sync_mode' has been deprecated and will be removed in a future release.
+  - name: --ssc-train
+    summary: |-
+      Use to override the built-in secretStore arc extension release train.
+  - name: --ssc-version
+    summary: |-
+      Use to override the built-in secretStore arc extension version.
   - name: --yes -y
     parameterValueGroup: "false, true"
     summary: |-
@@ -541,6 +641,8 @@ commands:
 - az_iot_ops_asset_delete
 - az_iot_ops_asset_endpoint
 - az_iot_ops_asset_endpoint_create
+- az_iot_ops_asset_endpoint_create_custom
+- az_iot_ops_asset_endpoint_create_onvif
 - az_iot_ops_asset_endpoint_create_opcua
 - az_iot_ops_asset_endpoint_delete
 - az_iot_ops_asset_endpoint_query
