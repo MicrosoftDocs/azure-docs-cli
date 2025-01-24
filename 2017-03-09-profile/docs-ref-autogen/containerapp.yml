@@ -347,7 +347,7 @@ directCommands:
                            [--registry-username]
                            [--repo]
                            [--revision-suffix]
-                           [--revisions-mode {multiple, single}]
+                           [--revisions-mode {labels, multiple, single}]
                            [--runtime {generic, java}]
                            [--scale-rule-auth]
                            [--scale-rule-http-concurrency]
@@ -363,6 +363,7 @@ directCommands:
                            [--source]
                            [--system-assigned]
                            [--tags]
+                           [--target-label]
                            [--target-port]
                            [--termination-grace-period]
                            [--token]
@@ -615,14 +616,14 @@ directCommands:
       The username to log in to container registry.
   - name: --repo
     summary: |-
-      Create an app via GitHub Actions in the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.
+      Create an app via GitHub Actions in the format: https://github.com/owner/repository-name or owner/repository-name.
     isPreview: true
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
   - name: --revisions-mode
     defaultValue: "single"
-    parameterValueGroup: "multiple, single"
+    parameterValueGroup: "labels, multiple, single"
     summary: |-
       The active revisions mode for the container app.
   - name: --runtime
@@ -677,6 +678,10 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --target-label
+    summary: |-
+      The label to apply to new revisions. Required for revisions-mode 'labels'.
+    isPreview: true
   - name: --target-port
     summary: |-
       The application port used for ingress traffic.
@@ -701,6 +706,43 @@ directCommands:
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://learn.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+- uid: az_containerapp_debug
+  name: az containerapp debug
+  summary: |-
+    Open an SSH-like interactive shell within a container app debug console.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az containerapp debug --name
+                          --resource-group
+                          [--container]
+                          [--replica]
+                          [--revision]
+  examples:
+  - summary: |-
+      Debug by connecting to a container app's debug console by replica, revision and container
+    syntax: az containerapp debug -n MyContainerapp -g MyResourceGroup --revision MyRevision --replica MyReplica --container MyContainer
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the Containerapp.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --container
+    summary: |-
+      The container name that the debug console will connect to. Default to the first container of first replica.
+  - name: --replica
+    summary: |-
+      The name of the replica. List replicas with 'az containerapp replica list'. A replica may be not found when it's scaled to zero if there is no traffic to your app. Default to the first replica of 'az containerapp replica list'.
+  - name: --revision
+    summary: |-
+      The name of the container app revision. Default to the latest revision.
 - uid: az_containerapp_delete
   name: az containerapp delete
   summary: |-
@@ -1131,11 +1173,13 @@ directCommands:
                        [--registry-username]
                        [--repo]
                        [--resource-group]
+                       [--revisions-mode {labels, multiple, single}]
                        [--service-principal-client-id]
                        [--service-principal-client-secret]
                        [--service-principal-tenant-id]
                        [--source]
                        [--system-assigned]
+                       [--target-label]
                        [--target-port]
                        [--token]
                        [--user-assigned]
@@ -1227,10 +1271,14 @@ directCommands:
       The username to log in to container registry.
   - name: --repo
     summary: |-
-      Create an app via Github Actions. In the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.
+      Create an app via Github Actions. In the format: https://github.com/owner/repository-name or owner/repository-name.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --revisions-mode
+    parameterValueGroup: "labels, multiple, single"
+    summary: |-
+      The active revisions mode for the container app.
   - name: --service-principal-client-id --sp-cid
     summary: |-
       The service principal client ID. Used by Github Actions to authenticate with Azure.
@@ -1246,6 +1294,10 @@ directCommands:
   - name: --system-assigned
     summary: |-
       Boolean indicating whether to assign system-assigned identity.
+  - name: --target-label
+    summary: |-
+      The label to apply to new revisions. Required for revisions-mode 'labels'.
+    isPreview: true
   - name: --target-port
     summary: |-
       The application port used for ingress traffic.
@@ -1438,6 +1490,7 @@ directCommands:
                            [--replace-env-vars]
                            [--resource-group]
                            [--revision-suffix]
+                           [--revisions-mode {labels, multiple, single}]
                            [--runtime {generic, java}]
                            [--scale-rule-auth]
                            [--scale-rule-http-concurrency]
@@ -1450,6 +1503,7 @@ directCommands:
                            [--source]
                            [--subscription]
                            [--tags]
+                           [--target-label]
                            [--termination-grace-period]
                            [--unbind]
                            [--workload-profile-name]
@@ -1577,6 +1631,10 @@ directCommands:
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
+  - name: --revisions-mode
+    parameterValueGroup: "labels, multiple, single"
+    summary: |-
+      The active revisions mode for the container app.
   - name: --runtime
     parameterValueGroup: "generic, java"
     summary: |-
@@ -1616,6 +1674,10 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --target-label
+    summary: |-
+      The label to apply to new revisions. Required for revisions-mode 'labels'.
+    isPreview: true
   - name: --termination-grace-period --tgp
     summary: |-
       Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
@@ -1653,6 +1715,8 @@ commands:
 - az_containerapp_add-on_weaviate
 - az_containerapp_add-on_weaviate_create
 - az_containerapp_add-on_weaviate_delete
+- az_containerapp_arc
+- az_containerapp_arc_setup-core-dns
 - az_containerapp_auth
 - az_containerapp_auth_apple
 - az_containerapp_auth_apple_show
@@ -1776,6 +1840,7 @@ commands:
 - az_containerapp_dapr
 - az_containerapp_dapr_disable
 - az_containerapp_dapr_enable
+- az_containerapp_debug
 - az_containerapp_delete
 - az_containerapp_delete(containerapp)
 - az_containerapp_env
@@ -1808,6 +1873,12 @@ commands:
 - az_containerapp_env_dotnet-component_delete
 - az_containerapp_env_dotnet-component_list
 - az_containerapp_env_dotnet-component_show
+- az_containerapp_env_http-route-config
+- az_containerapp_env_http-route-config_create
+- az_containerapp_env_http-route-config_delete
+- az_containerapp_env_http-route-config_list
+- az_containerapp_env_http-route-config_show
+- az_containerapp_env_http-route-config_update
 - az_containerapp_env_identity
 - az_containerapp_env_identity_assign
 - az_containerapp_env_identity_remove
@@ -1971,6 +2042,9 @@ commands:
 - az_containerapp_job_stop
 - az_containerapp_job_update
 - az_containerapp_job_update(containerapp)
+- az_containerapp_label-history
+- az_containerapp_label-history_list
+- az_containerapp_label-history_show
 - az_containerapp_list
 - az_containerapp_list(containerapp)
 - az_containerapp_list-usages
@@ -2004,11 +2078,14 @@ commands:
 - az_containerapp_revision_deactivate
 - az_containerapp_revision_label
 - az_containerapp_revision_label_add
+- az_containerapp_revision_label_add(containerapp)
 - az_containerapp_revision_label_remove
+- az_containerapp_revision_label_remove(containerapp)
 - az_containerapp_revision_label_swap
 - az_containerapp_revision_list
 - az_containerapp_revision_restart
 - az_containerapp_revision_set-mode
+- az_containerapp_revision_set-mode(containerapp)
 - az_containerapp_revision_show
 - az_containerapp_secret
 - az_containerapp_secret_list

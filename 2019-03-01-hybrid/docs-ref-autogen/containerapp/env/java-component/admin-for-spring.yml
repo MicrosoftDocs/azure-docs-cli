@@ -25,6 +25,7 @@ directCommands:
                                                                [--max-replicas]
                                                                [--min-replicas]
                                                                [--no-wait]
+                                                               [--set-configs]
                                                                [--unbind]
   examples:
   - summary: |-
@@ -39,7 +40,7 @@ directCommands:
       az containerapp env java-component admin-for-spring create -g MyResourceGroup \
           -n MyJavaComponentName \
           --environment MyEnvironment \
-          --configuration PropertyName1=Value1 PropertyName2=Value2
+          --set-configurations PropertyName1=Value1 PropertyName2=Value2
   - summary: |-
       Create an Admin for Spring with multiple replicas.
     syntax: >-
@@ -66,7 +67,9 @@ directCommands:
       Space separated list of services, bindings or other Java components to be connected to this Java Component. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
   - name: --configuration
     summary: |-
-      Java component configuration. Configuration must be in format "<propertyName>=<value>" "<propertyName>=<value>"...
+      Java component configuration. Configuration must be in format `<propertyName>=<value>` `<propertyName>=<value>`...
+    isDeprecated: true
+    deprecateInfo: Option '--configuration' has been deprecated and will be removed in a future release. Use '--[set|replace|remove|remove-all]-configurations' instead.
   - name: --max-replicas
     defaultValue: "1"
     summary: |-
@@ -79,6 +82,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --set-configs --set-configurations
+    summary: |-
+      Add or update Java component configuration(s). Other existing configurations are not modified. Configuration must be in format `<propertyName>=<value>` `<propertyName>=<value>`...
   - name: --unbind
     summary: |-
       Space separated list of services, bindings or Java components to be removed from this Java Component. e.g. BIND_NAME1...
@@ -168,22 +174,40 @@ directCommands:
                                                                [--max-replicas]
                                                                [--min-replicas]
                                                                [--no-wait]
+                                                               [--remove-all-configs {false, true}]
+                                                               [--remove-configs]
+                                                               [--replace-configs]
+                                                               [--set-configs]
                                                                [--unbind]
   examples:
-  - summary: |-
-      Delete all configurations of the Admin for Spring.
-    syntax: >-
-      az containerapp env java-component admin-for-spring update -g MyResourceGroup \
-          -n MyJavaComponentName \
-          --environment MyEnvironment \
-          --configuration
   - summary: |-
       Update an Admin for Spring with custom configurations.
     syntax: >-
       az containerapp env java-component admin-for-spring update -g MyResourceGroup \
           -n MyJavaComponentName \
           --environment MyEnvironment \
-          --configuration PropertyName1=Value1 PropertyName2=Value2
+          --set-configurations PropertyName1=Value1 PropertyName2=Value2
+  - summary: |-
+      Replace all configurations of the Admin for Spring.
+    syntax: >-
+      az containerapp env java-component admin-for-spring update -g MyResourceGroup \
+          -n MyJavaComponentName \
+          --environment MyEnvironment \
+          --replace-configurations PropertyName1=Value1 PropertyName2=Value2
+  - summary: |-
+      Delete configurations of the Admin for Spring.
+    syntax: >-
+      az containerapp env java-component admin-for-spring update -g MyResourceGroup \
+          -n MyJavaComponentName \
+          --environment MyEnvironment \
+          --remove-configurations PropertyName1 PropertyName2
+  - summary: |-
+      Delete all configurations of the Admin for Spring.
+    syntax: >-
+      az containerapp env java-component admin-for-spring update -g MyResourceGroup \
+          -n MyJavaComponentName \
+          --environment MyEnvironment \
+          --remove-all-configurations
   requiredParameters:
   - isRequired: true
     name: --environment
@@ -203,7 +227,9 @@ directCommands:
       Space separated list of services, bindings or other Java components to be connected to this Java Component. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
   - name: --configuration
     summary: |-
-      Java component configuration. Configuration must be in format "<propertyName>=<value>" "<propertyName>=<value>"...
+      Java component configuration. Configuration must be in format `<propertyName>=<value>` `<propertyName>=<value>`...
+    isDeprecated: true
+    deprecateInfo: Option '--configuration' has been deprecated and will be removed in a future release. Use '--[set|replace|remove|remove-all]-configurations' instead.
   - name: --max-replicas
     summary: |-
       Maximum number of replicas to run for the Java component.
@@ -214,6 +240,19 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --remove-all-configs --remove-all-configurations
+    parameterValueGroup: "false, true"
+    summary: |-
+      Remove all Java component configuration(s).
+  - name: --remove-configs --remove-configurations
+    summary: |-
+      Remove Java component configuration(s). Specify configuration names separated by space, in format `<propertyName>` `<propertyName>`...
+  - name: --replace-configs --replace-configurations
+    summary: |-
+      Replace Java component configuration(s), Other existing configurations are removed. Configuration must be in format `<propertyName>=<value>` `<propertyName>=<value>`...
+  - name: --set-configs --set-configurations
+    summary: |-
+      Add or update Java component configuration(s). Other existing configurations are not modified. Configuration must be in format `<propertyName>=<value>` `<propertyName>=<value>`...
   - name: --unbind
     summary: |-
       Space separated list of services, bindings or Java components to be removed from this Java Component. e.g. BIND_NAME1...
