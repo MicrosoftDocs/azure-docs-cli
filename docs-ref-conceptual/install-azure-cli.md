@@ -18,6 +18,10 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 [!INCLUDE [current-version](includes/current-version.md)]
 
 * [Install on Windows](install-azure-cli-windows.md)
+  * [Install on Windows using Windows Package Manager (WinGet)](./install-azure-cli-windows.md?pivots=winget)
+  * [Install on Windows using Microsoft Installer (MSI)](./install-azure-cli-windows.md?pivots=msi)
+  * [Install on Windows using Microsoft Installer (MSI) with PowerShell](./install-azure-cli-windows.md?pivots=msi-powershell)
+  * [Install on Windows using a ZIP package](./install-azure-cli-windows.md?pivots=zip)
 * [Install on macOS](install-azure-cli-macos.md)
 * Install on Linux or Windows Subsystem for Linux (WSL) ([What is WSL?](/windows/wsl/about))
 
