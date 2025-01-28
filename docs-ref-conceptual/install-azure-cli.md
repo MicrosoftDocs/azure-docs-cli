@@ -18,11 +18,11 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 [!INCLUDE [current-version](includes/current-version.md)]
 
 * [Install on Windows](install-azure-cli-windows.md)
-  * [Install on Windows using Windows Package Manager (WinGet)](./install-azure-cli-windows.md?pivots=winget)
+  * [Install on Windows using WinGet (Windows Package Manager)](./install-azure-cli-windows.md?pivots=winget)
   * [Install on Windows using Microsoft Installer (MSI)](./install-azure-cli-windows.md?pivots=msi)
   * [Install on Windows using Microsoft Installer (MSI) with PowerShell](./install-azure-cli-windows.md?pivots=msi-powershell)
   * [Install on Windows using a ZIP package](./install-azure-cli-windows.md?pivots=zip)
-* [Install on macOS](install-azure-cli-macos.md)
+
 * Install on Linux or Windows Subsystem for Linux (WSL) ([What is WSL?](/windows/wsl/about))
 
   * [Install on RHEL/CentOS Stream with dnf](./install-azure-cli-linux.md?pivots=dnf)
@@ -30,7 +30,11 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
   * [Install on Ubuntu/Debian with apt](./install-azure-cli-linux.md?pivots=apt)
   * [Install on Azure Linux with tdnf](./install-azure-cli-linux.md?pivots=tdnf)
   * [Install from script](./install-azure-cli-linux.md?pivots=script)
+
+* [Install on macOS](install-azure-cli-macos.md)
+
 * [Run in Docker container](run-azure-cli-docker.md)
+
 * [Run in Azure Cloud Shell](/azure/cloud-shell/quickstart)
 
 ## FAQ
@@ -63,4 +67,4 @@ Use the `az extension list` command to see installed extension. You can also use
 * [Sign in with the Azure CLI](./authenticate-azure-cli.md)
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-* [Tips to use the Azure CLI successfully](use-azure-cli-successfully-tips.md)
+* [Tips to use the Azure CLI successfully](./use-azure-cli-successfully-tips.md)
