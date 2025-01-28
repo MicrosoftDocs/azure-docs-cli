@@ -4,7 +4,7 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-### WinGet
+### WinGet (Windows Package Manager)
 
 Use [WinGet](/windows/package-manager/winget/), Microsoft's Package manager for Windows, to install and manage updates for Azure CLI. By default, Winget installs the 64-bit Azure CLI on 64-bit operating systems.
 
