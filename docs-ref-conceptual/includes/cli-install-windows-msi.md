@@ -4,7 +4,9 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-### Latest version
+### Microsoft Installer (MSI)
+
+#### Latest version
 
 Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, select the "Yes" box.
 
@@ -16,7 +18,7 @@ Download and install the latest release of the Azure CLI. When the installer ask
 
 If you have previously installed the Azure CLI, running either the 32-bit or 64-bit MSI will overwrite an existing installation.
 
-### Specific version
+#### Specific version
 
 If you prefer, you can download a specific version of the Azure CLI by using a URL.
 
