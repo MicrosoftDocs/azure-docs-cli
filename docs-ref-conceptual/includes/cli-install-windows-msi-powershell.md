@@ -4,7 +4,7 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-### PowerShell
+### Microsoft Installer (MSI) with PowerShell
 
 To install the Azure CLI using PowerShell, start PowerShell **as administrator** and run the following command:
 
@@ -24,13 +24,15 @@ To install a specific version, replace the `-Uri` argument with the URL describe
 
 [!INCLUDE [specific version](./specific-version.md)]
 
-### Differences between Bash and PowerShell
+### Syntax differences between Bash and PowerShell
 
 Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell. Review these articles to avoid scripting errors:
+
 - [Considerations for running the Azure CLI in a PowerShell scripting language](../use-azure-cli-successfully-powershell.md)
 - [Use quotation marks in Azure CLI parameters](../use-azure-cli-successfully-quoting.md)
 - Compare syntax of Bash, PowerShell and Cmd.exe in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](../get-started-tutorial-2-environment-syntax.md)
 
 When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion. See these articles for more information:
+
 - [Error handling for the Azure CLI in PowerShell](../use-azure-cli-successfully-powershell.md#error-handling-for-azure-cli-in-powershell)
-- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
+- [Enabling tab completion for the Azure CLI in PowerShell](#enable-tab-completion-in-powershell)
