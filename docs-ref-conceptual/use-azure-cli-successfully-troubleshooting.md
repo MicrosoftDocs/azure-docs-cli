@@ -195,6 +195,8 @@ See [Work behind a proxy](#work-behind-a-proxy) for information on how to resolv
 
 If you're using Azure CLI over a proxy server that uses self-signed certificates, the Python [requests library](https://github.com/kennethreitz/requests) used by the Azure CLI might cause the following error: `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. To address this error, set the environment variable `REQUESTS_CA_BUNDLE` to the path of CA bundle certificate file in PEM format.
 
+Additionally, if you were previously logged in, and your network administrator has recently added an intercepting proxy, you may need to login again after setting the above variable in order for the updated bundle to be retrieved and cached.
+
 | OS | Default certificate authority bundle |
 |---|---|
 | Windows 32-bit | `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem` |
