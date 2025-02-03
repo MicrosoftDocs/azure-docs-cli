@@ -8,6 +8,8 @@ ms.service: azure-cli
 ms.date: 08/19/2024
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
+zone_pivot_group_filename: azure/zone-pivot-groups.json
+zone_pivot_groups: cli-windows-installation-method
 keywords: Install azure cli, azure cli download, cli for windows, install azure cli on windows, azure cli windows, install azure cli windows
 ---
 
@@ -19,13 +21,6 @@ For Windows, the Azure CLI is installed via an MSI or a ZIP package, which gives
 When you perform an installation for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
-**There are four ways to install the Azure CLI in Windows:**
-
-* [Microsoft Installer (MSI)](?tabs=azure-cli#install-or-update)
-* [Microsoft Installer (MSI) in PowerShell](?tabs=powershell#install-or-update)
-* [Windows package manager](?tabs=winget#install-or-update)
-* [ZIP package](?tabs=zip#install-or-update)
-
 [!INCLUDE [current-version](includes/current-version.md)]
 
 ## Install or update
@@ -35,110 +30,37 @@ The MSI and ZIP distributable are used for installing or updating the Azure CLI 
 > [!IMPORTANT]
 > After the installation is complete, you will need to **close and reopen any active terminal window to use the Azure CLI**.
 
-# [Microsoft Installer (MSI)](#tab/azure-cli)
+::: zone pivot="winget"
 
-### Latest version
+[!INCLUDE [cli-install-windows-winget](includes/cli-install-windows-winget.md)]
 
-Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, select the "Yes" box.
+::: zone-end
 
-> [!div class="nextstepaction"]
-> [Latest MSI of the Azure CLI (32-bit)](https://aka.ms/installazurecliwindows)
+::: zone pivot="msi"
 
-> [!div class="nextstepaction"]
-> [Latest MSI of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowsx64)
+[!INCLUDE [cli-install-windows-msi](includes/cli-install-windows-msi.md)]
 
-If you have previously installed the Azure CLI, running either the 32-bit or 64-bit MSI will overwrite an existing installation.
+::: zone-end
 
-### Specific version
+::: zone pivot="msi-powershell"
 
-If you prefer, you can download a specific version of the Azure CLI by using a URL.
+[!INCLUDE [cli-install-windows-msi-powershell](includes/cli-install-windows-msi-powershell.md)]
 
-[!INCLUDE [specific version](includes/specific-version.md)]
+::: zone-end
 
-# [Microsoft Installer (MSI) with PowerShell](#tab/powershell)
+::: zone pivot="zip"
 
-### PowerShell
+[!INCLUDE [cli-install-windows-zip](includes/cli-install-windows-zip.md)]
 
-To install the Azure CLI using PowerShell, start PowerShell **as administrator** and run the following command:
-
-   ```PowerShell
-   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
-   ```
-
-This will download and install the latest 32-bit installer of the Azure CLI for Windows. If you prefer a 64-bit install, change URL to `https://aka.ms/installazurecliwindowsx64`. If the Azure CLI is already installed, the installer will overwrite the existing version.
-
-To install a specific version, replace the `-Uri` argument with the URL described in [Specific version](#specific-version-1). Here is an example of using the 32-bit installer of the Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023) in PowerShell:
-
-   ```PowerShell
-   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
-   ```
-
-### Specific version
-
-[!INCLUDE [specific version](includes/specific-version.md)]
-
-### Differences between Bash and PowerShell
-
-Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell. Review these articles to avoid scripting errors:
-- [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
-- [Use quotation marks in Azure CLI parameters](./use-azure-cli-successfully-quoting.md)
-- Compare syntax of Bash, PowerShell and Cmd.exe in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
-
-When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion. See these articles for more information:
-- [Error handling for the Azure CLI in PowerShell](./use-azure-cli-successfully-powershell.md#error-handling-for-azure-cli-in-powershell)
-- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
-
-# [Windows Package Manager](#tab/winget)
-
-### winget
-
-You can also use `winget`, Microsoft's Package manager for Windows, to install and manage updates for Azure CLI.
-
-> [!NOTE]
-> winget is available by default in Windows 11 and modern versions of Windows 10. However, it may not be installed in older versions of Windows. See the [winget documentation](/windows/package-manager/winget/) for installation instructions.
-
-   ```PowerShell
-   winget install -e --id Microsoft.AzureCLI
-   ```
-
-The `-e` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `-v <version>` with your desired version to the command.
-
-# [ZIP Package](#tab/zip)
-
-> [!IMPORTANT]
-> This package is currently in preview.
-
-You can use the ZIP package to install the Azure CLI on Windows. This package is useful when you don't have administrative privilege.
-
-Unzip the package to a folder, then using Cmd or PowerShell, call the Azure CLI by running `<unzipped folder path>\bin\az.cmd`.
-
-If you want to run the `az` command directly, follow the steps below to add the Azure CLI to your `PATH` environment variable.
-1. Open the Start Menu and search for `environment variables`.  Click `Edit the system environment variables`.
-1. Click the `Environment Variables...` button.
-1. In the `User varibles for <username>` box, select `Path` and click the `Edit...` button.
-1. Click the `New` button and add the `<unzipped folder path>\bin` to the list.
-1. **Restart your terminal.**  You should now be able to run `az` commands.
-
-### Latest version
-
-> [!div class="nextstepaction"]
-> [Latest ZIP of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowszipx64)
-
-### Specific version
-
-If you prefer, you can download a specific version of the Azure CLI by using a URL.
-
-To download the ZIP package for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>-x64.zip`.
-
-For example, to install the 64-bit ZIP of Azure CLI version 2.57.0, your URL would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.57.0-x64.zip`. 
-
-Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The ZIP package is available from version 2.57.0. Only 64-bit is available.
-
----
+::: zone-end
 
 ## Run the Azure CLI
 
-You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
+**After installation, close and reopen any active terminal window.** Run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. A common first step is to check your active subscription.
+
+```azurecli
+az account show
+```
 
 ## Troubleshooting installation
 
