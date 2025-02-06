@@ -1859,7 +1859,6 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Route custom events to a queue by using Event Grid and the Azure CLI](/azure/event-grid/custom-event-to-queue-storage)
 |  | [Durable Functions publishing to Azure Event Grid](/azure/azure-functions/durable/durable-functions-event-publishing)
 |  | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic)
-| [az eventgrid topic private-endpoint-connection](/cli/azure/eventgrid/topic/private-endpoint-connection) | [Configure private endpoints for Azure Event Grid custom topics or domains](/azure/event-grid/configure-private-endpoints)
 
 ## az eventhubs
 
@@ -4666,7 +4665,6 @@ ms.custom: devx-track-azurecli
 |  | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account)
 |  | [Convert append blobs and page blobs into block blobs](/azure/storage/blobs/convert-append-and-page-blobs-to-block-blobs)
 |  | [Create an image and use a user-assigned managed identity to access files in an Azure storage account](/azure/virtual-machines/linux/image-builder-user-assigned-identity)
-| [az storage blob directory](/cli/azure/storage/blob/directory) | [Enable and manage blob versioning](/azure/storage/blobs/versioning-enable)
 | [az storage blob immutability-policy](/cli/azure/storage/blob/immutability-policy) | [Configure immutability policies for blob versions](/azure/storage/blobs/immutable-policy-configure-version-scope)
 | [az storage blob metadata](/cli/azure/storage/blob/metadata) | [Manage block blobs with Azure CLI](/azure/storage/blobs/blob-cli)
 | [az storage blob service-properties](/cli/azure/storage/blob/service-properties) | [Host a static website in Azure Storage](/azure/storage/blobs/storage-blob-static-website-how-to)
