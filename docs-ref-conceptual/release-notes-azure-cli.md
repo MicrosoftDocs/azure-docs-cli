@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 01/14/2025
+ms.date: 02/11/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,105 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## February 11, 2025
+
+Version 2.69.0
+
+### ACR
+
+* `az acr manifest list-metadata`: Update help messages for untagged manifests
+
+### AKS
+
+* `az aks create/update/delete`: Add parameters `--if-match` and `--if-none-match` to support etag functionality for concurrency
+
+### App Config
+
+* `az appconfig kv import/export`: Support microsoft feature management schema
+* `az appconfig kv export`: Introduce a new environment variable called `AZURE_APPCONFIG_FM_COMPATIBILE` when exporting to a file for backward compatibility for users
+* `az appconfig feature show/list`: Support microsoft feature management schema
+* `az appconfig kv restore/show/list`: Update datetime validation to accept timezone offset
+* `az appconfig revision list`: Update datetime validation to accept timezone offset
+* `az appconfig export`: Update export help message for environment variable
+
+### App Service
+
+* `az functionapp create`: Refactor EOL implementation and sort based on runtime EOL date
+* `az functionapp list-flexconsumption-locations`: Check if flex region is enabled for subscription
+* `az functionapp deployment slot create`: Add `--https-only` parameter for slot creation command
+* `az webapp list-runtimes`: Remove the JBoss `_byol` entries from the output for webapps with Linux OS
+
+### Backup
+
+* `az backup`: Add support for new AFS Vault Standard Policies
+
+### Batch
+
+* [BREAKING CHANGE] `az batch certificate create/list/show/delete`: Remove deprecated commands
+* [BREAKING CHANGE] `az batch node reimage/remote-desktop`: Remove deprecated commands
+* [BREAKING CHANGE] `az batch pool create`: Remove `--application-licenses`, `--certificate-references` , `--os-family` and `--os-version` deprecated parameters
+* [BREAKING CHANGE] `az batch pool set/reset `: Remove `--certificate-references` deprecated parameter
+* `az batch job create`: Add parameters `--job-manager-task-application-package-references` and `--on-all-tasks-complete`
+* `az batch job disable`: Add parameter `--json-file`
+* `az batch job-schedule create`: Add parameters `--job-manager-task-application-package-references`, `--job-metadata`, and `--job-manager-task-environment-settings`
+* `az batch job-schedule set/reset`: Add parameters `--job-max-task-retry-count` and `--job-max-wall-clock-time`
+* `az batch node reboot`: Add parameter `--json-file`
+* `az batch node scheduling disable`: Add parameter `--json-file`
+* `az batch pool autoscale evaluate`: Add parameter `--json-file`
+* `az batch pool create`: Add parameters `--start-task-environment-settings` and `--start-task-max-task-retry-count`
+* `az batch pool reset`: Add parameters `--start-task-resource-files` and `--target-node-communication-mode`
+
+### Compute
+
+* [BREAKING CHANGE] `az sig gallery-application create/update`: Output field `supportedOsType` changed to `supportedOSType`
+* `az vm list-sizes`: Remove unused parameter `--ids`
+* `az vmss create/update`: Add new paramter `--zone-balance` to support setting zone balance
+* `az vm/vmss create`: Install guest attestation extension when security type set to `ConfidentialVM`
+* `az vmss scale`: Add new logic to support scaling VMSS in edge zone
+* `az vmss create`: Add `--encryption-identity` parameter to use managed identity for Azure disk encryption
+* `az vmss encryption enable`: Add `--encryption-identity` parameter to update or set encryption identity for Azure disk encryption
+
+### Container app
+
+* Fix #28047: `az containerapp compose create`: Upgrade pycomposefile version to split environment variables on the first equal sign instead of every equal sign
+
+### DevTest Labs
+
+* `az lab vm`: Add `hibernate` command group
+
+### Key Vault
+
+* `az keyvault update/update-hsm`: Fix `--bypass` overriding by default when specifying `--default-action Deny`
+
+### Network
+
+* `az network lb create`: Refine `--frontend-ip-zone` to support multiple zones
+* `az network private-endpoint-connnection`: Add `Microsoft.HealthDataAiservices/deidservices` for private endpoint connections
+* `az network routeserver create/update`: Add `--auto-scale-config`
+* `az network virtual-appliance reimage`: Allow reimage of virtual machines associated with a network virtual appliance
+
+### Profile
+
+* `az login`: Passing the managed identity ID with `--username` is deprecated and will be removed in a future release. Please use `--client-id`, `--object-id` or `--resource-id` instead
+
+### RDBMS
+
+* `az postgres flexible-server geo-restore`: Add `--restore-time` parameter
+* `az postgres flexible-server fabric-mirroring start/stop/update-databases`: Disable fabric mirroring on HA server
+* `az postgres flexible-server update`: Fix for scaling up node count on an elastic cluster
+
+### Redis
+
+* `az redis create/update`: Add `--zonal-allocation-policy` to support the way of selecting zones for cache instance
+
+### Role
+
+* `az role definition show`: New command to support showing specific role definition
+
+### Service Connector
+
+* `az webapp connection create redis`: Add parameter `--system-identity`
 
 ## January 14, 2025
 
