@@ -14,6 +14,8 @@ From: @GitHub-alias on 01/17/2025 (Azure CLI version 2.68.0)
 
 Be aware that the `--owner-spn` parameter is required when you do not supply an `--owner-object-id`.
 
+*********************************************************
+
 #### Switch between Azure accounts
 
 From: @GitHub-alias on 10/05/2024 (Azure CLI version 2.65.0)
@@ -26,17 +28,21 @@ az login --tenant TenantID
 az account set --subscription "SubscriptionName"
 ```
 
+*********************************************************
+
 #### Find more examples for `az account`
 
 From @dbradish-microsoft on 12/05/2024 (Azure CLI version 2.67.0)
 
-|Microsoft articles showing the use of `az account`:
-|--|
-|  [Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
-|  [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
-|  [Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
-|  [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-|  [Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
+Microsoft articles showing the use of `az account`:
+
+[Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
+[Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
+[Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
+[How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+[Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
+
+********************************************************
 
 #### Stack Overflow questions containing `az account`
 
@@ -56,4 +62,3 @@ Reference Name | Question ID | Question Title |
 | | 54113938 | [How to obtain bearer token for azure service principal with C#](https://stackoverflow.com/questions/54113938)
 | | 58972199 | [Azure active directory - Get access token using Azure CLI](https://stackoverflow.com/questions/58972199)
 | | 59878724 | [How to set a lifetime of a bearer token while retrieving through Azure CLI?](https://stackoverflow.com/questions/59878724)
-
