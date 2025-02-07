@@ -14,8 +14,8 @@ Reference
 
 ## Commands
 
-|Name|Description|Type|Status
-|-|-|-|
+|Name|Description|Type|Status|
+|-|-|-|-|
 |az account accept-ownership-status	| Accept subscription ownership status. | Extension	| GA |
 |az account alias | Manage subscription alias. | Extension| GA |
 |az account alias create | Create Alias Subscription. | Extension | GA |
@@ -117,12 +117,12 @@ az account set --subscription "SubscriptionName"
 From @dbradish-microsoft on 12/05/2024 (Azure CLI version 2.67.0)
 
 |Microsoft articles showing the use of `az account`:
-|--|
-|  [Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
-|  [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
-|  [Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
-|  [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-|  [Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
+
+* [Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
+* [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
+* [Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
+* [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+* [Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 
 #### Stack Overflow questions containing `az account`
 
@@ -130,7 +130,7 @@ From @dbradish-microsoft on 12/07/2024 (Azure CLI version 2.67.0)
 
 The following Stack Overflow questions discuss the use of `az account`:
 
-Reference Name | Question ID | Question Title |
+Reference name | Question ID | Question title and link |
 |-|-|-|
 |az account | 38475104 | [Azure Cli how to change subscription default](https://stackoverflow.com/questions/38475104)
 ||44143981 | [Is there an API to list all Azure Regions?](https://stackoverflow.com/questions/44143981)
