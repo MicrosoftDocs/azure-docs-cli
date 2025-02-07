@@ -92,15 +92,17 @@ The user principal name(s) of owner(s) who should be granted access to the new s
 
 `<az account get-access-token information here>`
 
-### Community contributions for `az account`
+## Community contributions for `az account`
 
-#### Parameter `--owner-spn` can be required
+### Parameter `--owner-spn` can be required
 
 From: @GitHub-alias on 01/17/2025 (Azure CLI version 2.68.0)
 
 Be aware that the `--owner-spn` parameter is required when you do not supply an `--owner-object-id`.
 
-#### Switch between Azure accounts
+*********************************************************
+
+### Switch between Azure accounts
 
 From: @GitHub-alias on 10/05/2024 (Azure CLI version 2.65.0)
 
@@ -112,25 +114,29 @@ az login --tenant TenantID
 az account set --subscription "SubscriptionName"
 ```
 
-#### Find more examples for `az account`
+*********************************************************
+
+### Find more examples for `az account`
 
 From @dbradish-microsoft on 12/05/2024 (Azure CLI version 2.67.0)
 
-|Microsoft articles showing the use of `az account`:
+Microsoft articles showing the use of `az account`:
 
-* [Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
-* [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
-* [Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
-* [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-* [Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
+[Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
+[Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
+[Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
+[How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+[Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 
-#### Stack Overflow questions containing `az account`
+********************************************************
+
+### Stack Overflow questions containing `az account`
 
 From @dbradish-microsoft on 12/07/2024 (Azure CLI version 2.67.0)
 
 The following Stack Overflow questions discuss the use of `az account`:
 
-Reference name | Question ID | Question title and link |
+Reference Name | Question ID | Question Title |
 |-|-|-|
 |az account | 38475104 | [Azure Cli how to change subscription default](https://stackoverflow.com/questions/38475104)
 ||44143981 | [Is there an API to list all Azure Regions?](https://stackoverflow.com/questions/44143981)

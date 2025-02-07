@@ -6,9 +6,9 @@ ms.topic: reference
 ms.service: azure-cli
 ---
 
-### Community contributions for `az account`
+## Community contributions for `az account`
 
-#### Parameter `--owner-spn` can be required
+### Parameter `--owner-spn` can be required
 
 From: @GitHub-alias on 01/17/2025 (Azure CLI version 2.68.0)
 
@@ -16,7 +16,7 @@ Be aware that the `--owner-spn` parameter is required when you do not supply an 
 
 *********************************************************
 
-#### Switch between Azure accounts
+### Switch between Azure accounts
 
 From: @GitHub-alias on 10/05/2024 (Azure CLI version 2.65.0)
 
@@ -30,7 +30,7 @@ az account set --subscription "SubscriptionName"
 
 *********************************************************
 
-#### Find more examples for `az account`
+### Find more examples for `az account`
 
 From @dbradish-microsoft on 12/05/2024 (Azure CLI version 2.67.0)
 
@@ -44,7 +44,7 @@ Microsoft articles showing the use of `az account`:
 
 ********************************************************
 
-#### Stack Overflow questions containing `az account`
+### Stack Overflow questions containing `az account`
 
 From @dbradish-microsoft on 12/07/2024 (Azure CLI version 2.67.0)
 
