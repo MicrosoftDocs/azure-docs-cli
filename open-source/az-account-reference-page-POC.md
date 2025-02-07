@@ -122,11 +122,11 @@ From @dbradish-microsoft on 12/05/2024 (Azure CLI version 2.67.0)
 
 Microsoft articles showing the use of `az account`:
 
-[Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
-[Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
-[Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
-[How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-[Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
+- [Authenticate to Azure using Azure CLI](/cli/azure/authenticate-azure-cli)
+- [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
+- [Sign in interactively with Azure CLI](/cli/azure/authenticate-azure-cli-interactively)
+- [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+- [Create an Azure service principal with Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 
 ********************************************************
 
