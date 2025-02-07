@@ -116,7 +116,7 @@ az account set --subscription "SubscriptionName"
 
 *********************************************************
 
-### Find more examples for `az account`
+### Find more documentation on `az account`
 
 From @dbradish-microsoft on 12/05/2024 (Azure CLI version 2.67.0)
 
