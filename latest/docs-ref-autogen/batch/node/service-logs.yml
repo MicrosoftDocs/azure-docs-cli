@@ -9,9 +9,7 @@ directCommands:
 - uid: az_batch_node_service-logs_upload
   name: az batch node service-logs upload
   summary: |-
-    Upload Azure Batch service log files from the specified Compute Node to Azure Blob Storage.
-  description: |-
-    This is for gathering Azure Batch service log files in an automated fashion from Compute Nodes if you are experiencing an error and wish to escalate to Azure support. The Azure Batch service log files should be shared with Azure support to aid in debugging issues with the Batch service.
+    Upload service logs from a specified Batch compute node.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -26,15 +24,19 @@ directCommands:
                                       [--json-file]
                                       [--resource-id]
                                       [--start-time]
+  examples:
+  - summary: |-
+      Upload logs to a storage account SAS URL
+    syntax: az batch node service-logs upload --pool-id pool1 --node-id node1 --start-time 2025-01-13T00:00:00Z --container-url sas_url
   requiredParameters:
   - isRequired: true
     name: --node-id
     summary: |-
-      The ID of the Compute Node from which you want to upload the Azure Batch service log files.
+      The ID of the Compute Node for which you want to get the Remote Desktop Protocol file. Required.
   - isRequired: true
     name: --pool-id
     summary: |-
-      The ID of the Pool that contains the Compute Node.
+      The ID of the Pool that contains the Compute Node. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -47,19 +49,19 @@ directCommands:
       Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
   - name: --container-url
     summary: |-
-      Required. If a user assigned managed identity is not being used, the URL must include a Shared Access Signature (SAS) granting write permissions to the container. The SAS duration must allow enough time for the upload to finish. The start time for SAS is optional and recommended to not be specified.
+      The URL of the container within Azure Blob Storage to which to upload the Batch Service log file(s). If a user assigned managed identity is not being used, the URL must include a Shared Access Signature (SAS) granting write permissions to the container. The SAS duration must allow enough time for the upload to finish. The start time for SAS is optional and recommended to not be specified. Required.
   - name: --end-time
     summary: |-
-      Any log file containing a log message in the time range will be uploaded. This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded, but the operation should not retrieve fewer logs than have been requested. If omitted, the default is to upload all logs available after the startTime. Expected format is an ISO-8601 timestamp.
+      The end of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded. This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded, but the operation should not retrieve fewer logs than have been requested. If omitted, the default is to upload all logs available after the startTime. Expected format is an ISO-8601 timestamp.
   - name: --json-file
     summary: |-
-      A file containing the upload batch service logs configuration specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Upload Batch Service Logs Configuration Arguments' are ignored.
+      A file containing the content specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Content Arguments' are ignored.
   - name: --resource-id
     summary: |-
       The ARM resource id of the user assigned identity.
   - name: --start-time
     summary: |-
-      Required. Any log file containing a log message in the time range will be uploaded. This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded, but the operation should not retrieve fewer logs than have been requested. Expected format is an ISO-8601 timestamp.
+      The start of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded. This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded, but the operation should not retrieve fewer logs than have been requested. Required. Expected format is an ISO-8601 timestamp.
 commands:
 - az_batch_node_service-logs_upload
 globalParameters:
@@ -87,5 +89,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 12/04/2024
+  ms.date: 01/24/2025
   description: Manage the service log files of a Batch compute node.

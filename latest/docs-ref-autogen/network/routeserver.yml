@@ -18,6 +18,7 @@ directCommands:
                                   --name
                                   --public-ip-address
                                   --resource-group
+                                  [--auto-scale-config]
                                   [--hub-routing-preference {ASPath, ExpressRoute, VpnGateway}]
                                   [--location]
                                   [--tags]
@@ -43,6 +44,12 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --auto-scale-config
+    summary: |-
+      VirtualHub Router autoscale configuration. Use space-separated property=value [property=value ...].
+    description: |-
+      Supported properties:
+      min-capacity: The minimum number of scale units for VirtualHub Router.
   - name: --hub-routing-preference
     parameterValueGroup: "ASPath, ExpressRoute, VpnGateway"
     summary: |-
@@ -95,12 +102,21 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
-  syntax: az network routeserver list [--resource-group]
+  syntax: >-
+    az network routeserver list [--max-items]
+                                [--next-token]
+                                [--resource-group]
   examples:
   - summary: |-
       List a route server.
     syntax: az network routeserver list -g MyResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -143,6 +159,7 @@ directCommands:
   syntax: >-
     az network routeserver update [--add]
                                   [--allow-b2b-traffic {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--auto-scale-config]
                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--hub-routing-preference {ASPath, ExpressRoute, VpnGateway}]
                                   [--ids]
@@ -165,6 +182,9 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Whether to allow branch to branch traffic.
+  - name: --auto-scale-config
+    summary: |-
+      The VirtualHub Router autoscale configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -298,5 +318,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 12/04/2024
+  ms.date: 01/24/2025
   description: Manage the route server.

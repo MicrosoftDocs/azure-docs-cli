@@ -28,6 +28,10 @@ directCommands:
                          [--resource-files]
                          [--retention-time]
                          [--task-id]
+  examples:
+  - summary: |-
+      Create a task which sleeps for 1 minute.
+    syntax: az batch task create --task-id task1 --job-id job1 --command-line "sleep 60"
   requiredParameters:
   - isRequired: true
     name: --job-id
@@ -42,7 +46,7 @@ directCommands:
       The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.
   - name: --account-name
     summary: |-
-      The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
+      The Batch account name. Only needed Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
   - name: --affinity-id
     summary: |-
       Required. You can pass the affinityId of a Node to indicate that this Task needs to run on that Compute Node. Note that this is just a soft affinity. If the target Compute Node is busy or unavailable at the time the Task is scheduled, then the Task will be scheduled elsewhere.
@@ -97,11 +101,11 @@ directCommands:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job from which to delete the Task.
+      The ID of the Job from which to delete the Task. Required.
   - isRequired: true
     name: --task-id
     summary: |-
-      The ID of the Task to delete.
+      The ID of the Task to delete. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -123,7 +127,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -149,7 +153,7 @@ directCommands:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job.
+      The ID of the Job. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -165,7 +169,7 @@ directCommands:
       An OData $expand clause.
   - name: --filter
     summary: |-
-      An OData $filter clause. For more information on constructing this filter, see https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+      An OData $filter clause. For more information on constructing this filter,see https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch.
   - name: --select
     summary: |-
       An OData $select clause.
@@ -192,11 +196,11 @@ directCommands:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job containing the Task.
+      The ID of the Job containing the Task. Required.
   - isRequired: true
     name: --task-id
     summary: |-
-      The ID of the Task to reactivate.
+      The ID of the Task to reactivate. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -218,7 +222,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
 - uid: az_batch_task_reset
   name: az batch task reset
   summary: |-
@@ -240,6 +244,10 @@ directCommands:
                         [--max-task-retry-count]
                         [--max-wall-clock-time]
                         [--retention-time]
+  examples:
+  - summary: |-
+      Set max retry count to 3 and reset other properties to their defaults
+    syntax: az batch task reset --task-id task1 --job-id job1 --max-task-retry-count 3
   requiredParameters:
   - isRequired: true
     name: --job-id
@@ -255,25 +263,25 @@ directCommands:
       Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.
   - name: --account-key
     summary: |-
-      Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.
+      The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.
   - name: --account-name
     summary: |-
-      Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
+      The Batch account name. Only needed Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
   - name: --if-match
     summary: |-
-      An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+      The operation will be performed only if the resource's current ETag exactly matches the specified value.
   - name: --if-modified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+      The operation will be performed only if the resource has been modified since the specified timestamp.
   - name: --if-none-match
     summary: |-
-      An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+      The operation will not be performed only if the resource's current ETag exactly matches the specified value.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      The operation will not be performed only if the resource has been modified since the specified timestamp.
   - name: --json-file
     summary: |-
-      A file containing the constraints specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Constraints Arguments' are ignored.
+      The file containing pool update properties parameter specification in JSON(formatted to match REST API request body). If this parameter is specified, all 'Pool Update Properties Parameter Arguments' are ignored.
   - name: --max-task-retry-count
     summary: |-
       The maximum number of times the Task may be retried. The Batch service retries a Task if its exit code is nonzero. Note that this value specifically controls the number of retries for the Task executable due to a nonzero exit code. The Batch service will try the Task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries the Task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry the Task after the first attempt. If the maximum retry count is -1, the Batch service retries the Task without limit, however this is not recommended for a start task or any task. The default value is 0 (no retries).
@@ -308,11 +316,11 @@ directCommands:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job that contains the Task.
+      The ID of the Job that contains the Task. Required.
   - isRequired: true
     name: --task-id
     summary: |-
-      The ID of the Task to get information about.
+      The ID of the Task to get information about. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -337,7 +345,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
   - name: --select
     summary: |-
       An OData $select clause.
@@ -364,11 +372,11 @@ directCommands:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job containing the Task.
+      The ID of the Job containing the Task. Required.
   - isRequired: true
     name: --task-id
     summary: |-
-      The ID of the Task to terminate.
+      The ID of the Task to terminate. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -390,7 +398,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
 commands:
 - az_batch_task_create
 - az_batch_task_delete
@@ -431,5 +439,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 12/04/2024
+  ms.date: 01/24/2025
   description: Manage Batch tasks.

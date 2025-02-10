@@ -1,14 +1,10 @@
 ### YamlMime:AzureCLIGroup
 uid: az_batch_job
 name: az batch job
-importantNote: >-
-  > [!NOTE]
-
-  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Batch jobs.
 status: GA
-sourceType: Core and Extension
+sourceType: Core
 directCommands:
 - uid: az_batch_job_create
   name: az batch job create
@@ -23,6 +19,7 @@ directCommands:
                         [--account-name]
                         [--allow-task-preemption]
                         [--id]
+                        [--job-manager-task-application-package-references]
                         [--job-manager-task-command-line]
                         [--job-manager-task-environment-settings]
                         [--job-manager-task-id]
@@ -32,10 +29,15 @@ directCommands:
                         [--json-file]
                         [--max-parallel-tasks]
                         [--metadata]
+                        [--on-all-tasks-complete]
                         [--pool-id]
                         [--priority]
                         [--required-slots]
                         [--uses-task-dependencies]
+  examples:
+  - summary: |-
+      Create an new job associated with an existing pool.
+    syntax: az batch job create --id job1 --pool-id pool1
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -51,37 +53,43 @@ directCommands:
       Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
   - name: --id
     summary: |-
-      Required. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case).
+      A string that uniquely identifies the Job within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). Required.
+  - name: --job-manager-task-application-package-references
+    summary: |-
+      A list of Application Packages that the Batch service will deploy to the Compute Node before running the command line.Application Packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced Application Package is already on the Compute Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Application Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. Space-separated application IDs with optional version in 'id[#version]' format.
   - name: --job-manager-task-command-line
     summary: |-
-      Required. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
+      The command line of the Job Manager Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables). Required.
   - name: --job-manager-task-environment-settings
     summary: |-
-      Space-separated values in 'key=value' format.
+      A list of environment variable settings for the Job Manager Task. Space-separated values in 'key=value' format.
   - name: --job-manager-task-id
     summary: |-
-      Required. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters.
+      A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. Required.
   - name: --job-manager-task-resource-files
     summary: |-
-      Files listed under this element are located in the Task's working directory. There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. Space-separated resource references in filename=httpurl format.
+      A list of files that the Batch service will download to the Compute Node before running the command line. Files listed under this element are located in the Task's working directory. There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. Space-separated resource references in filename=httpurl format.
   - name: --job-max-task-retry-count
     summary: |-
       The maximum number of times each Task may be retried. The Batch service retries a Task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each Task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a Task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry Tasks. If the maximum retry count is -1, the Batch service retries Tasks without limit. The default value is 0 (no retries).
   - name: --job-max-wall-clock-time
     summary: |-
-      If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
+      The maximum elapsed time that the Job may run, measured from the time the Job is created. If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
   - name: --json-file
     summary: |-
       A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
   - name: --max-parallel-tasks
     summary: |-
-      The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 .
+      The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.
   - name: --metadata
     summary: |-
-      The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space-separated values in 'key=value' format.
+      A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space-separated values in 'key=value' format.
+  - name: --on-all-tasks-complete
+    summary: |-
+      The action the Batch service should take when all Tasks in the Job are in the completed state. Note that if a Job contains no Tasks, then all Tasks are considered complete. This option is therefore most commonly used with a Job Manager task; if you want to use automatic Job termination without a Job Manager, you should initially set onAllTasksComplete to noaction and update the Job properties to set onAllTasksComplete to terminatejob once you have finished adding Tasks. The default is noaction. Known values are: "noaction" and "terminatejob".
   - name: --pool-id
     summary: |-
-      The id of an existing pool. All the tasks of the job will run on the specified pool.
+      The ID of an existing Pool. All the Tasks of the Job will run on the specified Pool. You must ensure that the Pool referenced by this property exists. If the Pool does not exist at the time the Batch service tries to schedule a Job, no Tasks for the Job will run until you create a Pool with that id. Note that the Batch service will not reject the Job request; it will simply not run Tasks until the Pool exists. You must specify either the Pool ID or the auto Pool specification, but not both.
   - name: --priority
     summary: |-
       The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0.
@@ -91,106 +99,10 @@ directCommands:
   - name: --uses-task-dependencies
     summary: |-
       Whether Tasks in the Job can define dependencies on each other. The default is false. True if flag present.
-- uid: az_batch_job_create(azure-batch-cli-extensions)
-  name: az batch job create
-  extensionSuffix: azure-batch-cli-extensions
-  summary: |-
-    Add a job and associated task(s) to a Batch account.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az batch job create [--account-endpoint]
-                        [--account-key]
-                        [--account-name]
-                        [--allow-task-preemption]
-                        [--id]
-                        [--job-manager-task-command-line]
-                        [--job-manager-task-environment-settings]
-                        [--job-manager-task-id]
-                        [--job-manager-task-resource-files]
-                        [--job-max-task-retry-count]
-                        [--job-max-wall-clock-time]
-                        [--json-file]
-                        [--max-parallel-tasks]
-                        [--metadata]
-                        [--parameters]
-                        [--pool-id]
-                        [--priority]
-                        [--required-slots]
-                        [--resource-group]
-                        [--template]
-                        [--uses-task-dependencies]
-  optionalParameters:
-  - name: --account-endpoint
-    summary: |-
-      Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.
-  - name: --account-key
-    summary: |-
-      The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.
-  - name: --account-name
-    summary: |-
-      The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
-  - name: --allow-task-preemption
-    summary: |-
-      Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API.
-  - name: --id
-    summary: |-
-      Required. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case).
-  - name: --job-manager-task-command-line
-    summary: |-
-      The command line of the Job Manager task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
-  - name: --job-manager-task-environment-settings
-    summary: |-
-      A list of environment variable settings for the Job Manager task. Space separated values in 'key=value' format.
-  - name: --job-manager-task-id
-    summary: |-
-      A string that uniquely identifies the Job Manager task within the job. The id can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters.
-  - name: --job-manager-task-resource-files
-    summary: |-
-      A list of files that the Batch service will download to the compute node before running the command line. Files listed under this element are located in the task's working directory. Space separated resource references in filename=httpurl format.
-  - name: --job-max-task-retry-count
-    summary: |-
-      The maximum number of times each task may be retried. The Batch service retries a task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry tasks. If the maximum retry count is -1, the Batch service retries tasks without limit. The default value is 0 (no retries).
-  - name: --job-max-wall-clock-time
-    summary: |-
-      The maximum elapsed time that the job may run, measured from the time the job is created. If the job does not complete within the time limit, the Batch service terminates it and any tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the job may run. Expected format is an ISO-8601 duration.
-  - name: --json-file
-    summary: |-
-      A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
-  - name: --max-parallel-tasks
-    summary: |-
-      The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 .
-  - name: --metadata
-    summary: |-
-      The Batch service does not assign any meaning to metadata; it is solely for the use of user code.
-  - name: --parameters
-    summary: |-
-      Parameter values for a Batch job JSON template file. Can only be used with --template.
-  - name: --pool-id
-    summary: |-
-      The id of an existing pool. All the tasks of the job will run on the specified pool.
-  - name: --priority
-    summary: |-
-      The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0.
-  - name: --required-slots
-    summary: |-
-      The number of scheduling slots that the Task requires to run. The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling slots available. For multi-instance Tasks, this property is not supported and must not be specified.
-  - name: --resource-group
-    summary: |-
-      The resource group of the Batch account.
-  - name: --template
-    summary: |-
-      A Batch job JSON template file. If this parameter is specified, all other parameters are ignored.
-  - name: --uses-task-dependencies
-    defaultValue: "False"
-    summary: |-
-      The flag that determines if this job will use tasks with dependencies. True if flag present.
 - uid: az_batch_job_delete
   name: az batch job delete
   summary: |-
-    Deletes a Job.
-  description: |-
-    Deleting a Job also deletes all Tasks that are part of that Job, and all Job statistics. This also overrides the retention period for Task data; that is, if the Job contains Tasks which are still retained on Compute Nodes, the Batch services deletes those Tasks' working directories and all their contents.  When a Delete Job request is received, the Batch service sets the Job to the deleting state. All update operations on a Job that is in deleting state will fail with status code 409 (Conflict), with additional information indicating that the Job is being deleted.
+    Deletes a job from a Batch account.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -204,11 +116,15 @@ directCommands:
                         [--if-none-match]
                         [--if-unmodified-since]
                         [--yes]
+  examples:
+  - summary: |-
+      Delete a job using the job id without prompt for confirmation.
+    syntax: az batch job delete --job-id job1 --yes
   requiredParameters:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job to delete.
+      The ID of the Job to delete. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -230,7 +146,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -238,9 +154,7 @@ directCommands:
 - uid: az_batch_job_disable
   name: az batch job disable
   summary: |-
-    Disables the specified Job, preventing new Tasks from running.
-  description: |-
-    The Batch Service immediately moves the Job to the disabling state. Batch then uses the disableTasks parameter to determine what to do with the currently running Tasks of the Job. The Job remains in the disabling state until the disable operation is completed and all Tasks have been dealt with according to the disableTasks option; the Job then moves to the disabled state. No new Tasks are started under the Job until it moves back to active state. If you try to disable a Job that is in any state other than active, disabling, or disabled, the request fails with status code 409.
+    Disable a Batch job.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -254,11 +168,16 @@ directCommands:
                          [--if-modified-since]
                          [--if-none-match]
                          [--if-unmodified-since]
+                         [--json-file]
+  examples:
+  - summary: |-
+      Disable a job and requeue any running tasks.
+    syntax: az batch job disable --job-id job1 --disable-tasks requeue
   requiredParameters:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job to disable.
+      The ID of the Job to disable. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -271,7 +190,7 @@ directCommands:
       Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
   - name: --disable-tasks
     summary: |-
-      Possible values include: 'requeue', 'terminate', 'wait'.
+      What to do with active Tasks associated with the Job. Required. Known values are: "requeue", "terminate", and "wait".
   - name: --if-match
     summary: |-
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
@@ -283,13 +202,14 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+  - name: --json-file
+    summary: |-
+      A file containing the content specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Content Arguments' are ignored.
 - uid: az_batch_job_enable
   name: az batch job enable
   summary: |-
-    Enables the specified Job, allowing new Tasks to run.
-  description: |-
-    When you call this API, the Batch service sets a disabled Job to the enabling state. After the this operation is completed, the Job moves to the active state, and scheduling of new Tasks under the Job resumes. The Batch service does not allow a Task to remain in the active state for more than 180 days. Therefore, if you enable a Job containing active Tasks which were added more than 180 days ago, those Tasks will not run.
+    Enable a Batch job.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -302,11 +222,15 @@ directCommands:
                         [--if-modified-since]
                         [--if-none-match]
                         [--if-unmodified-since]
+  examples:
+  - summary: |-
+      Enable a job.
+    syntax: az batch job enable --job-id job1
   requiredParameters:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job to enable.
+      The ID of the Job to enable. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -328,7 +252,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
 - uid: az_batch_job_list
   name: az batch job list
   summary: |-
@@ -344,6 +268,13 @@ directCommands:
                       [--filter]
                       [--job-schedule-id]
                       [--select]
+  examples:
+  - summary: |-
+      List all of the jobs in a Batch account
+    syntax: az batch job list
+  - summary: |-
+      List all of the job schedule in a Batch account
+    syntax: az batch job list --job-schedule-id jobschedule1
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -353,13 +284,13 @@ directCommands:
       The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.
   - name: --account-name
     summary: |-
-      The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
+      The Batch account name. Only needed Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
   - name: --expand
     summary: |-
       An OData $expand clause.
   - name: --filter
     summary: |-
-      An OData $filter clause.
+      An OData $filter clause. For more information on constructing this filter,see https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch.
   - name: --job-schedule-id
     summary: |-
       The ID of the job schedule from which you want to get a list of jobs. If omitted, lists all jobs in the account.
@@ -388,14 +319,18 @@ directCommands:
                        [--json-file]
                        [--max-parallel-tasks]
                        [--metadata]
-                       [--on-all-tasks-complete {noaction, terminatejob}]
+                       [--on-all-tasks-complete]
                        [--pool-id]
                        [--priority]
+  examples:
+  - summary: |-
+      Reset all job properties except priority.
+    syntax: az batch job reset --job-id job1 --priority 100
   requiredParameters:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job whose properties you want to update.
+      The ID of the Job whose properties you want to update. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -420,32 +355,31 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
   - name: --job-max-task-retry-count
     summary: |-
       The maximum number of times each Task may be retried. The Batch service retries a Task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each Task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a Task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry Tasks. If the maximum retry count is -1, the Batch service retries Tasks without limit. The default value is 0 (no retries).
   - name: --job-max-wall-clock-time
     summary: |-
-      If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
+      The maximum elapsed time that the Job may run, measured from the time the Job is created. If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
   - name: --json-file
     summary: |-
-      A file containing the job update parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+      A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
   - name: --max-parallel-tasks
     summary: |-
-      The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 .
+      The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.
   - name: --metadata
     summary: |-
-      If omitted, it takes the default value of an empty list; in effect, any existing metadata is deleted. Space-separated values in 'key=value' format.
+      A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space-separated values in 'key=value' format.
   - name: --on-all-tasks-complete
-    parameterValueGroup: "noaction, terminatejob"
     summary: |-
-      The action the Batch service should take when all Tasks in the Job are in the completed state. If omitted, the completion behavior is set to noaction. If the current value is terminatejob, this is an error because a Job's completion behavior may not be changed from terminatejob to noaction. You may not change the value from terminatejob to noaction - that is, once you have engaged automatic Job termination, you cannot turn it off again. If you try to do this, the request fails and Batch returns status code 400 (Bad Request) and an 'invalid property value' error response. If you do not specify this element in a PUT request, it is equivalent to passing noaction. This is an error if the current value is terminatejob.
+      The action the Batch service should take when all Tasks in the Job are in the completed state. The default is noaction. Known values are: "noaction" and "terminatejob".
   - name: --pool-id
     summary: |-
-      The id of an existing pool. All the tasks of the job will run on the specified pool.
+      The ID of an existing Pool. All the Tasks of the Job will run on the specified Pool. You must ensure that the Pool referenced by this property exists. If the Pool does not exist at the time the Batch service tries to schedule a Job, no Tasks for the Job will run until you create a Pool with that id. Note that the Batch service will not reject the Job request; it will simply not run Tasks until the Pool exists. You must specify either the Pool ID or the auto Pool specification, but not both.
   - name: --priority
     summary: |-
-      The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. If omitted, it is set to the default value 0.
+      The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0.
 - uid: az_batch_job_set
   name: az batch job set
   summary: |-
@@ -468,14 +402,18 @@ directCommands:
                      [--json-file]
                      [--max-parallel-tasks]
                      [--metadata]
-                     [--on-all-tasks-complete {noaction, terminatejob}]
+                     [--on-all-tasks-complete]
                      [--pool-id]
                      [--priority]
+  examples:
+  - summary: |-
+      Update job priority.
+    syntax: az batch job set --job-id job1 --priority 100
   requiredParameters:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job whose properties you want to update.
+      The ID of the Job whose properties you want to update. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -488,7 +426,7 @@ directCommands:
       Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
   - name: --allow-task-preemption
     summary: |-
-      Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. Specify either 'true' or 'false' to update the property.
+      Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
   - name: --if-match
     summary: |-
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
@@ -500,36 +438,35 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
   - name: --job-max-task-retry-count
     summary: |-
       The maximum number of times each Task may be retried. The Batch service retries a Task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each Task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a Task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry Tasks. If the maximum retry count is -1, the Batch service retries Tasks without limit. The default value is 0 (no retries).
   - name: --job-max-wall-clock-time
     summary: |-
-      If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
+      The maximum elapsed time that the Job may run, measured from the time the Job is created. If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
   - name: --json-file
     summary: |-
-      A file containing the job patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+      A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
   - name: --max-parallel-tasks
     summary: |-
       The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.
   - name: --metadata
     summary: |-
-      If omitted, the existing Job metadata is left unchanged. Space-separated values in 'key=value' format.
+      A list of name-value pairs associated with the Job as metadata. If omitted, the existing Job metadata is left unchanged. Space-separated values in 'key=value' format.
   - name: --on-all-tasks-complete
-    parameterValueGroup: "noaction, terminatejob"
     summary: |-
-      The action the Batch service should take when all Tasks in the Job are in the completed state. If omitted, the completion behavior is left unchanged. You may not change the value from terminatejob to noaction - that is, once you have engaged automatic Job termination, you cannot turn it off again. If you try to do this, the request fails with an 'invalid property value' error response; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request).
+      The action the Batch service should take when all Tasks in the Job are in the completed state. If omitted, the completion behavior is left unchanged. You may not change the value from terminatejob to noaction - that is, once you have engaged automatic Job termination, you cannot turn it off again. If you try to do this, the request fails with an 'invalid property value' error response; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Known values are: "noaction" and "terminatejob".
   - name: --pool-id
     summary: |-
-      The id of an existing pool. All the tasks of the job will run on the specified pool.
+      The ID of an existing Pool. All the Tasks of the Job will run on the specified Pool. You must ensure that the Pool referenced by this property exists. If the Pool does not exist at the time the Batch service tries to schedule a Job, no Tasks for the Job will run until you create a Pool with that id. Note that the Batch service will not reject the Job request; it will simply not run Tasks until the Pool exists. You must specify either the Pool ID or the auto Pool specification, but not both.
   - name: --priority
     summary: |-
       The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. If omitted, the priority of the Job is left unchanged.
 - uid: az_batch_job_show
   name: az batch job show
   summary: |-
-    Gets information about the specified Job.
+    Gets information about the specified Batch job.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -544,11 +481,15 @@ directCommands:
                       [--if-none-match]
                       [--if-unmodified-since]
                       [--select]
+  examples:
+  - summary: |-
+      Shows information details about a job.
+    syntax: az batch job show --job-id job1
   requiredParameters:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job.
+      The ID of the Job. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -573,7 +514,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
   - name: --select
     summary: |-
       An OData $select clause.
@@ -596,11 +537,15 @@ directCommands:
                       [--if-none-match]
                       [--if-unmodified-since]
                       [--terminate-reason]
+  examples:
+  - summary: |-
+      Stop a job and give a termination reason
+    syntax: az batch job stop --job-id job1 --terminate-reason "Completed workflow"
   requiredParameters:
   - isRequired: true
     name: --job-id
     summary: |-
-      The ID of the Job to terminate.
+      The ID of the Job to terminate. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -622,7 +567,7 @@ directCommands:
       An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
   - name: --if-unmodified-since
     summary: |-
-      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+      A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
   - name: --terminate-reason
     summary: |-
       Termination reason.
@@ -630,7 +575,6 @@ directCommands:
       The text you want to appear as the job's TerminateReason. The default is 'UserTerminate'.
 commands:
 - az_batch_job_create
-- az_batch_job_create(azure-batch-cli-extensions)
 - az_batch_job_delete
 - az_batch_job_disable
 - az_batch_job_enable
@@ -668,4 +612,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
+  ms.date: 01/24/2025
   description: Manage Batch jobs.

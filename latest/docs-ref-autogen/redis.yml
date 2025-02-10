@@ -33,6 +33,7 @@ directCommands:
                     [--tags]
                     [--tenant-settings]
                     [--update-channel {Preview, Stable}]
+                    [--zonal-allocation {Automatic, NoZones, UserDefined}]
                     [--zones]
   examples:
   - summary: |-
@@ -41,6 +42,9 @@ directCommands:
   - summary: |-
       Configure the multiple zones for new Premium Azure Cache for Redis
     syntax: az redis create --location westus2 --name MyRedisCache --resource-group MyResourceGroup --sku Premium --vm-size p1 --zones 1 2
+  - summary: |-
+      Deploying a Premium Azure Cache for Redis with zones automatically allocated
+    syntax: az redis create --location westus2 --name MyRedisCache --resource-group MyResourceGroup --sku Premium --vm-size p1 --zonal-allocation-policy Automatic
   - summary: |-
       Configure the memory policies for the cache.
     syntax: az redis create --resource-group resourceGroupName --name cacheName --location westus2 --sku Standard --vm-size c0 --redis-configuration @"config_max-memory.json"
@@ -161,6 +165,10 @@ directCommands:
     parameterValueGroup: "Preview, Stable"
     summary: |-
       Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using "Preview" update channel get latest Redis updates at least 4 weeks ahead of "Stable" channel caches. Default value is "Stable".
+  - name: --zonal-allocation --zonal-allocation-policy
+    parameterValueGroup: "Automatic, NoZones, UserDefined"
+    summary: |-
+      Specifies how availability zones are allocated to the Redis cache. "Automatic" enables zone redundancy and Azure will automatically select zones based on regional availability and capacity. "UserDefined" will select availability zones passed in by you using the "zones" parameter. "NoZones" will produce a non-zonal cache. If "zonal-allocation-policy" is not passed, it will be set to "UserDefined" when zones are passed in, otherwise, it will be set to "Automatic in regions where zones are supported and "NoZones" in regions where zones are not supported.
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
@@ -557,6 +565,9 @@ directCommands:
   - summary: |-
       Disable access keys authentication for Redis.
     syntax: az redis update --name MyRedisCache --resource-group MyResourceGroup --set "disableAccessKeyAuthentication=true"
+  - summary: |-
+      Updating a non zone redundant cache to zone redundant cache using automatic zonal allocation policy.
+    syntax: az redis update --name MyRedisCache --resource-group MyResourceGroup --set "zonalAllocationPolicy=Automatic"
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -670,5 +681,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 08/06/2024
+  ms.date: 01/24/2025
   description: Manage dedicated Redis caches for your Azure applications.
