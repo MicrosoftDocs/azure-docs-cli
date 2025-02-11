@@ -21,7 +21,7 @@ There are four authentication options when working with the Azure CLI:
 | [Azure Cloud Shell](/azure/cloud-shell/overview) | Azure Cloud Shell automatically logs you in and is the easiest way to get started.
 | [Sign in interactively](./authenticate-azure-cli-interactively.md) | This is a good option when learning Azure CLI commands and running the Azure CLI locally. Login through your browser with the [az login](/cli/azure/reference-index#az-login) command. Interactive login also gives you a subscription selector to automatically set your default subscription.
 | [Sign in with a managed identity](./authenticate-azure-cli-managed-identity.md) | [Managed identities](/entra/identity/managed-identities-azure-resources/overview) provide an Azure-managed identity for applications to use when connecting to resources that support Microsoft Entra authentication. Using a managed identity eliminates the need for you to manage secrets, credentials, certificates, and keys.
-| [Sign in using an service principal](./authenticate-azure-cli-service-principal.md) | When you write scripts, using a [service principal](/entra/identity-platform/app-objects-and-service-principals) is the recommended authentication approach. You grant just the appropriate permissions needed to a service principal keeping your automation secure.
+| [Sign in using a service principal](./authenticate-azure-cli-service-principal.md) | When you write scripts, using a [service principal](/entra/identity-platform/app-objects-and-service-principals) is the recommended authentication approach. You grant just the appropriate permissions needed to a service principal keeping your automation secure.
 
 ## Multi-factor authentication (MFA)
 
