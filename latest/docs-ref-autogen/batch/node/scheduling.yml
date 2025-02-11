@@ -9,9 +9,7 @@ directCommands:
 - uid: az_batch_node_scheduling_disable
   name: az batch node scheduling disable
   summary: |-
-    Disables Task scheduling on the specified Compute Node.
-  description: |-
-    You can disable Task scheduling on a Compute Node only if its current scheduling state is enabled.
+    Disable scheduling on a Batch compute node.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -21,16 +19,21 @@ directCommands:
                                      [--account-endpoint]
                                      [--account-key]
                                      [--account-name]
-                                     [--node-disable-scheduling-option {requeue, taskcompletion, terminate}]
+                                     [--json-file]
+                                     [--node-disable-scheduling-option]
+  examples:
+  - summary: |-
+      Disable scheduling on a node and requeue any running tasks.
+    syntax: az batch node scheduling disable --pool-id pool1 --node-id node1 --node-disable-scheduling-option requeue
   requiredParameters:
   - isRequired: true
     name: --node-id
     summary: |-
-      The ID of the Compute Node on which you want to disable Task scheduling.
+      The ID of the Compute Node on which you want to disable Task scheduling. Required.
   - isRequired: true
     name: --pool-id
     summary: |-
-      The ID of the Pool that contains the Compute Node.
+      The ID of the Pool that contains the Compute Node. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -41,16 +44,16 @@ directCommands:
   - name: --account-name
     summary: |-
       Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.
-  - name: --node-disable-scheduling-option
-    parameterValueGroup: "requeue, taskcompletion, terminate"
+  - name: --json-file
     summary: |-
-      The default value is requeue.
+      A file containing the parameters specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Parameters Arguments' are ignored.
+  - name: --node-disable-scheduling-option
+    summary: |-
+      What to do with currently running Tasks when disabling Task scheduling on the Compute Node. The default value is requeue. Known values are: "requeue", "terminate", and "taskcompletion".
 - uid: az_batch_node_scheduling_enable
   name: az batch node scheduling enable
   summary: |-
-    Enables Task scheduling on the specified Compute Node.
-  description: |-
-    You can enable Task scheduling on a Compute Node only if its current scheduling state is disabled.
+    Enable scheduling on a Batch compute node.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -60,15 +63,19 @@ directCommands:
                                     [--account-endpoint]
                                     [--account-key]
                                     [--account-name]
+  examples:
+  - summary: |-
+      Enable scheduling on a node.
+    syntax: az batch node scheduling enable --pool-id pool1 --node-id node1
   requiredParameters:
   - isRequired: true
     name: --node-id
     summary: |-
-      The ID of the Compute Node on which you want to enable Task scheduling.
+      The ID of the Compute Node on which you want to enable Task scheduling. Required.
   - isRequired: true
     name: --pool-id
     summary: |-
-      The ID of the Pool that contains the Compute Node.
+      The ID of the Pool that contains the Compute Node. Required.
   optionalParameters:
   - name: --account-endpoint
     summary: |-
@@ -107,5 +114,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 12/04/2024
+  ms.date: 01/24/2025
   description: Manage task scheduling for a Batch compute node.
