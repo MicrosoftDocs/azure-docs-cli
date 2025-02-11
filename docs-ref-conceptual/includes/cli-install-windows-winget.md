@@ -13,11 +13,11 @@ Use [WinGet](/windows/package-manager/winget/), Microsoft's Package manager for 
 versions of Windows. See the [winget documentation](/windows/package-manager/winget/) for installation instructions.
 
 ```PowerShell
-winget install -e --id Microsoft.AzureCLI
+winget install --exact --id Microsoft.AzureCLI
 ```
 
-The `-e` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `-v <version>` with your desired version to the command. Here's an example:
+The `--exact` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `--version <version>` with your desired version to the command. Here's an example:
 
 ```PowerShell
-winget install -e --id Microsoft.AzureCLI -v 2.66.0
+winget install --exact --id Microsoft.AzureCLI -v 2.67.0
 ```
