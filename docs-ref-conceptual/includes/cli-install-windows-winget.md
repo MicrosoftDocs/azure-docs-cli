@@ -19,5 +19,5 @@ winget install --exact --id Microsoft.AzureCLI
 The `--exact` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `--version <version>` with your desired version to the command. Here's an example:
 
 ```PowerShell
-winget install --exact --id Microsoft.AzureCLI -v 2.67.0
+winget install --exact --id Microsoft.AzureCLI --version 2.67.0
 ```
