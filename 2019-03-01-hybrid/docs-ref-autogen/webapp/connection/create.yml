@@ -2274,10 +2274,13 @@ directCommands:
                                       [--resource-group]
                                       [--secret]
                                       [--server]
+                                      [--service-principal]
                                       [--slot]
                                       [--source-id]
+                                      [--system-identity]
                                       [--target-id]
                                       [--target-resource-group]
+                                      [--user-identity]
                                       [--vault-id]
   examples:
   - summary: |-
@@ -2285,13 +2288,13 @@ directCommands:
     syntax: az webapp connection create redis
   - summary: |-
       Create a connection between webapp and redis with resource name
-    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --tg RedisRG --server MyServer --database MyDB --secret
+    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --tg RedisRG --server MyServer --database MyDB --system-identity
   - summary: |-
       Create a connection between webapp slot and redis with resource name
-    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --slot MySlot --tg RedisRG --server MyServer --database MyDB --secret
+    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --slot MySlot --tg RedisRG --server MyServer --database MyDB --system-identity
   - summary: |-
       Create a connection between webapp and redis with resource id
-    syntax: az webapp connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
+    syntax: az webapp connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --system-identity
   optionalParameters:
   - name: --appconfig-id
     summary: |-
@@ -2338,18 +2341,40 @@ directCommands:
   - name: --server
     summary: |-
       Name of the redis server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
   - name: --source-id
     summary: |-
       The resource id of a webapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the redis server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.

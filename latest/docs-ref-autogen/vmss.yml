@@ -65,6 +65,7 @@ directCommands:
                    [--enable-spot-restore {false, true}]
                    [--enable-vtpm {false, true}]
                    [--encryption-at-host {false, true}]
+                   [--encryption-identity]
                    [--ephemeral-os-disk {false, true}]
                    [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
@@ -146,6 +147,7 @@ directCommands:
                    [--vm-sku]
                    [--vnet-address-prefix]
                    [--vnet-name]
+                   [--zone-balance {false, true}]
                    [--zones]
   examples:
   - summary: |-
@@ -197,6 +199,9 @@ directCommands:
   - summary: |-
       Create a Debian11 VM scaleset with a user assigned identity.
     syntax: az vmss create -n MyVmss -g rg1 --image Debian11 --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: |-
+      Create a vmss with user assigned identity and add encryption identity for Azure disk encryption
+    syntax: az vmss create -n MyVm -g rg1 --image Debian11 --assign-identity myID --encryption-identity /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID --orchestration-mode Uniform --lb-sku Standard
   - summary: |-
       Create a Debian11 VM scaleset with both system and user assigned identity.
     syntax: az vmss create -n MyVmss -g rg1 --image Debian11 --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
@@ -400,6 +405,9 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable Host Encryption for the VM or VMSS. This will enable the encryption for all the disks including Resource/Temp disk at host itself.
+  - name: --encryption-identity
+    summary: |-
+      Resource Id of the user managed identity which can be used for Azure disk encryption.
   - name: --ephemeral-os-disk
     parameterValueGroup: "false, true"
     summary: |-
@@ -685,6 +693,10 @@ directCommands:
   - name: --vnet-name
     summary: |-
       Name of the virtual network when creating a new one or referencing an existing one.
+  - name: --zone-balance
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage.
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
@@ -1426,6 +1438,7 @@ directCommands:
                    [--v-cpus-available]
                    [--v-cpus-per-core]
                    [--vm-sku]
+                   [--zone-balance {false, true}]
                    [--zones]
   examples:
   - summary: |-
@@ -1693,6 +1706,10 @@ directCommands:
     summary: |-
       The new size of the virtual machine instances in the scale set. Default to "Standard_DS1_v2". See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     isPreview: true
+  - name: --zone-balance
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage.
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
@@ -1939,5 +1956,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 12/31/2024
+  ms.date: 01/26/2025
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

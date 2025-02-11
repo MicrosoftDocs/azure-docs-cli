@@ -1980,9 +1980,12 @@ directCommands:
                                       [--secret]
                                       [--server]
                                       [--service]
+                                      [--service-principal]
                                       [--source-id]
+                                      [--system-identity]
                                       [--target-id]
                                       [--target-resource-group]
+                                      [--user-identity]
                                       [--vault-id]
   examples:
   - summary: |-
@@ -1990,10 +1993,10 @@ directCommands:
     syntax: az spring connection create redis
   - summary: |-
       Create a connection between spring app and redis with resource name
-    syntax: az spring connection create redis -g SpringCloudRG --service MySpringService --app MyApp --tg RedisRG --server MyServer --database MyDB --secret
+    syntax: az spring connection create redis -g SpringCloudRG --service MySpringService --app MyApp --tg RedisRG --server MyServer --database MyDB --system-identity
   - summary: |-
       Create a connection between spring app and redis with resource id
-    syntax: az spring connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
+    syntax: az spring connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --system-identity
   optionalParameters:
   - name: --app
     summary: |-
@@ -2046,15 +2049,37 @@ directCommands:
   - name: --service
     summary: |-
       Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the redis server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
