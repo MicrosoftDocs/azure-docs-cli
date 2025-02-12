@@ -1,6 +1,6 @@
 ---
 title: Sign into Azure using a managed identity and the Azure CLI
-description: Learn how to sign into Azure using an managed identity and the Azure CLI. Find links to articles that show how to use the Azure CLI to manage Azure identities.
+description: Learn how to sign into Azure using a managed identity and the Azure CLI. Find links to articles that show how to use the Azure CLI to manage Azure identities.
 ms.date: 09/02/2024
 ms.topic: concept-article
 ms.service: azure-cli
@@ -13,11 +13,11 @@ ms.custom: devx-track-azurecli
 On resources configured for managed identities for Azure resources, you can sign in using the managed identity.
 Here are some of the benefits of using managed identities:
 
-* You don't need to manage credentials. Credentials aren’t even accessible to you.
+* You don't need to manage credentials. You can't even access the credentials.
 * You can use managed identities to authenticate to any resource that supports Microsoft Entra authentication, including your own applications.
-* Managed identities can be used at no extra cost.
+* You don't incur extra costs for using managed identities.
 
-Signing in with the resource's identity is done through the `--identity` flag.
+To sign in with the resource's identity, use the `--identity` flag.
 
 To sign in with a system-assigned managed identity:
 
@@ -25,7 +25,7 @@ To sign in with a system-assigned managed identity:
 az login --identity
 ```
 
-To sign in with a user-assigned managed identity, you must specify the client ID, object ID or resource ID of the user-assigned managed identity with `--username`:
+To sign in with a user-assigned managed identity, specify the client ID, object ID, or resource ID of the user-assigned managed identity with `--username`:
 
 ```azurecli-interactive
 az login --identity --username <client_id|object_id|resource_id>
