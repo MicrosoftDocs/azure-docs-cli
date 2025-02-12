@@ -12,7 +12,7 @@ It will not impact [service principals](/entra/identity-platform/app-objects-and
 or [managed identities](/entra/identity/managed-identities-azure-resources/overview).
 
 If you are using `az login` with an Entra ID and password, plan now to migrate to a service principal
-or managed identity. Migration often requires updating scripts and automation processes to use workload identities.
+or managed identity. Migration often requires updating scripts and automated processes.
 
 Here are some helpful links to assist you in making this change:
 
