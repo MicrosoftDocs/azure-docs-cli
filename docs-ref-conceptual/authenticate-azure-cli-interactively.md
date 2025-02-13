@@ -178,7 +178,7 @@ see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#c
 
 ## Sign in using --scope
 
-```
+```azurecli-interactive
 az login --scope https://management.core.windows.net//.default
 ```
 

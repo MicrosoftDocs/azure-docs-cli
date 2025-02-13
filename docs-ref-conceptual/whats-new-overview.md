@@ -17,8 +17,6 @@ This page highlights new features and upcoming changes for the Azure CLI.
 
 [!INCLUDE [MFA](includes/multifactor-authentication.md)]
 
-As more information becomes available that is specific to the Azure CLI, we'll post more details on this page.
-
 ## Ignite 2024!
 
 There are several new Azure CLI features being released for Ignite 2024.
