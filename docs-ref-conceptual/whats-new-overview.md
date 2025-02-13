@@ -1,7 +1,7 @@
 ---
 title: Azure CLI release highlights | Microsoft Docs
 description: Learn what's new in the Azure CLI. Read about new features and upcoming changes. Check here for announcements.
-ms.date: 08/01/2024
+ms.date: 02/10/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -12,6 +12,10 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 # Azure CLI release highlights
 
 This page highlights new features and upcoming changes for the Azure CLI.
+
+## Multifactor authentication (MFA)
+
+[!INCLUDE [MFA](includes/multifactor-authentication.md)]
 
 ## Ignite 2024!
 
@@ -27,12 +31,6 @@ For details on the new features, see [Azure CLI and Azure PowerShell Ignite 2024
 ## AI Shell
 
 AI Shell introduces a seamless way to obtain assistance from Copilot in Azure directly within your command-line interface (CLI). Generate Azure CLI commands using natural language -- right in your preferred terminal environment! For more information, see [Use Microsoft Copilot in Azure with AI Shell](/azure/copilot/ai-shell-overview).
-
-## Multi-factor authentication (MFA)
-
-[!INCLUDE [MFA](includes/multifactor-authentication.md)]
-
-As more information becomes available that is specific to the Azure CLI, we'll post more details on this page.
 
 ## Docker container image
 

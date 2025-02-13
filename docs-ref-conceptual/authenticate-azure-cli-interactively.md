@@ -15,11 +15,7 @@ access for script testing, learning, and on-the-fly management without needing t
 service principals or other noninteractive authentication methods.
 
 > [!IMPORTANT]
-> Microsoft announced in May 2024 that it requires Multifactor Authentication (MFA) for all Azure users. For information on how to plan for this change, 
-> see [Planning for mandatory MFA for Azure and other admin portals](/entra/identity/authentication/concept-mandatory-multifactor-authentication).
->
-> MFA only impacts Microsoft Entra ID [users](/entra/fundamentals/how-to-create-delete-users). It doesn't impact 
-> [service principals](/entra/identity-platform/app-objects-and-service-principals) or [managed identities](/entra/identity/managed-identities-azure-resources/overview).
+> [!INCLUDE [MFA](includes/multifactor-authentication.md)]
 
 ## Prerequisites
 
@@ -173,7 +169,7 @@ see [How to change your active tenant](manage-azure-subscriptions-azure-cli.md#c
 
 ## Sign in using --scope
 
-```
+```azurecli-interactive
 az login --scope https://management.core.windows.net//.default
 ```
 
