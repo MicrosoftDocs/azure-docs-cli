@@ -127,7 +127,7 @@ Provide your Azure user credentials on the command line. Only use this authentic
 learning Azure CLI commands. For production-level applications, use a service principal or managed
 identity.
 
-This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication
+This approach doesn't work with Microsoft accounts or accounts that have multifactor authentication (MFA)
 enabled. You receive an _interactive authentication is needed_ message.
 
 ```azurecli-interactive
@@ -199,8 +199,18 @@ Clearing your subscription cache isn't technically the same process as logging o
 
 ## Troubleshooting
 
+### The connection for this site isn't secure
+
 When your default browser is Microsoft Edge, you might encounter the following error when attempting to sign in to Azure interactively with `az login`: "_The connection for this site isn't secure._" To resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in Microsoft Edge. 
 Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
+
+### Interactive authentication is needed
+
+This message is received when a user identity has been used to authenticate to Azure, and multifactor authentication is required. The solution is to use a [workload identity](/entra/workload-id/workload-identities-overview) such as a [service principal](./authenticate-azure-cli-interactively.md) or [managed identity](./authenticate-azure-cli-managed-identity.md) to authenticate to Azure.
+
+### Authentication failed against tenant
+
+This error occurs when a single Entra user identity belongs to multiple Azure tenants. Azure CLI will loop through the tenants to which you have access and try to authenticate. To log in with your tenant of choice, use the `--tenant` parameter. For more information, see [Sign in with a different tenant](#sign-in-with-a-different-tenant).
 
 ## See also
 
