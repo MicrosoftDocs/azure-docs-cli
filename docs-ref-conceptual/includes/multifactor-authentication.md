@@ -4,7 +4,7 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-Starting in 2025, Microsoft will enforce mandatory MFA. For more background about this requirement, see our [blog post](https://aka.ms/azuremfablogpost).
+Starting in 2025, Microsoft will enforce mandatory MFA for Azure CLI and other command-line tools. For more background about this requirement, see our [blog post](https://aka.ms/azuremfablogpost).
 
 MFA will only impact Microsoft Entra ID [user identities](/entra/fundamentals/how-to-create-delete-users).
 It will not impact workload identities, such as [service principals](/entra/identity-platform/app-objects-and-service-principals)
