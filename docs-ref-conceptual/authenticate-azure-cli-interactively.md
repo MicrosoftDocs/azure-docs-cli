@@ -1,6 +1,6 @@
 ---
 title: Sign in with Azure CLI at a command line | Microsoft Docs
-description: Learn how to sign into the Azure CLI interactively using az login, WAM, a web browser and a subscription selector.
+description: Learn how to sign into the Azure CLI interactively using az login, WAM, a web browser, and a subscription selector.
 ms.date: 09/02/2024
 ms.topic: concept-article
 ms.service: azure-cli
@@ -10,10 +10,7 @@ ms.custom: devx-track-azurecli
 
 # Sign into Azure interactively using the Azure CLI 
 
-Interactive logins to Azure offer a more intuitive and flexible user experience. Interactive login
-with Azure CLI allows users to authenticate to Azure directly through the [az login](/cli/azure/reference-index#az-login)
-command, which is useful for ad-hoc management tasks and for environments that require manual
-sign-in, such as those customers with multi-factor authentication (MFA). This method simplifies
+Interactive logins to Azure offer a more intuitive and flexible user experience. With Azure CLI, you can authenticate to Azure directly through the [az login](/cli/azure/reference-index#az-login) command. This command is useful for ad-hoc management tasks and for environments that require manual sign-in, such as those with multi-factor authentication (MFA). This method simplifies
 access for script testing, learning, and on-the-fly management without needing to preconfigure
 service principals or other noninteractive authentication methods.
 
@@ -26,8 +23,7 @@ service principals or other noninteractive authentication methods.
 
 ## Interactive login
 
-To sign in interactively, use the [az login](/cli/azure/reference-index#az-login) command. Beginning
-with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Azure CLI uses Web Account Manager (WAM) on Windows, and a browser-based login on Linux and macOS by default.
+To sign in interactively, use the [az login](/cli/azure/reference-index#az-login) command. Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Azure CLI uses Web Account Manager (WAM) on Windows, and a browser-based login on Linux and macOS by default.
 
 ```azurecli-interactive
 az login
@@ -66,11 +62,11 @@ Learn more about it and its configuration at https://go.microsoft.com/fwlink/?li
 If you encounter any problem, please open an issue at https://aka.ms/azclibug
 ```
 
-The next time you login, the previously selected tenant and subscription is marked as the default
-with an asterisk (`*`) next to its number. This allows you to press <kbd>Enter</kbd> to select the
+The next time you sign in, the previously selected tenant and subscription is marked as the default
+with an asterisk (`*`) next to its number. This marking allows you to press <kbd>Enter</kbd> to select the
 default subscription.
 
-Commands run against the selected subscription by default. You can still use `az account set` to
+By default, commands run against the selected subscription. You can use `az account set` to
 change your subscription from a command line at any time. For more information,
 see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
@@ -80,7 +76,7 @@ Here are some guidelines about the subscription selector to keep in mind:
 * The subscription selector is only available when using the `az login` command.
 * You aren't prompted to select a subscription when you're logging in with a service principal or managed identity.
 
-If want to disable the subscription selector feature, set the
+If you want to disable the subscription selector feature, set the
 [core.login_experience_v2](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables) configuration property to `off`.
 
 ```azurecli-interactive
@@ -91,10 +87,10 @@ az login
 ## Sign in with Web Account Manager (WAM) on Windows
 
 Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account
-Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component
-that acts as an authentication broker. (An authentication broker is an application that runs on a
-user’s machine that manages the authentication handshakes and token maintenance for connected
-accounts.)
+Manager (WAM) is the default authentication method on Windows. WAM is a Windows 10+ component
+that acts as an authentication broker. An authentication broker is an application that runs on a
+user's machine. It manages the authentication handshakes and token maintenance for connected
+accounts.
 
 Using WAM has several benefits:
 
@@ -104,7 +100,7 @@ Using WAM has several benefits:
 * Bug fixes and enhancements shipped with Windows.
 
 If you encounter an issue and want to revert to the previous browser-based authentication method,
-set the [core.enable_broker_on_windows](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables) configuration property to `false`.
+Set the [core.enable_broker_on_windows](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables) configuration property to `false`.
 
 ```azurecli-interactive
 az account clear
@@ -121,14 +117,14 @@ The Azure CLI defaults to a browser-based authentication method when one of the 
 * The operating system (OS) is Mac, or Linux, or the Windows OS is earlier than Windows 10 or Windows Server 2019.
 * The `core.enable_broker_on_windows` configuration property is set to `false`.
 
-Follow these steps to sign in with a browser:
+To sign in with a browser, follow these steps:
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
 ## Sign in with credentials on the command line
 
 Provide your Azure user credentials on the command line. Only use this authentication method for
-learning Azure CLI commands. Production-level applications should use a service principal or managed
+learning Azure CLI commands. For production-level applications, use a service principal or managed
 identity.
 
 This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication
@@ -139,8 +135,7 @@ az login --user <username> --password <password>
 ```
 
 > [!IMPORTANT]
-> If you want to avoid displaying your password on console and are using `az login` interactively,
-> use the `read -s` command under `bash`.
+> To avoid displaying your password on console when using `az login` interactively, use the `read -s` command under `bash`.
 >
 > ```bash
 > read -sp "Azure password: " AZ_PASS && echo && az login -u <username> -p $AZ_PASS
@@ -155,13 +150,9 @@ az login --user <username> --password <password>
 
 ## Sign in with a different tenant
 
-You can select a tenant to sign in under with the `--tenant` argument. The value of this argument
-can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive
-and command-line sign-in methods work with `--tenant`.
+You can select a tenant to sign in with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive and command-line sign-in methods work with `--tenant`.
 
-In select environments and beginning in Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024),
-you need to first disable the subscription selector by setting the `core.login_experience_v2`
-configuration property to `off`.
+In select environments and beginning in Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), you need to first disable the subscription selector by setting the `core.login_experience_v2` configuration property to `off`.
 
 ```azurecli-interactive
 # disable the subscription selector (v. 2.61.0 and up)
@@ -171,10 +162,10 @@ az config set core.login_experience_v2=off
 az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
-To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [Interactive login](#interactive-login)
+To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [Interactive login](#interactive-login).
 
 After signing in, if you want to change your active tenant,
-see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
+see [How to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
 
 ## Sign in using --scope
 
@@ -192,8 +183,7 @@ az logout
 
 ## Clear your subscription cache
 
-To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear)
-command. You will need to sign in again to see an updated list.
+To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear) command. You need to sign in again to see an updated list.
 
 ```azurecli-interactive
 az account clear
@@ -201,9 +191,7 @@ az account clear
 az login
 ```
 
-Clearing your subscription cache is not technically the same process as logging out of Azure.
-However, when you clear your subscription cache, you cannot run Azure CLI commands, including
-`az account set`, until you sign in again.
+Clearing your subscription cache isn't technically the same process as logging out of Azure. However, when you clear your subscription cache, you can't run Azure CLI commands, including `az account set`, until you sign in again.
 
 ## Refresh tokens
 
@@ -211,9 +199,7 @@ However, when you clear your subscription cache, you cannot run Azure CLI comman
 
 ## Troubleshooting
 
-When your default browser is Microsoft Edge, you might encounter the following error when attempting
-to sign in to Azure interactively with `az login`: "_The connection for this site isn't secure._" To
-resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in Microsoft Edge. 
+When your default browser is Microsoft Edge, you might encounter the following error when attempting to sign in to Azure interactively with `az login`: "_The connection for this site isn't secure._" To resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in Microsoft Edge. 
 Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
 
 ## See also
