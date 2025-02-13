@@ -4,13 +4,13 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-Starting in 2024, Microsoft will enforce mandatory MFA. For more background about this requirement, see our [blog post](https://aka.ms/azuremfablogpost).
+Starting in 2025, Microsoft will enforce mandatory MFA. For more background about this requirement, see our [blog post](https://aka.ms/azuremfablogpost).
 
-MFA will only impact Microsoft Entra ID [users](/entra/fundamentals/how-to-create-delete-users).
-It will not impact [service principals](/entra/identity-platform/app-objects-and-service-principals)
-or [managed identities](/entra/identity/managed-identities-azure-resources/overview).
+MFA will only impact Microsoft Entra ID [user identities](/entra/fundamentals/how-to-create-delete-users).
+It will not impact workload identities, such as [service principals](/entra/identity-platform/app-objects-and-service-principals)
+and [managed identities](/entra/identity/managed-identities-azure-resources/overview).
 
-If you are using [az login](/cli/azure/reference-index#az-login) with an Entra ID and password to authenticate a script or automated process, plan now to migrate to a service principal or managed identity. Here are some helpful links to assist you in making this change:
+If you are using [az login](/cli/azure/reference-index#az-login) with an Entra ID and password to authenticate a script or automated process, plan now to migrate to a workload identity. Here are some helpful links to assist you in making this change:
 
 * [Planning for mandatory multifactor authentication for Azure and other admin portals](/entra/identity/authentication/concept-mandatory-multifactor-authentication).
 * [How to verify that users are set up for mandatory Microsoft Entra multifactor authentication (MFA)](/entra/identity/authentication/how-to-mandatory-multifactor-authentication)
