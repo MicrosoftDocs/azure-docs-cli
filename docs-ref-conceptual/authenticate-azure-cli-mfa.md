@@ -9,15 +9,14 @@ ms.custom: devx-track-azurecli
 # The impact of multifactor authentication on Azure CLI in automation scenarios
 
 This article explores how multifactor authentication (MFA) affects automation tasks that use
-Microsoft Entra user identities and provides guidance on alternative approaches for uninterrupted
-automation.
+Microsoft Entra [user identities](/entra/fundamentals/how-to-create-delete-users) and provides guidance on alternative approaches for uninterrupted automation.
 
 > [!IMPORTANT]
 > Action is required if you're using Microsoft Entra user identities for automation.
 
 MFA requirements prevent you from using Microsoft Entra user identities for authentication in
 automation scenarios. Organizations must switch to authentication methods designed for automation,
-such as managed identities or service principals, which support non-interactive automation use
+such as [managed identities](/entra/identity/managed-identities-azure-resources/overview) or [service principals](/entra/identity-platform/app-objects-and-service-principals), which support non-interactive automation use
 cases.
 
 ## Limitations of user identities with MFA in automation

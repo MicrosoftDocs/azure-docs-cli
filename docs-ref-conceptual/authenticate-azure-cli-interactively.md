@@ -212,7 +212,7 @@ This message is received when a user identity has been used to authenticate to A
 
 This error occurs when a single Entra user identity belongs to multiple Azure tenants. Azure CLI will loop through the tenants to which you have access and try to authenticate. To log in with your tenant of choice, use the `--tenant` parameter. For more information, see [Sign in with a different tenant](#sign-in-with-a-different-tenant).
 
-## See also
+## Next steps
 
-* [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* [Begin your Azure CLI journey](./get-started-tutorial-0-before-you-begin.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
