@@ -85,8 +85,8 @@ mandatory MFA enforcement for Microsoft Entra user identities.
 
 ## See also
 
-- [Sign into Azure with a service principal][auth-sp]
-- [Sign into Azure with a managed identity][auth-managed-identity]
+- [Sign into Azure with a service principal using Azure CIL][auth-sp]
+- [Sign into Azure with a managed identity using Azure CLI][auth-managed-identity]
 - [Reducing personal access token (PAT) usage across Azure DevOps][pat-ado-blog]
 - [Improve security posture in Azure service connections with AzurePipelinesCredential][fic-serviceconn-blog]
 
