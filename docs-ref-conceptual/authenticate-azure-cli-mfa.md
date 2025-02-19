@@ -102,7 +102,7 @@ To migrate your Azure CLI scripts from using `az login` with a Microsoft Entra I
 - A nonhuman identity that can access multiple Azure resources. A service principal is used by many Azure resources and isn't tied to a single Azure resource.
 - You can alter properties and credentials of a service principal as needed.
 - Ideal for applications that need to access multiple Azure resources across different subscriptions.
-- Considered more flexible than managed identities, but less secure.
+- Considered more flexible than managed identities but less secure.
 - Often referred to as an "application object" in an Azure tenant or Microsoft Entra ID directory.
 
 To learn more about service principals, see:
@@ -117,7 +117,7 @@ To learn how to log into Azure using Azure CLI and a service principal, see [Sig
 - Tied to a specific Azure resource allowing that single resource to access other Azure applications.
 - Credentials aren't visible to you. Azure handles secrets, credentials, certificates, and keys.
 - Ideal for Azure resources that need to access other Azure resources within a single subscription.
-- Considered less flexible than service principals, but more secure.
+- Considered less flexible than service principals but more secure.
 - There are two types of managed identities:
   - **System assigned**: This type is a 1:1 (one to one) access link between two Azure resources.
   - **User assigned**: This type has a 1:M (one to many) relationship where the managed identity can access multiple Azure resources.
