@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/13/2025
+ms.date: 02/18/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -69,7 +69,7 @@ You will be prompted to install an extension on first use.
 |[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.56.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
-|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.64.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.10.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
+|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.64.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.10.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.57.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | Preview | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.62.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [1.1.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
@@ -166,7 +166,7 @@ You will be prompted to install an extension on first use.
 |[partnercenter](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter) | 2.0.67 | Microsoft Azure CLI Extension for Partner Center | Preview | [0.2.4](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter/HISTORY.rst) |
 |[peering](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering) | 2.3.1 | Microsoft Azure Command-Line Tools PeeringManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering/HISTORY.rst) |
 |[playwright-cli-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/playwright-cli-extension) | 2.67.0 | Microsoft Azure Command-Line Tools PlaywrightCliExtension Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/playwright-cli-extension/HISTORY.rst) |
-|[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.3.1 | Microsoft Azure Command-Line Tools Portal Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
+|[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.67.0 | Microsoft Azure Command-Line Tools Portal Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated) | 2.56.0 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated/HISTORY.rst) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub) | 2.57.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
