@@ -11,7 +11,7 @@ ms.topic: conceptual
 
 This article explores how multifactor authentication (MFA) affects automation tasks that use
 Microsoft Entra user identities and provides guidance on alternative approaches for uninterrupted
-automation.
+automation. 
 
 > [!IMPORTANT]
 > Action is required if you're using Microsoft Entra user identities for automation.
