@@ -121,7 +121,7 @@ mandatory MFA enforcement for Microsoft Entra user identities.
 <!-- link references -->
 
 [auth-managed-identity]: /cli/azure/authenticate-azure-cli-managed-identity
-[auth-sp]: authenticate-azure-cli-service-principal
+[auth-sp]: /cli/azure/authenticate-azure-cli-service-principal
 [pat-ado-blog]: https://devblogs.microsoft.com/devops/reducing-pat-usage-across-azure-devops/
 [fic-serviceconn-blog]: https://devblogs.microsoft.com/azure-sdk/improve-security-posture-in-azure-service-connections-with-azurepipelinescredential/
 
