@@ -142,7 +142,7 @@ To learn how to log into Azure using Azure CLI and a managed identity, see [Sign
 
 To learn more about federated identities, see:
 
-- [What is workload identity federation?](identity-federations)
+- [What is workload identity federation?][identity-federations]
 - [Migrate to Microsoft Entra multifactor authentication with federations][mfa-federations]
 
 ## Learn more about multifactor authentication
