@@ -4,7 +4,6 @@ title: The impact of multifactor authentication on Azure CLI in automation scena
 ms.custom: devx-track-azurecli
 ms.service: azure-cli
 ms.topic: conceptual
-
 ---
 
 # The impact of multifactor authentication on Azure CLI in automation scenarios
