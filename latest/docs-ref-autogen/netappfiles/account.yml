@@ -10,6 +10,63 @@ summary: |-
 status: GA
 sourceType: Core and Extension
 directCommands:
+- uid: az_netappfiles_account_change-key-vault
+  name: az netappfiles account change-key-vault
+  summary: |-
+    Change KeyVault/Managed HSM that is used for encryption of volumes under NetApp account.
+  description: |-
+    Affects existing volumes that are encrypted with Key Vault/Managed HSM, and new volumes. Supports HSM to Key Vault, Key Vault to HSM, HSM to HSM and Key Vault to Key Vault.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles account change-key-vault [--account-name]
+                                            [--endpoint-pairs]
+                                            [--ids]
+                                            [--key-name]
+                                            [--key-vault-resource-id]
+                                            [--key-vault-uri]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--resource-group]
+                                            [--subscription]
+                                            [--yes]
+  examples:
+  - summary: |-
+      Accounts_ChangeKeyVault
+    syntax: az netappfiles account change-key-vault --resource-group myRG --account-name account1 --key-vault-uri https://my-key-vault.managedhsm.azure.net --key-name rsakey --key-vault-resource-id /subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.KeyVault/managedHSMs/my-hsm --key-vault-private-endpoints "[{virtual-network-id:/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1,private-endpoint-id:/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1}]"
+  optionalParameters:
+  - name: --account-name -a -n
+    summary: |-
+      The name of the NetApp account.
+  - name: --endpoint-pairs --key-vault-private-endpoints
+    summary: |-
+      Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --key-name
+    summary: |-
+      The name of the key that should be used for encryption.
+  - name: --key-vault-resource-id --keyvault-resource-id
+    summary: |-
+      Azure resource ID of the key vault/managed HSM that should be used for encryption.
+  - name: --key-vault-uri -v
+    summary: |-
+      The URI of the key vault/managed HSM that should be used for encryption.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_netappfiles_account_create
   name: az netappfiles account create
   summary: |-
@@ -246,6 +303,40 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+- uid: az_netappfiles_account_get-key-vault-status
+  name: az netappfiles account get-key-vault-status
+  summary: |-
+    Contains data from encryption.keyVaultProperties as well as information about which private endpoint is used by each encryption sibling set. Response from this endpoint can be used for transitiontocmk.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles account get-key-vault-status [--account-name]
+                                                [--ids]
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--resource-group]
+                                                [--subscription]
+  examples:
+  - summary: |-
+      Accounts_GetChangeKeyVaultInformation
+    syntax: az netappfiles account get-key-vault-status --resource-group myRG --account-name account1
+  optionalParameters:
+  - name: --account-name -a -n
+    summary: |-
+      The name of the NetApp account.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_netappfiles_account_list
   name: az netappfiles account list
   summary: |-
@@ -498,6 +589,55 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_netappfiles_account_transitiontocmk
+  name: az netappfiles account transitiontocmk
+  summary: |-
+    Transitions all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account.
+  description: |-
+    Az netappfiles account get-key-vault-status can be used to get the data required for this operation.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles account transitiontocmk [--account-name]
+                                           [--ids]
+                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--private-endpoint-id]
+                                           [--resource-group]
+                                           [--subscription]
+                                           [--virtual-network-id]
+                                           [--yes]
+  examples:
+  - summary: |-
+      Accounts_TransitionEncryptionKey
+    syntax: az netappfiles account transitiontocmk --resource-group myRG --account-name account1 --virtual-network-id /subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1 --private-endpoint-id /subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1
+  optionalParameters:
+  - name: --account-name -a -n
+    summary: |-
+      The name of the NetApp account.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --private-endpoint-id
+    summary: |-
+      Identifier of the private endpoint to reach the Azure Key Vault.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --virtual-network-id
+    summary: |-
+      Identifier for the virtual network.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_netappfiles_account_update
   name: az netappfiles account update
   summary: |-
@@ -845,10 +985,12 @@ commands:
 - az_netappfiles_account_backup-vault_update(netappfiles-preview)
 - az_netappfiles_account_backup-vault_wait
 - az_netappfiles_account_backup-vault_wait(netappfiles-preview)
+- az_netappfiles_account_change-key-vault
 - az_netappfiles_account_create
 - az_netappfiles_account_create(netappfiles-preview)
 - az_netappfiles_account_delete
 - az_netappfiles_account_delete(netappfiles-preview)
+- az_netappfiles_account_get-key-vault-status
 - az_netappfiles_account_list
 - az_netappfiles_account_list(netappfiles-preview)
 - az_netappfiles_account_migrate-backup
@@ -857,6 +999,7 @@ commands:
 - az_netappfiles_account_renew-credentials(netappfiles-preview)
 - az_netappfiles_account_show
 - az_netappfiles_account_show(netappfiles-preview)
+- az_netappfiles_account_transitiontocmk
 - az_netappfiles_account_update
 - az_netappfiles_account_update(netappfiles-preview)
 - az_netappfiles_account_wait
