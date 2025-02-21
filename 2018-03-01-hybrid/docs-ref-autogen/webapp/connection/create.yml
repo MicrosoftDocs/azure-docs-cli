@@ -1290,6 +1290,105 @@ directCommands:
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
+- uid: az_webapp_connection_create_fabric-sql(serviceconnector-passwordless)
+  name: az webapp connection create fabric-sql
+  extensionSuffix: serviceconnector-passwordless
+  summary: |-
+    Create a webapp connection to fabric-sql.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az webapp connection create fabric-sql [--appconfig-id]
+                                           [--client-type {dotnet, go, java, none, php, python}]
+                                           [--connection]
+                                           [--connstr-props]
+                                           [--customized-keys]
+                                           [--name]
+                                           [--new]
+                                           [--no-wait]
+                                           [--opt-out {auth, configinfo, publicnetwork}]
+                                           [--resource-group]
+                                           [--slot]
+                                           [--source-id]
+                                           [--system-identity]
+                                           [--target-id]
+                                           [--user-identity]
+                                           [--vault-id]
+                                           [--yes]
+  examples:
+  - summary: |-
+      Create a connection between webapp and fabric-sql interactively
+    syntax: az webapp connection create fabric-sql
+  - summary: |-
+      Create a connection between webapp and fabric-sql with resource name
+    syntax: az webapp connection create fabric-sql -g WebAppRG -n MyWebApp --connstr-props Server=MyServer,1433 Database=MyDB --system-identity
+  - summary: |-
+      Create a connection between webapp and fabric-sql with resource id
+    syntax: az webapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/SqlDatabases/{sql_id} --system-identity
+  optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
+  - name: --client-type
+    parameterValueGroup: "dotnet, go, java, none, php, python"
+    summary: |-
+      The client type used on the webapp.
+  - name: --connection
+    summary: |-
+      Name of the webapp connection.
+  - name: --connstr-props
+    summary: |-
+      The addtional connection string properties used to for building connection string.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --name -n
+    summary: |-
+      Name of the webapp. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    summary: |-
+      Deleting existing users with the same name before creating a new user in database.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "auth, configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the webapp. Required if '--source-id' is not specified.None.
+  - name: --slot
+    summary: |-
+      The name of the slot. Default to the production slot if not specified.
+  - name: --source-id
+    summary: |-
+      The resource id of a webapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if [] are not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_webapp_connection_create_keyvault
   name: az webapp connection create keyvault
   summary: |-
@@ -1693,6 +1792,7 @@ directCommands:
                                                [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                [--config-connstr {false, true}]
                                                [--connection]
+                                               [--connstr-props]
                                                [--customized-keys]
                                                [--database]
                                                [--name]
@@ -1739,6 +1839,9 @@ directCommands:
   - name: --connection
     summary: |-
       Name of the webapp connection.
+  - name: --connstr-props
+    summary: |-
+      The addtional connection string properties used to for building connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1776,9 +1879,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of secret, secret-uri, secret-name is required. Password or account key for secret auth.
+      secret-uri  : One of secret, secret-uri, secret-name is required. Keyvault secret uri which stores password.
+      secret-name : One of secret, secret-uri, secret-name is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
@@ -2129,6 +2232,7 @@ directCommands:
                                                   [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                   [--config-connstr {false, true}]
                                                   [--connection]
+                                                  [--connstr-props]
                                                   [--customized-keys]
                                                   [--database]
                                                   [--name]
@@ -2174,6 +2278,9 @@ directCommands:
   - name: --connection
     summary: |-
       Name of the webapp connection.
+  - name: --connstr-props
+    summary: |-
+      The addtional connection string properties used to for building connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2207,9 +2314,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of secret, secret-uri, secret-name is required. Password or account key for secret auth.
+      secret-uri  : One of secret, secret-uri, secret-name is required. Keyvault secret uri which stores password.
+      secret-name : One of secret, secret-uri, secret-name is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
@@ -2872,6 +2979,7 @@ directCommands:
                                     [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                     [--config-connstr {false, true}]
                                     [--connection]
+                                    [--connstr-props]
                                     [--customized-keys]
                                     [--database]
                                     [--name]
@@ -2919,6 +3027,9 @@ directCommands:
   - name: --connection
     summary: |-
       Name of the webapp connection.
+  - name: --connstr-props
+    summary: |-
+      The addtional connection string properties used to for building connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2956,9 +3067,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of secret, secret-uri, secret-name is required. Password or account key for secret auth.
+      secret-uri  : One of secret, secret-uri, secret-name is required. Keyvault secret uri which stores password.
+      secret-name : One of secret, secret-uri, secret-name is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of the sql server. Required if '--target-id' is not specified.
@@ -3626,6 +3737,7 @@ commands:
 - az_webapp_connection_create_cosmos-table
 - az_webapp_connection_create_eventhub
 - az_webapp_connection_create_fabric-sql
+- az_webapp_connection_create_fabric-sql(serviceconnector-passwordless)
 - az_webapp_connection_create_keyvault
 - az_webapp_connection_create_mysql
 - az_webapp_connection_create_mysql-flexible
