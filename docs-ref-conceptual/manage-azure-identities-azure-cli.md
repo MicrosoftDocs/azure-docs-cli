@@ -1,7 +1,7 @@
 ---
 title: Use Azure CLI to manage Azure identities | Microsoft Docs
 description: Find Azure CLI reference commands that manage the identity of Azure resources
-ms.date: 08/20/2024
+ms.date: 02/24/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
