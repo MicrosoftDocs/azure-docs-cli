@@ -4,6 +4,7 @@ title: The impact of multifactor authentication on Azure CLI in automation scena
 ms.custom: devx-track-azurecli
 ms.service: azure-cli
 ms.topic: conceptual
+ms.date: 02/24/2025
 ---
 
 # The impact of multifactor authentication on Azure CLI in automation scenarios
@@ -156,6 +157,7 @@ The Microsoft Entra ID documentation site offers more detail on MFA.
 ## See also
 
 - [Workload identities, other machine identities, and human identities][workload-identities].
+- [Azure CLI reference command index for Azure identities](./manage-azure-identities-azure-cli.md)
 - [Reducing personal access token (PAT) usage across Azure DevOps][pat-ado-blog]
 - [Improve security posture in Azure service connections with AzurePipelinesCredential][fic-serviceconn-blog]
 
