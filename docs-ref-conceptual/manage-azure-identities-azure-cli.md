@@ -21,150 +21,150 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az acr identity](/cli/azure/acr/identity) | [Troubleshoot a customer-managed key](https://learn.microsoft.com/azure/container-registry/tutorial-troubleshoot-customer-managed-keys)
-|  | [Tutorial: Build and deploy from source code to Azure Container Apps](https://learn.microsoft.com/azure/container-apps/tutorial-deploy-from-code)
+| [az acr identity](/cli/azure/acr/identity) | [Troubleshoot a customer-managed key](/azure/container-registry/tutorial-troubleshoot-customer-managed-keys)
+|  | [Tutorial: Build and deploy from source code to Azure Container Apps](/azure/container-apps/tutorial-deploy-from-code)
 
 ## az aks
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az aks pod-identity](/cli/azure/aks/pod-identity) | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](https://learn.microsoft.com/azure/aks/use-azure-ad-pod-identity)
-|  | [Migrate from pod managed-identity to workload identity](https://learn.microsoft.com/azure/aks/workload-identity-migrate-from-pod-identity)
-| [az aks pod-identity exception](/cli/azure/aks/pod-identity/exception) | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](https://learn.microsoft.com/azure/aks/use-azure-ad-pod-identity)
-|  | [Troubleshoot Azure Kubernetes Service backup and restore](https://learn.microsoft.com/azure/backup/azure-kubernetes-service-backup-troubleshoot)
+| [az aks pod-identity](/cli/azure/aks/pod-identity) | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
+|  | [Migrate from pod managed-identity to workload identity](/azure/aks/workload-identity-migrate-from-pod-identity)
+| [az aks pod-identity exception](/cli/azure/aks/pod-identity/exception) | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
+|  | [Troubleshoot Azure Kubernetes Service backup and restore](/azure/backup/azure-kubernetes-service-backup-troubleshoot)
 
 ## az appconfig
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az appconfig identity](/cli/azure/appconfig/identity) | [Use customer-managed keys to encrypt your App Configuration data](https://learn.microsoft.com/azure/azure-app-configuration/concept-customer-managed-keys)
-|  | [Add managed identities for Azure App Configuration](https://learn.microsoft.com/azure/azure-app-configuration/overview-managed-identity)
+| [az appconfig identity](/cli/azure/appconfig/identity) | [Use customer-managed keys to encrypt your App Configuration data](/azure/azure-app-configuration/concept-customer-managed-keys)
+|  | [Add managed identities for Azure App Configuration](/azure/azure-app-configuration/overview-managed-identity)
 
 ## az backup
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az backup vault identity](/cli/azure/backup/vault/identity) | [Encrypt backup data by using customer-managed keys](https://learn.microsoft.com/azure/backup/encryption-at-rest-with-cmk)
-|  | [Save and manage MARS agent passphrase securely in Azure Key Vault](https://learn.microsoft.com/azure/backup/save-backup-passphrase-securely-in-azure-key-vault)
+| [az backup vault identity](/cli/azure/backup/vault/identity) | [Encrypt backup data by using customer-managed keys](/azure/backup/encryption-at-rest-with-cmk)
+|  | [Save and manage MARS agent passphrase securely in Azure Key Vault](/azure/backup/save-backup-passphrase-securely-in-azure-key-vault)
 
 ## az communication
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az communication identity](/cli/azure/communication/identity) | [How to use Managed Identity with Azure Communication Services](https://learn.microsoft.com/azure/communication-services/how-tos/managed-identity)
-| [az communication identity token](/cli/azure/communication/identity/token) | [Quickstart: Join a room call](https://learn.microsoft.com/azure/communication-services/quickstarts/rooms/join-rooms-call)
-|  | [Pre-call diagnostic overview](https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/pre-call-diagnostics)
-|  | [Adding visual effects to a video call](https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/video-effects)
+| [az communication identity](/cli/azure/communication/identity) | [How to use Managed Identity with Azure Communication Services](/azure/communication-services/how-tos/managed-identity)
+| [az communication identity token](/cli/azure/communication/identity/token) | [Quickstart: Join a room call](/azure/communication-services/quickstarts/rooms/join-rooms-call)
+|  | [Pre-call diagnostic overview](/azure/communication-services/concepts/voice-video-calling/pre-call-diagnostics)
+|  | [Adding visual effects to a video call](/azure/communication-services/concepts/voice-video-calling/video-effects)
 
 ## az containerapp
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az containerapp identity](/cli/azure/containerapp/identity) | [Managed identities in Azure Container Apps](https://learn.microsoft.com/azure/container-apps/managed-identity)
-|  | [Deploy to Azure Container Apps from Azure Pipelines](https://learn.microsoft.com/azure/container-apps/azure-pipelines)
-|  | [Deploy to Azure Container Apps with GitHub Actions](https://learn.microsoft.com/azure/container-apps/github-actions)
+| [az containerapp identity](/cli/azure/containerapp/identity) | [Managed identities in Azure Container Apps](/azure/container-apps/managed-identity)
+|  | [Deploy to Azure Container Apps from Azure Pipelines](/azure/container-apps/azure-pipelines)
+|  | [Deploy to Azure Container Apps with GitHub Actions](/azure/container-apps/github-actions)
 |  | [Migrate a Python application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-python)
 |  | [Tutorial: Build and deploy a Python web app with Azure Container Apps and PostgreSQL](/azure/developer/python/tutorial-deploy-python-web-app-azure-container-apps-02)
 |  | [Migrate an application to use passwordless connections with Azure Database for PostgreSQL](/azure/developer/java/spring-framework/migrate-postgresql-to-passwordless-connection)
-|  | [Migrate an application to use passwordless connections with Azure Blob Storage](https://learn.microsoft.com/azure/storage/common/migrate-azure-credentials)
-|  | [Tutorial: Use code interpreter sessions in LangChain with Azure Container Apps](https://learn.microsoft.com/azure/container-apps/sessions-tutorial-langchain)
-|  | [Tutorial: Use code interpreter sessions in Semantic Kernel with Azure Container Apps](https://learn.microsoft.com/azure/container-apps/sessions-tutorial-semantic-kernel)
+|  | [Migrate an application to use passwordless connections with Azure Blob Storage](/azure/storage/common/migrate-azure-credentials)
+|  | [Tutorial: Use code interpreter sessions in LangChain with Azure Container Apps](/azure/container-apps/sessions-tutorial-langchain)
+|  | [Tutorial: Use code interpreter sessions in Semantic Kernel with Azure Container Apps](/azure/container-apps/sessions-tutorial-semantic-kernel)
 |  | [Authenticating Azure-hosted apps to Azure resources with the Azure SDK for Go](/azure/developer/go/sdk/authentication/authentication-azure-hosted-apps)
 
 ## az cosmosdb
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az cosmosdb identity](/cli/azure/cosmosdb/identity) | [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](https://learn.microsoft.com/azure/cosmos-db/how-to-setup-managed-identity)
-|  | [Create and manage container copy jobs in Azure Cosmos DB (Preview)](https://learn.microsoft.com/azure/cosmos-db/how-to-container-copy)
-|  | [Access Azure Key Vault from Azure Cosmos DB using a managed identity](https://learn.microsoft.com/azure/cosmos-db/access-key-vault-managed-identity)
-|  | [Configure customer-managed keys for your Azure Cosmos DB account with Azure Managed HSM Key Vault](https://learn.microsoft.com/azure/cosmos-db/how-to-setup-customer-managed-keys-mhsm)
+| [az cosmosdb identity](/cli/azure/cosmosdb/identity) | [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](/azure/cosmos-db/how-to-setup-managed-identity)
+|  | [Create and manage container copy jobs in Azure Cosmos DB (Preview)](/azure/cosmos-db/how-to-container-copy)
+|  | [Access Azure Key Vault from Azure Cosmos DB using a managed identity](/azure/cosmos-db/access-key-vault-managed-identity)
+|  | [Configure customer-managed keys for your Azure Cosmos DB account with Azure Managed HSM Key Vault](/azure/cosmos-db/how-to-setup-customer-managed-keys-mhsm)
 
 ## az dt
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az dt identity](/cli/azure/dt/identity) | [Set up an Azure Digital Twins instance and authentication (CLI)](https://learn.microsoft.com/azure/digital-twins/how-to-set-up-instance-cli)
+| [az dt identity](/cli/azure/dt/identity) | [Set up an Azure Digital Twins instance and authentication (CLI)](/azure/digital-twins/how-to-set-up-instance-cli)
 
 ## az functionapp
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az functionapp identity](/cli/azure/functionapp/identity) | [Create your first containerized functions on Azure Container Apps](https://learn.microsoft.com/azure/azure-functions/functions-deploy-container-apps)
-|  | [Tutorial: Build out an end-to-end solution](https://learn.microsoft.com/azure/digital-twins/tutorial-end-to-end)
-|  | [Enable API analysis in your API center - self-managed](https://learn.microsoft.com/azure/api-center/enable-api-analysis-linting)
-|  | [Ingest IoT Hub telemetry into Azure Digital Twins](https://learn.microsoft.com/azure/digital-twins/how-to-ingest-iot-hub-data)
-|  | [Set up twin-to-twin event handling](https://learn.microsoft.com/azure/digital-twins/how-to-send-twin-to-twin-events)
+| [az functionapp identity](/cli/azure/functionapp/identity) | [Create your first containerized functions on Azure Container Apps](/azure/azure-functions/functions-deploy-container-apps)
+|  | [Tutorial: Build out an end-to-end solution](/azure/digital-twins/tutorial-end-to-end)
+|  | [Enable API analysis in your API center - self-managed](/azure/api-center/enable-api-analysis-linting)
+|  | [Ingest IoT Hub telemetry into Azure Digital Twins](/azure/digital-twins/how-to-ingest-iot-hub-data)
+|  | [Set up twin-to-twin event handling](/azure/digital-twins/how-to-send-twin-to-twin-events)
 
 ## az identity
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az identity](/cli/azure/identity) | [Manage user-assigned managed identities](/entra/identity/managed-identities-azure-resources/how-manage-user-assigned-managed-identities)
-|  | [Use Key Vault references as app settings in Azure App Service and Azure Functions](https://learn.microsoft.com/azure/app-service/app-service-key-vault-references)
-|  | [How to use managed identities for App Service and Azure Functions](https://learn.microsoft.com/azure/app-service/overview-managed-identity)
-|  | [Transfer an Azure subscription to a different Microsoft Entra directory](https://learn.microsoft.com/azure/role-based-access-control/transfer-subscription)
-|  | [Use a managed identity in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/use-managed-identity)
-|  | [Configure a custom container for Azure App Service](https://learn.microsoft.com/azure/app-service/configure-custom-container)
-|  | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](https://learn.microsoft.com/azure/aks/workload-identity-deploy-cluster)
-|  | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access)
-|  | [Migrate custom software to Azure App Service using a custom container](https://learn.microsoft.com/azure/app-service/tutorial-custom-container)
+|  | [Use Key Vault references as app settings in Azure App Service and Azure Functions](/azure/app-service/app-service-key-vault-references)
+|  | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
+|  | [Transfer an Azure subscription to a different Microsoft Entra directory](/azure/role-based-access-control/transfer-subscription)
+|  | [Use a managed identity in Azure Kubernetes Service (AKS)](/azure/aks/use-managed-identity)
+|  | [Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container)
+|  | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](/azure/aks/workload-identity-deploy-cluster)
+|  | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](/azure/aks/csi-secrets-store-identity-access)
+|  | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
 |  | [Provision and publish a bot](/azure/bot-service/provision-and-publish-a-bot)
-| [az identity federated-credential](/cli/azure/identity/federated-credential) | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](https://learn.microsoft.com/azure/aks/workload-identity-deploy-cluster)
-|  | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access)
+| [az identity federated-credential](/cli/azure/identity/federated-credential) | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](/azure/aks/workload-identity-deploy-cluster)
+|  | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](/azure/aks/csi-secrets-store-identity-access)
 |  | [Configure a user-assigned managed identity to trust an external identity provider](/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity)
-|  | [Tutorial: Deploy applications using GitOps with Flux v2](https://learn.microsoft.com/azure/azure-arc/kubernetes/tutorial-use-gitops-flux2)
-|  | [Quickstart: Deploy Application Gateway for Containers ALB Controller](https://learn.microsoft.com/azure/application-gateway/for-containers/quickstart-deploy-application-gateway-for-containers-alb-controller)
-|  | [Migrate from pod managed-identity to workload identity](https://learn.microsoft.com/azure/aks/workload-identity-migrate-from-pod-identity)
-|  | [Securely scale your applications using the KEDA add-on and workload identity on Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/keda-workload-identity)
-|  | [Deploy an AI model on Azure Kubernetes Service (AKS) with the AI toolchain operator (preview)](https://learn.microsoft.com/azure/aks/ai-toolchain-operator)
-|  | [Use the Secret Store extension to fetch secrets for offline access in Azure Arc-enabled Kubernetes clusters](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension)
-|  | [Deploy a highly available PostgreSQL database on AKS](https://learn.microsoft.com/azure/aks/deploy-postgresql-ha)
+|  | [Tutorial: Deploy applications using GitOps with Flux v2](/azure/azure-arc/kubernetes/tutorial-use-gitops-flux2)
+|  | [Quickstart: Deploy Application Gateway for Containers ALB Controller](/azure/application-gateway/for-containers/quickstart-deploy-application-gateway-for-containers-alb-controller)
+|  | [Migrate from pod managed-identity to workload identity](/azure/aks/workload-identity-migrate-from-pod-identity)
+|  | [Securely scale your applications using the KEDA add-on and workload identity on Azure Kubernetes Service (AKS)](/azure/aks/keda-workload-identity)
+|  | [Deploy an AI model on Azure Kubernetes Service (AKS) with the AI toolchain operator (preview)](/azure/aks/ai-toolchain-operator)
+|  | [Use the Secret Store extension to fetch secrets for offline access in Azure Arc-enabled Kubernetes clusters](/azure/azure-arc/kubernetes/secret-store-extension)
+|  | [Deploy a highly available PostgreSQL database on AKS](/azure/aks/deploy-postgresql-ha)
 
 ## az image
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az image builder identity](/cli/azure/image/builder/identity) | [Troubleshoot Azure VM Image Builder](https://learn.microsoft.com/azure/virtual-machines/linux/image-builder-troubleshoot)
+| [az image builder identity](/cli/azure/image/builder/identity) | [Troubleshoot Azure VM Image Builder](/azure/virtual-machines/linux/image-builder-troubleshoot)
 
 ## az iot
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az iot central app identity](/cli/azure/iot/central/app/identity) | [Export IoT data to Blob Storage](https://learn.microsoft.com/azure/iot-central/core/howto-export-to-blob-storage)
-|  | [Export IoT data to Event Hubs](https://learn.microsoft.com/azure/iot-central/core/howto-export-to-event-hubs)
-|  | [Manage and monitor IoT Central applications](https://learn.microsoft.com/azure/iot-central/core/howto-manage-and-monitor-iot-central)
-|  | [Export IoT data to Azure Data Explorer](https://learn.microsoft.com/azure/iot-central/core/howto-export-to-azure-data-explorer)
-|  | [Export IoT data to Service Bus](https://learn.microsoft.com/azure/iot-central/core/howto-export-to-service-bus)
-| [az iot hub device-identity](/cli/azure/iot/hub/device-identity) | [Create and provision an IoT Edge device on Linux using symmetric keys](https://learn.microsoft.com/azure/iot-edge/how-to-provision-single-device-linux-symmetric)
-|  | [Create and manage device identities](https://learn.microsoft.com/azure/iot-hub/create-connect-device)
-|  | [Quickstart: Deploy your first IoT Edge module to a virtual Linux device](https://learn.microsoft.com/azure/iot-edge/quickstart-linux)
-|  | [Quickstart: Deploy your first IoT Edge module to a Windows device](https://learn.microsoft.com/azure/iot-edge/quickstart)
-|  | [Tutorial: Send device data to Azure Storage using IoT Hub message routing](https://learn.microsoft.com/azure/iot-hub/tutorial-routing)
-|  | [Quickstart: Send telemetry from a device to an IoT hub and monitor it with the Azure CLI](https://learn.microsoft.com/azure/iot-hub/quickstart-send-telemetry-cli)
-|  | [Tutorial - Use MQTT to develop an IoT device client without using a device SDK](https://learn.microsoft.com/azure/iot/tutorial-use-mqtt)
-|  | [Tutorial: Build out an end-to-end solution](https://learn.microsoft.com/azure/digital-twins/tutorial-end-to-end)
-|  | [Create and provision an IoT Edge device on Linux using X.509 certificates](https://learn.microsoft.com/azure/iot-edge/how-to-provision-single-device-linux-x509)
-|  | [Install and run the Spatial Analysis container (preview)](https://learn.microsoft.com/azure/ai-services/computer-vision/spatial-analysis-container)
-| [az iot hub device-identity connection-string](/cli/azure/iot/hub/device-identity/connection-string) | [Create and provision an IoT Edge device on Linux using symmetric keys](https://learn.microsoft.com/azure/iot-edge/how-to-provision-single-device-linux-symmetric)
-|  | [Create and manage device identities](https://learn.microsoft.com/azure/iot-hub/create-connect-device)
-|  | [Quickstart: Deploy your first IoT Edge module to a virtual Linux device](https://learn.microsoft.com/azure/iot-edge/quickstart-linux)
-|  | [Quickstart: Deploy your first IoT Edge module to a Windows device](https://learn.microsoft.com/azure/iot-edge/quickstart)
-|  | [Tutorial: Build out an end-to-end solution](https://learn.microsoft.com/azure/digital-twins/tutorial-end-to-end)
-|  | [Install and run the Spatial Analysis container (preview)](https://learn.microsoft.com/azure/ai-services/computer-vision/spatial-analysis-container)
-|  | [Create and provision an IoT Edge for Linux on Windows device using symmetric keys](https://learn.microsoft.com/azure/iot-edge/how-to-provision-single-device-linux-on-windows-symmetric)
-|  | [Tutorial: Use a simulated device to test connectivity with your IoT hub](https://learn.microsoft.com/azure/iot-hub/tutorial-connectivity)
-|  | [Use Visual Studio 2022 to develop and debug modules for Azure IoT Edge](https://learn.microsoft.com/azure/iot-edge/how-to-visual-studio-develop-module)
-|  | [Tutorial: Configure your devices from a back-end service](https://learn.microsoft.com/azure/iot-hub/tutorial-device-twins)
-| [az iot hub identity](/cli/azure/iot/hub/identity) | [Configure IoT Hub file uploads using Azure CLI](https://learn.microsoft.com/azure/iot-hub/iot-hub-configure-file-upload-cli)
-| [az iot hub module-identity](/cli/azure/iot/hub/module-identity) | [Deploy Azure IoT Edge modules with Azure CLI](https://learn.microsoft.com/azure/iot-edge/how-to-deploy-modules-cli)
-| [az iot ops identity](/cli/azure/iot/ops/identity) | [Enable secure settings in Azure IoT Operations](https://learn.microsoft.com/azure/iot-operations/deploy-iot-ops/howto-enable-secure-settings)
+| [az iot central app identity](/cli/azure/iot/central/app/identity) | [Export IoT data to Blob Storage](/azure/iot-central/core/howto-export-to-blob-storage)
+|  | [Export IoT data to Event Hubs](/azure/iot-central/core/howto-export-to-event-hubs)
+|  | [Manage and monitor IoT Central applications](/azure/iot-central/core/howto-manage-and-monitor-iot-central)
+|  | [Export IoT data to Azure Data Explorer](/azure/iot-central/core/howto-export-to-azure-data-explorer)
+|  | [Export IoT data to Service Bus](/azure/iot-central/core/howto-export-to-service-bus)
+| [az iot hub device-identity](/cli/azure/iot/hub/device-identity) | [Create and provision an IoT Edge device on Linux using symmetric keys](/azure/iot-edge/how-to-provision-single-device-linux-symmetric)
+|  | [Create and manage device identities](/azure/iot-hub/create-connect-device)
+|  | [Quickstart: Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
+|  | [Quickstart: Deploy your first IoT Edge module to a Windows device](/azure/iot-edge/quickstart)
+|  | [Tutorial: Send device data to Azure Storage using IoT Hub message routing](/azure/iot-hub/tutorial-routing)
+|  | [Quickstart: Send telemetry from a device to an IoT hub and monitor it with the Azure CLI](/azure/iot-hub/quickstart-send-telemetry-cli)
+|  | [Tutorial - Use MQTT to develop an IoT device client without using a device SDK](/azure/iot/tutorial-use-mqtt)
+|  | [Tutorial: Build out an end-to-end solution](/azure/digital-twins/tutorial-end-to-end)
+|  | [Create and provision an IoT Edge device on Linux using X.509 certificates](/azure/iot-edge/how-to-provision-single-device-linux-x509)
+|  | [Install and run the Spatial Analysis container (preview)](/azure/ai-services/computer-vision/spatial-analysis-container)
+| [az iot hub device-identity connection-string](/cli/azure/iot/hub/device-identity/connection-string) | [Create and provision an IoT Edge device on Linux using symmetric keys](/azure/iot-edge/how-to-provision-single-device-linux-symmetric)
+|  | [Create and manage device identities](/azure/iot-hub/create-connect-device)
+|  | [Quickstart: Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
+|  | [Quickstart: Deploy your first IoT Edge module to a Windows device](/azure/iot-edge/quickstart)
+|  | [Tutorial: Build out an end-to-end solution](/azure/digital-twins/tutorial-end-to-end)
+|  | [Install and run the Spatial Analysis container (preview)](/azure/ai-services/computer-vision/spatial-analysis-container)
+|  | [Create and provision an IoT Edge for Linux on Windows device using symmetric keys](/azure/iot-edge/how-to-provision-single-device-linux-on-windows-symmetric)
+|  | [Tutorial: Use a simulated device to test connectivity with your IoT hub](/azure/iot-hub/tutorial-connectivity)
+|  | [Use Visual Studio 2022 to develop and debug modules for Azure IoT Edge](/azure/iot-edge/how-to-visual-studio-develop-module)
+|  | [Tutorial: Configure your devices from a back-end service](/azure/iot-hub/tutorial-device-twins)
+| [az iot hub identity](/cli/azure/iot/hub/identity) | [Configure IoT Hub file uploads using Azure CLI](/azure/iot-hub/iot-hub-configure-file-upload-cli)
+| [az iot hub module-identity](/cli/azure/iot/hub/module-identity) | [Deploy Azure IoT Edge modules with Azure CLI](/azure/iot-edge/how-to-deploy-modules-cli)
+| [az iot ops identity](/cli/azure/iot/ops/identity) | [Enable secure settings in Azure IoT Operations](/azure/iot-operations/deploy-iot-ops/howto-enable-secure-settings)
 
 ## az mysql
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az mysql flexible-server identity](/cli/azure/mysql/flexible-server/identity) | [Use Java and JDBC with Azure Database for MySQL - Flexible Server](https://learn.microsoft.com/azure/mysql/flexible-server/connect-java)
+| [az mysql flexible-server identity](/cli/azure/mysql/flexible-server/identity) | [Use Java and JDBC with Azure Database for MySQL - Flexible Server](/azure/mysql/flexible-server/connect-java)
 |  | [Migrate an application to use passwordless connections with Azure Database for MySQL](/azure/developer/java/spring-framework/migrate-mysql-to-passwordless-connection)
 |  | [Configure passwordless database connections for Java apps on Oracle WebLogic Server](/azure/developer/java/ee/how-to-configure-passwordless-datasource)
 
@@ -172,33 +172,33 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az networkcloud clustermanager identity](/cli/azure/networkcloud/clustermanager/identity) | [Cluster Manager: How to manage the Cluster Manager in Operator Nexus](https://learn.microsoft.com/azure/operator-nexus/howto-cluster-manager)
+| [az networkcloud clustermanager identity](/cli/azure/networkcloud/clustermanager/identity) | [Cluster Manager: How to manage the Cluster Manager in Operator Nexus](/azure/operator-nexus/howto-cluster-manager)
 
 ## az nexusidentity
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az nexusidentity](/cli/azure/nexusidentity) | [Use Method D v2.0 break glass access](https://learn.microsoft.com/azure/operator-nexus/howto-use-break-glass-access)
+| [az nexusidentity](/cli/azure/nexusidentity) | [Use Method D v2.0 break glass access](/azure/operator-nexus/howto-use-break-glass-access)
 
 ## az policy
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az policy ment identity](/cli/azure/policy) | [Built-in policies for Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostics-settings-policies-deployifnotexists)
+| [az policy ment identity](/cli/azure/policy) | [Built-in policies for Azure Monitor](/azure/azure-monitor/essentials/diagnostics-settings-policies-deployifnotexists)
 
 ## az postgres
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az postgres flexible-server identity](/cli/azure/postgres/flexible-server/identity) | [Configure system or user assigned managed identities](https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-configure-managed-identities)
-|  | [System assigned managed identity](https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-configure-managed-identities-system-assigned)
-|  | [User assigned managed identities](https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-configure-managed-identities-user-assigned)
+| [az postgres flexible-server identity](/cli/azure/postgres/flexible-server/identity) | [Configure system or user assigned managed identities](/azure/postgresql/flexible-server/how-to-configure-managed-identities)
+|  | [System assigned managed identity](/azure/postgresql/flexible-server/how-to-configure-managed-identities-system-assigned)
+|  | [User assigned managed identities](/azure/postgresql/flexible-server/how-to-configure-managed-identities-user-assigned)
 
 ## az redis
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az redis identity](/cli/azure/redis/identity) | [Managed identity for storage](https://learn.microsoft.com/azure/azure-cache-for-redis/cache-managed-identity)
+| [az redis identity](/cli/azure/redis/identity) | [Managed identity for storage](/azure/azure-cache-for-redis/cache-managed-identity)
 
 ## az spring
 
@@ -206,32 +206,32 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |---|---|
 | [az spring app identity](/cli/azure/spring/app/identity) | [Migrate a Python application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-python)
 |  | [Migrate an application to use passwordless connections with Azure Database for PostgreSQL](/azure/developer/java/spring-framework/migrate-postgresql-to-passwordless-connection)
-|  | [Migrate an application to use passwordless connections with Azure Blob Storage](https://learn.microsoft.com/azure/storage/common/migrate-azure-credentials)
-|  | [Enable system-assigned managed identity for an application in Azure Spring Apps](https://learn.microsoft.com/azure/spring-apps/basic-standard/how-to-enable-system-assigned-managed-identity)
+|  | [Migrate an application to use passwordless connections with Azure Blob Storage](/azure/storage/common/migrate-azure-credentials)
+|  | [Enable system-assigned managed identity for an application in Azure Spring Apps](/azure/spring-apps/basic-standard/how-to-enable-system-assigned-managed-identity)
 |  | [Migrate a .NET application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration)
 |  | [Migrate an application to use passwordless connections with Azure Database for MySQL](/azure/developer/java/spring-framework/migrate-mysql-to-passwordless-connection)
-|  | [Migrate an application to use passwordless connections with Azure Service Bus](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-migrate-azure-credentials)
+|  | [Migrate an application to use passwordless connections with Azure Service Bus](/azure/service-bus-messaging/service-bus-migrate-azure-credentials)
 |  | [Migrate a Node.js application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-nodejs)
 |  | [Migrate a Java application to use passwordless connections with Azure SQL Database](/azure/developer/java/spring-framework/migrate-sql-database-to-passwordless-connection)
-|  | [Migrate an application to use passwordless connections with Azure Event Hubs](https://learn.microsoft.com/azure/event-hubs/passwordless-migration-event-hubs)
+|  | [Migrate an application to use passwordless connections with Azure Event Hubs](/azure/event-hubs/passwordless-migration-event-hubs)
 
 ## az synapse
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az synapse workspace managed-identity](/cli/azure/synapse/workspace/managed-identity) | [Move an Azure Synapse Analytics workspace from one region to another](https://learn.microsoft.com/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
+| [az synapse workspace managed-identity](/cli/azure/synapse/workspace/managed-identity) | [Move an Azure Synapse Analytics workspace from one region to another](/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
 
 ## az vm
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az vm identity](/cli/azure/vm/identity) | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access)
+| [az vm identity](/cli/azure/vm/identity) | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](/azure/aks/csi-secrets-store-identity-access)
 |  | [Sign in to a Linux virtual machine in Azure by using Microsoft Entra ID and OpenSSH](/entra/identity/devices/howto-vm-sign-in-azure-ad-linux)
-|  | [Connect with managed identity to Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-connect-with-managed-identity)
-|  | [Use an Azure managed identity to authenticate to an Azure container registry](https://learn.microsoft.com/azure/container-registry/container-registry-authentication-managed-identity)
-|  | [Use the Linux diagnostic extension 4.0 to monitor metrics and logs](https://learn.microsoft.com/azure/virtual-machines/extensions/diagnostics-linux)
-|  | [Tutorial: Use Azure Key Vault with a virtual machine in .NET](https://learn.microsoft.com/azure/key-vault/general/tutorial-net-virtual-machine)
-|  | [Send Prometheus metrics from virtual machines, scale sets, or Kubernetes clusters to an Azure Monitor workspace](https://learn.microsoft.com/azure/azure-monitor/essentials/prometheus-remote-write-virtual-machines)
+|  | [Connect with managed identity to Azure Database for PostgreSQL - Flexible Server](/azure/postgresql/flexible-server/how-to-connect-with-managed-identity)
+|  | [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity)
+|  | [Use the Linux diagnostic extension 4.0 to monitor metrics and logs](/azure/virtual-machines/extensions/diagnostics-linux)
+|  | [Tutorial: Use Azure Key Vault with a virtual machine in .NET](/azure/key-vault/general/tutorial-net-virtual-machine)
+|  | [Send Prometheus metrics from virtual machines, scale sets, or Kubernetes clusters to an Azure Monitor workspace](/azure/azure-monitor/essentials/prometheus-remote-write-virtual-machines)
 |  | [Authenticate Azure-hosted apps to Azure resources with the Azure SDK for .NET](/dotnet/azure/sdk/authentication/azure-hosted-apps)
 |  | [Migrate a Python application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-python)
 |  | [Authenticating Azure-hosted apps to Azure resources with the Azure SDK for Python](/azure/developer/python/sdk/authentication/azure-hosted-apps)
@@ -240,25 +240,25 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az vmss identity](/cli/azure/vmss/identity) | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access)
+| [az vmss identity](/cli/azure/vmss/identity) | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](/azure/aks/csi-secrets-store-identity-access)
 |  | [Sign in to a Linux virtual machine in Azure by using Microsoft Entra ID and OpenSSH](/entra/identity/devices/howto-vm-sign-in-azure-ad-linux)
 |  | [Fail to pull images from Azure Container Registry to Azure Kubernetes Service cluster](/troubleshoot/azure/azure-kubernetes/extensions/cannot-pull-image-from-acr-to-aks-cluster)
-|  | [Use the Linux diagnostic extension 4.0 to monitor metrics and logs](https://learn.microsoft.com/azure/virtual-machines/extensions/diagnostics-linux)
-|  | [Send Prometheus metrics from virtual machines, scale sets, or Kubernetes clusters to an Azure Monitor workspace](https://learn.microsoft.com/azure/azure-monitor/essentials/prometheus-remote-write-virtual-machines)
-|  | [Send Prometheus data to Azure Monitor by using managed identity authentication](https://learn.microsoft.com/azure/azure-monitor/containers/prometheus-remote-write-managed-identity)
-|  | [Create a chaos experiment that uses an agent-based fault with the Azure CLI](https://learn.microsoft.com/azure/chaos-studio/chaos-studio-tutorial-agent-based-cli)
+|  | [Use the Linux diagnostic extension 4.0 to monitor metrics and logs](/azure/virtual-machines/extensions/diagnostics-linux)
+|  | [Send Prometheus metrics from virtual machines, scale sets, or Kubernetes clusters to an Azure Monitor workspace](/azure/azure-monitor/essentials/prometheus-remote-write-virtual-machines)
+|  | [Send Prometheus data to Azure Monitor by using managed identity authentication](/azure/azure-monitor/containers/prometheus-remote-write-managed-identity)
+|  | [Create a chaos experiment that uses an agent-based fault with the Azure CLI](/azure/chaos-studio/chaos-studio-tutorial-agent-based-cli)
 
 ## az webapp
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az webapp identity](/cli/azure/webapp/identity) | [How to use managed identities for App Service and Azure Functions](https://learn.microsoft.com/azure/app-service/overview-managed-identity)
-|  | [Tutorial: Connect to SQL Database from .NET App Service without secrets using a managed identity](https://learn.microsoft.com/azure/app-service/tutorial-connect-msi-sql-database)
-|  | [Configure a custom container for Azure App Service](https://learn.microsoft.com/azure/app-service/configure-custom-container)
+| [az webapp identity](/cli/azure/webapp/identity) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
+|  | [Tutorial: Connect to SQL Database from .NET App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-sql-database)
+|  | [Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container)
 |  | [Connect to and query Azure SQL Database using Python and the pyodbc driver](/azure/azure-sql/database/azure-sql-python-quickstart)
-|  | [Migrate custom software to Azure App Service using a custom container](https://learn.microsoft.com/azure/app-service/tutorial-custom-container)
-|  | [Tutorial: Use a managed identity to connect Key Vault to an Azure web app in .NET](https://learn.microsoft.com/azure/key-vault/general/tutorial-net-create-vault-azure-web-app)
-|  | [Tutorial: Connect to Azure databases from App Service without secrets using a managed identity](https://learn.microsoft.com/azure/app-service/tutorial-connect-msi-azure-database)
+|  | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
+|  | [Tutorial: Use a managed identity to connect Key Vault to an Azure web app in .NET](/azure/key-vault/general/tutorial-net-create-vault-azure-web-app)
+|  | [Tutorial: Connect to Azure databases from App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-azure-database)
 |  | [Authenticate Azure-hosted apps to Azure resources with the Azure SDK for .NET](/dotnet/azure/sdk/authentication/azure-hosted-apps)
 |  | [Migrate a Python application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-python)
-|  | [Tutorial: Configure a sidecar container for a Linux app in Azure App Service](https://learn.microsoft.com/azure/app-service/tutorial-sidecar)
+|  | [Tutorial: Configure a sidecar container for a Linux app in Azure App Service](/azure/app-service/tutorial-sidecar)
