@@ -772,7 +772,6 @@ ms.custom: devx-track-azurecli
 |  | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application)
 | [az batch application package](/cli/azure/batch/application/package) | [Use Azure Pipelines to build and deploy an HPC solution](/azure/batch/batch-ci-cd)
 |  | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application)
-| [az batch file](/cli/azure/batch/file) | [Use Azure Batch CLI templates and file transfer](/azure/batch/batch-cli-templates)
 | [az batch job](/cli/azure/batch/job) | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job)
 |  | [Use Azure Batch CLI templates and file transfer](/azure/batch/batch-cli-templates)
@@ -1957,7 +1956,6 @@ ms.custom: devx-track-azurecli
 |  | [Get access keys for Event Grid resources (topics or domains)](/azure/event-grid/get-access-keys)
 |  | [Durable Functions publishing to Azure Event Grid](/azure/azure-functions/durable/durable-functions-event-publishing)
 |  | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic)
-| [az eventgrid topic private-endpoint-connection](/cli/azure/eventgrid/topic/private-endpoint-connection) | [Configure private endpoints for Azure Event Grid custom topics or domains](/azure/event-grid/configure-private-endpoints)
 
 ## az eventhubs
 
@@ -2621,8 +2619,6 @@ ms.custom: devx-track-azurecli
 |  | [Store Terraform state in Azure Storage](/azure/developer/terraform/store-state-in-azure-storage)
 | [az keyvault security-domain](/cli/azure/keyvault/security-domain) | [Quickstart: Provision and activate a Managed HSM using Azure CLI](/azure/key-vault/managed-hsm/quick-create-cli)
 |  | [Managed HSM disaster recovery](/azure/key-vault/managed-hsm/disaster-recovery-guide)
-| [az keyvault storage](/cli/azure/keyvault/storage) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
-| [az keyvault storage sas-definition](/cli/azure/keyvault/storage/sas-definition) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
 
 ## az kusto
 
