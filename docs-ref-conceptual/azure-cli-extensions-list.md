@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/24/2025
+ms.date: 02/25/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -29,7 +29,7 @@ You will be prompted to install an extension on first use.
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [13.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [13.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.4.23](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[akshybrid](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.1.2](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
@@ -93,7 +93,7 @@ You will be prompted to install an extension on first use.
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.51.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.61.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
-|[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.67.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
+|[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.67.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.61.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
 |[edgezones](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones) | 2.57.0 | Microsoft Azure Command-Line Tools Edgezones Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones/HISTORY.rst) |
@@ -131,7 +131,7 @@ You will be prompted to install an extension on first use.
 |[k8s-runtime](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime) | 2.57.0 | Microsoft Azure Command-Line Tools K8sRuntime Extension. | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime/HISTORY.rst) |
 |[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
-|[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.66.0 | Microsoft Azure Command-Line Tools Load Testing Extension. | GA | [1.4.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
+|[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.66.0 | Microsoft Azure Command-Line Tools Load Testing Extension. | GA | [1.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
 |[log-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics) | 2.61.0 | Support for Azure Log Analytics query capabilities. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics/HISTORY.rst) |
 |[log-analytics-solution](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics-solution) | 2.50.0 | Support for Azure Log Analytics Solution | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics-solution/HISTORY.rst) |
 |[logic](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic) | 2.55.0 | Microsoft Azure Command-Line Tools Logic Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic/HISTORY.rst) |
