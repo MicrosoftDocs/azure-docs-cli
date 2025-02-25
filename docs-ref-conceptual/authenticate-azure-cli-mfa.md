@@ -95,7 +95,7 @@ To migrate your Azure CLI scripts from using `az login` with a Microsoft Entra I
 
 1. Obtain the needed permissions to create a new workload identity, or contact your Azure administrator for assistance.
 1. Create the workload identity.
-1. Assign permissions to the new identity.
+1. Assign roles to the new identity. For more information on Azure role assignments, see [Steps to assign an Azure role](/azure/role-based-access-control/role-assignments-steps). To assign roles using the Azure CLI, see [Assign Azure roles using Azure CLI](/azure/role-based-access-control/role-assignments-cli).
 1. Update your Azure CLI scripts to sign in with a service principal or managed identity.
 
 ### Service principal key concepts
