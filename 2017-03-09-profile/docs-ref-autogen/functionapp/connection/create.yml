@@ -59,7 +59,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -147,7 +147,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -260,7 +260,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -459,7 +459,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -583,7 +583,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -709,7 +709,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -832,7 +832,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -955,7 +955,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1074,7 +1074,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1155,6 +1155,8 @@ directCommands:
                                                 [--connection]
                                                 [--connstr-props]
                                                 [--customized-keys]
+                                                [--fabric-sql-db-uuid]
+                                                [--fabric-workspace-uuid]
                                                 [--name]
                                                 [--no-wait]
                                                 [--opt-out {auth, configinfo, publicnetwork}]
@@ -1170,10 +1172,10 @@ directCommands:
     syntax: az functionapp connection create fabric-sql
   - summary: |-
       Create a connection between functionapp and fabric-sql with resource name
-    syntax: az functionapp connection create fabric-sql -g FuncAppRG -n MyFunctionApp  --system-identity
+    syntax: az functionapp connection create fabric-sql -g FuncAppRG -n MyFunctionApp --fabric-workspace-uuid TargetFabricWorkspaceUUID --fabric-sql-db-uuid TargetFabricSQLDatabaseUUID --system-identity
   - summary: |-
       Create a connection between functionapp and fabric-sql with resource id
-    syntax: az functionapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/SqlDatabases/{sql_id} --system-identity
+    syntax: az functionapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{fabric_workspace_uuid}/SqlDatabases/{fabric_sql_db_uuid} --system-identity
   optionalParameters:
   - name: --appconfig-id
     summary: |-
@@ -1187,10 +1189,16 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --fabric-sql-db-uuid
+    summary: |-
+      UUID of the target Fabric SQL database. Required if '--target-id' is not specified.
+  - name: --fabric-workspace-uuid
+    summary: |-
+      UUID of Fabric workspace which contains the target SQL database. Required if '--target-id' is not specified.
   - name: --name -n
     summary: |-
       Name of the function app. Required if '--source-id' is not specified.None.
@@ -1215,7 +1223,7 @@ directCommands:
       Usage: --system-identity.
   - name: --target-id
     summary: |-
-      The resource id of target service. Required if [] are not specified.
+      The resource id of target service. Required if ['--fabric-workspace-uuid', '--fabric-sql-db-uuid'] are not specified.
   - name: --user-identity
     summary: |-
       The user assigned identity auth info.
@@ -1260,7 +1268,7 @@ directCommands:
     syntax: az functionapp connection create fabric-sql -g FuncAppRG -n MyFunctionApp --connstr-props Server=MyServer,1433 Database=MyDB --system-identity
   - summary: |-
       Create a connection between functionapp and fabric-sql with resource id
-    syntax: az functionapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/SqlDatabases/{sql_id} --system-identity
+    syntax: az functionapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{fabric_workspace_uuid}/SqlDatabases/{fabric_sql_db_uuid} --system-identity
   optionalParameters:
   - name: --appconfig-id
     summary: |-
@@ -1274,7 +1282,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1306,7 +1314,7 @@ directCommands:
       Usage: --system-identity.
   - name: --target-id
     summary: |-
-      The resource id of target service. Required if [] are not specified.
+      The resource id of target service. Required if ['--fabric-workspace-uuid', '--fabric-sql-db-uuid'] are not specified.
   - name: --user-identity
     summary: |-
       The user assigned identity auth info.
@@ -1379,7 +1387,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1498,7 +1506,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1605,7 +1613,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1734,7 +1742,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1881,7 +1889,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2014,7 +2022,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2136,7 +2144,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2265,7 +2273,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2379,7 +2387,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2471,7 +2479,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2589,7 +2597,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2705,7 +2713,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2837,7 +2845,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2984,7 +2992,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3105,7 +3113,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3202,7 +3210,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3321,7 +3329,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3436,7 +3444,7 @@ directCommands:
       Name of the functionapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.

@@ -1,0 +1,420 @@
+### YamlMime:AzureCLIGroup
+uid: az_webapp_sitecontainers
+name: az webapp sitecontainers
+summary: |-
+  Manage linux web apps sitecontainers.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_webapp_sitecontainers_create
+  name: az webapp sitecontainers create
+  summary: |-
+    Create sitecontainers for a linux webapp.
+  description: |-
+    Multiple sitecontainers can be added or updated at once by passing arg --sitecontainers-spec-file, which is the path to a json file containing an array of sitecontainer specs.
+    Example json file:
+    [
+    {
+        "name": "firstcontainer",
+        "properties": {
+            "image": "myregistry.io/firstimage:latest",
+            "targetPort": "80",
+            "isMain": true,
+            "environmentVariables": [
+                {
+                    "name": "VARIABLE_1",
+                    "value": "APPSETTING_NAME1"
+                }
+            ],
+            "volumeMounts": [
+                {
+                    "containerMountPath": "mountPath",
+                    "readOnly": true,
+                    "volumeSubPath": "subPath"
+                }
+            ]
+        }
+    },
+    {
+        "name": "secondcontainer",
+        "properties": {
+            "image": "myregistry.io/secondimage:latest",
+            "targetPort": "3000",
+            "isMain": false,
+            "authType": "SystemIdentity",
+            "startUpCommand": "MyStartupCmd"
+        }
+    },
+    {
+        "name": "thirdcontainer",
+        "properties": {
+            "image": "myregistry.io/thirdimage:latest",
+            "targetPort": "3001",
+            "isMain": false,
+            "authType": "UserAssigned",
+            "userManagedIdentityClientId": "ClientID"
+        }
+    },
+    {
+        "name": "fourthcontainer",
+        "properties": {
+            "image": "myregistry.io/fourthimage:latest",
+            "targetPort": "3002",
+            "isMain": false,
+            "authType": "UserCredentials",
+            "userName": "Username",
+            "passwordSecret": "Password"
+        }
+    }
+    ].
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp sitecontainers create --name
+                                    --resource-group
+                                    [--container-name]
+                                    [--image]
+                                    [--is-main {false, true}]
+                                    [--registry-password]
+                                    [--registry-username]
+                                    [--si {false, true}]
+                                    [--sitecontainers-spec-file]
+                                    [--slot]
+                                    [--startup-cmd]
+                                    [--target-port]
+                                    [--ui]
+  examples:
+  - summary: |-
+      Create a main sitecontainer for a linux webapp
+    syntax: az webapp sitecontainers create --name MyWebApp --resource-group MyResourceGroup --container-name MyContainer --image MyImageRegistry.io/MyImage:latest --target-port 80 --is-main
+  - summary: |-
+      Create or update multiple sitecontainers for a linux webapp using a json sitecontainer-spec file
+    syntax: az webapp sitecontainers create --name MyWebApp --resource-group MyResourceGroup --sitecontainers-spec-file ./sitecontainersspec.json
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the linux webapp.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --container-name
+    summary: |-
+      Name of the SiteContainer.
+  - name: --image
+    summary: |-
+      Image Name.
+  - name: --is-main
+    parameterValueGroup: "false, true"
+    summary: |-
+      True if the container is the main SiteContainer; false otherwise.
+  - name: --registry-password
+    summary: |-
+      Password used for image registry auth.
+  - name: --registry-username
+    summary: |-
+      Username used for image registry auth.
+  - name: --si --system-assigned-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, the system-assigned identity will be used for auth while pulling image.
+  - name: --sitecontainers-spec-file --ssf
+    summary: |-
+      Path to a json sitecontainer spec file containing a list of sitecontainers, other sitecontainer input args will be ignored if this arg is provided.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the productions slot if not specified.
+  - name: --startup-cmd
+    summary: |-
+      Startup Command for the SiteContainer.
+  - name: --target-port
+    summary: |-
+      Target port for SiteContainer.
+  - name: --ui --user-assigned-identity
+    summary: |-
+      ClientID for the user-maganed identity which will be used for auth while pulling image.
+- uid: az_webapp_sitecontainers_delete
+  name: az webapp sitecontainers delete
+  summary: |-
+    Delete a sitecontainer for a linux webapp.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp sitecontainers delete --container-name
+                                    [--ids]
+                                    [--name]
+                                    [--resource-group]
+                                    [--slot]
+                                    [--subscription]
+  examples:
+  - summary: |-
+      Delete a sitecontainer for a linux webapp
+    syntax: az webapp sitecontainers delete --name MyWebApp --resource-group MyResourceGroup --container-name MyContainer
+  requiredParameters:
+  - isRequired: true
+    name: --container-name
+    summary: |-
+      Name of the SiteContainer.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the linux webapp.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the productions slot if not specified.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_webapp_sitecontainers_list
+  name: az webapp sitecontainers list
+  summary: |-
+    List all the sitecontainers for a linux webapp.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp sitecontainers list --name
+                                  --resource-group
+                                  [--slot]
+  examples:
+  - summary: |-
+      List all the sitecontainers for a linux webapp
+    syntax: az webapp sitecontainers list --name MyWebApp --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the linux webapp.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the productions slot if not specified.
+- uid: az_webapp_sitecontainers_log
+  name: az webapp sitecontainers log
+  summary: |-
+    Get the logs of a sitecontainer for a linux webapp.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp sitecontainers log --container-name
+                                 [--ids]
+                                 [--name]
+                                 [--resource-group]
+                                 [--slot]
+                                 [--subscription]
+  examples:
+  - summary: |-
+      Get the logs of a sitecontainer for a linux webapp
+    syntax: az webapp sitecontainers log --name MyWebApp --resource-group MyResourceGroup --container-name MyContainer
+  requiredParameters:
+  - isRequired: true
+    name: --container-name
+    summary: |-
+      Name of the SiteContainer.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the linux webapp.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the productions slot if not specified.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_webapp_sitecontainers_show
+  name: az webapp sitecontainers show
+  summary: |-
+    List the details of a sitecontainer for a linux webapp.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp sitecontainers show --container-name
+                                  [--ids]
+                                  [--name]
+                                  [--resource-group]
+                                  [--slot]
+                                  [--subscription]
+  examples:
+  - summary: |-
+      List the details of a sitecontainer for a linux webapp
+    syntax: az webapp sitecontainers show --name MyWebApp --resource-group MyResourceGroup --container-name MyContainer
+  requiredParameters:
+  - isRequired: true
+    name: --container-name
+    summary: |-
+      Name of the SiteContainer.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the linux webapp.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the productions slot if not specified.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_webapp_sitecontainers_status
+  name: az webapp sitecontainers status
+  summary: |-
+    Get the status of a sitecontainer for a linux webapp.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp sitecontainers status [--container-name]
+                                    [--ids]
+                                    [--name]
+                                    [--resource-group]
+                                    [--slot]
+                                    [--subscription]
+  examples:
+  - summary: |-
+      Get the status of a sitecontainer for a linux webapp
+    syntax: az webapp sitecontainers status --name MyWebApp --resource-group MyResourceGroup --container-name MyContainer
+  optionalParameters:
+  - name: --container-name
+    summary: |-
+      Name of the SiteContainer.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the linux webapp.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the productions slot if not specified.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_webapp_sitecontainers_update
+  name: az webapp sitecontainers update
+  summary: |-
+    Update an existing sitecontainer for a linux webapp.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp sitecontainers update --container-name
+                                    [--ids]
+                                    [--image]
+                                    [--is-main {false, true}]
+                                    [--name]
+                                    [--registry-password]
+                                    [--registry-username]
+                                    [--resource-group]
+                                    [--si {false, true}]
+                                    [--slot]
+                                    [--startup-cmd]
+                                    [--subscription]
+                                    [--target-port]
+                                    [--ui]
+  examples:
+  - summary: |-
+      Update a sitecontainer for a linux webapp
+    syntax: az webapp sitecontainers update --name MyWebApp --resource-group MyResourceGroup --container-name MyContainer --image MyImageRegistry.io/MyImage:latest --target-port 3000 --is-main false
+  requiredParameters:
+  - isRequired: true
+    name: --container-name
+    summary: |-
+      Name of the SiteContainer.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --image
+    summary: |-
+      Image Name.
+  - name: --is-main
+    parameterValueGroup: "false, true"
+    summary: |-
+      True if the container is the main site container; false otherwise.
+  - name: --name -n
+    summary: |-
+      Name of the linux webapp.
+  - name: --registry-password
+    summary: |-
+      Password used for image registry auth.
+  - name: --registry-username
+    summary: |-
+      Username used for image registry auth.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --si --system-assigned-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, the system-assigned identity will be used for auth while pulling image.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the productions slot if not specified.
+  - name: --startup-cmd
+    summary: |-
+      Startup Command for the SiteContainer.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --target-port
+    summary: |-
+      Target port for SiteContainer.
+  - name: --ui --user-assigned-identity
+    summary: |-
+      ClientID for the user-maganed identity which will be used for auth while pulling image.
+commands:
+- az_webapp_sitecontainers_create
+- az_webapp_sitecontainers_delete
+- az_webapp_sitecontainers_list
+- az_webapp_sitecontainers_log
+- az_webapp_sitecontainers_show
+- az_webapp_sitecontainers_status
+- az_webapp_sitecontainers_update
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage linux web apps sitecontainers.

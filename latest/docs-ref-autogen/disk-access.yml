@@ -13,10 +13,10 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az disk-access create --name
+    az disk-access create --disk-access-name
                           --resource-group
                           [--location]
-                          [--no-wait]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--tags]
   examples:
   - summary: |-
@@ -24,9 +24,9 @@ directCommands:
     syntax: az disk-access create -g MyResourceGroup -l centraluseuap -n MyDiskAccess
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --disk-access-name --name -n
     summary: |-
-      Name of the disk access resource.
+      The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -34,14 +34,14 @@ directCommands:
   optionalParameters:
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      Resource location  When not specified, the location of the resource group will be used.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_disk-access_delete
   name: az disk-access delete
   summary: |-
@@ -81,12 +81,21 @@ directCommands:
     List all the disk access resources under a resource group.
   status: GA
   sourceType: Core
-  syntax: az disk-access list [--resource-group]
+  syntax: >-
+    az disk-access list [--max-items]
+                        [--next-token]
+                        [--resource-group]
   examples:
   - summary: |-
       List all disk access resources in a resource group.
     syntax: az disk-access list -g MyResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -126,10 +135,11 @@ directCommands:
   sourceType: Core
   syntax: >-
     az disk-access update [--add]
-                          [--force-string]
+                          [--disk-access-name]
+                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                           [--ids]
-                          [--name]
-                          [--no-wait]
+                          [--location]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--remove]
                           [--resource-group]
                           [--set]
@@ -141,32 +151,32 @@ directCommands:
     syntax: az disk-access update -g MyResourceGroup -n MyDiskAccess --tags tag1=val1 tag2=val2
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --disk-access-name --name -n
+    summary: |-
+      The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --location -l
     summary: |-
-      Name of the disk access resource.
+      Resource location.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --remove
-    defaultValue: "[]"
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
-    defaultValue: "[]"
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --subscription
@@ -174,7 +184,7 @@ directCommands:
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_disk-access_wait
   name: az disk-access wait
   summary: |-
