@@ -105,6 +105,8 @@ directCommands:
                         [--disable-public-ip]
                         [--display-name]
                         [--engine-instances]
+                        [--engine-ref-id-type {None, SystemAssigned, UserAssigned}]
+                        [--engine-ref-ids]
                         [--env]
                         [--keyvault-reference-id]
                         [--load-test-config-file]
@@ -115,14 +117,14 @@ directCommands:
                         [--split-csv]
                         [--subnet-id]
                         [--test-plan]
-                        [--test-type {JMX, URL}]
+                        [--test-type {JMX, Locust, URL}]
   examples:
   - summary: |-
       Create a test with load test config file.
     syntax: az load test create --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-test-id --load-test-config-file ~/resources/sample-config.yaml
   - summary: |-
       Create a test with arguments.
-    syntax: az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --display-name "Sample Name" --description "Test description" --test-plan sample-jmx.jmx --engine-instances 1 --env rps=2 count=1
+    syntax: az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --display-name "Sample Name" --description "Test description" --test-plan sample-jmx.jmx --engine-instances 1 --env rps=2 count=1 --engine-ref-id-type SystemAssigned
   - summary: |-
       Create a test with load test config file and override engine-instance and env using arguments and don't wait for file upload.
     syntax: az load test create --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-test-id --load-test-config-file ~/resources/sample-config.yaml --engine-instances 1 --env rps=2 count=1 --no-wait
@@ -149,6 +151,12 @@ directCommands:
   - summary: |-
       Create an advanced URL test with multiple HTTP requests using a JSON file.
     syntax: az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --test-plan ~/resources/sample-url-requests.json --test-type URL
+  - summary: |-
+      Create a Locust based load test
+    syntax: az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --test-plan ~/resources/sample-locust-file.py --test-type Locust --env LOCUST_HOST="https://azure.microsoft.com" LOCUST_SPAWN_RATE=0.3 LOCUST_RUN_TIME=120 LOCUST_USERS=4
+  - summary: |-
+      Create a test with user assigned Managed Identity reference for engine.
+    syntax: az load test create --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --display-name "Sample Name" --engine-ref-id-type UserAssigned --engine-ref-ids "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-rg/providers/microsoft.managedidentity/userassignedidentities/sample-mi"
   requiredParameters:
   - isRequired: true
     name: --load-test-resource --name -n
@@ -183,6 +191,13 @@ directCommands:
   - name: --engine-instances
     summary: |-
       Number of engine instances on which the test should run.
+  - name: --engine-ref-id-type
+    parameterValueGroup: "None, SystemAssigned, UserAssigned"
+    summary: |-
+      Type of identity to be configured for the engine.
+  - name: --engine-ref-ids
+    summary: |-
+      Space separated list of fully qualified resource IDs of the managed identities to be configured on the engine. Required only for user assigned identities.
   - name: --env
     summary: |-
       Space-separated environment variables: key[=value] [key[=value] ...].
@@ -213,9 +228,9 @@ directCommands:
       Resource ID of the subnet to use for private load test.
   - name: --test-plan
     summary: |-
-      Reference to the test plan file. If `testType: JMX`: path to the JMeter script. If `testType: URL`: path to the requests JSON file.
+      Reference to the test plan file. If `testType: JMX`: path to the JMeter script. If `testType: URL`: path to the requests JSON file. If `testType: Locust`: path to the Locust test script.
   - name: --test-type
-    parameterValueGroup: "JMX, URL"
+    parameterValueGroup: "JMX, Locust, URL"
     summary: |-
       Type of the load test.
 - uid: az_load_test_delete
@@ -400,6 +415,8 @@ directCommands:
                         [--disable-public-ip]
                         [--display-name]
                         [--engine-instances]
+                        [--engine-ref-id-type {None, SystemAssigned, UserAssigned}]
+                        [--engine-ref-ids]
                         [--env]
                         [--keyvault-reference-id]
                         [--load-test-config-file]
@@ -432,6 +449,9 @@ directCommands:
   - summary: |-
       Update multi-region load configuration.
     syntax: az load test update --load-test-resource sample-alt-resource --resource-group sample-rg --test-id sample-existing-test-id --engine-instances 5 --regionwise-engines eastus=2 westus2=1 eastasia=2
+  - summary: |-
+      Update a test with user assigned Managed Identity reference for engine to SystemAssigned.
+    syntax: az load test update --test-id sample-test-id --load-test-resource sample-alt-resource --resource-group sample-rg --display-name "Sample Name" --engine-ref-id-type SystemAssigned
   requiredParameters:
   - isRequired: true
     name: --load-test-resource --name -n
@@ -466,6 +486,13 @@ directCommands:
   - name: --engine-instances
     summary: |-
       Number of engine instances on which the test should run.
+  - name: --engine-ref-id-type
+    parameterValueGroup: "None, SystemAssigned, UserAssigned"
+    summary: |-
+      Type of identity to be configured for the engine.
+  - name: --engine-ref-ids
+    summary: |-
+      Space separated list of fully qualified resource IDs of the managed identities to be configured on the engine. Required only for user assigned identities.
   - name: --env
     summary: |-
       Space-separated environment variables: key[=value] [key[=value] ...]. Use "" to clear existing environment variables.
@@ -496,7 +523,7 @@ directCommands:
       Resource ID of the subnet to use for private load test.
   - name: --test-plan
     summary: |-
-      Reference to the test plan file. If `testType: JMX`: path to the JMeter script. If `testType: URL`: path to the requests JSON file.
+      Reference to the test plan file. If `testType: JMX`: path to the JMeter script. If `testType: URL`: path to the requests JSON file. If `testType: Locust`: path to the Locust test script.
 commands:
 - az_load_test_app-component
 - az_load_test_app-component_add

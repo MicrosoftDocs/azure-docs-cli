@@ -1367,6 +1367,8 @@ directCommands:
                                                  [--connstr-props]
                                                  [--container]
                                                  [--customized-keys]
+                                                 [--fabric-sql-db-uuid]
+                                                 [--fabric-workspace-uuid]
                                                  [--name]
                                                  [--new]
                                                  [--no-wait]
@@ -1384,7 +1386,7 @@ directCommands:
     syntax: az containerapp connection create fabric-sql
   - summary: |-
       Create a connection between containerapp and fabric-sql with resource name
-    syntax: az containerapp connection create fabric-sql -g ContainerAppRG -n MyContainerApp --connstr-props Server=MyServer,1433 Database=MyDB --system-identity
+    syntax: az containerapp connection create fabric-sql -g ContainerAppRG -n MyContainerApp --fabric-workspace-uuid TargetFabricWorkspaceUUID --fabric-sql-db-uuid TargetFabricSQLDatabaseUUID --system-identity
   - summary: |-
       Create a connection between containerapp and fabric-sql with resource id
     syntax: az containerapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/SqlDatabases/{sql_id} --system-identity
@@ -1408,6 +1410,12 @@ directCommands:
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --fabric-sql-db-uuid
+    summary: |-
+      UUID of the target Fabric SQL database. Required if '--target-id' is not specified.
+  - name: --fabric-workspace-uuid
+    summary: |-
+      UUID of Fabric workspace which contains the target SQL database. Required if '--target-id' is not specified.
   - name: --name -n
     summary: |-
       Name of the container app. Required if '--source-id' is not specified.None.
@@ -1436,7 +1444,7 @@ directCommands:
       Usage: --system-identity.
   - name: --target-id
     summary: |-
-      The resource id of target service. Required if [] are not specified.
+      The resource id of target service. Required if ['--fabric-workspace-uuid', '--fabric-sql-db-uuid'] are not specified.
   - name: --user-identity
     summary: |-
       The user assigned identity auth info.
