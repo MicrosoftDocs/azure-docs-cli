@@ -1,0 +1,223 @@
+### YamlMime:AzureCLIGroup
+uid: az_postgres_flexible-server_replica
+name: az postgres flexible-server replica
+summary: |-
+  Manage read replicas.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_postgres_flexible-server_replica_create
+  name: az postgres flexible-server replica create
+  summary: |-
+    Create a read replica for a server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres flexible-server replica create --replica-name
+                                               --resource-group
+                                               --source-server
+                                               [--address-prefixes]
+                                               [--identity]
+                                               [--key]
+                                               [--location]
+                                               [--no-wait]
+                                               [--performance-tier]
+                                               [--private-dns-zone]
+                                               [--sku-name]
+                                               [--storage-size]
+                                               [--subnet]
+                                               [--subnet-prefixes]
+                                               [--tags]
+                                               [--tier]
+                                               [--vnet]
+                                               [--yes]
+                                               [--zone]
+  examples:
+  - summary: |-
+      Create a read replica 'testreplicaserver' for 'testserver' with public or private access in the specified zone and location if available.
+    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup --source-server testserver --zone 3 --location testLocation
+  - summary: |-
+      Create a read replica 'testreplicaserver' with new subnet for 'testserver' with private access.
+    syntax: >-
+      az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup \
+        --source-server testserver --zone 3 --location testLocation \
+        --vnet newVnet --subnet newSubnet \
+        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
+        --private-dns-zone testDNS.postgres.database.azure.com \
+        --tags "key=value"
+  - summary: |-
+      Create a read replica 'testreplicaserver' for 'testserver' with public or private access       in the specified location if available. Since zone is not passed, it will automatically pick up zone in the       replica location which is different from source server, if available, else will pick up zone same as source server       in the replica location if available, else will set the zone as None, i.e. No preference
+    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup --source-server testserver --location testLocation
+  - summary: |-
+      Create a read replica 'testreplicaserver' for 'testserver' with custom --storage-size and --sku.
+    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup --source-server testserver --sku-name Standard_D4ds_v5 --storage-size 256
+  - summary: |-
+      Create a read replica 'testreplicaserver' for 'testserver', where 'testreplicaserver' is in a different resource group 'newTestGroup'.       Here --resource-group is for the read replica's resource group, and --source-server must be passed as resource ID.
+    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g newTestGroup         --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName} --location testLocation
+  requiredParameters:
+  - isRequired: true
+    name: --replica-name
+    summary: |-
+      The name of the server to restore to.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --source-server
+    summary: |-
+      The name or resource ID of the source server to restore from.
+  optionalParameters:
+  - name: --address-prefixes
+    summary: |-
+      The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
+  - name: --identity
+    summary: |-
+      The name or resource ID of the user assigned identity for data encryption.
+  - name: --key
+    summary: |-
+      The resource ID of the primary keyvault key for data encryption.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --performance-tier
+    summary: |-
+      Performance tier of the server.
+  - name: --private-dns-zone
+    summary: |-
+      This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+  - name: --sku-name
+    summary: |-
+      The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.
+  - name: --storage-size
+    summary: |-
+      The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
+  - name: --subnet
+    summary: |-
+      Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
+  - name: --subnet-prefixes
+    summary: |-
+      The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --tier
+    summary: |-
+      Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.
+  - name: --vnet
+    summary: |-
+      Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  - name: --zone -z
+    summary: |-
+      Availability zone into which to provision the resource.
+- uid: az_postgres_flexible-server_replica_list
+  name: az postgres flexible-server replica list
+  summary: |-
+    List all read replicas for a given server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres flexible-server replica list --name
+                                             --resource-group
+  examples:
+  - summary: |-
+      List all read replicas for master server 'testserver'.
+    syntax: az postgres flexible-server replica list -g testGroup -n testserver
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the source server.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_postgres_flexible-server_replica_promote
+  name: az postgres flexible-server replica promote
+  summary: |-
+    Stop replication of a read replica and promote it to an independent server or as a primary server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres flexible-server replica promote [--ids]
+                                                [--name]
+                                                [--promote-mode {standalone, switchover}]
+                                                [--promote-option {forced, planned}]
+                                                [--resource-group]
+                                                [--subscription]
+                                                [--yes]
+  examples:
+  - summary: |-
+      Stop replication to 'testreplicaserver' and promote it a standalone read/write server.
+    syntax: az postgres flexible-server replica promote -g testGroup -n testreplicaserver
+  - summary: |-
+      Stop replication to 'testreplicaserver' and promote it a standalone read/write server with forced data sync.
+    syntax: az postgres flexible-server replica promote -g testGroup -n testreplicaserver --promote-mode standalone --promote-option forced
+  - summary: |-
+      Stop replication to 'testreplicaserver' and promote it to primary server with planned data sync.       The replica you are promoting must have the reader virtual endpoint assigned, or you will receive an error on promotion.
+    syntax: az postgres flexible-server replica promote -g testGroup -n testreplicaserver --promote-mode switchover --promote-option planned
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --promote-mode
+    defaultValue: "standalone"
+    parameterValueGroup: "standalone, switchover"
+    summary: |-
+      Whether to promote read replica to an independent server or promote it as a primary server.
+  - name: --promote-option
+    defaultValue: "planned"
+    parameterValueGroup: "forced, planned"
+    summary: |-
+      Whether to sync data before promoting read replica or promote as soon as possible.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+commands:
+- az_postgres_flexible-server_replica_create
+- az_postgres_flexible-server_replica_list
+- az_postgres_flexible-server_replica_promote
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage read replicas.

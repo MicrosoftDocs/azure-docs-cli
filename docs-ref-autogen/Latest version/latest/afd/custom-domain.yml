@@ -1,0 +1,379 @@
+### YamlMime:AzureCLIGroup
+uid: az_afd_custom-domain
+name: az afd custom-domain
+summary: |-
+  Manage custom domains within the specified profile.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_afd_custom-domain_create
+  name: az afd custom-domain create
+  summary: |-
+    Create a new domain within the specified profile.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az afd custom-domain create --custom-domain-name
+                                --profile-name
+                                --resource-group
+                                [--azure-dns-zone]
+                                [--certificate-type {AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate}]
+                                [--host-name]
+                                [--minimum-tls-version {TLS10, TLS12}]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--secret]
+  examples:
+  - summary: |-
+      Create a custom domain that uses AFD managed certificate for SSL/TLS encryption.
+    syntax: az afd custom-domain create -g group --custom-domain-name customDomain --profile-name profile --host-name www.contoso.com --minimum-tls-version TLS12 --certificate-type ManagedCertificate
+  - summary: |-
+      Create a custom domain that uses your own certificate for SSL/TLS encryption, the certificate is stored in Azure Key Vault and referenced by an AFD secret.
+    syntax: az afd custom-domain create -g group --custom-domain-name example-custom-domain --profile-name profile --host-name www.contoso.com --minimum-tls-version TLS12 --certificate-type CustomerCertificate --secret secretName
+  requiredParameters:
+  - isRequired: true
+    name: --custom-domain-name --name -n
+    summary: |-
+      Name of the domain under the profile which is unique globally.
+  - isRequired: true
+    name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --azure-dns-zone
+    summary: |-
+      ID of the Azure DNS zone.
+  - name: --certificate-type
+    parameterValueGroup: "AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate"
+    summary: |-
+      Defines the source of the SSL certificate.
+  - name: --host-name
+    summary: |-
+      The host name of the domain. Must be a domain name.
+  - name: --minimum-tls-version
+    parameterValueGroup: "TLS10, TLS12"
+    summary: |-
+      TLS protocol version that will be used for Https.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --secret
+    summary: |-
+      Resource reference to the secret. ie. subs/rg/profile/secret.
+- uid: az_afd_custom-domain_delete
+  name: az afd custom-domain delete
+  summary: |-
+    Delete an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az afd custom-domain delete [--custom-domain-name]
+                                [--ids]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--profile-name]
+                                [--resource-group]
+                                [--subscription]
+                                [--yes]
+  examples:
+  - summary: |-
+      Delete a custom domain.
+    syntax: az afd custom-domain delete -g group --profile-name profile  --custom-domain-name customDomainName
+  optionalParameters:
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the domain under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_afd_custom-domain_list
+  name: az afd custom-domain list
+  summary: |-
+    List existing AzureFrontDoor domains.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az afd custom-domain list --profile-name
+                              --resource-group
+                              [--max-items]
+                              [--next-token]
+  examples:
+  - summary: |-
+      List all the custom domains within the specified profile.
+    syntax: az afd custom-domain list -g group --profile-name profile
+  requiredParameters:
+  - isRequired: true
+    name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+- uid: az_afd_custom-domain_regenerate-validation-token
+  name: az afd custom-domain regenerate-validation-token
+  summary: |-
+    Updates the domain validation token.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az afd custom-domain regenerate-validation-token [--custom-domain-name]
+                                                     [--ids]
+                                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                     [--profile-name]
+                                                     [--resource-group]
+                                                     [--subscription]
+  examples:
+  - summary: |-
+      Regenerate the domain validation token.
+    syntax: az afd custom-domain regenerate-validation-token -g MyResourceGroup --profile-name MyProfle --custom-domain-name MyCustomDomain
+  optionalParameters:
+  - name: --custom-domain-name
+    summary: |-
+      Name of the domain under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_afd_custom-domain_show
+  name: az afd custom-domain show
+  summary: |-
+    Get an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az afd custom-domain show [--custom-domain-name]
+                              [--ids]
+                              [--profile-name]
+                              [--resource-group]
+                              [--subscription]
+  examples:
+  - summary: |-
+      show details of the custom domain within the specified profile.
+    syntax: az afd custom-domain show -g group --profile-name profile  --custom-domain-name customDomainName
+  optionalParameters:
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the domain under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_afd_custom-domain_update
+  name: az afd custom-domain update
+  summary: |-
+    Update a new domain within the specified profile.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az afd custom-domain update [--add]
+                                [--azure-dns-zone]
+                                [--certificate-type {AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate}]
+                                [--custom-domain-name]
+                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--ids]
+                                [--minimum-tls-version {TLS10, TLS12}]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--profile-name]
+                                [--remove]
+                                [--resource-group]
+                                [--secret]
+                                [--set]
+                                [--subscription]
+  examples:
+  - summary: |-
+      Update the custom domain's supported minimum TLS version.
+    syntax: az afd custom-domain update -g group --custom-domain-name customDomain --profile-name profile --minimum-tls-version TLS12
+  - summary: |-
+      Update the custom domain's certificate type to AFD managed certificate.
+    syntax: az afd custom-domain update -g group --custom-domain-name customDomain --profile-name profile --certificate-type ManagedCertificate
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --azure-dns-zone
+    summary: |-
+      ID of the Azure DNS zone.
+  - name: --certificate-type
+    parameterValueGroup: "AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate"
+    summary: |-
+      Defines the source of the SSL certificate.
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the domain under the profile which is unique globally.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --minimum-tls-version
+    parameterValueGroup: "TLS10, TLS12"
+    summary: |-
+      TLS protocol version that will be used for Https.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --secret
+    summary: |-
+      Resource reference to the secret. ie. subs/rg/profile/secret.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_afd_custom-domain_wait
+  name: az afd custom-domain wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az afd custom-domain wait [--created]
+                              [--custom]
+                              [--custom-domain-name]
+                              [--deleted]
+                              [--exists]
+                              [--ids]
+                              [--interval]
+                              [--profile-name]
+                              [--resource-group]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the domain under the profile which is unique globally.
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+commands:
+- az_afd_custom-domain_create
+- az_afd_custom-domain_delete
+- az_afd_custom-domain_list
+- az_afd_custom-domain_regenerate-validation-token
+- az_afd_custom-domain_show
+- az_afd_custom-domain_update
+- az_afd_custom-domain_wait
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage custom domains within the specified profile.
