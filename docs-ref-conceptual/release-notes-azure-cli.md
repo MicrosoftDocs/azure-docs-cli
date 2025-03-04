@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 02/11/2025
+ms.date: 03/04/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,96 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## March 04, 2025
+
+Version 2.70.0
+
+### AKS
+
+* `az aks create/az aks nodepool add`: Emit error message when using `--asg-ids` alone without `--allowed-host-ports`
+* `az aks nodepool upgrade`: Fix `--node-soak-duration` cannot be set to 0
+* `az aks machine list`: Add command to fetch list of machines in an agentpool
+* `az aks machine show`: Add command to fetch information about a specific machine in an agentpool
+* `az aks nodepool delete`: Add `--ignore-pod-disruption-budget` option for ignoring PodDisruptionBudget
+* `az aks create`: Add `--message-of-the-day` parameter to support message of the day
+* `az aks nodepool add`: Add `--message-of-the-day` parameter to support message of the day
+
+### App Config
+
+* `az appconfig kv import/export`: Fix bug when importing feature flag with percentile allocation property
+* `az appconfig`: Add support for custom token audience to `--auth-mode login` parameter
+
+### App Service
+
+* `az functionapp create`: Check if storage account is network restricted
+* `az functionapp create`: Refactor EOL message
+* Fix #28104: `az webapp config storage-account`: Remove windows limitation notes
+* Fix #28374: `az webapp create`: Improve error message for globally unique name for new app create
+* `az webapp sitecontainers`: Add new commands for linux web app sitecontainers
+* `az webapp up`: Add `--enable-kudu-warmup` parameter to support warm-up Kudu before making deployment
+* `az webapp deploy`: Add `--enable-kudu-warmup` parameter to support warm-up Kudu before making deployment
+* `az webapp deployment source config-zip`: Add `--enable-kudu-warmup` parameter to support warm-up Kudu before making deployment
+* Fix #29493: `az webapp create`: Update basic-auth parameter description
+
+### ARM
+
+* `az bicep`: Fix installation check for concurrent usages
+
+### Backup
+
+* `az backup restore restore-disks`: Support NoZone as a valid target zone for `--target-zone` parameter
+
+### Compute
+
+* `az vm available-set create/update`: Add `--additional-scheduled-events` parameter to support setting scheduled event policy
+* `az vm available-set create/update`: Add `--enable-user-reboot-scheduled-events` parameter to support setting scheduled event policy
+* `az vm available-set create/update`: Add `--enable-user-redeploy-scheduled-events` parameter to support setting scheduled event policy
+
+### Container app
+
+* `az containerapp create`: Fix to make `--registry-username` value to be `DNS1123` compliant
+
+### Core
+
+* Resolve CVE-2024-12797
+* Drop Track 1 SDK authentication
+* `aaz`: Add cross tenants control for `AAZResourceIdArgFormat`
+* `aaz`: Support `Any` type with full value shorthand syntax allowed
+
+### Cosmos DB
+
+* `az cosmosdb offline-region`: Add new command to support offline region for cosmosdb account
+
+### IoT
+
+* `az iot hub update`: Add `--min-tls-version` parameter to allow updating min tls version in a cleaner way
+
+### NetAppFiles
+
+* `az netappfiles account`: Add new command `change-key-vault` to change KeyVault/Managed HSM that is used for encryption of volumes under NetApp account
+* `az netappfiles account`: Add new command `get-key-vault-status` to get KeyVault information. Response from this command can be used for transitiontocmk
+* `az netappfiles account`: Add new command `transitiontocmk` to transition all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account
+* `az netappfiles volume create/update`: Add parameter `--cool-access-tiering-policy`
+
+### Network
+
+* `az network nic ip-config create/update`: Add `--private-ip-address-prefix-length` to support setting private ip address prefix length
+
+### RDBMS
+
+* `az postgres flexible-server index-tuning`: Support tuning options operations
+
+### Service Connector
+
+* `az containerapp connection create redis`: Add `--system-identity` paramter
+* `az webapp connection create fabric-sql`: Fix interactive mode & allow new parameters `--fabric-workspace-uuid` and `fabric-sql-db-uuid`
+
+### Storage
+
+* `az storage account create`: Add new `--sku StandardV2_LRS/StandardV2_ZRS/StandardV2_ZRS/StandardV2_ZRS/PremiumV2_LRS/PremiumV2_ZRS` for provisioned v2 support
+* `az storage account file-service-usage`: Support getting file-service usage for storage account
+* `az storage share-rm create/update`: Add `--paid-bursting-enabled`, `--paid-bursting-max-bandwidth-mibps`, `--paid-bursting-max-iops` for provisioned v1, add `--provisioned-bandwidth-mibps`, `--provisioned-iops` for provisioned v2 accounts
 
 ## February 11, 2025
 

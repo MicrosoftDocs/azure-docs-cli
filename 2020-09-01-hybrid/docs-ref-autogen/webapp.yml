@@ -80,6 +80,7 @@ directCommands:
                      [--role]
                      [--runtime]
                      [--scope]
+                     [--sitecontainers-app {false, true}]
                      [--startup-file]
                      [--subnet]
                      [--tags]
@@ -89,11 +90,17 @@ directCommands:
       Create a web app with the default configuration.
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName
   - summary: |-
-      Create a web app with a Java 11 runtime.
-    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java:11:Java SE:11"
+      Create a web app with a Java 21 runtime.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "JAVA:21-java21"
   - summary: |-
-      Create a web app with a NodeJS 10.14 runtime and deployed from a local git repository.
-    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node:12LTS" --deployment-local-git
+      Create a web app with a NodeJS 20 runtime and deployed from a local git repository.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node:20LTS" --deployment-local-git
+  - summary: |-
+      Create a web app with both SCM and FTP Basic Auth Publishing Credentials disabled.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --basic-auth Disabled
+  - summary: |-
+      Create a web app which supports sitecontainers.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --sitecontainers-app
   - summary: |-
       Create a web app with an image from DockerHub.
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i nginx
@@ -136,7 +143,7 @@ directCommands:
   - name: --basic-auth
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Enable or disable basic auth.
+      Enable or disable basic auth for both SCM and FTP Basic Auth Publishing Credentials. Defaults to Enabled if not specified. See https://aka.ms/app-service-basic-auth to learn more.
   - name: --container-image-name -c
     summary: |-
       The container custom image name and optionally the tag name (e.g., `<registry-name>/<image-name>:<tag>`).
@@ -200,6 +207,10 @@ directCommands:
   - name: --scope
     summary: |-
       Scope that the system assigned identity can access.
+  - name: --sitecontainers-app
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, a webapp which supports sitecontainers will be created.
   - name: --startup-file
     summary: |-
       Linux only. The web's startup file.
@@ -437,6 +448,7 @@ directCommands:
   syntax: >-
     az webapp deploy [--async {false, true}]
                      [--clean {false, true}]
+                     [--enable-kudu-warmup {false, true}]
                      [--ids]
                      [--ignore-stack {false, true}]
                      [--name]
@@ -466,6 +478,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       If true, cleans the target directory prior to deploying the file(s). Default value is determined based on artifact type.
+  - name: --enable-kudu-warmup
+    defaultValue: "True"
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, kudu will be warmed up before performing deployment for a linux webapp.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -901,6 +918,7 @@ directCommands:
     az webapp up [--app-service-environment]
                  [--basic-auth {Disabled, Enabled}]
                  [--dryrun]
+                 [--enable-kudu-warmup {false, true}]
                  [--html]
                  [--ids]
                  [--launch-browser]
@@ -948,6 +966,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Show summary of the create and deploy operation instead of executing it.
+  - name: --enable-kudu-warmup
+    defaultValue: "True"
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, kudu will be warmed up before performing deployment for a linux webapp.
   - name: --html
     defaultValue: "False"
     summary: |-
@@ -1402,6 +1425,14 @@ commands:
 - az_webapp_scan_track
 - az_webapp_show
 - az_webapp_show(appservice-kube)
+- az_webapp_sitecontainers
+- az_webapp_sitecontainers_create
+- az_webapp_sitecontainers_delete
+- az_webapp_sitecontainers_list
+- az_webapp_sitecontainers_log
+- az_webapp_sitecontainers_show
+- az_webapp_sitecontainers_status
+- az_webapp_sitecontainers_update
 - az_webapp_ssh
 - az_webapp_start
 - az_webapp_stop
