@@ -46,6 +46,7 @@ directCommands:
                         [--max-count]
                         [--max-pods]
                         [--max-surge]
+                        [--message-of-the-day]
                         [--min-count]
                         [--mode {System, User}]
                         [--no-wait]
@@ -196,6 +197,9 @@ directCommands:
   - name: --max-surge
     summary: |-
       Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
+  - name: --message-of-the-day
+    summary: |-
+      Path to a file containing the desired message of the day. Only valid for linux nodes. Will be written to /etc/motd.
   - name: --min-count
     summary: |-
       Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
@@ -628,11 +632,12 @@ directCommands:
                            --name
                            --resource-group
                            [--if-match]
+                           [--ignore-pdb]
                            [--no-wait]
   examples:
   - summary: |-
-      Delete an agent pool with ignore-pod-disruption-budget
-    syntax: az aks nodepool delete --resource-group MyResourceGroup --cluster-name MyManagedCluster --name nodepool1 --if-match etag
+      Delete an agent pool with ignore-pdb
+    syntax: az aks nodepool delete --resource-group MyResourceGroup --cluster-name MyManagedCluster --name nodepool1 --if-match etag --ignore-pdb
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -650,6 +655,9 @@ directCommands:
   - name: --if-match
     summary: |-
       The value provided will be compared to the ETag of the node pool, if it matches the operation will proceed. If it does not match, the request will be rejected to prevent accidental overwrites. This must not be specified when creating a new agentpool.
+  - name: --ignore-pdb -i
+    summary: |-
+      Delete an existing nodepool without considering Pod Disruption Budget.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
