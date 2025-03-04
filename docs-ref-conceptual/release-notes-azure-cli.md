@@ -59,6 +59,13 @@ Version 2.70.0
 
 * `az containerapp create`: Fix to make `--registry-username` value to be `DNS1123` compliant
 
+### Core
+
+* Resolve CVE-2024-12797
+* Drop Track 1 SDK authentication
+* `aaz`: Add cross tenants control for `AAZResourceIdArgFormat`
+* `aaz`: Support `Any` type with full value shorthand syntax allowed
+
 ### Cosmos DB
 
 * `az cosmosdb offline-region`: Add new command to support offline region for cosmosdb account
