@@ -147,7 +147,7 @@ All extensions use endpoint `azcliprod.blob.core.windows.net` for **module insta
 | aksarc | hybridaksstorage.z13.web.core.windows.net
 | akshybrid | hybridaksstorage.z13.web.core.windows.net
 | alias | azurecliprod.blob.core.windows.net
-| arcappliance | arcplatformcliextprod.blob.core.windows.net
+| arcappliance | arcplatformcliextprod.z13.web.core.windows.net
 | arcdata | azurearcdatacli.blob.core.windows.net
 | azure-batch-cli-extensions | github.com
 | azure-cli-ml | azurecliext.blob.core.windows.net
@@ -158,7 +158,7 @@ All extensions use endpoint `azcliprod.blob.core.windows.net` for **module insta
 | azurestackhci | hybridaksstorage.z13.web.core.windows.net
 | cli-translator | azurecliprod.blob.core.windows.net
 | csvmware | github.com
-| customlocation | arcplatformcliextprod.blob.core.windows.net
+| customlocation | arcplatformcliextprod.z13.web.core.windows.net
 | deploy-to-azure | github.com
 | dev-spaces | azurecliprod.blob.core.windows.net
 | footprint | azurecliprod.blob.core.windows.net
