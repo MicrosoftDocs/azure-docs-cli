@@ -23,8 +23,10 @@ directCommands:
                                   [--enable-auto-inflate {false, true}]
                                   [--enable-kafka {false, true}]
                                   [--encryption-config]
+                                  [--geo-data-replication-config]
                                   [--infra-encryption {false, true}]
                                   [--location]
+                                  [--max-lag]
                                   [--maximum-throughput-units]
                                   [--mi-system-assigned {false, true}]
                                   [--mi-user-assigned]
@@ -74,6 +76,9 @@ directCommands:
   - name: --encryption-config
     summary: |-
       List of KeyVaultProperties objects.
+  - name: --geo-data-replication-config --replica-config
+    summary: |-
+      A list of regions where replicas of the namespace are maintained Object.
   - name: --infra-encryption
     parameterValueGroup: "false, true"
     summary: |-
@@ -81,6 +86,9 @@ directCommands:
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --max-lag --max-replication-lag-duration-in-seconds
+    summary: |-
+      The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.
   - name: --maximum-throughput-units
     summary: |-
       Upper limit of throughput units when AutoInflate is enabled, vaule should be within 0 to 20 throughput units. ( 0 if AutoInflateEnabled = true).
@@ -159,6 +167,45 @@ directCommands:
     name: --name
     summary: |-
       Name to check the namespace name availability.
+- uid: az_eventhubs_namespace_failover
+  name: az eventhubs namespace failover
+  summary: |-
+    GeoDR Failover.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventhubs/_help.py
+  syntax: >-
+    az eventhubs namespace failover [--force {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--ids]
+                                    [--namespace-name]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--primary-location]
+                                    [--resource-group]
+                                    [--subscription]
+  optionalParameters:
+  - name: --force
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --namespace-name
+    summary: |-
+      The Namespace name.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --primary-location
+    summary: |-
+      Query parameter for the new primary location after failover.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_eventhubs_namespace_list
   name: az eventhubs namespace list
   summary: |-
@@ -236,6 +283,8 @@ directCommands:
                                   [--identity]
                                   [--ids]
                                   [--kafka-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--locations]
+                                  [--max-lag]
                                   [--maximum-throughput-units]
                                   [--minimum-tls-version {1.0, 1.1, 1.2}]
                                   [--name]
@@ -294,6 +343,12 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Value that indicates whether Kafka is enabled for eventhub namespace.
+  - name: --locations
+    summary: |-
+      A list of regions where replicas of the namespace are maintained.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --max-lag --max-replication-lag-duration-in-seconds
+    summary: |-
+      The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed.
   - name: --maximum-throughput-units
     summary: |-
       Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true).
@@ -423,6 +478,7 @@ commands:
 - az_eventhubs_namespace_encryption_add
 - az_eventhubs_namespace_encryption_remove
 - az_eventhubs_namespace_exists
+- az_eventhubs_namespace_failover
 - az_eventhubs_namespace_identity
 - az_eventhubs_namespace_identity_assign
 - az_eventhubs_namespace_identity_remove
@@ -449,6 +505,9 @@ commands:
 - az_eventhubs_namespace_private-endpoint-connection_wait
 - az_eventhubs_namespace_private-link-resource
 - az_eventhubs_namespace_private-link-resource_show
+- az_eventhubs_namespace_replica
+- az_eventhubs_namespace_replica_add
+- az_eventhubs_namespace_replica_remove
 - az_eventhubs_namespace_schema-registry
 - az_eventhubs_namespace_schema-registry_create
 - az_eventhubs_namespace_schema-registry_delete
@@ -483,5 +542,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 05/17/2023
+  ms.date: 11/12/2024
   description: Eventhub namespace.

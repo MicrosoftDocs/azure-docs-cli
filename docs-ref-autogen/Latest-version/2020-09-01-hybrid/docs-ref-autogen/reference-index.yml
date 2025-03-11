@@ -125,9 +125,12 @@ directCommands:
   syntax: >-
     az login [--allow-no-subscriptions]
              [--certificate]
+             [--client-id]
              [--federated-token]
              [--identity]
+             [--object-id]
              [--password]
+             [--resource-id]
              [--scope]
              [--service-principal]
              [--tenant]
@@ -140,19 +143,22 @@ directCommands:
     syntax: az login
   - summary: |-
       Log in with username and password. This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled. Use -p=secret if the first character of the password is '-'.
-    syntax: az login -u johndoe@contoso.com -p VerySecret
+    syntax: az login --username johndoe@contoso.com --password VerySecret
   - summary: |-
-      Log in with a service principal using client secret. Use -p=secret if the first character of the password is '-'.
-    syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 -p VerySecret --tenant contoso.onmicrosoft.com
+      Log in with a service principal using client secret. Use --password=secret if the first character of the password is '-'.
+    syntax: az login --service-principal --username APP_ID --password CLIENT_SECRET --tenant TENANT_ID
   - summary: |-
       Log in with a service principal using certificate.
-    syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 --certificate ~/mycertfile.pem --tenant contoso.onmicrosoft.com
+    syntax: az login --service-principal --username APP_ID --certificate /path/to/cert.pem --tenant TENANT_ID
   - summary: |-
       Log in with a system-assigned managed identity.
     syntax: az login --identity
   - summary: |-
-      Log in with a user-assigned managed identity. You must specify the client ID, object ID or resource ID of the user-assigned managed identity with --username.
-    syntax: az login --identity --username 00000000-0000-0000-0000-000000000000
+      Log in with a user-assigned managed identity's client ID.
+    syntax: az login --identity --client-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Log in with a user-assigned managed identity's resource ID.
+    syntax: az login --identity --resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity
   optionalParameters:
   - name: --allow-no-subscriptions
     defaultValue: "False"
@@ -161,6 +167,9 @@ directCommands:
   - name: --certificate
     summary: |-
       PEM file with key and public certificate.
+  - name: --client-id
+    summary: |-
+      Client ID of the user-assigned managed identity.
   - name: --federated-token
     summary: |-
       Federated token that can be used for OIDC token exchange.
@@ -168,9 +177,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Log in using managed identity.
+  - name: --object-id
+    summary: |-
+      Object ID of the user-assigned managed identity.
   - name: --password -p
     summary: |-
       User password or service principal secret. Will prompt if not given.
+  - name: --resource-id
+    summary: |-
+      Resource ID of the user-assigned managed identity.
   - name: --scope
     summary: |-
       Used in the /authorize request. It can cover only one static resource.
@@ -356,8 +371,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Include preview packages for extension installation, if exists.
-    isDeprecated: true
-    deprecateInfo: The default value of '--allow-preview' will be changed to 'false' from 'true' in next breaking change release(2.67.0).
   - name: --yes -y
     summary: |-
       Do not prompt for checking release notes.
@@ -534,6 +547,7 @@ commands:
 - az_partnercenter
 - az_peering
 - az_pipelines
+- az_playwright-testing
 - az_policy
 - az_portal
 - az_postgres

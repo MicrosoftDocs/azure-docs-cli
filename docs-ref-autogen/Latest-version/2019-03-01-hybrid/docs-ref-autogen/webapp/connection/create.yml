@@ -62,7 +62,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -156,7 +156,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -275,7 +275,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -483,7 +483,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -613,7 +613,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -745,7 +745,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -874,7 +874,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1003,7 +1003,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1128,7 +1128,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1211,6 +1211,8 @@ directCommands:
                                            [--connection]
                                            [--connstr-props]
                                            [--customized-keys]
+                                           [--fabric-sql-db-uuid]
+                                           [--fabric-workspace-uuid]
                                            [--name]
                                            [--no-wait]
                                            [--opt-out {auth, configinfo, publicnetwork}]
@@ -1227,13 +1229,13 @@ directCommands:
     syntax: az webapp connection create fabric-sql
   - summary: |-
       Create a connection between webapp and fabric-sql with resource name
-    syntax: az webapp connection create fabric-sql -g WebAppRG -n MyWebApp  --system-identity
+    syntax: az webapp connection create fabric-sql -g WebAppRG -n MyWebApp --fabric-workspace-uuid TargetFabricWorkspaceUUID --fabric-sql-db-uuid TargetFabricSQLDatabaseUUID --system-identity
   - summary: |-
       Create a connection between webapp slot and fabric-sql with resource name
-    syntax: az webapp connection create fabric-sql -g WebAppRG -n MyWebApp --slot MySlot  --system-identity
+    syntax: az webapp connection create fabric-sql -g WebAppRG -n MyWebApp --slot MySlot --fabric-workspace-uuid TargetFabricWorkspaceUUID --fabric-sql-db-uuid TargetFabricSQLDatabaseUUID --system-identity
   - summary: |-
       Create a connection between webapp and fabric-sql with resource id
-    syntax: az webapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/SqlDatabases/{sql_id} --system-identity
+    syntax: az webapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{fabric_workspace_uuid}/SqlDatabases/{fabric_sql_db_uuid} --system-identity
   optionalParameters:
   - name: --appconfig-id
     summary: |-
@@ -1247,10 +1249,16 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --fabric-sql-db-uuid
+    summary: |-
+      UUID of the target Fabric SQL database. Required if '--target-id' is not specified.
+  - name: --fabric-workspace-uuid
+    summary: |-
+      UUID of Fabric workspace which contains the target SQL database. Required if '--target-id' is not specified.
   - name: --name -n
     summary: |-
       Name of the webapp. Required if '--source-id' is not specified.None.
@@ -1278,7 +1286,7 @@ directCommands:
       Usage: --system-identity.
   - name: --target-id
     summary: |-
-      The resource id of target service. Required if [] are not specified.
+      The resource id of target service. Required if ['--fabric-workspace-uuid', '--fabric-sql-db-uuid'] are not specified.
   - name: --user-identity
     summary: |-
       The user assigned identity auth info.
@@ -1326,7 +1334,7 @@ directCommands:
     syntax: az webapp connection create fabric-sql -g WebAppRG -n MyWebApp --fabric-workspace-uuid TargetFabricWorkspaceUUID --fabric-sql-db-uuid TargetFabricSQLDatabaseUUID --system-identity
   - summary: |-
       Create a connection between webapp and fabric-sql with resource id
-    syntax: az webapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/SqlDatabases/{sql_id} --system-identity
+    syntax: az webapp connection create fabric-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id https://api.fabric.microsoft.com/v1/workspaces/{fabric_workspace_uuid}/SqlDatabases/{fabric_sql_db_uuid} --system-identity
   optionalParameters:
   - name: --appconfig-id
     summary: |-
@@ -1340,7 +1348,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1457,7 +1465,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1589,7 +1597,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1623,9 +1631,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of `<secret, secret-uri, secret-name>` is required. Password or account key for secret auth.
+      secret-uri  : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret uri which stores password.
+      secret-name : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of the mysql server. Required if '--target-id' is not specified.
@@ -1665,6 +1673,7 @@ directCommands:
                                                [--name]
                                                [--no-wait]
                                                [--opt-out {auth, configinfo, publicnetwork}]
+                                               [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
                                                [--server]
@@ -1708,7 +1717,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1726,6 +1735,10 @@ directCommands:
     parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
+  - name: --private-endpoint
+    parameterValueGroup: "false, true"
+    summary: |-
+      Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the webapp. Required if '--source-id' is not specified.None.
@@ -1738,9 +1751,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of `<secret, secret-uri, secret-name>` is required. Password or account key for secret auth.
+      secret-uri  : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret uri which stores password.
+      secret-name : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
@@ -1802,6 +1815,7 @@ directCommands:
                                                [--new]
                                                [--no-wait]
                                                [--opt-out {auth, configinfo, publicnetwork}]
+                                               [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
                                                [--server]
@@ -1843,7 +1857,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -1865,6 +1879,10 @@ directCommands:
     parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
+  - name: --private-endpoint
+    parameterValueGroup: "false, true"
+    summary: |-
+      Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the webapp. Required if '--source-id' is not specified.None.
@@ -1999,7 +2017,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2038,9 +2056,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of `<secret, secret-uri, secret-name>` is required. Password or account key for secret auth.
+      secret-uri  : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret uri which stores password.
+      secret-name : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of postgres server. Required if '--target-id' is not specified.
@@ -2145,7 +2163,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2175,9 +2193,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of `<secret, secret-uri, secret-name>` is required. Password or account key for secret auth.
+      secret-uri  : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret uri which stores password.
+      secret-name : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
@@ -2278,7 +2296,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2379,10 +2397,13 @@ directCommands:
                                       [--resource-group]
                                       [--secret]
                                       [--server]
+                                      [--service-principal]
                                       [--slot]
                                       [--source-id]
+                                      [--system-identity]
                                       [--target-id]
                                       [--target-resource-group]
+                                      [--user-identity]
                                       [--vault-id]
   examples:
   - summary: |-
@@ -2390,13 +2411,13 @@ directCommands:
     syntax: az webapp connection create redis
   - summary: |-
       Create a connection between webapp and redis with resource name
-    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --tg RedisRG --server MyServer --database MyDB --secret
+    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --tg RedisRG --server MyServer --database MyDB --system-identity
   - summary: |-
       Create a connection between webapp slot and redis with resource name
-    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --slot MySlot --tg RedisRG --server MyServer --database MyDB --secret
+    syntax: az webapp connection create redis -g WebAppRG -n MyWebApp --slot MySlot --tg RedisRG --server MyServer --database MyDB --system-identity
   - summary: |-
       Create a connection between webapp and redis with resource id
-    syntax: az webapp connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
+    syntax: az webapp connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --system-identity
   optionalParameters:
   - name: --appconfig-id
     summary: |-
@@ -2410,7 +2431,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2443,18 +2464,40 @@ directCommands:
   - name: --server
     summary: |-
       Name of the redis server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
   - name: --source-id
     summary: |-
       The resource id of a webapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the redis server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2508,7 +2551,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2606,7 +2649,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2730,7 +2773,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2859,7 +2902,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -2893,9 +2936,9 @@ directCommands:
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+      secret  : One of `<secret, secret-uri, secret-name>` is required. Password or account key for secret auth.
+      secret-uri  : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret uri which stores password.
+      secret-name : One of `<secret, secret-uri, secret-name>` is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of the sql server. Required if '--target-id' is not specified.
@@ -3002,7 +3045,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3155,7 +3198,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3282,7 +3325,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3385,7 +3428,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3510,7 +3553,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
@@ -3631,7 +3674,7 @@ directCommands:
       Name of the webapp connection.
   - name: --connstr-props
     summary: |-
-      The addtional connection string properties used to for building connection string.
+      The additional connection string properties used to build connection string.
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.

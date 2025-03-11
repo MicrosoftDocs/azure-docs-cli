@@ -19,7 +19,7 @@ directCommands:
                                       --resource-group
                                       [--description]
                                       [--location]
-                                      [--no-wait]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                       [--tags]
   examples:
   - summary: |-
@@ -27,9 +27,9 @@ directCommands:
     syntax: az sig gallery-application create --gallery-name MyGallery --name AppName -g MyResourceGroup --os-type windows
   requiredParameters:
   - isRequired: true
-    name: --application-name --name -n
+    name: --application-name --gallery-application-name --name -n
     summary: |-
-      The name of the gallery Application.
+      The name of the gallery application.
   - isRequired: true
     name: --gallery-name -r
     summary: |-
@@ -49,14 +49,14 @@ directCommands:
       The description of this gallery Application Definition resource. This property is updatable.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      Resource location  When not specified, the location of the resource group will be used.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_sig_gallery-application_delete
   name: az sig gallery-application delete
   summary: |-
@@ -104,6 +104,8 @@ directCommands:
   syntax: >-
     az sig gallery-application list --gallery-name
                                     --resource-group
+                                    [--max-items]
+                                    [--next-token]
   requiredParameters:
   - isRequired: true
     name: --gallery-name -r
@@ -113,6 +115,13 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_sig_gallery-application_show
   name: az sig gallery-application show
   summary: |-
@@ -148,75 +157,88 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az sig gallery-application update --application-name
-                                      --gallery-name
-                                      --resource-group
+    az sig gallery-application update [--add]
+                                      [--application-name]
                                       [--description]
+                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--gallery-name]
+                                      [--ids]
                                       [--location]
-                                      [--no-wait]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--remove]
+                                      [--resource-group]
+                                      [--set]
+                                      [--subscription]
                                       [--tags]
   examples:
   - summary: |-
       Update a simple gallery Application.
     syntax: az sig gallery-application update --gallery-name GalleryName --name AppName -g MyResourceGroup --description Description --tags tag=MyTag
-  requiredParameters:
-  - isRequired: true
-    name: --application-name --name -n
-    summary: |-
-      The name of the gallery Application.
-  - isRequired: true
-    name: --gallery-name -r
-    summary: |-
-      Gallery name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --application-name --gallery-application-name --name -n
+    summary: |-
+      The name of the gallery application.
   - name: --description
     summary: |-
       The description of this gallery Application Definition resource. This property is updatable.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --gallery-name -r
+    summary: |-
+      Gallery name.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      Resource location.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_sig_gallery-application_wait
   name: az sig gallery-application wait
   summary: |-
-    Place the CLI in a waiting state until a condition of the sig gallery-application is met.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   syntax: >-
-    az sig gallery-application wait --application-name
-                                    --gallery-name
-                                    --resource-group
+    az sig gallery-application wait [--application-name]
                                     [--created]
                                     [--custom]
                                     [--deleted]
                                     [--exists]
+                                    [--gallery-name]
+                                    [--ids]
                                     [--interval]
+                                    [--resource-group]
+                                    [--subscription]
                                     [--timeout]
                                     [--updated]
-  requiredParameters:
-  - isRequired: true
-    name: --application-name --name -n
-    summary: |-
-      The name of the gallery Application.
-  - isRequired: true
-    name: --gallery-name -r
-    summary: |-
-      Gallery name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --application-name --gallery-application-name --name -n
+    summary: |-
+      The name of the gallery application.
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -232,10 +254,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+  - name: --gallery-name -r
+    summary: |-
+      Gallery name.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --timeout
     defaultValue: "3600"
     summary: |-
