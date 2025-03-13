@@ -147,15 +147,15 @@ To learn more about federated identities, see:
 
 ## Troubleshooting
 
-### ROPC Authentication error: Due to a configuration change made by your administrator
+### ROPC error: Due to a configuration change made by your administrator
 
-When you try to sign into Azure by using a password, this is known as ROPC flow (Resource Owner Password Credential) and is not supported with MFA. Here's an example:
+When you try to sign into Azure by using a password, this is known as ROPC flow (Resource Owner Password Credential). This authentication method is not supported with MFA. Here's an example:
 
 ```
 az login --username $username –password $password
 ```
 
-If MFA is required for the user, the above command fails with the following _error message_:
+If MFA is required for the user, the above command fails with the following error message:
 
 ```output
 AADSTS50076: Due to a configuration change made by your administrator, or because you moved to a new location, you must use multi-factor authentication to access ‘’. Trace ID Correlation ID: Timestamp:
@@ -163,15 +163,15 @@ AADSTS50076: Due to a configuration change made by your administrator, or becaus
 
 **Solution:** Switch to using an authentication method compatible with MFA.
 
-### Cross-Tenant authentication error: Authentication failed against tenant
+### Cross-tenant warning: Authentication failed against tenant
 
-If you have access to several tenants and one of them requires MFA, the Azure CLI may display a _warning message_ similar to this one:
+If you have access to several tenants and one of them requires MFA, the Azure CLI may display a warning message similar to this one:
 
 ```azurecli
 Authentication failed against tenant 00000000-0000-0000-0000-000000000000 'Tenant Name': AADSTSXXXXX: Due to a configuration change made by your administrator, or because you moved to a new location, you must use multi-factor authentication to access '00000000-0000-0000-0000-000000000000'. Trace ID: 00000000-0000-0000-0000-000000000000 Correlation ID: 00000000-0000-0000-0000-000000000000 Timestamp: yyyy-mm-dd hh:mm:ss.
 ```
 
-During the login phase, Azure CLI tries to sign in with the first tenant found. While we are working towards a resolution for this issue, specify the tenant you want to use with the `--tenant` parameter:
+During the login phase, Azure CLI tries to sign in with _the first tenant found_. While we are working towards a resolution for this issue, specify the tenant you want to use with the `--tenant` parameter:
 
 ```azurecli
 az login --tenant 00000000-0000-0000-0000-000000000000
