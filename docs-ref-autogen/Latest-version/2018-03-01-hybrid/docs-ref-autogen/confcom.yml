@@ -1,0 +1,359 @@
+### YamlMime:AzureCLIGroup
+uid: az_confcom
+name: az confcom
+extensionInformation: >-
+  > [!NOTE]
+
+  > This reference is part of the **confcom** extension for the Azure CLI (version 2.26.2 or higher). The extension will automatically install the first time you run an **az confcom** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Commands to generate security policies for confidential containers in Azure.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_confcom_acifragmentgen
+  name: az confcom acifragmentgen
+  summary: |-
+    Create a Confidential Container Policy Fragment for ACI.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az confcom acifragmentgen [--algo]
+                              [--chain]
+                              [--debug-mode]
+                              [--disable-stdio]
+                              [--feed]
+                              [--fragment-path]
+                              [--fragments-json]
+                              [--generate-import]
+                              [--image]
+                              [--image-target]
+                              [--input]
+                              [--key]
+                              [--minimum-svn]
+                              [--namespace]
+                              [--no-print]
+                              [--omit-id]
+                              [--output-filename]
+                              [--outraw]
+                              [--svn]
+                              [--tar]
+                              [--upload-fragment]
+  examples:
+  - summary: |-
+      Input an image name to generate a simple fragment
+    syntax: az confcom acifragmentgen --image mcr.microsoft.com/azuredocs/aci-helloworld
+  - summary: |-
+      Input a config file to generate a fragment with a custom namespace and debug mode enabled
+    syntax: az confcom acifragmentgen --input "./config.json" --namespace "my-namespace" --debug-mode
+  - summary: |-
+      Generate an import statement for a signed local fragment
+    syntax: az confcom acifragmentgen --fragment-path "./fragment.rego.cose" --generate-import --minimum-svn 1
+  - summary: |-
+      Generate a fragment and COSE sign it with a key and chain
+    syntax: az confcom acifragmentgen --input "./config.json" --key "./key.pem" --chain "./chain.pem" --svn 1 --namespace contoso --no-print
+  - summary: |-
+      Generate a fragment import from an image name
+    syntax: az confcom acifragmentgen --image <my-image> --generate-import --minimum-svn 1
+  - summary: |-
+      Attach a fragment to a specified image
+    syntax: az confcom acifragmentgen --input "./config.json" --key "./key.pem" --chain "./chain.pem" --svn 1 --namespace contoso --upload-fragment --image-target <my-image>
+  optionalParameters:
+  - name: --algo
+    defaultValue: "ES384"
+    summary: |-
+      Algorithm used for signing the generated policy fragment. This must be used with --key and --chain.
+      Supported algorithms are ['PS256', 'PS384', 'PS512', 'ES256', 'ES384', 'ES512', 'EdDSA'].
+  - name: --chain
+    summary: |-
+      Path to .pem formatted certificate chain file to use for signing the generated policy fragment. This must be used with --key.
+  - name: --debug-mode
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated security policy adds the ability to use /bin/sh or /bin/bash to debug the container. It also enabled stdio access, ability to dump stack traces, and enables runtime logging. It is recommended to only use this option for debugging purposes.
+  - name: --disable-stdio
+    defaultValue: "False"
+    summary: |-
+      When enabled, the containers in the container group do not have access to stdio.
+  - name: --feed -f
+    summary: |-
+      Feed to use for the generated policy fragment. This is typically the same as the image name when using image-attached fragments. It is the location in the remote repository where the fragment will be stored.
+  - name: --fragment-path -p
+    summary: |-
+      Path to an existing policy fragment file to be used with --generate-import. This option allows you to create import statements for the specified fragment without needing to pull it from an OCI registry.
+  - name: --fragments-json -j
+    summary: |-
+      Path to a JSON file that will store the fragment import information generated when using --generate-import. This file can later be fed into the policy generation command (acipolicygen) to include the fragment in a new or existing policy. If not specified, the import statement will be printed to the console instead of being saved to a file.
+  - name: --generate-import -g
+    defaultValue: "False"
+    summary: |-
+      Generate an import statement for a policy fragment.
+  - name: --image
+    summary: |-
+      Image to use for the generated policy fragment.
+  - name: --image-target
+    summary: |-
+      Image target where the generated policy fragment is attached.
+  - name: --input -i
+    summary: |-
+      Path to a JSON file containing the configuration for the generated policy fragment.
+  - name: --key -k
+    summary: |-
+      Path to .pem formatted key file to use for signing the generated policy fragment. This must be used with --chain.
+  - name: --minimum-svn
+    summary: |-
+      Used with --generate-import to specify the minimum SVN for the import statement.
+  - name: --namespace -n
+    summary: |-
+      Namespace to use for the generated policy fragment.
+  - name: --no-print
+    defaultValue: "False"
+    summary: |-
+      Do not print the generated policy fragment to stdout.
+  - name: --omit-id
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated policy will not contain the ID field. This will keep the policy from being tied to a specific image name and tag. This is helpful if the image being used will be present in multiple registries and used interchangeably.
+  - name: --output-filename
+    summary: |-
+      Save output policy to given file path.
+  - name: --outraw
+    defaultValue: "False"
+    summary: |-
+      Output policy in clear text compact JSON instead of default pretty print format.
+  - name: --svn
+    summary: |-
+      Minimum Allowed Software Version Number for the generated policy fragment. This should be a monotonically increasing integer.
+  - name: --tar
+    summary: |-
+      Path to either a tarball containing image layers or a JSON file containing paths to tarballs of image layers.
+  - name: --upload-fragment -u
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated policy fragment will be uploaded to the registry of the image being used.
+- uid: az_confcom_acipolicygen
+  name: az confcom acipolicygen
+  summary: |-
+    Create a Confidential Container Security Policy for ACI.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az confcom acipolicygen [--approve-wildcards]
+                            [--debug-mode]
+                            [--diff]
+                            [--disable-stdio]
+                            [--exclude-default-fragments]
+                            [--faster-hashing]
+                            [--fragments-json]
+                            [--image]
+                            [--include-fragments]
+                            [--infrastructure-svn]
+                            [--input]
+                            [--omit-id]
+                            [--outraw]
+                            [--outraw-pretty-print]
+                            [--parameters]
+                            [--print-existing-policy]
+                            [--print-policy]
+                            [--save-to-file]
+                            [--tar]
+                            [--template-file]
+                            [--validate-sidecar]
+                            [--virtual-node-yaml]
+  examples:
+  - summary: |-
+      Input an ARM Template file to inject a base64 encoded Confidential Container Security Policy into the ARM Template
+    syntax: az confcom acipolicygen --template-file "./template.json"
+  - summary: |-
+      Input an ARM Template file to create a human-readable Confidential Container Security Policy
+    syntax: az confcom acipolicygen --template-file "./template.json" --outraw-pretty-print
+  - summary: |-
+      Input an ARM Template file to save a Confidential Container Security Policy to a file as base64 encoded text
+    syntax: az confcom acipolicygen --template-file "./template.json" -s "./output-file.txt" --print-policy
+  - summary: |-
+      Input an ARM Template file and use a tar file as the image source instead of the Docker daemon
+    syntax: az confcom acipolicygen --template-file "./template.json" --tar "./image.tar"
+  - summary: |-
+      Input an ARM Template file and use a fragments JSON file to generate a policy
+    syntax: az confcom acipolicygen --template-file "./template.json" --fragments-json "./fragments.json" --include-fragments
+  optionalParameters:
+  - name: --approve-wildcards -y
+    defaultValue: "False"
+    summary: |-
+      When enabled, all prompts for using wildcards in environment variables are automatically approved.
+  - name: --debug-mode
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated security policy adds the ability to use /bin/sh or /bin/bash to debug the container. It also enabled stdio access, ability to dump stack traces, and enables runtime logging. It is recommended to only use this option for debugging purposes.
+  - name: --diff -d
+    defaultValue: "False"
+    summary: |-
+      When combined with an input ARM Template file (or YAML file for Virtual Node policy generation), verifies the policy present in the ARM Template under "ccePolicy" and the containers within the file are compatible. If they are incompatible, a list of reasons is given and the exit status code will be 2.
+  - name: --disable-stdio
+    defaultValue: "False"
+    summary: |-
+      When enabled, the containers in the container group do not have access to stdio.
+  - name: --exclude-default-fragments -e
+    defaultValue: "False"
+    summary: |-
+      When enabled, the default fragments are not included in the generated policy. This includes containers needed to mount azure files, mount secrets, mount git repos, and other common ACI features.
+  - name: --faster-hashing
+    defaultValue: "False"
+    summary: |-
+      When enabled, the hashing algorithm used to generate the policy is faster but less memory efficient.
+  - name: --fragments-json -j
+    summary: |-
+      Path to JSON file containing fragment information to use for generating a policy. This requires --include-fragments to be enabled.
+  - name: --image
+    summary: |-
+      Input image name.
+  - name: --include-fragments -f
+    defaultValue: "False"
+    summary: |-
+      When enabled, the path specified by --fragments-json will be used to pull fragments from an OCI registry or locally and include them in the generated policy.
+  - name: --infrastructure-svn
+    summary: |-
+      Minimum Allowed Software Version Number for Infrastructure Fragment.
+  - name: --input -i
+    summary: |-
+      Input JSON config file.
+  - name: --omit-id
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated policy will not contain the ID field. This will keep the policy from being tied to a specific image name and tag. This is helpful if the image being used will be present in multiple registries and used interchangeably.
+  - name: --outraw
+    defaultValue: "False"
+    summary: |-
+      Output policy in clear text compact JSON instead of default base64 format.
+  - name: --outraw-pretty-print
+    defaultValue: "False"
+    summary: |-
+      Output policy in clear text and pretty print format.
+  - name: --parameters -p
+    summary: |-
+      Input parameters file to optionally accompany an ARM Template.
+  - name: --print-existing-policy
+    defaultValue: "False"
+    summary: |-
+      When enabled, the existing security policy that is present in the ARM Template is printed to the command line, and no new security policy is generated.
+  - name: --print-policy
+    defaultValue: "False"
+    summary: |-
+      When enabled, the generated security policy is printed to the command line instead of injected into the input ARM Template.
+  - name: --save-to-file -s
+    summary: |-
+      Save output policy to given file path.
+  - name: --tar
+    summary: |-
+      Path to either a tarball containing image layers or a JSON file containing paths to tarballs of image layers.
+  - name: --template-file -a
+    summary: |-
+      Input ARM Template file.
+  - name: --validate-sidecar -v
+    defaultValue: "False"
+    summary: |-
+      Validate that the image used to generate the CCE Policy for a sidecar container will be allowed by its generated policy.
+  - name: --virtual-node-yaml
+    summary: |-
+      Input YAML file for Virtual Node policy generation.
+- uid: az_confcom_katapolicygen
+  name: az confcom katapolicygen
+  summary: |-
+    Create a Confidential Container Security Policy for AKS.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az confcom katapolicygen [--config-map-file]
+                             [--containerd-pull]
+                             [--containerd-socket-path]
+                             [--outraw]
+                             [--print-policy]
+                             [--print-version]
+                             [--rules-file-name]
+                             [--settings-file-name]
+                             [--use-cached-files]
+                             [--yaml]
+  examples:
+  - summary: |-
+      Input a Kubernetes YAML file to inject a base64 encoded Confidential Container Security Policy into the YAML file
+    syntax: az confcom katapolicygen --yaml "./pod.json"
+  - summary: |-
+      Input a Kubernetes YAML file to print a base64 encoded Confidential Container Security Policy to stdout
+    syntax: az confcom katapolicygen --yaml "./pod.json" --print-policy
+  - summary: |-
+      Input a Kubernetes YAML file and custom settings file to inject a base64 encoded Confidential Container Security Policy into the YAML file
+    syntax: az confcom katapolicygen --yaml "./pod.json" -j "./settings.json"
+  - summary: |-
+      Input a Kubernetes YAML file and external config map file
+    syntax: az confcom katapolicygen --yaml "./pod.json" --config-map-file "./configmap.json"
+  - summary: |-
+      Input a Kubernetes YAML file and custom rules file
+    syntax: az confcom katapolicygen --yaml "./pod.json" -p "./rules.rego"
+  - summary: |-
+      Input a Kubernetes YAML file with a custom containerd socket path
+    syntax: az confcom katapolicygen --yaml "./pod.json" --containerd-pull --containerd-socket-path "/my/custom/containerd.sock"
+  optionalParameters:
+  - name: --config-map-file -c
+    summary: |-
+      Path to config map file.
+  - name: --containerd-pull -d
+    defaultValue: "False"
+    summary: |-
+      Use containerd to pull the image. This option is only supported on Linux.
+  - name: --containerd-socket-path
+    summary: |-
+      Path to the containerd socket. This option is only supported on Linux.
+  - name: --outraw
+    defaultValue: "False"
+    summary: |-
+      Output policy in clear text compact JSON instead of default base64 format.
+  - name: --print-policy
+    defaultValue: "False"
+    summary: |-
+      Print the base64 encoded generated policy in the terminal.
+  - name: --print-version -v
+    defaultValue: "False"
+    summary: |-
+      Print the version of genpolicy tooling.
+  - name: --rules-file-name -p
+    summary: |-
+      Path to custom rules file.
+  - name: --settings-file-name -j
+    summary: |-
+      Path to custom settings file.
+  - name: --use-cached-files -u
+    defaultValue: "False"
+    summary: |-
+      Use cached files to save on computation time.
+  - name: --yaml -y
+    summary: |-
+      Input YAML Kubernetes file.
+commands:
+- az_confcom_acifragmentgen
+- az_confcom_acipolicygen
+- az_confcom_katapolicygen
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Commands to generate security policies for confidential containers in Azure.
