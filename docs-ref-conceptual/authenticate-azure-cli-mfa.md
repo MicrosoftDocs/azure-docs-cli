@@ -147,7 +147,7 @@ To learn more about federated identities, see:
 
 ## Troubleshooting
 
-### ROPC Authentication
+### ROPC Authentication error: Due to a configuration change made by your administrator
 
 When you try to sign into Azure by using a password, this is known as ROPC flow (Resource Owner Password Credential) and is not supported with MFA. Here's an example:
 
@@ -163,7 +163,7 @@ AADSTS50076: Due to a configuration change made by your administrator, or becaus
 
 **Solution:** Switch to using an authentication method compatible with MFA.
 
-### Cross-Tenant authentication
+### Cross-Tenant authentication error: Authentication failed against tenant
 
 If you have access to several tenants and one of them requires MFA, the Azure CLI may display a _warning message_ similar to this one:
 
