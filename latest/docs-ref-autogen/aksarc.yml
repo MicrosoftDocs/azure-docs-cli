@@ -29,6 +29,7 @@ directCommands:
                      [--disable-nfs-driver]
                      [--disable-smb-driver]
                      [--enable-ahub]
+                     [--enable-ai-toolchain-operator]
                      [--enable-azure-rbac]
                      [--enable-cluster-autoscaler]
                      [--enable-oidc-issuer]
@@ -50,6 +51,7 @@ directCommands:
                      [--ssh-auth-ips]
                      [--ssh-key-value]
                      [--tags]
+                     [--validate]
   examples:
   - summary: |-
       PutProvisionedCluster
@@ -70,7 +72,7 @@ directCommands:
   - isRequired: true
     name: --vnet-id --vnet-ids
     summary: |-
-      ARM resource ID of aksarc virtual network or Azure Stack HCI logical network.
+      ARM resource ID of aksarc virtual network or Azure Local logical network.
   optionalParameters:
   - name: --aad-admin-group-object-ids -i
     summary: |-
@@ -99,6 +101,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --enable-ai-toolchain-operator --enable-kaito
+    defaultValue: "False"
+    summary: |-
+      Enable AI Toolchain Operator for the provisioned cluster.
   - name: --enable-azure-rbac
     defaultValue: "False"
     summary: |-
@@ -170,6 +176,10 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --validate
+    defaultValue: "False"
+    summary: |-
+      Validate the cluster's input parameters without actually creating the cluster.
 - uid: az_aksarc_delete
   name: az aksarc delete
   summary: |-
@@ -248,6 +258,37 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Overwrite any existing cluster entry with the same name.
+- uid: az_aksarc_get-logs
+  name: az aksarc get-logs
+  summary: |-
+    Collect logs from provisioned clusters and the underlying infrastructure.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aksarc get-logs [--credentials-dir]
+                       [--ip]
+                       [--kubeconfig]
+                       [--out-dir]
+  examples:
+  - summary: |-
+      Collect logs with IP address and SSH credentials
+    syntax: az aksarc get-logs --ip 192.168.200.31 192.168.200.32 --ssh-key ~/.ssh --out-dir ./logs
+  - summary: |-
+      Collect logs with kubeconfig and SSH credentials, kubeconfig is only used to collect IP addresses, and ssh-key file path is used instead of directory
+    syntax: az aksarc get-logs --kubeconfig ~/.kube/config --ssh-key ~/.ssh/id_rsa --out-dir ./logs
+  optionalParameters:
+  - name: --credentials-dir --ssh-key
+    summary: |-
+      Path to SSH credentials to connect to nodes, either id_rsa file or directory is accepted.
+  - name: --ip --ips
+    summary: |-
+      IP addresses of nodes (control plane nodes or worker nodes) from which logs need to be collected.
+  - name: --kubeconfig
+    summary: |-
+      Path to kubeconfig file to connect to the cluster.
+  - name: --out-dir
+    summary: |-
+      Output directory to store collected logs. If not specified, logs will be stored in the current directory.
 - uid: az_aksarc_get-upgrades
   name: az aksarc get-upgrades
   summary: |-
@@ -361,11 +402,13 @@ directCommands:
                      [--ca-profile]
                      [--control-plane-count]
                      [--disable-ahub]
+                     [--disable-ai-toolchain-operator]
                      [--disable-cluster-autoscaler]
                      [--disable-gateway]
                      [--disable-nfs-driver]
                      [--disable-smb-driver]
                      [--enable-ahub]
+                     [--enable-ai-toolchain-operator]
                      [--enable-cluster-autoscaler]
                      [--enable-nfs-driver]
                      [--enable-smb-driver]
@@ -410,6 +453,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --disable-ai-toolchain-operator --disable-kaito
+    defaultValue: "False"
+    summary: |-
+      Disable AI Toolchain Operator for the provisioned cluster.
   - name: --disable-cluster-autoscaler -d
     defaultValue: "False"
     summary: |-
@@ -430,6 +477,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --enable-ai-toolchain-operator --enable-kaito
+    defaultValue: "False"
+    summary: |-
+      Enable AI Toolchain Operator for the provisioned cluster.
   - name: --enable-cluster-autoscaler -e
     defaultValue: "False"
     summary: |-
@@ -499,6 +550,7 @@ commands:
 - az_aksarc_create
 - az_aksarc_delete
 - az_aksarc_get-credentials
+- az_aksarc_get-logs
 - az_aksarc_get-upgrades
 - az_aksarc_get-versions
 - az_aksarc_list
