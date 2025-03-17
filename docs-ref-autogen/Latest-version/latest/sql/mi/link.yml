@@ -1,0 +1,309 @@
+### YamlMime:AzureCLIGroup
+uid: az_sql_mi_link
+name: az sql mi link
+summary: |-
+  Instance link management commands.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_sql_mi_link_create
+  name: az sql mi link create
+  summary: |-
+    Create a Managed Instance link between Sql On-Prem and Sql Managed Instance.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link create --instance-name
+                          --link-name
+                          --resource-group
+                          [--databases]
+                          [--failover-mode {Manual, None}]
+                          [--instance-ag-name]
+                          [--instance-link-role {Primary, Secondary}]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--partner-ag-name]
+                          [--partner-endpoint]
+                          [--seeding-mode {Automatic, Manual}]
+  examples:
+  - summary: |-
+      Create a Managed Instance link with minimal properties.
+    syntax: az sql mi link create -g testrg --mi testcl --name link1 --instance-ag-name instanceAg --partner-ag-name partnerAg --partner-endpoint TCP://SERVER:7022 --databases "[{database-name:testdb}]"
+  requiredParameters:
+  - isRequired: true
+    name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      Name of the managed instance.
+  - isRequired: true
+    name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --databases
+    summary: |-
+      Databases in the distributed availability group  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --failover-mode
+    parameterValueGroup: "Manual, None"
+    summary: |-
+      The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure.
+  - name: --instance-ag-name --instance-availability-group-name
+    summary: |-
+      Managed instance side availability group name.
+  - name: --instance-link-role
+    parameterValueGroup: "Primary, Secondary"
+    summary: |-
+      Managed instance side link role.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --partner-ag-name --partner-availability-group-name
+    summary: |-
+      SQL server side availability group name.
+  - name: --partner-endpoint
+    summary: |-
+      SQL server side endpoint - IP or DNS resolvable name.
+  - name: --seeding-mode
+    defaultValue: "Automatic"
+    parameterValueGroup: "Automatic, Manual"
+    summary: |-
+      Database seeding mode – can be Automatic (default), or Manual for supported scenarios.
+- uid: az_sql_mi_link_delete
+  name: az sql mi link delete
+  summary: |-
+    Drop a Managed Instance link between Sql On-Prem and Sql Managed Instance.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link delete [--ids]
+                          [--instance-name]
+                          [--link-name]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--resource-group]
+                          [--subscription]
+                          [--yes]
+  examples:
+  - summary: |-
+      Initiate a Managed Instance link drop.
+    syntax: az sql mi link delete -g testrg --mi testcl --name link1
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      Name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_sql_mi_link_failover
+  name: az sql mi link failover
+  summary: |-
+    Performs requested failover type in this Managed Instance link.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link failover --failover-type {ForcedAllowDataLoss, Planned}
+                            [--ids]
+                            [--instance-name]
+                            [--link-name]
+                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                            [--resource-group]
+                            [--subscription]
+                            [--yes]
+  examples:
+  - summary: |-
+      Failover a Managed Instance link.
+    syntax: az sql mi link failover -g testrg --mi testcl --name link1 --failover-type ForcedAllowDataLoss
+  requiredParameters:
+  - isRequired: true
+    name: --failover-type
+    parameterValueGroup: "ForcedAllowDataLoss, Planned"
+    summary: |-
+      The failover type, can be ForcedAllowDataLoss or Planned.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      The name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_sql_mi_link_list
+  name: az sql mi link list
+  summary: |-
+    Get a list of Managed Instance links in instance.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link list --instance-name
+                        --resource-group
+                        [--max-items]
+                        [--next-token]
+  examples:
+  - summary: |-
+      Lists all Managed Instance links in instance.
+    syntax: az sql mi link list -g testrg --mi testcl
+  requiredParameters:
+  - isRequired: true
+    name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      Name of the managed instance.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+- uid: az_sql_mi_link_show
+  name: az sql mi link show
+  summary: |-
+    Get a Managed Instance link info.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link show [--ids]
+                        [--instance-name]
+                        [--link-name]
+                        [--resource-group]
+                        [--subscription]
+  examples:
+  - summary: |-
+      Gets the Managed Instance link info.
+    syntax: az sql mi link show -g testrg --mi testcl --name link1
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      Name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_sql_mi_link_update
+  name: az sql mi link update
+  summary: |-
+    Update a Managed Instance link replication mode.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi link update [--ids]
+                          [--instance-name]
+                          [--link-name]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--replication-mode {Async, Sync}]
+                          [--resource-group]
+                          [--subscription]
+  examples:
+  - summary: |-
+      Update a Managed Instance link replication mode.
+    syntax: az sql mi link update -g testrg --mi testcl --name link1 --replication-mode Sync
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --instance-name --managed-instance --managed-instance-name --mi
+    summary: |-
+      The name of the managed instance.
+  - name: --link-name --name -n
+    summary: |-
+      Managed Instance link name.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --replication-mode
+    parameterValueGroup: "Async, Sync"
+    summary: |-
+      Replication mode of the link.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+commands:
+- az_sql_mi_link_create
+- az_sql_mi_link_delete
+- az_sql_mi_link_failover
+- az_sql_mi_link_list
+- az_sql_mi_link_show
+- az_sql_mi_link_update
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  ms.date: 12/04/2024
+  description: Instance link management commands.
