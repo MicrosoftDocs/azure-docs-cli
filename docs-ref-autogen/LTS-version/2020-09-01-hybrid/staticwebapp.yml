@@ -1,0 +1,365 @@
+### YamlMime:AzureCLIGroup
+uid: az_staticwebapp
+name: az staticwebapp
+importantNote: >-
+  > [!NOTE]
+
+  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage static apps.
+status: GA
+sourceType: Core and Extension
+directCommands:
+- uid: az_staticwebapp_create
+  name: az staticwebapp create
+  summary: |-
+    Create a static app. To provide content to the static web app and integrate with a Github repo, provide the Github repository URL (--source) and a branch (--branch). If the repo is under a Github organization, please ensure that the Azure CLI Github App has access to the organization. Access can be requested in the browser when using the "--login-with-github" argument. Access must be granted by the organization's admin.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az staticwebapp create --name
+                           --resource-group
+                           [--api-location]
+                           [--app-location]
+                           [--branch]
+                           [--location]
+                           [--login-with-ado]
+                           [--login-with-github]
+                           [--no-wait]
+                           [--output-location]
+                           [--sku {Dedicated, Free, Standard}]
+                           [--source]
+                           [--tags]
+                           [--token]
+  examples:
+  - summary: |-
+      Create static app in a subscription.
+    syntax: az staticwebapp create -n MyStaticAppName -g MyExistingRg -s https://github.com/JohnDoe/my-first-static-web-app -l WestUs2 -b master -t MyAccessToken
+  - summary: |-
+      Create static app in a subscription, retrieving token interactively
+    syntax: az staticwebapp create -n MyStaticAppName -g MyExistingRg -s https://github.com/JohnDoe/my-first-static-web-app -l WestUs2 -b master --login-with-github
+  - summary: |-
+      Create a static web app without any content and without a github integration
+    syntax: az staticwebapp create -n MyStaticAppName -g MyExistingRg
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the static site.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --api-location
+    summary: |-
+      Location of your Azure Functions code. For example, '/api' represents a folder called 'api'.
+  - name: --app-location
+    defaultValue: "/"
+    summary: |-
+      Location of your application code. For example, '/' represents the root of your app, while '/app' represents a directory called 'app'.
+  - name: --branch -b
+    summary: |-
+      The target branch in the repository.
+  - name: --location -l
+    defaultValue: "centralus"
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --login-with-ado
+    defaultValue: "False"
+    summary: |-
+      Use azure credentials to create an Azure Dev Ops personal access token.
+  - name: --login-with-github
+    defaultValue: "False"
+    summary: |-
+      Interactively log in with Github to retrieve the Personal Access Token.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --output-location
+    summary: |-
+      The path of your build output relative to your apps location. For example, setting a value of 'build' when your app location is set to '/app' will cause the content at '/app/build' to be served.
+  - name: --sku
+    defaultValue: "Free"
+    parameterValueGroup: "Dedicated, Free, Standard"
+    summary: |-
+      The pricing tiers for Static Web App.
+  - name: --source -s
+    summary: |-
+      URL for the repository of the static site.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --token -t
+    summary: |-
+      A user's GitHub or Azure Dev Ops repository token. This is used to create the Github Action or Dev Ops pipeline.
+- uid: az_staticwebapp_delete
+  name: az staticwebapp delete
+  summary: |-
+    Delete a static app.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az staticwebapp delete --name
+                           [--no-wait]
+                           [--resource-group]
+                           [--yes]
+  examples:
+  - summary: |-
+      Delete a static app.
+    syntax: az staticwebapp delete -n MyStaticAppName -g MyRg
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the static site.
+  optionalParameters:
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_staticwebapp_disconnect
+  name: az staticwebapp disconnect
+  summary: |-
+    Disconnect source control to enable connecting to a different repo.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az staticwebapp disconnect --name
+                               [--no-wait]
+                               [--resource-group]
+  examples:
+  - summary: |-
+      Disconnect static app.
+    syntax: az staticwebapp disconnect -n MyStaticAppName
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the static site.
+  optionalParameters:
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_staticwebapp_list
+  name: az staticwebapp list
+  summary: |-
+    List all static app resources in a subscription, or in resource group if provided.
+  status: GA
+  sourceType: Core
+  syntax: az staticwebapp list [--resource-group]
+  examples:
+  - summary: |-
+      List static apps in a subscription.
+    syntax: az staticwebapp list
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_staticwebapp_reconnect
+  name: az staticwebapp reconnect
+  summary: |-
+    Connect to a repo and branch following a disconnect command.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az staticwebapp reconnect --branch
+                              --name
+                              --source
+                              [--login-with-github]
+                              [--no-wait]
+                              [--resource-group]
+                              [--token]
+  examples:
+  - summary: |-
+      Connect a repo and branch to static app.
+    syntax: az staticwebapp reconnect -n MyStaticAppName --source MyGitHubRepo -b master --token MyAccessToken
+  - summary: |-
+      Connect a repo and branch to static app, retrieving token interactively
+    syntax: az staticwebapp reconnect -n MyStaticAppName --source MyGitHubRepo -b master --login-with-github
+  requiredParameters:
+  - isRequired: true
+    name: --branch -b
+    summary: |-
+      The target branch in the repository.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the static site.
+  - isRequired: true
+    name: --source -s
+    summary: |-
+      URL for the repository of the static site.
+  optionalParameters:
+  - name: --login-with-github
+    defaultValue: "False"
+    summary: |-
+      Interactively log in with Github to retrieve the Personal Access Token.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --token -t
+    summary: |-
+      A user's GitHub or Azure Dev Ops repository token. This is used to create the Github Action or Dev Ops pipeline.
+- uid: az_staticwebapp_show
+  name: az staticwebapp show
+  summary: |-
+    Show details of a static app.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az staticwebapp show --name
+                         [--resource-group]
+  examples:
+  - summary: |-
+      Show static app in a subscription.
+    syntax: az staticwebapp show -n MyStaticAppName
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the static site.
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_staticwebapp_update
+  name: az staticwebapp update
+  summary: |-
+    Update a static app. Return the app updated.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az staticwebapp update --name
+                           [--branch]
+                           [--no-wait]
+                           [--resource-group]
+                           [--sku {Dedicated, Free, Standard}]
+                           [--source]
+                           [--tags]
+                           [--token]
+  examples:
+  - summary: |-
+      Update static app to standard sku.
+    syntax: az staticwebapp update -n MyStaticAppName --sku Standard
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the static site.
+  optionalParameters:
+  - name: --branch -b
+    summary: |-
+      The target branch in the repository.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --sku
+    parameterValueGroup: "Dedicated, Free, Standard"
+    summary: |-
+      The pricing tiers for Static Web App.
+  - name: --source -s
+    summary: |-
+      URL for the repository of the static site.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --token -t
+    summary: |-
+      A user's GitHub or Azure Dev Ops repository token. This is used to create the Github Action or Dev Ops pipeline.
+commands:
+- az_staticwebapp_appsettings
+- az_staticwebapp_appsettings_delete
+- az_staticwebapp_appsettings_list
+- az_staticwebapp_appsettings_set
+- az_staticwebapp_backends
+- az_staticwebapp_backends_link
+- az_staticwebapp_backends_show
+- az_staticwebapp_backends_unlink
+- az_staticwebapp_backends_validate
+- az_staticwebapp_create
+- az_staticwebapp_dbconnection
+- az_staticwebapp_dbconnection_create
+- az_staticwebapp_dbconnection_delete
+- az_staticwebapp_dbconnection_show
+- az_staticwebapp_delete
+- az_staticwebapp_disconnect
+- az_staticwebapp_enterprise-edge
+- az_staticwebapp_enterprise-edge_disable
+- az_staticwebapp_enterprise-edge_enable
+- az_staticwebapp_enterprise-edge_show
+- az_staticwebapp_environment
+- az_staticwebapp_environment_delete
+- az_staticwebapp_environment_functions
+- az_staticwebapp_environment_list
+- az_staticwebapp_environment_show
+- az_staticwebapp_functions
+- az_staticwebapp_functions_link
+- az_staticwebapp_functions_show
+- az_staticwebapp_functions_unlink
+- az_staticwebapp_hostname
+- az_staticwebapp_hostname_delete
+- az_staticwebapp_hostname_list
+- az_staticwebapp_hostname_set
+- az_staticwebapp_hostname_show
+- az_staticwebapp_identity
+- az_staticwebapp_identity_assign
+- az_staticwebapp_identity_remove
+- az_staticwebapp_identity_show
+- az_staticwebapp_list
+- az_staticwebapp_reconnect
+- az_staticwebapp_secrets
+- az_staticwebapp_secrets_list
+- az_staticwebapp_secrets_reset-api-key
+- az_staticwebapp_show
+- az_staticwebapp_update
+- az_staticwebapp_users
+- az_staticwebapp_users_invite
+- az_staticwebapp_users_list
+- az_staticwebapp_users_update
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage static apps.
