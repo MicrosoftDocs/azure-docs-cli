@@ -4,7 +4,7 @@ name: az networkfabric acl
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az networkfabric acl** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az networkfabric acl** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Access Control List Resource.
 status: GA
@@ -20,10 +20,13 @@ directCommands:
     az networkfabric acl create --configuration-type {File, Inline}
                                 --resource-group
                                 --resource-name
+                                [--acl-type {ControlPlaneTrafficPolicy, Management, Tenant}]
                                 [--acls-url]
                                 [--annotation]
                                 [--default-action {Deny, Permit}]
+                                [--device-role {CE, ManagementSwitch, NPB, ToR}]
                                 [--dynamic-match-configurations]
+                                [--global-access-control-list-actions]
                                 [--location]
                                 [--match-configurations]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -43,7 +46,7 @@ directCommands:
     name: --configuration-type
     parameterValueGroup: "File, Inline"
     summary: |-
-      Input method to configure Access Control List. Example: File.
+      Input method to configure Access Control List.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -53,22 +56,34 @@ directCommands:
     summary: |-
       Name of the Access Control List.
   optionalParameters:
+  - name: --acl-type
+    parameterValueGroup: "ControlPlaneTrafficPolicy, Management, Tenant"
+    summary: |-
+      Access Control List (ACL) Type.
   - name: --acls-url
     summary: |-
       Access Control List file URL.
   - name: --annotation
     summary: |-
-      Description for underlying resource.
+      Switch configuration description.
   - name: --default-action
+    defaultValue: "Permit"
     parameterValueGroup: "Deny, Permit"
     summary: |-
-      Default action that needs to be applied when no condition is matched. Example: Permit.
+      Default action that needs to be applied when no condition is matched. Example: Permit | Deny.
+  - name: --device-role
+    parameterValueGroup: "CE, ManagementSwitch, NPB, ToR"
+    summary: |-
+      Device Role.
   - name: --dynamic-match-configurations
     summary: |-
       List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --global-access-control-list-actions
+    summary: |-
+      Global Access Control List (ACL) actions  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
-      Location of Azure region  When not specified, the location of the resource group will be used.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
   - name: --match-configurations
     summary: |-
       List of match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -174,11 +189,14 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az networkfabric acl update [--acls-url]
+    az networkfabric acl update [--acl-type {ControlPlaneTrafficPolicy, Management, Tenant}]
+                                [--acls-url]
                                 [--annotation]
                                 [--configuration-type {File, Inline}]
                                 [--default-action {Deny, Permit}]
+                                [--device-role {CE, ManagementSwitch, NPB, ToR}]
                                 [--dynamic-match-configurations]
+                                [--global-access-control-list-actions]
                                 [--ids]
                                 [--match-configurations]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -191,23 +209,34 @@ directCommands:
       Update ACL with Inline configuration type
     syntax: az networkfabric acl update -g "example-rg" --resource-name "example-acl" --configuration-type "Inline" --default-action "Permit"  --dynamic-match-configurations "[{ipGroups:[{name:'example-ipGroup',ipAddressType:IPv4,ipPrefixes:['10.20.3.1/20']}],vlanGroups:[{name:'example-vlanGroup',vlans:['20-30']}],portGroups:[{name:'example-portGroup',ports:['100-200']}]}]" --match-configurations "[{matchConfigurationName:'example-match',sequenceNumber:123,ipAddressType:IPv4,matchConditions:[{etherTypes:['0x1'],fragments:['0xff00-0xffff'],ipLengths:['4094-9214'],ttlValues:[23],dscpMarkings:[32],portCondition:{flags:[established],portType:SourcePort,layer4Protocol:TCP,ports:['1-20'],portGroupNames:['example-portGroup']},protocolTypes:[TCP],vlanMatchCondition:{vlans:['20-30'],innerVlans:[30],vlanGroupNames:['example-vlanGroup']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.20.20.20/12'],ipGroupNames:['example-ipGroup']}}],actions:[{type:Count,counterName:'example-counter'}]}]"
   optionalParameters:
+  - name: --acl-type
+    parameterValueGroup: "ControlPlaneTrafficPolicy, Management, Tenant"
+    summary: |-
+      Access Control List (ACL) Type.
   - name: --acls-url
     summary: |-
       Access Control List file URL.
   - name: --annotation
     summary: |-
-      Description for underlying resource.
+      Switch configuration description.
   - name: --configuration-type
     parameterValueGroup: "File, Inline"
     summary: |-
-      Input method to configure Access Control List. Example: File.
+      Input method to configure Access Control List.
   - name: --default-action
     parameterValueGroup: "Deny, Permit"
     summary: |-
-      Default action that needs to be applied when no condition is matched. Example: Permit.
+      Default action that needs to be applied when no condition is matched. Example: Permit | Deny.
+  - name: --device-role
+    parameterValueGroup: "CE, ManagementSwitch, NPB, ToR"
+    summary: |-
+      Device Role.
   - name: --dynamic-match-configurations
     summary: |-
       List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --global-access-control-list-actions
+    summary: |-
+      Global Access Control List (ACL) actions  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -229,7 +258,7 @@ directCommands:
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_networkfabric_acl_wait
   name: az networkfabric acl wait
   summary: |-
