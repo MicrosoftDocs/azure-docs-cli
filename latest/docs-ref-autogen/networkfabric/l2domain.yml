@@ -4,7 +4,7 @@ name: az networkfabric l2domain
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az networkfabric l2domain** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az networkfabric l2domain** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage L2 Isolation Domain Resource.
 status: GA
@@ -17,13 +17,15 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az networkfabric l2domain create --nf-id
+    az networkfabric l2domain create --network-fabric-id
                                      --resource-group
                                      --resource-name
                                      --vlan-id
                                      [--annotation]
+                                     [--extended-vlan {Disabled, Enabled}]
                                      [--location]
                                      [--mtu]
+                                     [--network-to-network-interconnect-id]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--tags]
   examples:
@@ -32,7 +34,7 @@ directCommands:
     syntax: az networkfabric l2domain create --resource-group "example-rg" --resource-name "example-l2domain" --location "westus3" --nf-id "/subscriptions/xxxxxx-xxxxxx-xxxx-xxxx-xxxxxx/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/NetworkFabrics/example-fabricName" --vlan-id  501 --mtu 1500
   requiredParameters:
   - isRequired: true
-    name: --nf-id
+    name: --network-fabric-id --nf-id
     summary: |-
       ARM Resource ID of the Network Fabric.
   - isRequired: true
@@ -46,17 +48,26 @@ directCommands:
   - isRequired: true
     name: --vlan-id
     summary: |-
-      Vlan Identifier of the Network Fabric. The value should be between 100 to 4094. Example: 501.
+      Vlan Identifier of the Network Fabric. Example: 501.
   optionalParameters:
   - name: --annotation
     summary: |-
-      Description for underlying resource.
+      Switch configuration description.
+  - name: --extended-vlan
+    defaultValue: "Disabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Extended VLAN status, default value is Disabled.
   - name: --location -l
     summary: |-
-      Location of Azure region  When not specified, the location of the resource group will be used.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
   - name: --mtu
+    defaultValue: "1500"
     summary: |-
-      Maximum transmission unit. The value should be between 64 to 9200. Default value is 1500. Example: 1500.
+      Maximum transmission unit. Default value is 1500.
+  - name: --network-to-network-interconnect-id --nni-id
+    summary: |-
+      ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -160,8 +171,10 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az networkfabric l2domain update [--annotation]
+                                     [--extended-vlan {Disabled, Enabled}]
                                      [--ids]
                                      [--mtu]
+                                     [--network-to-network-interconnect-id]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--resource-group]
                                      [--resource-name]
@@ -174,13 +187,20 @@ directCommands:
   optionalParameters:
   - name: --annotation
     summary: |-
-      Description for underlying resource.
+      Switch configuration description.
+  - name: --extended-vlan
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Extended VLAN status.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --mtu
     summary: |-
-      Maximum transmission unit. The value should be between 64 to 9200. Default value is 1500. Example: 1500.
+      Maximum transmission unit. Default value is 1500.
+  - name: --network-to-network-interconnect-id --nni-id
+    summary: |-
+      ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -196,7 +216,7 @@ directCommands:
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_networkfabric_l2domain_update-admin-state
   name: az networkfabric l2domain update-admin-state
   summary: |-
@@ -209,7 +229,7 @@ directCommands:
                                                  [--resource-group]
                                                  [--resource-ids]
                                                  [--resource-name]
-                                                 [--state {Disable, Enable}]
+                                                 [--state {Disable, Enable, UnderMaintenance}]
                                                  [--subscription]
   examples:
   - summary: |-
@@ -233,7 +253,7 @@ directCommands:
     summary: |-
       Name of the L2 Isolation Domain.
   - name: --state
-    parameterValueGroup: "Disable, Enable"
+    parameterValueGroup: "Disable, Enable, UnderMaintenance"
     summary: |-
       Administrative state.
   - name: --subscription

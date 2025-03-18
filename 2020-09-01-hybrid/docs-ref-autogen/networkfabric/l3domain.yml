@@ -4,7 +4,7 @@ name: az networkfabric l3domain
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az networkfabric l3domain** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az networkfabric l3domain** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage L3 Isolation Domain Resource.
 status: GA
@@ -17,7 +17,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az networkfabric l3domain create --nf-id
+    az networkfabric l3domain create --network-fabric-id
                                      --resource-group
                                      --resource-name
                                      [--aggregate-route-configuration]
@@ -27,6 +27,8 @@ directCommands:
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--redistribute-connected-subnets {False, True}]
                                      [--redistribute-static-routes {False, True}]
+                                     [--route-prefix-limit]
+                                     [--static-route-route-policy]
                                      [--tags]
   examples:
   - summary: |-
@@ -37,7 +39,7 @@ directCommands:
     syntax: az networkfabric l3domain create --connected-subnet-route-policy "??"
   requiredParameters:
   - isRequired: true
-    name: --nf-id
+    name: --network-fabric-id --nf-id
     summary: |-
       ARM Resource ID of the Network Fabric.
   - isRequired: true
@@ -54,25 +56,33 @@ directCommands:
       Aggregate route configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --annotation
     summary: |-
-      Description for underlying resource.
+      Switch configuration description.
   - name: --connected-subnet-route-policy
     summary: |-
-      Connected Subnet RoutePolicy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Connected Subnet RoutePolicy  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
-      Location of Azure region  When not specified, the location of the resource group will be used.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --redistribute-connected-subnets
+    defaultValue: "True"
     parameterValueGroup: "False, True"
     summary: |-
-      Advertise Connected Subnets. Default value is True. Example: True.
+      Advertise Connected Subnets. Ex: "True" | "False".
   - name: --redistribute-static-routes
+    defaultValue: "False"
     parameterValueGroup: "False, True"
     summary: |-
-      Advertise Static Routes. Default value is False. Example: True.
+      Advertise Static Routes. Ex: "True" | "False".
+  - name: --route-prefix-limit
+    summary: |-
+      VRF Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --static-route-route-policy
+    summary: |-
+      Static Route - route policy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -180,6 +190,8 @@ directCommands:
                                      [--redistribute-static-routes {False, True}]
                                      [--resource-group]
                                      [--resource-name]
+                                     [--route-prefix-limit]
+                                     [--static-route-route-policy]
                                      [--subscription]
                                      [--tags]
   examples:
@@ -195,10 +207,10 @@ directCommands:
       Aggregate route configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --annotation
     summary: |-
-      Description for underlying resource.
+      Switch configuration description.
   - name: --connected-subnet-route-policy
     summary: |-
-      Connected Subnet RoutePolicy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Connected Subnet RoutePolicy  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -209,23 +221,29 @@ directCommands:
   - name: --redistribute-connected-subnets
     parameterValueGroup: "False, True"
     summary: |-
-      Advertise Connected Subnets. Default value is True. Example: True.
+      Advertise Connected Subnets. Ex: "True" | "False".
   - name: --redistribute-static-routes
     parameterValueGroup: "False, True"
     summary: |-
-      Advertise Static Routes. Default value is False. Example: True.
+      Advertise Static Routes. Ex: "True" | "False".
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --resource-name
     summary: |-
       Name of the L3 Isolation Domain.
+  - name: --route-prefix-limit
+    summary: |-
+      Virtual Routing and Forwarding (VRF) Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --static-route-route-policy
+    summary: |-
+      Static Route - route policy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_networkfabric_l3domain_update-admin-state
   name: az networkfabric l3domain update-admin-state
   summary: |-
@@ -238,7 +256,7 @@ directCommands:
                                                  [--resource-group]
                                                  [--resource-ids]
                                                  [--resource-name]
-                                                 [--state {Disable, Enable}]
+                                                 [--state {Disable, Enable, UnderMaintenance}]
                                                  [--subscription]
   examples:
   - summary: |-
@@ -262,7 +280,7 @@ directCommands:
     summary: |-
       Name of the L3 Isolation Domain.
   - name: --state
-    parameterValueGroup: "Disable, Enable"
+    parameterValueGroup: "Disable, Enable, UnderMaintenance"
     summary: |-
       Administrative state.
   - name: --subscription

@@ -4,7 +4,7 @@ name: az networkfabric nni
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az networkfabric nni** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az networkfabric nni** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Network To Network Interconnect Resource.
 status: GA
@@ -21,16 +21,19 @@ directCommands:
                                 --resource-group
                                 --resource-name
                                 --use-option-b {False, True}
+                                [--conditional-default-route-configuration]
                                 [--egress-acl-id]
                                 [--export-route-policy]
                                 [--import-route-policy]
                                 [--ingress-acl-id]
                                 [--is-management-type {False, True}]
                                 [--layer2-configuration]
+                                [--micro-bfd-state {Disabled, Enabled}]
                                 [--nni-type {CE, NPB}]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--npb-static-route-configuration]
                                 [--option-b-layer3-configuration]
+                                [--static-route-configuration]
   examples:
   - summary: |-
       Create a Network To Network Interconnect
@@ -55,31 +58,40 @@ directCommands:
     name: --use-option-b
     parameterValueGroup: "False, True"
     summary: |-
-      Selection of option B for NNI. Example: True.
+      Based on this option layer3 parameters are mandatory. Example: True/False.
   optionalParameters:
+  - name: --conditional-default-route-configuration
+    summary: |-
+      Conditional Default Route Configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --egress-acl-id
     summary: |-
-      Egress Acl ARM resource ID.
+      Egress Acl. ARM resource ID of Access Control Lists.
   - name: --export-route-policy
     summary: |-
-      Export Route Policy configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Export Route Policy information  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --import-route-policy
     summary: |-
-      Import Route Policy configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Import Route Policy information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ingress-acl-id
     summary: |-
-      Ingress Acl ARM resource ID.
+      Ingress Acl. ARM resource ID of Access Control Lists.
   - name: --is-management-type
+    defaultValue: "True"
     parameterValueGroup: "False, True"
     summary: |-
-      Configuration to use NNI for Infrastructure Management. Default value is True. Example: True.
+      Configuration to use NNI for Infrastructure Management. Example: True/False.
   - name: --layer2-configuration
     summary: |-
       Common properties for Layer2 Configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --micro-bfd-state
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Micro Bidirectional Forwarding Detection (BFD) enabled/disabled state.
   - name: --nni-type
+    defaultValue: "CE"
     parameterValueGroup: "CE, NPB"
     summary: |-
-      Usage type of NNI. Default value is CE. Example: CE.
+      Type of NNI used. Example: CE | NPB.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -90,6 +102,9 @@ directCommands:
   - name: --option-b-layer3-configuration
     summary: |-
       Common properties for Layer3Configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --static-route-configuration
+    summary: |-
+      Static Route Configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_networkfabric_nni_delete
   name: az networkfabric nni delete
   summary: |-
@@ -204,11 +219,13 @@ directCommands:
                                 [--import-route-policy]
                                 [--ingress-acl-id]
                                 [--layer2-configuration]
+                                [--micro-bfd-state {Disabled, Enabled}]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--npb-static-route-configuration]
                                 [--option-b-layer3-configuration]
                                 [--resource-group]
                                 [--resource-name]
+                                [--static-route-configuration]
                                 [--subscription]
   examples:
   - summary: |-
@@ -220,7 +237,7 @@ directCommands:
   optionalParameters:
   - name: --egress-acl-id
     summary: |-
-      Egress Acl ARM resource ID.
+      Egress Acl. ARM resource ID of Access Control Lists.
   - name: --export-route-policy
     summary: |-
       Export Route Policy information  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -235,10 +252,14 @@ directCommands:
       Import Route Policy information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ingress-acl-id
     summary: |-
-      Ingress Acl ARM resource ID.
+      Ingress Acl. ARM resource ID of Access Control Lists.
   - name: --layer2-configuration
     summary: |-
       Common properties for Layer2Configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --micro-bfd-state
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Micro BFD enabled/disabled state.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -255,6 +276,52 @@ directCommands:
   - name: --resource-name
     summary: |-
       Name of the Network to Network Interconnect.
+  - name: --static-route-configuration
+    summary: |-
+      Static Route Configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_networkfabric_nni_update-bfd-administrative-state
+  name: az networkfabric nni update-bfd-administrative-state
+  summary: |-
+    Updates the Admin State.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az networkfabric nni update-bfd-administrative-state [--administrative-state {Disabled, Enabled, MAT, RMA}]
+                                                         [--ids]
+                                                         [--network-fabric-name]
+                                                         [--network-to-network-interconnect-name]
+                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                         [--resource-group]
+                                                         [--route-type {OptionA, Static}]
+                                                         [--subscription]
+  optionalParameters:
+  - name: --administrative-state
+    parameterValueGroup: "Disabled, Enabled, MAT, RMA"
+    summary: |-
+      State. Select either enable or disable.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --network-fabric-name
+    summary: |-
+      Name of the Network Fabric.
+  - name: --network-to-network-interconnect-name --nni-name
+    summary: |-
+      Name of the Network to Network Interconnect.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --route-type
+    parameterValueGroup: "OptionA, Static"
+    summary: |-
+      Route Type. Choose either Static or OptionA.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -326,6 +393,7 @@ commands:
 - az_networkfabric_nni_list
 - az_networkfabric_nni_show
 - az_networkfabric_nni_update
+- az_networkfabric_nni_update-bfd-administrative-state
 - az_networkfabric_nni_wait
 globalParameters:
 - name: --debug
