@@ -60,10 +60,46 @@ directCommands:
     az quantum job list --location
                         --resource-group
                         --workspace-name
+                        [--created-after]
+                        [--created-before]
+                        [--item-type]
+                        [--job-name]
+                        [--job-type]
+                        [--order]
+                        [--orderby]
+                        [--provider-id]
+                        [--skip]
+                        [--status]
+                        [--target-id]
+                        [--top]
   examples:
   - summary: |-
       Get the list of jobs from an Azure Quantum workspace.
     syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation
+  - summary: |-
+      List jobs that used the microsoft-elements provider.
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --provider-id microsoft-elements
+  - summary: |-
+      List jobs that ran on the microsoft.dft target.
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --target-id microsoft.dft
+  - summary: |-
+      List jobs that completed successfully.
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --status Succeeded
+  - summary: |-
+      List jobs created after January 15th, 2025.
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --created-after 2025-01-15
+  - summary: |-
+      List jobs whose names start with "Generate...".
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --job-name Generate
+  - summary: |-
+      Skip the first 50 jobs, start listing at the 51st job and list 10 jobs.
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --skip 50 --top 10
+  - summary: |-
+      Sort the job list by Target ID and display in tabular format.
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --orderby Target -o table
+  - summary: |-
+      Sort the job list by Job Name in descending order, display in tabular format.
+    syntax: az quantum job list -g MyResourceGroup -w MyWorkspace -l MyLocation --orderby Name --order desc -o table
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -77,6 +113,43 @@ directCommands:
     name: --workspace-name -w
     summary: |-
       Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
+  optionalParameters:
+  - name: --created-after
+    summary: |-
+      Jobs created after this date to be listed.
+  - name: --created-before
+    summary: |-
+      Jobs created before this date to be listed.
+  - name: --item-type
+    summary: |-
+      Item type to be listed, "job" or "session".
+  - name: --job-name
+    summary: |-
+      A friendly name to give to this run of the program.
+  - name: --job-type
+    summary: |-
+      Job type to be listed, example "QuantumComputing".
+  - name: --order
+    summary: |-
+      How to order the list: `asc` or `desc`.
+  - name: --orderby
+    summary: |-
+      The field on which to order the list.
+  - name: --provider-id -p
+    summary: |-
+      Identifier of an Azure Quantum provider.
+  - name: --skip
+    summary: |-
+      How many jobs to skip when returning a job list.
+  - name: --status
+    summary: |-
+      Status of jobs to be listed.
+  - name: --target-id -t
+    summary: |-
+      Execution engine for quantum computing jobs. When a workspace is configured with a set of providers, they each enable one or more targets. You can configure the default target using `az quantum target set`.
+  - name: --top
+    summary: |-
+      The number of jobs listed per page.
 - uid: az_quantum_job_output
   name: az quantum job output
   summary: |-
