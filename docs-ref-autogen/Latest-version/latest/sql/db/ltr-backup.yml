@@ -1,0 +1,374 @@
+### YamlMime:AzureCLIGroup
+uid: az_sql_db_ltr-backup
+name: az sql db ltr-backup
+summary: |-
+  Manage SQL database long term retention backups.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_sql_db_ltr-backup_delete
+  name: az sql db ltr-backup delete
+  summary: |-
+    Delete a long term retention backup.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql db ltr-backup delete --database
+                                --location
+                                --name
+                                --server
+                                [--yes]
+  examples:
+  - summary: |-
+      Delete long term retention backup for database.
+    syntax: az sql db ltr-backup delete -l southeastasia -s myserver -d mydb -n "3214b3fb-fba9-43e7-96a3-09e35ffcb336;132292152080000000"
+  requiredParameters:
+  - isRequired: true
+    name: --database -d
+    summary: |-
+      Name of the Azure SQL Database. If specified (along with server name), retrieves all requested backups under this database.
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      The location of the desired backups.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the LTR backup. Use 'az sql db ltr-backup show' or 'az sql db ltr-backup list' for backup name.
+  - isRequired: true
+    name: --server -s
+    summary: |-
+      Name of the Azure SQL Server. If specified, retrieves all requested backups under this server.
+  optionalParameters:
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_sql_db_ltr-backup_list
+  name: az sql db ltr-backup list
+  summary: |-
+    List the long term retention backups for a location, server or database.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql db ltr-backup list --location
+                              [--database]
+                              [--database-state]
+                              [--latest]
+                              [--resource-group]
+                              [--server]
+  examples:
+  - summary: |-
+      List long term retention backups for a database.
+    syntax: az sql db ltr-backup list -l southeastasia -s myserver -d mydb
+  - summary: |-
+      List long term retention backups for a server (list only the latest LTR backups, which belong to live databases).
+    syntax: az sql db ltr-backup list -l southeastasia -s myserver --database-state Live --only-latest-per-database True
+  - summary: |-
+      List long term retention backups for a server (with resource group argument).
+    syntax: az sql db ltr-backup list -l southeastasia -g mygroup -s myserver
+  - summary: |-
+      List long term retention backups for a location (list only the latest LTR backups, which belong to live databases).
+    syntax: az sql db ltr-backup list -l southeastasia --database-state Live --only-latest-per-database True
+  - summary: |-
+      List long term retention backups for a location (with resource group argument).
+    syntax: az sql db ltr-backup list -l southeastasia -g mygroup
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      The location of the desired backups.
+  optionalParameters:
+  - name: --database -d
+    summary: |-
+      Name of the Azure SQL Database. If specified (along with server name), retrieves all requested backups under this database.
+  - name: --database-state --state
+    summary: |-
+      'All', 'Live', or 'Deleted'. Will fetch backups only from databases of specified state. If no state provied, defaults to 'All'.
+  - name: --latest --only-latest-per-database
+    summary: |-
+      If true, will only return the latest backup for each database.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --server -s
+    summary: |-
+      Name of the Azure SQL Server. If specified, retrieves all requested backups under this server.
+- uid: az_sql_db_ltr-backup_restore
+  name: az sql db ltr-backup restore
+  summary: |-
+    Restore a long term retention backup to a new database.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql db ltr-backup restore --backup-id
+                                 --dest-database
+                                 --dest-resource-group
+                                 --dest-server
+                                 [--assign-identity {false, true}]
+                                 [--auto-pause-delay]
+                                 [--availability-zone]
+                                 [--backup-storage-redundancy]
+                                 [--capacity]
+                                 [--compute-model {Provisioned, Serverless}]
+                                 [--edition]
+                                 [--elastic-pool]
+                                 [--encryption-protector]
+                                 [--encryption-protector-auto-rotation {false, true}]
+                                 [--family]
+                                 [--federated-client-id]
+                                 [--ha-replicas]
+                                 [--keys]
+                                 [--license-type {BasePrice, LicenseIncluded}]
+                                 [--min-capacity]
+                                 [--no-wait]
+                                 [--preferred-enclave-type {Default, VBS}]
+                                 [--read-scale {Disabled, Enabled}]
+                                 [--service-level-objective]
+                                 [--tags]
+                                 [--umi]
+                                 [--zone-redundant {false, true}]
+  examples:
+  - summary: |-
+      Restore LTR backup.
+    syntax: >-
+      az sql db ltr-backup restore \
+
+      --dest-database targetdb --dest-server myserver --dest-resource-group mygroup \
+
+      --backup-id "/subscriptions/6caa113c-794c-42f8-ab9d-878d8aa104dc/resourceGroups/mygroup/providers/Microsoft.Sql/locations/southeastasia/longTermRetentionServers/myserver/longTermRetentionDatabases/sourcedb/longTermRetentionBackups/3214b3fb-fba9-43e7-96a3-09e35ffcb336;132292152080000000"
+  requiredParameters:
+  - isRequired: true
+    name: --backup-id
+    summary: |-
+      The resource id of the long term retention backup to be restored. Use 'az sql db ltr-backup show' or 'az sql db ltr-backup list' for backup id.
+  - isRequired: true
+    name: --dest-database
+    summary: |-
+      Name of the database that will be created as the restore destination.
+  - isRequired: true
+    name: --dest-resource-group
+    summary: |-
+      Name of the resource group of the server to restore database to.
+  - isRequired: true
+    name: --dest-server
+    summary: |-
+      Name of the server to restore database to.
+  optionalParameters:
+  - name: --assign-identity -i
+    parameterValueGroup: "false, true"
+    summary: |-
+      Assign identity for database.
+  - name: --auto-pause-delay
+    summary: |-
+      Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+  - name: --availability-zone
+    summary: |-
+      Availability zone.
+  - name: --backup-storage-redundancy --bsr
+    summary: |-
+      Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.
+  - name: --capacity -c
+    summary: |-
+      The capacity component of the sku in integer number of DTUs or vcores.
+  - name: --compute-model
+    parameterValueGroup: "Provisioned, Serverless"
+    summary: |-
+      The compute model of the database.
+  - name: --edition --tier -e
+    summary: |-
+      The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.
+  - name: --elastic-pool
+    summary: |-
+      The name or resource id of the elastic pool to create the database in.
+  - name: --encryption-protector
+    summary: |-
+      Specifies the Azure key vault key to be used as database encryption protector key.
+  - name: --encryption-protector-auto-rotation --epauto
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specifies the database encryption protector key auto rotation flag. Can be either true, false or null.
+  - name: --family -f
+    summary: |-
+      The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.
+  - name: --federated-client-id
+    summary: |-
+      The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
+  - name: --ha-replicas --read-replicas
+    summary: |-
+      The number of high availability replicas to provision for the database. Only settable for Hyperscale edition.
+  - name: --keys
+    summary: |-
+      The list of AKV keys for the SQL Database.
+  - name: --license-type
+    parameterValueGroup: "BasePrice, LicenseIncluded"
+    summary: |-
+      The license type to apply for this database.``LicenseIncluded`` if you need a license, or ``BasePrice``if you have a license and are eligible for the Azure HybridBenefit.
+  - name: --min-capacity
+    summary: |-
+      Minimal capacity that database will always have allocated, if not paused.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --preferred-enclave-type
+    parameterValueGroup: "Default, VBS"
+    summary: |-
+      Specifies type of enclave for this resource.
+  - name: --read-scale
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
+  - name: --service-level-objective --service-objective
+    summary: |-
+      The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_S_Gen5_8, BC_Gen5_2, HS_Gen5_32.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --umi --user-assigned-identity-id
+    summary: |-
+      The list of user assigned identity for the SQL Database.
+  - name: --zone-redundant -z
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specifies whether to enable zone redundancy. Default is true if no value is specified.
+- uid: az_sql_db_ltr-backup_show
+  name: az sql db ltr-backup show
+  summary: |-
+    Get a long term retention backup for a database.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql db ltr-backup show --database
+                              --location
+                              --name
+                              --server
+  examples:
+  - summary: |-
+      Show long term retention backup for a database.
+    syntax: az sql db ltr-backup show -l southeastasia -s myserver -d mydb -n "3214b3fb-fba9-43e7-96a3-09e35ffcb336;132292152080000000;Hot"
+  requiredParameters:
+  - isRequired: true
+    name: --database -d
+    summary: |-
+      Name of the Azure SQL Database. If specified (along with server name), retrieves all requested backups under this database.
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      The location of the desired backups.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the LTR backup. Use 'az sql db ltr-backup show' or 'az sql db ltr-backup list' for backup name.
+  - isRequired: true
+    name: --server -s
+    summary: |-
+      Name of the Azure SQL Server. If specified, retrieves all requested backups under this server.
+- uid: az_sql_db_ltr-backup_wait
+  name: az sql db ltr-backup wait
+  summary: |-
+    Place the CLI in a waiting state until a condition of the database is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql db ltr-backup wait [--created]
+                              [--custom]
+                              [--deleted]
+                              [--exists]
+                              [--expand]
+                              [--filter]
+                              [--ids]
+                              [--interval]
+                              [--name]
+                              [--resource-group]
+                              [--server]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --expand
+    summary: |-
+      The child resources to include in the response. Default value is None.
+  - name: --filter
+    summary: |-
+      An OData filter expression that filters elements in the collection. Default value is None.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name -n
+    summary: |-
+      Name of the Azure SQL Database.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --server -s
+    summary: |-
+      Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+commands:
+- az_sql_db_ltr-backup_delete
+- az_sql_db_ltr-backup_list
+- az_sql_db_ltr-backup_restore
+- az_sql_db_ltr-backup_show
+- az_sql_db_ltr-backup_wait
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  ms.date: 12/04/2024
+  description: Manage SQL database long term retention backups.
