@@ -236,7 +236,7 @@ directCommands:
       Disable visual representation of work.
   - name: --ops-config
     summary: |-
-      IoT Operations arc extension custom configuration. Format is space-separated key=value pairs. --ops-config can be used one or more times. For advanced use cases.
+      IotOperations arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
   - name: --runtime-socket
     summary: |-
       The default node path of the container runtime socket. If not provided (default), the socket path is determined by --kubernetes-distro.
@@ -327,14 +327,31 @@ directCommands:
 
     After the foundation layer has been installed the `az iot ops create` command should
     be used to deploy an instance.
+
+    Note: --*-config options allow override of default config settings.
+
+    The default config settings for container storage are:
+      edgeStorageConfiguration.create=true
+      feature.diskStorageClass=default,local-path
+
+    If --enable-fault-tolerance is used the following config delta applies to container storage:
+      feature.diskStorageClass=acstor-arccontainerstorage-storage-pool
+      acstorConfiguration.create=true
+      acstorConfiguration.properties.diskMountPoint=/mnt
+
+    The default config settings for secret store are:
+      rotationPollIntervalInSeconds=120
+      validatingAdmissionPolicies.applyPolicies=false.
   status: GA
   sourceType: Extension
   syntax: >-
     az iot ops init --cluster
                     --resource-group
+                    [--acs-config]
                     [--enable-fault-tolerance {false, true}]
                     [--ensure-latest {false, true}]
                     [--no-progress {false, true}]
+                    [--ssc-config]
                     [--user-trust {false, true}]
   examples:
   - summary: |-
@@ -346,6 +363,12 @@ directCommands:
   - summary: |-
       This example highlights enabling user trust settings for a custom cert-manager config. This will skip deployment of the system cert-manager and trust-manager.
     syntax: az iot ops init --cluster mycluster -g myresourcegroup --user-trust
+  - summary: |-
+      Provide custom deploy-time configs for Arc Container Storage.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --enable-fault-tolerance --acs-config acstorConfiguration.properties.diskMountPoint=/mnt
+  - summary: |-
+      Provide custom deploy-time configs for Arc Secret Store.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --ssc-config rotationPollIntervalInSeconds=60
   requiredParameters:
   - isRequired: true
     name: --cluster
@@ -356,6 +379,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acs-config
+    summary: |-
+      ContainerStorage arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
   - name: --enable-fault-tolerance
     parameterValueGroup: "false, true"
     summary: |-
@@ -368,6 +394,9 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Disable visual representation of work.
+  - name: --ssc-config
+    summary: |-
+      SecretStore arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
   - name: --user-trust --ut
     parameterValueGroup: "false, true"
     summary: |-
