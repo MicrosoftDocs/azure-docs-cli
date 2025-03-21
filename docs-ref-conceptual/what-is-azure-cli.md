@@ -75,4 +75,4 @@ While we appreciate the insights this data provides, we also understand that not
 
 * [Onboarding Cheat Sheet](./cheat-sheet-onboarding.md)
 * [Get started with the Azure CLI](./get-started-with-azure-cli.md)
-* [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
+* [Full command reference list for the Azure CLI](../docs-ref-autogen/Latest-version/latest/reference-index.yml)

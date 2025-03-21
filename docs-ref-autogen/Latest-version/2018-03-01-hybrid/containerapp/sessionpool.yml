@@ -1,0 +1,407 @@
+### YamlMime:AzureCLIGroup
+uid: az_containerapp_sessionpool
+name: az containerapp sessionpool
+extensionInformation: >-
+  > [!NOTE]
+
+  > This reference is part of the **containerapp** extension for the Azure CLI (version 2.62.0 or higher). The extension will automatically install the first time you run an **az containerapp sessionpool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Commands to manage session pools.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_containerapp_sessionpool_create
+  name: az containerapp sessionpool create
+  summary: |-
+    Create or update a Session pool.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp sessionpool create --name
+                                       --resource-group
+                                       [--args]
+                                       [--command]
+                                       [--container-name]
+                                       [--container-type {CustomContainer, NodeLTS, PythonLTS}]
+                                       [--cooldown-period]
+                                       [--cpu]
+                                       [--env-vars]
+                                       [--environment]
+                                       [--image]
+                                       [--location]
+                                       [--max-sessions]
+                                       [--memory]
+                                       [--mi-system-assigned]
+                                       [--mi-user-assigned]
+                                       [--network-status {EgressDisabled, EgressEnabled}]
+                                       [--no-wait]
+                                       [--ready-sessions]
+                                       [--registry-identity]
+                                       [--registry-password]
+                                       [--registry-server]
+                                       [--registry-username]
+                                       [--secrets]
+                                       [--target-port]
+  examples:
+  - summary: |-
+      Create or update a Session Pool with container type PythonLTS default settings.
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type PythonLTS, with max concurrent sessions is 30, ready session instances 20.
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type PythonLTS --max-sessions 30 --ready-sessions 20 \
+          --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer with default quickstart image.
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type CustomContainer --environment MyEnvironment \
+          --cpu 0.5 --memory 1Gi --target-port 80 --location eastasia --image mcr.microsoft.com/k8se/quickstart:latest
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer that has secrets and environment variables.
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type CustomContainer --environment MyEnvironment \
+          --cpu 0.5 --memory 1Gi --target-port 80 --image MyImage \
+          --env-vars GREETING="Hello, world" SECRETENV=secretref:anothersecret \
+          --secrets mysecret=secretvalue1 anothersecret="secret value 2" --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer that from private registry
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type CustomContainer --environment MyEnvironment --image MyImage \
+          --cpu 0.5 --memory 1Gi --target-port 80 --registry-server myregistry.azurecr.io \
+          --registry-username myregistry --registry-password $REGISTRY_PASSWORD \
+          --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer and Managed Identity to authenticate Azure container registry
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type CustomContainer --environment MyEnvironment --image MyImage \
+          --cpu 0.5 --memory 1Gi --target-port 80 --registry-server myregistry.azurecr.io \
+          --registry-identity  MyUserIdentityResourceId \
+          --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer with system assigned and user assigned identity.
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --container-type CustomContainer --environment MyEnvironment --image MyImage \
+          --cpu 0.5 --memory 1Gi --target-port 80 \
+          --mi-system-assigned --mi-user-assigned MyUserIdentityResourceId \
+          --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer with cooldown period 360s
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --environment MyEnvironment --cpu 0.5 --memory 1Gi --target-port 80 --container-type CustomContainer \
+          --cooldown-period 360 --location eastasia
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The Session Pool name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --args
+    summary: |-
+      A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+  - name: --command
+    summary: |-
+      A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+  - name: --container-name
+    summary: |-
+      Name of the container. On create if no container name is provided the container name will default to the name of the session pool coverted to lower case.
+  - name: --container-type
+    parameterValueGroup: "CustomContainer, NodeLTS, PythonLTS"
+    summary: |-
+      The pool type of the Session Pool, default='PythonLTS'.
+  - name: --cooldown-period
+    summary: |-
+      Period (in seconds), after which the session will be deleted, default=300.
+  - name: --cpu
+    summary: |-
+      Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+  - name: --env-vars
+    summary: |-
+      A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+  - name: --environment
+    summary: |-
+      Name or resource ID of the container app's environment.
+  - name: --image -i
+    summary: |-
+      Container image, e.g. publisher/image-name:tag.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --max-sessions
+    summary: |-
+      Max count of sessions can be run at the same time.
+  - name: --memory
+    summary: |-
+      Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+  - name: --mi-system-assigned
+    defaultValue: "False"
+    summary: |-
+      Boolean indicating whether to assign system-assigned identity.
+  - name: --mi-user-assigned
+    summary: |-
+      Space-separated user identities to be assigned.
+  - name: --network-status
+    parameterValueGroup: "EgressDisabled, EgressEnabled"
+    summary: |-
+      Egress is enabled for the Sessions or not.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --ready-sessions
+    summary: |-
+      The number of sessions that will be ready in the session pool all the time.
+  - name: --registry-identity
+    summary: |-
+      The managed identity with which to authenticate to the Azure Container Registry (instead of username/password). Use 'system' for a system-assigned identity, use a resource ID for a user-assigned identity. The managed identity should have been assigned acrpull permissions on the ACR before deployment (use 'az role assignment create --role acrpull ...').
+  - name: --registry-password
+    summary: |-
+      The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+  - name: --registry-server
+    summary: |-
+      The container registry server hostname, e.g. myregistry.azurecr.io.
+  - name: --registry-username
+    summary: |-
+      The username to log in to container registry.
+  - name: --secrets -s
+    summary: |-
+      A list of secret(s) for the session pool. Space-separated values in 'key=value' format. Empty string to clear existing values.
+  - name: --target-port
+    summary: |-
+      The session port used for ingress traffic.
+- uid: az_containerapp_sessionpool_delete
+  name: az containerapp sessionpool delete
+  summary: |-
+    Delete a session pool.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp sessionpool delete --resource-group
+                                       [--ids]
+                                       [--name]
+                                       [--no-wait]
+                                       [--subscription]
+                                       [--yes]
+  examples:
+  - summary: |-
+      Delete a session pool.
+    syntax: az containerapp sessionpool delete -n mysessionpool -g MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      The Session Pool name.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_containerapp_sessionpool_list
+  name: az containerapp sessionpool list
+  summary: |-
+    List Session Pools by subscription or resource group.
+  status: GA
+  sourceType: Extension
+  syntax: az containerapp sessionpool list [--resource-group]
+  examples:
+  - summary: |-
+      List Session Pools in the current subscription.
+    syntax: az containerapp sessionpool list
+  - summary: |-
+      List Session Pools by resource group.
+    syntax: az containerapp sessionpool list -g MyResourceGroup
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_containerapp_sessionpool_show
+  name: az containerapp sessionpool show
+  summary: |-
+    Show details of a Session Pool.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp sessionpool show --resource-group
+                                     [--ids]
+                                     [--name]
+                                     [--subscription]
+  examples:
+  - summary: |-
+      Show the details of a Session Pool.
+    syntax: az containerapp sessionpool show -n mysessionpool -g MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      The Session Pool name.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_containerapp_sessionpool_update
+  name: az containerapp sessionpool update
+  summary: |-
+    Update a Session pool.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp sessionpool update --resource-group
+                                       [--args]
+                                       [--command]
+                                       [--container-name]
+                                       [--cooldown-period]
+                                       [--cpu]
+                                       [--env-vars]
+                                       [--ids]
+                                       [--image]
+                                       [--location]
+                                       [--max-sessions]
+                                       [--memory]
+                                       [--name]
+                                       [--network-status {EgressDisabled, EgressEnabled}]
+                                       [--no-wait]
+                                       [--ready-sessions]
+                                       [--registry-password]
+                                       [--registry-server]
+                                       [--registry-username]
+                                       [--secrets]
+                                       [--subscription]
+                                       [--target-port]
+  examples:
+  - summary: |-
+      Update a session pool's max concurrent sessions configuration and image.
+    syntax: az containerapp sessionpool update -n mysessionpool -g MyResourceGroup --max-sessions 20 --image MyNewImage
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --args
+    summary: |-
+      A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+  - name: --command
+    summary: |-
+      A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+  - name: --container-name
+    summary: |-
+      Name of the container. On create if no container name is provided the container name will default to the name of the session pool coverted to lower case.
+  - name: --cooldown-period
+    summary: |-
+      Period (in seconds), after which the session will be deleted, default=300.
+  - name: --cpu
+    summary: |-
+      Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+  - name: --env-vars
+    summary: |-
+      A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --image -i
+    summary: |-
+      Container image, e.g. publisher/image-name:tag.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --max-sessions
+    summary: |-
+      Max count of sessions can be run at the same time.
+  - name: --memory
+    summary: |-
+      Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+  - name: --name -n
+    summary: |-
+      The Session Pool name.
+  - name: --network-status
+    parameterValueGroup: "EgressDisabled, EgressEnabled"
+    summary: |-
+      Egress is enabled for the Sessions or not.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --ready-sessions
+    summary: |-
+      The number of sessions that will be ready in the session pool all the time.
+  - name: --registry-password
+    summary: |-
+      The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+  - name: --registry-server
+    summary: |-
+      The container registry server hostname, e.g. myregistry.azurecr.io.
+  - name: --registry-username
+    summary: |-
+      The username to log in to container registry.
+  - name: --secrets -s
+    summary: |-
+      A list of secret(s) for the session pool. Space-separated values in 'key=value' format. Empty string to clear existing values.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --target-port
+    summary: |-
+      The session port used for ingress traffic.
+commands:
+- az_containerapp_sessionpool_create
+- az_containerapp_sessionpool_delete
+- az_containerapp_sessionpool_list
+- az_containerapp_sessionpool_show
+- az_containerapp_sessionpool_update
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Commands to manage session pools.
