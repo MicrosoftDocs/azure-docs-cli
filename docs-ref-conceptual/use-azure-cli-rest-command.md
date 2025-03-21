@@ -336,4 +336,4 @@ az group delete --resource-group <resourceGroupName>
 ## See also
 
 * [Azure REST API reference](/rest/api/azure/)
-* [az resource](../latest/docs-ref-autogen/resource.yml) command
+* [az resource](../docs-ref-autogen/Latest-version/latest/resource.yml) command
