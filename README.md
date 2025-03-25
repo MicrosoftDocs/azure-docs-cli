@@ -1,6 +1,6 @@
 # Azure CLI documentation
 
-This repository hosts the documentation source for the Azure CLI, published on [docs.microsoft.com](https://docs.microsoft.com/cli/azure/).
+This repository hosts the documentation source for the Azure CLI, published on [learn.microsoft.com](https://learn.microsoft.com/cli/azure/).
 
 ## Public contributions
 

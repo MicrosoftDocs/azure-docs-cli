@@ -1,0 +1,681 @@
+### YamlMime:AzureCLIGroup
+uid: az_cdn_endpoint
+name: az cdn endpoint
+summary: |-
+  Manage CDN endpoints.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_cdn_endpoint_create
+  name: az cdn endpoint create
+  summary: |-
+    Create a new CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint create --endpoint-name
+                           --origin
+                           --profile-name
+                           --resource-group
+                           [--content-types-to-compress]
+                           [--default-origin-group]
+                           [--delivery-policy]
+                           [--enable-compression {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--geo-filters]
+                           [--location]
+                           [--no-http {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--no-https {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--optimization-type {DynamicSiteAcceleration, GeneralMediaStreaming, GeneralWebDelivery, LargeFileDownload, VideoOnDemandMediaStreaming}]
+                           [--origin-groups]
+                           [--origin-host-header]
+                           [--origin-path]
+                           [--probe-path]
+                           [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                           [--tags]
+                           [--url-signing-keys]
+                           [--web-application-firewall-policy-link]
+  examples:
+  - summary: |-
+      Create an endpoint to service content for hostname over HTTP or HTTPS.
+    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com
+  - summary: |-
+      Create an endpoint with a custom domain origin with HTTP and HTTPS ports.
+    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com 88 4444
+  - summary: |-
+      Create an endpoint with a custom domain origin with private link enabled.
+    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com 80 443 /subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Network/privateLinkServices/pls1 eastus "Please approve this request"
+  - summary: |-
+      Create an https-only endpoint with a custom domain origin and support compression for Azure CDN's default compression MIME types.
+    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com --no-http --enable-compression
+  - summary: |-
+      Create an endpoint with a custom domain origin and support compression for specific MIME types.
+    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com --enable-compression --content-types-to-compress text/plain text/html
+  requiredParameters:
+  - isRequired: true
+    name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - isRequired: true
+    name: --origin
+    summary: |-
+      Endpoint origin specified by the following space-delimited 7 tuple: www.example.com http_port https_port private_link_resource_id private_link_location private_link_approval_message origin_name. The HTTP and HTTPS ports and the private link resource ID and location are optional. The HTTP and HTTPS ports default to 80 and 443, respectively. Private link fields are only valid for the sku Standard_Microsoft, and private_link_location is required if private_link_resource_id is set. the origin name is optional and defaults to origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - isRequired: true
+    name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --content-types-to-compress
+    summary: |-
+      List of content types on which compression applies. The value should be a valid MIME type.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --default-origin-group
+    summary: |-
+      The origin group to use for origins not explicitly included in an origin group. Can be specified as a resource ID or the name of an origin group of this endpoint.
+  - name: --delivery-policy
+    summary: |-
+      A policy that specifies the delivery rules to be used for an endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enable-compression
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
+  - name: --geo-filters
+    summary: |-
+      List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --location -l
+    summary: |-
+      Resource location.  When not specified, the location of the resource group will be used.
+  - name: --no-http
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Disable HTTP traffic.Indicates whether HTTP traffic is not allowed on the endpoint. Default is to allow HTTP traffic.
+  - name: --no-https
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Indicates whether HTTPS traffic is not allowed on the endpoint. Default is to allow HTTPS traffic.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --optimization-type
+    parameterValueGroup: "DynamicSiteAcceleration, GeneralMediaStreaming, GeneralWebDelivery, LargeFileDownload, VideoOnDemandMediaStreaming"
+    summary: |-
+      Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization.
+  - name: --origin-groups
+    summary: |-
+      The origin groups comprising of origins that are used for load balancing the traffic based on availability.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --origin-host-header
+    summary: |-
+      The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+  - name: --origin-path
+    summary: |-
+      A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+  - name: --probe-path
+    summary: |-
+      Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin.
+  - name: --query-string-caching-behavior
+    defaultValue: "NotSet"
+    parameterValueGroup: "BypassCaching, IgnoreQueryString, NotSet, UseQueryString"
+    summary: |-
+      Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --url-signing-keys
+    summary: |-
+      List of keys used to validate the signed URL hashes.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --web-application-firewall-policy-link
+    summary: |-
+      Defines the Web Application Firewall policy for the endpoint (if applicable)  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+- uid: az_cdn_endpoint_delete
+  name: az cdn endpoint delete
+  summary: |-
+    Delete an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint delete [--endpoint-name]
+                           [--ids]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--profile-name]
+                           [--resource-group]
+                           [--subscription]
+  examples:
+  - summary: |-
+      Delete a CDN endpoint.
+    syntax: az cdn endpoint delete -g group -n endpoint --profile-name profile-name
+  optionalParameters:
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_endpoint_list
+  name: az cdn endpoint list
+  summary: |-
+    List existing CDN endpoints.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint list --profile-name
+                         --resource-group
+                         [--max-items]
+                         [--next-token]
+  examples:
+  - summary: |-
+      List all endpoints within a given CDN profile.
+    syntax: az cdn endpoint list -g group --profile-name profile-name
+  requiredParameters:
+  - isRequired: true
+    name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+- uid: az_cdn_endpoint_load
+  name: az cdn endpoint load
+  summary: |-
+    Pre-loads a content to CDN. Available for Verizon Profiles.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint load --content-paths
+                         [--endpoint-name]
+                         [--ids]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--profile-name]
+                         [--resource-group]
+                         [--subscription]
+  examples:
+  - summary: |-
+      Pre-load Javascript and CSS content for an endpoint.
+    syntax: az cdn endpoint load -g group -n endpoint --profile-name profile-name --content-paths '/scripts/app.js' '/styles/main.css'
+  requiredParameters:
+  - isRequired: true
+    name: --content-paths
+    summary: |-
+      The path to the content to be loaded. Path should be a relative file URL of the origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  optionalParameters:
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_endpoint_name-exists
+  name: az cdn endpoint name-exists
+  summary: |-
+    Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint name-exists --name
+                                [--type {Microsoft.Cdn/Profiles/AfdEndpoints, Microsoft.Cdn/Profiles/Endpoints}]
+  examples:
+  - summary: |-
+      Check whether the resource name contoso is available or not.
+    syntax: az cdn name-exists --name contoso
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The resource name to validate.
+  optionalParameters:
+  - name: --type
+    defaultValue: "Microsoft.Cdn/Profiles/Endpoints"
+    parameterValueGroup: "Microsoft.Cdn/Profiles/AfdEndpoints, Microsoft.Cdn/Profiles/Endpoints"
+    summary: |-
+      The type of the resource whose name is to be validated.
+- uid: az_cdn_endpoint_purge
+  name: az cdn endpoint purge
+  summary: |-
+    Removes a content from CDN.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint purge --content-paths
+                          [--endpoint-name]
+                          [--ids]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--profile-name]
+                          [--resource-group]
+                          [--subscription]
+  examples:
+  - summary: |-
+      Purge pre-loaded Javascript and CSS content.
+    syntax: az cdn endpoint purge -g group -n endpoint --profile-name profile-name --content-paths '/scripts/app.js' '/styles/*'
+  requiredParameters:
+  - isRequired: true
+    name: --content-paths
+    summary: |-
+      The path to the content to be purged. Can describe a file path or a wild card directory.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  optionalParameters:
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_endpoint_show
+  name: az cdn endpoint show
+  summary: |-
+    Get an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint show [--endpoint-name]
+                         [--ids]
+                         [--profile-name]
+                         [--resource-group]
+                         [--subscription]
+  optionalParameters:
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_endpoint_start
+  name: az cdn endpoint start
+  summary: |-
+    Starts an existing CDN endpoint that is on a stopped state.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint start [--endpoint-nameendpoint-name]
+                          [--ids]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--profile-name]
+                          [--resource-group]
+                          [--subscription]
+  examples:
+  - summary: |-
+      Start a CDN endpoint.
+    syntax: az cdn endpoint start -g group -n endpoint --profile-name profile-name
+  optionalParameters:
+  - name: --endpoint-nameendpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_endpoint_stop
+  name: az cdn endpoint stop
+  summary: |-
+    Stops an existing running CDN endpoint.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint stop [--endpoint-name]
+                         [--ids]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--profile-name]
+                         [--resource-group]
+                         [--subscription]
+  examples:
+  - summary: |-
+      Stop a CDN endpoint.
+    syntax: az cdn endpoint stop -g group -n endpoint --profile-name profile-name
+  optionalParameters:
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_endpoint_update
+  name: az cdn endpoint update
+  summary: |-
+    Update an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. Only tags can be updated after creating an endpoint. To update origins, use the Update Origin operation. To update origin groups, use the Update Origin group operation. To update custom domains, use the Update Custom Domain operation.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint update [--content-types-to-compress]
+                           [--default-origin-group]
+                           [--delivery-policy]
+                           [--enable-compression {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--endpoint-name]
+                           [--geo-filters]
+                           [--ids]
+                           [--no-http {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--no-https {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--optimization-type {DynamicSiteAcceleration, GeneralMediaStreaming, GeneralWebDelivery, LargeFileDownload, VideoOnDemandMediaStreaming}]
+                           [--origin-host-header]
+                           [--origin-path]
+                           [--probe-path]
+                           [--profile-name]
+                           [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                           [--resource-group]
+                           [--subscription]
+                           [--tags]
+                           [--url-signing-keys]
+                           [--web-application-firewall-policy-link]
+  examples:
+  - summary: |-
+      Turn off HTTP traffic for an endpoint.
+    syntax: az cdn endpoint update -g group -n endpoint --profile-name profile --no-http
+  - summary: |-
+      Enable content compression for an endpoint.
+    syntax: az cdn endpoint update -g group -n endpoint --profile-name profile --enable-compression
+  optionalParameters:
+  - name: --content-types-to-compress
+    summary: |-
+      List of content types on which compression applies. The value should be a valid MIME type.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --default-origin-group
+    summary: |-
+      The origin group to use for origins not explicitly included in an origin group. Can be specified as a resource ID or the name of an origin group of this endpoint.
+  - name: --delivery-policy
+    summary: |-
+      A policy that specifies the delivery rules to be used for an endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enable-compression
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --geo-filters
+    summary: |-
+      List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-http
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Disable HTTP traffic.Indicates whether HTTP traffic is not allowed on the endpoint. Default is to allow HTTP traffic.
+  - name: --no-https
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Indicates whether HTTPS traffic is not allowed on the endpoint. Default is to allow HTTPS traffic.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --optimization-type
+    parameterValueGroup: "DynamicSiteAcceleration, GeneralMediaStreaming, GeneralWebDelivery, LargeFileDownload, VideoOnDemandMediaStreaming"
+    summary: |-
+      Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization.
+  - name: --origin-host-header
+    summary: |-
+      The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+  - name: --origin-path
+    summary: |-
+      A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+  - name: --probe-path
+    summary: |-
+      Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --query-string-caching-behavior
+    parameterValueGroup: "BypassCaching, IgnoreQueryString, NotSet, UseQueryString"
+    summary: |-
+      Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --tags
+    summary: |-
+      Endpoint tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --url-signing-keys
+    summary: |-
+      List of keys used to validate the signed URL hashes.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --web-application-firewall-policy-link
+    summary: |-
+      Defines the Web Application Firewall policy for the endpoint (if applicable)  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+- uid: az_cdn_endpoint_validate-custom-domain
+  name: az cdn endpoint validate-custom-domain
+  summary: |-
+    Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint validate-custom-domain --host-name
+                                           [--endpoint-name]
+                                           [--ids]
+                                           [--profile-name]
+                                           [--resource-group]
+                                           [--subscription]
+  examples:
+  - summary: |-
+      Validate domain www.contoso.com to see whether it maps to the correct CDN endpoint in DNS.
+    syntax: az cdn endpoint validate-custom-domain -g group -n endpoint --profile-name profile-name --host-name www.contoso.com
+  requiredParameters:
+  - isRequired: true
+    name: --host-name
+    summary: |-
+      The host name of the custom domain. Must be a domain name.
+  optionalParameters:
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_endpoint_wait
+  name: az cdn endpoint wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn endpoint wait [--created]
+                         [--custom]
+                         [--deleted]
+                         [--endpoint-name]
+                         [--exists]
+                         [--ids]
+                         [--interval]
+                         [--profile-name]
+                         [--resource-group]
+                         [--subscription]
+                         [--timeout]
+                         [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --endpoint-name --name -n
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+commands:
+- az_cdn_endpoint_create
+- az_cdn_endpoint_delete
+- az_cdn_endpoint_list
+- az_cdn_endpoint_load
+- az_cdn_endpoint_name-exists
+- az_cdn_endpoint_purge
+- az_cdn_endpoint_rule
+- az_cdn_endpoint_rule_action
+- az_cdn_endpoint_rule_action_add
+- az_cdn_endpoint_rule_action_remove
+- az_cdn_endpoint_rule_action_show
+- az_cdn_endpoint_rule_add
+- az_cdn_endpoint_rule_condition
+- az_cdn_endpoint_rule_condition_add
+- az_cdn_endpoint_rule_condition_remove
+- az_cdn_endpoint_rule_condition_show
+- az_cdn_endpoint_rule_remove
+- az_cdn_endpoint_rule_show
+- az_cdn_endpoint_show
+- az_cdn_endpoint_start
+- az_cdn_endpoint_stop
+- az_cdn_endpoint_update
+- az_cdn_endpoint_validate-custom-domain
+- az_cdn_endpoint_wait
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  ms.date: 03/28/2024
+  description: Manage CDN endpoints.
