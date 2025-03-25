@@ -1,0 +1,603 @@
+### YamlMime:AzureCLIGroup
+uid: az_postgres_server
+name: az postgres server
+summary: |-
+  Manage PostgreSQL servers.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_postgres_server_create
+  name: az postgres server create
+  summary: |-
+    Create a server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server create [--admin-password]
+                              [--admin-user]
+                              [--assign-identity]
+                              [--auto-grow {Disabled, Enabled}]
+                              [--backup-retention]
+                              [--geo-redundant-backup {Disabled, Enabled}]
+                              [--infrastructure-encryption {Disabled, Enabled}]
+                              [--location]
+                              [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
+                              [--name]
+                              [--public]
+                              [--resource-group]
+                              [--sku-name]
+                              [--ssl-enforcement {Disabled, Enabled}]
+                              [--storage-size]
+                              [--tags]
+                              [--version]
+  examples:
+  - summary: |-
+      Create a PostgreSQL server in North Europe with sku GP_Gen5_2 (General Purpose, Gen 5 hardware, 2 vCores).
+    syntax: >-
+      az postgres server create -l northeurope -g testgroup -n testsvr -u username -p password \
+          --sku-name GP_Gen5_2
+  - summary: |-
+      Create a PostgreSQL server with all paramaters set.
+    syntax: >-
+      az postgres server create -l northeurope -g testgroup -n testsvr -u username -p password \
+          --sku-name B_Gen5_1 --ssl-enforcement Enabled --minimal-tls-version TLS1_0 --public-network-access Disabled \
+          --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 \
+          --tags "key=value" --version 11
+  optionalParameters:
+  - name: --admin-password -p
+    summary: |-
+      The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
+  - name: --admin-user -u
+    defaultValue: "rigidlizard2"
+    summary: |-
+      Administrator username for the server. Once set, it cannot be changed.
+  - name: --assign-identity
+    defaultValue: "False"
+    summary: |-
+      Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
+  - name: --auto-grow
+    defaultValue: "Enabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable autogrow of the storage. Default value is Enabled.
+  - name: --backup-retention
+    summary: |-
+      The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+  - name: --geo-redundant-backup
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable geo-redundant backups. Default value is Disabled. Not supported in Basic pricing tier.
+  - name: --infrastructure-encryption -i
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Add an optional second layer of encryption for data using new encryption algorithm. Default value is Disabled.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --minimal-tls-version
+    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled"
+    summary: |-
+      Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --public --public-network-access
+    summary: |-
+      Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Allowed values are : `Enabled`, `Disabled`, `all`, `0.0.0.0`, `<SingleIP>`, `<StartIP-DestinationIP>`. Default is `Enabled`.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --sku-name
+    defaultValue: "GP_Gen5_2"
+    summary: |-
+      The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.
+  - name: --ssl-enforcement
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable ssl enforcement for connections to server. Default is Enabled.
+  - name: --storage-size
+    defaultValue: "5120"
+    summary: |-
+      The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 5120.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --version
+    defaultValue: "11"
+    summary: |-
+      Server major version. https://learn.microsoft.com/en-us/azure/postgresql/single-server/concepts-supported-versions.
+- uid: az_postgres_server_delete
+  name: az postgres server delete
+  summary: |-
+    Delete a server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server delete [--ids]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
+                              [--yes]
+  examples:
+  - summary: |-
+      Delete a server.
+    syntax: az postgres server delete -g testgroup -n testsvr
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_postgres_server_georestore
+  name: az postgres server georestore
+  summary: |-
+    Geo-restore a server from backup.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server georestore --location
+                                  --source-server
+                                  [--backup-retention]
+                                  [--geo-redundant-backup]
+                                  [--ids]
+                                  [--name]
+                                  [--no-wait]
+                                  [--resource-group]
+                                  [--sku-name]
+                                  [--subscription]
+  examples:
+  - summary: |-
+      Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2.
+    syntax: az postgres server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
+  - summary: |-
+      Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2 with sku GP_Gen5_2.
+    syntax: az postgres server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2 --sku-name GP_Gen5_2
+  - summary: |-
+      Geo-restore 'testsvr2' into a new server 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
+    syntax: >-
+      az postgres server georestore -g testgroup -n testsvrnew \
+          -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforPostgreSQL/servers/testsvr2" \
+          -l westus2
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - isRequired: true
+    name: --source-server -s
+    summary: |-
+      The name or ID of the source server to restore from.
+  optionalParameters:
+  - name: --backup-retention
+    summary: |-
+      The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+  - name: --geo-redundant-backup
+    summary: |-
+      Enable or disable geo-redundant backups. Default value is Disabled. Not supported in Basic pricing tier.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --sku-name
+    summary: |-
+      The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_postgres_server_list
+  name: az postgres server list
+  summary: |-
+    List available servers.
+  status: GA
+  sourceType: Core
+  syntax: az postgres server list [--resource-group]
+  examples:
+  - summary: |-
+      List all PostgreSQL servers in a subscription.
+    syntax: az postgres server list
+  - summary: |-
+      List all PostgreSQL servers in a resource group.
+    syntax: az postgres server list -g testgroup
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_postgres_server_list-skus
+  name: az postgres server list-skus
+  summary: |-
+    List available sku's in the given region.
+  status: GA
+  sourceType: Core
+  syntax: az postgres server list-skus --location
+  examples:
+  - summary: |-
+      List available sku's in the given region.
+    syntax: az postgres server list-skus -l eastus
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      The name of the location. Required.
+- uid: az_postgres_server_restart
+  name: az postgres server restart
+  summary: |-
+    Restart a server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server restart [--ids]
+                               [--name]
+                               [--resource-group]
+                               [--subscription]
+  examples:
+  - summary: |-
+      Restart a server.
+    syntax: az postgres server restart -g testgroup -n testsvr
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_postgres_server_restore
+  name: az postgres server restore
+  summary: |-
+    Restore a server from backup.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server restore --pitr-time
+                               --source-server
+                               [--ids]
+                               [--name]
+                               [--no-wait]
+                               [--resource-group]
+                               [--subscription]
+  examples:
+  - summary: |-
+      Restore 'testsvr' to a specific point-in-time as a new server 'testsvrnew'.
+    syntax: az postgres server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
+  - summary: |-
+      Restore 'testsvr2' to 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
+    syntax: >-
+      az postgres server restore -g testgroup -n testsvrnew \
+          -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforPostgreSQL/servers/testsvr2" \
+          --restore-point-in-time "2017-06-15T13:10:00Z"
+  requiredParameters:
+  - isRequired: true
+    name: --pitr-time --restore-point-in-time
+    summary: |-
+      The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+08:00.
+  - isRequired: true
+    name: --source-server -s
+    summary: |-
+      The name or resource ID of the source server to restore from.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_postgres_server_show
+  name: az postgres server show
+  summary: |-
+    Get the details of a server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server show [--ids]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
+  examples:
+  - summary: |-
+      Get the details of a server. (autogenerated)
+    syntax: az postgres server show --name MyServer --resource-group MyResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_postgres_server_show-connection-string
+  name: az postgres server show-connection-string
+  summary: |-
+    Show the connection strings for a PostgreSQL server database.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server show-connection-string [--admin-password]
+                                              [--admin-user]
+                                              [--database-name]
+                                              [--ids]
+                                              [--server-name]
+                                              [--subscription]
+  examples:
+  - summary: |-
+      Show connection strings for cmd and programming languages.
+    syntax: az postgres server show-connection-string -s testServer -u username -p password -d databasename
+  optionalParameters:
+  - name: --admin-password -p
+    defaultValue: "{password}"
+    summary: |-
+      The login password of the administrator.
+  - name: --admin-user -u
+    defaultValue: "{username}"
+    summary: |-
+      The login username of the administrator.
+  - name: --database-name -d
+    defaultValue: "{database}"
+    summary: |-
+      The name of a database.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --server-name -s
+    defaultValue: "{server}"
+    summary: |-
+      Name of the server.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_postgres_server_update
+  name: az postgres server update
+  summary: |-
+    Update a server.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server update [--add]
+                              [--admin-password]
+                              [--assign-identity]
+                              [--auto-grow {Disabled, Enabled}]
+                              [--backup-retention]
+                              [--force-string]
+                              [--ids]
+                              [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
+                              [--name]
+                              [--public]
+                              [--remove]
+                              [--resource-group]
+                              [--set]
+                              [--sku-name]
+                              [--ssl-enforcement {Disabled, Enabled}]
+                              [--storage-size]
+                              [--subscription]
+                              [--tags]
+  examples:
+  - summary: |-
+      Update a server's sku.
+    syntax: az postgres server update -g testgroup -n testsvrnew --sku-name GP_Gen5_4
+  - summary: |-
+      Update a server's tags.
+    syntax: az postgres server update -g testgroup -n testsvrnew --tags "k1=v1" "k2=v2"
+  - summary: |-
+      Update a server. (autogenerated)
+    syntax: az postgres server update --name testsvrnew --resource-group testgroup --ssl-enforcement Enabled --minimal-tls-version TLS1_0
+  optionalParameters:
+  - name: --add
+    defaultValue: "[]"
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --admin-password -p
+    summary: |-
+      The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
+  - name: --assign-identity
+    defaultValue: "False"
+    summary: |-
+      Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
+  - name: --auto-grow
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable autogrow of the storage. Default value is Enabled.
+  - name: --backup-retention
+    summary: |-
+      The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+  - name: --force-string
+    defaultValue: "False"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --minimal-tls-version
+    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled"
+    summary: |-
+      Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --public --public-network-access
+    summary: |-
+      Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Allowed values are : `Enabled`, `Disabled`, `all`, `0.0.0.0`, `<SingleIP>`, `<StartIP-DestinationIP>`. Default is `Enabled`.
+  - name: --remove
+    defaultValue: "[]"
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    defaultValue: "[]"
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --sku-name
+    summary: |-
+      The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.
+  - name: --ssl-enforcement
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable ssl enforcement for connections to server. Default is Enabled.
+  - name: --storage-size
+    summary: |-
+      The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 5120.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+- uid: az_postgres_server_wait
+  name: az postgres server wait
+  summary: |-
+    Wait for server to satisfy certain conditions.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az postgres server wait [--custom]
+                            [--exists]
+                            [--ids]
+                            [--interval]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
+                            [--timeout]
+  optionalParameters:
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+commands:
+- az_postgres_server_ad-admin
+- az_postgres_server_ad-admin_create
+- az_postgres_server_ad-admin_delete
+- az_postgres_server_ad-admin_list
+- az_postgres_server_ad-admin_show
+- az_postgres_server_ad-admin_wait
+- az_postgres_server_configuration
+- az_postgres_server_configuration_list
+- az_postgres_server_configuration_set
+- az_postgres_server_configuration_show
+- az_postgres_server_create
+- az_postgres_server_delete
+- az_postgres_server_firewall-rule
+- az_postgres_server_firewall-rule_create
+- az_postgres_server_firewall-rule_delete
+- az_postgres_server_firewall-rule_list
+- az_postgres_server_firewall-rule_show
+- az_postgres_server_firewall-rule_update
+- az_postgres_server_georestore
+- az_postgres_server_key
+- az_postgres_server_key_create
+- az_postgres_server_key_delete
+- az_postgres_server_key_list
+- az_postgres_server_key_show
+- az_postgres_server_list
+- az_postgres_server_list-skus
+- az_postgres_server_private-endpoint-connection
+- az_postgres_server_private-endpoint-connection_approve
+- az_postgres_server_private-endpoint-connection_delete
+- az_postgres_server_private-endpoint-connection_reject
+- az_postgres_server_private-endpoint-connection_show
+- az_postgres_server_private-link-resource
+- az_postgres_server_private-link-resource_list
+- az_postgres_server_replica
+- az_postgres_server_replica_create
+- az_postgres_server_replica_list
+- az_postgres_server_replica_stop
+- az_postgres_server_restart
+- az_postgres_server_restore
+- az_postgres_server_show
+- az_postgres_server_show-connection-string
+- az_postgres_server_update
+- az_postgres_server_vnet-rule
+- az_postgres_server_vnet-rule_create
+- az_postgres_server_vnet-rule_delete
+- az_postgres_server_vnet-rule_list
+- az_postgres_server_vnet-rule_show
+- az_postgres_server_vnet-rule_update
+- az_postgres_server_wait
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage PostgreSQL servers.
