@@ -73,6 +73,10 @@ Version 2.71.0
 
 * Fix #30828: `az containerapp job stop`: Fix `TypeError` when `--job-execution-name` is not specified
 
+### Core
+
+* PREVIEW: Support managed identity authentication with MSAL. Run `az config set core.use_msal_managed_identity=true` or set environment variable `AZURE_CORE_USE_MSAL_MANAGED_IDENTITY=true` to enable it
+
 ### Key Vault
 
 * `az keyvault create`: Support C SKU family for MHSM creation
