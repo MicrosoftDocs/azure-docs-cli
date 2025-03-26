@@ -56,7 +56,14 @@ The MSI and ZIP distributable are used for installing or updating the Azure CLI 
 
 ## Run the Azure CLI
 
-**After installation, close and reopen any active terminal window.** Run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. A common first step is to check your active subscription.
+**After installation, close and reopen any active terminal window.** Run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
+
+Before you can execute Azure CLI commands, you need to sign into Azure. To sign in interactively, use `az login`. For information on authentication, see [Sign into Azure with Azure CLI](authenticate-azure-cli.md).
+
+```azurecli
+az login
+```
+A common first step is to check your active subscription.
 
 ```azurecli
 az account show
