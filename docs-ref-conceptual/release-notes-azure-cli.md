@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 03/04/2025
+ms.date: 04/01/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,109 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## April 01, 2025
+
+Version 2.71.0
+
+### ACR
+
+* `az acr create`: Fix a bug where creating cache rule without credential set would fail
+
+### AKS
+
+* `az aks`: Fix error message when outbound type validation failed
+* `az aks create/update`: Update recording rule group create logic for managed prometheus addon
+* `az aks create/update`: Add `--bootstrap-artifact-source` parameter to configure artifact source when bootstraping the cluster
+* `az aks create/update`: Add `--bootstrap-container-registry-resource-id` parameter to configure container registry resource ID
+* `az aks create/update`: Add new option `none` for `--outbound-type` parameter
+
+### App Config
+
+* `az appconfig`: Fix managed identity auth for `--auth-mode login` parameter
+
+### App Service
+
+* `az webapp deploy`: Add `--enable-kudu-warmup` parameter to support warm-up Kudu before making deployment
+* Fix #27724: `az webapp config appsettings set`: Remove redaction warning message from output
+* Fix #26920: `az webapp deployment slot create`: Make the created new slot has same VNet integration settings of source slot as Portal behavior
+* Fix #30908: `az webapp snapshot restore`: Fix the error "no resource group found" when trying to restore a snapshot backup to a paired region
+* Fix #29512: `az webapp config backup update`: Fix `str` object has no attribute `name`
+* Fix #21721: `az webapp config storage-account add`: Add validation for non-existent FileShare
+* `az functionapp list-flexconsumption-locations`: Add `--details` and `--runtime` parameters to provide more details
+
+### ARM
+
+* Fix #29809: `az deployment/stack/bicep`: Fix an issue where the commands mistakenly check for the latest Bicep version, even when `use_binary_from_path` is `true` and `check_version` is `false`
+* Fix #29435: `az bicep install/upgrade`: Fix an issue where the command downloads the x64 binary instead of the ARM binary on aarch64 machines
+
+### ARO
+
+* `az aro create`: Update VM SKU to align with best practices
+
+### Backup
+
+* `az backup protection enable-for-vm`: Update in warning message while protecting Trusted Launch virtual machines
+
+### Cloud
+
+* `az cloud register/update`: Add upcoming breaking change announcement
+
+### Compute
+
+* `az sig image-definition list-shared`: Mark `--marker` and `--show-next-marker` as deprecated and will be removed in the upcoming breaking change window
+* `az sig image-version list-shared`: Mark `--marker` and `--show-next-marker` as deprecated and will be removed in the upcoming breaking change window
+* `az sig image-definition list-community`: Mark `--marker` and `--show-next-marker` as deprecated and will be removed in the upcoming breaking change window
+* `az sig image-version list-community`: Mark `--marker` and `--show-next-marker` as deprecated and will be removed in the upcoming breaking change window
+* `az disk config update`: Add new command to support updating disk size gb by PATCH method
+* `az vm/vmss create/update`: Add support for setting security type to `Standard`
+* Fix #30976: `az sig image-version create`: Fix missing auxiliary tokens
+* `az sig image-version create/update`: Add new parameter `--block-deletion-before-end-of-life` to support blocking deletion if the end of life has not expired
+* `az vm list-sizes`: Mark the command as deprecated
+
+### Container app
+
+* Fix #30828: `az containerapp job stop`: Fix `TypeError` when `--job-execution-name` is not specified
+
+### Key Vault
+
+* `az keyvault create`: Support C SKU family for MHSM creation
+
+### MySQL
+
+* [BREAKING CHANGE] `az mysql flexible-server create`: Change default values for `--auto-scale-iops`, `--version` for MySQL
+
+### Network
+
+* `az network virtual-appliance`: Add command `get-boot-diagnostic-log` to support getting boot diagnostic logs
+* Fix #31003: `az network vpn-connection create`: Pass auxiliary authorization header for referenced resource IDs
+* `az network vnet-gateway create`: Add `--enable-high-bandwith-vpn-gateway` parameter
+* `az network vpn-connection show`: Support new properties with virtual network gateway
+
+### Profile
+
+* `az login`: Add upcoming breaking change announcement for `--username`
+
+### RDBMS
+
+* `az postgres flexible-server update`: Fix bug for not updating geo backup data encryption properties
+* `az postgres flexible-server fabric-mirroring`: Fix for space separated list of databases during `start` and `update-databases`
+* `az postgres flexible-server create`: Support adding admin during creation if `--active-directory-auth` is Enabled and no longer generate password when `--password-auth` is Disabled
+
+### Role
+
+* `az role assignment list`: Add upcoming breaking change announcement for `--include-classic-administrators`
+* `az role assignment list`: Include role assignments inherited from management groups
+
+### Service Connector
+
+* `az * connection create neon-postgres`: Add command for Neon Postgres Serverless
+
+### Storage
+
+* `az storage share/directory/file`: Support NFS FileShares
+* `az storage file hard-link create`: Support creating hard-links for NFS files
+* `az storage share create`: Support `--enable-snapshot-virtual-directory-access`
 
 ## March 04, 2025
 
