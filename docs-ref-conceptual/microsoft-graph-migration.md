@@ -3,7 +3,7 @@ title: Microsoft Graph migration | Microsoft Docs
 description: Learn about the Microsoft Graph migration of Azure CLI.
 author: jiasli
 ms.author: jiasli
-ms.date: 08/1/2023
+ms.date: 09/19/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli

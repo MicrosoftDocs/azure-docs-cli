@@ -1282,7 +1282,7 @@ ms.custom: devx-track-azurecli
 |  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](/azure/cosmos-db/scripts/cli/cassandra/autoscale)
 | [az cosmosdb cassandra table throughput](/cli/azure/cosmosdb/cassandra/table/throughput) | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput)
 | [az cosmosdb copy](/cli/azure/cosmosdb/copy) | [Create and manage container copy jobs in Azure Cosmos DB (Preview)](/azure/cosmos-db/how-to-container-copy)
-| [az cosmosdb database](/cli/azure/cosmosdb/database) | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create)
+| [az cosmosdb create](/cli/azure/cosmosdb) | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create)
 | [az cosmosdb gremlin](/cli/azure/cosmosdb/gremlin) | [Get the latest restorable timestamp for continuous backup accounts](/azure/cosmos-db/get-latest-restore-timestamp)
 | [az cosmosdb gremlin database](/cli/azure/cosmosdb/gremlin/database) | [Quickstart: Azure Cosmos DB for Apache Gremlin library for .NET](/azure/cosmos-db/gremlin/quickstart-dotnet)
 |  | [Restore a deleted container or database to the same Azure Cosmos DB account](/azure/cosmos-db/how-to-restore-in-account-continuous-backup)

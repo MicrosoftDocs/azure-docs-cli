@@ -1,7 +1,7 @@
 ---
 title: Use shorthand syntax with parameters | Microsoft Docs
 description: Learn to use shorthand syntax with Azure CLI parameters. Pass JSON values easily with simplified shorthand syntax.
-ms.date: 08/20/2024
+ms.date: 09/22/2024
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
 #customer intent: As an Azure CLI developer, I need to learn an easier way to work with JSON syntax in Azure CLI parameter values.
