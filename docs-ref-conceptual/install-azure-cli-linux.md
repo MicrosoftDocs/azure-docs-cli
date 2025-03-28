@@ -3,7 +3,7 @@ title: Install the Azure CLI on Linux | Microsoft Docs
 description: Learn how to install and run the Azure CLI on Linux manually. You can install the Azure CLI on Linux computers with one command or a step-by-step process.
 author: jiasli
 ms.author: jiasli
-ms.date: 08/2/2023
+ms.date: 09/19/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, linux-related-content

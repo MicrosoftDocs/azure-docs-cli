@@ -1,7 +1,7 @@
 ---
 title: Sign in with Azure CLI using a service principal
 description: Learn how to sign into Azure using a service principal and the Azure CLI. Find an example for appending a certification to a private key
-ms.date: 09/02/2024
+ms.date: 02/13/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli

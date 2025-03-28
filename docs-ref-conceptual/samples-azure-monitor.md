@@ -1,7 +1,7 @@
 ---
 title: Azure CLI samples for Azure Monitor
 description: See links to Azure CLI samples for working with Azure Monitor
-ms.date: 06/13/2023
+ms.date: 09/19/2024
 ms.service: azure-cli
 ms.topic: sample 
 ms.custom: devx-track-azurecli

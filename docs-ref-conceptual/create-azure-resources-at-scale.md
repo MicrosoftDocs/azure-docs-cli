@@ -1,7 +1,7 @@
 ---
 title: Create multiple resources from a script using Azure CLI
 description: Learn how to create multiple Azure resources from a script and log progress to a file. The Azure CLI script is provided for both Bash and PowerShell..
-ms.date: 04/30/2024
+ms.date: 09/19/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli

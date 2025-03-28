@@ -1,7 +1,7 @@
 ---
 title: Azure CLI samples full list | Microsoft Docs
 description: Find links to Azure CLI samples.  Search by Azure service, command name, or GitHub file name.
-ms.date: 06/01/2024
+ms.date: 02/24/2025
 ms.service: azure-cli
 ms.topic: sample 
 ms.custom: devx-track-azurecli

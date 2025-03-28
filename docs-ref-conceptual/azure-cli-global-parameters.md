@@ -1,7 +1,7 @@
 ---
 title: Use global parameters with Azure CLI  | Microsoft Docs
 description: Learn how to use various global parameters with Azure CLI to configure a resource group.
-ms.date: 08/28/2024
+ms.date: 09/19/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli

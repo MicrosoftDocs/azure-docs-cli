@@ -1,7 +1,7 @@
 ---
 title: Azure CLI reference command article list | Microsoft Docs
 description: Find links to Azure CLI articles demonstrating the use of reference commands.  Search by reference group or command name.
-ms.date: 11/27/2023
+ms.date: 02/24/2025
 ms.service: azure-cli
 ms.topic: reference
 ms.custom: devx-track-azurecli
