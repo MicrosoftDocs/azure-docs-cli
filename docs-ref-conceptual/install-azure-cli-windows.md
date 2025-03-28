@@ -5,7 +5,7 @@ author: jiasli
 ms.author: jiasli
 manager: yonzhan
 ms.service: azure-cli
-ms.date: 08/19/2024
+ms.date: 03/26/2025
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
 zone_pivot_group_filename: azure/zone-pivot-groups.json

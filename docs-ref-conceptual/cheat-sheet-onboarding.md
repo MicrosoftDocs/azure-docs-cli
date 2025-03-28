@@ -1,7 +1,7 @@
 ---
 title: Azure CLI onboarding cheat sheet | Microsoft Docs
 description: Quickly onboard with the Azure CLI. Get answers to common CLI questions and learn to use the Azure CLI.
-ms.date: 06/27/2024
+ms.date: 12/06/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli

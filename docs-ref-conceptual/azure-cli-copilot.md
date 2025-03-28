@@ -1,7 +1,7 @@
 ---
 title: Use Microsoft Copilot to learn Azure CLI | Microsoft Docs
 description: How to use the new AI functionalities of Microsoft Copilot to learn Azure CLI.
-ms.date: 08/28/2024
+ms.date: 09/19/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli

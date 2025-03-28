@@ -1,7 +1,7 @@
 ---
 title: Troubleshoot Azure CLI | Microsoft Docs
 description: Learn to use the Azure CLI successfully by understanding common Azure CLI errors and how to fix them.
-ms.date: 06/26/2024
+ms.date: 12/10/2024
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
 #customer intent: As an Azure CLI customer, I want to be able to search for Azure CLI errors and receive more explanation than what is available from the in-line error message. Just don't tell me what an error is, also tell me how to fix it.

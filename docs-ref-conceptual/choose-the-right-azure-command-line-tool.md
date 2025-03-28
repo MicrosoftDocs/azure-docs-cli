@@ -3,7 +3,7 @@ title: Choose the right Azure command-line tool - Azure CLI | Microsoft Docs
 description: Learn which Azure command-line tool fits your needs with an Azure CLI vs Azure PowerShell comparison — get started with your preferred command-line tool.
 ms.topic: quickstart
 ms.service: azure
-ms.date: 06/19/2023
+ms.date: 09/19/2024
 ms.custom: devx-track-azurecli, mode-api, devx-track-azurepowershell
 Keywords: azure command line tool, azure cli tools, azure cli vs powershell, azure cli powershell, powershell cli, azure cli vs cloud shell, shell environment
 ---

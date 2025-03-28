@@ -1,7 +1,7 @@
 ---
 title: How to manage Azure resource groups – Azure CLI | Microsoft Docs
 description: Learn how to manage Azure resource groups in the Azure CLI, a cross-platform tool to connect to Azure and execute administrative commands on Azure resources.
-ms.date: 08/2/2023
+ms.date: 03/24/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
