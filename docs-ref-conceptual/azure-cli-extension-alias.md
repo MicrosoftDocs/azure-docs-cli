@@ -119,7 +119,7 @@ To register the environment variables inside the command of the alias, the dolla
 
 ## Process arguments using Jinja2 templates
 
-[Jinja2](http://jinja.pocoo.org/docs/2.10/) performs the argument substitution in the alias extension. Jinja2 templates allow for manipulating the arguments.
+[Jinja2](https://jinja.palletsprojects.com/en/stable/) performs the argument substitution in the alias extension. Jinja2 templates allow for manipulating the arguments.
 
 With Jinja2 templates, you can write aliases that take different types of arguments than the underlying command. For example, you can make an alias that takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
 
