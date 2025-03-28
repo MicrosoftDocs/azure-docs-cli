@@ -28,10 +28,20 @@ directCommands:
                                 [--disallow-trailing-dot {false, true}]
                                 [--fail-on-exist]
                                 [--file-endpoint]
+                                [--file-mode]
+                                [--group]
                                 [--metadata]
+                                [--owner]
                                 [--sas-token]
                                 [--snapshot]
                                 [--timeout]
+  examples:
+  - summary: |-
+      Create a new directory under the specified NFS share with file-mode, owner, group
+    syntax: >-
+      az storage directory create --account-name mystorageaccount --name dir --share-name myshare
+
+      --file-mode rwxr--r-- --owner 1 --group 2
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -71,9 +81,18 @@ directCommands:
   - name: --file-endpoint
     summary: |-
       Storage data service endpoint. Must be used in conjunction with either storage account key or a SAS token. You can find each service primary endpoint with `az storage account show`. Environment variable: AZURE_STORAGE_SERVICE_ENDPOINT.
+  - name: --file-mode
+    summary: |-
+      Only applicable to NFS Directory. The mode permissions to be set on the directory. Symbolic (rwxrw-rw-) is supported. The sticky bit is also supported and its represented either by the letter t or T in the final character-place depending on whether the execution bit for the others category is set or unset respectively, absence of t or T indicates sticky bit not set.".
+  - name: --group
+    summary: |-
+      Only applicable to NFS Directory. The owner group identifier (GID) to be set on the directory. The default value is 0 (root group).
   - name: --metadata
     summary: |-
       Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+  - name: --owner
+    summary: |-
+      Only applicable to NFS Directory. The owner user identifier (UID) to be set on the directory. The default value is 0 (root).
   - name: --sas-token
     summary: |-
       A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.

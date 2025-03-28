@@ -163,6 +163,8 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--azure-monitor-workspace-resource-id]
+                  [--bootstrap-artifact-source {Cache, Direct}]
+                  [--bootstrap-container-registry-resource-id]
                   [--ca-profile]
                   [--client-secret]
                   [--crg-id]
@@ -271,7 +273,7 @@ directCommands:
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu}]
-                  [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
                   [--pod-subnet-id]
@@ -485,6 +487,16 @@ directCommands:
   - name: --azure-monitor-workspace-resource-id
     summary: |-
       Resource ID of the Azure Monitor Workspace.
+  - name: --bootstrap-artifact-source
+    defaultValue: "Direct"
+    parameterValueGroup: "Cache, Direct"
+    summary: |-
+      Configure artifact source when bootstraping the cluster.
+    description: |-
+      The artifacts include the addon image. Use "Direct" to download artifacts from MCR, "Cache" to downalod artifacts from Azure Container Registry.
+  - name: --bootstrap-container-registry-resource-id
+    summary: |-
+      Configure container registry resource ID. Must use "Cache" as bootstrap artifact source.
   - name: --ca-profile --cluster-autoscaler-profile
     summary: |-
       Comma-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
@@ -908,6 +920,8 @@ directCommands:
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes.
+    isDeprecated: true
+    deprecateInfo: The default value of '--node-vm-size' will be changed to 'Dynamically Selected By Azure' from 'Standard_DS2_V2 (Linux), Standard_DS2_V3 (Windows)' in next breaking change release(2.73.0) scheduled for May 2025.
   - name: --nodepool-allowed-host-ports
     summary: |-
       Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. `80/TCP 443/TCP 4000-5000/TCP`.
@@ -938,11 +952,11 @@ directCommands:
     summary: |-
       The OS SKU of the agent node pool. Ubuntu or CBLMariner.
   - name: --outbound-type
-    parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
+    parameterValueGroup: "loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting"
     summary: |-
       How outbound traffic will be configured for a cluster.
     description: |-
-      Select between loadBalancer, userDefinedRouting, managedNATGateway and userAssignedNATGateway. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
+      Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway and none. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
   - name: --pod-cidr
     summary: |-
       A CIDR notation IP range from which to assign pod IPs when kubenet is used.
@@ -1974,6 +1988,8 @@ directCommands:
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes.
+    isDeprecated: true
+    deprecateInfo: The default value of '--node-vm-size' will be changed to 'Dynamically Selected By Azure' from 'Standard_DS2_V2 (Linux), Standard_DS2_V3 (Windows)' in next breaking change release(2.73.0) scheduled for May 2025.
   - name: --nodepool-allowed-host-ports
     summary: |-
       Expose host ports on the node pool. When specified, format should be a comma-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
@@ -3341,6 +3357,8 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--azure-monitor-workspace-resource-id]
+                  [--bootstrap-artifact-source {Cache, Direct}]
+                  [--bootstrap-container-registry-resource-id]
                   [--ca-profile]
                   [--defender-config]
                   [--detach-acr]
@@ -3427,7 +3445,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
-                  [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
@@ -3582,6 +3600,15 @@ directCommands:
   - name: --azure-monitor-workspace-resource-id
     summary: |-
       Resource ID of the Azure Monitor Workspace.
+  - name: --bootstrap-artifact-source
+    parameterValueGroup: "Cache, Direct"
+    summary: |-
+      Configure artifact source when bootstraping the cluster.
+    description: |-
+      The artifacts include the addon image. Use "Direct" to download artifacts from MCR, "Cache" to downalod artifacts from Azure Container Registry.
+  - name: --bootstrap-container-registry-resource-id
+    summary: |-
+      Configure container registry resource ID. Must use "Cache" as bootstrap artifact source.
   - name: --ca-profile --cluster-autoscaler-profile
     summary: |-
       Comma-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
@@ -3933,11 +3960,11 @@ directCommands:
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --outbound-type
-    parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
+    parameterValueGroup: "loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting"
     summary: |-
       How outbound traffic will be configured for a cluster.
     description: |-
-      This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
+      This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting and none. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
   - name: --pod-cidr
     summary: |-
       Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
@@ -5373,6 +5400,7 @@ commands:
 - az_aks_connection_create_mysql
 - az_aks_connection_create_mysql-flexible
 - az_aks_connection_create_mysql-flexible(serviceconnector-passwordless)
+- az_aks_connection_create_neon-postgres
 - az_aks_connection_create_postgres
 - az_aks_connection_create_postgres-flexible
 - az_aks_connection_create_postgres-flexible(serviceconnector-passwordless)
@@ -5406,6 +5434,7 @@ commands:
 - az_aks_connection_update_keyvault
 - az_aks_connection_update_mysql
 - az_aks_connection_update_mysql-flexible
+- az_aks_connection_update_neon-postgres
 - az_aks_connection_update_postgres
 - az_aks_connection_update_postgres-flexible
 - az_aks_connection_update_redis
