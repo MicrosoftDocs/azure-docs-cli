@@ -83,6 +83,58 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+- uid: az_stack-hci-vm_network_nic_create-from-local
+  name: az stack-hci-vm network nic create-from-local
+  summary: |-
+    Create a network interface.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az stack-hci-vm network nic create-from-local --custom-location
+                                                  --mac-address
+                                                  --name
+                                                  --resource-group
+                                                  --subnet-id
+                                                  [--location]
+                                                  [--polling-interval]
+                                                  [--tags]
+  examples:
+  - summary: |-
+      Without ip configurations provided
+    syntax: az stack-hci-vm network nic create-from-local --resource-group "test-rg" --custom-location "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location"  --location "West US2" --subnet-id "test-lnet"  --name "test-nic" --mac-address  "02:ee:00:00:04:04"
+  requiredParameters:
+  - isRequired: true
+    name: --custom-location
+    summary: |-
+      The ID of the extended location.
+  - isRequired: true
+    name: --mac-address
+    summary: |-
+      MacAddress - The MAC address of the network interface.
+  - isRequired: true
+    name: --name
+    summary: |-
+      Name of the network interface.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --subnet-id
+    summary: |-
+      ID of the subnet or network to create the network interface on.
+    description: |-
+      Usage: --subnet-id "test-lnet".
+  optionalParameters:
+  - name: --location -l
+    summary: |-
+      If location is not specified, the location of the resource group is used.
+  - name: --polling-interval
+    summary: |-
+      ARM polling interval for long running operations.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
 - uid: az_stack-hci-vm_network_nic_delete
   name: az stack-hci-vm network nic delete
   summary: |-
@@ -173,25 +225,51 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az stack-hci-vm network nic update [--ids]
+    az stack-hci-vm network nic update [--add]
+                                       [--force-string]
+                                       [--ids]
                                        [--name]
+                                       [--network-security-group]
+                                       [--remove]
                                        [--resource-group]
+                                       [--set]
                                        [--subscription]
                                        [--tags]
   examples:
   - summary: |-
       UpdateNetworkInterface
-    syntax: az stack-hci-vm network nic update --tags additionalProperties="sample" --name "test-nic" --resource-group "test-rg"
+    syntax: az stack-hci-vm network nic update --tags additionalProperties="sample" --name "test-nic" --resource-group "test-rg --network-security-group myNSG"
   optionalParameters:
+  - name: --add
+    defaultValue: "[]"
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --force-string
+    defaultValue: "False"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name
     summary: |-
       Name of the network interface.
+  - name: --network-security-group --nsg
+    summary: |-
+      Name or ID of a network security group (NSG).
+    description: |-
+      Usage: --network-security-group "myNSG".
+  - name: --remove
+    defaultValue: "[]"
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    defaultValue: "[]"
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -200,6 +278,7 @@ directCommands:
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
 commands:
 - az_stack-hci-vm_network_nic_create
+- az_stack-hci-vm_network_nic_create-from-local
 - az_stack-hci-vm_network_nic_delete
 - az_stack-hci-vm_network_nic_list
 - az_stack-hci-vm_network_nic_show

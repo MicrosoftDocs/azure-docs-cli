@@ -44,7 +44,9 @@ directCommands:
                            [--ssh-dest-key-path]
                            [--ssh-key-values]
                            [--storage-path-id]
+                           [--strict-placement {false, true}]
                            [--tags]
+                           [--zone]
   examples:
   - summary: |-
       Create a Stack HCI VM
@@ -145,6 +147,60 @@ directCommands:
   - name: --storage-path-id
     summary: |-
       Azure ID of the Storage Path pointing to the location where the VM config files are stored.
+  - name: --strict-placement
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specifies whether VM can only failover strictly within the zone it was placed in.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --zone
+    summary: |-
+      The zone in which the VM should be placed. i.e --zone "zone1".
+- uid: az_stack-hci-vm_create-from-local
+  name: az stack-hci-vm create-from-local
+  summary: |-
+    This function constructs the data for the API call to hydrate an existing Hyper-V VM.
+  description: |-
+    It's the same API call as VM creation apart from the fact that the 'is_hydration' flag is set to True. With this, the validation in the azstackhci-operator allows the image path to be empty.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az stack-hci-vm create-from-local --custom-location
+                                      --name
+                                      --resource-group
+                                      [--attach-data-disks]
+                                      [--location]
+                                      [--nics]
+                                      [--polling-interval]
+                                      [--tags]
+  requiredParameters:
+  - isRequired: true
+    name: --custom-location
+    summary: |-
+      The ID of the extended location.
+  - isRequired: true
+    name: --name
+    summary: |-
+      Name of the virtual machine.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --attach-data-disks
+    summary: |-
+      Names of attached data disks.
+  - name: --location -l
+    summary: |-
+      If location is not specified, the location of the resource group is used.
+  - name: --nics
+    summary: |-
+      Names of attached NICs.
+  - name: --polling-interval
+    summary: |-
+      ARM polling interval for long running operations.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -479,10 +535,12 @@ directCommands:
       List of virtual hard disk names.
 commands:
 - az_stack-hci-vm_create
+- az_stack-hci-vm_create-from-local
 - az_stack-hci-vm_delete
 - az_stack-hci-vm_disk
 - az_stack-hci-vm_disk_attach
 - az_stack-hci-vm_disk_create
+- az_stack-hci-vm_disk_create-from-local
 - az_stack-hci-vm_disk_delete
 - az_stack-hci-vm_disk_detach
 - az_stack-hci-vm_disk_list
@@ -508,6 +566,7 @@ commands:
 - az_stack-hci-vm_network_lnet_update
 - az_stack-hci-vm_network_nic
 - az_stack-hci-vm_network_nic_create
+- az_stack-hci-vm_network_nic_create-from-local
 - az_stack-hci-vm_network_nic_delete
 - az_stack-hci-vm_network_nic_list
 - az_stack-hci-vm_network_nic_show
