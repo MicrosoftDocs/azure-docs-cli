@@ -129,6 +129,8 @@ directCommands:
   syntax: >-
     az role assignment list [--all]
                             [--assignee]
+                            [--fill-principal-name {false, true}]
+                            [--fill-role-definition-name {false, true}]
                             [--include-classic-administrators {false, true}]
                             [--include-groups]
                             [--include-inherited]
@@ -142,6 +144,9 @@ directCommands:
   - summary: |-
       List all role assignments of an assignee at the subscription scope.
     syntax: az role assignment list --assignee 00000000-0000-0000-0000-000000000000 --scope /subscriptions/00000000-0000-0000-0000-000000000000
+  - summary: |-
+      List all role assignments with "Reader" role at the subscription scope, without filling principalName property
+    syntax: az role assignment list --role Reader --scope /subscriptions/00000000-0000-0000-0000-000000000000 --fill-principal-name false
   optionalParameters:
   - name: --all
     defaultValue: "False"
@@ -150,6 +155,16 @@ directCommands:
   - name: --assignee
     summary: |-
       Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.
+  - name: --fill-principal-name
+    defaultValue: "True"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Query Microsoft Graph to get the assignee's userPrincipalName (for user), servicePrincipalNames (for service principal) or displayName (for group), then fill principalName property with it. If the logged-in account has no permission or the machine has no network access to query Microsoft Graph, set this flag to false to avoid warning or error.
+  - name: --fill-role-definition-name
+    defaultValue: "True"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Fill roleDefinitionName property in addition to roleDefinitionId. This operation is expensive. If you encounter performance issue, set this flag to false.
   - name: --include-classic-administrators
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -256,5 +271,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 01/20/2025
+  ms.date: 03/28/2025
   description: Manage role assignments.
