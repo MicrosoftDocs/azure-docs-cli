@@ -17,7 +17,7 @@ If you want to run the `az` command directly, follow the steps below to add the 
 
 1. Open the Start Menu and search for `environment variables`.  Click `Edit the system environment variables`.
 1. Click the `Environment Variables...` button.
-1. In the `User varibles for <username>` box, select `Path` and click the `Edit...` button.
+1. In the `User variables for <username>` box, select `Path` and click the `Edit...` button.
 1. Click the `New` button and add the `<unzipped folder path>\bin` to the list.
 1. **Restart your terminal.**  You should now be able to run `az` commands.
 

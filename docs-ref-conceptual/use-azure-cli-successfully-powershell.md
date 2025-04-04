@@ -309,7 +309,7 @@ in PowerShell 7 within a Windows environment.
 az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
-Did you receive a `argument --query: invalid jmespath_type value:...` error from the scripts on this
+Did you receive an `argument --query: invalid jmespath_type value:...` error from the scripts on this
 tab? This error is returned when executing these Windows scripts in Bash or PowerShell 7 _within a
 Linux environment_.
 
