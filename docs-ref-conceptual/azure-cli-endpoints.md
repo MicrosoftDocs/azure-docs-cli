@@ -25,20 +25,20 @@ resource_manager | `https://management.azure.com/`
 sql_management | `https://management.core.windows.net:8443/`
 batch_resource_id | `https://batch.core.windows.net/`
 gallery | `https://gallery.azure.com/`
-active_directory | `https://login.microsoftonline.com_`
+active_directory | `https://login.microsoftonline.com/`
 active_directory_resource_id | `https://management.core.windows.net/`
 active_directory_graph_resource_id | `https://graph.windows.net/`
 microsoft_graph_resource_id | `https://graph.microsoft.com/`
 active_directory_data_lake_resource_id | `https://datalake.azure.net/`
-vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/arm-compute/quickstart-templates/aliases.json_`
-media_resource_id | `https://rest.media.azure.net_`
-ossrdbms_resource_id | `https://ossrdbms-aad.database.windows.net_`
-app_insights_resource_id | `https://api.applicationinsights.io_`
-log_analytics_resource_id | `https://api.loganalytics.io_`
-app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.azure.com/v2/track_`
-synapse_analytics_resource_id | `https://dev.azuresynapse.net_`
-attestation_resource_id | `https://attest.azure.net_`
-portal | `https://portal.azure.com_`
+vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/arm-compute/quickstart-templates/aliases.json`
+media_resource_id | `https://rest.media.azure.net/`
+ossrdbms_resource_id | `https://ossrdbms-aad.database.windows.net/`
+app_insights_resource_id | `https://api.applicationinsights.io/`
+log_analytics_resource_id | `https://api.loganalytics.io/`
+app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.azure.com/v2/track`
+synapse_analytics_resource_id | `https://dev.azuresynapse.net/`
+attestation_resource_id | `https://attest.azure.net/`
+portal | `https://portal.azure.com/`
 
 ### Endpoint suffixes
 
