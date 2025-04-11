@@ -59,3 +59,7 @@ sudo tdnf remove azure-cli
 ### Remove data
 
 [!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
+## Troubleshooting
+
+[!INCLUDE[linux-completion.md](linux-completion.md)]

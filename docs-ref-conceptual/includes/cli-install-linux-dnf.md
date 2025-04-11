@@ -191,3 +191,5 @@ allow HTTPS connections to the following address:
 * `https://packages.microsoft.com`
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
+
+[!INCLUDE[linux-completion.md](linux-completion.md)]
