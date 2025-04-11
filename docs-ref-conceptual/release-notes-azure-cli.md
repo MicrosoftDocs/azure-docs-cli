@@ -1923,9 +1923,9 @@ Version 2.54.0
 * `az storage file/directory`: Add `--disallow-trailing-dot`
 * `az storage share list-handle/close-handle`: Add `--disallow-trailing-dot`
 * `az storage file copy start/start-batch`: Add `--disallow-source-trailing-dot`
-* Fix #27590: `az storage fs directory download`: Check user sytem PATH for azcopy and use CLI config directory for new install
+* Fix #27590: `az storage fs directory download`: Check user system PATH for azcopy and use CLI config directory for new install
 * `az storage account blob-inventory-policy create`: Add support for new filter `creationTime.lastNDays` in json
-* `az storage account migration start/show`: Support customer inititated migration between replication options
+* `az storage account migration start/show`: Support customer initiated migration between replication options
 * [BREAKING CHANGE] `az storage container-rm update`: Remove `--default-encryption-scope` and `--deny-encryption-scope-override` as they should only be specified during create
 
 ## October 24, 2023
@@ -2511,7 +2511,7 @@ Version 2.49.0
 * [BREAKING CHANGE] `az servicebus georecovery-alias fail-over`: Remove `--parameters` argument
 * [BREAKING CHANGE] `az servicebus namespace network-rule`: This command group is removed and replaced by `az servicebus namespace network-rule-set`
 * [BREAKING CHANGE] `az servicebus namespace network-rule add`: This command is removed and replaced by `az servicebus namespace network-rule-set ip-rule/virtual-network-rule add`
-* [BREAKING CHANGE] `az servicebus namespace network-rule remove`: This is removed and replaced by by `az servicebus namespace network-rule-set ip-rule/virtual-network-rule remove`
+* [BREAKING CHANGE] `az servicebus namespace network-rule remove`: This is removed and replaced by `az servicebus namespace network-rule-set ip-rule/virtual-network-rule remove`
 * [BREAKING CHANGE] `az servicebus queue update`: Remove deprecated parameters `--enable-partitioning`, `--enable-session` and `--duplicate-detection`
 
 ### Service Connector
@@ -10127,7 +10127,7 @@ Version 2.0.58
 
 ### ACR
 * [BREAKING CHANGE] Removed `acr build-task` command group
-* [BREAKING CHANGE] Removed `--tag` and `--manifest` options from from `acr repository delete`
+* [BREAKING CHANGE] Removed `--tag` and `--manifest` options from `acr repository delete`
 
 ### ACS
 * Added support for case-insensitive names to `aks [enable-addons|disable-addons]`
@@ -10453,7 +10453,7 @@ Version 2.0.51
 * Fixed bug where errors may have been ignored
 
 ### Network
-* Added `root-cert` subcommands to `application-gateway` to handle trusted root certifcates
+* Added `root-cert` subcommands to `application-gateway` to handle trusted root certificates
 * Added `--min-capacity` and `--custom-error-pages` options to `application-gateway [create|update]`:
 * Added `--zones` for availability zone support to `application-gateway create`
 * Added arguments `--file-upload-limit`, `--max-request-body-size` and `--request-body-check` to `application-gateway waf-config set`
@@ -10964,7 +10964,7 @@ Version 2.0.43
 
 ### ACS
 
-* Changed to return return 0 (success) when ending `az aks browse` by pressing [Ctrl+C]
+* Changed to return 0 (success) when ending `az aks browse` by pressing [Ctrl+C]
 
 ### Batch
 
@@ -11875,7 +11875,7 @@ Version 2.0.28
 
 ### ACS
 
-* Changed to use the the `virtual-kubelet-for-aks` Helm chart for `aks install-connector` by default
+* Changed to use the `virtual-kubelet-for-aks` Helm chart for `aks install-connector` by default
 * Fixed issue: Insuffient permission for service principals to create ACI container group issue
 * Added `--aci-container-group`, `--location`, and `--image-tag` parameters to `aks install-connector`
 * Removed deprecation notice from `aks get-versions`
