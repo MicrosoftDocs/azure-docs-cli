@@ -9,7 +9,7 @@ keywords: azure,
 ---
 # Learn Azure CLI syntax differences in Bash, PowerShell and Cmd
 
-Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-Bash), [PowerShell](/powershell/scripting/overview), and Windows command shell [(Cmd)](/windows-server/administration/windows-commands/windows-commands) scripting languages. However, there are subtile scripting differences. In this tutorial step, learn how to create your first Azure Storage Account and format parameter values for all three scripting languages.
+Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash), [PowerShell](/powershell/scripting/overview), and Windows command shell [(Cmd)](/windows-server/administration/windows-commands/windows-commands) scripting languages. However, there are subtile scripting differences. In this tutorial step, learn how to create your first Azure Storage Account and format parameter values for all three scripting languages.
 
 ## Prerequisites
 
