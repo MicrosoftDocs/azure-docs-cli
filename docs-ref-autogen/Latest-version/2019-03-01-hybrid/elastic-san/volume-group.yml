@@ -4,7 +4,7 @@ name: az elastic-san volume-group
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **elastic-san** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az elastic-san volume-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **elastic-san** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az elastic-san volume-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Elastic SAN Volume Group.
 status: GA
@@ -21,6 +21,8 @@ directCommands:
                                        --name
                                        --resource-group
                                        [--data-integrity-check {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--delete-retention-period-days]
+                                       [--delete-retention-policy-state {Disabled, Enabled}]
                                        [--encryption {EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey}]
                                        [--encryption-properties]
                                        [--identity]
@@ -34,6 +36,9 @@ directCommands:
   - summary: |-
       Create a volume group with CustomerManagedKey and UserAssignedIdentity
     syntax: az elastic-san volume-group create -e "san_name" -n "vg_name" -g "rg" --encryption EncryptionAtRestWithCustomerManagedKey --protocol-type Iscsi --identity '{type:UserAssigned,user-assigned-identity:"uai_id"}' --encryption-properties '{key-vault-properties:{key-name:"key_name",key-vault-uri:"vault_uri"},identity:{user-assigned-identity:"uai_id"}}'
+  - summary: |-
+      Create a volume group with delete retention policy params
+    syntax: az elastic-san volume-group create -e san_name -n volume_group_name -g rg_name --encryption EncryptionAtRestWithPlatformKey --protocol-type Iscsi --network-acls '{virtual-network-rules:[{id:{subnet_id},action:Allow}]}' --delete-retention-policy-state Enabled --delete-retention-period-days 7
   requiredParameters:
   - isRequired: true
     name: --elastic-san --elastic-san-name -e
@@ -52,6 +57,15 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       A boolean indicating whether or not Data Integrity Check is enabled.
+  - name: --delete-retention-period-days --retention-period
+    summary: |-
+      The number of days to retain the resources after deletion.
+    isPreview: true
+  - name: --delete-retention-policy-state --delete-retention-state
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Manage delete retention policy state.
+    isPreview: true
   - name: --encryption
     parameterValueGroup: "EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey"
     summary: |-
@@ -124,12 +138,16 @@ directCommands:
   syntax: >-
     az elastic-san volume-group list --elastic-san
                                      --resource-group
+                                     [--access-soft-deleted-resources {false, true}]
                                      [--max-items]
                                      [--next-token]
   examples:
   - summary: |-
       List Volume Groups.
     syntax: az elastic-san volume-group list -g "rg" -e "san_name"
+  - summary: |-
+      List soft-deleted volume groups
+    syntax: az elastic-san volume-group list -g rg_name -e san_name --access-soft-deleted-resources True
   requiredParameters:
   - isRequired: true
     name: --elastic-san --elastic-san-name -e
@@ -140,6 +158,11 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --access-soft-deleted-resources --soft-deleted-only --x-ms-access-soft-deleted-resources
+    parameterValueGroup: "false, true"
+    summary: |-
+      Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups.
+    isPreview: true
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
@@ -178,6 +201,96 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_elastic-san_volume-group_test-backup
+  name: az elastic-san volume-group test-backup
+  summary: |-
+    Validate whether a disk snapshot backup can be taken for list of volumes.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az elastic-san volume-group test-backup --volume-names
+                                            [--elastic-san]
+                                            [--ids]
+                                            [--name]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--resource-group]
+                                            [--subscription]
+  examples:
+  - summary: |-
+      Test Backup
+    syntax: az elastic-san volume-group test-backup -g rg_name -e san_name -n volume_group_name --volume-names "[volume_name]"
+  requiredParameters:
+  - isRequired: true
+    name: --volume-names
+    summary: |-
+      Array of volume names  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  optionalParameters:
+  - name: --elastic-san --elastic-san-name -e
+    summary: |-
+      The name of the ElasticSan.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --volume-group-name -n
+    summary: |-
+      The name of the VolumeGroup.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_elastic-san_volume-group_test-restore
+  name: az elastic-san volume-group test-restore
+  summary: |-
+    Validate whether a list of backed up disk snapshots can be restored into ElasticSan volumes.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az elastic-san volume-group test-restore --disk-snapshot-ids
+                                             [--elastic-san]
+                                             [--ids]
+                                             [--name]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--resource-group]
+                                             [--subscription]
+  examples:
+  - summary: |-
+      Test Restore
+    syntax: az elastic-san volume-group test-restore -g rg_name -e san_name -n volume_group_name --disk-snapshot-ids "[snapshot_id]"
+  requiredParameters:
+  - isRequired: true
+    name: --disk-snapshot-ids
+    summary: |-
+      Array of DiskSnapshot ARM IDs  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  optionalParameters:
+  - name: --elastic-san --elastic-san-name -e
+    summary: |-
+      The name of the ElasticSan.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --volume-group-name -n
+    summary: |-
+      The name of the VolumeGroup.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_elastic-san_volume-group_update
   name: az elastic-san volume-group update
   summary: |-
@@ -187,6 +300,8 @@ directCommands:
   syntax: >-
     az elastic-san volume-group update [--add]
                                        [--data-integrity-check {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--delete-retention-period-days]
+                                       [--delete-retention-policy-state {Disabled, Enabled}]
                                        [--elastic-san]
                                        [--encryption {EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey}]
                                        [--encryption-properties]
@@ -225,6 +340,15 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       A boolean indicating whether or not Data Integrity Check is enabled.
+  - name: --delete-retention-period-days --retention-period
+    summary: |-
+      The number of days to retain the resources after deletion.
+    isPreview: true
+  - name: --delete-retention-policy-state --delete-retention-state
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Manage delete retention policy state.
+    isPreview: true
   - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
@@ -338,6 +462,8 @@ commands:
 - az_elastic-san_volume-group_delete
 - az_elastic-san_volume-group_list
 - az_elastic-san_volume-group_show
+- az_elastic-san_volume-group_test-backup
+- az_elastic-san_volume-group_test-restore
 - az_elastic-san_volume-group_update
 - az_elastic-san_volume-group_wait
 globalParameters:
