@@ -20,7 +20,6 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az managed-cassandra cluster create --cluster-name
-                                        --delegated-management-subnet-id
                                         --location
                                         --resource-group
                                         [--authentication-method {Cassandra, Ldap, None}]
@@ -29,6 +28,7 @@ directCommands:
                                         [--client-certificates]
                                         [--cluster-name-override]
                                         [--cluster-type {NonProduction, Production}]
+                                        [--delegated-management-subnet-id]
                                         [--extensions]
                                         [--external-gossip-certificates]
                                         [--external-seed-nodes]
@@ -60,10 +60,6 @@ directCommands:
     summary: |-
       Cluster Name.
   - isRequired: true
-    name: --delegated-management-subnet-id -s
-    summary: |-
-      The resource id of a subnet where the ip address of the cassandra management server will be allocated. This subnet must have connectivity to the delegated_subnet_id subnet of each data center.
-  - isRequired: true
     name: --location -l
     summary: |-
       Azure Location of the Cluster.
@@ -93,6 +89,9 @@ directCommands:
     parameterValueGroup: "NonProduction, Production"
     summary: |-
       Type of the cluster, can be Production or NonProduction. If set to Production, operations on cluster might have restrictions.
+  - name: --delegated-management-subnet-id -s
+    summary: |-
+      The resource id of a subnet where the ip address of the cassandra management server will be allocated. This subnet must have connectivity to the delegated_subnet_id subnet of each data center. This param is not needed for VPN clusters.
   - name: --extensions
     summary: |-
       A set of extensions that will be effective on the cluster. It will replace the entire set of extensions with new set. Use "" to remove all. Now Available: cassandra-lucene-index.
