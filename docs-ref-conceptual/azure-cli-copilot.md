@@ -23,7 +23,7 @@ By default, Copilot in Azure is available to all users in an organization. Check
 
 ## Open Microsoft Copilot in Azure
 
-To use Copilot in Azure, go to the Azure portal and select the **Copilot** icon on the top taskbar. A window will open with a chat assistant where you can ask questions.
+To use Copilot in Azure, go to the Azure portal and select the **Copilot** icon in the page header. A new pane will open with a chat assistant where you can ask questions.
 
 :::image type="content" source="./media/azure-cli-copilot/copilot-cli-1.png" alt-text="<Screenshot of the Copilot icon in the Azure portal.>":::
 
@@ -31,11 +31,11 @@ When you tell Copilot in Azure about a task you want to perform with Azure CLI, 
 
 ## Search for reference commands
 
-Ask Copilot in Azure to assist with using the reference command `az group`. Note the placeholder values (marked in blue font) you need to update with actual values.
+Ask Copilot in Azure to help you with a specific Azure CLI command. For example, you can ask how to create a virtual machine in Azure.
 
 :::image type="content" source="./media/azure-cli-copilot/copilot-cli-2.png" alt-text="<Screenshot of Copilot in Azure providing an Azure CLI script to create a virtual machine.>":::
 
-Replace the variables with actual values, or define the variables in a variable block before running the command.
+You can copy the script and use it. Be sure to replace the variables with actual values or define them in a variable block before running the command.
 
 ## Look up an Azure CLI script
 
