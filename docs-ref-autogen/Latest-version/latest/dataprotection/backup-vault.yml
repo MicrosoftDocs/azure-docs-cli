@@ -4,7 +4,7 @@ name: az dataprotection backup-vault
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-vault** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-vault** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage backup vault with dataprotection.
 status: GA
@@ -31,6 +31,8 @@ directCommands:
                                           [--e-tag]
                                           [--immutability-state {Disabled, Locked, Unlocked}]
                                           [--location]
+                                          [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--mi-user-assigned]
                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                           [--retention-duration-in-days]
                                           [--soft-delete-state {AlwaysOn, Off, On}]
@@ -40,13 +42,13 @@ directCommands:
   examples:
   - summary: |-
       Create BackupVault
-    syntax: az dataprotection backup-vault create --type "None" --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
+    syntax: az dataprotection backup-vault create --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
   - summary: |-
       Create BackupVault With MSI
-    syntax: az dataprotection backup-vault create --type "systemAssigned" --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
+    syntax: az dataprotection backup-vault create --mi-system-assigned --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
   - summary: |-
       Create BackupVault With CMK Encryption
-    syntax: az dataprotection backup-vault create -g "resourceGroupName" -v "vaultName" --location "eastasia" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --type "UserAssigned" --user-assigned-identities '{"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/samplerg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleuami":{}}' --cmk-encryption-key-uri "https://samplekvazbckp.vault.azure.net/keys/testkey/3cd5235ad6ac4c11b40a6f35444bcbe1" --cmk-encryption-state "Enabled" --cmk-identity-type "UserAssigned" --cmk-infrastructure-encryption "Enabled" --cmk-user-assigned-identity-id  "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/samplerg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleuami"
+    syntax: az dataprotection backup-vault create -g "resourceGroupName" -v "vaultName" --location "eastasia" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --mi-user-assigned "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/samplerg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleuami" --cmk-encryption-key-uri "https://samplekvazbckp.vault.azure.net/keys/testkey/3cd5235ad6ac4c11b40a6f35444bcbe1" --cmk-encryption-state "Enabled" --cmk-identity-type "UserAssigned" --cmk-infrastructure-encryption "Enabled" --cmk-user-assigned-identity-id  "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/samplerg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleuami"
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -101,6 +103,13 @@ directCommands:
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.  When not specified, the location of the resource group will be used.
+  - name: --mi-system-assigned
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Provide this flag to use system assigned identity.
+  - name: --mi-user-assigned
+    summary: |-
+      Space separated resource IDs to add user-assigned identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -329,7 +338,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --operation-requests --resource-guard-operation-requests
     summary: |-
-      ResourceGuardOperationRequests on which LAC check will be performed  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--operation-requests`.
+      Critical operation request which is protected by the resourceGuard  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--operation-requests`.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -425,6 +434,11 @@ directCommands:
 commands:
 - az_dataprotection_backup-vault_create
 - az_dataprotection_backup-vault_delete
+- az_dataprotection_backup-vault_identity
+- az_dataprotection_backup-vault_identity_assign
+- az_dataprotection_backup-vault_identity_remove
+- az_dataprotection_backup-vault_identity_show
+- az_dataprotection_backup-vault_identity_wait
 - az_dataprotection_backup-vault_list
 - az_dataprotection_backup-vault_list-from-resourcegraph
 - az_dataprotection_backup-vault_resource-guard-mapping
