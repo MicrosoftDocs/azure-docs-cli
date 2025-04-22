@@ -10,25 +10,58 @@ summary: |-
 status: GA
 sourceType: Extension
 directCommands:
+- uid: az_confidentialledger_check-name-availability
+  name: az confidentialledger check-name-availability
+  summary: |-
+    To check whether a resource name is available.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az confidentialledger check-name-availability [--name]
+                                                  [--type]
+  examples:
+  - summary: |-
+      CheckNameAvailability
+    syntax: az confidentialledger check-name-availability --type Microsoft.ConfidentialLedger/ledgers --name sample-name
+  optionalParameters:
+  - name: --name
+    summary: |-
+      The name of the resource for which availability needs to be checked.
+  - name: --type
+    summary: |-
+      The resource type.
 - uid: az_confidentialledger_create
   name: az confidentialledger create
   summary: |-
-    Creates a  Confidential Ledger with the specified ledger parameters.
+    Create a  Confidential Ledger with the specified ledger parameters.
   status: GA
   sourceType: Extension
   syntax: >-
     az confidentialledger create --ledger-name
                                  --resource-group
                                  [--aad-based-security-principals]
+                                 [--application-type {CodeTransparency, ConfidentialLedger}]
                                  [--cert-based-security-principals]
+                                 [--enclave-platform {AmdSevSnp, IntelSgx}]
+                                 [--host-level]
+                                 [--ledger-sku {Basic, Standard, Unknown}]
                                  [--ledger-type {Private, Public, Unknown}]
                                  [--location]
-                                 [--no-wait]
+                                 [--max-body-size-in-mb]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--node-count]
+                                 [--running-state {Active, Paused, Pausing, Resuming, Unknown}]
+                                 [--subject-name]
                                  [--tags]
+                                 [--worker-threads]
+                                 [--write-lb-address-prefix]
   examples:
   - summary: |-
-      ConfidentialLedgerCreate
-    syntax: az confidentialledger create --location "EastUS" --aad-based-security-principals ledger-role-name="Administrator" principal-id="34621747-6fc8-4771-a2eb-72f31c461f2e" tenant-id="bce123b9-2b7b-4975-8360-5ca0b9b1cd08" --cert-based-security-principals cert="-----BEGIN CERTIFICATE-----MIIBsjCCATigAwIBAgIUZWIbyG79TniQLd2UxJuU74tqrKcwCgYIKoZIzj0EAwMwEDEOMAwGA1UEAwwFdXNlcjAwHhcNMjEwMzE2MTgwNjExWhcNMjIwMzE2MTgwNjExWjAQMQ4wDAYDVQQDDAV1c2VyMDB2MBAGByqGSM49AgEGBSuBBAAiA2IABBiWSo/j8EFit7aUMm5lF+lUmCu+IgfnpFD+7QMgLKtxRJ3aGSqgS/GpqcYVGddnODtSarNE/HyGKUFUolLPQ5ybHcouUk0kyfA7XMeSoUA4lBz63Wha8wmXo+NdBRo39qNTMFEwHQYDVR0OBBYEFPtuhrwgGjDFHeUUT4nGsXaZn69KMB8GA1UdIwQYMBaAFPtuhrwgGjDFHeUUT4nGsXaZn69KMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0EAwMDaAAwZQIxAOnozm2CyqRwSSQLls5r+mUHRGRyXHXwYtM4Dcst/VEZdmS9fqvHRCHbjUlO/+HNfgIwMWZ4FmsjD3wnPxONOm9YdVn/PRD7SsPRPbOjwBiE4EBGaHDsLjYAGDSGi7NJnSkA-----END CERTIFICATE-----" ledger-role-name="Reader" --ledger-type "Public" --tags additionalProps1="additional properties" --name "DummyLedgerName" --resource-group "DummyResourceGroupName"
+      ConfidentialLedgerCreate with cert-based-security-principals
+    syntax: az confidentialledger create --resource-group DummyResourceGroupName --ledger-name DummyLedgerName --ledger-type Public --ledger-sku Standard --location EastUS --aad-based-security-principals "[{principal-id:34621747-6fc8-4771-a2eb-72f31c461f2e,tenant-id:bce123b9-2b7b-4975-8360-5ca0b9b1cd08,ledger-role-name:Administrator}]" --tags "{additionalProps1:'additional properties'}"
+  - summary: |-
+      ConfidentialLedgerCreate with cert-based-security-principals
+    syntax: az confidentialledger create --resource-group DummyResourceGroupName --ledger-name DummyLedgerName --ledger-type Public --ledger-sku Standard --location EastUS --cert-based-security-principals "[{cert:'-----BEGIN CERTIFICATE-----MIIBsjCCATigAwIBAgIUZWIbyG79TniQLd2UxJuU74tqrKcwCgYIKoZIzj0EAwMwEDEOMAwGA1UEAwwFdXNlcjAwHhcNMjEwMzE2MTgwNjExWhcNMjIwMzE2MTgwNjExWjAQMQ4wDAYDVQQDDAV1c2VyMDB2MBAGByqGSM49AgEGBSuBBAAiA2IABBiWSo/j8EFit7aUMm5lF+lUmCu+IgfnpFD+7QMgLKtxRJ3aGSqgS/GpqcYVGddnODtSarNE/HyGKUFUolLPQ5ybHcouUk0kyfA7XMeSoUA4lBz63Wha8wmXo+NdBRo39qNTMFEwHQYDVR0OBBYEFPtuhrwgGjDFHeUUT4nGsXaZn69KMB8GA1UdIwQYMBaAFPtuhrwgGjDFHeUUT4nGsXaZn69KMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0EAwMDaAAwZQIxAOnozm2CyqRwSSQLls5r+mUHRGRyXHXwYtM4Dcst/VEZdmS9fqvHRCHbjUlO/+HNfgIwMWZ4FmsjD3wnPxONOm9YdVn/PRD7SsPRPbOjwBiE4EBGaHDsLjYAGDSGi7NJnSkA-----END CERTIFICATE-----',ledger-role-name:Reader}]" --tags "{additionalProps1:'additional properties'}"
   requiredParameters:
   - isRequired: true
     name: --ledger-name --name -n
@@ -41,56 +74,75 @@ directCommands:
   optionalParameters:
   - name: --aad-based-security-principals --aad-based-users
     summary: |-
-      Array of all AAD based Security Principals.
-    description: |-
-      Usage: --aad-based-security-principals principal-id=XX tenant-id=XX ledger-role-name=XX
-
-      principal-id: UUID/GUID based Principal Id of the Security Principal
-      tenant-id: UUID/GUID based Tenant Id of the Security Principal
-      ledger-role-name: LedgerRole associated with the Security Principal of Ledger
-
-      Multiple actions can be specified by using more than one --aad-based-security-principals argument.
+      Array of all AAD based Security Principals.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --application-type
+    parameterValueGroup: "CodeTransparency, ConfidentialLedger"
+    summary: |-
+      Application type of the Confidential Ledger.
   - name: --cert-based-security-principals --cert-based-users
     summary: |-
-      Array of all cert based Security Principals.
-    description: |-
-      Usage: --cert-based-security-principals cert=XX ledger-role-name=XX
-
-      cert: Public key of the user cert (.pem or .cer)
-      ledger-role-name: LedgerRole associated with the Security Principal of Ledger
-
-      Multiple actions can be specified by using more than one --cert-based-security-principals argument.
+      Array of all cert based Security Principals.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enclave-platform
+    parameterValueGroup: "AmdSevSnp, IntelSgx"
+    summary: |-
+      Enclave platform of the Confidential Ledger.
+  - name: --host-level
+    summary: |-
+      CCF Property for the logging level for the untrusted host: Trace, Debug, Info, Fail, Fatal.
+  - name: --ledger-sku
+    parameterValueGroup: "Basic, Standard, Unknown"
+    summary: |-
+      SKU associated with the ledger.
   - name: --ledger-type
     parameterValueGroup: "Private, Public, Unknown"
     summary: |-
       Type of Confidential Ledger.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+  - name: --max-body-size-in-mb
+    summary: |-
+      CCF Property for the maximum size of the http request body: 1MB, 5MB, 10MB.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --node-count
+    summary: |-
+      Number of CCF nodes in the ACC Ledger.
+  - name: --running-state
+    parameterValueGroup: "Active, Paused, Pausing, Resuming, Unknown"
+    summary: |-
+      Object representing RunningState for Ledger.
+  - name: --subject-name
+    summary: |-
+      CCF Property for the subject name to include in the node certificate. Default: CN=CCF Node.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --worker-threads
+    summary: |-
+      Number of additional threads processing incoming client requests in the enclave (modify with care!).
+  - name: --write-lb-address-prefix --write-lb-prefix
+    summary: |-
+      Prefix for the write load balancer. Example: write.
 - uid: az_confidentialledger_delete
   name: az confidentialledger delete
   summary: |-
-    Deletes an existing Confidential Ledger.
+    Delete an existing Confidential Ledger.
   status: GA
   sourceType: Extension
   syntax: >-
     az confidentialledger delete [--ids]
                                  [--ledger-name]
-                                 [--no-wait]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--resource-group]
                                  [--subscription]
                                  [--yes]
   examples:
   - summary: |-
       ConfidentialLedgerDelete
-    syntax: az confidentialledger delete --name "DummyLedgerName" --resource-group "DummyResourceGroupName"
+    syntax: az confidentialledger delete --resource-group DummyResourceGroupName --ledger-name DummyLedgerName
   optionalParameters:
   - name: --ids
     summary: |-
@@ -99,7 +151,7 @@ directCommands:
     summary: |-
       Name of the Confidential Ledger.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
@@ -115,30 +167,38 @@ directCommands:
 - uid: az_confidentialledger_list
   name: az confidentialledger list
   summary: |-
-    Retrieves the properties of all Confidential Ledgers. And Retrieves the properties of all Confidential Ledgers.
+    List the properties of all Confidential Ledgers.
   status: GA
   sourceType: Extension
   syntax: >-
     az confidentialledger list [--filter]
+                               [--max-items]
+                               [--next-token]
                                [--resource-group]
   examples:
   - summary: |-
-      ConfidentialLedgerList
-    syntax: az confidentialledger list --resource-group "DummyResourceGroupName"
-  - summary: |-
       ConfidentialLedgerListBySub
     syntax: az confidentialledger list
+  - summary: |-
+      ConfidentialLedgerListByResourceGroup
+    syntax: az confidentialledger list --resource-group DummyResourceGroupName
   optionalParameters:
   - name: --filter
     summary: |-
       The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'.
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_confidentialledger_show
   name: az confidentialledger show
   summary: |-
-    Retrieves the properties of a Confidential Ledger.
+    Get the properties of a Confidential Ledger.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -149,7 +209,7 @@ directCommands:
   examples:
   - summary: |-
       ConfidentialLedgerGet
-    syntax: az confidentialledger show --name "DummyLedgerName" --resource-group "DummyResourceGroupName"
+    syntax: az confidentialledger show --resource-group DummyResourceGroupName --ledger-name DummyLedgerName
   optionalParameters:
   - name: --ids
     summary: |-
@@ -166,76 +226,118 @@ directCommands:
 - uid: az_confidentialledger_update
   name: az confidentialledger update
   summary: |-
-    Updates properties of Confidential Ledger.
+    Update a  Confidential Ledger with the specified ledger parameters.
   status: GA
   sourceType: Extension
   syntax: >-
     az confidentialledger update [--aad-based-security-principals]
+                                 [--add]
+                                 [--application-type {CodeTransparency, ConfidentialLedger}]
                                  [--cert-based-security-principals]
+                                 [--enclave-platform {AmdSevSnp, IntelSgx}]
+                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--host-level]
                                  [--ids]
                                  [--ledger-name]
+                                 [--ledger-sku {Basic, Standard, Unknown}]
                                  [--ledger-type {Private, Public, Unknown}]
-                                 [--location]
-                                 [--no-wait]
+                                 [--max-body-size-in-mb]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--node-count]
+                                 [--remove]
                                  [--resource-group]
+                                 [--running-state {Active, Paused, Pausing, Resuming, Unknown}]
+                                 [--set]
+                                 [--subject-name]
                                  [--subscription]
                                  [--tags]
+                                 [--worker-threads]
+                                 [--write-lb-address-prefix]
   examples:
   - summary: |-
       ConfidentialLedgerUpdate
-    syntax: az confidentialledger update --location "EastUS" --aad-based-security-principals ledger-role-name="Administrator" principal-id="34621747-6fc8-4771-a2eb-72f31c461f2e" tenant-id="bce123b9-2b7b-4975-8360-5ca0b9b1cd08" --cert-based-security-principals cert="-----BEGIN CERTIFICATE-----\nMIIDUjCCAjqgAwIBAgIQJ2IrDBawSkiAbkBYmiAopDANBgkqhkiG9w0BAQsFADAmMSQwIgYDVQQDExtTeW50aGV0aWNzIExlZGdlciBVc2VyIENlcnQwHhcNMjAwOTIzMjIxODQ2WhcNMjEwOTIzMjIyODQ2WjAmMSQwIgYDVQQDExtTeW50aGV0aWNzIExlZGdlciBVc2VyIENlcnQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCX2s/Eu4q/eQ63N+Ugeg5oAciZua/YCJr41c/696szvSY7Zg1SNJlW88/nbz70+QpO55OmqlEE3QCU+T0Vl/h0Gf//n1PYcoBbTGUnYEmV+fTTHict6rFiEwrGJ62tvcpYgwapInSLyEeUzjki0zhOLJ1OfRnYd1eGnFVMpE5aVjiS8Q5dmTEUyd51EIprGE8RYAW9aeWSwTH7gjHUsRlJnHKcdhaK/v5QKJnNu5bzPFUcpC0ZBcizoMPAtroLAD4B68Jl0z3op18MgZe6lRrVoWuxfqnk5GojuB/Vu8ohAZKoFhQ6NB6r+LL2AUs+Zr7Bt26IkEdR178n9JMEA4gHAgMBAAGjfDB6MA4GA1UdDwEB/wQEAwIFoDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBS/a7PU9iOfOKEyZCp11Oen5VSuuDAdBgNVHQ4EFgQUv2uz1PYjnzihMmQqddTnp+VUrrgwDQYJKoZIhvcNAQELBQADggEBAF5q2fDwnse8egXhfaJCqqM969E9gSacqFmASpoDJPRPEX7gqoO7v1ww7nqRtRDoRiBvo/yNk7jlSAkRN3nRRnZLZZ3MYQdmCr4FGyIqRg4Y94+nja+Du9pDD761rxRktMVPSOaAVM/E5DQvscDlPvlPYe9mkcrLCE4DXYpiMmLT8Tm55LJJq5m07dVDgzAIR1L/hmEcbK0pnLgzciMtMLxGO2udnyyW/UW9WxnjvrrD2JluTHH9mVbb+XQP1oFtlRBfH7aui1ZgWfKvxrdP4zdK9QoWSUvRux3TLsGmHRBjBMtqYDY3y5mB+aNjLelvWpeVb0m2aOSVXynrLwNCAVA=\n-----END CERTIFICATE-----" ledger-role-name="Reader" --ledger-type "Public" --tags additionProps2="additional property value" additionalProps1="additional properties" --name "DummyLedgerName" --resource-group "DummyResourceGroupName"
+    syntax: az confidentialledger update --resource-group DummyResourceGroupName --ledger-name DummyLedgerName --location EastUS --aad-based-security-principals "[{principal-id:34621747-6fc8-4771-a2eb-72f31c461f2e,tenant-id:bce123b9-2b7b-4975-8360-5ca0b9b1cd08,ledger-role-name:Contributor}]" --tags "{additionalProps1:'additional update properties'}"
   optionalParameters:
   - name: --aad-based-security-principals --aad-based-users
     summary: |-
-      Array of all AAD based Security Principals.
-    description: |-
-      Usage: --aad-based-security-principals principal-id=XX tenant-id=XX ledger-role-name=XX
-
-      principal-id: UUID/GUID based Principal Id of the Security Principal
-      tenant-id: UUID/GUID based Tenant Id of the Security Principal
-      ledger-role-name: LedgerRole associated with the Security Principal of Ledger
-
-      Multiple actions can be specified by using more than one --aad-based-security-principals argument.
+      Array of all AAD based Security Principals.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --application-type
+    parameterValueGroup: "CodeTransparency, ConfidentialLedger"
+    summary: |-
+      Application type of the Confidential Ledger.
   - name: --cert-based-security-principals --cert-based-users
     summary: |-
-      Array of all cert based Security Principals.
-    description: |-
-      Usage: --cert-based-security-principals cert=XX ledger-role-name=XX
-
-      cert: Public key of the user cert (.pem or .cer)
-      ledger-role-name: LedgerRole associated with the Security Principal of Ledger
-
-      Multiple actions can be specified by using more than one --cert-based-security-principals argument.
+      Array of all cert based Security Principals.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enclave-platform
+    parameterValueGroup: "AmdSevSnp, IntelSgx"
+    summary: |-
+      Enclave platform of the Confidential Ledger.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --host-level
+    summary: |-
+      CCF Property for the logging level for the untrusted host: Trace, Debug, Info, Fail, Fatal.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --ledger-name --name -n
     summary: |-
       Name of the Confidential Ledger.
+  - name: --ledger-sku
+    parameterValueGroup: "Basic, Standard, Unknown"
+    summary: |-
+      SKU associated with the ledger.
   - name: --ledger-type
     parameterValueGroup: "Private, Public, Unknown"
     summary: |-
       Type of Confidential Ledger.
-  - name: --location -l
+  - name: --max-body-size-in-mb
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      CCF Property for the maximum size of the http request body: 1MB, 5MB, 10MB.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --node-count
+    summary: |-
+      Number of CCF nodes in the ACC Ledger.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --running-state
+    parameterValueGroup: "Active, Paused, Pausing, Resuming, Unknown"
+    summary: |-
+      Object representing RunningState for Ledger.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --subject-name
+    summary: |-
+      CCF Property for the subject name to include in the node certificate. Default: CN=CCF Node.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --worker-threads
+    summary: |-
+      Number of additional threads processing incoming client requests in the enclave (modify with care!).
+  - name: --write-lb-address-prefix --write-lb-prefix
+    summary: |-
+      Prefix for the write load balancer. Example: write.
 - uid: az_confidentialledger_wait
   name: az confidentialledger wait
   summary: |-
-    Place the CLI in a waiting state until a condition of the confidentialledger is met.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -250,16 +352,6 @@ directCommands:
                                [--subscription]
                                [--timeout]
                                [--updated]
-  examples:
-  - summary: |-
-      Pause executing next line of CLI script until the confidentialledger is successfully created.
-    syntax: az confidentialledger wait --name "DummyLedgerName" --resource-group "DummyResourceGroupName" --created
-  - summary: |-
-      Pause executing next line of CLI script until the confidentialledger is successfully updated.
-    syntax: az confidentialledger wait --name "DummyLedgerName" --resource-group "DummyResourceGroupName" --updated
-  - summary: |-
-      Pause executing next line of CLI script until the confidentialledger is successfully deleted.
-    syntax: az confidentialledger wait --name "DummyLedgerName" --resource-group "DummyResourceGroupName" --deleted
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -301,6 +393,7 @@ directCommands:
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
 commands:
+- az_confidentialledger_check-name-availability
 - az_confidentialledger_create
 - az_confidentialledger_delete
 - az_confidentialledger_list

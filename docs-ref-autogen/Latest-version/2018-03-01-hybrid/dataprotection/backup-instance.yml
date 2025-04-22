@@ -4,7 +4,7 @@ name: az dataprotection backup-instance
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage backup instance with dataprotection.
 status: GA
@@ -148,6 +148,8 @@ directCommands:
                                                  --policy-id
                                                  [--backup-configuration]
                                                  [--friendly-name]
+                                                 [--mi-system-assigned {false, true}]
+                                                 [--mi-user-assigned]
                                                  [--secret-store-type {AzureKeyVault}]
                                                  [--secret-store-uri]
                                                  [--snapshot-resource-group-name]
@@ -181,6 +183,13 @@ directCommands:
   - name: --friendly-name
     summary: |-
       User-defined friendly name for the backup instance.
+  - name: --mi-system-assigned --use-system-assigned-identity --use-system-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use system assigned identity.
+  - name: --mi-user-assigned --uami --user-assigned-identity-arm-url
+    summary: |-
+      ARM ID of the User Assigned Managed Identity.
   - name: --secret-store-type
     parameterValueGroup: "AzureKeyVault"
     summary: |-
@@ -592,6 +601,8 @@ directCommands:
                                              --vault-name
                                              [--container-blob-list]
                                              [--no-wait]
+                                             [--system-assigned {false, true}]
+                                             [--uami]
   examples:
   - summary: |-
       Update backed up containers for a vaulted blob backup instance
@@ -617,6 +628,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --system-assigned --use-system-assigned-identity --use-system-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use system assigned identity.
+  - name: --uami --user-assigned --user-assigned-identity-arm-url
+    summary: |-
+      ARM ID of the User Assigned Managed Identity.
 - uid: az_dataprotection_backup-instance_update-msi-permissions
   name: az dataprotection backup-instance update-msi-permissions
   summary: |-
@@ -634,6 +652,7 @@ directCommands:
                                                              [--restore-request-object]
                                                              [--snapshot-resource-group-id]
                                                              [--target-storage-account-id]
+                                                             [--uami]
                                                              [--yes]
   examples:
   - summary: |-
@@ -682,6 +701,9 @@ directCommands:
   - name: --target-storage-account-id
     summary: |-
       ARM id of the target storage account. Required when assigning permissions over target storage account and the --operation is Restore.
+  - name: --uami --user-assigned --user-assigned-identity-arm-url
+    summary: |-
+      ARM ID of the User Assigned Managed Identity to be used for assigning permissions. Required if the vault does not have a System Assigned Identity associated with it, and can also be used if the vault does have one.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -823,6 +845,52 @@ directCommands:
   - name: --vault-name -v
     summary: |-
       Name of the backup vault.
+- uid: az_dataprotection_backup-instance_validate-for-update
+  name: az dataprotection backup-instance validate-for-update
+  summary: |-
+    Validate whether update for backup instance will be successful or not.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az dataprotection backup-instance validate-for-update --backup-instance-name
+                                                          --resource-group
+                                                          --vault-name
+                                                          [--container-blob-list]
+                                                          [--no-wait]
+                                                          [--system-assigned {false, true}]
+                                                          [--uami]
+  examples:
+  - summary: |-
+      Validate for modify backup
+    syntax: az dataprotection backup-instance validate-for-update -g testRG -v testVault --backup-instance-name "testdisk-testdisk-00000000-0000-0000-0000-0000000000000" --uami "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuami"
+  requiredParameters:
+  - isRequired: true
+    name: --backup-instance-name
+    summary: |-
+      Backup instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --vault-name -v
+    summary: |-
+      Name of the backup vault.
+  optionalParameters:
+  - name: --container-blob-list --vaulted-blob-container-list
+    summary: |-
+      Enter the container list to modify a vaulted blob backup. The output for 'az dataprotection backup-instance initialize-backupconfig' needs to be provided as input.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --system-assigned --use-system-assigned-identity --use-system-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use system assigned identity.
+  - name: --uami --user-assigned --user-assigned-identity-arm-url
+    summary: |-
+      ARM ID of the User Assigned Managed Identity.
 - uid: az_dataprotection_backup-instance_wait
   name: az dataprotection backup-instance wait
   summary: |-
@@ -912,6 +980,7 @@ commands:
 - az_dataprotection_backup-instance_update-policy
 - az_dataprotection_backup-instance_validate-for-backup
 - az_dataprotection_backup-instance_validate-for-restore
+- az_dataprotection_backup-instance_validate-for-update
 - az_dataprotection_backup-instance_wait
 globalParameters:
 - name: --debug
