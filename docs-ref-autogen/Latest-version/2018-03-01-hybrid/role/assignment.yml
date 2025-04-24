@@ -41,7 +41,7 @@ directCommands:
       Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.
   - name: --assignee-object-id
     summary: |-
-      Use this parameter instead of '--assignee' to bypass Graph API invocation in case of insufficient privileges. This parameter only works with object ids for users, groups, service principals, and managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id.
+      The assignee's object ID (also known as principal ID). Use this argument instead of '--assignee' to bypass Microsoft Graph query in case the logged-in account has no permission or the machine has no network access to query Microsoft Graph.
   - name: --name -n
     summary: |-
       A GUID for the role assignment. It must be unique and different for each role assignment. If omitted, a new GUID is generated.
@@ -56,6 +56,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
   syntax: >-
     az role assignment delete [--assignee]
+                              [--assignee-object-id]
                               [--ids]
                               [--include-inherited]
                               [--resource-group]
@@ -69,10 +70,16 @@ directCommands:
   - summary: |-
       Delete all role assignments of an assignee at the subscription scope.
     syntax: az role assignment delete --assignee 00000000-0000-0000-0000-000000000000 --scope /subscriptions/00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Delete all role assignments of an assignee (with its object ID) at the subscription scope.
+    syntax: az role assignment delete --assignee-object-id 00000000-0000-0000-0000-000000000000 --scope /subscriptions/00000000-0000-0000-0000-000000000000
   optionalParameters:
   - name: --assignee
     summary: |-
       Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.
+  - name: --assignee-object-id
+    summary: |-
+      The assignee's object ID (also known as principal ID). Use this argument instead of '--assignee' to bypass Microsoft Graph query in case the logged-in account has no permission or the machine has no network access to query Microsoft Graph.
   - name: --ids
     summary: |-
       Space-separated role assignment ids.
@@ -98,15 +105,15 @@ directCommands:
     List role assignments.
   description: |-
     By default, only assignments scoped to subscription will be displayed. To view assignments scoped by resource or group, use `--all`.
-
-    [WARNING] Azure classic subscription administrators will be retired on August 31, 2024. After August 31, 2024, all classic administrators risk losing access to the subscription. Delete classic administrators who no longer need access or assign an Azure RBAC role for fine-grained access control. Learn more: https://go.microsoft.com/fwlink/?linkid=2238474.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
   syntax: >-
     az role assignment list [--all]
                             [--assignee]
-                            [--include-classic-administrators {false, true}]
+                            [--assignee-object-id]
+                            [--fill-principal-name {false, true}]
+                            [--fill-role-definition-name {false, true}]
                             [--include-groups]
                             [--include-inherited]
                             [--resource-group]
@@ -114,11 +121,20 @@ directCommands:
                             [--scope]
   examples:
   - summary: |-
-      List all role assignments with "Reader" role at the subscription scope.
+      List role assignments at the subscription scope.
+    syntax: az role assignment list --scope /subscriptions/00000000-0000-0000-0000-000000000000
+  - summary: |-
+      List role assignments at the subscription scope, without filling roleDefinitionName property.
+    syntax: az role assignment list --scope /subscriptions/00000000-0000-0000-0000-000000000000 --fill-role-definition-name false
+  - summary: |-
+      List role assignments with "Reader" role at the subscription scope.
     syntax: az role assignment list --role Reader --scope /subscriptions/00000000-0000-0000-0000-000000000000
   - summary: |-
-      List all role assignments of an assignee at the subscription scope.
+      List role assignments of an assignee at the subscription scope.
     syntax: az role assignment list --assignee 00000000-0000-0000-0000-000000000000 --scope /subscriptions/00000000-0000-0000-0000-000000000000
+  - summary: |-
+      List role assignments of an assignee (with its object ID) at the subscription scope, without filling principalName property. This command does not query Microsoft Graph.
+    syntax: az role assignment list --assignee-object-id 00000000-0000-0000-0000-000000000000 --scope /subscriptions/00000000-0000-0000-0000-000000000000 --fill-principal-name false
   optionalParameters:
   - name: --all
     defaultValue: "False"
@@ -127,17 +143,23 @@ directCommands:
   - name: --assignee
     summary: |-
       Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.
-  - name: --include-classic-administrators
-    defaultValue: "False"
+  - name: --assignee-object-id
+    summary: |-
+      The assignee's object ID (also known as principal ID). Use this argument instead of '--assignee' to bypass Microsoft Graph query in case the logged-in account has no permission or the machine has no network access to query Microsoft Graph.
+  - name: --fill-principal-name
+    defaultValue: "True"
     parameterValueGroup: "false, true"
     summary: |-
-      List default role assignments for subscription classic administrators, aka co-admins.
-    isDeprecated: true
-    deprecateInfo: Argument '--include-classic-administrators' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+      Query Microsoft Graph to get the assignee's userPrincipalName (for user), servicePrincipalNames (for service principal) or displayName (for group), then fill principalName property with it. If the logged-in account has no permission or the machine has no network access to query Microsoft Graph, set this flag to false to avoid warning or error.
+  - name: --fill-role-definition-name
+    defaultValue: "True"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Fill roleDefinitionName property in addition to roleDefinitionId. This operation is expensive. If you encounter performance issue, set this flag to false.
   - name: --include-groups
     defaultValue: "False"
     summary: |-
-      Include extra assignments to the groups of which the user is a member(transitively).
+      Include extra assignments to the groups of which the user is a member (transitively).
   - name: --include-inherited
     defaultValue: "False"
     summary: |-
@@ -198,5 +220,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 01/20/2025
+  ms.date: 04/23/2025
   description: Manage role assignments.

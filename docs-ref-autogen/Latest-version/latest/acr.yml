@@ -159,7 +159,10 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
-  syntax: az acr check-name --name
+  syntax: >-
+    az acr check-name --name
+                      [--dnl-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse, Unsecure}]
+                      [--resource-group]
   examples:
   - summary: |-
       Check if a registry name already exists.
@@ -169,6 +172,16 @@ directCommands:
     name: --name -n
     summary: |-
       The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+  optionalParameters:
+  - name: --dnl-scope
+    defaultValue: "Unsecure"
+    parameterValueGroup: "NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse, Unsecure"
+    summary: |-
+      Domain name label scope will add a hash to the resource name . The resulting login server name will be in the format `registry-name`-`hash`.azurecr-io. Default is Unsecure.
+    isPreview: true
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_acr_create
   name: az acr create
   summary: |-
@@ -185,6 +198,7 @@ directCommands:
                   [--allow-metadata-search {false, true}]
                   [--allow-trusted-services {false, true}]
                   [--default-action {Allow, Deny}]
+                  [--dnl-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse, Unsecure}]
                   [--identity]
                   [--key-encryption-key]
                   [--location]
@@ -235,6 +249,11 @@ directCommands:
     parameterValueGroup: "Allow, Deny"
     summary: |-
       Default action to apply when no rule matches. Only applicable to Premium SKU.
+  - name: --dnl-scope
+    parameterValueGroup: "NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse, Unsecure"
+    summary: |-
+      Domain name label scope will add a hash to the resource name. The resulting login server name will be in the format `registryname`-`hash`.azurecr-io. Default is Unsecure.
+    isPreview: true
   - name: --identity
     summary: |-
       Use assigned managed identity resource id or name if in the same resource group.

@@ -179,11 +179,14 @@ directCommands:
                                 [--subscription]
   examples:
   - summary: |-
-      Import an SSL or App Service Certificate certificate to a web app from Key Vault.
+      Import an SSL or App Service Certificate certificate to a web app from Key Vault. Note that all webapps in the webspace will also be able to use the certificate.
     syntax: az webapp config ssl import --resource-group MyResourceGroup --name MyWebapp --key-vault MyKeyVault --key-vault-certificate-name MyCertificateName
   - summary: |-
-      Import an SSL or App Service Certificate to a web app from Key Vault using resource id (typically if Key Vault is in another subscription).
+      Import an SSL or App Service Certificate to a web app from Key Vault using resource id (typically if Key Vault is in another subscription). Note that all webapps in the webspace will also be able to use the certificate.
     syntax: az webapp config ssl import --resource-group MyResourceGroup --name MyWebapp --key-vault '/subscriptions/[sub id]/resourceGroups/[rg]/providers/Microsoft.KeyVault/vaults/[vault name]' --key-vault-certificate-name MyCertificateName
+  - summary: |-
+      Import an SSL or App Service Certificate certificate to a webspace from Key Vault. Note that all webapps in the webspace will also be able to use the certificate.
+    syntax: az webapp config ssl import --resource-group MyResourceGroup --key-vault MyKeyVault --key-vault-certificate-name MyCertificateName
   requiredParameters:
   - isRequired: true
     name: --key-vault
@@ -202,7 +205,7 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
     summary: |-
-      Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
+      Name of the web app. This is used to set the location of the webspace for the certificate import. If not specified, the location of the resource group will be used. If you have apps in multiple regions/webspaces, you must specify the name of the app to set the location of the webspace for the certificate import.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.

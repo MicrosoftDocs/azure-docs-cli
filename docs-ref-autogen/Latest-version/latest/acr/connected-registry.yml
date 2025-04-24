@@ -21,6 +21,8 @@ directCommands:
     az acr connected-registry create --name
                                      --registry
                                      [--client-tokens]
+                                     [--gc-enabled {false, true}]
+                                     [--gc-schedule]
                                      [--log-level]
                                      [--mode {ReadOnly, ReadWrite}]
                                      [--notifications]
@@ -62,6 +64,15 @@ directCommands:
   - name: --client-tokens
     summary: |-
       Specify the client access to the repositories in the connected registry. It can be in the format [TOKEN_NAME01] [TOKEN_NAME02]...
+  - name: --gc-enabled
+    defaultValue: "true"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Indicate whether garbage collection is enabled. It is enabled by default.
+  - name: --gc-schedule
+    defaultValue: "0 0 * * *"
+    summary: |-
+      Used to determine garbage collection schedule. Uses cron expression to determine the schedule. If not specified, garbage collection is set to run once a day.
   - name: --log-level
     defaultValue: "Information"
     summary: |-
@@ -342,6 +353,8 @@ directCommands:
                                      --registry
                                      [--add-client-tokens]
                                      [--add-notifications]
+                                     [--gc-enabled {false, true}]
+                                     [--gc-schedule]
                                      [--log-level]
                                      [--remove-client-tokens]
                                      [--remove-notifications]
@@ -376,6 +389,13 @@ directCommands:
   - name: --add-notifications
     summary: |-
       List of artifact pattern to be added to notifications list. Use the format "--add-notifications [PATTERN1 PATTERN2 ...]".
+  - name: --gc-enabled
+    parameterValueGroup: "false, true"
+    summary: |-
+      Indicate whether garbage collection is enabled. It is enabled by default.
+  - name: --gc-schedule
+    summary: |-
+      Used to determine garbage collection schedule. Uses cron expression to determine the schedule. If not specified, garbage collection is set to run once a day.
   - name: --log-level
     summary: |-
       Set the log level for logging on the instance. Accepted log levels are Debug, Information, Warning, Error, and None.
