@@ -13,6 +13,25 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 
 This page highlights new features and upcoming changes for the Azure CLI.
 
+## Important notice for Azure Stack Hub customers
+
+> [!IMPORTANT]
+> If you're using **Azure Stack Hub**, do not upgrade Azure CLI beyond version 2.66.x.
+
+Starting with **Azure CLI 2.73.0**, Azure profiles are deprecated and no longer supported:
+
+- `2017-03-09-profile`
+- `2018-03-01-hybrid`
+- `2019-03-01-hybrid`
+- `2020-09-01-hybrid`
+
+These profiles are required for Azure Stack Hub compatibility. Newer versions of Azure CLI do
+**not** include them. To ensure compatibility with Azure Stack Hub, use **Azure CLI version 2.66.x
+(LTS)**.
+
+If you upgrade to a newer version of Azure CLI, you must roll back to version **2.66.x** to restore
+Azure Stack Hub compatibility.
+
 ## Multifactor authentication (MFA)
 
 [!INCLUDE [MFA](includes/multifactor-authentication.md)]
