@@ -4,7 +4,6 @@ title: The impact of multifactor authentication on Azure CLI in automation scena
 ms.custom: devx-track-azurecli
 ms.service: azure-cli
 ms.topic: conceptual
-ms.date: 03/17/2025
 ---
 
 # The impact of multifactor authentication on Azure CLI in automation scenarios
@@ -33,10 +32,10 @@ cases.
   authentication is handled in a non-interactive way, such as with a managed identity or service
   principal.
 
-- **Scripted login failures**: In automation scenarios like running Azure CLI scripts
-  unattended, an MFA-enabled user identity causes the script to fail when trying to authenticate.
-  Since MFA requires user interaction, it's incompatible with non-interactive scripts. This means
-  you must switch to a managed identity or service principal, both of which use non-interactive
+- **Scripted login failures**: In automation scenarios like running Azure CLI scripts unattended, an
+  MFA-enabled user identity causes the script to fail when trying to authenticate. Since MFA
+  requires user interaction, it's incompatible with non-interactive scripts. This means you must
+  switch to a managed identity or service principal, both of which use non-interactive
   authentication.
 
 - **Security considerations**: While MFA adds an extra layer of security, it can limit automation
@@ -86,21 +85,26 @@ mandatory MFA enforcement for Microsoft Entra user identities.
 
 ## How to begin
 
-To migrate your Azure CLI scripts from using `az login` with a Microsoft Entra ID human user account and password, follow these steps:
+To migrate your Azure CLI scripts from using `az login` with a Microsoft Entra ID human user account
+and password, follow these steps:
 
 1. Determine which workload identity is best for you.
    - Service principal
    - Managed identity
    - Federated identity
 
-1. Obtain the needed permissions to create a new workload identity, or contact your Azure administrator for assistance.
+1. Obtain the needed permissions to create a new workload identity, or contact your Azure
+   administrator for assistance.
 1. Create the workload identity.
-1. Assign roles to the new identity. For more information on Azure role assignments, see [Steps to assign an Azure role](/azure/role-based-access-control/role-assignments-steps). To assign roles using the Azure CLI, see [Assign Azure roles using Azure CLI](/azure/role-based-access-control/role-assignments-cli).
+1. Assign roles to the new identity. For more information on Azure role assignments, see
+   [Steps to assign an Azure role][03]. To assign roles using the Azure CLI, see
+   [Assign Azure roles using Azure CLI][02].
 1. Update your Azure CLI scripts to sign in with a service principal or managed identity.
 
 ### Service principal key concepts
 
-- A nonhuman identity that can access multiple Azure resources. A service principal is used by many Azure resources and isn't tied to a single Azure resource.
+- A nonhuman identity that can access multiple Azure resources. A service principal is used by many
+  Azure resources and isn't tied to a single Azure resource.
 - You can alter properties and credentials of a service principal as needed.
 - Ideal for applications that need to access multiple Azure resources across different subscriptions.
 - Considered more flexible than managed identities but less secure.
@@ -108,10 +112,11 @@ To migrate your Azure CLI scripts from using `az login` with a Microsoft Entra I
 
 To learn more about service principals, see:
 
-- [Apps & service principals in Microsoft Entra ID][apps-sp-entra]
-- [Securing service principals in Microsoft Entra ID][service-principals-entra]
+- [Apps & service principals in Microsoft Entra ID][07]
+- [Securing service principals in Microsoft Entra ID][06]
 
-To learn how to log into Azure using Azure CLI and a service principal, see [Sign into Azure with a service principal using Azure CLI][auth-sp]
+To learn how to log into Azure using Azure CLI and a service principal, see
+[Sign into Azure with a service principal using Azure CLI][05]
 
 ### Managed identity key concepts
 
@@ -121,17 +126,22 @@ To learn how to log into Azure using Azure CLI and a service principal, see [Sig
 - Considered less flexible than service principals but more secure.
 - There are two types of managed identities:
   - **System assigned**: This type is a 1:1 (one to one) access link between two Azure resources.
-  - **User assigned**: This type has a 1:M (one to many) relationship where the managed identity can access multiple Azure resources.
+  - **User assigned**: This type has a 1:M (one to many) relationship where the managed identity can
+    access multiple Azure resources.
 
-To learn more about managed identities, see [Managed identities for Azure resources][managed-identities].
+To learn more about managed identities, see [Managed identities for Azure resources][13].
 
-To learn how to log into Azure using Azure CLI and a managed identity, see [Sign into Azure with a managed identity using Azure CLI][auth-managed-identity]
+To learn how to log into Azure using Azure CLI and a managed identity, see
+[Sign into Azure with a managed identity using Azure CLI][04]
 
 ### Federated identity key concepts
 
-- A federated identity allows service principals (app registrations) and user-assigned managed identities to trust tokens from an external identity provider (IdP), such as GitHub or Google.
-- Once the trust relationship is created, your external software workload exchanges trusted tokens from the external IdP for access tokens from the Microsoft identity platform.
-- Your software workload uses that access token to access the Microsoft Entra protected resources to which the workload is granted access.
+- A federated identity allows service principals (app registrations) and user-assigned managed
+  identities to trust tokens from an external identity provider (IdP), such as GitHub or Google.
+- Once the trust relationship is created, your external software workload exchanges trusted tokens
+  from the external IdP for access tokens from the Microsoft identity platform.
+- Your software workload uses that access token to access the Microsoft Entra protected resources to
+  which the workload is granted access.
 - Federated identities are often the best solution for the following scenarios:
   - Workload running on any Kubernetes cluster
   - GitHub Actions
@@ -142,14 +152,15 @@ To learn how to log into Azure using Azure CLI and a managed identity, see [Sign
 
 To learn more about federated identities, see:
 
-- [What is workload identity federation?][identity-federations]
-- [Migrate to Microsoft Entra multifactor authentication with federations][mfa-federations]
+- [What is workload identity federation?][15]
+- [Migrate to Microsoft Entra multifactor authentication with federations][11]
 
 ## Troubleshooting
 
 ### ROPC error: Due to a configuration change made by your administrator
 
-When you try to sign into Azure by using a password, this is known as ROPC flow (Resource Owner Password Credential). This authentication method is not supported with MFA. Here's an example:
+When you try to sign into Azure by using a password, this is known as ROPC flow (Resource Owner
+Password Credential). This authentication method is not supported with MFA. Here's an example:
 
 ```
 az login --username $username –password $password
@@ -171,7 +182,9 @@ If you have access to several tenants and one of them requires MFA, the Azure CL
 Authentication failed against tenant 00000000-0000-0000-0000-000000000000 'Tenant Name': AADSTSXXXXX: Due to a configuration change made by your administrator, or because you moved to a new location, you must use multi-factor authentication to access '00000000-0000-0000-0000-000000000000'. Trace ID: 00000000-0000-0000-0000-000000000000 Correlation ID: 00000000-0000-0000-0000-000000000000 Timestamp: yyyy-mm-dd hh:mm:ss.
 ```
 
-During the login phase, Azure CLI tries to sign in with _the first tenant found_. While we are working towards a resolution for this issue, specify the tenant you want to use with the `--tenant` parameter:
+During the login phase, Azure CLI tries to sign in with _the first tenant found_. While we are
+working towards a resolution for this issue, specify the tenant you want to use with the `--tenant`
+parameter:
 
 ```azurecli
 az login --tenant 00000000-0000-0000-0000-000000000000
@@ -181,35 +194,34 @@ az login --tenant 00000000-0000-0000-0000-000000000000
 
 The Microsoft Entra ID documentation site offers more detail on MFA.
 
-- [Plan for mandatory Microsoft Entra multifactor authentication (MFA)][plan-entra-mfa]
-- [How to use the MFA Server Migration Utility to migrate to Microsoft Entra multifactor authentication][mfa-migrate-util]
-- [Deployment considerations for Microsoft Entra multifactor authentication][deploy-considerations-entra-mfa]
-- [Migrate from MFA Server to Microsoft Entra multifactor authentication][migrate-mfa-server-entra]
+- [Plan for mandatory Microsoft Entra multifactor authentication (MFA)][08]
+- [How to use the MFA Server Migration Utility to migrate to Microsoft Entra multifactor authentication][09]
+- [Deployment considerations for Microsoft Entra multifactor authentication][12]
+- [Migrate from MFA Server to Microsoft Entra multifactor authentication][10]
 
 ## See also
 
-- [Workload identities, other machine identities, and human identities][workload-identities].
-- [Azure CLI reference command index for Azure identities](./manage-azure-identities-azure-cli.md)
-- [Reducing personal access token (PAT) usage across Azure DevOps][pat-ado-blog]
-- [Improve security posture in Azure service connections with AzurePipelinesCredential][fic-serviceconn-blog]
+- [Workload identities, other machine identities, and human identities][14].
+- [Azure CLI reference command index for Azure identities][01]
+- [Reducing personal access token (PAT) usage across Azure DevOps][17]
+- [Improve security posture in Azure service connections with AzurePipelinesCredential][16]
 
 <!-- link references -->
 
-[apps-sp-entra]: /entra/identity-platform/app-objects-and-service-principals
-[service-principals-entra]: /entra/architecture/service-accounts-principal
-[auth-sp]: /cli/azure/authenticate-azure-cli-service-principal
-
-[managed-identities]: /entra/identity/managed-identities-azure-resources/overview
-[auth-managed-identity]: /cli/azure/authenticate-azure-cli-managed-identity
-
-[identity-federations]: /entra/workload-id/workload-identity-federation
-[mfa-federations]: /entra/identity/authentication/how-to-migrate-mfa-server-to-mfa-with-federation
-
-[plan-entra-mfa]: /entra/identity/authentication/concept-mandatory-multifactor-authentication
-[mfa-migrate-util]: /entra/identity/authentication/how-to-mfa-server-migration-utility
-[deploy-considerations-entra-mfa]: /entra/identity/authentication/howto-mfa-getstarted
-[migrate-mfa-server-entra]: /entra/identity/authentication/how-to-migrate-mfa-server-to-azure-mfa
-
-[workload-identities]: /entra/workload-id/workload-identities-overview#workload-identities-other-machine-identities-and-human-identities
-[pat-ado-blog]: https://devblogs.microsoft.com/devops/reducing-pat-usage-across-azure-devops/
-[fic-serviceconn-blog]: https://devblogs.microsoft.com/azure-sdk/improve-security-posture-in-azure-service-connections-with-azurepipelinescredential/
+[01]: ./manage-azure-identities-azure-cli.md
+[02]: /azure/role-based-access-control/role-assignments-cli
+[03]: /azure/role-based-access-control/role-assignments-steps
+[04]: /cli/azure/authenticate-azure-cli-managed-identity
+[05]: /cli/azure/authenticate-azure-cli-service-principal
+[06]: /entra/architecture/service-accounts-principal
+[07]: /entra/identity-platform/app-objects-and-service-principals
+[08]: /entra/identity/authentication/concept-mandatory-multifactor-authentication
+[09]: /entra/identity/authentication/how-to-mfa-server-migration-utility
+[10]: /entra/identity/authentication/how-to-migrate-mfa-server-to-azure-mfa
+[11]: /entra/identity/authentication/how-to-migrate-mfa-server-to-mfa-with-federation
+[12]: /entra/identity/authentication/howto-mfa-getstarted
+[13]: /entra/identity/managed-identities-azure-resources/overview
+[14]: /entra/workload-id/workload-identities-overview#workload-identities-other-machine-identities-and-human-identities
+[15]: /entra/workload-id/workload-identity-federation
+[16]: https://devblogs.microsoft.com/azure-sdk/improve-security-posture-in-azure-service-connections-with-azurepipelinescredential/
+[17]: https://devblogs.microsoft.com/devops/reducing-pat-usage-across-azure-devops/
