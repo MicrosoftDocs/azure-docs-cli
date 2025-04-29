@@ -2620,7 +2620,7 @@ Version 2.49.0
 
 * `az storage account blob-service-properties cors-rule`: Add new command group to manage blob cors rules
 
-## April 25, 2023
+## April 25, 2023 - 2
 
 Version 2.48.1
 
@@ -2989,7 +2989,7 @@ Version 2.45.0
 
 * `az dms project task create`: Update DMS MySQL API to support new migration types
 
-### Feedback
+### Feedback reference
 
 * Stop including error messages in the feedback body
 
@@ -3581,7 +3581,7 @@ Version 2.40.0
 * `az cosmos db service`: Add service support for cosmosDB
 * `az cosmosdb gremlin graph`: Add analyticalStorageTTL property to sql containers
 
-### Feedback
+### Feedback reference
 
 * `az survey`: New command for CLI survey
 
