@@ -4,9 +4,9 @@ name: az standby-container-group-pool
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **standbypool** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az standby-container-group-pool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **standbypool** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az standby-container-group-pool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Standby Container Group Pool Operations.
+  Manage Standby Container Group Pool.
 status: GA
 sourceType: Extension
 directCommands:
@@ -27,10 +27,11 @@ directCommands:
                                            [--refill-policy {always}]
                                            [--subnet-ids]
                                            [--tags]
+                                           [--zones]
   examples:
   - summary: |-
-      Create Standby Container Group Pool
-    syntax: az standby-container-group-pool create --resource-group myrg --name mypool --subscription 461fa159-654a-415f-853a-40b801021944 --container-profile-id /subscriptions/461fa159-654a-415f-853a-40b801021944/resourceGroups/myrg/providers/Microsoft.ContainerInstance/containerGroupProfiles/mycg --profile-revision 1 --subnet-ids [0].id=/subscriptions/461fa159-654a-415f-853a-40b801021944/resourceGroups/ru-cli-test-standbypool/providers/Microsoft.Network/virtualNetworks/ru-cli-test-standbypool-vnet/subnets/testSubnet --refill-policy always --max-ready-capacity 1 --location eastus
+      StandbyContainerGroupPools_CreateOrUpdate
+    syntax: az standby-container-group-pool create --resource-group rgstandbypool --name pool --max-ready-capacity 688 --refill-policy always --container-profile-id /subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile --profile-revision 1 --subnet-ids "[{id:/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.Network/virtualNetworks/cgSubnet/subnets/cgSubnet}]" --zones "[1,2,3]" --tags "{}" --location West US --subscription 00000000-0000-0000-0000-000000000009
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -67,6 +68,9 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --zones
+    summary: |-
+      Specifies zones of standby container group pools.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_standby-container-group-pool_delete
   name: az standby-container-group-pool delete
   summary: |-
@@ -82,13 +86,13 @@ directCommands:
                                            [--yes]
   examples:
   - summary: |-
-      Delete Standby Container Group Pool
-    syntax: az standby-container-group-pool delete --name mypool --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg
+      StandbyContainerGroupPools_Delete
+    syntax: az standby-container-group-pool delete --resource-group rgstandbypool --name pool --subscription 00000000-0000-0000-0000-000000000009
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --standby-container-group-pool-name -n
+  - name: --name -n
     summary: |-
       Name of the standby container group pool.
   - name: --no-wait
@@ -108,7 +112,7 @@ directCommands:
 - uid: az_standby-container-group-pool_list
   name: az standby-container-group-pool list
   summary: |-
-    List StandbyContainerGroupPoolResource resources by subscription ID or by resource group.
+    List StandbyContainerGroupPoolResource resources by subscription ID by resource group.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -117,8 +121,8 @@ directCommands:
                                          [--resource-group]
   examples:
   - summary: |-
-      List by subscription id by resource group
-    syntax: az standby-container-pool list --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg
+      StandbyContainerGroupPools_ListBySubscription
+    syntax: az standby-container-group-pool list --subscription 00000000-0000-0000-0000-000000000009 --resource-group resourceGroup
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -142,13 +146,13 @@ directCommands:
                                          [--subscription]
   examples:
   - summary: |-
-      Get standby container group pool
-    syntax: az standby-container-group-pool show --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg --name mypool
+      StandbyContainerGroupPools_Get
+    syntax: az standby-container-group-pool show --resource-group rgstandbypool --name pool --subscription 00000000-0000-0000-0000-000000000009
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --standby-container-group-pool-name -n
+  - name: --name -n
     summary: |-
       Name of the standby container group pool.
   - name: --resource-group -g
@@ -171,8 +175,8 @@ directCommands:
                                            [--version]
   examples:
   - summary: |-
-      Get standby container group pool runtime view
-    syntax: az standby-container-group-pool status --resource-group myrg --name mypool --subscription 461fa159-654a-415f-853a-40b801021944 --version latest
+      StandbyContainerGroupPoolRuntimeViews_Status
+    syntax: az standby-container-group-pool status --resource-group rgstandbypool --name pool --version latest --subscription 00000000-0000-0000-0000-000000000009
   optionalParameters:
   - name: --ids
     summary: |-
@@ -207,6 +211,11 @@ directCommands:
                                            [--subnet-ids]
                                            [--subscription]
                                            [--tags]
+                                           [--zones]
+  examples:
+  - summary: |-
+      StandbyPoolContainerGroup_Update
+    syntax: az standby-container-group-pool update --resource-group rgstandbypool --name pool --max-ready-capacity 688 --refill-policy always --container-profile-id /subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile --profile-revision 1 --subnet-ids "[{id:/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.Network/virtualNetworks/cgSubnet/subnets/cgSubnet}]" --zones "[1,2,3]" --tags "{}" --location West US --subscription 00000000-0000-0000-0000-000000000009
   optionalParameters:
   - name: --container-profile-id
     summary: |-
@@ -229,7 +238,7 @@ directCommands:
       Specifies refill policy of the pool.
   - name: --resource-group -g
     summary: |-
-      The resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subnet-ids
     summary: |-
       Specifies subnet Ids for container group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -239,6 +248,9 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --zones
+    summary: |-
+      Specifies zones of standby container group pools.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_standby-container-group-pool_wait
   name: az standby-container-group-pool wait
   summary: |-
@@ -280,7 +292,7 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
-  - name: --name --standby-container-group-pool-name -n
+  - name: --name -n
     summary: |-
       Name of the standby container group pool.
   - name: --resource-group -g
@@ -330,4 +342,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Standby Container Group Pool Operations.
+  description: Manage Standby Container Group Pool.
