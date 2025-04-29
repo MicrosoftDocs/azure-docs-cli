@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 04/01/2025
+ms.date: 05/06/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,98 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## May 06, 2025
+
+Version 2.72.0
+
+### ACR
+
+* Fix #31130: `az acr task show`: Fix extra version line in encodedTask created by file
+* `az acr create/check-name`: Add parameter `--dnl-scope` for domain name label hash
+
+### AKS
+
+* `az aks update`: Make specified version to match current version when turning off autoupgrade
+* `az aks nodepool add/update`: Add option `Ubuntu2204` to `--os-sku` parameter
+* `az aks create`: Add `--custom-ca-trust-certificates` parameter to support custom CA trust feature
+* `az aks nodepool add`: Add `--custom-ca-trust-certificates` parameter to support custom CA trust feature
+* `az aks nodepool add`: Add GPU driver install options `--gpu-driver install` and `--gpu-driver none`
+
+### App Config
+
+* `az appconfig create/update`: Add developer sku support
+* `az appconfig feature set`: Update feature name documentation
+
+### App Service
+
+* Fix #20983: `az webapp config ssl import`: Make web app a non-required parameter
+* `az appservice plan create`: Add Pv4/Pmv4 ASP support
+* Fix #20209: `az webapp create-remote-connection`: Add ssh command to output
+
+### ARM
+
+* `az deployment`: Fix issue where Bicep is not found in CI environments
+* Fix #31188: `az lock delete`: Fix the case sensitivity of `--namespace` parameter validation
+
+### ARO
+
+* `az aro update`: Ensure that refreshing cluster service principal credentials is successful when the cluster has an invalid or missing subnet in its resource definition
+
+### Compute
+
+* [BREAKING CHANGE] `az sig image-version`: Change the `--os-vhd-storage-account` parameter mapping to the `properties.storageProfile.osDiskImage.source.storageAccountId` property
+* [BREAKING CHANGE] `az sig image-version`: Change the `--data-vhds-storage-accounts` parameter mapping to the `properties.storageProfile.dataDiskImages.source.storageAccountId` property
+* `az vm create`: Add new parameter `--zone-placement-policy` to support setting vm placement to create a zonal VM
+* `az vm create`: Add new parameter `--include-zones` to support setting vm placement to create a zonal VM
+* `az vm create`: Add new parameter `--exclude-zones` to support setting vm placement to create a zonal VM
+* `az vm create/update`: Add new parameter `--align-regional-disks-to-vm-zone` to support setting regional disks attached to the VM to be converted to zonal
+* `az sig image-version create/update`: Rename shorter alias for `--block-deletion-before-end-of-life` parameter
+* `az vm create/update`: Add new parameters `--wire-server-mode` and `--wire-server-access-control-profile-reference-id` to support setting wireserver endpoint settings
+* `az vmss create/update`: Add new parameters `--wire-server-mode` and `--wire-server-access-control-profile-reference-id` to support setting wireserver endpoint settings
+* `az vm create/update`: Add new parameters `--imds-mode` and `--imds-access-control-profile-reference-id` to support setting IMDS endpoint settings
+* `az vmss create/update`: Add new parameters `--imds-mode` and `--imds-access-control-profile-reference-id` to support setting IMDS endpoint settings
+* `az vm create/update`: Add new parameter `--key-incarnation-id` to support setting key incarnation id
+* `az vmss create/update`: Add new parameter `--key-incarnation-id` to support setting key incarnation id
+* `az vm/vmss create/update`: Set `--security-type` to `Standard` only if explicitly set by end user
+
+### Consumption
+
+* `az consumption usage list`: Enhance handling of `usageStart` and `usageEnd` when missing
+
+### Microsoft Entra ID
+
+* `az ad sp create-for-rbac`: Add `--service-management-reference` argument
+* `az ad sp create-for-rbac`: Add `--create-password` argument. Use `--create-password false` to disable creating password credential
+
+### MySQL
+
+* `az mysql flexible-server create`: Add `--backup-interval` parameter to enable setting backup interval
+* `az mysql flexible-server restore`: Add `--faster-restore` parameter to open auto-iops-scaling when restore
+* `az mysql flexible-server replica create`: Add `--faster-provisioning` parameter to open auto-iops-scaling when create replica
+
+### Network
+
+* Fix #31129: `az network vnet-gateway create/update`: Refine the logic of `--root-cert-data`
+* `az network application-gateway waf-policy managed-rule rule-set`: Support rule set type Microsoft_DefaultRuleSet
+
+### Profile
+
+* Fix #29030: `az login`: During interactive login, fall back to `tenantId` if `tenantDisplayName` is missing
+
+### RDBMS
+
+* `az postgres flexible-server upgrade`: Add server capability API check to the `--version` parameter and allow user to upgrade to PG17 when it is available
+
+### Role
+
+* `az role assignment list`: Add `--fill-principal-name` argument. Use `--fill-principal-name false` to omit `principalName` property and bypass Microsoft Graph query
+* `az role assignment list`: Add `--fill-role-definition-name` argument. Use `--fill-role-definition-name false` to omit `roleDefinitionName` property and bypass the role definitions query
+* `az role assignment list/delete`: Add `--assignee-object-id` argument. Use this argument instead of `--assignee` to bypass Microsoft Graph query
+
+### Service Connector
+
+* `az webapp connection create`: Clarify that system identity is a flag
 
 ## April 01, 2025
 
