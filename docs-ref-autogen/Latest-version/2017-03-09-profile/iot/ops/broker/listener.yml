@@ -6,34 +6,61 @@ extensionInformation: >-
 
   > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops broker listener** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Broker listener management.
+  Mqtt broker listener management.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_broker_listener_delete
-  name: az iot ops broker listener delete
+- uid: az_iot_ops_broker_listener_apply
+  name: az iot ops broker listener apply
   summary: |-
-    Delete an mqtt broker listener.
+    Create or replace an mqtt broker listener service.
+  description: |-
+    An example of the config file format is as follows:
+
+    {
+      "serviceType": "LoadBalancer",
+      "ports": [
+          {
+              "port": 1883,
+              "protocol": "Mqtt"
+          },
+          {
+              "authenticationRef": "default",
+              "port": 8883,
+              "protocol": "Mqtt",
+              "tls": {
+                  "mode": "Automatic",
+                  "certManagerCertificateSpec": {
+                      "issuerRef": {
+                          "name": "azure-iot-operations-aio-certificate-issuer",
+                          "kind": "ClusterIssuer",
+                          "group": "cert-manager.io"
+                      }
+                  }
+              }
+          }
+      ]
+    }
+
+    When used with apply the above content will create or replace a target listener
+    with a two port configuration.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker listener delete --broker
-                                      --instance
-                                      --name
-                                      --resource-group
-                                      [--yes {false, true}]
+    az iot ops broker listener apply --config-file
+                                     --instance
+                                     --name
+                                     --resource-group
+                                     [--broker]
   examples:
   - summary: |-
-      Delete the broker listener called 'listener' associated with broker 'broker'.
-    syntax: az iot ops broker listener delete -n listener -b broker --in mycluster-ops-instance -g myresourcegroup
-  - summary: |-
-      Same as prior example but skipping the confirmation prompt.
-    syntax: az iot ops broker listener delete -n listener -b broker --in mycluster-ops-instance -g myresourcegroup -y
+      Create or replace a listener for the default broker using a config file.
+    syntax: az iot ops broker listener apply -n listener --in myinstance -g myresourcegroup --config-file /path/to/listener/config.json
   requiredParameters:
   - isRequired: true
-    name: --broker -b
+    name: --config-file
     summary: |-
-      Mqtt broker name.
+      Path to a config file containing resource properties in json format. The config file should contain an object with properties compatible with the ARM representation of the resource. The object correlates directly with 'properties:{}' of the ARM resource.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -41,12 +68,53 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      Mqtt broker listener name.
+      Listener name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --broker -b
+    defaultValue: "default"
+    summary: |-
+      Broker name.
+- uid: az_iot_ops_broker_listener_delete
+  name: az iot ops broker listener delete
+  summary: |-
+    Delete an mqtt broker listener.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops broker listener delete --instance
+                                      --name
+                                      --resource-group
+                                      [--broker]
+                                      [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete an mqtt broker listener associated with the default broker.
+    syntax: az iot ops broker listener delete -n listener --in myinstance -g myresourcegroup
+  - summary: |-
+      Same as prior example but skipping the confirmation prompt.
+    syntax: az iot ops broker listener delete -n listener --in myinstance -g myresourcegroup -y
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Listener name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: "default"
+    summary: |-
+      Broker name.
   - name: --yes -y
     parameterValueGroup: "false, true"
     summary: |-
@@ -58,18 +126,14 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker listener list --broker
-                                    --instance
+    az iot ops broker listener list --instance
                                     --resource-group
+                                    [--broker]
   examples:
   - summary: |-
-      Enumerate all broker listeners associated with the default broker.
-    syntax: az iot ops broker listener list -b broker --in mycluster-ops-instance -g myresourcegroup
+      Enumerate all mqtt broker listeners associated with the default broker.
+    syntax: az iot ops broker listener list --in myinstance -g myresourcegroup
   requiredParameters:
-  - isRequired: true
-    name: --broker -b
-    summary: |-
-      Mqtt broker name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -78,6 +142,11 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: "default"
+    summary: |-
+      Broker name.
 - uid: az_iot_ops_broker_listener_show
   name: az iot ops broker listener show
   summary: |-
@@ -85,19 +154,15 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker listener show --broker
-                                    --instance
+    az iot ops broker listener show --instance
                                     --name
                                     --resource-group
+                                    [--broker]
   examples:
   - summary: |-
-      Show details of the default listener 'listener' associated with the default broker.
-    syntax: az iot ops broker listener show -n listener -b broker --in mycluster-ops-instance -g myresourcegroup
+      Show details of the default listener associated with the default broker.
+    syntax: az iot ops broker listener show -n default --in myinstance -g myresourcegroup
   requiredParameters:
-  - isRequired: true
-    name: --broker -b
-    summary: |-
-      Mqtt broker name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -105,14 +170,23 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      Mqtt broker listener name.
+      Listener name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: "default"
+    summary: |-
+      Broker name.
 commands:
+- az_iot_ops_broker_listener_apply
 - az_iot_ops_broker_listener_delete
 - az_iot_ops_broker_listener_list
+- az_iot_ops_broker_listener_port
+- az_iot_ops_broker_listener_port_add
+- az_iot_ops_broker_listener_port_remove
 - az_iot_ops_broker_listener_show
 globalParameters:
 - name: --debug
@@ -139,4 +213,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Broker listener management.
+  description: Mqtt broker listener management.

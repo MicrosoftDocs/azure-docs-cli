@@ -4,9 +4,9 @@ name: az standby-vm-pool
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **standbypool** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az standby-vm-pool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **standbypool** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az standby-vm-pool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Standby Virtual Machine Pool Operations.
+  Manage Standby Virtual Machine Pool.
 status: GA
 sourceType: Extension
 directCommands:
@@ -24,15 +24,15 @@ directCommands:
                               [--min-ready-capacity]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--tags]
-                              [--vm-state {Deallocated, Running}]
+                              [--vm-state {Deallocated, Hibernated, Running}]
                               [--vmss-id]
   examples:
   - summary: |-
-      Create standby virtual machine pool
-    syntax: az standby-vm-pool create --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg --name mypool --max-ready-capacity 20 --min-ready-capacity 10 --vm-state Running --vmss-id /subscriptions/461fa159-654a-415f-853a-40b801021944/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachineScaleSets/myvmss --location eastus
+      StandbyVirtualMachinePools_CreateOrUpdate
+    syntax: az standby-vm-pool create --resource-group rgstandbypool --name pool --max-ready-capacity 304 --min-ready-capacity 300 --vm-state Running --vmss-id /subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.Compute/virtualMachineScaleSets/myVmss --tags "{}" --location West US --subscription 00000000-0000-0000-0000-000000000009
   requiredParameters:
   - isRequired: true
-    name: --name --standby-virtual-machine-pool-name -n
+    name: --name -n
     summary: |-
       Name of the standby virtual machine pool.
   - isRequired: true
@@ -57,7 +57,7 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --vm-state
-    parameterValueGroup: "Deallocated, Running"
+    parameterValueGroup: "Deallocated, Hibernated, Running"
     summary: |-
       Specifies the desired state of virtual machines in the pool.
   - name: --vmss-id
@@ -78,13 +78,13 @@ directCommands:
                               [--yes]
   examples:
   - summary: |-
-      Delete standby virtual machine pool
-    syntax: az standby-vm-pool delete --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg --name mypool
+      StandbyVirtualMachinePools_Delete
+    syntax: az standby-vm-pool delete --resource-group rgstandbypool --name pool --subscription 00000000-0000-0000-0000-000000000009
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --standby-virtual-machine-pool-name -n
+  - name: --name -n
     summary: |-
       Name of the standby virtual machine pool.
   - name: --no-wait
@@ -104,7 +104,7 @@ directCommands:
 - uid: az_standby-vm-pool_list
   name: az standby-vm-pool list
   summary: |-
-    List StandbyVirtualMachinePoolResource resources by subscription ID or by resource group.
+    List StandbyVirtualMachinePoolResource resources by subscription ID by resource group name.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -113,8 +113,8 @@ directCommands:
                             [--resource-group]
   examples:
   - summary: |-
-      List by subscriptionId by resource group
-    syntax: az standby-vm-pool list --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg
+      StandbyVirtualMachinePools_ListBySubscription
+    syntax: az standby-vm-pool list --subscription 00000000-0000-0000-0000-000000000009 --resource-group myRG
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -138,13 +138,13 @@ directCommands:
                             [--subscription]
   examples:
   - summary: |-
-      Get standby virtual machine pool
-    syntax: az standby-vm-pool show --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg --name mypool
+      StandbyVirtualMachinePools_Get
+    syntax: az standby-vm-pool show --resource-group rgstandbypool --name pool
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --standby-virtual-machine-pool-name -n
+  - name: --name -n
     summary: |-
       Name of the standby virtual machine pool.
   - name: --resource-group -g
@@ -167,8 +167,8 @@ directCommands:
                               [--version]
   examples:
   - summary: |-
-      Get standby virtual machine pool runtime view
-    syntax: az standby-vm-pool status --resource-group myrg --name mypool --subscription 461fa159-654a-415f-853a-40b801021944 --version latest
+      StandbyVirtualMachinePoolRuntimeViews_Status
+    syntax: az standby-vm-pool status --resource-group rgstandbypool --name pool --version latest --subscription 00000000-0000-0000-0000-000000000009
   optionalParameters:
   - name: --ids
     summary: |-
@@ -200,12 +200,12 @@ directCommands:
                               [--resource-group]
                               [--subscription]
                               [--tags]
-                              [--vm-state {Deallocated, Running}]
+                              [--vm-state {Deallocated, Hibernated, Running}]
                               [--vmss-id]
   examples:
   - summary: |-
-      Update standby virtual machine pool
-    syntax: az standby-vm-pool update --subscription 461fa159-654a-415f-853a-40b801021944 --resource-group myrg --name mypool --max-ready-capacity 3
+      StandbyVirtualMachinePool_Update
+    syntax: az standby-vm-pool update --resource-group rgstandbypool --name pool --max-ready-capacity 304 --min-ready-capacity 300 --vm-state Running --vmss-id /subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.Compute/virtualMachineScaleSets/myVmss --tags "{}" --location West US --subscription 00000000-0000-0000-0000-000000000009
   optionalParameters:
   - name: --ids
     summary: |-
@@ -216,12 +216,12 @@ directCommands:
   - name: --min-ready-capacity
     summary: |-
       Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity.
-  - name: --name --standby-virtual-machine-pool-name -n
+  - name: --name -n
     summary: |-
       Name of the standby virtual machine pool.
   - name: --resource-group -g
     summary: |-
-      The resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -229,7 +229,7 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --vm-state
-    parameterValueGroup: "Deallocated, Running"
+    parameterValueGroup: "Deallocated, Hibernated, Running"
     summary: |-
       Specifies the desired state of virtual machines in the pool.
   - name: --vmss-id
@@ -276,7 +276,7 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
-  - name: --name --standby-virtual-machine-pool-name -n
+  - name: --name -n
     summary: |-
       Name of the standby virtual machine pool.
   - name: --resource-group -g
@@ -326,4 +326,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Standby Virtual Machine Pool Operations.
+  description: Manage Standby Virtual Machine Pool.
