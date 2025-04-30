@@ -128,6 +128,7 @@ directCommands:
   syntax: >-
     az acr check-health [--ignore-errors]
                         [--name]
+                        [--repository]
                         [--vnet]
                         [--yes]
   examples:
@@ -137,6 +138,9 @@ directCommands:
   - summary: |-
       Gets health state of the environment, without stopping on first error.
     syntax: az acr check-health --ignore-errors
+  - summary: |-
+      Gets health state with target registry 'myregistry', and checks allowed permissions to the specific repository 'myrepo'.
+    syntax: az acr check-health -n myregistry --repository myrepo
   optionalParameters:
   - name: --ignore-errors
     defaultValue: "False"
@@ -145,6 +149,10 @@ directCommands:
   - name: --name -n
     summary: |-
       The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+  - name: --repository
+    summary: |-
+      The name of the repository.
+    isPreview: true
   - name: --vnet
     summary: |-
       Virtual network ID so to run this command inside a VNET to verify the DNS routing to private endpoints.
@@ -203,6 +211,7 @@ directCommands:
                   [--key-encryption-key]
                   [--location]
                   [--public-network-enabled {false, true}]
+                  [--role-assignment-mode {rbac, rbac-abac}]
                   [--tags]
                   [--workspace]
                   [--zone-redundancy {Disabled, Enabled}]
@@ -210,6 +219,9 @@ directCommands:
   - summary: |-
       Create a managed container registry with the Standard SKU.
     syntax: az acr create -n myregistry -g MyResourceGroup --sku Standard
+  - summary: |-
+      Create a registry with ABAC-based Repository Permission enabled.
+    syntax: az acr create -n myregistry -g MyResourceGroup --sku Standard --role-assignment-mode rbac-abac
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -267,6 +279,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Allow public network access for the container registry. The Default is to allow.
+  - name: --role-assignment-mode
+    parameterValueGroup: "rbac, rbac-abac"
+    summary: |-
+      Role assignment mode of the registry. For more information on this feature, see https://aka.ms/acr/auth/abac. The Default is rbac.
+    isPreview: true
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -618,6 +635,9 @@ directCommands:
   - summary: |-
       Get the details of an Azure Container Registry
     syntax: az acr show --name myregistry --resource-group MyResourceGroup
+  - summary: |-
+      Check status of ABAC-based Repository Permission on a registry.
+    syntax: az acr show --name myregistry --resource-group MyResourceGroup --query roleAssignmentMode
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -690,6 +710,7 @@ directCommands:
                   [--public-network-enabled {false, true}]
                   [--remove]
                   [--resource-group]
+                  [--role-assignment-mode {rbac, rbac-abac}]
                   [--set]
                   [--sku {Basic, Premium, Standard}]
                   [--tags]
@@ -700,6 +721,9 @@ directCommands:
   - summary: |-
       Enable the administrator user account for an Azure Container Registry.
     syntax: az acr update -n myregistry --admin-enabled true
+  - summary: |-
+      Turn on ABAC-based Repository Permission on an existing registry.
+    syntax: az acr update -n myregistry --role-assignment-mode rbac-abac
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -756,6 +780,11 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --role-assignment-mode
+    parameterValueGroup: "rbac, rbac-abac"
+    summary: |-
+      Role assignment mode of the registry. For more information on this feature, see https://aka.ms/acr/auth/abac. The Default is rbac.
+    isPreview: true
   - name: --set
     defaultValue: "[]"
     summary: |-
@@ -910,6 +939,14 @@ commands:
 - az_acr_show
 - az_acr_show-endpoints
 - az_acr_show-usage
+- az_acr_supply-chain
+- az_acr_supply-chain_workflow
+- az_acr_supply-chain_workflow_cancel-run
+- az_acr_supply-chain_workflow_create
+- az_acr_supply-chain_workflow_delete
+- az_acr_supply-chain_workflow_list
+- az_acr_supply-chain_workflow_show
+- az_acr_supply-chain_workflow_update
 - az_acr_task
 - az_acr_task_cancel-run
 - az_acr_task_create
