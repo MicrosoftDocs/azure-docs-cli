@@ -98,7 +98,7 @@ you might want to add URLs related to other Microsoft products and services.
 | postgresql_server_endpoint | *.postgres.database.usgovcloudapi.net |
 | mariadb_server_endpoint    | *.mariadb.database.usgovcloudapi.net  |
 | acr_login_server_endpoint  | *.azurecr.us                          |
-| synapse_analytics_endpoint | *.dev.azuresynapse.usgovcloudapi.net' |
+| synapse_analytics_endpoint | *.dev.azuresynapse.usgovcloudapi.net  |
 
 ### [Azure China Cloud](#tab/azure-china-cloud)
 
