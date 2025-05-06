@@ -73,6 +73,8 @@ directCommands:
                    [--health-probe]
                    [--host-group]
                    [--image]
+                   [--imds-access-control-profile-reference-id]
+                   [--imds-mode {Audit, Enforce}]
                    [--instance-count]
                    [--is-overridable {false, true}]
                    [--lb]
@@ -145,6 +147,8 @@ directCommands:
                    [--vm-sku]
                    [--vnet-address-prefix]
                    [--vnet-name]
+                   [--wire-server-access-control-profile-reference-id]
+                   [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
                    [--zones]
   examples:
@@ -430,6 +434,13 @@ directCommands:
     summary: |-
       The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. In addition, it also supports shared gallery image. Please use the image alias including the version of the distribution you want to use. For example: please use Debian11 instead of Debian.' This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version". For more information, see https://learn.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage.
     valueFrom: az sig image-version show-shared, az vm image list, az vm image show
+  - name: --imds-access-control-profile-reference-id --imds-profile-id
+    summary: |-
+      Specify the access control profile version resource id resource id of imds.
+  - name: --imds-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --instance-count
     defaultValue: "2"
     summary: |-
@@ -554,6 +565,8 @@ directCommands:
     parameterValueGroup: "Audit, Enforce"
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
+    isDeprecated: true
+    deprecateInfo: Option '--proxy-agent-mode' has been deprecated and will be removed in a future release. Use '--wire-server-mode' instead.
   - name: --public-ip-address
     summary: |-
       Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" or '' for None ('""' in Azure CLI using PowerShell).
@@ -593,7 +606,7 @@ directCommands:
   - name: --security-type
     parameterValueGroup: "ConfidentialVM, Standard, TrustedLaunch"
     summary: |-
-      Specify the security type of the virtual machine.
+      Specify the security type of the virtual machine scale set. The value Standard can be used if subscription has feature flag UseStandardSecurityType registered under Microsoft.Compute namespace. Refer to https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features for steps to enable required feature.
   - name: --single-placement-group
     parameterValueGroup: "false, true"
     summary: |-
@@ -681,6 +694,13 @@ directCommands:
   - name: --vnet-name
     summary: |-
       Name of the virtual network when creating a new one or referencing an existing one.
+  - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
+    summary: |-
+      Specify the access control profile version resource id of wire server.
+  - name: --wire-server-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --zone-balance
     parameterValueGroup: "false, true"
     summary: |-
@@ -1390,6 +1410,8 @@ directCommands:
                    [--force-deletion]
                    [--force-string]
                    [--ids]
+                   [--imds-access-control-profile-reference-id]
+                   [--imds-mode {Audit, Enforce}]
                    [--instance-id]
                    [--is-overridable {false, true}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
@@ -1413,7 +1435,7 @@ directCommands:
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
                    [--security-posture-id]
-                   [--security-type {Standard, TrustedLaunch}]
+                   [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--set]
                    [--sku-allocat-strat {CapacityOptimized, LowestPrice}]
                    [--skuprofile-vmsizes]
@@ -1426,6 +1448,8 @@ directCommands:
                    [--v-cpus-available]
                    [--v-cpus-per-core]
                    [--vm-sku]
+                   [--wire-server-access-control-profile-reference-id]
+                   [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
                    [--zones]
   examples:
@@ -1565,6 +1589,13 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --imds-access-control-profile-reference-id --imds-profile-id
+    summary: |-
+      Specify the access control profile version resource id resource id of imds.
+  - name: --imds-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --instance-id
     summary: |-
       Update the VM instance with this ID. If missing, update the VMSS.
@@ -1627,6 +1658,8 @@ directCommands:
     parameterValueGroup: "Audit, Enforce"
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
+    isDeprecated: true
+    deprecateInfo: Option '--proxy-agent-mode' has been deprecated and will be removed in a future release. Use '--wire-server-mode' instead.
   - name: --regular-priority-count
     summary: |-
       The base number of regular priority VMs that will be created in this scale set as it scales out. Must be greater than 0.
@@ -1650,9 +1683,9 @@ directCommands:
     summary: |-
       The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest.
   - name: --security-type
-    parameterValueGroup: "Standard, TrustedLaunch"
+    parameterValueGroup: "ConfidentialVM, Standard, TrustedLaunch"
     summary: |-
-      Specify the security type of the virtual machine scale set.
+      Specify the security type of the virtual machine scale set. The value Standard can be used if subscription has feature flag UseStandardSecurityType registered under Microsoft.Compute namespace. Refer to https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features for steps to enable required feature.
   - name: --set
     defaultValue: "[]"
     summary: |-
@@ -1694,6 +1727,13 @@ directCommands:
     summary: |-
       The new size of the virtual machine instances in the scale set. Default to "Standard_DS1_v2". See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     isPreview: true
+  - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
+    summary: |-
+      Specify the access control profile version resource id of wire server.
+  - name: --wire-server-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --zone-balance
     parameterValueGroup: "false, true"
     summary: |-
@@ -1944,5 +1984,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 03/19/2025
+  ms.date: 04/17/2025
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
