@@ -30,7 +30,6 @@ directCommands:
     {Supported service APIs}
     - deviceregistry.microsoft.com/[v1]
     - mqttbroker.iotoperations.azure.com/[v1]
-    - opcuabroker.iotoperations.azure.com/[v1beta1]
     - connectivity.iotoperations.azure.com/[v1]
 
     For more information on cluster requirements, please check https://aka.ms/iot-ops-cluster-requirements.
@@ -46,7 +45,7 @@ directCommands:
                      [--post {false, true}]
                      [--pre {false, true}]
                      [--resource-name]
-                     [--resources {asset, assetendpointprofile, assettype, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile}]
+                     [--resources {asset, assetendpointprofile, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile}]
   examples:
   - summary: |-
       Basic usage. Checks overall IoT Operations health with summary output.
@@ -92,7 +91,7 @@ directCommands:
     summary: |-
       Only run checks for the specific resource name. The name is case insensitive. Glob patterns '*' and '?' are supported. Note: Only alphanumeric characters, hyphens, '?' and '*' are allowed.
   - name: --resources
-    parameterValueGroup: "asset, assetendpointprofile, assettype, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile"
+    parameterValueGroup: "asset, assetendpointprofile, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile"
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
 - uid: az_iot_ops_create
@@ -118,13 +117,13 @@ directCommands:
                       [--broker-config-file]
                       [--broker-frontend-replicas]
                       [--broker-frontend-workers]
-                      [--broker-listener-type {ClusterIp, LoadBalancer, NodePort}]
                       [--broker-mem-profile {High, Low, Medium, Tiny}]
                       [--cluster-namespace]
                       [--custom-location]
                       [--description]
                       [--df-profile-instances]
                       [--enable-rsync {false, true}]
+                      [--feature]
                       [--kubernetes-distro {K3s, K8s, MicroK8s}]
                       [--location]
                       [--no-progress {false, true}]
@@ -149,6 +148,9 @@ directCommands:
   - summary: |-
       This example highlights trust settings for a user provided cert-manager config. Note that the cluster must have been initialized with `--user-trust` and a user cert-manager deployment must be present.
     syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --trust-settings configMapName=example-bundle configMapKey=trust-bundle.pem issuerKind=ClusterIssuer issuerName=trust-manager-selfsigned-issuer
+  - summary: |-
+      To configure component features such as preview settings, use the --feature option.
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --feature connectors.settings.preview=Enabled
   requiredParameters:
   - isRequired: true
     name: --cluster
@@ -194,11 +196,6 @@ directCommands:
     defaultValue: "2"
     summary: |-
       Mqtt broker frontend workers. Min value: 1, max value: 16.
-  - name: --broker-listener-type --lt
-    defaultValue: "ClusterIp"
-    parameterValueGroup: "ClusterIp, LoadBalancer, NodePort"
-    summary: |-
-      Service type associated with the default mqtt broker listener.
   - name: --broker-mem-profile --mp
     defaultValue: "Medium"
     parameterValueGroup: "High, Low, Medium, Tiny"
@@ -222,6 +219,9 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Resource sync rules will be included in the IoT Operations deployment.
+  - name: --feature
+    summary: |-
+      Instance feature config. The settings of a component and/or it's mode can be configured. Component mode syntax is `{component}.mode={mode}` where known mode values are: `Stable`, `Preview` and `Disabled`. Component setting syntax is `{component}.settings.{setting}={value}` where known setting values are `Enabled` or `Disabled`. This option can be used one or more times.
   - name: --kubernetes-distro
     defaultValue: "K8s"
     parameterValueGroup: "K3s, K8s, MicroK8s"
@@ -242,7 +242,7 @@ directCommands:
       The default node path of the container runtime socket. If not provided (default), the socket path is determined by --kubernetes-distro.
   - name: --tags
     summary: |-
-      Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --trust-settings
     summary: |-
       Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerName`, `issuerKind`, `configMapName`, `configMapKey`. If not used, a system provided self-signed trust bundle is configured.
@@ -462,13 +462,14 @@ directCommands:
   summary: |-
     Update an IoT Operations instance.
   description: |-
-    Currently instance tags and description can be updated.
+    Currently instance tags, description and features can be updated.
   status: GA
   sourceType: Extension
   syntax: >-
     az iot ops update --name
                       --resource-group
                       [--description]
+                      [--feature]
                       [--tags]
   examples:
   - summary: |-
@@ -480,6 +481,9 @@ directCommands:
   - summary: |-
       Update the instance description.
     syntax: az iot ops update --name myinstance -g myresourcegroup --desc "Fabrikam Widget Factory B42"
+  - summary: |-
+      Update an instance to enable preview config for connectors.
+    syntax: az iot ops update --name myinstance -g myresourcegroup --feature connectors.settings.preview=Enabled
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -493,9 +497,12 @@ directCommands:
   - name: --description
     summary: |-
       Description of the IoT Operations instance.
+  - name: --feature
+    summary: |-
+      Instance feature config. The settings of a component and/or it's mode can be configured. Component mode syntax is `{component}.mode={mode}` where known mode values are: `Stable`, `Preview` and `Disabled`. Component setting syntax is `{component}.settings.{setting}={value}` where known setting values are `Enabled` or `Disabled`. This option can be used one or more times.
   - name: --tags
     summary: |-
-      Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
 - uid: az_iot_ops_upgrade
   name: az iot ops upgrade
   summary: |-
@@ -591,18 +598,25 @@ commands:
 - az_iot_ops_asset_update
 - az_iot_ops_broker
 - az_iot_ops_broker_authn
+- az_iot_ops_broker_authn_apply
 - az_iot_ops_broker_authn_delete
 - az_iot_ops_broker_authn_list
+- az_iot_ops_broker_authn_method
+- az_iot_ops_broker_authn_method_add
 - az_iot_ops_broker_authn_show
 - az_iot_ops_broker_authz
+- az_iot_ops_broker_authz_apply
 - az_iot_ops_broker_authz_delete
 - az_iot_ops_broker_authz_list
 - az_iot_ops_broker_authz_show
-- az_iot_ops_broker_delete
 - az_iot_ops_broker_list
 - az_iot_ops_broker_listener
+- az_iot_ops_broker_listener_apply
 - az_iot_ops_broker_listener_delete
 - az_iot_ops_broker_listener_list
+- az_iot_ops_broker_listener_port
+- az_iot_ops_broker_listener_port_add
+- az_iot_ops_broker_listener_port_remove
 - az_iot_ops_broker_listener_show
 - az_iot_ops_broker_show
 - az_iot_ops_check

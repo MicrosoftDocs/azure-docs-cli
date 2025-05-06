@@ -392,42 +392,30 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az sig image-definition list-community [--ids]
-                                           [--location]
-                                           [--marker]
-                                           [--public-gallery-name]
-                                           [--show-next-marker]
-                                           [--subscription]
+    az sig image-definition list-community --location
+                                           --public-gallery-name
+                                           [--max-items]
+                                           [--next-token]
   examples:
   - summary: |-
-      List an image definition in a gallery community.
-    syntax: >-
-      az sig image-definition list-community --public-gallery-name publicGalleryName \
-
-      --location myLocation
-  optionalParameters:
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --location -l
+      List an image versions in a gallery community.
+    syntax: az sig image-version list-community --public-gallery-name publicGalleryName --gallery-image-definition MyImage --location myLocation
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - name: --marker
+  - isRequired: true
+    name: --public-gallery-name
     summary: |-
-      A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
-    isDeprecated: true
-    deprecateInfo: Argument '--marker' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
-  - name: --public-gallery-name
+      The public name of the community gallery.
+  optionalParameters:
+  - name: --max-items
     summary: |-
-      The public name of community gallery.
-  - name: --show-next-marker
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
     summary: |-
-      Show nextMarker in result when specified.
-    isDeprecated: true
-    deprecateInfo: Argument '--show-next-marker' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_sig_image-definition_list-community(image-gallery)
   name: az sig image-definition list-community
   extensionSuffix: image-gallery
@@ -463,16 +451,12 @@ directCommands:
   - name: --marker
     summary: |-
       A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
-    isDeprecated: true
-    deprecateInfo: Argument '--marker' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
   - name: --public-gallery-name
     summary: |-
       The public name of community gallery.
   - name: --show-next-marker
     summary: |-
       Show nextMarker in result when specified.
-    isDeprecated: true
-    deprecateInfo: Argument '--show-next-marker' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -483,53 +467,38 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az sig image-definition list-shared [--gallery-unique-name]
-                                        [--ids]
-                                        [--location]
-                                        [--marker]
+    az sig image-definition list-shared --gallery-unique-name
+                                        --location
+                                        [--max-items]
+                                        [--next-token]
                                         [--shared-to {tenant}]
-                                        [--show-next-marker]
-                                        [--subscription]
   examples:
   - summary: |-
       List an image definition in a gallery shared directly to your subscription in the given location.
-    syntax: >-
-      az sig image-definition list-shared --gallery-unique-name galleryUniqueName \
-
-      --location myLocation
+    syntax: az sig image-definition list-shared --gallery-unique-name galleryUniqueName --location myLocation
   - summary: |-
       List an image definition in a gallery shared directly to your tenant in the given location.
-    syntax: >-
-      az sig image-definition list-shared --gallery-unique-name galleryUniqueName \
-
-      --location myLocation --shared-to tenant
-  optionalParameters:
-  - name: --gallery-unique-name
+    syntax: az sig image-definition list-shared --gallery-unique-name galleryUniqueName --location myLocation --shared-to tenant
+  requiredParameters:
+  - isRequired: true
+    name: --gallery-unique-name
     summary: |-
       The unique name of the Shared Gallery.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --location -l
+  - isRequired: true
+    name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - name: --marker
+  optionalParameters:
+  - name: --max-items
     summary: |-
-      A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
-    isDeprecated: true
-    deprecateInfo: Argument '--marker' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --shared-to
     parameterValueGroup: "tenant"
     summary: |-
       The query parameter to decide what shared galleries to fetch when doing listing operations. If not specified, list by subscription id.
-  - name: --show-next-marker
-    summary: |-
-      Show nextMarker in result when specified.
-    isDeprecated: true
-    deprecateInfo: Argument '--show-next-marker' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_sig_image-definition_show
   name: az sig image-definition show
   summary: |-
