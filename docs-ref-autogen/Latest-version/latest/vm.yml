@@ -212,6 +212,7 @@ directCommands:
                  [--additional-events {false, true}]
                  [--admin-password]
                  [--admin-username]
+                 [--align-regional-disks {false, true}]
                  [--asgs]
                  [--assign-identity]
                  [--attach-data-disks]
@@ -245,10 +246,15 @@ directCommands:
                  [--ephemeral-os-disk {false, true}]
                  [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                  [--eviction-policy {Deallocate, Delete}]
+                 [--exclude-zones]
                  [--generate-ssh-keys]
                  [--host]
                  [--host-group]
                  [--image]
+                 [--imds-access-control-profile-reference-id]
+                 [--imds-mode {Audit, Enforce}]
+                 [--include-zones]
+                 [--key-incarnation-id]
                  [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
                  [--location]
                  [--max-price]
@@ -308,8 +314,11 @@ directCommands:
                  [--vmss]
                  [--vnet-address-prefix]
                  [--vnet-name]
+                 [--wire-server-access-control-profile-reference-id]
+                 [--wire-server-mode {Audit, Enforce}]
                  [--workspace]
                  [--zone]
+                 [--zone-placement-policy {Any}]
   examples:
   - summary: |-
       Create a default Ubuntu2204 VM with automatic SSH authentication.
@@ -418,6 +427,10 @@ directCommands:
   - name: --admin-username
     summary: |-
       Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://learn.microsoft.com/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
+  - name: --align-regional-disks --align-regional-disks-to-vm-zone
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether the regional disks should be aligned/moved to the VM zone. This is applicable only for VMs with placement property set. Please note that this change is irreversible.
   - name: --asgs
     summary: |-
       Space-separated list of existing application security groups to associate with the VM.
@@ -537,6 +550,9 @@ directCommands:
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
       The eviction policy for the Spot priority virtual machine. Default eviction policy is Deallocate for a Spot priority virtual machine.
+  - name: --exclude-zones
+    summary: |-
+      If "--zone-placement-policy" is set to "Any", availability zone selected by the system must not be present in the list of availability zones passed with "excludeZones". If "--exclude-zones" is not provided, all availability zones in region will be considered for selection.
   - name: --generate-ssh-keys
     defaultValue: "False"
     summary: |-
@@ -553,6 +569,19 @@ directCommands:
     summary: |-
       The name of the operating system image as a URN alias, URN, custom image name or ID, custom image version ID, or VHD blob URI. In addition, it also supports shared gallery image. Please use the image alias including the version of the distribution you want to use. For example: please use Debian11 instead of Debian.' This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version". For more information, see https://learn.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage.
     valueFrom: az sig image-version show-shared, az vm image list, az vm image show
+  - name: --imds-access-control-profile-reference-id --imds-profile-id
+    summary: |-
+      Specify the access control profile version resource id resource id of imds.
+  - name: --imds-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
+  - name: --include-zones
+    summary: |-
+      If "--zone-placement-policy" is set to "Any", availability zone selected by the system must be present in the list of availability zones passed with "--include-zones". If "--include-zones" is not provided, all availability zones in region will be considered for selection.
+  - name: --key-incarnation-id
+    summary: |-
+      Increase the value of this property allows user to reset the key used for securing communication channel between guest and host.
   - name: --license-type
     parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server"
     summary: |-
@@ -642,6 +671,8 @@ directCommands:
     parameterValueGroup: "Audit, Enforce"
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
+    isDeprecated: true
+    deprecateInfo: Option '--proxy-agent-mode' has been deprecated and will be removed in a future release. Use '--wire-server-mode' instead.
   - name: --public-ip-address
     summary: |-
       Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" or '' for None ('""' in Azure CLI using PowerShell).
@@ -667,7 +698,7 @@ directCommands:
   - name: --security-type
     parameterValueGroup: "ConfidentialVM, Standard, TrustedLaunch"
     summary: |-
-      Specify the security type of the virtual machine.
+      Specify the security type of the virtual machine. The value Standard can be used if subscription has feature flag UseStandardSecurityType registered under Microsoft.Compute namespace. Refer to https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features for steps to enable required feature.
   - name: --size
     defaultValue: "Standard_DS1_v2"
     summary: |-
@@ -753,6 +784,13 @@ directCommands:
   - name: --vnet-name
     summary: |-
       Name of the virtual network when creating a new one or referencing an existing one.
+  - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
+    summary: |-
+      Specify the access control profile version resource id of wire server.
+  - name: --wire-server-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --workspace
     summary: |-
       Name or ID of Log Analytics Workspace. If you specify the workspace through its name, the workspace should be in the same resource group with the vm, otherwise a new workspace will be created.
@@ -760,6 +798,10 @@ directCommands:
   - name: --zone -z
     summary: |-
       Availability zone into which to provision the resource.
+  - name: --zone-placement-policy
+    parameterValueGroup: "Any"
+    summary: |-
+      Specify the policy for virtual machine's placement in availability zone.
 - uid: az_vm_deallocate
   name: az vm deallocate
   summary: |-
@@ -1676,6 +1718,7 @@ directCommands:
   syntax: >-
     az vm update [--add]
                  [--additional-events {false, true}]
+                 [--align-regional-disks {false, true}]
                  [--capacity-reservation-group]
                  [--disk-caching]
                  [--disk-controller-type {NVMe, SCSI}]
@@ -1690,6 +1733,9 @@ directCommands:
                  [--host]
                  [--host-group]
                  [--ids]
+                 [--imds-access-control-profile-reference-id]
+                 [--imds-mode {Audit, Enforce}]
+                 [--key-incarnation-id]
                  [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
                  [--max-price]
                  [--name]
@@ -1700,7 +1746,7 @@ directCommands:
                  [--proxy-agent-mode {Audit, Enforce}]
                  [--remove]
                  [--resource-group]
-                 [--security-type {Standard, TrustedLaunch}]
+                 [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                  [--set]
                  [--size]
                  [--subscription]
@@ -1708,6 +1754,8 @@ directCommands:
                  [--user-data]
                  [--v-cpus-available]
                  [--v-cpus-per-core]
+                 [--wire-server-access-control-profile-reference-id]
+                 [--wire-server-mode {Audit, Enforce}]
                  [--workspace]
                  [--write-accelerator]
   examples:
@@ -1751,6 +1799,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       The configuration parameter used while creating event grid and resource graph scheduled event setting.
+  - name: --align-regional-disks --align-regional-disks-to-vm-zone
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether the regional disks should be aligned/moved to the VM zone. This is applicable only for VMs with placement property set. Please note that this change is irreversible.
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
@@ -1806,6 +1858,16 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --imds-access-control-profile-reference-id --imds-profile-id
+    summary: |-
+      Specify the access control profile version resource id resource id of imds.
+  - name: --imds-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
+  - name: --key-incarnation-id
+    summary: |-
+      Increase the value of this property allows user to reset the key used for securing communication channel between guest and host.
   - name: --license-type
     parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server"
     summary: |-
@@ -1835,6 +1897,8 @@ directCommands:
     parameterValueGroup: "Audit, Enforce"
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
+    isDeprecated: true
+    deprecateInfo: Option '--proxy-agent-mode' has been deprecated and will be removed in a future release. Use '--wire-server-mode' instead.
   - name: --remove
     defaultValue: "[]"
     summary: |-
@@ -1843,9 +1907,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --security-type
-    parameterValueGroup: "Standard, TrustedLaunch"
+    parameterValueGroup: "ConfidentialVM, Standard, TrustedLaunch"
     summary: |-
-      Specify the security type of the virtual machine.
+      Specify the security type of the virtual machine. The value Standard can be used if subscription has feature flag UseStandardSecurityType registered under Microsoft.Compute namespace. Refer to https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features for steps to enable required feature.
   - name: --set
     defaultValue: "[]"
     summary: |-
@@ -1870,6 +1934,13 @@ directCommands:
   - name: --v-cpus-per-core
     summary: |-
       Specify the ratio of vCPU to physical core. Setting this property to 1 also means that hyper-threading is disabled.
+  - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
+    summary: |-
+      Specify the access control profile version resource id of wire server.
+  - name: --wire-server-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --workspace
     summary: |-
       Name or ID of Log Analytics Workspace. If you specify the workspace through its name, the workspace should be in the same resource group with the vm, otherwise a new workspace will be created.
