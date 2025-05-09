@@ -18,9 +18,9 @@ The Azure CLI syntax is a combination of groups, references, commands, and param
 
 | Azure Service | Reference group | Reference subgroup(s) | Command | Full reference command | Parameter Examples
 |-|-|-|-|-|-|
-| Azure CLI | [az config](../docs-ref-autogen/Latest-version/latest/config.yml) | | | az config | --local, --output -o
-| Azure Network | [az network](../docs-ref-autogen/Latest-version/latest/network.yml) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az-network-application-gateway-create) | --name, --resource-group, --capacity
-| Azure DevOps | [az pipelines](../docs-ref-autogen/Latest-version/latest/pipelines.yml) | agent | list | [az pipelines agent list](../docs-ref-autogen/Latest-version/latest/pipelines/agent.yml) | --pool-id, --agent-name, --demands
+| Azure CLI | [az config](../../docs-ref-autogen/LTS-version/latest/config.yml) | | | az config | --local, --output -o
+| Azure Network | [az network](../../docs-ref-autogen/LTS-version/latest/network.yml) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az-network-application-gateway-create) | --name, --resource-group, --capacity
+| Azure DevOps | [az pipelines](../../docs-ref-autogen/LTS-version/latest/pipelines.yml) | agent | list | [az pipelines agent list](../../docs-ref-autogen/LTS-version/latest/pipelines/agent.yml) | --pool-id, --agent-name, --demands
 
 A **reference subgroup** can have multiple levels such as `az network application-gateway private-link ip-config add`
 
@@ -28,7 +28,7 @@ A **reference subgroup** can have multiple levels such as `az network applicatio
 |-|-|-|-|-|
 |network|application-gateway|private-link|ip-config|add
 
-See [Reference list A to Z](../docs-ref-autogen/Latest-version/latest/reference-index.yml) for a complete list of reference commands.
+See [Reference list A to Z](../../docs-ref-autogen/LTS-version/latest/reference-index.yml) for a complete list of reference commands.
 
 ## What is reference type?
 

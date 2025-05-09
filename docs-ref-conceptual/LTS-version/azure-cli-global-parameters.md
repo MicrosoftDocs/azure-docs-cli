@@ -1,7 +1,6 @@
 ---
 title: Use global parameters with Azure CLI  | Microsoft Docs
 description: Learn how to use various global parameters with Azure CLI to configure a resource group.
-ms.date: 09/19/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -97,7 +96,7 @@ telemetry.main: Finish creating telemetry upload process.
 
 ## `--only-show-errors` global parameter
 
-During the process of debugging, remove the warnings returned by a reference command by using the
+During the process of debugging, remove the warnings returned by a reference command using the
 `--only-show-errors` global parameter.
 
 # [Without `--only-show-errors`](#tab/tabid-1)
@@ -159,8 +158,8 @@ To show the output of a command in a specific format, specify the `--output` glo
 this example, the output is shown as a table:
 
 > [!NOTE]
-> The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default output value is json.
-
+> The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default
+> output value is json.
 
 ```azurecli-interactive
 az vm list --resource-group myResourceGroup --output table
@@ -174,16 +173,18 @@ Name    ResourceGroup    Location
 myVm    myResourceGroup  eastus
 ```
 
-To learn more about the different output formats, see [Output formats for Azure CLI commands](../docs-ref-conceptual/format-output-azure-cli.md).
+To learn more about the different output formats, see
+[Output formats for Azure CLI commands](format-output-azure-cli.md).
 
 ## `--query` global parameter
 
 There are times the output console might display extensive amounts of information that you need to
-filter through. To do so, use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org)
-on the results of commands. JMESPath is a query language for JSON, which gives you the ability to
-select and modify data from Azure CLI output.
+filter through. To do so, use the `--query` global parameter to execute a
+[JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for
+JSON, which gives you the ability to select and modify data from Azure CLI output.
 
-This example returns the SSH public keys authorized to connect to the virtual machine by adding `--query`:
+This example returns the SSH public keys authorized to connect to the virtual machine by adding
+`--query`:
 
 ```azurecli-interactive
  az vm show --resource-group myResourceGroup --name myVm --query "osProfile.linuxConfigurat
@@ -201,9 +202,10 @@ Output console:
 ]
 ```
 
-To learn more about querying command output, see [How to query Azure CLI command output using a JMESPath query](../docs-ref-conceptual/use-azure-cli-successfully-query.md).
+To learn more about querying command output, see
+[How to query Azure CLI command output using a JMESPath query](use-azure-cli-successfully-query.md).
 
 ## See also
 
-- [Azure CLI configuration](./azure-cli-configuration.md)
-- [Use the Azure CLI successfully](./use-cli-effectively.md)
+- [Azure CLI configuration](azure-cli-configuration.md)
+- [Use the Azure CLI successfully](use-azure-cli-successfully-tips.md)

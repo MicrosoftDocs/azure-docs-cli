@@ -157,7 +157,7 @@ Clearing your subscription cache is not technically the same process as logging 
 
 Azure management groups contain subscriptions. Management groups provide a way to manage access, policies, and compliance for those subscriptions. For more information, see [What are Azure management groups](/azure/governance/management-groups/overview).
 
-Use the [az account management-group](../docs-ref-autogen/Latest-version/latest/account/management-group.yml) commands to create and manage Azure Management Groups.
+Use the [az account management-group](../../docs-ref-autogen/LTS-version/latest/account/management-group.yml) commands to create and manage Azure Management Groups.
 
 You can create a management group for several of your subscriptions by using the [az account management-group create](/cli/azure/account/management-group#az-account-management-group-create) command:
 
@@ -196,7 +196,7 @@ Removing a subscription or deleting a management group doesn't delete or deactiv
 
 As an administrator, you may need to lock a subscription to prevent users from deleting or modifying it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
 
-In Azure CLI, use the [az account lock](../docs-ref-autogen/Latest-version/latest/account/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a subscription:
+In Azure CLI, use the [az account lock](../../docs-ref-autogen/LTS-version/latest/account/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a subscription:
 
 ```azurecli-interactive
 az account lock create --name "Cannot delete subscription" --lock-type CanNotDelete

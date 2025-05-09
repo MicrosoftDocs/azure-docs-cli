@@ -108,7 +108,7 @@ If you're using persisted parameter values, as described in this article, those 
 
 As an administrator, you may need to lock a resource group to prevent users from deleting or modifying it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
 
-In Azure CLI, use the [az group lock](../docs-ref-autogen/Latest-version/latest/group/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a resource group:
+In Azure CLI, use the [az group lock](../../docs-ref-autogen/LTS-version/latest/group/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a resource group:
 
 ```azurecli-interactive
 az group lock create --name "Cannot delete resource group" --lock-type CanNotDelete
