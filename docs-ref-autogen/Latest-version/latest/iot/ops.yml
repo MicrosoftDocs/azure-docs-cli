@@ -94,6 +94,106 @@ directCommands:
     parameterValueGroup: "asset, assetendpointprofile, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile"
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
+- uid: az_iot_ops_clone
+  name: az iot ops clone
+  summary: |-
+    Clone an instance.
+  description: |-
+    Clone analyzes an instance then reproduces it in an infrastructure-as-code
+    manner via ARM templates.
+
+    The output of clone may be applied directly to another connected
+    cluster (referred to as replication), and/or saved locally to use at another time
+    - potentially with modification.
+
+    The clone definition being a generic ARM template, can be deployed via existing tools.
+    See https://aka.ms/aio-clone-deploy for details.
+
+    Clone is compatible with the following instance version range: 1.0.34>=,<1.2.0.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az iot ops clone --name
+                     --resource-group
+                     [--base-uri]
+                     [--force {false, true}]
+                     [--mode {linked, nested}]
+                     [--no-progress {false, true}]
+                     [--param]
+                     [--self-hosted-issuer {false, true}]
+                     [--summary {detailed, simple}]
+                     [--to-cluster-id]
+                     [--to-dir]
+                     [--yes {false, true}]
+  examples:
+  - summary: |-
+      Clone an instance to a desired connected cluster.
+    syntax: az iot ops clone -n myinstance -g myresourcegroup --to-cluster-id $CLUSTER_RESOURCE_ID
+  - summary: |-
+      Clone an instance to a desired connected cluster, with customized replication.
+    syntax: az iot ops clone -n myinstance -g myresourcegroup --to-cluster-id $CLUSTER_RESOURCE_ID --param location=eastus
+  - summary: |-
+      Clone an instance to a desired connected cluster, but splitting and serially applying asset related sub-deployments.
+    syntax: az iot ops clone -n myinstance -g myresourcegroup --to-cluster-id $CLUSTER_RESOURCE_ID --mode linked
+  - summary: |-
+      Clone an instance to a local directory.
+    syntax: az iot ops clone -n myinstance -g myresourcegroup --to-dir .
+  - summary: |-
+      Clone an instance to a local directory, but splitting and linking to asset related sub-deployments.
+    syntax: az iot ops clone -n myinstance -g myresourcegroup --to-dir /my/content --mode linked
+  - summary: |-
+      Hide progress displays and skip prompts.
+    syntax: az iot ops clone -n myinstance -g myresourcegroup --to-dir . --no-progress -y
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The model instance to clone.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The resource group the model instance to clone resides in.
+  optionalParameters:
+  - name: --base-uri
+    summary: |-
+      Base URI to use for template links. If not provided a relative path strategy will be used. Relevant when --mode is set to 'linked'. Example: `https://raw.githubusercontent.com/myorg/myproject/main/myclones/`.
+  - name: --force
+    parameterValueGroup: "false, true"
+    summary: |-
+      Force the operation to execute.
+  - name: --mode
+    defaultValue: "nested"
+    parameterValueGroup: "linked, nested"
+    summary: |-
+      When mode 'nested' is used, sub-deployments will be self-contained in the root deployment. When mode 'linked' is used, asset related sub-deployments will be split and stored as separate files linked by the root deployment.
+  - name: --no-progress
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable visual representation of work.
+  - name: --param -p
+    summary: |-
+      Parameter overrides when replicating the clone to a connected cluster. If omitted default values from the model instance are used. Format is space-separated key=value pairs where the key represents a clone definition parameter. The following keys can be set: instanceName, clusterName, clusterNamespace, customLocationName, opsExtensionName, schemaRegistryId, resourceSlug, location, applyRoleAssignments. Can be used one or more times.
+  - name: --self-hosted-issuer
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use the self-hosted oidc issuer for federation. Only applicable if user-assigned managed identities are associated to the model instance.
+  - name: --summary
+    defaultValue: "simple"
+    parameterValueGroup: "detailed, simple"
+    summary: |-
+      Deployment summary option.
+  - name: --to-cluster-id
+    summary: |-
+      The resource Id of the connected cluster the clone will be applied to.
+  - name: --to-dir
+    summary: |-
+      The local directory the instance clone definitions will be stored in.
+  - name: --yes -y
+    parameterValueGroup: "false, true"
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
 - uid: az_iot_ops_create
   name: az iot ops create
   summary: |-
@@ -620,6 +720,7 @@ commands:
 - az_iot_ops_broker_listener_show
 - az_iot_ops_broker_show
 - az_iot_ops_check
+- az_iot_ops_clone
 - az_iot_ops_connector
 - az_iot_ops_connector_opcua
 - az_iot_ops_connector_opcua_client
@@ -637,12 +738,17 @@ commands:
 - az_iot_ops_create
 - az_iot_ops_dataflow
 - az_iot_ops_dataflow_endpoint
+- az_iot_ops_dataflow_endpoint_apply
+- az_iot_ops_dataflow_endpoint_delete
 - az_iot_ops_dataflow_endpoint_list
 - az_iot_ops_dataflow_endpoint_show
 - az_iot_ops_dataflow_list
 - az_iot_ops_dataflow_profile
+- az_iot_ops_dataflow_profile_create
+- az_iot_ops_dataflow_profile_delete
 - az_iot_ops_dataflow_profile_list
 - az_iot_ops_dataflow_profile_show
+- az_iot_ops_dataflow_profile_update
 - az_iot_ops_dataflow_show
 - az_iot_ops_delete
 - az_iot_ops_identity
