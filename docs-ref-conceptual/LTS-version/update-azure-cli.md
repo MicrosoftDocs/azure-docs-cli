@@ -23,7 +23,7 @@ When `azure-cli` is already the latest version, running `az upgrade` checks and 
 
 ## Automatic Update
 
-By default, autoupgrade for Azure CLI is disabled. If you would like to keep up with the latest version, you can enable autoupgrade through [configuration](../docs-ref-autogen/Latest-version/latest/config.yml).
+By default, autoupgrade for Azure CLI is disabled. If you would like to keep up with the latest version, you can enable autoupgrade through [configuration](../../docs-ref-autogen/LTS-version/latest/config.yml).
 
 ```azurecli
 az config set auto-upgrade.enable=yes

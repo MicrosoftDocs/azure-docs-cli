@@ -208,4 +208,4 @@ To learn more about querying command output, see
 ## See also
 
 - [Azure CLI configuration](azure-cli-configuration.md)
-- [Use the Azure CLI successfully](use-cli-effectively.md)
+- [Use the Azure CLI successfully](use-azure-cli-successfully-tips.md)
