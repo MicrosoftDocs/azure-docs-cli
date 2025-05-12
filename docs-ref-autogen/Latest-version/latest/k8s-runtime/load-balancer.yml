@@ -4,7 +4,7 @@ name: az k8s-runtime load-balancer
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **k8s-runtime** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az k8s-runtime load-balancer** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **k8s-runtime** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az k8s-runtime load-balancer** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage load balancers of Arc Kubernetes clusters.
 status: GA
@@ -22,6 +22,7 @@ directCommands:
                                         [--addresses]
                                         [--advertise-mode {ARP, BGP, Both}]
                                         [--bgp-peers]
+                                        [--communities]
                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--service-selector]
   examples:
@@ -48,6 +49,9 @@ directCommands:
   - name: --bgp-peers
     summary: |-
       The list of BGP peers it should advertise to. Null or empty means to advertise to all peers.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --communities
+    summary: |-
+      BGP Communities  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -165,10 +169,19 @@ directCommands:
     az k8s-runtime load-balancer update --load-balancer-name
                                         --resource-uri
                                         [--add]
+                                        [--addresses]
+                                        [--advertise-mode {ARP, BGP, Both}]
+                                        [--bgp-peers]
+                                        [--communities]
                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--remove]
+                                        [--service-selector]
                                         [--set]
+  examples:
+  - summary: |-
+      Update a load balancer
+    syntax: az k8s-runtime load-balancer update --load-balancer-name testlb1 --resource-uri subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1 --advertise-mode ARP
   requiredParameters:
   - isRequired: true
     name: --load-balancer-name
@@ -182,6 +195,19 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --addresses
+    summary: |-
+      IP Range  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --advertise-mode
+    parameterValueGroup: "ARP, BGP, Both"
+    summary: |-
+      Advertise Mode.
+  - name: --bgp-peers
+    summary: |-
+      The list of BGP peers it should advertise to. Null or empty means to advertise to all peers.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --communities
+    summary: |-
+      BGP Communities  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -193,6 +219,9 @@ directCommands:
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+  - name: --service-selector
+    summary: |-
+      A dynamic label mapping to select related services. For instance, if you want to create a load balancer only for services with label "a=b", then please specify {"a": "b"} in the field.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.

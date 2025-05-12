@@ -4,7 +4,7 @@ name: az k8s-runtime bgp-peer
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **k8s-runtime** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az k8s-runtime bgp-peer** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **k8s-runtime** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az k8s-runtime bgp-peer** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage BGP peers of Arc Kubernetes clusters.
 status: GA
@@ -19,10 +19,16 @@ directCommands:
   syntax: >-
     az k8s-runtime bgp-peer create --bgp-peer-name
                                    --resource-uri
+                                   [--bfd-profile]
+                                   [--bgp-multi-hop {Disabled, Enabled}]
+                                   [--hold-time]
+                                   [--keep-alive-time]
                                    [--my-asn]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--node-selector]
                                    [--peer-address]
                                    [--peer-asn]
+                                   [--peer-port]
   examples:
   - summary: |-
       Create a BGP Peer
@@ -37,6 +43,19 @@ directCommands:
     summary: |-
       The fully qualified Azure Resource manager identifier of the resource.
   optionalParameters:
+  - name: --bfd-profile
+    summary: |-
+      BFD Profile.
+  - name: --bgp-multi-hop
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      EBGP multiple hop.
+  - name: --hold-time
+    summary: |-
+      Hold time, per RFC4271.
+  - name: --keep-alive-time
+    summary: |-
+      Keepalive time, per RFC4271.
   - name: --my-asn
     summary: |-
       My ASN.
@@ -44,12 +63,18 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --node-selector
+    summary: |-
+      A dynamic label mapping to select related nodes to peer with. For instance, if you want to create a BGP peer only for nodes with label "a=b", then please specify {"a": "b"} in the field.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --peer-address
     summary: |-
       Peer Address.
   - name: --peer-asn
     summary: |-
       Peer ASN.
+  - name: --peer-port
+    summary: |-
+      Peer BGP port.
 - uid: az_k8s-runtime_bgp-peer_delete
   name: az k8s-runtime bgp-peer delete
   summary: |-
@@ -136,10 +161,23 @@ directCommands:
     az k8s-runtime bgp-peer update --bgp-peer-name
                                    --resource-uri
                                    [--add]
+                                   [--bfd-profile]
+                                   [--bgp-multi-hop {Disabled, Enabled}]
                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--hold-time]
+                                   [--keep-alive-time]
+                                   [--my-asn]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--node-selector]
+                                   [--peer-address]
+                                   [--peer-asn]
+                                   [--peer-port]
                                    [--remove]
                                    [--set]
+  examples:
+  - summary: |-
+      Update a BGP peer
+    syntax: az k8s-runtime bgp-peer update --bgp-peer-name bgpPeer1 --resource-uri subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1 --my-asn 10000 --peer-asn 20000 --peer-address 192.168.50.1
   requiredParameters:
   - isRequired: true
     name: --bgp-peer-name
@@ -153,14 +191,42 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --bfd-profile
+    summary: |-
+      BFD Profile.
+  - name: --bgp-multi-hop
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      EBGP multiple hop.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --hold-time
+    summary: |-
+      Hold time, per RFC4271.
+  - name: --keep-alive-time
+    summary: |-
+      Keepalive time, per RFC4271.
+  - name: --my-asn
+    summary: |-
+      My ASN.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --node-selector
+    summary: |-
+      A dynamic label mapping to select related nodes to peer with. For instance, if you want to create a BGP peer only for nodes with label "a=b", then please specify {"a": "b"} in the field.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --peer-address
+    summary: |-
+      Peer Address.
+  - name: --peer-asn
+    summary: |-
+      Peer ASN.
+  - name: --peer-port
+    summary: |-
+      Peer BGP port.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.

@@ -32,6 +32,7 @@ directCommands:
                  [--platform]
                  [--resource-group]
                  [--secret-build-arg]
+                 [--source-acr-auth-id {[caller], none}]
                  [--target]
                  [--timeout]
                  [<SOURCE_LOCATION>]
@@ -57,6 +58,9 @@ directCommands:
   - summary: |-
       Queue a local context as a Linux build on arm/v7 architecture, tag it, and push it to the registry.
     syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r myregistry . --platform linux/arm/v7
+  - summary: |-
+      Queue a local context as a Linux build, tag it, and push it to the ABAC-based Repository Permission enabled registry and use the caller's Entra identity to authenticate with the source registry.
+    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r myregistry . --source-acr-auth-id [caller]
   requiredParameters:
   - isRequired: true
     name: --registry -r
@@ -109,6 +113,11 @@ directCommands:
   - name: --secret-build-arg
     summary: |-
       Secret build argument in '--secret-build-arg name[=value]' format. Multiples are supported by passing '--secret-build-arg name[=value]' multiple times. This parameter value is not surfaced to the ACR team and is more suitable for sensitive information.
+  - name: --source-acr-auth-id
+    parameterValueGroup: "[caller], none"
+    summary: |-
+      Assign the identity used for source registry login. Use '[caller]' for caller identity.
+    isPreview: true
   - name: --target
     summary: |-
       The name of the target build stage.
@@ -536,6 +545,7 @@ directCommands:
                [--resource-group]
                [--set]
                [--set-secret]
+               [--source-acr-auth-id {[caller], none}]
                [--timeout]
                [--values]
                [<SOURCE_LOCATION>]
@@ -561,6 +571,9 @@ directCommands:
   - summary: |-
       Queue a remote OCI Artifact context and runs the task.
     syntax: az acr run -r myregistry oci://myregistry.azurecr.io/myartifact:mytag -f hello-world.yaml
+  - summary: |-
+      Queue a run to execute a container command in an ABAC-based Repository Permission enabled registry and use the caller's Entra identity to authenticate with the source registry.
+    syntax: az acr run -r myregistry --cmd '$Registry/myimage' /dev/null --source-acr-auth-id [caller]
   requiredParameters:
   - isRequired: true
     name: --registry -r
@@ -609,6 +622,11 @@ directCommands:
   - name: --set-secret
     summary: |-
       Secret value in '--set name[=value]' format. Multiples supported by passing --set multiple times.
+  - name: --source-acr-auth-id
+    parameterValueGroup: "[caller], none"
+    summary: |-
+      Assign the identity used for source registry login. Use '[caller]' for caller identity.
+    isPreview: true
   - name: --timeout
     summary: |-
       The timeout in seconds.

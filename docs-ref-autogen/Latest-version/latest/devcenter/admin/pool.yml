@@ -21,6 +21,8 @@ directCommands:
                                    --name
                                    --project
                                    --resource-group
+                                   [--active-hours-configuration]
+                                   [--dev-box-tunnel-enable-status {Disabled, Enabled}]
                                    [--devbox-definition-image-reference]
                                    [--devbox-definition-name]
                                    [--devbox-definition-sku]
@@ -41,13 +43,16 @@ directCommands:
     syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Unmanaged" --single-sign-on-status "Enabled"
   - summary: |-
       Create pool using managed network
-    syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Managed" --managed-virtual-network-region ["westus3"] --single-sign-on-status "Enabled"
+    syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Managed" --managed-virtual-network-region ["westus3"] --single-sign-on-status "Enabled"
   - summary: |-
       Create a pool with stop on disconnect enabled
     syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Unmanaged" --single-sign-on-status "Enabled" --stop-on-disconnect status="Enabled" grace-period-minutes="60"
   - summary: |-
       Create pool using image definition
     syntax: az devcenter admin pool create --location "eastus" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Unmanaged" --single-sign-on-status "Enabled" --devbox-definition-type "Value" --devbox-definition-image-reference id="/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/rg1/providers/Microsoft.DevCenter/projects/DevProject/images/~Catalog~image2~project-sample-2" --devbox-definition-sku name=""general_i_8c32gb256ssd_v2"
+  - summary: |-
+      Create pool with active hours configuration
+    syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Managed" --managed-virtual-network-region ["westus3"] --active-hours-configuration auto-start-enable-status="Enabled" default-end-time-hour="17" default-start-time-hour="9" default-time-zone="America/Los_Angeles" keep-awake-enable-status="Enabled"
   requiredParameters:
   - isRequired: true
     name: --local-administrator
@@ -67,17 +72,22 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --active-hours-configuration -a
+    summary: |-
+      Active hours configuration settings for Dev Boxes created in this pool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --dev-box-tunnel-enable-status -u
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Indicates whether Dev Box Tunnel is enabled for a the pool.
   - name: --devbox-definition-image-reference -i
     summary: |-
       Image reference information for a definition of the machines that are created from this pool. Will be ignored if the parameter devbox-definition-type is Reference or not provided.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isPreview: true
   - name: --devbox-definition-name -d
     summary: |-
       Name of a dev box definition in parent project of this pool. Will be ignored if the parameter devbox-definition-type is Value.
   - name: --devbox-definition-sku -s
     summary: |-
       The SKU for Dev Boxes created from the Pool. Will be ignored if the parameter devbox-definition-type is Reference or not provided.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isPreview: true
   - name: --devbox-definition-type -t
     parameterValueGroup: "Reference, Value"
     summary: |-
@@ -108,7 +118,6 @@ directCommands:
   - name: --stop-on-no-connect
     summary: |-
       Stop on no connect configuration settings for Dev Boxes created in this pool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isPreview: true
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -265,7 +274,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az devcenter admin pool update [--add]
+    az devcenter admin pool update [--active-hours-configuration]
+                                   [--add]
+                                   [--dev-box-tunnel-enable-status {Disabled, Enabled}]
                                    [--devbox-definition-image-reference]
                                    [--devbox-definition-name]
                                    [--devbox-definition-sku]
@@ -293,20 +304,25 @@ directCommands:
       Update
     syntax: az devcenter admin pool update --devbox-definition-name "WebDevBox2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --stop-on-disconnect status="Disabled"
   optionalParameters:
+  - name: --active-hours-configuration -a
+    summary: |-
+      Active hours configuration settings for Dev Boxes created in this pool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --dev-box-tunnel-enable-status -u
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Indicates whether Dev Box Tunnel is enabled for a the pool.
   - name: --devbox-definition-image-reference -i
     summary: |-
       Image reference information for a definition of the machines that are created from this pool. Will be ignored if the parameter devbox-definition-type is Reference or not provided.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isPreview: true
   - name: --devbox-definition-name -d
     summary: |-
       Name of a dev box definition in parent project of this pool. Will be ignored if the parameter devbox-definition-type is Value.
   - name: --devbox-definition-sku -s
     summary: |-
       The SKU for Dev Boxes created from the Pool. Will be ignored if the parameter devbox-definition-type is Reference or not provided.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isPreview: true
   - name: --devbox-definition-type -t
     parameterValueGroup: "Reference, Value"
     summary: |-
@@ -360,7 +376,6 @@ directCommands:
   - name: --stop-on-no-connect
     summary: |-
       Stop on no connect configuration settings for Dev Boxes created in this pool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isPreview: true
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
