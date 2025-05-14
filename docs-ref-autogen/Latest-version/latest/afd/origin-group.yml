@@ -18,6 +18,7 @@ directCommands:
                                --resource-group
                                [--additional-latency-in-milliseconds]
                                [--enable-health-probe {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--health-probe-settings]
                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--probe-interval-in-seconds]
                                [--probe-path]
@@ -30,7 +31,7 @@ directCommands:
   examples:
   - summary: |-
       Creates a new origin group within the specified profile.
-    syntax: az afd origin-group create -g group --origin-group-name og1 --profile-name profile --probe-request-type GET --probe-protocol Http --probe-interval-in-seconds 120 --probe-path /test1/azure.txt --sample-size 4 --successful-samples-required 3 --additional-latency-in-milliseconds 50  --enable-health-probe true
+    syntax: az afd origin-group create --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --sample-size 3 --successful-samples-required 3 --additional-latency-in-milliseconds 1000 --health-probe-settings "{probe-path:/path2,probe-request-type:NotSet,probe-protocol:NotSet,probe-interval-in-seconds:10}" --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes 5
   requiredParameters:
   - isRequired: true
     name: --name --origin-group-name -n
@@ -39,7 +40,7 @@ directCommands:
   - isRequired: true
     name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -52,6 +53,9 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Indicates whether to enable probe on the origin group.
+  - name: --health-probe-settings
+    summary: |-
+      Health probe settings to the origin that is used to determine the health of the origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -114,7 +118,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -164,6 +168,10 @@ directCommands:
                              [--profile-name]
                              [--resource-group]
                              [--subscription]
+  examples:
+  - summary: |-
+      Get an existing origin group within a profile.
+    syntax: az afd origin-group show --resource-group RG --profile-name profile1 --origin-group-name origingroup1
   optionalParameters:
   - name: --ids
     summary: |-
@@ -173,7 +181,7 @@ directCommands:
       Name of the origin group which is unique within the endpoint.
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -191,6 +199,7 @@ directCommands:
                                [--additional-latency-in-milliseconds]
                                [--enable-health-probe {0, 1, f, false, n, no, t, true, y, yes}]
                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--health-probe-settings]
                                [--ids]
                                [--name]
                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -209,7 +218,7 @@ directCommands:
                                [--traffic-restoration-time-to-healed-or-new-endpoints-in-minutes]
   examples:
   - summary: |-
-      Update the probe setting of the specified origin group.
+      Update a new origin group within the specified profile.
     syntax: az afd origin-group update -g group --origin-group-name og1 --profile-name profile --probe-request-type HEAD --probe-protocol Https --probe-interval-in-seconds 120 --probe-path /test1/azure.txt
   optionalParameters:
   - name: --add
@@ -226,6 +235,9 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --health-probe-settings
+    summary: |-
+      Health probe settings to the origin that is used to determine the health of the origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -252,7 +264,7 @@ directCommands:
       The type of health probe request that is made.
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -325,7 +337,7 @@ directCommands:
       Name of the origin group which is unique within the endpoint.
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
