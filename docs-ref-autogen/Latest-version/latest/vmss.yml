@@ -20,7 +20,7 @@ directCommands:
                    --resource-group
                    [--accelerated-networking {false, true}]
                    [--accept-term]
-                   [--additional-events {false, true}]
+                   [--additional-events --additional-scheduled-events --scheduled-event-additional-publishing-target-event-grid-and-resource-graph {false, true}]
                    [--admin-password]
                    [--admin-username]
                    [--app-gateway]
@@ -34,7 +34,7 @@ directCommands:
                    [--automatic-repairs-grace-period]
                    [--backend-pool-name]
                    [--backend-port]
-                   [--capacity-reservation-group]
+                   [--capacity-reservation-group --crg]
                    [--computer-name-prefix]
                    [--custom-data]
                    [--data-disk-caching]
@@ -56,8 +56,8 @@ directCommands:
                    [--enable-integrity-monitoring]
                    [--enable-osimage-notification {false, true}]
                    [--enable-proxy-agent {false, true}]
-                   [--enable-reboot {false, true}]
-                   [--enable-redeploy {false, true}]
+                   [--enable-reboot --enable-user-reboot-scheduled-events {false, true}]
+                   [--enable-redeploy --enable-user-redeploy-scheduled-events {false, true}]
                    [--enable-resilient-creation {false, true}]
                    [--enable-resilient-deletion {false, true}]
                    [--enable-secure-boot {false, true}]
@@ -66,19 +66,19 @@ directCommands:
                    [--encryption-at-host {false, true}]
                    [--encryption-identity]
                    [--ephemeral-os-disk {false, true}]
-                   [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
+                   [--ephemeral-os-disk-placement --ephemeral-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
-                   [--exclude-extensions]
+                   [--exclude-extensions --security-posture-reference-exclude-extensions]
                    [--generate-ssh-keys]
                    [--health-probe]
                    [--host-group]
                    [--image]
-                   [--imds-access-control-profile-reference-id]
+                   [--imds-access-control-profile-reference-id --imds-profile-id]
                    [--imds-mode {Audit, Enforce}]
                    [--instance-count]
-                   [--is-overridable {false, true}]
-                   [--lb]
-                   [--lb-nat-rule-name]
+                   [--is-overridable --security-posture-reference-is-overridable {false, true}]
+                   [--lb --load-balancer]
+                   [--lb-nat-rule-name --nat-rule-name]
                    [--lb-sku {Basic, Gateway, Standard}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
                    [--location]
@@ -120,10 +120,10 @@ directCommands:
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
                    [--scope]
                    [--secrets]
-                   [--security-posture-id]
+                   [--security-posture-id --security-posture-reference-id]
                    [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--single-placement-group {false, true}]
-                   [--sku-allocat-strat {CapacityOptimized, LowestPrice}]
+                   [--sku-allocat-strat --skuprofile-allocation-strategy {CapacityOptimized, LowestPrice}]
                    [--skuprofile-vmsizes]
                    [--specialized {false, true}]
                    [--spot-restore-timeout]
@@ -147,7 +147,7 @@ directCommands:
                    [--vm-sku]
                    [--vnet-address-prefix]
                    [--vnet-name]
-                   [--wire-server-access-control-profile-reference-id]
+                   [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                    [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
                    [--zones]
@@ -756,7 +756,7 @@ directCommands:
   syntax: >-
     az vmss delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
                    [--ids]
-                   [--name]
+                   [--name --vm-scale-set-name]
                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                    [--resource-group]
                    [--subscription]
@@ -856,7 +856,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss get-os-upgrade-history --name
+    az vmss get-os-upgrade-history --name --vm-scale-set-name
                                    --resource-group
                                    [--max-items]
                                    [--next-token]
@@ -969,7 +969,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss list-instances --name
+    az vmss list-instances --name --virtual-machine-scale-set-name
                            --resource-group
                            [--expand]
                            [--filter]
@@ -1009,7 +1009,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss list-skus --name
+    az vmss list-skus --name --vm-scale-set-name
                       --resource-group
                       [--max-items]
                       [--next-token]
@@ -1039,7 +1039,7 @@ directCommands:
   syntax: >-
     az vmss perform-maintenance [--ids]
                                 [--instance-ids]
-                                [--name]
+                                [--name --vm-scale-set-name]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--resource-group]
                                 [--subscription]
@@ -1071,7 +1071,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss reimage [--force-update-os-disk-for-ephemeral {false, true}]
+    az vmss reimage [--force-update-os-disk-for-ephemeral --update-os-disk {false, true}]
                     [--ids]
                     [--instance-ids]
                     [--name]
@@ -1275,7 +1275,7 @@ directCommands:
   syntax: >-
     az vmss simulate-eviction [--ids]
                               [--instance-id]
-                              [--name]
+                              [--name --vm-scale-set-name]
                               [--resource-group]
                               [--subscription]
   examples:
@@ -1383,10 +1383,10 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
     az vmss update [--add]
-                   [--additional-events {false, true}]
+                   [--additional-events --additional-scheduled-events --scheduled-event-additional-publishing-target-event-grid-and-resource-graph {false, true}]
                    [--automatic-repairs-action {Reimage, Replace, Restart}]
                    [--automatic-repairs-grace-period]
-                   [--capacity-reservation-group]
+                   [--capacity-reservation-group --crg]
                    [--custom-data]
                    [--disk-controller-type {NVMe, SCSI}]
                    [--enable-auto-os-upgrade {false, true}]
@@ -1395,25 +1395,25 @@ directCommands:
                    [--enable-hibernation {false, true}]
                    [--enable-osimage-notification {false, true}]
                    [--enable-proxy-agent {false, true}]
-                   [--enable-reboot {false, true}]
-                   [--enable-redeploy {false, true}]
+                   [--enable-reboot --enable-user-reboot-scheduled-events {false, true}]
+                   [--enable-redeploy --enable-user-redeploy-scheduled-events {false, true}]
                    [--enable-resilient-creation {false, true}]
                    [--enable-resilient-deletion {false, true}]
                    [--enable-secure-boot {false, true}]
                    [--enable-spot-restore {false, true}]
                    [--enable-terminate-notification {false, true}]
                    [--enable-vtpm {false, true}]
-                   [--ephemeral-option {Local}]
+                   [--ephemeral-option --ephemeral-os-disk-option {Local}]
                    [--ephemeral-os-disk {false, true}]
-                   [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
-                   [--exclude-extensions]
+                   [--ephemeral-os-disk-placement --ephemeral-placement {CacheDisk, NvmeDisk, ResourceDisk}]
+                   [--exclude-extensions --security-posture-reference-exclude-extensions]
                    [--force-deletion]
                    [--force-string]
                    [--ids]
-                   [--imds-access-control-profile-reference-id]
+                   [--imds-access-control-profile-reference-id --imds-profile-id]
                    [--imds-mode {Audit, Enforce}]
                    [--instance-id]
-                   [--is-overridable {false, true}]
+                   [--is-overridable --security-posture-reference-is-overridable {false, true}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
                    [--max-batch-instance-percent]
                    [--max-price]
@@ -1434,10 +1434,10 @@ directCommands:
                    [--remove]
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
-                   [--security-posture-id]
+                   [--security-posture-id --security-posture-reference-id]
                    [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--set]
-                   [--sku-allocat-strat {CapacityOptimized, LowestPrice}]
+                   [--sku-allocat-strat --skuprofile-allocation-strategy {CapacityOptimized, LowestPrice}]
                    [--skuprofile-vmsizes]
                    [--spot-restore-timeout]
                    [--subscription]
@@ -1448,7 +1448,7 @@ directCommands:
                    [--v-cpus-available]
                    [--v-cpus-per-core]
                    [--vm-sku]
-                   [--wire-server-access-control-profile-reference-id]
+                   [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                    [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
                    [--zones]

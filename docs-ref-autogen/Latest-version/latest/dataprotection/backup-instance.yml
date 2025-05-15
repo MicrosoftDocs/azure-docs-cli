@@ -18,7 +18,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az dataprotection backup-instance adhoc-backup --rule-name
-                                                   [--backup-instance-name]
+                                                   [--backup-instance-name --name]
                                                    [--ids]
                                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                    [--resource-group]
@@ -100,7 +100,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance delete [--backup-instance-name]
+    az dataprotection backup-instance delete [--backup-instance-name --name]
                                              [--ids]
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--resource-group]
@@ -148,11 +148,11 @@ directCommands:
                                                  --policy-id
                                                  [--backup-configuration]
                                                  [--friendly-name]
-                                                 [--mi-system-assigned {false, true}]
-                                                 [--mi-user-assigned]
+                                                 [--mi-system-assigned --use-system-assigned-identity --use-system-identity {false, true}]
+                                                 [--mi-user-assigned --uami --user-assigned-identity-arm-url]
                                                  [--secret-store-type {AzureKeyVault}]
                                                  [--secret-store-uri]
-                                                 [--snapshot-resource-group-name]
+                                                 [--snapshot-resource-group-name --snapshot-rg]
                                                  [--tags]
   examples:
   - summary: |-
@@ -211,18 +211,18 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
-                                                              [--backup-hook-references]
-                                                              [--container-list]
+                                                              [--backup-hook-references --backup-hook-refs]
+                                                              [--container-list --vaulted-backup-containers]
                                                               [--excluded-namespaces]
-                                                              [--excluded-resource-type]
+                                                              [--excluded-resource-type --excluded-resource-types]
                                                               [--include-all-containers {false, true}]
-                                                              [--include-cluster-scope {false, true}]
+                                                              [--include-cluster-scope --include-cluster-scope-resources {false, true}]
                                                               [--included-namespaces]
-                                                              [--included-resource-type]
+                                                              [--included-resource-type --included-resource-types]
                                                               [--label-selectors]
                                                               [--snapshot-volumes {false, true}]
                                                               [--storage-account-name]
-                                                              [--storage-account-resource-group]
+                                                              [--storage-account-resource-group --storage-account-rg]
   examples:
   - summary: |-
       Initialize backup configuration for AzureKubernetesService
@@ -286,17 +286,17 @@ directCommands:
     az dataprotection backup-instance initialize-restoreconfig --datasource-type {AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
                                                                [--conflict-policy {Patch, Skip}]
                                                                [--excluded-namespaces]
-                                                               [--excluded-resource-type]
-                                                               [--include-cluster-scope {false, true}]
+                                                               [--excluded-resource-type --excluded-resource-types]
+                                                               [--include-cluster-scope --include-cluster-scope-resources {false, true}]
                                                                [--included-namespaces]
-                                                               [--included-resource-type]
+                                                               [--included-resource-type --included-resource-types]
                                                                [--label-selectors]
                                                                [--namespace-mappings]
-                                                               [--persistent-restoremode {RestoreWithVolumeData, RestoreWithoutVolumeData}]
-                                                               [--resource-modifier]
-                                                               [--restore-hook-references]
-                                                               [--staging-resource-group-id]
-                                                               [--staging-storage-account-id]
+                                                               [--persistent-restoremode --persistent-volume-restore-mode {RestoreWithVolumeData, RestoreWithoutVolumeData}]
+                                                               [--resource-modifier --resource-modifier-reference]
+                                                               [--restore-hook-references --restore-hook-refs]
+                                                               [--staging-resource-group-id --staging-rg-id]
+                                                               [--staging-storage-account-id --staging-storage-id]
   examples:
   - summary: |-
       Initialize restore configuration
@@ -437,7 +437,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance resume-protection [--backup-instance-name]
+    az dataprotection backup-instance resume-protection [--backup-instance-name --name]
                                                         [--ids]
                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                         [--resource-group]
@@ -474,7 +474,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance show [--backup-instance-name]
+    az dataprotection backup-instance show [--backup-instance-name --name]
                                            [--ids]
                                            [--resource-group]
                                            [--subscription]
@@ -506,10 +506,10 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance stop-protection [--backup-instance-name]
+    az dataprotection backup-instance stop-protection [--backup-instance-name --name]
                                                       [--ids]
                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                      [--operation-requests]
+                                                      [--operation-requests --resource-guard-operation-requests]
                                                       [--resource-group]
                                                       [--subscription]
                                                       [--tenant-id]
@@ -551,10 +551,10 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance suspend-backup [--backup-instance-name]
+    az dataprotection backup-instance suspend-backup [--backup-instance-name --name]
                                                      [--ids]
                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                     [--operation-requests]
+                                                     [--operation-requests --resource-guard-operation-requests]
                                                      [--resource-group]
                                                      [--subscription]
                                                      [--tenant-id]
@@ -599,10 +599,10 @@ directCommands:
     az dataprotection backup-instance update --backup-instance-name
                                              --resource-group
                                              --vault-name
-                                             [--container-blob-list]
+                                             [--container-blob-list --vaulted-blob-container-list]
                                              [--no-wait]
-                                             [--system-assigned {false, true}]
-                                             [--uami]
+                                             [--system-assigned --use-system-assigned-identity --use-system-identity {false, true}]
+                                             [--uami --user-assigned --user-assigned-identity-arm-url]
   examples:
   - summary: |-
       Update backed up containers for a vaulted blob backup instance
@@ -650,9 +650,9 @@ directCommands:
                                                              [--backup-instance]
                                                              [--keyvault-id]
                                                              [--restore-request-object]
-                                                             [--snapshot-resource-group-id]
+                                                             [--snapshot-resource-group-id --snapshot-rg-id]
                                                              [--target-storage-account-id]
-                                                             [--uami]
+                                                             [--uami --user-assigned --user-assigned-identity-arm-url]
                                                              [--yes]
   examples:
   - summary: |-
@@ -720,7 +720,7 @@ directCommands:
                                                     --resource-group
                                                     --vault-name
                                                     [--no-wait]
-                                                    [--operation-requests]
+                                                    [--operation-requests --resource-guard-operation-requests]
                                                     [--tenant-id]
   examples:
   - summary: |-
@@ -800,7 +800,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance validate-for-restore --backup-instance-name
+    az dataprotection backup-instance validate-for-restore --backup-instance-name --name
                                                            --restore-request-object
                                                            [--ids]
                                                            [--no-wait]
@@ -855,10 +855,10 @@ directCommands:
     az dataprotection backup-instance validate-for-update --backup-instance-name
                                                           --resource-group
                                                           --vault-name
-                                                          [--container-blob-list]
+                                                          [--container-blob-list --vaulted-blob-container-list]
                                                           [--no-wait]
-                                                          [--system-assigned {false, true}]
-                                                          [--uami]
+                                                          [--system-assigned --use-system-assigned-identity --use-system-identity {false, true}]
+                                                          [--uami --user-assigned --user-assigned-identity-arm-url]
   examples:
   - summary: |-
       Validate for modify backup
@@ -898,7 +898,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance wait [--backup-instance-name]
+    az dataprotection backup-instance wait [--backup-instance-name --name]
                                            [--created]
                                            [--custom]
                                            [--deleted]
