@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 05/06/2025
+ms.date: 05/20/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,115 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## May 20, 2025
+
+Version 2.73.0
+
+### ACR
+
+* `az acr connected-registry create/update`: Add new parameter `--gc-enabled` which enables or disables garbage collection on a connected registry
+* `az acr connected-registry create/update`: Add new parameter `--gc-schedule` which uses cron expression to set a collection interval
+* `az acr create/update`: Add a new optional parameter `--role-assignment-mode` to specify the role assignment mode for new or existing registries. This parameter allows customers to enable or disable Attribute-Based Access Control (ABAC)
+* `az acr check-health`: Add a new optional parameter `--repository` to check read, write, and delete permissions for a specific repository
+* `az acr task create/update`: Add a new optional parameter `--source-acr-auth-id` to specify the managed identity used for authentication with the source registry
+* `az acr build`: Add a new optional parameter `--source-acr-auth-id` to specify the identity used for authentication with the source registry
+* `az acr run`: Add a new optional parameter `--source-acr-auth-id` to specify the identity used for authentication with the source registry
+* `az acr create`: Remove preview flag from `--allow-trusted-services`
+
+### AKS
+
+* [BREAKING CHANGE] `az aks create`: Change default value of option `--node-vm-size` to ""
+* [BREAKING CHANGE] `az aks nodepool add`: Change default value of option `--node-vm-size` to ""
+* `az aks create/update`: Add support for apiserver vnet integration feature
+* `az aks create/approuting`: Add default NIC config for app routing
+* Fix #31265: `az aks enable-addons`: Fix UnboundLocalError when setting specific dataCollectionSettings
+
+### App Service
+
+* [BREAKING CHANGE] `az appservcie ase create/update/delete`: Remove support for ASEv2
+* `az webapp list-runtimes`: Update API response filter logic
+* `az functionapp plan update`: Add zone redundant update support for Flex
+
+### Backup
+
+* [BREAKING CHANGE] `az backup protection enable-for-vm`: Support for protecting TVM with standard policy
+
+### Cloud
+
+* [BREAKING CHANGE] `az cloud register/update`: No `gallery` endpoint returned if use endpoint discovery with `--endpoint-resource-manager`
+* `az cloud register/update`: Support data plane endpoints auto discovery with `--endpoint-resource-manager`
+
+### Compute
+
+* [BREAKING CHANGE] `az sig image-definition list-community/list-shared`: Replace pagination parameters with new parameters `--max-items` and `--next-token`
+* [BREAKING CHANGE] `az sig image-version list-community/list-shared`: Replace pagination parameters with new parameters `--max-items` and `--next-token`
+* `az vm/vmss create`: Fix missing auxiliary tokens
+* `az vmss create/update`: Add new parameter `--enable-automatic-zone-balancing` to support setting automatic zone rebalancing policy
+* `az vmss create/update`: Add new parameter `--automatic-zone-balancing-strategy` to support setting automatic zone rebalancing policy
+* `az vmss create/update`: Add new parameter `--automatic-zone-balancing-behavior` to support setting automatic zone rebalancing policy
+* `az vmss create/update`: Add new parameter `--skuprofile-rank` to specify a list of ranks to use with VMSS instance mix SKU profile VM sizes
+
+### DMS
+
+* `az dms project task create`: Add ability to use a lockless option for ensuring data consistency
+
+### Key Vault
+
+* `az keyvault key get-attestation`: Support getting a MHSM key's attestation
+
+### Monitor
+
+* `az monitor log-analytics workspace failover/failback`: Add new commands for supporting activating and deactivating workspace failover
+
+### NetAppFiles
+
+* `az volume-group create`: Parameter `--proximity-placement-group` is no longer required
+* `az netappfiles account create`: Add new parameter `--federated-client-id` for Cross Tennant CMK
+* `az netappfiles account create`: Add new parameter `--nfs-v4-id-domain`. Domain for NFSv4 user ID mapping
+* `az netappfiles account update`: Add new parameter `--federated-client-id` for Cross Tennant CMK
+* `az netappfiles account update`: Add new parameter `--nfs-v4-id-domain`. Domain for NFSv4 user ID mapping
+* `az netappfiles usage list`: Add new command to list current subscription usages
+* `az netappfiles usage show`: Add new command to show current subscription usages
+
+### Network
+
+* Fix #31294: `az network vnet update`: Refine processing logic of `--address-prefixes`
+
+### Packaging
+
+* Bump Python to 3.12 on RHEL and CentOS Stream
+* [BREAKING CHANGE] Drop Ubuntu 20.04 support
+
+### Profile
+
+* [BREAKING CHANGE] `az login`: `--username` no longer accepts user-assigned managed identity ID. Explicitly specify `--client-id`, `--object-id` or `--resource-id` instead
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres flexible-server create`: Set the default value of parameter `--create-default-database` to Disabled
+* [BREAKING CHANGE] `az postgres flexible-server create`: Set default PG version to 17 on create
+* [BREAKING CHANGE] `az postgres flexible-server stop-replication`: Remove deprecated command, use `az postgres flexible-server replica promote` instead
+* [BREAKING CHANGE] `az postgres flexible-server create/upgrade`: Remove support of PG12 which has officially ended
+* [BREAKING CHANGE] `az postgres flexible-server create/update/ad-admin`: Rename deprecated references to Microsoft Entra
+* [BREAKING CHANGE] `az postgres flexible-server create`: Set the default value of parameter `--create-default-database` to Disabled
+* [BREAKING CHANGE] `az postgres flexible-server create`: Set default PG version to 17 on creation
+* [BREAKING CHANGE] `az postgres flexible-server update`: Add user confirmation on certain update operations
+* `az postgres flexible-server create`: BUG FIX, Set public access network to disabled if None argument is passed in
+* `az postgres flexible-server create/db create`: Add validation for database name
+* `az postgres flexible-server create`: Set default sku to be coming from location capability API
+
+### Role
+
+* `az role assignment list`: Drop `--include-classic-administrators` argument
+
+### Service Connector
+
+* `az webapp connection create mongodb-atlas`: Add `mongodb-atlas` target service support
+
+### Storage
+
+* [BREAKING CHANGE] `az storage account migration start`: Add confirmation for storage account migration between redundancy options
 
 ## May 06, 2025
 
