@@ -57,6 +57,8 @@ The breaking changes listed in this section are planned for the next major relea
 
 - Starting from 2.73.0, no gallery endpoint will be returned if using endpoint discovery with --endpoint-resource-manager. Please manually set it with --endpoint-gallery.
 
+## netappfiles
+
 ### `netappfiles create`
 
 [Link to cloud reference group](/cli/azure/netappfiles)
