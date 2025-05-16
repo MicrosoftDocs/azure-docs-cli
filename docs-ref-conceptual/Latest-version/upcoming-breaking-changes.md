@@ -57,6 +57,26 @@ The breaking changes listed in this section are planned for the next major relea
 
 - Starting from 2.73.0, no gallery endpoint will be returned if using endpoint discovery with --endpoint-resource-manager. Please manually set it with --endpoint-gallery.
 
+### `netappfiles create`
+
+[Link to cloud reference group](/cli/azure/netappfiles)
+
+- '--is-restoring' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+
+### `netappfiles update`
+
+[Link to cloud reference group](/cli/azure/netappfiles)
+
+- '--avs-data-store' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--creation-token' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--is-large-volume' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--is-restoring' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--ldap-enabled' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--network-features' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--security-style' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--volume-type' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+- '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.73.0) scheduled for May 2025.
+
 ## profile
 
 ### `login`
