@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/18/2025
+ms.date: 05/19/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -30,7 +30,7 @@ You will be prompted to install an extension on first use.
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [17.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [18.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.37](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[akshybrid](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.1.2](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
@@ -167,7 +167,6 @@ You will be prompted to install an extension on first use.
 |[palo-alto-networks](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks) | 2.51.0 | Microsoft Azure Command-Line Tools PaloAltoNetworks Extension. | Preview | [1.1.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks/HISTORY.rst) |
 |[partnercenter](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter) | 2.0.67 | Microsoft Azure CLI Extension for Partner Center | Preview | [0.2.4](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter/HISTORY.rst) |
 |[peering](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering) | 2.3.1 | Microsoft Azure Command-Line Tools PeeringManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering/HISTORY.rst) |
-|[pinecone](https://github.com/Azure/azure-cli-extensions/tree/main/src/pinecone) | 2.70.0 | Microsoft Azure Command-Line Tools Pinecone Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/pinecone/HISTORY.rst) |
 |[playwright-cli-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/playwright-cli-extension) | 2.67.0 | Microsoft Azure Command-Line Tools PlaywrightCliExtension Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/playwright-cli-extension/HISTORY.rst) |
 |[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.67.0 | Microsoft Azure Command-Line Tools Portal Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated) | 2.56.0 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated/HISTORY.rst) |
@@ -194,7 +193,7 @@ You will be prompted to install an extension on first use.
 |[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.45.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [2.0.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.54.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
-|[stack-hci-vm](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) | 2.15.0 | Microsoft Azure Command-Line Tools Stack-HCi-VM Extension | GA | [1.8.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) |
+|[stack-hci-vm](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) | 2.15.0 | Microsoft Azure Command-Line Tools Stack-HCi-VM Extension | GA | [1.9.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) |
 |[standbypool](https://github.com/Azure/azure-cli-extensions/tree/main/src/standbypool) | 2.70.0 | Microsoft Azure Command-Line Tools Standbypool Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/standbypool/HISTORY.rst) |
 |[staticwebapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp) | 2.39.0 | Microsoft Azure Command-Line Tools Staticwebapp Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp/HISTORY.rst) |
 |[storage-actions](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions) | 2.57.0 | Microsoft Azure Command-Line Tools StorageActions Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions/HISTORY.rst) |
@@ -216,6 +215,5 @@ You will be prompted to install an extension on first use.
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.67.0 | Azure VMware Solution commands. | GA | [7.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.56.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
-|[weights-and-biases](https://github.com/Azure/azure-cli-extensions/tree/main/src/weights-and-biases) | 2.70.0 | Microsoft Azure Command-Line Tools WeightsAndBiases Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/weights-and-biases/HISTORY.rst) |
 |[workloads](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads) | 2.61.0 | Microsoft Azure Command-Line Tools Workloads Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads/HISTORY.rst) |
-|[zones](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones) | 2.0.67 | Microsoft Azure Command-Line Tools Zones Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones/HISTORY.rst) |
+|[zones](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones) | 2.0.67 | Microsoft Azure Command-Line Tools Zones Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones/HISTORY.rst) |
