@@ -109,7 +109,6 @@ directCommands:
                                  [--external-volume-name]
                                  [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos5-r {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos5-rw {0, 1, f, false, n, no, t, true, y, yes}]
@@ -279,10 +278,6 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Specifies whether volume is a Large Volume or Regular Volume.
-  - name: --is-restoring
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Restoring.
   - name: --kerberos-enabled
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -1608,7 +1603,6 @@ directCommands:
   syntax: >-
     az netappfiles volume update [--account-name]
                                  [--add]
-                                 [--avs-data-store {Disabled, Enabled}]
                                  [--backup-policy-id]
                                  [--backup-vault-id]
                                  [--ca-retrieval-policy {Default, Never, OnRead}]
@@ -1616,7 +1610,6 @@ directCommands:
                                  [--capacity-pool-resource-id]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
-                                 [--creation-token]
                                  [--default-group-quota]
                                  [--default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--default-user-quota]
@@ -1627,12 +1620,8 @@ directCommands:
                                  [--export-policy-rules]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
-                                 [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id]
-                                 [--ldap-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--name]
-                                 [--network-features {Basic, Basic_Standard, Standard, Standard_Basic}]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--placement-rules]
                                  [--policy-enforced {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1645,7 +1634,6 @@ directCommands:
                                  [--remove]
                                  [--replication-schedule {_10minutely, daily, hourly}]
                                  [--resource-group]
-                                 [--security-style {ntfs, unix}]
                                  [--service-level {Premium, Standard, StandardZRS, Ultra}]
                                  [--set]
                                  [--smb-access-based-enumeration {Disabled, Enabled}]
@@ -1662,7 +1650,6 @@ directCommands:
                                  [--usage-threshold]
                                  [--vnet]
                                  [--volume-spec-name]
-                                 [--volume-type]
   examples:
   - summary: |-
       Update an ANF volume
@@ -1674,10 +1661,6 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
-  - name: --avs-data-store
-    parameterValueGroup: "Disabled, Enabled"
-    summary: |-
-      Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose.
   - name: --backup-policy-id
     summary: |-
       Backup Policy Resource ID.
@@ -1702,9 +1685,6 @@ directCommands:
   - name: --coolness-period
     summary: |-
       Specifies the number of days after which data that is not accessed by clients will be tiered.
-  - name: --creation-token
-    summary: |-
-      A unique file path for the volume. Used when creating mount targets.
   - name: --default-group-quota --default-group-quota-in-ki-bs
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
@@ -1741,28 +1721,12 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --is-large-volume
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Specifies whether volume is a Large Volume or Regular Volume.
-  - name: --is-restoring
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Restoring.
   - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
     summary: |-
       The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
-  - name: --ldap-enabled
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Specifies whether LDAP is enabled or not for a given NFS volume.
   - name: --name --volume-name -n -v
     summary: |-
       The name of the volume.
-  - name: --network-features
-    parameterValueGroup: "Basic, Basic_Standard, Standard, Standard_Basic"
-    summary: |-
-      Basic network, or Standard features available to the volume. hide me.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -1803,10 +1767,6 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --security-style
-    parameterValueGroup: "ntfs, unix"
-    summary: |-
-      The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol.
   - name: --service-level
     parameterValueGroup: "Premium, Standard, StandardZRS, Ultra"
     summary: |-
@@ -1861,9 +1821,6 @@ directCommands:
   - name: --volume-spec-name
     summary: |-
       Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log.
-  - name: --volume-type
-    summary: |-
-      What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection.
 - uid: az_netappfiles_volume_update(netappfiles-preview)
   name: az netappfiles volume update
   extensionSuffix: netappfiles-preview

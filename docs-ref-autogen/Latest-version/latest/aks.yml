@@ -150,6 +150,8 @@ directCommands:
                   [--aks-custom-headers]
                   [--ampls-resource-id]
                   [--api-server-authorized-ip-ranges]
+                  [--apiserver-subnet-id]
+                  [--app-routing-default-nginx-controller {AnnotationControlled, External, Internal, None}]
                   [--appgw-id]
                   [--appgw-name]
                   [--appgw-subnet-cidr]
@@ -186,6 +188,7 @@ directCommands:
                   [--enable-acns]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
                   [--enable-asm]
                   [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
@@ -445,6 +448,13 @@ directCommands:
   - name: --api-server-authorized-ip-ranges
     summary: |-
       Comma-separated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+  - name: --apiserver-subnet-id
+    summary: |-
+      The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration).
+  - name: --app-routing-default-nginx-controller --ardnc
+    parameterValueGroup: "AnnotationControlled, External, Internal, None"
+    summary: |-
+      Configure default nginx ingress controller type. Valid values are annotationControlled (default behavior), external, internal, or none.
   - name: --appgw-id
     summary: |-
       Resource Id of an existing Application Gateway to use with AGIC. Use with ingress-azure addon.
@@ -591,6 +601,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+  - name: --enable-apiserver-vnet-integration
+    defaultValue: "False"
+    summary: |-
+      Enable integration of user vnet with control plane apiserver pods.
   - name: --enable-app-routing
     defaultValue: "False"
     summary: |-
@@ -926,9 +940,7 @@ directCommands:
       The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
   - name: --node-vm-size -s
     summary: |-
-      Size of Virtual Machines to create as Kubernetes nodes.
-    isDeprecated: true
-    deprecateInfo: The default value of '--node-vm-size' will be changed to 'Dynamically Selected By Azure' from 'Standard_DS2_V2 (Linux), Standard_DS2_V3 (Windows)' in next breaking change release(2.73.0) scheduled for May 2025.
+      Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
   - name: --nodepool-allowed-host-ports
     summary: |-
       Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. `80/TCP 443/TCP 4000-5000/TCP`.
@@ -2005,8 +2017,6 @@ directCommands:
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
-    isDeprecated: true
-    deprecateInfo: The default value of '--node-vm-size' will be changed to 'Dynamically Selected By Azure' from 'Standard_DS2_V2 (Linux), Standard_DS2_V3 (Windows)' in next breaking change release(2.73.0) scheduled for May 2025.
   - name: --nodepool-allowed-host-ports
     summary: |-
       Expose host ports on the node pool. When specified, format should be a comma-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
@@ -3369,6 +3379,7 @@ directCommands:
                   [--aad-tenant-id]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
+                  [--apiserver-subnet-id]
                   [--assign-identity]
                   [--assign-kubelet-identity]
                   [--attach-acr]
@@ -3402,6 +3413,7 @@ directCommands:
                   [--disable-image-cleaner]
                   [--disable-keda]
                   [--disable-local-accounts]
+                  [--disable-private-cluster]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
@@ -3411,6 +3423,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-acns]
                   [--enable-ahub]
+                  [--enable-apiserver-vnet-integration]
                   [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-metrics]
@@ -3427,6 +3440,7 @@ directCommands:
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-oidc-issuer]
+                  [--enable-private-cluster]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
@@ -3591,6 +3605,9 @@ directCommands:
   - name: --api-server-authorized-ip-ranges
     summary: |-
       Comma-separated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+  - name: --apiserver-subnet-id
+    summary: |-
+      The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration).
   - name: --assign-identity
     summary: |-
       Specify an existing user assigned identity to manage cluster resource group.
@@ -3713,6 +3730,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-private-cluster
+    defaultValue: "False"
+    summary: |-
+      Disable private cluster for apiserver vnet integration cluster.
   - name: --disable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -3748,6 +3769,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --enable-apiserver-vnet-integration
+    defaultValue: "False"
+    summary: |-
+      Enable integration of user vnet with control plane apiserver pods.
   - name: --enable-azure-container-storage
     parameterValueGroup: "azureDisk, elasticSan, ephemeralDisk"
     summary: |-
@@ -3811,6 +3836,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable OIDC issuer.
+  - name: --enable-private-cluster
+    defaultValue: "False"
+    summary: |-
+      Enable private cluster for apiserver vnet integration cluster.
   - name: --enable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -5446,6 +5475,7 @@ commands:
 - az_aks_connection_create_cosmos-table
 - az_aks_connection_create_eventhub
 - az_aks_connection_create_keyvault
+- az_aks_connection_create_mongodb-atlas
 - az_aks_connection_create_mysql
 - az_aks_connection_create_mysql-flexible
 - az_aks_connection_create_mysql-flexible(serviceconnector-passwordless)
@@ -5481,6 +5511,7 @@ commands:
 - az_aks_connection_update_cosmos-table
 - az_aks_connection_update_eventhub
 - az_aks_connection_update_keyvault
+- az_aks_connection_update_mongodb-atlas
 - az_aks_connection_update_mysql
 - az_aks_connection_update_mysql-flexible
 - az_aks_connection_update_neon-postgres

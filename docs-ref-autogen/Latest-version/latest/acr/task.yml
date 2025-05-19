@@ -69,6 +69,7 @@ directCommands:
                        [--secret-arg]
                        [--set]
                        [--set-secret]
+                       [--source-acr-auth-id]
                        [--source-trigger-name]
                        [--status {Disabled, Enabled}]
                        [--target]
@@ -112,11 +113,22 @@ directCommands:
           -c https://github.com/Azure/acr-builder.git -f Windows.Dockerfile \
           --commit-trigger-enabled false --platform Windows/amd64
   - summary: |-
-      Create a Linux multi-step task from a public GitHub repository with with both system-assigned and user-assigned managed identities and base image, git commit, pull request, and timer triggers that run the task at noon on Mondays through Fridays with the timer trigger name provided.
+      Create a Linux multi-step task from a public GitHub repository with both system-assigned and user-assigned managed identities and base image, git commit, pull request, and timer triggers that run the task at noon on Mondays through Fridays with the timer trigger name provided.
     syntax: >-
       az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r myregistry \
           --pull-request-trigger-enabled true --schedule "dailyTimer:0 12 * * Mon-Fri" \
           -c https://github.com/Azure-Samples/acr-tasks.git#:multipleRegistries -f testtask.yaml \
+          --assign-identity [system] "/subscriptions/<subscriptionId>/resourcegroups/<myResourceGroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<myUserAssignedIdentitiy>"
+  - summary: |-
+      Create a task without the source location in an ABAC-based Repository Permission registry and specify a system-assigned managed identity used for auth with the source registry.
+    syntax: az acr task create -n hello-world -r myregistry --cmd '$Registry/myimage' -c /dev/null --source-acr-auth-id [system]
+  - summary: |-
+      Create a task without the source location in an ABAC-based Repository Permission registry and specify a user-assigned managed identity used for auth with the source registry.
+    syntax: az acr task create -n hello-world -r myregistry --cmd '$Registry/myimage' -c /dev/null --source-acr-auth-id "/subscriptions/<subscriptionId>/resourcegroups/<myResourceGroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<myUserAssignedIdentitiy>"
+  - summary: |-
+      Create a task without the source location in an ABAC-based Repository Permission registry with both system-assigned and user-assigned managed identities, and specify the system-assigned managed identity used for auth with the source registry.
+    syntax: >-
+      az acr task create -n hello-world -r myregistry --cmd '$Registry/myimage' -c /dev/null --source-acr-auth-id [system]
           --assign-identity [system] "/subscriptions/<subscriptionId>/resourcegroups/<myResourceGroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<myUserAssignedIdentitiy>"
   requiredParameters:
   - isRequired: true
@@ -137,7 +149,7 @@ directCommands:
       Build argument in '--arg name[=value]' format. Multiples are supported by passing '--arg name[=value]' multiple times. IMPORTANT: This parameter should not include passwords, access tokens, or sensitive information of any kind. This parameter value will be visible to the ACR team for debugging purposes.
   - name: --assign-identity
     summary: |-
-      Assigns managed identities to the task. Use '[system]' to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity. Please see https://aka.ms/acr/tasks/task-create-managed-identity for more information.
+      Assign managed identities to the task. Use '[system]' to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity. Please see https://aka.ms/acr/tasks/task-create-managed-identity for more information.
   - name: --auth-mode
     parameterValueGroup: "Default, None"
     summary: |-
@@ -222,6 +234,10 @@ directCommands:
   - name: --set-secret
     summary: |-
       Secret task value in '--set-secret name[=value]' format. Multiples supported by passing --set-secret multiple times.
+  - name: --source-acr-auth-id
+    summary: |-
+      Assign the managed identity used for source registry login. Use '[system]' to refer to the system-assigned identity or a resource ID to refer to a user-assigned managed identity.
+    isPreview: true
   - name: --source-trigger-name
     defaultValue: "defaultSourceTriggerName"
     summary: |-
@@ -596,6 +612,7 @@ directCommands:
                        [--secret-arg]
                        [--set]
                        [--set-secret]
+                       [--source-acr-auth-id]
                        [--status {Disabled, Enabled}]
                        [--target]
                        [--timeout]
@@ -620,6 +637,12 @@ directCommands:
     syntax: >-
       az acr task update --image MyImage --name MyTask --registry myregistry \
           --context https://github.com/Azure-Samples/acr-build-helloworld-node.git
+  - summary: |-
+      Update the task using the system-assigned managed identity for authentication with the source registry in Azure Container Registry.
+    syntax: az acr task update -n MyTask -r myregistry --source-acr-auth-id [system]
+  - summary: |-
+      Update the task using the user-assigned managed identity for authentication with the source registry in Azure Container Registry.
+    syntax: az acr task update -n MyTask -r myregistry --source-acr-auth-id "/subscriptions/<subscriptionId>/resourcegroups/<myResourceGroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<myUserAssignedIdentitiy>"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -702,6 +725,10 @@ directCommands:
   - name: --set-secret
     summary: |-
       Secret task value in '--set-secret name[=value]' format. Multiples supported by passing --set-secret multiple times.
+  - name: --source-acr-auth-id
+    summary: |-
+      Assign the managed identity used for source registry login. Use '[system]' to refer to the system-assigned identity or a resource ID to refer to a user-assigned managed identity.
+    isPreview: true
   - name: --status
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
@@ -808,5 +835,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 01/24/2025
+  ms.date: 05/09/2025
   description: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
