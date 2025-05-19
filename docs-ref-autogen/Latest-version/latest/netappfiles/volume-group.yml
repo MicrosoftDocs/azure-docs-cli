@@ -16,7 +16,6 @@ directCommands:
   syntax: >-
     az netappfiles volume-group create --account-name
                                        --group-name
-                                       --ppg
                                        --resource-group
                                        [--add-snapshot-capacity]
                                        [--application-identifier]
@@ -45,6 +44,7 @@ directCommands:
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--number-of-hosts]
                                        [--pool-name]
+                                       [--ppg]
                                        [--prefix]
                                        [--shared-repl-skd {_10minutely, daily, hourly}]
                                        [--shared-size]
@@ -65,7 +65,7 @@ directCommands:
     syntax: az netappfiles volume-group create -g mygroup --account-name myaccountname --pool-name mypoolname --volume-group-name myvolumegroupname --vnet myvnet --ppg myppg --application-type SAP-HANA --application-identifier mysapsid
   - summary: |-
       Create ANF volume group for Oracle
-    syntax: az netappfiles volume-group create -g mygroup --account-name myaccountname --pool-name mypoolname --volume-group-name myvolumegroupname --vnet myvnet --ppg myppg --application-type ORACLE --application-identifier DEV
+    syntax: az netappfiles volume-group create -g mygroup --account-name myaccountname --pool-name mypoolname --volume-group-name myvolumegroupname --vnet myvnet --zones 1 --application-type ORACLE --application-identifier OR2 --prefix ora
   requiredParameters:
   - isRequired: true
     name: --account-name -a
@@ -75,10 +75,6 @@ directCommands:
     name: --group-name --name --volume-group-name -n
     summary: |-
       The name of the volumeGroup.
-  - isRequired: true
-    name: --ppg --proximity-placement-group
-    summary: |-
-      The resource id of the Proximity Placement Group for volume placement.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -178,6 +174,9 @@ directCommands:
   - name: --pool-name -p
     summary: |-
       Name of the ANF capacity pool.
+  - name: --ppg --proximity-placement-group
+    summary: |-
+      The resource id of the Proximity Placement Group for volume placement.
   - name: --prefix
     summary: |-
       All volume names will be prefixed with the given text. The default values for prefix text depends on system role. For PRIMARY it will be `""` and HA it will be `"HA-"`.
