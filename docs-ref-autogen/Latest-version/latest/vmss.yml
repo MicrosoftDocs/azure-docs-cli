@@ -32,6 +32,8 @@ directCommands:
                    [--authentication-type {all, password, ssh}]
                    [--automatic-repairs-action {Reimage, Replace, Restart}]
                    [--automatic-repairs-grace-period]
+                   [--automatic-zone-balancing-behavior {CreateBeforeDelete}]
+                   [--automatic-zone-balancing-strategy {Recreate}]
                    [--backend-pool-name]
                    [--backend-port]
                    [--capacity-reservation-group]
@@ -51,6 +53,7 @@ directCommands:
                    [--enable-agent {false, true}]
                    [--enable-auto-os-upgrade {false, true}]
                    [--enable-auto-update {false, true}]
+                   [--enable-automatic-zone-balancing {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-hibernation {false, true}]
                    [--enable-integrity-monitoring]
@@ -123,7 +126,8 @@ directCommands:
                    [--security-posture-id]
                    [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--single-placement-group {false, true}]
-                   [--sku-allocat-strat {CapacityOptimized, LowestPrice}]
+                   [--sku-allocat-strat {CapacityOptimized, LowestPrice, Prioritized}]
+                   [--skuprofile-rank]
                    [--skuprofile-vmsizes]
                    [--specialized {false, true}]
                    [--spot-restore-timeout]
@@ -285,6 +289,14 @@ directCommands:
   - name: --automatic-repairs-grace-period
     summary: |-
       The amount of time (in minutes, between 30 and 90) for which automatic repairs are suspended due to a state change on VM.
+  - name: --automatic-zone-balancing-behavior --balancing-behavior
+    parameterValueGroup: "CreateBeforeDelete"
+    summary: |-
+      Type of rebalance behavior that will be used for recreating virtualmachines in the scale set across availability zones.
+  - name: --automatic-zone-balancing-strategy --balancing-strategy
+    parameterValueGroup: "Recreate"
+    summary: |-
+      Type of rebalance strategy that will be used for rebalancing virtualmachines in the scale set across availability zones.
   - name: --backend-pool-name
     summary: |-
       Name to use for the backend pool when creating a new load balancer or application gateway.
@@ -350,6 +362,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Indicate whether Automatic Updates is enabled for the Windows virtual machine.
+  - name: --enable-automatic-zone-balancing --enable-zone-balancing
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether automatic AZ balancing should be enabled on the virtualmachine scale set.
   - name: --enable-cross-zone-upgrade
     parameterValueGroup: "false, true"
     summary: |-
@@ -612,9 +628,12 @@ directCommands:
     summary: |-
       Limit the scale set to a single placement group. See https://learn.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-placement-groups for details.
   - name: --sku-allocat-strat --skuprofile-allocation-strategy
-    parameterValueGroup: "CapacityOptimized, LowestPrice"
+    parameterValueGroup: "CapacityOptimized, LowestPrice, Prioritized"
     summary: |-
       Allocation strategy for vm sizes in SKU profile.
+  - name: --skuprofile-rank
+    summary: |-
+      A list for ranks associated with the SKU profile vm sizes.
   - name: --skuprofile-vmsizes
     summary: |-
       A list of VM sizes in the scale set. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
@@ -1386,11 +1405,14 @@ directCommands:
                    [--additional-events {false, true}]
                    [--automatic-repairs-action {Reimage, Replace, Restart}]
                    [--automatic-repairs-grace-period]
+                   [--automatic-zone-balancing-behavior {CreateBeforeDelete}]
+                   [--automatic-zone-balancing-strategy {Recreate}]
                    [--capacity-reservation-group]
                    [--custom-data]
                    [--disk-controller-type {NVMe, SCSI}]
                    [--enable-auto-os-upgrade {false, true}]
                    [--enable-automatic-repairs {false, true}]
+                   [--enable-automatic-zone-balancing {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-hibernation {false, true}]
                    [--enable-osimage-notification {false, true}]
@@ -1437,7 +1459,8 @@ directCommands:
                    [--security-posture-id]
                    [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--set]
-                   [--sku-allocat-strat {CapacityOptimized, LowestPrice}]
+                   [--sku-allocat-strat {CapacityOptimized, LowestPrice, Prioritized}]
+                   [--skuprofile-rank]
                    [--skuprofile-vmsizes]
                    [--spot-restore-timeout]
                    [--subscription]
@@ -1495,6 +1518,14 @@ directCommands:
   - name: --automatic-repairs-grace-period
     summary: |-
       The amount of time (in minutes, between 30 and 90) for which automatic repairs are suspended due to a state change on VM.
+  - name: --automatic-zone-balancing-behavior --balancing-behavior
+    parameterValueGroup: "CreateBeforeDelete"
+    summary: |-
+      Type of rebalance behavior that will be used for recreating virtualmachines in the scale set across availability zones.
+  - name: --automatic-zone-balancing-strategy --balancing-strategy
+    parameterValueGroup: "Recreate"
+    summary: |-
+      Type of rebalance strategy that will be used for rebalancing virtualmachines in the scale set across availability zones.
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
@@ -1515,6 +1546,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable automatic repairs.
+  - name: --enable-automatic-zone-balancing --enable-zone-balancing
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether automatic AZ balancing should be enabled on the virtualmachine scale set.
   - name: --enable-cross-zone-upgrade
     parameterValueGroup: "false, true"
     summary: |-
@@ -1691,9 +1726,12 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --sku-allocat-strat --skuprofile-allocation-strategy
-    parameterValueGroup: "CapacityOptimized, LowestPrice"
+    parameterValueGroup: "CapacityOptimized, LowestPrice, Prioritized"
     summary: |-
       Allocation strategy for vm sizes in SKU profile.
+  - name: --skuprofile-rank
+    summary: |-
+      A list for ranks associated with the SKU profile vm sizes.
   - name: --skuprofile-vmsizes
     summary: |-
       A list of VM sizes in the scale set. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
@@ -1984,5 +2022,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 04/17/2025
+  ms.date: 04/24/2025
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
