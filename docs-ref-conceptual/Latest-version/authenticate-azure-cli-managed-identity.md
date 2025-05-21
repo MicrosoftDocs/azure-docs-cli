@@ -1,7 +1,6 @@
 ---
 title: Sign into Azure using a managed identity and Azure CLI
 description: Learn how to sign into Azure using a managed identity and Azure CLI. Find links to articles that show how to use the Azure CLI to manage Azure identities.
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 #customer intent: As an app developer, I need to security automate authentication to Azure using a managed identity.

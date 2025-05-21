@@ -4,7 +4,6 @@ description: Learn how to install and run the Azure CLI on Linux manually. You c
 author: jiasli
 ms.author: jiasli
 ms.date: 09/19/2024
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, linux-related-content
 zone_pivot_group_filename: azure/zone-pivot-groups.json

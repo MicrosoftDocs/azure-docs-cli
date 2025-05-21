@@ -1,7 +1,6 @@
 ---
 title: Manage Azure CLI Extensions - Install, Update, and Remove
 description: Learn how to install, update, and manage Azure CLI extensions. Use Microsoft or custom extensions to enhance your CLI experience and automate tasks.
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: manage extensions, microsoft extensions, install extensions, uninstall extensions, azure extensions, azure cli extensions

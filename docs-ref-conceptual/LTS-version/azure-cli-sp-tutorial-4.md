@@ -2,7 +2,6 @@
 title: Get an existing service principal using the Azure CLI | Microsoft Docs
 description: Learn how to retrieve an existing service principal using the Azure CLI.
 ms.date: 09/19/2024
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli

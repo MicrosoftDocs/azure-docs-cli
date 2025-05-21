@@ -2,7 +2,6 @@
 title: Quoting differences in scripting languages | Microsoft Docs
 description: Learn about quoting difference between Bash, PowerShell, and Cmd. Find examples for escape characters, single and double quotes.
 ms.date: 09/22/2024
-ms.topic: concept-article
 ms.custom: devx-track-azurecli
 #customer intent: As a manager of Azure resources, I want to quickly find solutions to quoting errors in Azure CLI commands. I want all tips and techniques for quoting to be in one place so I don't have to review multiple how-to guides and tutorials.
 ---

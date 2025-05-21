@@ -2,7 +2,6 @@
 title: Azure CLI lifecycle and support | Microsoft Docs
 description: Learn the details about the support lifecycle of the Azure CLI reference commands.
 ms.date: 12/10/2024
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli support, azure cli lifecycle
