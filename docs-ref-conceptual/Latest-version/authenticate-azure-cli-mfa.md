@@ -3,7 +3,6 @@ description: Learn about the impact of mandatory multifactor authentication enfo
 title: The impact of multifactor authentication on Azure CLI in automation scenarios
 ms.custom: devx-track-azurecli
 ms.service: azure-cli
-ms.topic: conceptual
 ---
 
 # The impact of multifactor authentication on Azure CLI in automation scenarios

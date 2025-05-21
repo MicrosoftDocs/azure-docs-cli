@@ -1,7 +1,6 @@
 ---
 title: Use Microsoft Copilot in Azure to learn how to use the Azure CLI
 description: Use Microsoft Copilot in Azure to learn and generate Azure CLI commands faster with AI-powered guidance tailored to your resources and tasks.
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli microsoft copilot, copilot for azure, azure command line

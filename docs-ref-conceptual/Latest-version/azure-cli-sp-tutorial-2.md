@@ -2,7 +2,6 @@
 title: Create a service principal containing password authentication using the Azure CLI | Microsoft Docs
 description: Learn to use service principals with a password to control access to Azure resources.
 ms.date: 09/19/2024
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli

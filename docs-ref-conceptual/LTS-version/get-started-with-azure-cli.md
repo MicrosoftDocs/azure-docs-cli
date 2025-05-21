@@ -1,7 +1,6 @@
 ---
 title: Get started with Azure Command-Line Interface (CLI)
 description: Learn how to get started with Azure CLI to manage Azure resources efficiently. This guide covers sign-in, essential commands, tab completion, and interactive mode.
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli, how to use azure cli, azure command line interface, azure cli commands, azure cli tutorial
