@@ -2,7 +2,6 @@
 title: Use the Azure REST API with Azure CLI| Microsoft Docs
 description: Learn how to use the Azure REST API for Azure CLI including PUT, PATCH, GET, POST, and DELETE HTTP requests.
 ms.date: 03/24/2025
-ms.topic: concept-article
 ms.custom: devx-track-azurecli
 #customer-intent: As an Azure CLI customer that has primarily used the Azure portal, I'm finding out that not all portal features are available in Azure CLI commands. I need to learn how to use the REST API to supplement my Azure CLI scripts.
 ---

@@ -4,7 +4,6 @@ description: Learn how to update the Azure Command-Line Interface (CLI) by perfo
 author: jiasli
 ms.author: jiasli
 ms.date: 03/24/2025
-ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: update azure cli
