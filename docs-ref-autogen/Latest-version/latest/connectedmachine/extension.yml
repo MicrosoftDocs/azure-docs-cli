@@ -13,7 +13,7 @@ directCommands:
 - uid: az_connectedmachine_extension_create
   name: az connectedmachine extension create
   summary: |-
-    Create an extension.
+    Create operation to create or update the extension.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -34,8 +34,8 @@ directCommands:
                                          [--type-handler-version]
   examples:
   - summary: |-
-      Sample command for extension create
-    syntax: az connectedmachine extension create --name CustomScriptExtension --location eastus2euap --type CustomScriptExtension --publisher Microsoft.Compute --type-handler-version 1.10 --machine-name myMachine --resource-group myResourceGroup
+      sample command for extension create
+    syntax: az connectedmachine extension create --resource-group myResourceGroup --machine-name myMachine --extension-name CustomScriptExtension --location eastus2euap --publisher Microsoft.Compute --type-handler-version 1.10 --type CustomScriptExtension --settings "{commandToExecute:'powershell.exe -c "Get-Process | Where-Object { $_.CPU -gt 10000 }"'}"
   requiredParameters:
   - isRequired: true
     name: --extension-name --name -n
@@ -92,7 +92,7 @@ directCommands:
 - uid: az_connectedmachine_extension_delete
   name: az connectedmachine extension delete
   summary: |-
-    Delete an extension.
+    Delete operation to delete the extension.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -105,8 +105,8 @@ directCommands:
                                          [--yes]
   examples:
   - summary: |-
-      Sample command for extension delete
-    syntax: az connectedmachine extension delete --name myName --machine-name myMachine --resource-group myResourceGroup
+      sample command for extension delete
+    syntax: az connectedmachine extension delete --resource-group myResourceGroup --machine-name myMachine --extension-name MMA
   optionalParameters:
   - name: --extension-name --name -n
     summary: |-
@@ -169,7 +169,7 @@ directCommands:
 - uid: az_connectedmachine_extension_show
   name: az connectedmachine extension show
   summary: |-
-    Show an extension of a Non-Azure machine.
+    Get operation to get the extension.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -180,8 +180,8 @@ directCommands:
                                        [--subscription]
   examples:
   - summary: |-
-      Sample command for extension show
-    syntax: az connectedmachine extension show --name CustomScriptExtension --machine-name myMachine --resource-group myResourceGroup
+      sample command for extension show
+    syntax: az connectedmachine extension show --resource-group myResourceGroup --machine-name myMachine --extension-name CustomScriptExtension
   optionalParameters:
   - name: --extension-name --name -n
     summary: |-
@@ -201,25 +201,20 @@ directCommands:
 - uid: az_connectedmachine_extension_update
   name: az connectedmachine extension update
   summary: |-
-    Update an extension.
+    Update operation to create or update the extension.
   status: GA
   sourceType: Extension
   syntax: >-
-    az connectedmachine extension update [--add]
-                                         [--auto-upgrade-min {0, 1, f, false, n, no, t, true, y, yes}]
+    az connectedmachine extension update [--auto-upgrade-min {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--enable-auto-upgrade {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--extension-name]
-                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--force-update-tag]
                                          [--ids]
-                                         [--instance-view]
                                          [--machine-name]
                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--protected-settings]
                                          [--publisher]
-                                         [--remove]
                                          [--resource-group]
-                                         [--set]
                                          [--settings]
                                          [--subscription]
                                          [--tags]
@@ -227,12 +222,9 @@ directCommands:
                                          [--type-handler-version]
   examples:
   - summary: |-
-      Sample command for extension update
+      sample command for extension update
     syntax: az connectedmachine extension update --name CustomScriptExtension --type CustomScriptExtension --publisher Microsoft.Compute --type-handler-version 1.10 --machine-name myMachine --resource-group myResourceGroup
   optionalParameters:
-  - name: --add
-    summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --auto-upgrade-min --auto-upgrade-minor-version
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -244,22 +236,15 @@ directCommands:
   - name: --extension-name --name -n
     summary: |-
       The name of the machine extension.
-  - name: --force-string
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --force-update-tag
     summary: |-
       How the extension handler should be forced to update even if the extension configuration has not changed.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --instance-view
-    summary: |-
-      The machine extension instance view.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --machine-name
     summary: |-
-      The name of the machine containing the extension.
+      The name of the machine where the extension should be created or updated.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -270,15 +255,9 @@ directCommands:
   - name: --publisher
     summary: |-
       The name of the extension handler publisher.
-  - name: --remove
-    summary: |-
-      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --set
-    summary: |-
-      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --settings
     summary: |-
       Json formatted public settings for the extension.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -287,7 +266,7 @@ directCommands:
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --type
     summary: |-
       Specifies the type of the extension; an example is "CustomScriptExtension".
