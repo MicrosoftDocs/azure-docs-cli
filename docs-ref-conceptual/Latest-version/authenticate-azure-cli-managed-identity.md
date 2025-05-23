@@ -25,10 +25,16 @@ az login --identity
 ```
 
 To sign in with a user-assigned managed identity, specify the client ID, object ID, or resource ID
-of the user-assigned managed identity with `--username`:
+of the user-assigned managed identity with `--client-id`, `--object-id`, or `--resource-id` respectively:
 
 ```azurecli-interactive
-az login --identity --username <client_id|object_id|resource_id>
+az login --identity --client-id <client_id>
+```
+```azurecli-interactive
+az login --identity --object-id <object_id>
+```
+```azurecli-interactive
+az login --identity --resource-id <resource_id>
 ```
 
 To learn more about managed identities for Azure resources, see
