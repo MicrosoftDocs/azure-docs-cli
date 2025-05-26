@@ -4,34 +4,35 @@ name: az datadog monitor
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **datadog** extension for the Azure CLI (version 2.17.0 or higher). The extension will automatically install the first time you run an **az datadog monitor** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **datadog** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az datadog monitor** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage monitor with datadog.
+  Provides a set of commands to manage Datadog monitor resources in your Azure subscription, enabling integration and observability of your Azure resources through Datadog.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_datadog_monitor_create
   name: az datadog monitor create
   summary: |-
-    Create a monitor resource.
+    Creates a new Datadog monitor resource in your Azure subscription. This sets up the integration between Azure and your Datadog account, enabling observability and monitoring of your Azure resources through Datadog.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog monitor create --monitor-name
+    az datadog monitor create --monitor-name --name
                               --resource-group
                               [--datadog-organization-properties]
+                              [--identity]
                               [--location]
-                              [--no-wait]
-                              [--sku-name]
+                              [--monitoring-status {Disabled, Enabled}]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--sku]
                               [--tags]
-                              [--type {SystemAssigned, UserAssigned}]
                               [--user-info]
   examples:
   - summary: |-
       Monitors_Create
     syntax: az datadog monitor create --name "myMonitor" --resource-group "myResourceGroup" --location "West US 2" --tags Environment="Dev" --user-info name="Alice" email-address="alice@microsoft.com" phone-number="123-456-7890" --type "SystemAssigned" --sku-name "payg_v2_Monthly"
   - summary: |-
-      Monitors creation with linking to Datadogo organization.
+      Monitors creation with linking to Datadog organization.
     syntax: az datadog monitor create --name "myMonitor" --resource-group "myResourceGroup" --location "West US 2" --datadog-organization-properties api-key=XX application-key=XX --tags Environment="Dev" --user-info name="Alice" email-address="alice@microsoft.com" phone-number="123-456-7890" --type "SystemAssigned" --sku-name "Linked"
   requiredParameters:
   - isRequired: true
@@ -45,59 +46,48 @@ directCommands:
   optionalParameters:
   - name: --datadog-organization-properties
     summary: |-
-      Datadog organization properties.
-    description: |-
-      Usage: --datadog-organization-properties linking-auth-code=XX linking-client-id=XX redirect-uri=XX api-key=XX application-key=XX enterprise-app-id=XX
-
-      linking-auth-code: The auth code used to linking to an existing datadog organization.
-      linking-client-id: The client_id from an existing in exchange for an auth token to link organization.
-      redirect-uri: The redirect uri for linking.
-      api-key: Api key associated to the Datadog organization.
-      application-key: Application key associated to the Datadog organization.
-      enterprise-app-id: The Id of the Enterprise App used for Single sign on.
+      Datadog organization properties  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --identity
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --monitoring-status
+    defaultValue: "Enabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Flag specifying if the resource monitoring is enabled or disabled.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --sku-name
+  - name: --sku
     summary: |-
-      Name of the SKU.
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
-  - name: --type
-    parameterValueGroup: "SystemAssigned, UserAssigned"
-    summary: |-
-      Identity type.
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --user-info
     summary: |-
-      User info.
-    description: |-
-      Usage: --user-info name=XX email-address=XX phone-number=XX
-
-      name: Name of the user
-      email-address: Email of the user used by Datadog for contacting them if needed
-      phone-number: Phone number of the user used by Datadog for contacting them if needed.
+      User info  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_datadog_monitor_delete
   name: az datadog monitor delete
   summary: |-
-    Delete a monitor resource.
+    Deletes an existing Datadog monitor resource from your Azure subscription, removing the integration and stopping the observability of your Azure resources through Datadog.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog monitor delete [--ids]
-                              [--monitor-name]
-                              [--no-wait]
+                              [--monitor-name --name]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--resource-group]
                               [--subscription]
                               [--yes]
   examples:
   - summary: |-
       Monitors_Delete
-    syntax: az datadog monitor delete --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor delete --resource-group myResourceGroup --monitor-name myMonitor
   optionalParameters:
   - name: --ids
     summary: |-
@@ -106,7 +96,7 @@ directCommands:
     summary: |-
       Monitor resource name.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
@@ -122,18 +112,18 @@ directCommands:
 - uid: az_datadog_monitor_get-default-key
   name: az datadog monitor get-default-key
   summary: |-
-    Get the default api key.
+    Fetches the default Datadog API key associated with your monitor resource, which is used for authenticating and sending telemetry data from Azure to Datadog.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog monitor get-default-key [--ids]
-                                       [--monitor-name]
+                                       [--monitor-name --name]
                                        [--resource-group]
                                        [--subscription]
   examples:
   - summary: |-
       Monitors_GetDefaultKey
-    syntax: az datadog monitor get-default-key --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor get-default-key --resource-group myResourceGroup --monitor-name myMonitor
   optionalParameters:
   - name: --ids
     summary: |-
@@ -150,34 +140,42 @@ directCommands:
 - uid: az_datadog_monitor_list
   name: az datadog monitor list
   summary: |-
-    List all monitors under the specified resource group. And List all monitors under the specified subscription.
+    Retrieves a list of all Datadog monitor resources either within a specific resource group or across the entire subscription, helping you quickly audit and manage your monitoring setup.
   status: GA
   sourceType: Extension
-  syntax: az datadog monitor list [--resource-group]
+  syntax: >-
+    az datadog monitor list [--max-items]
+                            [--next-token]
+                            [--resource-group]
   examples:
   - summary: |-
-      Monitors_ListByResourceGroup
-    syntax: az datadog monitor list --resource-group "myResourceGroup"
-  - summary: |-
       Monitors_List
-    syntax: az datadog monitor list
+    syntax: az datadog monitor list [--resource-group]
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_datadog_monitor_list-api-key
   name: az datadog monitor list-api-key
   summary: |-
-    List the api keys for a given monitor resource.
+    Lists all API keys associated with a specific Datadog monitor resource, allowing you to manage and audit the keys used for authentication and data transmission.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog monitor list-api-key --monitor-name
+    az datadog monitor list-api-key --monitor-name --name
                                     --resource-group
+                                    [--max-items]
+                                    [--next-token]
   examples:
   - summary: |-
       Monitors_ListApiKeys
-    syntax: az datadog monitor list-api-key --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor list-api-key --resource-group myResourceGroup --monitor-name myMonitor
   requiredParameters:
   - isRequired: true
     name: --monitor-name --name -n
@@ -187,19 +185,28 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_datadog_monitor_list-host
   name: az datadog monitor list-host
   summary: |-
-    List the hosts for a given monitor resource.
+    Lists all hosts being monitored by a specific Datadog monitor resource, providing visibility into the infrastructure components under observation.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog monitor list-host --monitor-name
+    az datadog monitor list-host --monitor-name --name
                                  --resource-group
+                                 [--max-items]
+                                 [--next-token]
   examples:
   - summary: |-
       Monitors_ListHosts
-    syntax: az datadog monitor list-host --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor list-host --resource-group myResourceGroup --monitor-name myMonitor
   requiredParameters:
   - isRequired: true
     name: --monitor-name --name -n
@@ -209,19 +216,28 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_datadog_monitor_list-linked-resource
   name: az datadog monitor list-linked-resource
   summary: |-
-    List all Azure resources associated to the same Datadog organization as the target resource.
+    Lists all Azure resources that are linked to the same Datadog organization as the specified monitor resource, helping you understand the scope of integration.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog monitor list-linked-resource --monitor-name
+    az datadog monitor list-linked-resource --monitor-name --name
                                             --resource-group
+                                            [--max-items]
+                                            [--next-token]
   examples:
   - summary: |-
       Monitors_ListLinkedResources
-    syntax: az datadog monitor list-linked-resource --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor list-linked-resource --resource-group myResourceGroup --monitor-name myMonitor
   requiredParameters:
   - isRequired: true
     name: --monitor-name --name -n
@@ -231,19 +247,28 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_datadog_monitor_list-monitored-resource
   name: az datadog monitor list-monitored-resource
   summary: |-
-    List the resources currently being monitored by the Datadog monitor resource.
+    Lists all Azure resources that are currently being monitored by the specified Datadog monitor resource, providing insight into the coverage of your observability setup.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog monitor list-monitored-resource --monitor-name
+    az datadog monitor list-monitored-resource --monitor-name --name
                                                --resource-group
+                                               [--max-items]
+                                               [--next-token]
   examples:
   - summary: |-
       Monitors_ListMonitoredResources
-    syntax: az datadog monitor list-monitored-resource --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor list-monitored-resource --resource-group myResourceGroup --monitor-name myMonitor
   requiredParameters:
   - isRequired: true
     name: --monitor-name --name -n
@@ -253,21 +278,28 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_datadog_monitor_refresh-set-password-link
   name: az datadog monitor refresh-set-password-link
   summary: |-
-    Refresh the set password link and return a latest one.
+    Refreshes the link used to set the password for the Datadog monitor resource and returns the latest link, ensuring secure access management.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog monitor refresh-set-password-link [--ids]
-                                                 [--monitor-name]
+                                                 [--monitor-name --name]
                                                  [--resource-group]
                                                  [--subscription]
   examples:
   - summary: |-
       Monitors_RefreshSetPasswordLink
-    syntax: az datadog monitor refresh-set-password-link --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor refresh-set-password-link --resource-group myResourceGroup --monitor-name myMonitor
   optionalParameters:
   - name: --ids
     summary: |-
@@ -284,7 +316,7 @@ directCommands:
 - uid: az_datadog_monitor_set-default-key
   name: az datadog monitor set-default-key
   summary: |-
-    Set the default api key.
+    Sets the default Datadog API key for the specified monitor resource, which will be used for authenticating and sending telemetry data from Azure to Datadog.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -292,14 +324,14 @@ directCommands:
                                        [--created-by]
                                        [--ids]
                                        [--key]
-                                       [--monitor-name]
-                                       [--name]
+                                       [--key-name]
+                                       [--monitor-name --name]
                                        [--resource-group]
                                        [--subscription]
   examples:
   - summary: |-
       Monitors_SetDefaultKey
-    syntax: az datadog monitor set-default-key --monitor-name "myMonitor" --key "1111111111111111aaaaaaaaaaaaaaaa" --resource-group "myResourceGroup"
+    syntax: az datadog monitor set-default-key --resource-group myResourceGroup --monitor-name myMonitor --key 1111111111111111aaaaaaaaaaaaaaaa
   optionalParameters:
   - name: --created
     summary: |-
@@ -313,12 +345,12 @@ directCommands:
   - name: --key
     summary: |-
       The value of the API key.
-  - name: --monitor-name
-    summary: |-
-      Monitor resource name.
-  - name: --name
+  - name: --key-name
     summary: |-
       The name of the API key.
+  - name: --monitor-name --name -n
+    summary: |-
+      Monitor resource name.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -328,18 +360,18 @@ directCommands:
 - uid: az_datadog_monitor_show
   name: az datadog monitor show
   summary: |-
-    Get the properties of a specific monitor resource.
+    Retrieves the properties and configuration details of a specific Datadog monitor resource, providing insight into its setup and status.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog monitor show [--ids]
-                            [--monitor-name]
+                            [--monitor-name --name]
                             [--resource-group]
                             [--subscription]
   examples:
   - summary: |-
       Monitors_Get
-    syntax: az datadog monitor show --name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog monitor show --resource-group myResourceGroup --monitor-name myMonitor
   optionalParameters:
   - name: --ids
     summary: |-
@@ -356,52 +388,82 @@ directCommands:
 - uid: az_datadog_monitor_update
   name: az datadog monitor update
   summary: |-
-    Update a monitor resource.
+    Updates the configuration of an existing Datadog monitor resource in your Azure subscription, allowing you to modify its settings and integration parameters.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog monitor update [--ids]
-                              [--monitor-name]
-                              [--monitoring-status]
-                              [--no-wait]
+    az datadog monitor update [--add]
+                              [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--identity]
+                              [--ids]
+                              [--location]
+                              [--monitor-name --name]
+                              [--monitoring-status {Disabled, Enabled}]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--remove]
                               [--resource-group]
-                              [--sku-name]
+                              [--set]
+                              [--sku]
                               [--subscription]
                               [--tags]
+                              [--user-info]
   examples:
   - summary: |-
       Monitors_Update
     syntax: az datadog monitor update --name "myMonitor" --tags Environment="Dev" --monitoring-status "Disabled" --resource-group "myResourceGroup"
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --identity
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - name: --monitoring-status
+    parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Flag specifying if the resource monitoring is enabled or disabled. Allowed values: "Enabled", "Disabled".
+      Flag specifying if the resource monitoring is enabled or disabled.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --sku-name
+  - name: --set
     summary: |-
-      Name of the SKU.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --sku
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --user-info
+    summary: |-
+      User info  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_datadog_monitor_wait
   name: az datadog monitor wait
   summary: |-
-    Place the CLI in a waiting state until a condition of the datadog monitor is met.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -411,21 +473,11 @@ directCommands:
                             [--exists]
                             [--ids]
                             [--interval]
-                            [--monitor-name]
+                            [--monitor-name --name]
                             [--resource-group]
                             [--subscription]
                             [--timeout]
                             [--updated]
-  examples:
-  - summary: |-
-      Pause executing next line of CLI script until the datadog monitor is successfully created.
-    syntax: az datadog monitor wait --name "myMonitor" --resource-group "myResourceGroup" --created
-  - summary: |-
-      Pause executing next line of CLI script until the datadog monitor is successfully updated.
-    syntax: az datadog monitor wait --name "myMonitor" --resource-group "myResourceGroup" --updated
-  - summary: |-
-      Pause executing next line of CLI script until the datadog monitor is successfully deleted.
-    syntax: az datadog monitor wait --name "myMonitor" --resource-group "myResourceGroup" --deleted
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -505,4 +557,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage monitor with datadog.
+  description: Provides a set of commands to manage Datadog monitor resources in your Azure subscription, enabling integration and observability of your Azure resources through Datadog.

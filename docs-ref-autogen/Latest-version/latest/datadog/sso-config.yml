@@ -4,35 +4,36 @@ name: az datadog sso-config
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **datadog** extension for the Azure CLI (version 2.17.0 or higher). The extension will automatically install the first time you run an **az datadog sso-config** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **datadog** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az datadog sso-config** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage sso config with datadog.
+  Provides a set of commands to manage Single Sign-On (SSO) configurations for Datadog monitor resources, enabling secure and streamlined access for users.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_datadog_sso-config_create
   name: az datadog sso-config create
   summary: |-
-    Configures single-sign-on for this resource.
+    Sets up Single Sign-On (SSO) for your Datadog monitor resource, allowing users to log in to Datadog using their Azure Active Directory credentials for streamlined and secure access.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog sso-config create --configuration-name
-                                 --monitor-name
+                                 --monitor-name --name
                                  --resource-group
-                                 [--no-wait]
-                                 [--properties]
+                                 [--enterprise-app-id]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--single-sign-on-state {Disable, Enable, Existing, Initial}]
   examples:
   - summary: |-
       SingleSignOnConfigurations_CreateOrUpdate
-    syntax: az datadog sso-config create --configuration-name "default" --monitor-name "myMonitor" --properties enterprise-app-id="00000000-0000-0000-0000-000000000000" single-sign-on-state="Enable" --resource-group "myResourceGroup"
+    syntax: az datadog sso-config create --resource-group myResourceGroup --monitor-name myMonitor --configuration-name default --single-sign-on-state Enable --enterprise-app-id 00000000-0000-0000-0000-000000000000
   requiredParameters:
   - isRequired: true
     name: --configuration-name
     summary: |-
       Configuration name.
   - isRequired: true
-    name: --monitor-name
+    name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - isRequired: true
@@ -40,54 +41,64 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --enterprise-app-id
+    summary: |-
+      The Id of the Enterprise App used for Single sign-on.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --properties
-    description: |-
-      Usage: --properties single-sign-on-state=XX enterprise-app-id=XX
-
-      single-sign-on-state: Various states of the SSO resource
-      enterprise-app-id: The Id of the Enterprise App used for Single sign-on.
+  - name: --single-sign-on-state
+    parameterValueGroup: "Disable, Enable, Existing, Initial"
+    summary: |-
+      Various states of the SSO resource.
 - uid: az_datadog_sso-config_list
   name: az datadog sso-config list
   summary: |-
-    List the single sign-on configurations for a given monitor resource.
+    Lists all Single Sign-On (SSO) configurations associated with a specific Datadog monitor resource, helping you manage and audit access settings.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog sso-config list --monitor-name
+    az datadog sso-config list --monitor-name --name
                                --resource-group
+                               [--max-items]
+                               [--next-token]
   examples:
   - summary: |-
       SingleSignOnConfigurations_List
-    syntax: az datadog sso-config list --monitor-name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog sso-config list --resource-group myResourceGroup --monitor-name myMonitor
   requiredParameters:
   - isRequired: true
-    name: --monitor-name
+    name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_datadog_sso-config_show
   name: az datadog sso-config show
   summary: |-
-    Gets the datadog single sign-on resource for the given Monitor.
+    Retrieves the details of the Single Sign-On (SSO) configuration for a specific Datadog monitor resource, providing insight into its setup and status.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog sso-config show [--configuration-name]
                                [--ids]
-                               [--monitor-name]
+                               [--monitor-name --name]
                                [--resource-group]
                                [--subscription]
   examples:
   - summary: |-
       SingleSignOnConfigurations_Get
-    syntax: az datadog sso-config show --configuration-name "default" --monitor-name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog sso-config show --resource-group myResourceGroup --monitor-name myMonitor --configuration-name default
   optionalParameters:
   - name: --configuration-name
     summary: |-
@@ -95,7 +106,7 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --monitor-name
+  - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - name: --resource-group -g
@@ -107,67 +118,70 @@ directCommands:
 - uid: az_datadog_sso-config_update
   name: az datadog sso-config update
   summary: |-
-    Configures single-sign-on for this resource.
+    Updates the Single Sign-On (SSO) configuration for a specific Datadog monitor resource, allowing you to modify its settings and integration parameters.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog sso-config update [--add]
                                  [--configuration-name]
-                                 [--force-string]
+                                 [--enterprise-app-id]
+                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
-                                 [--monitor-name]
-                                 [--no-wait]
-                                 [--properties]
+                                 [--monitor-name --name]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--remove]
                                  [--resource-group]
                                  [--set]
+                                 [--single-sign-on-state {Disable, Enable, Existing, Initial}]
                                  [--subscription]
+  examples:
+  - summary: |-
+      SSO_update
+    syntax: az datadog sso-config update --resource-group myResourceGroup --monitor-name myMonitor --configuration-name default --single-sign-on-state Enable --enterprise-app-id 00000000-0000-0000-0000-000000000000
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --configuration-name
     summary: |-
       Configuration name.
+  - name: --enterprise-app-id
+    summary: |-
+      The Id of the Enterprise App used for Single sign-on.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --monitor-name
+  - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --properties
-    description: |-
-      Usage: --properties single-sign-on-state=XX enterprise-app-id=XX
-
-      single-sign-on-state: Various states of the SSO resource
-      enterprise-app-id: The Id of the Enterprise App used for Single sign-on.
   - name: --remove
-    defaultValue: "[]"
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
-    defaultValue: "[]"
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --single-sign-on-state
+    parameterValueGroup: "Disable, Enable, Existing, Initial"
+    summary: |-
+      Various states of the SSO resource.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_datadog_sso-config_wait
   name: az datadog sso-config wait
   summary: |-
-    Place the CLI in a waiting state until a condition of the datadog sso-config is met.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -178,18 +192,11 @@ directCommands:
                                [--exists]
                                [--ids]
                                [--interval]
-                               [--monitor-name]
+                               [--monitor-name --name]
                                [--resource-group]
                                [--subscription]
                                [--timeout]
                                [--updated]
-  examples:
-  - summary: |-
-      Pause executing next line of CLI script until the datadog sso-config is successfully created.
-    syntax: az datadog sso-config wait --configuration-name "default" --monitor-name "myMonitor" --resource-group "myResourceGroup" --created
-  - summary: |-
-      Pause executing next line of CLI script until the datadog sso-config is successfully updated.
-    syntax: az datadog sso-config wait --configuration-name "default" --monitor-name "myMonitor" --resource-group "myResourceGroup" --updated
   optionalParameters:
   - name: --configuration-name
     summary: |-
@@ -216,7 +223,7 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
-  - name: --monitor-name
+  - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - name: --resource-group -g
@@ -264,4 +271,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage sso config with datadog.
+  description: Provides a set of commands to manage Single Sign-On (SSO) configurations for Datadog monitor resources, enabling secure and streamlined access for users.
