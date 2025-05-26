@@ -4,34 +4,31 @@ name: az datadog tag-rule
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **datadog** extension for the Azure CLI (version 2.17.0 or higher). The extension will automatically install the first time you run an **az datadog tag-rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **datadog** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az datadog tag-rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage tag rule with datadog.
+  Provides a set of commands to manage tag rules for Datadog monitor resources, allowing you to control which Azure resources are monitored based on their tags.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_datadog_tag-rule_create
   name: az datadog tag-rule create
   summary: |-
-    Create a tag rule set for a given monitor resource.
+    Creates a new set of tag rules for a specific Datadog monitor resource, determining which Azure resources are monitored based on their tags.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog tag-rule create --monitor-name
+    az datadog tag-rule create --monitor-name --name
                                --resource-group
                                --rule-set-name
-                               [--filtering-tags]
-                               [--log-rules-filtering-tags]
-                               [--send-aad-logs {false, true}]
-                               [--send-resource-logs {false, true}]
-                               [--send-subscription-logs {false, true}]
+                               [--log-rules]
+                               [--metric-rules]
   examples:
   - summary: |-
       TagRules_CreateOrUpdate
-    syntax: az datadog tag-rule create --monitor-name "myMonitor" --log-rules-filtering-tags name="Environment" action="Include" value="Prod" --log-rules-filtering-tags name="Environment" action="Exclude" value="Dev" --send-aad-logs false --send-resource-logs true --send-subscription-logs true --resource-group "myResourceGroup" --rule-set-name "default"
+    syntax: az datadog tag-rule create --resource-group myResourceGroup --monitor-name myMonitor --rule-set-name default --log-rules "{send-aad-logs:False,send-subscription-logs:True,send-resource-logs:True,filtering-tags:[{name:Environment,value:Prod,action:Include},{name:Environment,value:Dev,action:Exclude}]}" --metric-rules "{filtering-tags:[]}"
   requiredParameters:
   - isRequired: true
-    name: --monitor-name
+    name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - isRequired: true
@@ -43,83 +40,64 @@ directCommands:
     summary: |-
       Rule set name.
   optionalParameters:
-  - name: --filtering-tags
+  - name: --log-rules
     summary: |-
-      List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
-    description: |-
-      Usage: --filtering-tags name=XX value=XX action=XX
-
-      name: The name (also known as the key) of the tag.
-      value: The value of the tag.
-      action: Valid actions for a filtering tag. Exclusion takes priority over inclusion.
-
-      Multiple actions can be specified by using more than one --filtering-tags argument.
-  - name: --log-rules-filtering-tags
+      Set of rules for sending logs for the Monitor resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --metric-rules
     summary: |-
-      List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
-    description: |-
-      Usage: --log-rules-filtering-tags name=XX value=XX action=XX
-
-      name: The name (also known as the key) of the tag.
-      value: The value of the tag.
-      action: Valid actions for a filtering tag. Exclusion takes priority over inclusion.
-
-      Multiple actions can be specified by using more than one --log-rules-filtering-tags argument.
-  - name: --send-aad-logs
-    parameterValueGroup: "false, true"
-    summary: |-
-      Flag specifying if AAD logs should be sent for the Monitor resource.
-  - name: --send-resource-logs
-    parameterValueGroup: "false, true"
-    summary: |-
-      Flag specifying if Azure resource logs should be sent for the Monitor resource.
-  - name: --send-subscription-logs
-    parameterValueGroup: "false, true"
-    summary: |-
-      Flag specifying if Azure subscription logs should be sent for the Monitor resource.
+      Set of rules for sending metrics for the Monitor resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_datadog_tag-rule_list
   name: az datadog tag-rule list
   summary: |-
-    List the tag rules for a given monitor resource.
+    Lists all tag rules associated with a specific Datadog monitor resource, helping you manage and audit the rules that control resource monitoring.
   status: GA
   sourceType: Extension
   syntax: >-
-    az datadog tag-rule list --monitor-name
+    az datadog tag-rule list --monitor-name --name
                              --resource-group
+                             [--max-items]
+                             [--next-token]
   examples:
   - summary: |-
       TagRules_List
-    syntax: az datadog tag-rule list --monitor-name "myMonitor" --resource-group "myResourceGroup"
+    syntax: az datadog tag-rule list --resource-group myResourceGroup --monitor-name myMonitor
   requiredParameters:
   - isRequired: true
-    name: --monitor-name
+    name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_datadog_tag-rule_show
   name: az datadog tag-rule show
   summary: |-
-    Get a tag rule set for a given monitor resource.
+    Retrieves the details of the tag rules for a specific Datadog monitor resource, providing insight into its setup and status.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog tag-rule show [--ids]
-                             [--monitor-name]
+                             [--monitor-name --name]
                              [--resource-group]
                              [--rule-set-name]
                              [--subscription]
   examples:
   - summary: |-
       TagRules_Get
-    syntax: az datadog tag-rule show --monitor-name "myMonitor" --resource-group "myResourceGroup" --rule-set-name "default"
+    syntax: az datadog tag-rule show --resource-group myResourceGroup --monitor-name myMonitor --rule-set-name default
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --monitor-name
+  - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - name: --resource-group -g
@@ -134,63 +112,46 @@ directCommands:
 - uid: az_datadog_tag-rule_update
   name: az datadog tag-rule update
   summary: |-
-    Update a tag rule set for a given monitor resource.
+    Updates the tag rules for a specific Datadog monitor resource, allowing you to modify the rules that control which Azure resources are monitored.
   status: GA
   sourceType: Extension
   syntax: >-
     az datadog tag-rule update [--add]
-                               [--filtering-tags]
-                               [--force-string]
+                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                [--ids]
-                               [--log-rules-filtering-tags]
-                               [--monitor-name]
+                               [--log-rules]
+                               [--metric-rules]
+                               [--monitor-name --name]
                                [--remove]
                                [--resource-group]
                                [--rule-set-name]
-                               [--send-aad-logs {false, true}]
-                               [--send-resource-logs {false, true}]
-                               [--send-subscription-logs {false, true}]
                                [--set]
                                [--subscription]
+  examples:
+  - summary: |-
+      TagRule_update
+    syntax: az datadog tag-rule update --resource-group myResourceGroup --monitor-name myMonitor --rule-set-name default --log-rules "{send-aad-logs:False,send-subscription-logs:True,send-resource-logs:True,filtering-tags:[{name:Environment,value:Prod,action:Include},{name:Environment,value:Dev,action:Exclude}]}" --metric-rules "{filtering-tags:[]}"
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
-  - name: --filtering-tags
-    summary: |-
-      List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
-    description: |-
-      Usage: --filtering-tags name=XX value=XX action=XX
-
-      name: The name (also known as the key) of the tag.
-      value: The value of the tag.
-      action: Valid actions for a filtering tag. Exclusion takes priority over inclusion.
-
-      Multiple actions can be specified by using more than one --filtering-tags argument.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --log-rules-filtering-tags
+  - name: --log-rules
     summary: |-
-      List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
-    description: |-
-      Usage: --log-rules-filtering-tags name=XX value=XX action=XX
-
-      name: The name (also known as the key) of the tag.
-      value: The value of the tag.
-      action: Valid actions for a filtering tag. Exclusion takes priority over inclusion.
-
-      Multiple actions can be specified by using more than one --log-rules-filtering-tags argument.
-  - name: --monitor-name
+      Set of rules for sending logs for the Monitor resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --metric-rules
+    summary: |-
+      Set of rules for sending metrics for the Monitor resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
   - name: --remove
-    defaultValue: "[]"
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
@@ -199,20 +160,7 @@ directCommands:
   - name: --rule-set-name
     summary: |-
       Rule set name.
-  - name: --send-aad-logs
-    parameterValueGroup: "false, true"
-    summary: |-
-      Flag specifying if AAD logs should be sent for the Monitor resource.
-  - name: --send-resource-logs
-    parameterValueGroup: "false, true"
-    summary: |-
-      Flag specifying if Azure resource logs should be sent for the Monitor resource.
-  - name: --send-subscription-logs
-    parameterValueGroup: "false, true"
-    summary: |-
-      Flag specifying if Azure subscription logs should be sent for the Monitor resource.
   - name: --set
-    defaultValue: "[]"
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --subscription
@@ -248,4 +196,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage tag rule with datadog.
+  description: Provides a set of commands to manage tag rules for Datadog monitor resources, allowing you to control which Azure resources are monitored based on their tags.
