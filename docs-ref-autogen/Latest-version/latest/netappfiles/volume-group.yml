@@ -21,6 +21,8 @@ directCommands:
                                        [--application-identifier --sap-sid]
                                        [--application-type {ORACLE, SAP-HANA}]
                                        [--backup-nfsv3 {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--binary-size]
+                                       [--binary-throughput]
                                        [--data-backup-repl-skd {_10minutely, daily, hourly}]
                                        [--data-backup-size]
                                        [--data-backup-src-id]
@@ -29,6 +31,8 @@ directCommands:
                                        [--data-size]
                                        [--data-src-id]
                                        [--data-throughput]
+                                       [--database-size]
+                                       [--database-throughput]
                                        [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
                                        [--gp-rules]
                                        [--group-description]
@@ -38,11 +42,14 @@ directCommands:
                                        [--log-backup-size]
                                        [--log-backup-src-id]
                                        [--log-backup-throughput]
+                                       [--log-mirror-size]
+                                       [--log-mirror-throughput]
                                        [--log-size]
                                        [--log-throughput]
                                        [--memory]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--number-of-hosts --number-of-hots]
+                                       [--number-of-volumes]
                                        [--pool-name]
                                        [--ppg --proximity-placement-group]
                                        [--prefix]
@@ -97,6 +104,12 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Indicates if NFS Protocol version 3 is preferred for data backup and log backup volumes. Default is False.
+  - name: --binary-size
+    summary: |-
+      Capacity (in GiB) for binary volume. If not provided size will automatically be calculated.
+  - name: --binary-throughput
+    summary: |-
+      Throughput in MiB/s for log binary volume. If not provided size will automatically be calculated.
   - name: --data-backup-repl-skd
     parameterValueGroup: "_10minutely, daily, hourly"
     summary: |-
@@ -123,6 +136,14 @@ directCommands:
   - name: --data-throughput
     summary: |-
       Throughput in MiB/s for data volumes. If not provided size will automatically be calculated.
+  - name: --database-size
+    defaultValue: "100"
+    summary: |-
+      Oracle database size in (TiB), used to auto compute storage size and throughput.
+  - name: --database-throughput
+    defaultValue: "1"
+    summary: |-
+      Oracle database throughput in (MiB/s), used to auto compute storage size and throughput.
   - name: --encryption-key-source
     defaultValue: "Microsoft.NetApp"
     parameterValueGroup: "Microsoft.KeyVault, Microsoft.NetApp"
@@ -153,6 +174,12 @@ directCommands:
   - name: --log-backup-throughput
     summary: |-
       Throughput in MiB/s for log backup volumes. If not provided size will automatically be calculated.
+  - name: --log-mirror-size
+    summary: |-
+      Capacity (in GiB) for log mirror volume. If not provided size will automatically be calculated.
+  - name: --log-mirror-throughput
+    summary: |-
+      Throughput in MiB/s for log mirror volume. If not provided size will automatically be calculated.
   - name: --log-size
     summary: |-
       Capacity (in GiB) for log volumes. If not provided size will automatically be calculated.
@@ -162,7 +189,7 @@ directCommands:
   - name: --memory
     defaultValue: "100"
     summary: |-
-      System (SAP HANA) memory in GiB (max 12000 GiB), used to auto compute storage size and throughput.
+      System (SAP-HANA) memory in GiB (max 12000 GiB), used to auto compute storage size and throughput.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -170,7 +197,10 @@ directCommands:
   - name: --number-of-hosts --number-of-hots
     defaultValue: "1"
     summary: |-
-      Total Number of system (SAP HANA) host in this deployment (currently max 3 nodes can be configured).
+      Total Number of system (SAP-HANA) host in this deployment (currently max 3 nodes can be configured).
+  - name: --number-of-volumes
+    summary: |-
+      Total Number of Oracle data volumes (currently min 2 and max 8 nodes can be configured).
   - name: --pool-name -p
     summary: |-
       Name of the ANF capacity pool.
@@ -204,7 +234,7 @@ directCommands:
   - name: --start-host-id
     defaultValue: "1"
     summary: |-
-      Starting SAP HANA Host ID. Host ID 1 indicates Master Host. Shared, Data Backup and Log Backup volumes are only provisioned for Master Host i.e. `HostID == 1`.
+      Starting SAP-HANA Host ID. Host ID 1 indicates Master Host. Shared, Data Backup and Log Backup volumes are only provisioned for Master Host i.e. `HostID == 1`.
   - name: --subnet
     defaultValue: "Default"
     summary: |-
@@ -213,7 +243,7 @@ directCommands:
     defaultValue: "PRIMARY"
     parameterValueGroup: "DR, HA, PRIMARY"
     summary: |-
-      Type of role for the storage account. Primary indicates first of a SAP HANA Replication (HSR) setup or No HSR. High Availability (HA) specifies local scenario. Default is PRIMARY.  Allowed values: DR, HA, PRIMARY.
+      Type of role for the storage account. Primary indicates first of a SAP-HANA Replication (HSR) setup or No HSR. High Availability (HA) specifies local scenario. Default is PRIMARY.  Allowed values: DR, HA, PRIMARY.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
