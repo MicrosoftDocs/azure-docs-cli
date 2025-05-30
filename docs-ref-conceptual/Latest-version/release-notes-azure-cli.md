@@ -1,13 +1,85 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 05/20/2025
+ms.date: 06/03/2025
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## June 03, 2025
+
+Version 2.74.0
+
+### ACR
+
+* `az acr login`: Add `refreshToken` and `username` fields to the output after using `--expose-token` parameter
+* `az acr create`: Fix logs for domain name label
+* `az acr connected-registry`: Remove private preview message
+
+### AKS
+
+* `az aks nodepool add/update/upgrade`: Add new parameter `--undrainable-node-behavior` to specify whether nodes can be cordoned during upgrade
+* `az aks create/enable-addons`: Remove preview flag for `--enable-high-log-scale-mode` parameter
+* `az aks nodepool add/update/upgrade`: Add `--max-unavailable` to specify he maximum number or percentage of nodes that can be simultaneously unavailable during upgrade
+
+### App Config
+
+* Fix #30619: `az appconfig feature set`: Fix invalid value for `--requirement-type`
+* Fix #30619: `az appconfig kv import`: Fix invalid value for `--requirement-type`
+
+### App Service
+
+* `az appservice plan create`: Update the description of `--zone-redundant` parameter
+* `az webapp config set`: Remove number of workers validation
+
+### ARM
+
+* `az policy`: Add breaking change pre-announcement
+
+### Backup
+
+* `az backup container/item/policy/protection`: Add support for ASE backup operations
+* `az backup`: Add support for HANA Snapshot
+
+### Compute
+
+* `az vm/vmss create`: Add warning log for changing the default value of VM size
+
+### Cosmos DB
+
+* `az cosmosdb sql container`: Add Full Text Policy support
+
+### Identity
+
+* `az identity federated-credential create/update`: Add support for claims matching expressions
+
+### Monitor
+
+* `az monitor action-group`: Support `--incident-receivers`,  `--mi-user-assigned` and `--mi-system-assigned`(#31205)
+
+### MySQL
+
+* `az mysql flexible-server create`: Change default storage redundancy for BC SKU to local redundancy
+
+### NetAppFiles
+
+* `az netappfiles volume-group create`: Add support for Oracle in ANF Volume Groups
+
+### Network
+
+* `az network vnet-gateway create`: Add `--enable-high-bandwith-vpn-gateway` parameter
+* `az network vpn-connection show`: Support new properties output with virtual network gateway
+* `az network vnet-gateway migration`: Support vpn gateway migration feature
+* `az network private-endpoint-connection`: Add provider `Microsoft.FluidRelay/fluidRelayServers`
+* `az network network-watcher packet-capture`: Support for packet capture includes a ring buffer
+* `az network private-endpoint-connection`: Add provider `Microsoft.VideoIndexer/accounts`
+
+### RDBMS
+
+* `az postgres flexible-server create/db`: Fix for `--database-name` validation
 
 ## May 20, 2025
 
