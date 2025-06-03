@@ -4,7 +4,7 @@ name: az databox job
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **databox** extension for the Azure CLI (version 2.48.0 or higher). The extension will automatically install the first time you run an **az databox job** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **databox** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az databox job** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage data box job.
 status: GA
@@ -27,6 +27,9 @@ directCommands:
   - summary: |-
       Cancel job
     syntax: az databox job cancel -g rg --job-name name --reason reason
+  - summary: |-
+      JobsCancelPost
+    syntax: az databox job cancel --resource-group YourResourceGroupName --job-name TestJobName1 --reason CancelTest
   requiredParameters:
   - isRequired: true
     name: --reason
@@ -74,6 +77,7 @@ directCommands:
                           [--kek-vault-resource-id]
                           [--location]
                           [--mobile]
+                          [--model {AzureDataBox120, AzureDataBox525, DataBox, DataBoxCustomerDisk, DataBoxDisk, DataBoxHeavy}]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--phone]
                           [--postal-code]
@@ -93,6 +97,12 @@ directCommands:
   - summary: |-
       Create job
     syntax: az databox job create -g rg -n job-name --sku databox --contact-name 'test' --phone 14258828080 --email-list testing@microsoft.com --street-address1 "1 MICROSOFT WAY" --city Redmond --state-or-province WA --country US --postal-code 98052 --company-name Microsoft --storage-account account-id --staging-storage-account account-id --resource-group-for-managed-disk rg --transfer-type ImportToAzure --kek-type MicrosoftManaged
+  - summary: |-
+      Create job - DataboxV2
+    syntax: az databox job create -g rg -n job-name --sku databox --model AzureDataBox120 --contact-name 'test' --phone 14258828080 --email-list testing@microsoft.com --street-address1 "1 MICROSOFT WAY" --city Redmond --state-or-province WA --country US --postal-code 98052 --company-name Microsoft --storage-account account-id --staging-storage-account account-id --resource-group-for-managed-disk rg --transfer-type ImportToAzure --kek-type MicrosoftManaged
+  - summary: |-
+      JobsCreate
+    syntax: az databox job create --resource-group YourResourceGroupName --job-name TestJobName1 --transfer-type ImportToAzure --contact-name XXXX XXXX --phone 0000000000 --phone-extension  --email-list "[xxxx@xxxx.xxx]" --street-address1 XXXX XXXX --street-address2 XXXX XXXX --city XXXX XXXX --state-or-province XX --country XX --postal-code 00000 --company-name XXXX XXXX --address-type Commercial --data-import-details "[{account-details:{storageAccountId:/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName,storage-account:{storage-account-id:/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName}}}]" --location westus --sku DataBox --model DataBox
   requiredParameters:
   - isRequired: true
     name: --job-name --name -n
@@ -157,6 +167,10 @@ directCommands:
   - name: --mobile
     summary: |-
       Mobile number of the contact person.
+  - name: --model
+    parameterValueGroup: "AzureDataBox120, AzureDataBox525, DataBox, DataBoxCustomerDisk, DataBoxDisk, DataBoxHeavy"
+    summary: |-
+      The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -225,6 +239,9 @@ directCommands:
   - summary: |-
       Delete job
     syntax: az databox job delete -n job-name -g rg
+  - summary: |-
+      JobsDelete
+    syntax: az databox job delete --resource-group YourResourceGroupName --job-name TestJobName1
   optionalParameters:
   - name: --ids
     summary: |-
@@ -252,12 +269,24 @@ directCommands:
     List all the jobs available under the subscription.
   status: GA
   sourceType: Extension
-  syntax: az databox job list [--resource-group]
+  syntax: >-
+    az databox job list [--max-items]
+                        [--next-token]
+                        [--resource-group]
   examples:
   - summary: |-
       List job by resource group
     syntax: az databox job list -g rg
+  - summary: |-
+      JobsList
+    syntax: az databox job list
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -276,6 +305,9 @@ directCommands:
   - summary: |-
       List credential
     syntax: az databox job list-credential -g rg -n job-name
+  - summary: |-
+      JobsListCredentials
+    syntax: az databox job list-credential --resource-group YourResourceGroupName --job-name TestJobName1
   optionalParameters:
   - name: --ids
     summary: |-
@@ -304,7 +336,10 @@ directCommands:
   examples:
   - summary: |-
       Mark devices shipped
-    syntax: az databox job mark-devices-shipped -g rg -n job-name
+    syntax: az databox job mark-devices-shipped -g rg -n job-name --deliver-package-details "{carrier-name:testCarrier,tracking-id:000000}"
+  - summary: |-
+      MarkDevicesShipped
+    syntax: az databox job mark-devices-shipped --job-name TestJobName1 --resource-group YourResourceGroupName --deliver-package-details "{carrier-name:testCarrier,tracking-id:000000}"
   requiredParameters:
   - isRequired: true
     name: --deliver-package-details
@@ -323,6 +358,43 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_databox_job_mitigate
+  name: az databox job mitigate
+  summary: |-
+    Request to mitigate for a given job.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az databox job mitigate [--ids]
+                            [--job-name]
+                            [--resolution-code {MoveToCleanUpDevice, None, ReachOutToOperation, Restart, Resume}]
+                            [--resource-group]
+                            [--srn-resolution-map]
+                            [--subscription]
+  examples:
+  - summary: |-
+      Mitigate
+    syntax: az databox job mitigate --job-name TestJobName1 --resource-group YourResourceGroupName --srn-resolution-map "{testDISK-1:MoveToCleanUpDevice,testDISK-2:Resume}"
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --job-name
+    summary: |-
+      The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only.
+  - name: --resolution-code
+    parameterValueGroup: "MoveToCleanUpDevice, None, ReachOutToOperation, Restart, Resume"
+    summary: |-
+      Resolution code for the job.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --srn-resolution-map
+    summary: |-
+      Serial number and the customer resolution code corresponding to each serial number  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_databox_job_show
   name: az databox job show
   summary: |-
@@ -338,6 +410,9 @@ directCommands:
   - summary: |-
       Show job
     syntax: az databox job show -g rg -n job-name
+  - summary: |-
+      JobsGet
+    syntax: az databox job show --resource-group YourResourceGroupName --job-name TestJobName1 --expand details
   optionalParameters:
   - name: --ids
     summary: |-
@@ -456,6 +531,7 @@ commands:
 - az_databox_job_list
 - az_databox_job_list-credential
 - az_databox_job_mark-devices-shipped
+- az_databox_job_mitigate
 - az_databox_job_show
 - az_databox_job_update
 globalParameters:
