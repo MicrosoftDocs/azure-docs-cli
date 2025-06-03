@@ -15,26 +15,29 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
   syntax: >-
     az backup recoveryconfig show --restore-mode {AlternateWorkloadRestore, OriginalWorkloadRestore, RestoreAsFiles}
+                                  [--attach-and-mount {false, true}]
                                   [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
                                   [--container-name]
                                   [--filepath]
                                   [--from-full-rp-name]
+                                  [--identity-arm-id]
                                   [--ids]
                                   [--item-name]
                                   [--log-point-in-time]
                                   [--resource-group]
                                   [--rp-name]
+                                  [--snapshot-rg]
                                   [--subscription]
                                   [--target-container-name]
                                   [--target-instance-name]
                                   [--target-item-name]
                                   [--target-resource-group]
                                   [--target-server-name]
-                                  [--target-server-type {HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance}]
+                                  [--target-server-type {HANAInstance, SAPAseDatabase, SAPHanaDBInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance}]
                                   [--target-subscription-id]
                                   [--target-vault-name]
                                   [--vault-name]
-                                  [--workload-type {MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase}]
+                                  [--workload-type {MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase}]
   examples:
   - summary: |-
       Construct the recovery configuration of an Azure workload backed up item. The configuration object stores all details such as the recovery mode, target destinations for the restore and application specific parameters like target physical paths for SQL.
@@ -46,6 +49,10 @@ directCommands:
     summary: |-
       Specify the restore mode.
   optionalParameters:
+  - name: --attach-and-mount
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify attach and mount value for HANA Snapshot restores.
   - name: --backup-management-type
     defaultValue: "AzureWorkload"
     parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload"
@@ -60,6 +67,9 @@ directCommands:
   - name: --from-full-rp-name
     summary: |-
       Name of the starting Recovery point.
+  - name: --identity-arm-id
+    summary: |-
+      Set Identity ARM ID for HANA Snapshot restores.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -75,6 +85,9 @@ directCommands:
   - name: --rp-name -r
     summary: |-
       Name of the recovery point.
+  - name: --snapshot-rg
+    summary: |-
+      Specify the resource group for HANA Snapshot Instance restores. If not provided, the default value will be fetched from the target container details.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -94,7 +107,7 @@ directCommands:
     summary: |-
       Specify the parent server name of the target item.
   - name: --target-server-type
-    parameterValueGroup: "HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance"
+    parameterValueGroup: "HANAInstance, SAPAseDatabase, SAPHanaDBInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance"
     summary: |-
       Specify the type of the server which should be discovered.
   - name: --target-subscription-id
@@ -107,7 +120,7 @@ directCommands:
     summary: |-
       Name of the Recovery services vault.
   - name: --workload-type
-    parameterValueGroup: "MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase"
+    parameterValueGroup: "MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase"
     summary: |-
       Specify the type of applications within the Resource which should be discovered and protected by Azure Backup. 'MSSQL' and 'SQLDataBase' can be used interchangeably for SQL in Azure VM, as can 'SAPHANA' and 'SAPHanaDatabase' for SAP HANA in Azure VM.
 commands:

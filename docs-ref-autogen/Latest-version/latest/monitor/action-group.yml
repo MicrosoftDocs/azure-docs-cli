@@ -17,9 +17,24 @@ directCommands:
     az monitor action-group create --action-group-name --name
                                    --resource-group
                                    [--action --actions]
+                                   [--arm-role-receivers]
+                                   [--automation-runbook-receivers]
+                                   [--azure-app-push-receivers]
+                                   [--azure-function-receivers]
+                                   [--email-receivers]
+                                   [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--event-hub-receivers]
                                    [--group-short-name --short-name]
+                                   [--incident-receivers]
+                                   [--itsm-receivers]
                                    [--location]
+                                   [--logic-app-receivers]
+                                   [--mi-system-assigned --system-assigned]
+                                   [--mi-user-assigned --user-assigned]
+                                   [--sms-receivers]
                                    [--tags]
+                                   [--voice-receivers]
+                                   [--webhook-receivers]
   examples:
   - summary: |-
       Create a new action group
@@ -37,54 +52,175 @@ directCommands:
   - name: --action --actions -a
     summary: |-
       Add receivers to the action group during the creation.
+
+
               Usage:   --action TYPE NAME [ARG ...]
+
+
               Email:
+
+
                   Format:     --action email NAME EMAIL_ADDRESS [usecommonalertschema]
+
+
                   Example:    --action email bob bob@contoso.com
+
+
               SMS:
+
+
                   Format:     --action sms NAME COUNTRY_CODE PHONE_NUMBER
+
+
                   Example:    --action sms charli 1 5551234567
+
+
               Webhook:
+
+
                   Format:     --action webhook NAME URI [useaadauth OBJECT_ID IDENTIFIER URI] [usecommonalertschema]
+
+
                   Example:    --action webhook alert_hook https://www.contoso.com/alert useaadauth testobj http://identifier usecommonalertschema
+
+
               Arm Role:
+
+
                   Format:     --action armrole NAME ROLE_ID [usecommonalertschema]
+
+
                   Example:    --action armole owner_role 8e3af657-a8ff-443c-a75c-2fe8c4bcb635
+
+
               Azure App Push:
+
+
                   Format:     --action azureapppush NAME EMAIL_ADDRESS
+
+
                   Example:    --action azureapppush test_apppush bob@contoso.com
+
+
               ITSM:
+
+
                   Format:     --action itsm NAME WORKSPACE_ID CONNECTION_ID TICKET_CONFIGURATION REGION
+
+
                   Example:    --action itsm test_itsm test_workspace test_conn ticket_blob useast
+
+
               Automation runbook:
+
+
                   Format:     --action automationrunbook NAME AUTOMATION_ACCOUNT_ID RUNBOOK_NAME WEBHOOK_RESOURCE_ID SERVICE_URI [isglobalrunbook] [usecommonalertschema]
+
+
                   Example:    --action automationrunbook test_runbook test_acc test_book test_webhook test_rsrc http://example.com isglobalrunbook usecommonalertschema
+
+
               Voice:
+
+
                   Format:     --action voice NAME COUNTRY_CODE PHONE_NUMBER
+
+
                   Example:    --action voice charli 1 4441234567
+
+
               Logic App:
+
+
                   Format:     --action logicapp NAME RESOURCE_ID CALLBACK_URL [usecommonalertschema]
+
+
                   Example:    --action logicapp test_logicapp test_rsrc http://callback
+
+
               Azure Function:
+
+
                   Format:     --action azurefunction NAME FUNCTION_APP_RESOURCE_ID FUNCTION_NAME HTTP_TRIGGER_URL [usecommonalertschema]
+
+
                   Example:    --action azurefunction test_function test_rsrc test_func http://trigger usecommonalertschema
+
+
               Event Hub:
+
+
                   Format:     --action eventhub NAME SUBSCRIPTION_ID EVENT_HUB_NAME_SPACE EVENT_HUB_NAME [usecommonalertschema]
+
+
                   Example:    --action eventhub test_eventhub 5def922a-3ed4-49c1-b9fd-05ec533819a3 eventhubNameSpace testEventHubName usecommonalertschema
+
+
               Multiple actions can be specified by using more than one `--add-action` argument.
+
+
               'useaadauth', 'isglobalrunbook' and 'usecommonalertschema' are optional arguements that only need to be passed to set the respective parameter to True.
+
+
               If the 'useaadauth' argument is passed, then the OBJECT_ID and IDENTIFIER_URI values are required as well.
                 Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --arm-role-receivers
+    summary: |-
+      The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --automation-runbook-receivers
+    summary: |-
+      The list of AutomationRunbook receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --azure-app-push-receivers
+    summary: |-
+      The list of AzureAppPush receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --azure-function-receivers
+    summary: |-
+      The list of azure function receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --email-receivers
+    summary: |-
+      The list of email receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enabled
+    defaultValue: "True"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications.
+  - name: --event-hub-receivers
+    summary: |-
+      The list of event hub receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --group-short-name --short-name
     summary: |-
       The short name of the action group. This will be used in SMS messages.
+  - name: --incident-receivers
+    summary: |-
+      The list of incident receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --itsm-receivers
+    summary: |-
+      The list of ITSM receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     defaultValue: "Global"
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.  When not specified, the location of the resource group will be used.
+  - name: --logic-app-receivers
+    summary: |-
+      The list of logic app receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --sms-receivers
+    summary: |-
+      The list of SMS receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use '' to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --voice-receivers
+    summary: |-
+      The list of voice receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --webhook-receivers
+    summary: |-
+      The list of webhook receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_monitor_action-group_delete
   name: az monitor action-group delete
   summary: |-
@@ -195,15 +331,28 @@ directCommands:
     az monitor action-group update [--action-group-name --name]
                                    [--add]
                                    [--add-action --add-actions]
+                                   [--arm-role-receivers]
+                                   [--automation-runbook-receivers]
+                                   [--azure-app-push-receivers]
+                                   [--azure-function-receivers]
+                                   [--email-receivers]
+                                   [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--event-hub-receivers]
                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--group-short-name --short-name]
                                    [--ids]
+                                   [--incident-receivers]
+                                   [--itsm-receivers]
+                                   [--logic-app-receivers]
                                    [--remove]
                                    [--remove-action]
                                    [--resource-group]
                                    [--set]
+                                   [--sms-receivers]
                                    [--subscription]
                                    [--tags]
+                                   [--voice-receivers]
+                                   [--webhook-receivers]
   examples:
   - summary: |-
       Update an action group
@@ -218,43 +367,139 @@ directCommands:
   - name: --add-action --add-actions -a
     summary: |-
       Add receivers to the action group.
+
+
               Usage:   --add-action TYPE NAME [ARG ...]
+
+
               Email:
+
+
                   Format:     --add-action email NAME EMAIL_ADDRESS [usecommonalertschema]
+
+
                   Example:    --add-action email bob bob@contoso.com
+
+
               SMS:
+
+
                   Format:     --add-action sms NAME COUNTRY_CODE PHONE_NUMBER
+
+
                   Example:    --add-action sms charli 1 5551234567
+
+
               Webhook:
+
+
                   Format:     --add-action webhook NAME URI [useaadauth OBJECT_ID IDENTIFIER URI] [usecommonalertschema]
+
+
                   Example:    --add-action https://www.contoso.com/alert useaadauth testobj http://identifier usecommonalertschema
+
+
               Arm Role:
+
+
                   Format:     --add-action armrole NAME ROLE_ID [usecommonalertschema]
+
+
                   Example:    --add-action armole owner_role 8e3af657-a8ff-443c-a75c-2fe8c4bcb635
+
+
               Azure App Push:
+
+
                   Format:     --add-action azureapppush NAME EMAIL_ADDRESS
+
+
                   Example:    --add-action azureapppush test_apppush bob@contoso.com
+
+
               ITSM:
+
+
                   Format:     --add-action itsm NAME WORKSPACE_ID CONNECTION_ID TICKET_CONFIGURATION REGION
+
+
                   Example:    --add-action itsm test_itsm test_workspace test_conn ticket_blob useast
+
+
               Automation runbook:
+
+
                   Format:     --add-action automationrunbook NAME AUTOMATION_ACCOUNT_ID RUNBOOK_NAME WEBHOOK_RESOURCE_ID SERVICE_URI [isglobalrunbook] [usecommonalertschema]
+
+
                   Example:    --add-action automationrunbook test_runbook test_acc test_book test_webhook test_rsrc http://example.com isglobalrunbook usecommonalertschema
+
+
               Voice:
+
+
                   Format:     --add-action voice NAME COUNTRY_CODE PHONE_NUMBER
+
+
                   Example:    --add-action voice charli 1 4441234567
+
+
               Logic App:
+
+
                   Format:     --add-action logicapp NAME RESOURCE_ID CALLBACK_URL [usecommonalertschema]
+
+
                   Example:    --add-action logicapp test_logicapp test_rsrc http://callback
+
+
               Azure Function:
+
+
                   Format:     --add-action azurefunction NAME FUNCTION_APP_RESOURCE_ID FUNCTION_NAME HTTP_TRIGGER_URL [usecommonalertschema]
+
+
                   Example:    --add-action azurefunction test_function test_rsrc test_func http://trigger usecommonalertschema
+
+
               Event Hub:
+
+
                   Format:     --action eventhub NAME SUBSCRIPTION_ID EVENT_HUB_NAME_SPACE EVENT_HUB_NAME [usecommonalertschema]
+
+
                   Example:    --action eventhub test_eventhub 5def922a-3ed4-49c1-b9fd-05ec533819a3 eventhubNameSpace testEventHubName usecommonalertschema
+
+
               Multiple actions can be specified by using more than one `--add-action` argument.
+
+
               'useaadauth', 'isglobalrunbook' and 'usecommonalertschema' are optional arguements that only need to be passed to set the respective parameter to True.
+
+
               If the 'useaadauth' argument is passed, then the OBJECT_ID and IDENTIFIER_URI values are required as well.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --arm-role-receivers
+    summary: |-
+      The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --automation-runbook-receivers
+    summary: |-
+      The list of AutomationRunbook receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --azure-app-push-receivers
+    summary: |-
+      The list of AzureAppPush receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --azure-function-receivers
+    summary: |-
+      The list of azure function receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --email-receivers
+    summary: |-
+      The list of email receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enabled
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications.
+  - name: --event-hub-receivers
+    summary: |-
+      The list of event hub receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -265,6 +510,15 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --incident-receivers
+    summary: |-
+      The list of incident receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --itsm-receivers
+    summary: |-
+      The list of ITSM receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --logic-app-receivers
+    summary: |-
+      The list of logic app receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -277,12 +531,21 @@ directCommands:
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+  - name: --sms-receivers
+    summary: |-
+      The list of SMS receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use '' to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --voice-receivers
+    summary: |-
+      The list of voice receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --webhook-receivers
+    summary: |-
+      The list of webhook receivers that are part of this action group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_monitor_action-group_wait
   name: az monitor action-group wait
   summary: |-
@@ -346,6 +609,10 @@ commands:
 - az_monitor_action-group_create
 - az_monitor_action-group_delete
 - az_monitor_action-group_enable-receiver
+- az_monitor_action-group_identity
+- az_monitor_action-group_identity_assign
+- az_monitor_action-group_identity_remove
+- az_monitor_action-group_identity_show
 - az_monitor_action-group_list
 - az_monitor_action-group_show
 - az_monitor_action-group_test-notifications
