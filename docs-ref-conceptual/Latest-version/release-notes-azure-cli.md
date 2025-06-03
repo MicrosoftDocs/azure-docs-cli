@@ -48,6 +48,11 @@ Version 2.74.0
 
 * `az vm/vmss create`: Add warning log for changing the default value of VM size
 
+### Core
+
+* Resolve CVE-2024-13176
+* Resolve CVE-2024-9143
+
 ### Cosmos DB
 
 * `az cosmosdb sql container`: Add Full Text Policy support
