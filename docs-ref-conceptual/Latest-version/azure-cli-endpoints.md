@@ -150,10 +150,8 @@ following exceptions:
 
 |       Extension name       |                    Endpoint                    |
 | -------------------------- | ---------------------------------------------- |
-| ai-examples                | azurecliprod.blob.core.windows.net             |
 | aksarc                     | hybridaksstorage.z13.web.core.windows.net      |
 | akshybrid                  | hybridaksstorage.z13.web.core.windows.net      |
-| alias                      | azurecliprod.blob.core.windows.net             |
 | arcappliance               | arcplatformcliextprod.z13.web.core.windows.net |
 | arcdata                    | azurearcdatacli.blob.core.windows.net          |
 | azure-batch-cli-extensions | github.com                                     |
@@ -163,16 +161,11 @@ following exceptions:
 | azure-iot-ops              | github.com                                     |
 | azure-sphere               | software-static.download.prss.microsoft.com    |
 | azurestackhci              | hybridaksstorage.z13.web.core.windows.net      |
-| cli-translator             | azurecliprod.blob.core.windows.net             |
 | csvmware                   | github.com                                     |
 | customlocation             | arcplatformcliextprod.z13.web.core.windows.net |
 | deploy-to-azure            | github.com                                     |
-| dev-spaces                 | azurecliprod.blob.core.windows.net             |
-| footprint                  | azurecliprod.blob.core.windows.net             |
 | fzf                        | pahealyfzf.blob.core.windows.net               |
 | hybridaks                  | hybridaksstorage.z13.web.core.windows.net      |
-| ip-group                   | azurecliprod.blob.core.windows.net             |
-| ml                         | azuremlsdktestpypi.blob.core.windows.net       |
 | partnercenter              | github.com                                     |
 | sap-hana                   | github.com                                     |
 | stack-hci-vm               | hciarcvmsstorage.z13.web.core.windows.net      |
