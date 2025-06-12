@@ -1,0 +1,320 @@
+### YamlMime:AzureCLIGroup
+uid: az_amlfs_import
+name: az amlfs import
+extensionInformation: >-
+  > [!NOTE]
+
+  > This reference is part of the **amlfs** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az amlfs import** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Import Job.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_amlfs_import_create
+  name: az amlfs import create
+  summary: |-
+    Create an import job.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az amlfs import create --aml-filesystem-name
+                           --import-job-name --name
+                           --resource-group
+                           [--admin-status {Active, Cancel}]
+                           [--conflict-mode --conflict-resolution-mode {Fail, OverwriteAlways, OverwriteIfDirty, Skip}]
+                           [--import-prefixes]
+                           [--location]
+                           [--maximum-errors]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--tags]
+  examples:
+  - summary: |-
+      importJobs_CreateOrUpdate
+    syntax: az amlfs import create --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1 --tags "{Dept:ContosoAds}" --location eastus --import-prefixes "[/]" --conflict-resolution-mode OverwriteAlways --maximum-errors 0
+  requiredParameters:
+  - isRequired: true
+    name: --aml-filesystem-name
+    summary: |-
+      Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - isRequired: true
+    name: --import-job-name --name -n
+    summary: |-
+      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --admin-status
+    defaultValue: "Active"
+    parameterValueGroup: "Active, Cancel"
+    summary: |-
+      The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job. By default it is set to 'Active'.
+  - name: --conflict-mode --conflict-resolution-mode
+    defaultValue: "Fail"
+    parameterValueGroup: "Fail, OverwriteAlways, OverwriteIfDirty, Skip"
+    summary: |-
+      How the import job will handle conflicts. For example, if the import job is trying to bring in a directory, but a file is at that path, how it handles it. Fail indicates that the import job should stop immediately and not do anything with the conflict. Skip indicates that it should pass over the conflict. OverwriteIfDirty causes the import job to delete and re-import the file or directory if it is a conflicting type, is dirty, or was not previously imported. OverwriteAlways extends OverwriteIfDirty to include releasing files that had been restored but were not dirty. Please reference https://learn.microsoft.com/en-us/azure/azure-managed-lustre/ for a thorough explanation of these resolution modes.
+  - name: --import-prefixes
+    summary: |-
+      An array of blob paths/prefixes that get imported into the cluster namespace. It has '/' as the default value.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+  - name: --maximum-errors
+    defaultValue: "0"
+    summary: |-
+      Total non-conflict oriented errors the import job will tolerate before exiting with failure. -1 means infinite. 0 means exit immediately and is the default.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+- uid: az_amlfs_import_delete
+  name: az amlfs import delete
+  summary: |-
+    Delete an import job for deletion.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az amlfs import delete [--aml-filesystem-name]
+                           [--ids]
+                           [--import-job-name --name]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--resource-group]
+                           [--subscription]
+                           [--yes]
+  examples:
+  - summary: |-
+      importJobs_Delete
+    syntax: az amlfs import delete --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1
+  optionalParameters:
+  - name: --aml-filesystem-name
+    summary: |-
+      Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --import-job-name --name -n
+    summary: |-
+      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_amlfs_import_list
+  name: az amlfs import list
+  summary: |-
+    List all import jobs the user has access to under an AML File System.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az amlfs import list --aml-filesystem-name
+                         --resource-group
+                         [--max-items]
+                         [--next-token]
+  examples:
+  - summary: |-
+      importJobs_ListByAmlFilesystem
+    syntax: az amlfs import list --resource-group scgroup --aml-filesystem-name fs1
+  requiredParameters:
+  - isRequired: true
+    name: --aml-filesystem-name
+    summary: |-
+      Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+- uid: az_amlfs_import_show
+  name: az amlfs import show
+  summary: |-
+    Get an import job.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az amlfs import show [--aml-filesystem-name]
+                         [--ids]
+                         [--import-job-name --name]
+                         [--resource-group]
+                         [--subscription]
+  examples:
+  - summary: |-
+      importJobs_Get
+    syntax: az amlfs import show --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1
+  optionalParameters:
+  - name: --aml-filesystem-name
+    summary: |-
+      Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --import-job-name --name -n
+    summary: |-
+      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_amlfs_import_update
+  name: az amlfs import update
+  summary: |-
+    Update an import job instance.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az amlfs import update [--admin-status {Active, Cancel}]
+                           [--aml-filesystem-name]
+                           [--ids]
+                           [--import-job-name --name]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--resource-group]
+                           [--subscription]
+                           [--tags]
+  examples:
+  - summary: |-
+      importJobs_CreateOrUpdate
+    syntax: az amlfs import update --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1 --admin-status Cancel
+  optionalParameters:
+  - name: --admin-status
+    parameterValueGroup: "Active, Cancel"
+    summary: |-
+      The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job.
+  - name: --aml-filesystem-name
+    summary: |-
+      Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --import-job-name --name -n
+    summary: |-
+      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+- uid: az_amlfs_import_wait
+  name: az amlfs import wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az amlfs import wait [--aml-filesystem-name]
+                         [--created]
+                         [--custom]
+                         [--deleted]
+                         [--exists]
+                         [--ids]
+                         [--import-job-name --name]
+                         [--interval]
+                         [--resource-group]
+                         [--subscription]
+                         [--timeout]
+                         [--updated]
+  optionalParameters:
+  - name: --aml-filesystem-name
+    summary: |-
+      Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --import-job-name --name -n
+    summary: |-
+      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+commands:
+- az_amlfs_import_create
+- az_amlfs_import_delete
+- az_amlfs_import_list
+- az_amlfs_import_show
+- az_amlfs_import_update
+- az_amlfs_import_wait
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage Import Job.
