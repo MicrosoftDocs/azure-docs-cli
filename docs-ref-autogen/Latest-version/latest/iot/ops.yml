@@ -4,7 +4,7 @@ name: az iot ops
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.62.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure IoT Operations.
 description: |-
@@ -104,12 +104,12 @@ directCommands:
 
     The output of clone may be applied directly to another connected
     cluster (referred to as replication), and/or saved locally to use at another time
-    - potentially with modification.
+    with potential modification.
 
     The clone definition being a generic ARM template, can be deployed via existing tools.
-    See https://aka.ms/aio-clone-deploy for details.
+    See https://aka.ms/aio-clone for details.
 
-    Clone is compatible with the following instance version range: 1.0.34>=,<1.2.0.
+    Clone is compatible with the following instance version range: `1.0.34>=,<1.2.0`.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -203,6 +203,9 @@ directCommands:
 
     The result of the command nets an IoT Operations instance with
     a set of default resources configured for cohesive function.
+
+    To enable edge to cloud resource hydration please use the
+    `az iot ops rsync enable` command post instance creation.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -319,6 +322,8 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Resource sync rules will be included in the IoT Operations deployment.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-rsync' has been deprecated and will be removed in a future release. Use 'az iot ops rsync enable' instead.
   - name: --feature
     summary: |-
       Instance feature config. The settings of a component and/or it's mode can be configured. Component mode syntax is `{component}.mode={mode}` where known mode values are: `Stable`, `Preview` and `Disabled`. Component setting syntax is `{component}.settings.{setting}={value}` where known setting values are `Enabled` or `Disabled`. This option can be used one or more times.
@@ -448,6 +453,8 @@ directCommands:
     az iot ops init --cluster
                     --resource-group
                     [--acs-config]
+                    [--check-cluster {false, true}]
+                    [--context]
                     [--enable-fault-tolerance {false, true}]
                     [--ensure-latest {false, true}]
                     [--no-progress {false, true}]
@@ -469,6 +476,9 @@ directCommands:
   - summary: |-
       Provide custom deploy-time configs for Arc Secret Store.
     syntax: az iot ops init --cluster mycluster -g myresourcegroup --ssc-config rotationPollIntervalInSeconds=60
+  - summary: |-
+      Check if the cluster meets necessary prerequisite configuration before continuing with init. A valid kubeconfig is required with this option.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --check-cluster
   requiredParameters:
   - isRequired: true
     name: --cluster
@@ -482,6 +492,14 @@ directCommands:
   - name: --acs-config
     summary: |-
       ContainerStorage arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+  - name: --check-cluster
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enforce a check for minimum cluster requirements before bootstrapping.
+    isPreview: true
+  - name: --context
+    summary: |-
+      Kubeconfig context name to use for k8s cluster communication. If no context is provided current_context is used.
   - name: --enable-fault-tolerance
     parameterValueGroup: "false, true"
     summary: |-
@@ -737,11 +755,35 @@ commands:
 - az_iot_ops_connector_opcua_trust_show
 - az_iot_ops_create
 - az_iot_ops_dataflow
+- az_iot_ops_dataflow_apply
+- az_iot_ops_dataflow_delete
 - az_iot_ops_dataflow_endpoint
 - az_iot_ops_dataflow_endpoint_apply
+- az_iot_ops_dataflow_endpoint_create
+- az_iot_ops_dataflow_endpoint_create_adls
+- az_iot_ops_dataflow_endpoint_create_adx
+- az_iot_ops_dataflow_endpoint_create_custom-kafka
+- az_iot_ops_dataflow_endpoint_create_custom-mqtt
+- az_iot_ops_dataflow_endpoint_create_eventgrid
+- az_iot_ops_dataflow_endpoint_create_eventhub
+- az_iot_ops_dataflow_endpoint_create_fabric-onelake
+- az_iot_ops_dataflow_endpoint_create_fabric-realtime
+- az_iot_ops_dataflow_endpoint_create_local-mqtt
+- az_iot_ops_dataflow_endpoint_create_local-storage
 - az_iot_ops_dataflow_endpoint_delete
 - az_iot_ops_dataflow_endpoint_list
 - az_iot_ops_dataflow_endpoint_show
+- az_iot_ops_dataflow_endpoint_update
+- az_iot_ops_dataflow_endpoint_update_adls
+- az_iot_ops_dataflow_endpoint_update_adx
+- az_iot_ops_dataflow_endpoint_update_custom-kafka
+- az_iot_ops_dataflow_endpoint_update_custom-mqtt
+- az_iot_ops_dataflow_endpoint_update_eventgrid
+- az_iot_ops_dataflow_endpoint_update_eventhub
+- az_iot_ops_dataflow_endpoint_update_fabric-onelake
+- az_iot_ops_dataflow_endpoint_update_fabric-realtime
+- az_iot_ops_dataflow_endpoint_update_local-mqtt
+- az_iot_ops_dataflow_endpoint_update_local-storage
 - az_iot_ops_dataflow_list
 - az_iot_ops_dataflow_profile
 - az_iot_ops_dataflow_profile_create
@@ -757,6 +799,10 @@ commands:
 - az_iot_ops_identity_show
 - az_iot_ops_init
 - az_iot_ops_list
+- az_iot_ops_rsync
+- az_iot_ops_rsync_disable
+- az_iot_ops_rsync_enable
+- az_iot_ops_rsync_list
 - az_iot_ops_schema
 - az_iot_ops_schema_create
 - az_iot_ops_schema_delete

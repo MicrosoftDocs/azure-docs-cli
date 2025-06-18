@@ -4,7 +4,7 @@ name: az vmware private-cloud
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **vmware** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az vmware private-cloud** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **vmware** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az vmware private-cloud** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage private clouds.
 status: GA
@@ -22,19 +22,19 @@ directCommands:
                                    --sku
                                    [--accept-eula --yes]
                                    [--cluster-size]
+                                   [--dns-zone-type {Private, Public}]
                                    [--ext-nw-blocks --extended-network-blocks]
                                    [--internet {Disabled, Enabled}]
                                    [--location]
                                    [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--network-block]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--nsxt-password]
                                    [--secondary-zone]
                                    [--strategy {DualZone, SingleZone}]
                                    [--tags]
-                                   [--vcenter-password]
                                    [--virtual-network-id]
                                    [--zone]
+                                   [--zones]
   requiredParameters:
   - isRequired: true
     name: --name --private-cloud-name -n
@@ -56,6 +56,10 @@ directCommands:
   - name: --cluster-size
     summary: |-
       Number of hosts for the default management cluster. Minimum of 3 and maximum of 16.
+  - name: --dns-zone-type
+    parameterValueGroup: "Private, Public"
+    summary: |-
+      The type of DNS zone to use.
   - name: --ext-nw-blocks --extended-network-blocks
     summary: |-
       Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -78,9 +82,6 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --nsxt-password
-    summary: |-
-      Optionally, set the NSX-T Manager password when the private cloud is created  If value is blank it's asked from the tty.
   - name: --secondary-zone
     summary: |-
       The secondary availability zone for the private cloud.
@@ -91,15 +92,15 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --vcenter-password
-    summary: |-
-      Optionally, set the vCenter admin password when the private cloud is created  If value is blank it's asked from the tty.
   - name: --virtual-network-id
     summary: |-
       Azure resource ID of the virtual network.
   - name: --zone
     summary: |-
       The primary availability zone for the private cloud.
+  - name: --zones
+    summary: |-
+      The availability zones.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_vmware_private-cloud_delete
   name: az vmware private-cloud delete
   summary: |-
@@ -249,7 +250,7 @@ directCommands:
   examples:
   - summary: |-
       Rotate the NSX-T password
-    syntax: az rotate-nsxt-password --resource-group MyResourceGroup --private-cloud MyPrivateCloud
+    syntax: az vmware private-cloud rotate-nsxt-password --resource-group group1 --private-cloud cloud1
   optionalParameters:
   - name: --ids
     summary: |-
@@ -287,7 +288,7 @@ directCommands:
   examples:
   - summary: |-
       Rotate the vCenter password.
-    syntax: az vmware private-cloud rotate-vcenter-password --resource-group MyResourceGroup --private-cloud MyPrivateCloud
+    syntax: az vmware private-cloud rotate-vcenter-password --resource-group group1 --private-cloud cloud1
   optionalParameters:
   - name: --ids
     summary: |-
@@ -351,13 +352,11 @@ directCommands:
                                    [--name --private-cloud-name]
                                    [--network-block]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--nsxt-password]
                                    [--remove]
                                    [--resource-group]
                                    [--set]
                                    [--subscription]
                                    [--tags]
-                                   [--vcenter-password]
                                    [--vsan-datastore-name]
   optionalParameters:
   - name: --add
@@ -397,9 +396,6 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --nsxt-password
-    summary: |-
-      Optionally, set the NSX-T Manager password when the private cloud is created  If value is blank it's asked from the tty.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -415,9 +411,6 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --vcenter-password
-    summary: |-
-      Optionally, set the vCenter admin password when the private cloud is created  If value is blank it's asked from the tty.
   - name: --vsan-datastore-name
     summary: |-
       Name of the vsan datastore associated with the cluster.
