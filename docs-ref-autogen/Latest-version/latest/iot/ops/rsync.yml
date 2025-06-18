@@ -1,0 +1,169 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_rsync
+name: az iot ops rsync
+extensionInformation: >-
+  > [!NOTE]
+
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.62.0 or higher). The extension will automatically install the first time you run an **az iot ops rsync** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Resource sync rules management.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_rsync_disable
+  name: az iot ops rsync disable
+  summary: |-
+    Disable edge to cloud hydration by deleting instance associated resource sync rules.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops rsync' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops rsync disable --instance
+                             --resource-group
+                             [--yes {false, true}]
+  examples:
+  - summary: |-
+      Disable resource sync for the target instance.
+    syntax: az iot ops rsync disable -n myinstance -g myresourcegroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --yes -y
+    parameterValueGroup: "false, true"
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+- uid: az_iot_ops_rsync_enable
+  name: az iot ops rsync enable
+  summary: |-
+    Enable edge to cloud hydration by creating resource sync rules for the instance.
+  description: |-
+    This operation will create two resource sync rules. One for IoT Operations and one for
+    Device Registry. It will then apply a role assignment between the K8 Bridge service
+    principal and the IoT Operations instance custom location.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops rsync' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops rsync enable --instance
+                            --resource-group
+                            [--custom-role-id]
+                            [--k8-bridge-sp-oid]
+                            [--rule-adr-name]
+                            [--rule-adr-pri]
+                            [--rule-ops-name]
+                            [--rule-ops-pri]
+                            [--skip-ra {false, true}]
+                            [--tags]
+  examples:
+  - summary: |-
+      Enable resource sync for the instance.
+    syntax: az iot ops rsync enable -n myinstance -g myresourcegroup
+  - summary: |-
+      Enable resource sync for the instance but skip the role assignment step.
+    syntax: az iot ops rsync enable -n myinstance -g myresourcegroup --skip-ra
+  - summary: |-
+      Enable resource sync for the instance and explictly provide the K8 Bridge principal OID.
+    syntax: az iot ops rsync enable -n myinstance -g myresourcegroup --k8-bridge-sp-oid $TENANT_K8_BRIDGE_SP_OID
+  - summary: |-
+      Enable resource sync for the instance with some customization.
+    syntax: az iot ops rsync enable -n myinstance -g myresourcegroup --rule-adr-name myadrsync --rule-ops-name myopsync --rule-adr-pri 100 --rule-ops-pri 200
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --custom-role-id
+    summary: |-
+      Fully qualified role definition Id in the following format: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/{roleId}.
+  - name: --k8-bridge-sp-oid
+    summary: |-
+      Provide an explicit K8 Bridge service principal OID for the custom location role assignment. This is useful if the logged-in principal does not have permission to query apps from MS Graph.
+  - name: --rule-adr-name
+    summary: |-
+      The desired name of the resource sync rule to create for Device Registry.
+  - name: --rule-adr-pri
+    summary: |-
+      The desired priority of the resource sync rule to create for Device Registry.
+  - name: --rule-ops-name
+    summary: |-
+      The desired name of the resource sync rule to create for IoT Operations.
+  - name: --rule-ops-pri
+    summary: |-
+      The desired priority of the resource sync rule to create for IoT Operations.
+  - name: --skip-ra
+    parameterValueGroup: "false, true"
+    summary: |-
+      When used the role assignment step of the operation will be skipped.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+- uid: az_iot_ops_rsync_list
+  name: az iot ops rsync list
+  summary: |-
+    List resource sync rules associated with the instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops rsync' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops rsync list --instance
+                          --resource-group
+  examples:
+  - summary: |-
+      List resource sync rules associated with the instance.
+    syntax: az iot ops rsync list -n myinstance -g myresourcegroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+commands:
+- az_iot_ops_rsync_disable
+- az_iot_ops_rsync_enable
+- az_iot_ops_rsync_list
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Resource sync rules management.
