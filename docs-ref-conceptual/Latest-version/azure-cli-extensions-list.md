@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/18/2025
+ms.date: 06/22/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -215,7 +215,7 @@ You will be prompted to install an extension on first use.
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap) | 2.61.0 | Manage virtual network taps (VTAP). | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap/HISTORY.rst) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.55.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
 |[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [2.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
-|[vme](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme) | 2.70.0 | Microsoft Azure Command-Line Tools Vme Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme/HISTORY.rst) |
+|[vme](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme) | 2.70.0 | Microsoft Azure Command-Line Tools Vme Extension | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme/HISTORY.rst) |
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.70.0 | Azure VMware Solution commands. | GA | [8.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.56.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |

@@ -134,6 +134,11 @@ Version 2.73.0
 * `az vmss create/update`: Add new parameter `--automatic-zone-balancing-behavior` to support setting automatic zone rebalancing policy
 * `az vmss create/update`: Add new parameter `--skuprofile-rank` to specify a list of ranks to use with VMSS instance mix SKU profile VM sizes
 
+### Core
+
+* [BREAKING CHANGE] Remove Azure Stack profiles `2020-09-01-hybrid`, `2019-03-01-hybrid`, `2018-03-01-hybrid` and `2017-03-09-profile`
+* Use MSAL for managed identity authentication
+
 ### DMS
 
 * `az dms project task create`: Add ability to use a lockless option for ensuring data consistency
