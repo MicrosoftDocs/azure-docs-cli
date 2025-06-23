@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/22/2025
+ms.date: 06/23/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -41,7 +41,7 @@ You will be prompted to install an extension on first use.
 |[aosm](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm) | 2.54.0 | Microsoft Azure Command-Line Tools Aosm Extension | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm/HISTORY.rst) |
 |[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.57.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | Preview | [1.2.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.71.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
-|[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.10](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
+|[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.60.0 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.11](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.5.0](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.24](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[arcgateway](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway) | 2.57.0 | Microsoft Azure Command-Line Tools Arcgateway Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway/HISTORY.rst) |
@@ -81,6 +81,7 @@ You will be prompted to install an extension on first use.
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
 |[custom-providers](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers) | 2.3.1 | Microsoft Azure Command-Line Tools Custom Providers Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers/HISTORY.rst) |
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.4](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
+|[data-transfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer) | 2.70.0 | Microsoft Azure Command-Line Tools DataTransfer Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer/HISTORY.rst) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.70.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.70.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
