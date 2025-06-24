@@ -58,7 +58,7 @@ az config set defaults.location=westus2 defaults.group=MyResourceGroup
 The following command turns off the survey links while executing the Azure CLI commands:
 
 ```azurecli-interactive
-az config set output.show_survey_link=no
+az config set core.survey_message=no
 ```
 
 ## CLI configuration file
