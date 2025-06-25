@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/24/2025
+ms.date: 06/25/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -51,13 +51,12 @@ You will be prompted to install an extension on first use.
 |[automanage](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage) | 2.44.1 | Microsoft Azure Command-Line Tools Automanage Extension. | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage/HISTORY.rst) |
 |[automation](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation) | 2.55.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Experimental | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation/HISTORY.rst) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
-|[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.1](https://github.com/Microsoft/azure-devops-cli-extension) |
+|[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.2](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.61.0 | Manage Azure Firewall resources. | GA | [1.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.59.0 | The Azure IoT extension for Azure CLI. | GA | [0.26.0](https://github.com/azure/azure-iot-cli-extension) |
 |[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.62.0 | The Azure IoT Operations extension for Azure CLI. | GA | [1.7.0](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.3](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.57.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
-|[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-cli-extensions/tree/main/src/baremetal-infrastructure) | 2.57.0 | Microsoft Azure Command-Line Tools BaremetalInfrastructure Extension. | Preview | [3.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/baremetal-infrastructure/HISTORY.rst) |
 |[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.62.0 | Microsoft Azure Command-Line Tools Bastion Extension. | GA | [1.4.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
 |[billing-benefits](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits) | 2.43.0 | Microsoft Azure Command-Line Tools BillingBenefits Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits/HISTORY.rst) |
@@ -145,7 +144,7 @@ You will be prompted to install an extension on first use.
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
 |[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.70.0 | Support for managednetworkfabric commands based on 2024-06-15-preview API version. | Preview | [8.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner) | 2.61.0 | Support for Management Partner preview | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner/HISTORY.rst) |
-|[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.61.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
+|[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.70.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
 |[mdp](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp) | 2.57.0 | Microsoft Azure Command-Line Tools Mdp Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp/HISTORY.rst) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh) | 2.67.0 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh/HISTORY.rst) |
 |[microsoft-fabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric) | 2.61.0 | Microsoft Azure Command-Line Tools Microsoft Fabric Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric/HISTORY.rst) |
