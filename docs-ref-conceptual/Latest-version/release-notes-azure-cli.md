@@ -63,6 +63,11 @@ Version 2.75.0
 * `az containerapp update`: Modify `--yaml` template handling to fix `runningStatus` error
 * Fix #31480: `az containerapp revision copy`: Only return `containerapp does not exist` when got 404
 
+### Core
+
+* Resolve CVE-2025-50181
+* Resolve CVE-2025-50182
+
 ### Identity
 
 * Fix #31598: Fix regression in `az identity federated-credential create` by defaulting audience
