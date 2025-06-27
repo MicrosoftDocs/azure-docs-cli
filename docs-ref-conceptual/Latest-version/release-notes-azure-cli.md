@@ -1,13 +1,109 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 06/03/2025
+ms.date: 07/01/2025
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## July 01, 2025
+
+Version 2.75.0
+
+### ACR
+
+* `az acr connected-registry create`: Fix for enabling dedicated endpoint on container registry resource when user confirms during creation
+* `az acr login`: Fix login status code when command fails
+
+### AKS
+
+* `az aks create`: Simplify logic and enable correct recording rule groups for managed prom
+* `az aks`: Allow `LongRunningOperation` to show poller status
+* `az aks update`: Add option `--assignee-principal-type` to specify the principal type when using `--attach-acr`
+* `az aks create`: Add `--enable-static-egress-gateway` parameter to support static egress gateway feature
+* `az aks update`: Add `--enable-static-egress-gateway` parameter to support static egress gateway feature
+* `az aks nodepool add`: Add option `Gateway` to `--mode` parameter and `--gateway-prefix-size` parameter to support static egress gateway feature
+* `az aks create`: Add `--pod-ip-allocation-mode` parameter to support Azure CNI Static Block Allocation
+* `az aks nodepool add`: Add `--pod-ip-allocation-mode` parameter to support Azure CNI Static Block Allocation
+
+### App Config
+
+* `az appconfig kv export/import/list/delete`: Support filtering by tags
+* `az appconfig restore`: Support filtering by tags
+* `az appconfig revision list`: Support filtering by tags
+* `az appconfig kv import/export/restore`: Add new parameter `--dry-run` to support dry-run feature
+
+### ARM
+
+* `az deployment what-if`: Show potential changes in pretty-printed what-if result
+* `az deployment what-if`: Display warnings and diagnostic messages in pretty-printed what-if result
+
+### ARO
+
+* `az aro update`: Fix credential refresh to handle clusters with invalid machinesets
+
+### Cloud
+
+* `az cloud register/update`: Add `--endpoint-microsoft-graph-resource-id` to support configuring Microsoft Graph endpoint
+* `az cloud register/update`: Add `--skip-endpoint-discovery` to allow skipping cloud endpoints' auto discovery
+
+### Compute
+
+* [BREAKING CHANGE] `az vmss create/update`: Remove too long argument option `--scheduled-event-additional-publishing-target-event-grid-and-resource-graph` to fix help message issue
+
+### Consumption
+
+* `az consumption usage list`: Fix usage list returns data with replace `None` string to null value
+
+### Container app
+
+* `az containerapp update`: Modify `--yaml` template handling to fix `runningStatus` error
+* Fix #31480: `az containerapp revision copy`: Only return `containerapp does not exist` when got 404
+
+### Core
+
+* Resolve CVE-2025-50181
+* Resolve CVE-2025-50182
+
+### Identity
+
+* Fix #31598: Fix regression in `az identity federated-credential create` by defaulting audience
+
+### Key Vault
+
+* `az keyvault secret download`: Add `--overwrite` flag
+
+### Network
+
+* `az network nat gateway`: Support Standard V2 SKU
+* `az network public-ip`: Support Standard V2 SKU
+* `az network public-ip prefix`: Support Standard V2 SKU
+* `az network application-gateway waf-policy managed-rule exception`: Support exception feature in application gateway
+* `az network vnet subnet create/update`: Support IPAM pool allocation
+
+### Packaging
+
+* Drop Azure Linux (Mariner) 2.0 support
+
+### RDBMS
+
+* `az postgres flexible-server create`: Extend EOL to PG 11 and 12
+
+### Service Fabric
+
+* Fix #18358: `az sf client-certificate add`: Fix the bug that command fails with `remove` not defined
+
+### SQL
+
+* `az sql db replica create`: Add partner subscription id for cross-subscription GeoDr
+
+### Storage
+
+* `az storage account create/update`: Add `--sas-expiration-action` to sas policy
+* `az storage file upload-batch/download-batch`: Add OAuth login support
 
 ## June 03, 2025
 
