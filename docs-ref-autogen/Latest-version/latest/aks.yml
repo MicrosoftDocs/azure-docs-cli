@@ -212,6 +212,7 @@ directCommands:
                   [--enable-secret-rotation]
                   [--enable-secure-boot]
                   [--enable-sgxquotehelper]
+                  [--enable-static-egress-gateway]
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
                   [--enable-vpa]
@@ -280,6 +281,7 @@ directCommands:
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
+                  [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                   [--pod-subnet-id]
                   [--ppg]
                   [--private-dns-zone]
@@ -416,6 +418,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with Azure Service Mesh enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
+  - summary: |-
+      Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/SubID/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/SubID/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -698,6 +703,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable SGX quote helper for confcom addon.
+  - name: --enable-static-egress-gateway
+    defaultValue: "False"
+    summary: |-
+      Enable Static Egress Gateway addon to the cluster.
   - name: --enable-syslog
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -985,6 +994,13 @@ directCommands:
       A comma-separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
     description: |-
       Each range must not overlap with any Subnet IP ranges. For example, "172.244.0.0/16,fd0:abcd::/64".
+  - name: --pod-ip-allocation-mode
+    parameterValueGroup: "DynamicIndividual, StaticBlock"
+    summary: |-
+      Set the ip allocation mode for how Pod IPs from the Azure Pod Subnet are allocated to the nodes in the AKS cluster. The choice is between dynamic batches of individual IPs or static allocation of a set of CIDR blocks. Accepted Values are "DynamicIndividual" or "StaticBlock".
+    description: |-
+      Used together with the "azure" network plugin.
+      Requires --pod-subnet-id.
   - name: --pod-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
@@ -3397,6 +3413,7 @@ directCommands:
                   [--apiserver-subnet-id]
                   [--assign-identity]
                   [--assign-kubelet-identity]
+                  [--assignee-principal-type]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--azure-container-storage-nodepools]
@@ -3432,6 +3449,7 @@ directCommands:
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
+                  [--disable-static-egress-gateway]
                   [--disable-vpa]
                   [--disable-windows-gmsa]
                   [--disable-workload-identity]
@@ -3459,6 +3477,7 @@ directCommands:
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
+                  [--enable-static-egress-gateway]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
                   [--enable-windows-recording-rules]
@@ -3629,6 +3648,9 @@ directCommands:
   - name: --assign-kubelet-identity
     summary: |-
       Update cluster's kubelet identity to an existing user assigned identity. Please note this operation will recreate all agent nodes in the cluster.
+  - name: --assignee-principal-type -t
+    summary: |-
+      Use this parameter in conjunction with --attach-acr to explicitly set the principal type in the ACR role assignment. This helps avoid RBAC-related errors by ensuring the correct principal type is applied. Valid values are 'User', 'Group' or 'ServicePrincipal'.
   - name: --attach-acr
     summary: |-
       Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -3761,6 +3783,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable CSI Snapshot Controller.
+  - name: --disable-static-egress-gateway
+    defaultValue: "False"
+    summary: |-
+      Disable Static Egress Gateway addon to the cluster.
   - name: --disable-vpa
     defaultValue: "False"
     summary: |-
@@ -3867,6 +3893,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Snapshot Controller.
+  - name: --enable-static-egress-gateway
+    defaultValue: "False"
+    summary: |-
+      Enable Static Egress Gateway addon to the cluster.
   - name: --enable-vpa
     defaultValue: "False"
     summary: |-

@@ -35,6 +35,7 @@ directCommands:
                         [--enable-ultra-ssd]
                         [--enable-vtpm]
                         [--eviction-policy {Deallocate, Delete}]
+                        [--gateway-prefix-size]
                         [--gpu-driver {Install, None}]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                         [--host-group-id]
@@ -50,7 +51,7 @@ directCommands:
                         [--max-unavailable]
                         [--message-of-the-day]
                         [--min-count]
-                        [--mode {System, User}]
+                        [--mode {Gateway, System, User}]
                         [--no-wait]
                         [--node-count]
                         [--node-osdisk-size]
@@ -62,6 +63,7 @@ directCommands:
                         [--node-vm-size]
                         [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Windows2019, Windows2022}]
                         [--os-type]
+                        [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                         [--pod-subnet-id]
                         [--ppg]
                         [--priority {Regular, Spot}]
@@ -97,6 +99,9 @@ directCommands:
   - summary: |-
       create a nodepool with a Capacity Reservation Group(CRG) ID.
     syntax: az aks nodepool add -g MyResourceGroup -n MyNodePool --cluster-name MyMC --node-vm-size VMSize --crg-id "/subscriptions/SubID/resourceGroups/ResourceGroupName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
+  - summary: |-
+      Create a nodepool with ip allocation mode set to "StaticBlock" and using a pod subnet ID
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu --pod-subnet-id /subscriptions/SubID/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet --pod-ip-allocation-mode StaticBlock
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -163,6 +168,9 @@ directCommands:
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
       The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
+  - name: --gateway-prefix-size
+    summary: |-
+      The size of Public IPPrefix attached to the Gateway-mode node pool. The node pool must be in Gateway mode.
   - name: --gpu-driver
     parameterValueGroup: "Install, None"
     summary: |-
@@ -215,7 +223,7 @@ directCommands:
       Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
     defaultValue: "User"
-    parameterValueGroup: "System, User"
+    parameterValueGroup: "Gateway, System, User"
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait
@@ -255,6 +263,13 @@ directCommands:
   - name: --os-type
     summary: |-
       The OS Type. Linux or Windows.
+  - name: --pod-ip-allocation-mode
+    parameterValueGroup: "DynamicIndividual, StaticBlock"
+    summary: |-
+      Set the ip allocation mode for how Pod IPs from the Azure Pod Subnet are allocated to the nodes in the AKS cluster. The choice is between dynamic batches of individual IPs or static allocation of a set of CIDR blocks. Accepted Values are "DynamicIndividual" or "StaticBlock".
+    description: |-
+      Used together with the "azure" network plugin.
+      Requires --pod-subnet-id.
   - name: --pod-subnet-id
     summary: |-
       The Resource Id of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
@@ -1272,7 +1287,7 @@ directCommands:
                            [--max-surge]
                            [--max-unavailable]
                            [--min-count]
-                           [--mode {System, User}]
+                           [--mode {Gateway, System, User}]
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
@@ -1374,7 +1389,7 @@ directCommands:
     summary: |-
       Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
-    parameterValueGroup: "System, User"
+    parameterValueGroup: "Gateway, System, User"
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait

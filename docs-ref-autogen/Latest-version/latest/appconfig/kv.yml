@@ -20,6 +20,7 @@ directCommands:
                            [--endpoint]
                            [--label]
                            [--name]
+                           [--tags]
                            [--yes]
   examples:
   - summary: |-
@@ -31,6 +32,9 @@ directCommands:
   - summary: |-
       Delete a key using your 'az login' credentials and App Configuration store endpoint.
     syntax: az appconfig kv delete --endpoint https://myappconfiguration.azconfig.io --key color --auth-mode login --yes
+  - summary: |-
+      Delete a key with key name "color" and has tags "tag1=value1" and "tag2=value2".
+    syntax: az appconfig kv delete -n MyAppConfiguration --key color --tags tag1=value1 tag2=value2 --yes
   requiredParameters:
   - isRequired: true
     name: --key
@@ -54,6 +58,9 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+  - name: --tags
+    summary: |-
+      If no tags are specified, delete all key-values with any tags. Support space-separated tags: key[=value] [key[=value] ...].
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -75,6 +82,8 @@ directCommands:
                            [--dest-endpoint]
                            [--dest-label]
                            [--dest-name]
+                           [--dest-tags]
+                           [--dry-run]
                            [--endpoint]
                            [--export-as-reference {false, true}]
                            [--format {json, properties, yaml}]
@@ -91,6 +100,7 @@ directCommands:
                            [--skip-features {false, true}]
                            [--skip-keyvault {false, true}]
                            [--snapshot]
+                           [--tags]
                            [--yes]
   examples:
   - summary: |-
@@ -117,6 +127,15 @@ directCommands:
   - summary: |-
       Export all keys to another App Configuration store from a snapshot of the source configuration
     syntax: az appconfig kv export -n MyAppConfiguration -d appconfig --dest-name AnotherAppConfiguration --snapshot MySnapshot
+  - summary: |-
+      Export all keys and feature flags with specific tags to another App Configuration store.
+    syntax: az appconfig kv export -n MyAppConfiguration -d appconfig --tags tag1=value1 tag2=value2 --dest-name AnotherAppConfiguration
+  - summary: |-
+      Export all keys and feature flags to another App Configuration store and apply new tags.
+    syntax: az appconfig kv export -n MyAppConfiguration -d appconfig --dest-name AnotherAppConfiguration --dest-tags newtag1=newvalue1
+  - summary: |-
+      Preview the export result without making any changes to the App Configuration store.
+    syntax: az appconfig kv export -n MyAppConfiguration --label test -d file --path D:/abc.json --format json --dry-run
   requiredParameters:
   - isRequired: true
     name: --destination -d
@@ -152,6 +171,13 @@ directCommands:
   - name: --dest-name
     summary: |-
       The name of the destination App Configuration store.
+  - name: --dest-tags
+    summary: |-
+      Exported KVs and feature flags will be assigned with these tags. If no tags are specified, exported KVs and features will retain existing tags. Support space-separated tags: key[=value] [key[=value] ...]. Use  to clear existing tags.
+  - name: --dry-run
+    defaultValue: "False"
+    summary: |-
+      Preview the result of export operation without making any changes to the App Configuration store.
   - name: --endpoint
     summary: |-
       If auth mode is "login", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
@@ -193,7 +219,7 @@ directCommands:
     defaultValue: "appconfig/default"
     parameterValueGroup: "appconfig/default, appconfig/kvset"
     summary: |-
-      Export profile to be used for exporting the key-values. Options 'depth', 'separator', 'naming-convention', 'prefix', 'dest-label' and, 'resolve-keyvault' are not supported when using 'appconfig/kvset' profile.
+      Export profile to be used for exporting the key-values. Options 'depth', 'separator', 'naming-convention', 'prefix', 'dest-label' , 'dest-tags' and, 'resolve-keyvault' are not supported when using 'appconfig/kvset' profile.
   - name: --resolve-keyvault
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -215,6 +241,9 @@ directCommands:
   - name: --snapshot
     summary: |-
       Export all keys in a given snapshot of the App Configuration store. If no snapshot is specified, the keys currently in the store are exported based on the specified key and label filters.
+  - name: --tags
+    summary: |-
+      Key-values which contain the specified tags in source AppConfig will be exported. If no tags are specified, all key-values with any tags can be exported. Support space-separated tag filters: key[=value] [key[=value] ...].
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -233,6 +262,7 @@ directCommands:
                            [--connection-string]
                            [--content-type]
                            [--depth]
+                           [--dry-run]
                            [--endpoint]
                            [--format {json, properties, yaml}]
                            [--import-mode {all, ignore-match}]
@@ -251,7 +281,9 @@ directCommands:
                            [--src-label]
                            [--src-name]
                            [--src-snapshot]
+                           [--src-tags]
                            [--strict {false, true}]
+                           [--tags]
                            [--yes]
   examples:
   - summary: |-
@@ -281,6 +313,15 @@ directCommands:
   - summary: |-
       Import all keys and feature flags from a file using the appconfig/kvset format.
     syntax: az appconfig kv import -n MyAppConfiguration -s file --path D:/abc.json --format json --profile appconfig/kvset
+  - summary: |-
+      Import all keys and feature flags with specific tags from an App Configuration store and apply new tags.
+    syntax: az appconfig kv import -n MyAppConfiguration -s appconfig --src-name AnotherAppConfiguration --src-tags tag1=value1 tag2=value2 --tags newtag1=newvalue1
+  - summary: |-
+      Import all keys and feature flags from a file and apply new tags.
+    syntax: az appconfig kv import -n MyAppConfiguration -s file --path D:/abc.json --format json --tags tag1=value1
+  - summary: |-
+      Preview the import result without making any changes to the App Configuration store.
+    syntax: az appconfig kv import -n MyAppConfiguration -s file --path D:/abc.json --format json --dry-run
   requiredParameters:
   - isRequired: true
     name: --source -s
@@ -305,6 +346,10 @@ directCommands:
   - name: --depth
     summary: |-
       Depth for flattening the json or yaml file to key-value pairs. Flatten to the deepest level by default if --separator is provided. Not applicable for property files or feature flags.
+  - name: --dry-run
+    defaultValue: "False"
+    summary: |-
+      Preview the result of import operation without making any changes to the App Configuration store.
   - name: --endpoint
     summary: |-
       If auth mode is "login", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
@@ -338,7 +383,7 @@ directCommands:
     defaultValue: "appconfig/default"
     parameterValueGroup: "appconfig/default, appconfig/kvset"
     summary: |-
-      Import profile to be used for importing the key-values. Options 'depth', 'separator', 'content-type', 'label', 'skip-features' and, 'prefix' are not supported when using 'appconfig/kvset' profile.
+      Import profile to be used for importing the key-values. Options 'depth', 'separator', 'content-type', 'label', 'skip-features', 'tags' and, 'prefix' are not supported when using 'appconfig/kvset' profile.
   - name: --separator
     summary: |-
       Delimiter for flattening the json or yaml file to key-value pairs. Separator will be ignored for property files and feature flags. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'.
@@ -370,11 +415,17 @@ directCommands:
   - name: --src-snapshot
     summary: |-
       Import all keys in a given snapshot of the source App Configuration store. If no snapshot is specified, the keys currently in the store are imported based on the specified key and label filters.
+  - name: --src-tags
+    summary: |-
+      Key-values which contain the specified tags in source AppConfig will be imported. If no tags are specified, all key-values with any tags can be imported. Support space-separated tag filters: key[=value] [key[=value] ...].
   - name: --strict
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
       Delete all other key-values in the store with specified prefix and label.
+  - name: --tags
+    summary: |-
+      Imported KVs and feature flags will be assigned with these tags. If no tags are specified, imported KVs and feature flags will retain existing tags. Support space-separated tags: key[=value] [key[=value] ...]. Use  to clear existing tags.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -398,6 +449,7 @@ directCommands:
                          [--name]
                          [--resolve-keyvault {false, true}]
                          [--snapshot]
+                         [--tags]
                          [--top]
   examples:
   - summary: |-
@@ -421,6 +473,15 @@ directCommands:
   - summary: |-
       List all key-values in a given snapshot of the app configuration store.
     syntax: az appconfig kv list --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --snapshot MySnapshot
+  - summary: |-
+      List all key-values with specific tags
+    syntax: az appconfig kv list -n MyAppConfiguration --tags tag1=value1 tag2=value2
+  - summary: |-
+      List all key-values with tag name "tag1" with empty value
+    syntax: az appconfig kv list -n MyAppConfiguration --tags tag1=
+  - summary: |-
+      List all key-values with tag name "tag1" with null value
+    syntax: az appconfig kv list -n MyAppConfiguration --tags tag1=\0
   optionalParameters:
   - name: --all
     defaultValue: "False"
@@ -461,6 +522,9 @@ directCommands:
   - name: --snapshot
     summary: |-
       List all keys in a given snapshot of the App Configuration store. If no snapshot is specified, the keys currently in the store are listed.
+  - name: --tags
+    summary: |-
+      If no tags are specified, return all key-values with any tags. Support space-separated tags: key[=value] [key[=value] ...].
   - name: --top -t
     summary: |-
       Maximum number of items to return. Must be a positive integer. Default to 100.
@@ -524,10 +588,12 @@ directCommands:
     az appconfig kv restore --datetime
                             [--auth-mode {key, login}]
                             [--connection-string]
+                            [--dry-run]
                             [--endpoint]
                             [--key]
                             [--label]
                             [--name]
+                            [--tags]
                             [--yes]
   examples:
   - summary: |-
@@ -536,6 +602,12 @@ directCommands:
   - summary: |-
       Restore a specific key for any label start with v1. using connection string to a specific point in time.
     syntax: az appconfig kv restore --key color --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --label v1.* --datetime "2019-05-01T11:24:12Z"
+  - summary: |-
+      Restore all key-values with specific tags to a specific point in time.
+    syntax: az appconfig kv restore -n MyAppConfiguration --tags tag1=value1 tag2=value2 --datetime "2019-05-01T11:24:12Z"
+  - summary: |-
+      Preview the restore result without making any changes to the App Configuration store.
+    syntax: az appconfig kv restore -n MyAppConfiguration --datetime "2019-05-01T11:24:12Z" --dry-run
   requiredParameters:
   - isRequired: true
     name: --datetime
@@ -550,6 +622,10 @@ directCommands:
   - name: --connection-string
     summary: |-
       Combination of access key and endpoint of the App Configuration store. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+  - name: --dry-run
+    defaultValue: "False"
+    summary: |-
+      Preview the result of restore operation without making any changes to the App Configuration store.
   - name: --endpoint
     summary: |-
       If auth mode is "login", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
@@ -562,6 +638,9 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+  - name: --tags
+    summary: |-
+      If no tags are specified, restore all key-values with any tags. Support space-separated tags: key[=value] [key[=value] ...].
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -833,5 +912,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 04/16/2025
+  ms.date: 06/23/2025
   description: Manage key-values stored in an App Configuration store.
