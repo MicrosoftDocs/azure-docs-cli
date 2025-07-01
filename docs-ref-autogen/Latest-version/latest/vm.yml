@@ -109,7 +109,8 @@ directCommands:
     az vm capture --vhd-name-prefix
                   [--ids]
                   [--name]
-                  [--overwrite]
+                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                  [--overwrite {0, 1, f, false, n, no, t, true, y, yes}]
                   [--resource-group]
                   [--storage-container]
                   [--subscription]
@@ -125,13 +126,11 @@ directCommands:
   - summary: |-
       Deallocate, generalize, and capture multiple stopped virtual machines.
     syntax: >-
-      vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+      az vm deallocate --ids MyVmIds
 
-      az vm deallocate --ids {vms_ids}
+      az vm generalize --ids MyVmIds
 
-      az vm generalize --ids {vms_ids}
-
-      az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
+      az vm capture --ids MyVmIds --vhd-name-prefix MyPrefix
   requiredParameters:
   - isRequired: true
     name: --vhd-name-prefix
@@ -143,9 +142,14 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
     summary: |-
-      The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+      The name of the virtual machine.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --overwrite
     defaultValue: "True"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Overwrite the existing disk file.
   - name: --resource-group -g
@@ -864,15 +868,15 @@ directCommands:
 - uid: az_vm_delete
   name: az vm delete
   summary: |-
-    Delete a VM.
+    Delete operation to delete a virtual machine.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm delete [--force-deletion]
+    az vm delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
                  [--ids]
                  [--name]
-                 [--no-wait]
+                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                  [--resource-group]
                  [--subscription]
                  [--yes]
@@ -885,16 +889,17 @@ directCommands:
     syntax: az vm delete --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   optionalParameters:
   - name: --force-deletion
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Optional parameter to force delete virtual machines. Default value is None.
+      Optional parameter to force delete virtual machines.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
     summary: |-
-      The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+      The name of the virtual machine.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
