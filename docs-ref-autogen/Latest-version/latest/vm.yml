@@ -1,14 +1,10 @@
 ### YamlMime:AzureCLIGroup
 uid: az_vm
 name: az vm
-importantNote: >-
-  > [!NOTE]
-
-  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Linux or Windows virtual machines.
 status: GA
-sourceType: Core and Extension
+sourceType: Core
 directCommands:
 - uid: az_vm_assess-patches
   name: az vm assess-patches
@@ -109,7 +105,8 @@ directCommands:
     az vm capture --vhd-name-prefix
                   [--ids]
                   [--name]
-                  [--overwrite]
+                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                  [--overwrite {0, 1, f, false, n, no, t, true, y, yes}]
                   [--resource-group]
                   [--storage-container]
                   [--subscription]
@@ -125,13 +122,11 @@ directCommands:
   - summary: |-
       Deallocate, generalize, and capture multiple stopped virtual machines.
     syntax: >-
-      vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+      az vm deallocate --ids MyVmIds
 
-      az vm deallocate --ids {vms_ids}
+      az vm generalize --ids MyVmIds
 
-      az vm generalize --ids {vms_ids}
-
-      az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
+      az vm capture --ids MyVmIds --vhd-name-prefix MyPrefix
   requiredParameters:
   - isRequired: true
     name: --vhd-name-prefix
@@ -143,9 +138,14 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
     summary: |-
-      The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+      The name of the virtual machine.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --overwrite
     defaultValue: "True"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Overwrite the existing disk file.
   - name: --resource-group -g
@@ -864,15 +864,15 @@ directCommands:
 - uid: az_vm_delete
   name: az vm delete
   summary: |-
-    Delete a VM.
+    Delete operation to delete a virtual machine.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm delete [--force-deletion]
+    az vm delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
                  [--ids]
                  [--name]
-                 [--no-wait]
+                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                  [--resource-group]
                  [--subscription]
                  [--yes]
@@ -885,16 +885,17 @@ directCommands:
     syntax: az vm delete --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   optionalParameters:
   - name: --force-deletion
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Optional parameter to force delete virtual machines. Default value is None.
+      Optional parameter to force delete virtual machines.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
     summary: |-
-      The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+      The name of the virtual machine.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
@@ -2017,10 +2018,6 @@ directCommands:
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
 commands:
-- az_vm_aem
-- az_vm_aem_delete
-- az_vm_aem_set
-- az_vm_aem_verify
 - az_vm_application
 - az_vm_application_list
 - az_vm_application_set
@@ -2125,14 +2122,6 @@ commands:
 - az_vm_reapply
 - az_vm_redeploy
 - az_vm_reimage
-- az_vm_repair
-- az_vm_repair_create
-- az_vm_repair_list-scripts
-- az_vm_repair_repair-and-restore
-- az_vm_repair_repair-button
-- az_vm_repair_reset-nic
-- az_vm_repair_restore
-- az_vm_repair_run
 - az_vm_resize
 - az_vm_restart
 - az_vm_run-command
@@ -2187,4 +2176,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
+  ms.date: 06/17/2025
   description: Manage Linux or Windows virtual machines.
