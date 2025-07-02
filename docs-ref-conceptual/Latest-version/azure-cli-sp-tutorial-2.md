@@ -1,7 +1,6 @@
 ---
 title: Create a service principal containing password authentication using the Azure CLI | Microsoft Docs
 description: Learn to use service principals with a password to control access to Azure resources.
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
@@ -9,13 +8,19 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Use an Azure service principal with password-based authentication
 
-When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. Password-based authentication is good to use when learning about service principals, but we recommend using [certificate-based authentication](./azure-cli-sp-tutorial-3.md) for applications.
+When creating a service principal, you choose the type of sign-in authentication it uses. There are
+two types of authentication available for Azure service principals: password-based authentication
+and certificate-based authentication. Password-based authentication is good to use when learning
+about service principals, but we recommend using [certificate-based authentication][01] for
+applications.
 
-This step in the tutorial explains how to use a service principal password to access an Azure resource.
+This step in the tutorial explains how to use a service principal password to access an Azure
+resource.
 
 ## Create a service principal containing a password
 
-The default behavior of [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) is to create a service principal with a random password.
+The default behavior of [az ad sp create-for-rbac][04] is to create a service principal with a
+random password.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
@@ -23,7 +28,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --scopes /subscriptions/mySubscriptionId/resourceGroups/myResourceGroupName
 ```
 
-Output Console:
+Output console:
 
 ```output
 {
@@ -34,11 +39,15 @@ Output Console:
 }
 ```
 
-The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+The output for a service principal with password authentication includes the `password` key. Make
+sure you copy this value - it can't be retrieved. If you lose the password,
+[reset the service principal credentials][02].
 
 ## Sign in using a service principal using a password
 
-Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId` (also known as "service principal ID", "username" or "assignee"), `tenant`, and `password`. Here's an example:
+Test the new service principal's credentials and permissions by signing in. To sign in with a
+service principal, you need the `appId` (also known as "service principal ID", "username" or
+"assignee"), `tenant`, and `password`. Here's an example:
 
 ```azurecli-interactive
 az login --service-principal \
@@ -60,7 +69,9 @@ az login --service-principal \
          --tenant $tenantID
 ```
 
-If you're testing in an organization that requires two-factor authentication, error message "...Interactive authentication is needed..." is displayed. As an alternative, use a certificate or [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
+If you're testing in an organization that requires two-factor authentication, error message
+"...Interactive authentication is needed..." is displayed. As an alternative, use a certificate or
+[managed identities][03].
 
 > [!IMPORTANT]
 > If you want to avoid displaying your password on console and are using `az login` interactively,
@@ -79,7 +90,15 @@ If you're testing in an organization that requires two-factor authentication, er
 
 ## Next Steps
 
-Now that you've learned how to work with service principals using a password, proceed to the next step to learn how to use service principals with certificate-based authentication.
+Now that you've learned how to work with service principals using a password, proceed to the next
+step to learn how to use service principals with certificate-based authentication.
 
 > [!div class="nextstepaction"]
-> [Use certificate-based authentication](./azure-cli-sp-tutorial-3.md)
+> [Use certificate-based authentication][01]
+
+<!-- link references -->
+
+[01]: ./azure-cli-sp-tutorial-3.md
+[02]: ./azure-cli-sp-tutorial-7.md
+[03]: /azure/active-directory/managed-identities-azure-resources/overview
+[04]: /cli/azure/ad/sp#az_ad_sp_create_for_rbac
