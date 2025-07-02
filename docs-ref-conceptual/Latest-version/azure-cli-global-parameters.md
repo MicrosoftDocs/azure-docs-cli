@@ -1,23 +1,22 @@
 ---
-title: Use global parameters with Azure CLI  | Microsoft Docs
+title: How to work with global parameters in Azure CLI
 description: Learn how to use various global parameters with Azure CLI to configure a resource group.
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 
-# How-to work with global parameters in Azure CLI
+# How to work with global parameters in Azure CLI
 
-When you work with the Azure CLI reference commands, there are arguments that are available for most
-commands. These arguments are called "global parameters," as they're common to almost all Azure CLI
-reference commands.
+When you work with the Azure CLI reference commands, there are arguments available for most
+commands. These arguments are referred to as "global parameters," as they're common to almost all
+Azure CLI reference commands.
 
 ## `--help` global parameter
 
 To get information about a reference group or command, use the `--help` global parameter. The
-`--help` parameter displays Azure CLI reference information in your console including available
-subgroup and parameter lists.
-
+`--help` parameter displays Azure CLI reference information in your console, including available
+subgroups and parameter lists.
 
 ```azurecli-interactive
 az group create --name myResourceGroup --location eastus --help
@@ -52,15 +51,15 @@ Examples
 ## `--verbose` global parameter
 
 Learn more in-depth details about logging by adding the `--verbose` global parameter to your
-reference command. Verbose output is helpful when trying to understand why certain commands take
-longer than others to execute.
+reference command. Verbose output is helpful when trying to understand why specific commands take
+longer to execute than others.
 
 ```azurecli-interactive
 az group create --name myResourceGroup --location eastus --verbose 
 ```
 
-The following console output shown here has fields omitted for brevity, but note the additional
-information on the execution time.
+The following console output shown here has fields omitted for brevity. However, note the additional
+information on execution time.
 
 ```output
 {...}
@@ -70,7 +69,7 @@ Command ran in 1.413 seconds (init: 0.487, invoke: 0.926)
 ## `--debug` global parameter
 
 If the extra details from the `--verbose` parameter aren't enough and you wish to view the entire
-log, use the `--debug` global parameter. Also provide the output generated with `--debug` when
+log, use the `--debug` global parameter. Also, provide the output generated with `--debug` when
 submitting a bug report.
 
 ```azurecli-interactive
@@ -126,16 +125,18 @@ Loading command table... Expected time around 1 minute.
 az interactive --only-show-errors
 ```
 
-In this output, the warning of "This command is in preview..." hasn't been returned.
+In this output, the warning "This command is in preview..." doesn't appear.
 
 ```output
 Any comments or concerns? You can use the 'feedback' command! We would greatly appreciate it.
 
-A new Recommender is added which can make the completion ability more intelligent and provide the scenario completion!
-If you want to disable this feature, you can use 'az config set interactive.enable_recommender=False' to disable it.
+A new Recommender is added which can make the completion ability more intelligent and provide the
+scenario completion! If you want to disable this feature, you can use 'az config set
+interactive.enable_recommender=False' to disable it.
 
-A command preload mechanism was added to prevent lagging and command run errors.
-You can skip preloading in a single pass by CTRL+C or turn it off by setting 'az config set interactive.enable_preloading=False'
+A command preload mechanism was added to prevent lagging and command run errors. You can skip
+preloading in a single pass by CTRL+C or turn it off by setting 'az config set
+interactive.enable_preloading=False'
 
 Loading command table... Expected time around 1 minute.
 ```
@@ -173,14 +174,14 @@ myVm    myResourceGroup  eastus
 ```
 
 To learn more about the different output formats, see
-[Output formats for Azure CLI commands](format-output-azure-cli.md).
+[Output formats for Azure CLI commands][02].
 
 ## `--query` global parameter
 
-There are times the output console might display extensive amounts of information that you need to
-filter through. To do so, use the `--query` global parameter to execute a
-[JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for
-JSON, which gives you the ability to select and modify data from Azure CLI output.
+There are times when the output console might display extensive amounts of information that you need
+to filter through. To do so, use the `--query` global parameter to execute a [JMESPath query][03] on
+the results of commands. JMESPath is a query language for JSON, which enables you to select and
+modify data from Azure CLI output.
 
 This example returns the SSH public keys authorized to connect to the virtual machine by adding
 `--query`:
@@ -202,9 +203,17 @@ Output console:
 ```
 
 To learn more about querying command output, see
-[How to query Azure CLI command output using a JMESPath query](use-azure-cli-successfully-query.md).
+[How to query Azure CLI command output using a JMESPath query][04].
 
 ## See also
 
-- [Azure CLI configuration](azure-cli-configuration.md)
-- [Use the Azure CLI successfully](use-azure-cli-successfully-tips.md)
+- [Azure CLI configuration][01]
+- [Use the Azure CLI successfully][05]
+
+<!-- link references -->
+
+[01]: azure-cli-configuration.md
+[02]: format-output-azure-cli.md
+[03]: http://jmespath.org
+[04]: use-azure-cli-successfully-query.md
+[05]: use-azure-cli-successfully-tips.md
