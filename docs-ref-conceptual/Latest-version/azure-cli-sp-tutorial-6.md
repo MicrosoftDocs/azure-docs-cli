@@ -1,7 +1,6 @@
 ---
 title: Create a resource using a service principal and the Azure CLI | Microsoft Docs
 description: Learn how to create a resource using a service principal and the Azure CLI.
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
@@ -9,14 +8,17 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Create a resource using a service principal
 
-If given the necessary permissions, a service principal can create and manage Azure resources just like an account. This tutorial step provides an example of how to create a resource for [Azure Storage](/azure/storage/) using a service principal and the following commands:
+If given the necessary permissions, a service principal can create and manage Azure resources just
+like an account. This tutorial step provides an example of how to create a resource for
+[Azure Storage][03] using a service principal and the following commands:
 
-* [az login](/cli/azure/reference-index#az-login)
-* [az group create](/cli/azure/group#az-group-create)
-* [az storage account create](/cli/azure/storage/account#az-storage-account-create)
-* [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
+- [az login][05]
+- [az group create][04]
+- [az storage account create][07]
+- [az storage account keys list][06]
 
-To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned in the console output when you [created a service principal](./azure-cli-sp-tutorial-1.md).
+To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned in
+the console output when you [created a service principal][01].
 
 1. Sign in as the service principal.
 
@@ -58,11 +60,11 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 
     For Azure Storage, valid values for the `<KIND>` parameter are:
 
-    * BlobStorage
-    * BlockBlobStorage
-    * FileStorage
-    * Storage
-    * StorageV2
+    - BlobStorage
+    - BlockBlobStorage
+    - FileStorage
+    - Storage
+    - StorageV2
 
     ```azurecli-interactive
     az storage account create --name myStorageAccountName \
@@ -101,7 +103,18 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 
 ## Next Steps
 
-Now that you've learned how to create a resource using service principal, proceed to the next step to learn how to reset your service principal credentials.
+Now that you've learned how to create a resource using service principal, proceed to the next step
+to learn how to reset your service principal credentials.
 
 > [!div class="nextstepaction"]
-> [Reset service principal credentials](./azure-cli-sp-tutorial-7.md)
+> [Reset service principal credentials][02]
+
+<!-- link references -->
+
+[01]: ./azure-cli-sp-tutorial-1.md
+[02]: ./azure-cli-sp-tutorial-7.md
+[03]: /azure/storage/
+[04]: /cli/azure/group#az-group-create
+[05]: /cli/azure/reference-index#az-login
+[06]: /cli/azure/storage/account/keys#az-storage-account-keys-list
+[07]: /cli/azure/storage/account#az-storage-account-create
