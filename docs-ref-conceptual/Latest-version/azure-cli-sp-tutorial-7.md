@@ -1,7 +1,6 @@
 ---
 title: Reset service principal credentials using the Azure CLI | Microsoft Docs
 description: Learn how to reset your service principal credentials using the Azure CLI.
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
@@ -9,14 +8,20 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Reset service principal credentials
 
-If you lose your service principal credentials, reset the credentials using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). This step details how to reset your service principal password or certificate.
+If you lose your service principal credentials, reset the credentials using
+[az ad sp credential reset][04]. This step details how to reset your service principal password or
+certificate.
 
 > [!WARNING]
-> While learning to manage Azure service principals, returning passwords and credential locations in your terminal, and consequently in your log file, is common. However, when outside of a testing environment, [store credential output in a variable](#reset-credentials-storing-output-in-a-variable).
+> While learning to manage Azure service principals, returning passwords and credential locations in
+> your terminal, and consequently in your log file, is common. However, when outside of a testing
+> environment, [store credential output in a variable][05].
 
 ## Reset credentials returning output to the console and log file
 
-Use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) command to create a new password or certificate for your service principal. If you don't know the ID associated with your service principal, use the `az ad sp list` command as explained in [Get an existing service principal](./azure-cli-sp-tutorial-4.md).
+Use [az ad sp credential reset][04] command to create a new password or certificate for your service
+principal. If you don't know the ID associated with your service principal, use the `az ad sp list`
+command as explained in [Get an existing service principal][01].
 
 Reset a service principal password.
 
@@ -40,7 +45,8 @@ Reset a service principal credential with a new self-signed certificate.
 az ad sp credential reset --id myServicePrincipalID --create-cert
 ```
 
-Console output showing the new certificate location in the console. This information is also written in the log.
+Console output showing the new certificate location in the console. This information is also written
+in the log.
 
 ```output
 {
@@ -53,7 +59,9 @@ Console output showing the new certificate location in the console. This informa
 
 ## Reset credentials storing output in a variable
 
-To avoid storing credentials in your log file, use the `--query` parameter to store output in a variable. When testing, use the `echo` command to see the value of your variable, but understand that `echo` writes to the log.
+To avoid storing credentials in your log file, use the `--query` parameter to store output in a
+variable. When testing, use the `echo` command to see the value of your variable, but understand
+that `echo` writes to the log.
 
 Reset a service principal credential with a password.
 
@@ -67,6 +75,7 @@ myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query pass
 # only use it when testing
 echo $myNewPassword
 ```
+
 # [PowerShell](#tab/powershell)
 
 ```azurecli
@@ -78,12 +87,22 @@ $myNewPassword = az ad sp credential reset --id myServicePrincipalID --query pas
 Write-Host $myNewPassword
 ```
 
-For more information on the `tsv` output type, see [Output formats for Azure CLI commands](./format-output-azure-cli.md#tsv-output-format).
+For more information on the `tsv` output type, see [Output formats for Azure CLI commands][03].
 
 ---
+
 ## Next Steps
 
-Now that you've learned how to reset your service principal credentials, proceed to the next step to see how to clean up tutorial resources.
+Now that you've learned how to reset your service principal credentials, proceed to the next step to
+see how to clean up tutorial resources.
 
 > [!div class="nextstepaction"]
-> [Cleanup & troubleshoot service principals](./azure-cli-sp-tutorial-8.md)
+> [Cleanup & troubleshoot service principals][02]
+
+<!-- link references -->
+
+[01]: ./azure-cli-sp-tutorial-4.md
+[02]: ./azure-cli-sp-tutorial-8.md
+[03]: ./format-output-azure-cli.md#tsv-output-format
+[04]: /cli/azure/ad/sp/credential#az-ad-sp-credential-reset
+[05]: #reset-credentials-storing-output-in-a-variable
