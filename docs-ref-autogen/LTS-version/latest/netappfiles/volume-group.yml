@@ -1,0 +1,684 @@
+### YamlMime:AzureCLIGroup
+uid: az_netappfiles_volume-group
+name: az netappfiles volume-group
+summary: |-
+  Manage Azure NetApp Files (ANF) Volume Group Resources.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_netappfiles_volume-group_create
+  name: az netappfiles volume-group create
+  summary: |-
+    Create a volume group along with specified volumes.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume-group create --account-name
+                                       --group-name --name --volume-group-name
+                                       --ppg --proximity-placement-group
+                                       --resource-group
+                                       [--add-snapshot-capacity]
+                                       [--application-identifier --sap-sid]
+                                       [--application-type {ORACLE, SAP-HANA}]
+                                       [--backup-nfsv3 {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--data-backup-repl-skd {_10minutely, daily, hourly}]
+                                       [--data-backup-size]
+                                       [--data-backup-src-id]
+                                       [--data-backup-throughput]
+                                       [--data-repl-skd {_10minutely, daily, hourly}]
+                                       [--data-size]
+                                       [--data-src-id]
+                                       [--data-throughput]
+                                       [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
+                                       [--gp-rules]
+                                       [--group-description]
+                                       [--key-vault-private-endpoint-resource-id --kv-private-endpoint-id]
+                                       [--location]
+                                       [--log-backup-repl-skd {_10minutely, daily, hourly}]
+                                       [--log-backup-size]
+                                       [--log-backup-src-id]
+                                       [--log-backup-throughput]
+                                       [--log-size]
+                                       [--log-throughput]
+                                       [--memory]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--number-of-hosts --number-of-hots]
+                                       [--pool-name]
+                                       [--prefix]
+                                       [--shared-repl-skd {_10minutely, daily, hourly}]
+                                       [--shared-size]
+                                       [--shared-src-id]
+                                       [--shared-throughput]
+                                       [--smb-access {Disabled, Enabled}]
+                                       [--smb-browsable {Disabled, Enabled}]
+                                       [--start-host-id]
+                                       [--subnet]
+                                       [--system-role {DR, HA, PRIMARY}]
+                                       [--tags]
+                                       [--vnet]
+                                       [--volumes]
+                                       [--zones]
+  examples:
+  - summary: |-
+      Create ANF volume group for SAP
+    syntax: az netappfiles volume-group create -g mygroup --account-name myaccountname --pool-name mypoolname --volume-group-name myvolumegroupname --vnet myvnet --ppg myppg --application-type SAP-HANA --application-identifier mysapsid
+  - summary: |-
+      Create ANF volume group for Oracle
+    syntax: az netappfiles volume-group create -g mygroup --account-name myaccountname --pool-name mypoolname --volume-group-name myvolumegroupname --vnet myvnet --ppg myppg --application-type ORACLE --application-identifier DEV
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - isRequired: true
+    name: --group-name --name --volume-group-name -n
+    summary: |-
+      The name of the volumeGroup.
+  - isRequired: true
+    name: --ppg --proximity-placement-group
+    summary: |-
+      The resource id of the Proximity Placement Group for volume placement.
+    groupName: Volumes Arguments
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --add-snapshot-capacity
+    defaultValue: "50"
+    summary: |-
+      Additional memory to store snapshots, must be specified as % of RAM (range 0-200). This is used to auto compute storage size.  Default: 50.
+    groupName: Volumes Arguments
+  - name: --application-identifier --sap-sid
+    summary: |-
+      Application specific identifier.
+    groupName: GroupMetaData Arguments
+  - name: --application-type
+    defaultValue: SAP-HANA
+    acceptedValues: ORACLE, SAP-HANA
+    summary: |-
+      Application Type.
+    groupName: GroupMetaData Arguments
+  - name: --backup-nfsv3
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates if NFS Protocol version 3 is preferred for data backup and log backup volumes. Default is False.
+    groupName: Backup Volume Properties Arguments
+  - name: --data-backup-repl-skd
+    acceptedValues: _10minutely, daily, hourly
+    summary: |-
+      Replication Schedule for data backup volume.
+    groupName: Data Backup Volume Arguments
+  - name: --data-backup-size
+    summary: |-
+      Capacity (in GiB) for data backup volumes. If not provided size will automatically be calculated.
+    groupName: Data Backup Volume Arguments
+  - name: --data-backup-src-id
+    summary: |-
+      ResourceId of the data backup source volume.
+    groupName: Data Backup Volume Arguments
+  - name: --data-backup-throughput
+    summary: |-
+      Throughput in MiB/s for data backup volumes. If not provided size will automatically be calculated.
+    groupName: Data Backup Volume Arguments
+  - name: --data-repl-skd
+    acceptedValues: _10minutely, daily, hourly
+    summary: |-
+      Replication Schedule for data volume.
+    groupName: Data Volume Arguments
+  - name: --data-size
+    summary: |-
+      Capacity (in GiB) for data volumes. If not provided size will automatically be calculated.
+    groupName: Data Volume Arguments
+  - name: --data-src-id
+    summary: |-
+      ResourceId of the data source volume.
+    groupName: Data Volume Arguments
+  - name: --data-throughput
+    summary: |-
+      Throughput in MiB/s for data volumes. If not provided size will automatically be calculated.
+    groupName: Data Volume Arguments
+  - name: --encryption-key-source
+    defaultValue: Microsoft.NetApp
+    acceptedValues: Microsoft.KeyVault, Microsoft.NetApp
+    summary: |-
+      Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'.
+    groupName: CMK Encryption Arguments
+  - name: --gp-rules
+    summary: |-
+      Application specific placement rules for the volume group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: GroupMetaData Arguments
+  - name: --group-description
+    summary: |-
+      Group Description.
+    groupName: GroupMetaData Arguments
+  - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
+    summary: |-
+      The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+    groupName: CMK Encryption Arguments
+  - name: --location -l
+    summary: |-
+      Resource location.
+    groupName: Body Arguments
+  - name: --log-backup-repl-skd
+    acceptedValues: _10minutely, daily, hourly
+    summary: |-
+      Replication Schedule for Log backup volume.
+    groupName: Log Volume Arguments
+  - name: --log-backup-size
+    summary: |-
+      Capacity (in GiB) for log backup volumes. If not provided size will automatically be calculated.
+    groupName: Log Backup Volume Arguments
+  - name: --log-backup-src-id
+    summary: |-
+      ResourceId of the log backup source volume.
+    groupName: Log Backup Volume Arguments
+  - name: --log-backup-throughput
+    summary: |-
+      Throughput in MiB/s for log backup volumes. If not provided size will automatically be calculated.
+    groupName: Log Backup Volume Arguments
+  - name: --log-size
+    summary: |-
+      Capacity (in GiB) for log volumes. If not provided size will automatically be calculated.
+    groupName: Log Volume Arguments
+  - name: --log-throughput
+    summary: |-
+      Throughput in MiB/s for log volumes. If not provided size will automatically be calculated.
+    groupName: Log Volume Arguments
+  - name: --memory
+    defaultValue: "100"
+    summary: |-
+      System (SAP HANA) memory in GiB (max 12000 GiB), used to auto compute storage size and throughput.
+    groupName: Volume Group SAP HANA sizing Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --number-of-hosts --number-of-hots
+    defaultValue: "1"
+    summary: |-
+      Total Number of system (SAP HANA) host in this deployment (currently max 3 nodes can be configured).
+    groupName: Volume Group SAP HANA sizing Arguments
+  - name: --pool-name -p
+    summary: |-
+      Name of the ANF capacity pool.
+    groupName: Volumes Arguments
+  - name: --prefix
+    summary: |-
+      All volume names will be prefixed with the given text. The default values for prefix text depends on system role. For PRIMARY it will be `""` and HA it will be `"HA-"`.
+    groupName: Volumes Arguments
+  - name: --shared-repl-skd
+    acceptedValues: _10minutely, daily, hourly
+    summary: |-
+      Replication Schedule for shared volume.
+    groupName: Shared Volume Arguments
+  - name: --shared-size
+    summary: |-
+      Capacity (in GiB) for shared volumes. If not provided size will automatically be calculated.
+    groupName: Shared Volume Arguments
+  - name: --shared-src-id
+    summary: |-
+      ResourceId of the shared source volume.
+    groupName: Shared Volume Arguments
+  - name: --shared-throughput
+    summary: |-
+      Throughput in MiB/s for shared volumes. If not provided size will automatically be calculated.
+    groupName: Shared Volume Arguments
+  - name: --smb-access
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
+    groupName: Volumes Arguments
+  - name: --smb-browsable
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume.
+    groupName: Volumes Arguments
+  - name: --start-host-id
+    defaultValue: "1"
+    summary: |-
+      Starting SAP HANA Host ID. Host ID 1 indicates Master Host. Shared, Data Backup and Log Backup volumes are only provisioned for Master Host i.e. `HostID == 1`.
+    groupName: Volumes Arguments
+  - name: --subnet
+    defaultValue: Default
+    summary: |-
+      The delegated Subnet name.
+    groupName: Volumes Arguments
+  - name: --system-role
+    defaultValue: PRIMARY
+    acceptedValues: DR, HA, PRIMARY
+    summary: |-
+      Type of role for the storage account. Primary indicates first of a SAP HANA Replication (HSR) setup or No HSR. High Availability (HA) specifies local scenario. Default is PRIMARY.  Allowed values: DR, HA, PRIMARY.
+    groupName: Volumes Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Body Arguments
+  - name: --vnet
+    summary: |-
+      The ARM Id or name of the vnet for the volumes.
+    groupName: Volumes Arguments
+  - name: --volumes
+    summary: |-
+      List of volumes from group  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --zones
+    summary: |-
+      Availability Zone  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Body Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_volume-group_delete
+  name: az netappfiles volume-group delete
+  summary: |-
+    Delete the specified volume group only if there are no volumes under volume group.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume-group delete [--account-name]
+                                       [--group-name --name --volume-group-name]
+                                       [--ids]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--resource-group]
+                                       [--subscription]
+                                       [--yes]
+  examples:
+  - summary: |-
+      Delete an ANF volume group
+    syntax: az netappfiles volume-group create -g mygroup --account-name myaccountname --pool-name mypoolname --volume-group-name myvolumegroupname
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --group-name --name --volume-group-name -n
+    summary: |-
+      The name of the volumeGroup.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_volume-group_list
+  name: az netappfiles volume-group list
+  summary: |-
+    List all volume groups for given account.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume-group list --account-name
+                                     --resource-group
+  examples:
+  - summary: |-
+      Get a list of ANF volume groups
+    syntax: az netappfiles volume-group list -g mygroup --account-name myaccountname
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_volume-group_show
+  name: az netappfiles volume-group show
+  summary: |-
+    Get details of the specified volume group.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume-group show [--account-name]
+                                     [--group-name --name --volume-group-name]
+                                     [--ids]
+                                     [--resource-group]
+                                     [--subscription]
+  examples:
+  - summary: |-
+      Get an ANF volume group
+    syntax: az netappfiles volume-group show -g mygroup --account-name myaccountname --volume-group-name myvolumegroupname
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --group-name --name --volume-group-name -n
+    summary: |-
+      The name of the volumeGroup.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_volume-group_update
+  name: az netappfiles volume-group update
+  summary: |-
+    Update a volume group along with specified volumes.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume-group update [--account-name]
+                                       [--add]
+                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--group-meta-data]
+                                       [--group-name --name --volume-group-name]
+                                       [--ids]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--remove]
+                                       [--resource-group]
+                                       [--set]
+                                       [--subscription]
+                                       [--volumes]
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --group-meta-data
+    summary: |-
+      Volume group details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --group-name --name --volume-group-name -n
+    summary: |-
+      The name of the volumeGroup.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --volumes
+    summary: |-
+      List of volumes from group  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_volume-group_wait
+  name: az netappfiles volume-group wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume-group wait [--account-name]
+                                     [--created]
+                                     [--custom]
+                                     [--deleted]
+                                     [--exists]
+                                     [--group-name --name --volume-group-name]
+                                     [--ids]
+                                     [--interval]
+                                     [--resource-group]
+                                     [--subscription]
+                                     [--timeout]
+                                     [--updated]
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --group-name --name --volume-group-name -n
+    summary: |-
+      The name of the volumeGroup.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_netappfiles_volume-group_create
+- az_netappfiles_volume-group_delete
+- az_netappfiles_volume-group_list
+- az_netappfiles_volume-group_show
+- az_netappfiles_volume-group_update
+- az_netappfiles_volume-group_wait
+metadata:
+  ms.date: 03/07/2024
+  description: Manage Azure NetApp Files (ANF) Volume Group Resources.
