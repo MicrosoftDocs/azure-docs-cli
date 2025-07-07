@@ -1,7 +1,6 @@
 ---
-title: Create virtual network (VNet) – Azure CLI | Microsoft Docs
-description: Learn how to create a virtual network (VNet) and subnet with the Azure CLI.
-ms.date: 09/19/2024
+title: Create a virtual network (VNet) using the Azure CLI
+description: Learn how to create an Azure virtual network and subnet using the CLI. Enable secure communication between VMs, the internet, and on-premises networks.
 ms.topic: tutorial
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -10,11 +9,17 @@ keywords: azure cli create vnet, virtual network in azure cli, subnet in virtual
 
 # Create a virtual network
 
-Virtual networks (VNets) allow virtual machines (VMs) and other Azure resources to communicate securely with each other, the internet, and on-premises networks. VNets can also be connected to other VNets if their address ranges don't overlap. In this section, you learn how to create a virtual network with a subnet.
+Virtual networks (VNets) allow virtual machines (VMs) and other Azure resources to communicate
+securely with each other, the internet, and on-premises networks. VNets can also be connected to
+other VNets if their address ranges don't overlap. In this section, you learn how to create a
+virtual network with a subnet.
 
-Subnets allow you to segment the VNet address space into subnetworks for organization purposes. Azure deploys resources to subnets within a virtual network, so you need to create a subnet.
+Subnets allow you to segment the VNet address space into subnetworks for organization purposes.
+Azure deploys resources to subnets within a virtual network, so you need to create a subnet.
 
-Use the [az network vnet create](/cli/azure/network/vnet#az_network_vnet_create) command to create a virtual network named `TutorialVNet1` with address prefix of 10.0.0.0/16 and a subnet named `TutorialSubnet1` with address prefix of 10.0.0.0/24.
+Use the [az network vnet create][01] command to create a virtual network named `TutorialVNet1` with
+address prefix of 10.0.0.0/16 and a subnet named `TutorialSubnet1` with address prefix of
+10.0.0.0/24.
 
 # [Bash](#tab/bash)
 
@@ -55,4 +60,9 @@ az network vnet create `
   --address-prefixes $vnetAddressPrefix `
   --subnet-name $subnetName `
   --subnet-prefixes $subnetAddressPrefix
+
 ```
+
+<!-- link references -->
+
+[01]: /cli/azure/network/vnet#az_network_vnet_create
