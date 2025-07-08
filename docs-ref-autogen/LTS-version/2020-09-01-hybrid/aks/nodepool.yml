@@ -321,7 +321,6 @@ directCommands:
                         [--enable-vtpm]
                         [--eviction-policy {Deallocate, Delete}]
                         [--gateway-prefix-size]
-                        [--gpu-driver {Install, None}]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                         [--host-group-id]
                         [--if-match]
@@ -330,7 +329,6 @@ directCommands:
                         [--kubernetes-version]
                         [--labels]
                         [--linux-os-config]
-                        [--max-blocked-nodes]
                         [--max-count]
                         [--max-pods]
                         [--max-surge]
@@ -347,13 +345,14 @@ directCommands:
                         [--node-soak-duration]
                         [--node-taints]
                         [--node-vm-size]
-                        [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2019, Windows2022, WindowsAnnual}]
+                        [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022, WindowsAnnual}]
                         [--os-type]
                         [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                         [--pod-subnet-id]
                         [--ppg]
                         [--priority {Regular, Spot}]
                         [--scale-down-mode {Deallocate, Delete}]
+                        [--skip-gpu-driver-install]
                         [--snapshot-id]
                         [--spot-max-price]
                         [--ssh-access {disabled, localuser}]
@@ -481,10 +480,6 @@ directCommands:
     summary: |-
       The size of Public IPPrefix attached to the Gateway-mode node pool. The node pool must be in Gateway mode.
     isPreview: true
-  - name: --gpu-driver
-    acceptedValues: Install, None
-    summary: |-
-      Whether to install driver for GPU node pool. Possible values are "Install" or "None". Default is "Install".
   - name: --gpu-instance-profile
     acceptedValues: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
     summary: |-
@@ -511,9 +506,6 @@ directCommands:
   - name: --linux-os-config
     summary: |-
       OS configurations for Linux agent nodes.
-  - name: --max-blocked-nodes
-    summary: |-
-      The maximum number or percentage of extra nodes that are allowed to be blocked in the agent pool during an upgrade when undrainable node behavior is Cordon. When specified, it represents the number or percent used, eg. 1 or 5%.
   - name: --max-count
     summary: |-
       Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
@@ -570,11 +562,11 @@ directCommands:
       The node taints for the node pool.
   - name: --node-vm-size -s
     summary: |-
-      Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
+      Size of Virtual Machines to create as Kubernetes nodes.
   - name: --os-sku
-    acceptedValues: AzureLinux, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2019, Windows2022, WindowsAnnual
+    acceptedValues: AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022, WindowsAnnual
     summary: |-
-      The os-sku of the agent node pool. Ubuntu, CBLMariner, Ubuntu2204 or Ubuntu2404 when os-type is Linux, default is Ubuntu if not set; Windows2019, Windows2022 or WindowsAnnual when os-type is Windows, the current default is Windows2022 if not set.
+      The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019, Windows2022 or WindowsAnnual when os-type is Windows, the current default is Windows2022 if not set.
   - name: --os-type
     summary: |-
       The OS Type. Linux or Windows. Windows not supported yet for "VirtualMachines" VM set type.
@@ -601,6 +593,11 @@ directCommands:
     acceptedValues: Deallocate, Delete
     summary: |-
       Describes how VMs are added to or removed from nodepools.
+  - name: --skip-gpu-driver-install
+    defaultValue: "False"
+    summary: |-
+      To skip GPU driver auto installation by AKS on a nodepool using GPU vm size if customers want to manage GPU driver installation by their own. If not specified, the default is false.
+    isPreview: true
   - name: --snapshot-id
     summary: |-
       The source snapshot id used to create this nodepool. Must use VMSS agent pool type.
@@ -1949,7 +1946,6 @@ directCommands:
                            [--if-match]
                            [--if-none-match]
                            [--labels]
-                           [--max-blocked-nodes]
                            [--max-count]
                            [--max-surge]
                            [--max-unavailable]
@@ -1958,7 +1954,7 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
-                           [--os-sku {AzureLinux, Ubuntu, Ubuntu2204, Ubuntu2404}]
+                           [--os-sku {AzureLinux, Ubuntu}]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--ssh-access {disabled, localuser}]
                            [--tags]
@@ -2067,9 +2063,6 @@ directCommands:
   - name: --labels
     summary: |-
       The node labels for the node pool. See https://aka.ms/node-labels for syntax of labels.
-  - name: --max-blocked-nodes
-    summary: |-
-      The maximum number or percentage of extra nodes that are allowed to be blocked in the agent pool during an upgrade when undrainable node behavior is Cordon. When specified, it represents the number or percent used, eg. 1 or 5%.
   - name: --max-count
     summary: |-
       Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
@@ -2097,7 +2090,7 @@ directCommands:
     summary: |-
       The node taints for the node pool.
   - name: --os-sku
-    acceptedValues: AzureLinux, Ubuntu, Ubuntu2204, Ubuntu2404
+    acceptedValues: AzureLinux, Ubuntu
     summary: |-
       The os-sku of the agent node pool.
   - name: --scale-down-mode
@@ -2257,7 +2250,6 @@ directCommands:
                             [--if-match]
                             [--if-none-match]
                             [--kubernetes-version]
-                            [--max-blocked-nodes]
                             [--max-surge]
                             [--max-unavailable]
                             [--no-wait]
@@ -2295,9 +2287,6 @@ directCommands:
   - name: --kubernetes-version -k
     summary: |-
       Version of Kubernetes to upgrade the node pool to, such as "1.11.12".
-  - name: --max-blocked-nodes
-    summary: |-
-      The maximum number or percentage of extra nodes that are allowed to be blocked in the agent pool during an upgrade when undrainable node behavior is Cordon. When specified, it represents the number or percent used, eg. 1 or 5%.
   - name: --max-surge
     summary: |-
       Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
