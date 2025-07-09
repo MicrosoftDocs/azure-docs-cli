@@ -190,12 +190,12 @@ the public announcement of the retirement.
 Azure CLI depends on Python version 3.8 or above. The following table summarizes the expected end of
 support for each version of Python:
 
-|Python version|End of support date|
-|-|-|
-|3.8|October 2024 |
-|3.9|October 2025 |
-|3.10|October 2026 |
-|3.11|October 2027 |
+| Python version | End of support date |
+|----------------|---------------------|
+| 3.9            | October 2025        |
+| 3.10           | October 2026        |
+| 3.11           | October 2027        |
+| 3.12           | October 2028        |
 
 Azure CLI can only be supported on operating systems where the above versions of Python are supported.
 
@@ -208,18 +208,17 @@ Azure CLI can only be supported on operating systems where the above versions of
     time we stop testing and supporting it.
   - Here are the supported Linux operating systems for the Azure CLI:
 
-    | Operating system |  Version  |  End of support   |
+    | Operating system | Version   | End of support    |
     | ---------------- | --------- | ----------------- |
-    | Ubuntu           | 20.04 LTS | April 2025        |
-    |                  | 22.04 LTS | April 2027        |
+    | Ubuntu           | 22.04 LTS | April 2027        |
     |                  | 24.04 LTS | June 2029         |
-    | Debian           | 11        |                   |
-    |                  | 12        |                   |
-    | Alpine           | 3.17      | November 22, 2024 |
+    | Debian           | 11        | August 31, 2026   |
+    |                  | 12        | June 30, 2028     |
     | RHEL             | 8         | May 31, 2029      |
     |                  | 9         | May 31, 2032      |
+    |                  | 10        | May 31, 2035      |
     | CentOS Stream    | 9         | Estimated 2027    |
-    | Azure Linux      | 2.0       | July 2025         |
+    |                  | 10        | Estimated 2030    |
     | Azure Linux      | 3.0       |                   |
 
     > [!NOTE]
