@@ -70,7 +70,7 @@ CLI.
 | Command | Description | Example
 |-|-|-|
 | [az interactive][10] | In a PowerShell console, get autocompletion, command descriptions, and examples as you type. | See [Work in interactive mode][10] for more information. Example: Type `az interactive` in your console window then <kbd>Enter</kbd>.
-| [az scenario][24] | Get end to end (E2E) examples and execute them with walk-through prompts. | Type `az scenario guide "keywords of interest"` in your console then <kbd>Enter</kbd>. The Azure CLI returns scenarios based on your keywords. Example: `az scenario guide "virtual machines"`
+| [az scenario][24] | Get end-to-end (E2E) examples and execute them with walk-through prompts. | Type `az scenario guide "keywords of interest"` in your console then <kbd>Enter</kbd>. The Azure CLI returns scenarios based on your keywords. Example: `az scenario guide "virtual machines"`
 | [az next][22] | Get recommendations for the next Azure CLI command based on customer execution patterns. You're prompted to select a command path. | Type `az next` in your console then <kbd>Enter</kbd>. Pick from 1 of 7 preset command paths.
 | [az find][21] | This is an AI robot that returns reference examples for keywords. | Type `az find "active subscription"` in your console then <kbd>Enter</kbd>.
 
