@@ -87,7 +87,7 @@ $subnetId = az network nic show --ids $nicId --query '[ipConfigurations[].subnet
 
 Use the public IP object ID to look up the public IP address and store it in a shell variable. The
 subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI.
-Therefore, it isn't be needed for the rest of the tutorial.
+Therefore, it isn't needed for the rest of the tutorial.
 
 # [Bash](#tab/bash)
 
