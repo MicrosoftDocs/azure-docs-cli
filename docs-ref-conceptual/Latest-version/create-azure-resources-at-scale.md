@@ -8,9 +8,9 @@ ms.custom: devx-track-azurecli
 
 # How to create resources at scale using the Azure CLI
 
-As an Azure Resource Manager, you frequently have to create multiple Azure resources when
-configuring new environments. You might also have an Azure resource approval process that works best
-when Azure resources are created automatically from a script.
+As an Azure cloud resource administrator, you frequently have to create multiple Azure resources
+when configuring new environments. You might also have an Azure resource approval process that works
+best when Azure resources are created automatically from a script.
 
 In this article, you learn the following items:
 
