@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/09/2025
+ms.date: 07/10/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -33,7 +33,7 @@ You will be prompted to install an extension on first use.
 |[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [18.0.0b18](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.62](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[akshybrid](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.1.2](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) |
-|[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
+|[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
 |[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.61.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [2.7.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
@@ -58,7 +58,7 @@ You will be prompted to install an extension on first use.
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.3](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.57.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-cli-extensions/tree/main/src/baremetal-infrastructure) | 2.57.0 | Microsoft Azure Command-Line Tools BaremetalInfrastructure Extension. | Preview | [3.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/baremetal-infrastructure/HISTORY.rst) |
-|[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.62.0 | Microsoft Azure Command-Line Tools Bastion Extension. | GA | [1.4.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
+|[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.62.0 | Microsoft Azure Command-Line Tools Bastion Extension. | GA | [1.4.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
 |[billing-benefits](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits) | 2.43.0 | Microsoft Azure Command-Line Tools BillingBenefits Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits/HISTORY.rst) |
 |[blueprint](https://github.com/Azure/azure-cli-extensions/tree/main/src/blueprint) | 2.50.0 | Microsoft Azure Command-Line Tools Blueprint Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/blueprint/HISTORY.rst) |
 |[carbon](https://github.com/Azure/azure-cli-extensions/tree/main/src/carbon) | 2.70.0 | Microsoft Azure Command-Line Tools Carbon Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/carbon/HISTORY.rst) |
@@ -80,7 +80,7 @@ You will be prompted to install an extension on first use.
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.55.0 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[custom-providers](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers) | 2.3.1 | Microsoft Azure Command-Line Tools Custom Providers Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers/HISTORY.rst) |
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.4](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
-|[data-transfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer) | 2.70.0 | Microsoft Azure Command-Line Tools DataTransfer Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer/HISTORY.rst) |
+|[data-transfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer) | 2.0.24 | Microsoft Azure Command-Line Tools DataTransfer Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer/HISTORY.rst) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.70.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.70.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
