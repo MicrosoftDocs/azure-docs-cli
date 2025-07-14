@@ -1,64 +1,56 @@
 ### YamlMime:AzureCLIGroup
-uid: az_csvmware_vm_nic
-name: az csvmware vm nic
+uid: az_webpubsub_custom-certificate
+name: az webpubsub custom-certificate
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **csvmware** extension for the Azure CLI (version 2.0.67 or higher). The extension will automatically install the first time you run an **az csvmware vm nic** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **webpubsub** extension for the Azure CLI (version 2.56.0 or higher). The extension will automatically install the first time you run an **az webpubsub custom-certificate** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage VMware virtual machine's Network Interface Cards.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: "Command group 'csvmware' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  Manage WebPubSub custom certificates.
+status: GA
 sourceType: Extension
 directCommands:
-- uid: az_csvmware_vm_nic_add
-  name: az csvmware vm nic add
+- uid: az_webpubsub_custom-certificate_create
+  name: az webpubsub custom-certificate create
   summary: |-
-    Add NIC to a VMware virtual machine.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'csvmware' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Create a custom certificate of WebPubSub Service.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az csvmware vm nic add --resource-group
-                           --virtual-network
-                           --vm-name
-                           [--adapter {E1000, E1000E, PCNET32, VMXNET, VMXNET2, VMXNET3}]
-                           [--power-on-boot {false, true}]
+    az webpubsub custom-certificate create --certificate-name
+                                           --key-vault-base-uri
+                                           --key-vault-secret-name
+                                           --resource-group
+                                           --webpubsub-name
+                                           [--key-vault-secret-version]
   examples:
   - summary: |-
-      Add a NIC with default parameters in a VM.
-    syntax: az csvmware vm nic add --vm-name MyVm -g MyResourceGroup --virtual-network MyVirtualNetwork
-  - summary: |-
-      Add a NIC with E1000E adapter that powers on boot in a VM.
-    syntax: az csvmware vm nic add --vm-name MyVm -g MyResourceGroup --virtual-network MyVirtualNetwork --adapter E1000E --power-on-boot true
+      Create a custom certificate
+    syntax: az webpubsub custom-certificate create --webpubsub-name MyWebPubSub -g MyResourceGroup --certificate-name MyCertificate --key-vault-base-uri https://myvault.vault.azure.net/ --key-vault-secret-name MySecret --key-vault-secret-version 8d35338681be4cf09b97e899cb7179b8
   requiredParameters:
+  - isRequired: true
+    name: --certificate-name
+    summary: |-
+      Name of the custom certificate.
+  - isRequired: true
+    name: --key-vault-base-uri
+    summary: |-
+      Key vault base URI. For example, `https://contoso.vault.azure.net`.
+  - isRequired: true
+    name: --key-vault-secret-name
+    summary: |-
+      Key vault secret name where certificate is stored.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --virtual-network
+    name: --webpubsub-name
     summary: |-
-      ID of the virtual network. You can also pass the basename of the ID.
-    groupName: Network Arguments
-  - isRequired: true
-    name: --vm-name
-    summary: |-
-      Name of the virtual machine.
+      Name of the webpubsub.
   optionalParameters:
-  - name: --adapter
-    defaultValue: VMXNET3
-    acceptedValues: E1000, E1000E, PCNET32, VMXNET, VMXNET2, VMXNET3
+  - name: --key-vault-secret-version
     summary: |-
-      The adapter for the NIC.
-    groupName: Network Arguments
-  - name: --power-on-boot
-    defaultValue: "False"
-    acceptedValues: false, true
-    summary: |-
-      Will power on the NIC at boot time.
-    groupName: Network Arguments
+      Key vault secret version where certificate is stored. If empty, will use latest version.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -86,36 +78,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_csvmware_vm_nic_delete
-  name: az csvmware vm nic delete
+- uid: az_webpubsub_custom-certificate_delete
+  name: az webpubsub custom-certificate delete
   summary: |-
-    Delete NICs from a VM.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'csvmware' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Delete a custom certificate of WebPubSub Service.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az csvmware vm nic delete --nics
-                              --resource-group
-                              --vm-name
+    az webpubsub custom-certificate delete --certificate-name
+                                           --resource-group
+                                           --webpubsub-name
   examples:
   - summary: |-
-      Delete two NICs from a VM.
-    syntax: az csvmware vm nic delete --vm-name MyVm -g MyResourceGroup --nics "My NIC Name 1" "My NIC Name 2"
+      Delete a custom certificate
+    syntax: az webpubsub custom-certificate delete --webpubsub-name MyWebPubSub -g MyResourceGroup --certificate-name MyCertificate
   requiredParameters:
   - isRequired: true
-    name: --nics
+    name: --certificate-name
     summary: |-
-      Names of NICs.
-    groupName: Network Arguments
+      Name of the custom certificate.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --vm-name
+    name: --webpubsub-name
     summary: |-
-      Name of the virtual machine.
+      Name of the webpubsub.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -143,30 +132,28 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_csvmware_vm_nic_list
-  name: az csvmware vm nic list
+- uid: az_webpubsub_custom-certificate_list
+  name: az webpubsub custom-certificate list
   summary: |-
-    List details of NICs available on a VMware virtual machine.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'csvmware' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    List custom certificates of WebPubSub Service.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az csvmware vm nic list --resource-group
-                            --vm-name
+    az webpubsub custom-certificate list --resource-group
+                                         --webpubsub-name
   examples:
   - summary: |-
-      List details of NICs in a VM.
-    syntax: az csvmware vm nic list --vm-name MyVm -g MyResourceGroup
+      List custom certificates
+    syntax: az webpubsub custom-certificate list --webpubsub-name MyWebPubSub -g MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --vm-name
+    name: --webpubsub-name
     summary: |-
-      Name of the virtual machine.
+      Name of the webpubsub.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -194,36 +181,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_csvmware_vm_nic_show
-  name: az csvmware vm nic show
+- uid: az_webpubsub_custom-certificate_show
+  name: az webpubsub custom-certificate show
   summary: |-
-    Get the details of a VMware virtual machine's NIC.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'csvmware' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Show the detail of a custom certificate of WebPubSub Service.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az csvmware vm nic show --name
-                            --resource-group
-                            --vm-name
+    az webpubsub custom-certificate show --certificate-name
+                                         --resource-group
+                                         --webpubsub-name
   examples:
   - summary: |-
-      Get the details of a NIC in a VM.
-    syntax: az csvmware vm nic show --vm-name MyVm -g MyResourceGroup -n "My NIC Name"
+      Show custom certificate
+    syntax: az webpubsub custom-certificate show --webpubsub-name MyWebPubSub -g MyResourceGroup --certificate-name MyCertificate
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --certificate-name
     summary: |-
-      Name of the NIC.
-    groupName: Network Arguments
+      Name of the custom certificate.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --vm-name
+    name: --webpubsub-name
     summary: |-
-      Name of the virtual machine.
+      Name of the webpubsub.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -252,9 +236,9 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_csvmware_vm_nic_add
-- az_csvmware_vm_nic_delete
-- az_csvmware_vm_nic_list
-- az_csvmware_vm_nic_show
+- az_webpubsub_custom-certificate_create
+- az_webpubsub_custom-certificate_delete
+- az_webpubsub_custom-certificate_list
+- az_webpubsub_custom-certificate_show
 metadata:
-  description: Manage VMware virtual machine's Network Interface Cards.
+  description: Manage WebPubSub custom certificates.
