@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_iot_du_device_deployment
 name: az iot du device deployment
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot du device deployment** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Device deployment management.
@@ -20,9 +19,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot du device deployment cancel --account
-                                       --cid
-                                       --deployment-id
-                                       --gid
+                                       --cid --class-id
+                                       --deployment-id --did
+                                       --gid --group-id
                                        --instance
                                        [--resource-group]
   examples:
@@ -34,6 +33,7 @@ directCommands:
     name: --account -n
     summary: |-
       Device Update account name. You can configure the default account name using `az config set defaults.adu_account={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --cid --class-id
     summary: |-
@@ -50,10 +50,39 @@ directCommands:
     name: --instance -i
     summary: |-
       Device Update instance name. You can configure the default instance name using `az config set defaults.adu_instance={name}`.
+    groupName: Account Identifier Arguments
   optionalParameters:
   - name: --resource-group -g
     summary: |-
       Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group={name}`.
+    groupName: Account Identifier Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_du_device_deployment_create
   name: az iot du device deployment create
   summary: |-
@@ -62,17 +91,17 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot du device deployment create --account
-                                       --deployment-id
-                                       --gid
+                                       --deployment-id --did
+                                       --gid --group-id
                                        --instance
-                                       --un
-                                       --up
-                                       --update-version
-                                       [--failed-count]
-                                       [--failed-percentage]
-                                       [--rbun]
-                                       [--rbup]
-                                       [--rbuv]
+                                       --un --update-name
+                                       --up --update-provider
+                                       --update-version --uv
+                                       [--failed-count --fc]
+                                       [--failed-percentage --fp]
+                                       [--rbun --rollback-update-name]
+                                       [--rbup --rollback-update-provider]
+                                       [--rbuv --rollback-update-version]
                                        [--resource-group]
                                        [--start-time]
   examples:
@@ -90,6 +119,7 @@ directCommands:
     name: --account -n
     summary: |-
       Device Update account name. You can configure the default account name using `az config set defaults.adu_account={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --deployment-id --did
     summary: |-
@@ -102,40 +132,77 @@ directCommands:
     name: --instance -i
     summary: |-
       Device Update instance name. You can configure the default instance name using `az config set defaults.adu_instance={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --un --update-name
     summary: |-
       The update name.
+    groupName: Update Id Arguments
   - isRequired: true
     name: --up --update-provider
     summary: |-
       The update provider.
+    groupName: Update Id Arguments
   - isRequired: true
     name: --update-version --uv
     summary: |-
       The update version.
+    groupName: Update Id Arguments
   optionalParameters:
   - name: --failed-count --fc
     summary: |-
       Integer representing the number of failed devices in a deployment before a cloud initated rollback occurs. Required when defining rollback policy.
+    groupName: Update Rollback Policy Arguments
   - name: --failed-percentage --fp
     summary: |-
       Integer representing the percentage of failed devices in a deployment before a cloud initated rollback occurs. Required when defining rollback policy.
+    groupName: Update Rollback Policy Arguments
   - name: --rbun --rollback-update-name
     summary: |-
       The rollback update name.
+    groupName: Update Rollback Policy Arguments
   - name: --rbup --rollback-update-provider
     summary: |-
       The rollback update provider.
+    groupName: Update Rollback Policy Arguments
   - name: --rbuv --rollback-update-version
     summary: |-
       The rollback update version.
+    groupName: Update Rollback Policy Arguments
   - name: --resource-group -g
     summary: |-
       Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group={name}`.
+    groupName: Account Identifier Arguments
   - name: --start-time
     summary: |-
       The iso-8601 compliant start time for deployment. If no value is provided the corresponding value for UTC 'now' will be used.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_du_device_deployment_delete
   name: az iot du device deployment delete
   summary: |-
@@ -144,10 +211,10 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot du device deployment delete --account
-                                       --deployment-id
-                                       --gid
+                                       --deployment-id --did
+                                       --gid --group-id
                                        --instance
-                                       [--cid]
+                                       [--cid --class-id]
                                        [--resource-group]
                                        [--yes {false, true}]
   examples:
@@ -162,6 +229,7 @@ directCommands:
     name: --account -n
     summary: |-
       Device Update account name. You can configure the default account name using `az config set defaults.adu_account={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --deployment-id --did
     summary: |-
@@ -174,6 +242,7 @@ directCommands:
     name: --instance -i
     summary: |-
       Device Update instance name. You can configure the default instance name using `az config set defaults.adu_instance={name}`.
+    groupName: Account Identifier Arguments
   optionalParameters:
   - name: --cid --class-id
     summary: |-
@@ -181,10 +250,38 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group={name}`.
+    groupName: Account Identifier Arguments
   - name: --yes -y
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_du_device_deployment_list
   name: az iot du device deployment list
   summary: |-
@@ -193,9 +290,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot du device deployment list --account
-                                     --gid
+                                     --gid --group-id
                                      --instance
-                                     [--cid]
+                                     [--cid --class-id]
                                      [--order-by]
                                      [--resource-group]
   examples:
@@ -213,6 +310,7 @@ directCommands:
     name: --account -n
     summary: |-
       Device Update account name. You can configure the default account name using `az config set defaults.adu_account={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --gid --group-id
     summary: |-
@@ -221,6 +319,7 @@ directCommands:
     name: --instance -i
     summary: |-
       Device Update instance name. You can configure the default instance name using `az config set defaults.adu_instance={name}`.
+    groupName: Account Identifier Arguments
   optionalParameters:
   - name: --cid --class-id
     summary: |-
@@ -231,6 +330,34 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group={name}`.
+    groupName: Account Identifier Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_du_device_deployment_list-devices
   name: az iot du device deployment list-devices
   summary: |-
@@ -239,9 +366,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot du device deployment list-devices --account
-                                             --cid
-                                             --deployment-id
-                                             --gid
+                                             --cid --class-id
+                                             --deployment-id --did
+                                             --gid --group-id
                                              --instance
                                              [--filter]
                                              [--resource-group]
@@ -257,6 +384,7 @@ directCommands:
     name: --account -n
     summary: |-
       Device Update account name. You can configure the default account name using `az config set defaults.adu_account={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --cid --class-id
     summary: |-
@@ -273,6 +401,7 @@ directCommands:
     name: --instance -i
     summary: |-
       Device Update instance name. You can configure the default instance name using `az config set defaults.adu_instance={name}`.
+    groupName: Account Identifier Arguments
   optionalParameters:
   - name: --filter
     summary: |-
@@ -280,6 +409,34 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group={name}`.
+    groupName: Account Identifier Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_du_device_deployment_retry
   name: az iot du device deployment retry
   summary: |-
@@ -288,9 +445,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot du device deployment retry --account
-                                      --cid
-                                      --deployment-id
-                                      --gid
+                                      --cid --class-id
+                                      --deployment-id --did
+                                      --gid --group-id
                                       --instance
                                       [--resource-group]
   examples:
@@ -302,6 +459,7 @@ directCommands:
     name: --account -n
     summary: |-
       Device Update account name. You can configure the default account name using `az config set defaults.adu_account={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --cid --class-id
     summary: |-
@@ -318,10 +476,39 @@ directCommands:
     name: --instance -i
     summary: |-
       Device Update instance name. You can configure the default instance name using `az config set defaults.adu_instance={name}`.
+    groupName: Account Identifier Arguments
   optionalParameters:
   - name: --resource-group -g
     summary: |-
       Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group={name}`.
+    groupName: Account Identifier Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_du_device_deployment_show
   name: az iot du device deployment show
   summary: |-
@@ -330,10 +517,10 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot du device deployment show --account
-                                     --deployment-id
-                                     --gid
+                                     --deployment-id --did
+                                     --gid --group-id
                                      --instance
-                                     [--cid]
+                                     [--cid --class-id]
                                      [--resource-group]
                                      [--status {false, true}]
   examples:
@@ -354,6 +541,7 @@ directCommands:
     name: --account -n
     summary: |-
       Device Update account name. You can configure the default account name using `az config set defaults.adu_account={name}`.
+    groupName: Account Identifier Arguments
   - isRequired: true
     name: --deployment-id --did
     summary: |-
@@ -366,6 +554,7 @@ directCommands:
     name: --instance -i
     summary: |-
       Device Update instance name. You can configure the default instance name using `az config set defaults.adu_instance={name}`.
+    groupName: Account Identifier Arguments
   optionalParameters:
   - name: --cid --class-id
     summary: |-
@@ -373,10 +562,38 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group={name}`.
+    groupName: Account Identifier Arguments
   - name: --status
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_du_device_deployment_cancel
 - az_iot_du_device_deployment_create
@@ -385,29 +602,5 @@ commands:
 - az_iot_du_device_deployment_list-devices
 - az_iot_du_device_deployment_retry
 - az_iot_du_device_deployment_show
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Deployments will apply a desired compatible update against a target device group distributing the update across device classes within the group. Cloud-initiated rollback policy can be optionally configured.

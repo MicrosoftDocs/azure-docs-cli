@@ -36,7 +36,7 @@ directCommands:
                                           [--secret]
                                           [--source-id]
                                           [--target-id]
-                                          [--target-resource-group]
+                                          [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and app-insights interactively
@@ -55,7 +55,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python"
+    acceptedValues: dotnet, dotnet-internal, go, java, nodejs, none, python
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -68,7 +68,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -79,7 +79,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -90,6 +90,7 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -99,6 +100,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the app insights. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_appconfig
   name: az aks connection create appconfig
   summary: |-
@@ -125,7 +153,7 @@ directCommands:
                                        [--service-principal]
                                        [--source-id]
                                        [--target-id]
-                                       [--target-resource-group]
+                                       [--target-resource-group --tg]
                                        [--use-appconfig-extension {false, true}]
                                        [--workload-identity]
   examples:
@@ -146,7 +174,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -159,7 +187,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -170,13 +198,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -185,6 +214,7 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -194,6 +224,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -205,7 +236,7 @@ directCommands:
       The resource group which contains the app configuration. Required if '--target-id' is not specified.
   - name: --use-appconfig-extension -e
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Install Azure App Configuration extension in the Kubernetes cluster.
   - name: --workload-identity
@@ -216,6 +247,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_cognitiveservices
   name: az aks connection create cognitiveservices
   summary: |-
@@ -241,7 +300,7 @@ directCommands:
                                                [--service-principal]
                                                [--source-id]
                                                [--target-id]
-                                               [--target-resource-group]
+                                               [--target-resource-group --tg]
                                                [--workload-identity]
   examples:
   - summary: |-
@@ -261,7 +320,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, none, python"
+    acceptedValues: dotnet, none, python
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -274,7 +333,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -285,7 +344,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -296,6 +355,7 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -305,6 +365,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -322,6 +383,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_confluent-cloud
   name: az aks connection create confluent-cloud
   summary: |-
@@ -382,7 +471,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, go, java, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -392,7 +481,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -403,7 +492,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -412,6 +501,33 @@ directCommands:
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_cosmos-cassandra
   name: az aks connection create cosmos-cassandra
   summary: |-
@@ -440,7 +556,7 @@ directCommands:
                                               [--service-principal]
                                               [--source-id]
                                               [--target-id]
-                                              [--target-resource-group]
+                                              [--target-resource-group --tg]
                                               [--workload-identity]
   examples:
   - summary: |-
@@ -460,7 +576,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -476,7 +592,7 @@ directCommands:
     summary: |-
       Name of the keyspace. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -487,13 +603,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -502,10 +619,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -515,6 +634,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -532,6 +652,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_cosmos-gremlin
   name: az aks connection create cosmos-gremlin
   summary: |-
@@ -561,7 +709,7 @@ directCommands:
                                             [--service-principal]
                                             [--source-id]
                                             [--target-id]
-                                            [--target-resource-group]
+                                            [--target-resource-group --tg]
                                             [--workload-identity]
   examples:
   - summary: |-
@@ -581,7 +729,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, php, python
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -600,7 +748,7 @@ directCommands:
     summary: |-
       Name of the graph. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -611,13 +759,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -626,10 +775,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -639,6 +790,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -656,6 +808,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_cosmos-mongo
   name: az aks connection create cosmos-mongo
   summary: |-
@@ -684,7 +864,7 @@ directCommands:
                                           [--service-principal]
                                           [--source-id]
                                           [--target-id]
-                                          [--target-resource-group]
+                                          [--target-resource-group --tg]
                                           [--workload-identity]
   examples:
   - summary: |-
@@ -704,7 +884,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, springBoot"
+    acceptedValues: dotnet, dotnet-internal, go, java, nodejs, none, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -720,7 +900,7 @@ directCommands:
     summary: |-
       Name of the database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -731,13 +911,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -746,10 +927,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -759,6 +942,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -776,6 +960,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_cosmos-sql
   name: az aks connection create cosmos-sql
   summary: |-
@@ -804,7 +1016,7 @@ directCommands:
                                         [--service-principal]
                                         [--source-id]
                                         [--target-id]
-                                        [--target-resource-group]
+                                        [--target-resource-group --tg]
                                         [--workload-identity]
   examples:
   - summary: |-
@@ -824,7 +1036,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -840,7 +1052,7 @@ directCommands:
     summary: |-
       Name of the database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -851,13 +1063,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -866,10 +1079,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -879,6 +1094,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -896,6 +1112,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_cosmos-table
   name: az aks connection create cosmos-table
   summary: |-
@@ -924,7 +1168,7 @@ directCommands:
                                           [--source-id]
                                           [--table]
                                           [--target-id]
-                                          [--target-resource-group]
+                                          [--target-resource-group --tg]
                                           [--workload-identity]
   examples:
   - summary: |-
@@ -944,7 +1188,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -957,7 +1201,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -968,13 +1212,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -983,10 +1228,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -996,6 +1243,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1016,6 +1264,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_eventhub
   name: az aks connection create eventhub
   summary: |-
@@ -1043,7 +1319,7 @@ directCommands:
                                       [--service-principal]
                                       [--source-id]
                                       [--target-id]
-                                      [--target-resource-group]
+                                      [--target-resource-group --tg]
                                       [--workload-identity]
   examples:
   - summary: |-
@@ -1060,7 +1336,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1073,7 +1349,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1087,13 +1363,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -1102,10 +1379,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -1115,6 +1394,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1132,6 +1412,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_keyvault
   name: az aks connection create keyvault
   summary: |-
@@ -1159,7 +1467,7 @@ directCommands:
                                       [--service-principal]
                                       [--source-id]
                                       [--target-id]
-                                      [--target-resource-group]
+                                      [--target-resource-group --tg]
                                       [--vault]
                                       [--workload-identity]
   examples:
@@ -1183,7 +1491,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1197,11 +1505,11 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --enable-csi
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Use keyvault as a secrets store via a CSI volume. If specified, AuthType Arguments are not needed.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1209,7 +1517,7 @@ directCommands:
       Name of the managed cluster. Required if '--source-id' is not specified.None.
   - name: --new
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicates whether to create a new keyvault when creating the aks connection.
   - name: --no-wait
@@ -1217,20 +1525,22 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -1240,6 +1550,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1260,6 +1571,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_mysql
   name: az aks connection create mysql
   summary: |-
@@ -1289,7 +1628,7 @@ directCommands:
                                    [--service-endpoint {false, true}]
                                    [--source-id]
                                    [--target-id]
-                                   [--target-resource-group]
+                                   [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and mysql interactively
@@ -1305,7 +1644,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1321,7 +1660,7 @@ directCommands:
     summary: |-
       Name of the mysql database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1332,13 +1671,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -1352,13 +1692,15 @@ directCommands:
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of the mysql server. Required if '--target-id' is not specified.
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1368,6 +1710,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql server. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_mysql-flexible
   name: az aks connection create mysql-flexible
   summary: |-
@@ -1393,7 +1762,7 @@ directCommands:
                                             [--server]
                                             [--source-id]
                                             [--target-id]
-                                            [--target-resource-group]
+                                            [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and mysql-flexible interactively
@@ -1409,7 +1778,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1425,7 +1794,7 @@ directCommands:
     summary: |-
       Name of the mysql flexible database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1436,7 +1805,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -1452,6 +1821,7 @@ directCommands:
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
@@ -1464,6 +1834,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_mysql-flexible(serviceconnector-passwordless)
   name: az aks connection create mysql-flexible
   extensionSuffix: serviceconnector-passwordless
@@ -1489,7 +1886,7 @@ directCommands:
                                             [--service-principal]
                                             [--source-id]
                                             [--target-id]
-                                            [--target-resource-group]
+                                            [--target-resource-group --tg]
                                             [--workload-identity]
                                             [--yes]
   examples:
@@ -1507,7 +1904,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1523,7 +1920,7 @@ directCommands:
     summary: |-
       Name of the mysql flexible database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1538,7 +1935,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -1556,6 +1953,7 @@ directCommands:
       secret  : One of secret, secret-uri, secret-name is required. Password or account key for secret auth.
       secret-uri  : One of secret, secret-uri, secret-name is required. Keyvault secret uri which stores password.
       secret-name : One of secret, secret-uri, secret-name is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
@@ -1569,6 +1967,7 @@ directCommands:
       object-id            : Optional. Object id of the service principal (Enterprise Application).
       secret               : Required. Secret of the service principal.
       mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1586,10 +1985,38 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity. Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
       mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
+    groupName: AuthType Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_postgres
   name: az aks connection create postgres
   summary: |-
@@ -1620,7 +2047,7 @@ directCommands:
                                       [--service-endpoint {false, true}]
                                       [--source-id]
                                       [--target-id]
-                                      [--target-resource-group]
+                                      [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and postgres interactively
@@ -1642,7 +2069,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1658,7 +2085,7 @@ directCommands:
     summary: |-
       Name of postgres database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1666,7 +2093,7 @@ directCommands:
       Name of the managed cluster. Required if '--source-id' is not specified.None.
   - name: --new
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicates whether to create a new postgres when creating the aks connection.
   - name: --no-wait
@@ -1674,13 +2101,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -1694,13 +2122,15 @@ directCommands:
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of postgres server. Required if '--target-id' is not specified.
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1710,6 +2140,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the postgres service. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_postgres-flexible
   name: az aks connection create postgres-flexible
   summary: |-
@@ -1735,7 +2192,7 @@ directCommands:
                                                [--server]
                                                [--source-id]
                                                [--target-id]
-                                               [--target-resource-group]
+                                               [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and postgres-flexible interactively
@@ -1751,7 +2208,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1767,7 +2224,7 @@ directCommands:
     summary: |-
       Name of postgres flexible database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1778,7 +2235,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -1794,6 +2251,7 @@ directCommands:
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
@@ -1806,6 +2264,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_postgres-flexible(serviceconnector-passwordless)
   name: az aks connection create postgres-flexible
   extensionSuffix: serviceconnector-passwordless
@@ -1831,7 +2316,7 @@ directCommands:
                                                [--service-principal]
                                                [--source-id]
                                                [--target-id]
-                                               [--target-resource-group]
+                                               [--target-resource-group --tg]
                                                [--workload-identity]
                                                [--yes]
   examples:
@@ -1849,7 +2334,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1865,7 +2350,7 @@ directCommands:
     summary: |-
       Name of postgres flexible database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -1880,7 +2365,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -1898,6 +2383,7 @@ directCommands:
       secret  : One of secret, secret-uri, secret-name is required. Password or account key for secret auth.
       secret-uri  : One of secret, secret-uri, secret-name is required. Keyvault secret uri which stores password.
       secret-name : One of secret, secret-uri, secret-name is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
@@ -1910,6 +2396,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1927,10 +2414,38 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_redis
   name: az aks connection create redis
   summary: |-
@@ -1957,7 +2472,7 @@ directCommands:
                                    [--server]
                                    [--source-id]
                                    [--target-id]
-                                   [--target-resource-group]
+                                   [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and redis interactively
@@ -1973,7 +2488,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -1989,7 +2504,7 @@ directCommands:
     summary: |-
       Name of the redis database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2000,13 +2515,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2015,6 +2531,7 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of the redis server. Required if '--target-id' is not specified.
@@ -2027,6 +2544,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the redis server. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_redis-enterprise
   name: az aks connection create redis-enterprise
   summary: |-
@@ -2052,7 +2596,7 @@ directCommands:
                                               [--server]
                                               [--source-id]
                                               [--target-id]
-                                              [--target-resource-group]
+                                              [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and redis-enterprise interactively
@@ -2068,7 +2612,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2084,7 +2628,7 @@ directCommands:
     summary: |-
       Name of the redis enterprise database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2095,7 +2639,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
@@ -2106,6 +2650,7 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of the redis enterprise server. Required if '--target-id' is not specified.
@@ -2118,6 +2663,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the redis server. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_servicebus
   name: az aks connection create servicebus
   summary: |-
@@ -2145,7 +2717,7 @@ directCommands:
                                         [--service-principal]
                                         [--source-id]
                                         [--target-id]
-                                        [--target-resource-group]
+                                        [--target-resource-group --tg]
                                         [--workload-identity]
   examples:
   - summary: |-
@@ -2162,7 +2734,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2175,7 +2747,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2189,13 +2761,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2204,10 +2777,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -2217,6 +2792,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -2234,6 +2810,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_signalr
   name: az aks connection create signalr
   summary: |-
@@ -2260,7 +2864,7 @@ directCommands:
                                      [--signalr]
                                      [--source-id]
                                      [--target-id]
-                                     [--target-resource-group]
+                                     [--target-resource-group --tg]
                                      [--workload-identity]
   examples:
   - summary: |-
@@ -2277,7 +2881,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, none"
+    acceptedValues: dotnet, dotnet-internal, none
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2290,7 +2894,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2301,13 +2905,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2316,6 +2921,7 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -2325,6 +2931,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --signalr
     summary: |-
       Name of the signalr service. Required if '--target-id' is not specified.
@@ -2345,6 +2952,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_sql
   name: az aks connection create sql
   summary: |-
@@ -2372,7 +3007,7 @@ directCommands:
                                  [--service-endpoint {false, true}]
                                  [--source-id]
                                  [--target-id]
-                                 [--target-resource-group]
+                                 [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and sql interactively
@@ -2388,7 +3023,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2404,7 +3039,7 @@ directCommands:
     summary: |-
       Name of the sql database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2415,13 +3050,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2435,13 +3071,15 @@ directCommands:
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of the sql server. Required if '--target-id' is not specified.
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -2451,6 +3089,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the sql server. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_sql(serviceconnector-passwordless)
   name: az aks connection create sql
   extensionSuffix: serviceconnector-passwordless
@@ -2478,7 +3143,7 @@ directCommands:
                                  [--service-principal]
                                  [--source-id]
                                  [--target-id]
-                                 [--target-resource-group]
+                                 [--target-resource-group --tg]
                                  [--workload-identity]
                                  [--yes]
   examples:
@@ -2496,7 +3161,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2512,7 +3177,7 @@ directCommands:
     summary: |-
       Name of the sql database. Required if '--target-id' is not specified.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2527,13 +3192,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2549,13 +3215,15 @@ directCommands:
       secret  : One of secret, secret-uri, secret-name is required. Password or account key for secret auth.
       secret-uri  : One of secret, secret-uri, secret-name is required. Keyvault secret uri which stores password.
       secret-name : One of secret, secret-uri, secret-name is required. Keyvault secret name which stores password. It's for AKS only.
+    groupName: AuthType Arguments
   - name: --server
     summary: |-
       Name of the sql server. Required if '--target-id' is not specified.
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -2565,6 +3233,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -2582,10 +3251,38 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_storage-blob
   name: az aks connection create storage-blob
   summary: |-
@@ -2614,7 +3311,7 @@ directCommands:
                                           [--service-principal]
                                           [--source-id]
                                           [--target-id]
-                                          [--target-resource-group]
+                                          [--target-resource-group --tg]
                                           [--workload-identity]
   examples:
   - summary: |-
@@ -2640,7 +3337,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2653,7 +3350,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2661,7 +3358,7 @@ directCommands:
       Name of the managed cluster. Required if '--source-id' is not specified.None.
   - name: --new
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicates whether to create a new storage-blob when creating the aks connection.
   - name: --no-wait
@@ -2669,13 +3366,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2684,10 +3382,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -2697,6 +3397,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -2714,6 +3415,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_storage-file
   name: az aks connection create storage-file
   summary: |-
@@ -2740,7 +3469,7 @@ directCommands:
                                           [--service-endpoint {false, true}]
                                           [--source-id]
                                           [--target-id]
-                                          [--target-resource-group]
+                                          [--target-resource-group --tg]
   examples:
   - summary: |-
       Create a connection between aks and storage-file interactively
@@ -2759,7 +3488,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2772,7 +3501,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2783,13 +3512,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2798,10 +3528,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -2811,6 +3543,33 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the storage account. Required if '--target-id' is not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_storage-queue
   name: az aks connection create storage-queue
   summary: |-
@@ -2838,7 +3597,7 @@ directCommands:
                                            [--service-principal]
                                            [--source-id]
                                            [--target-id]
-                                           [--target-resource-group]
+                                           [--target-resource-group --tg]
                                            [--workload-identity]
   examples:
   - summary: |-
@@ -2858,7 +3617,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python, springBoot
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2871,7 +3630,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2882,13 +3641,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -2897,10 +3657,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -2910,6 +3672,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -2927,6 +3690,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_storage-table
   name: az aks connection create storage-table
   summary: |-
@@ -2954,7 +3745,7 @@ directCommands:
                                            [--service-principal]
                                            [--source-id]
                                            [--target-id]
-                                           [--target-resource-group]
+                                           [--target-resource-group --tg]
                                            [--workload-identity]
   examples:
   - summary: |-
@@ -2974,7 +3765,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -2987,7 +3778,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -2998,13 +3789,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -3013,10 +3805,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+    groupName: NetworkSolution Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -3026,6 +3820,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -3043,6 +3838,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_connection_create_webpubsub
   name: az aks connection create webpubsub
   summary: |-
@@ -3068,7 +3891,7 @@ directCommands:
                                        [--service-principal]
                                        [--source-id]
                                        [--target-id]
-                                       [--target-resource-group]
+                                       [--target-resource-group --tg]
                                        [--webpubsub]
                                        [--workload-identity]
   examples:
@@ -3086,7 +3909,7 @@ directCommands:
     summary: |-
       The app configuration id to store configuration.
   - name: --client-type
-    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
+    acceptedValues: dotnet, dotnet-internal, java, nodejs, none, python
     summary: |-
       The client type used on the aks.
   - name: --connection
@@ -3099,7 +3922,7 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --kube-namespace
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
   - name: --name -n
@@ -3110,13 +3933,14 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
+    acceptedValues: auth, configinfo, publicnetwork
     summary: |-
       Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+    groupName: NetworkSolution Arguments
   - name: --resource-group -g
     summary: |-
       The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
@@ -3125,6 +3949,7 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret.
+    groupName: AuthType Arguments
   - name: --service-principal
     summary: |-
       The service principal auth info.
@@ -3134,6 +3959,7 @@ directCommands:
       client-id      : Required. Client id of the service principal.
       object-id      : Optional. Object id of the service principal (Enterprise Application).
       secret         : Required. Secret of the service principal.
+    groupName: AuthType Arguments
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -3154,6 +3980,34 @@ directCommands:
 
       user-identity-resource-id: Required. The resource id of the user assigned identity.
       Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+    groupName: AuthType Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_aks_connection_create_app-insights
 - az_aks_connection_create_appconfig
@@ -3183,29 +4037,5 @@ commands:
 - az_aks_connection_create_storage-queue
 - az_aks_connection_create_storage-table
 - az_aks_connection_create_webpubsub
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Create a connection between a aks and a target resource.

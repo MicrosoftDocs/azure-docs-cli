@@ -20,7 +20,7 @@ directCommands:
   syntax: >-
     az network watcher connection-monitor test-configuration add --connection-monitor
                                                                  --location
-                                                                 --name
+                                                                 --name --test-configuration-name
                                                                  --protocol {Http, Icmp, Tcp}
                                                                  --test-groups
                                                                  [--frequency]
@@ -60,7 +60,7 @@ directCommands:
       The name of the connection monitor test configuration.
   - isRequired: true
     name: --protocol
-    parameterValueGroup: "Http, Icmp, Tcp"
+    acceptedValues: Http, Icmp, Tcp
     summary: |-
       The protocol to use in test evaluation.  Allowed values: Http, Icmp, Tcp.
   - isRequired: true
@@ -72,54 +72,91 @@ directCommands:
     summary: |-
       The frequency of test evaluation, in seconds.  Default: 60.
   - name: --http-method
-    parameterValueGroup: "Get, Post"
+    acceptedValues: Get, Post
     summary: |-
       The HTTP method to use. Allowed values: Get, Post.
+    groupName: HTTP Protocol Arguments
   - name: --http-path
     summary: |-
       The path component of the URI. For instance, "/dir1/dir2".
+    groupName: HTTP Protocol Arguments
   - name: --http-port
     summary: |-
       The port to connect to.
+    groupName: HTTP Protocol Arguments
   - name: --http-prefer-https
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit.
+    groupName: HTTP Protocol Arguments
   - name: --http-request-header
     summary: |-
       The HTTP headers to transmit with the request. List of property=value pairs to define HTTP headers.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: HTTP Protocol Arguments
   - name: --http-valid-status-codes
     summary: |-
       HTTP status codes to consider successful. For instance, "2xx,301-304,418".  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: HTTP Protocol Arguments
   - name: --icmp-disable-trace-route
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Value indicating whether path evaluation with trace route should be disabled. false is default.  Allowed values: false, true.
+    groupName: ICMP Protocol Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --preferred-ip-version
-    parameterValueGroup: "IPv4, IPv6"
+    acceptedValues: IPv4, IPv6
     summary: |-
       The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters.  Allowed values: IPv4, IPv6.
   - name: --tcp-disable-trace-route
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Value indicating whether path evaluation with trace route should be disabled. false is default.  Allowed values: false, true.
+    groupName: TCP Protocol Arguments
   - name: --tcp-port
     summary: |-
       The port to connect to.
+    groupName: TCP Protocol Arguments
   - name: --tcp-port-behavior
-    parameterValueGroup: "ListenIfAvailable, None"
+    acceptedValues: ListenIfAvailable, None
     summary: |-
       Destination port behavior.  Allowed values: ListenIfAvailable,  None.
+    groupName: TCP Protocol Arguments
   - name: --threshold-failed-percent
     summary: |-
       The maximum percentage of failed checks permitted for a test to evaluate as successful.
   - name: --threshold-round-trip-time
     summary: |-
       The maximum round-trip time in milliseconds permitted for a test to evaluate as successful.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_watcher_connection-monitor_test-configuration_list
   name: az network watcher connection-monitor test-configuration list
   summary: |-
@@ -145,6 +182,33 @@ directCommands:
     name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_watcher_connection-monitor_test-configuration_remove
   name: az network watcher connection-monitor test-configuration remove
   summary: |-
@@ -157,7 +221,7 @@ directCommands:
   syntax: >-
     az network watcher connection-monitor test-configuration remove --connection-monitor
                                                                     --location
-                                                                    --name
+                                                                    --name --test-configuration-name
                                                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                                     [--test-groups]
   examples:
@@ -182,12 +246,39 @@ directCommands:
       The name of the connection monitor test configuration.
   optionalParameters:
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --test-groups
     summary: |-
       Space-separated list of names of test group which only need to be affected if specified.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_watcher_connection-monitor_test-configuration_show
   name: az network watcher connection-monitor test-configuration show
   summary: |-
@@ -200,7 +291,7 @@ directCommands:
   syntax: >-
     az network watcher connection-monitor test-configuration show --connection-monitor
                                                                   --location
-                                                                  --name
+                                                                  --name --test-configuration-name
   examples:
   - summary: |-
       Show a test configuration from a connection monitor.
@@ -218,6 +309,33 @@ directCommands:
     name: --name --test-configuration-name -n
     summary: |-
       The name of the connection monitor test configuration.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_watcher_connection-monitor_test-configuration_wait
   name: az network watcher connection-monitor test-configuration wait
   summary: |-
@@ -244,75 +362,87 @@ directCommands:
   - name: --connection-monitor
     summary: |-
       Connection monitor name.
+    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
       Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
       Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
       Wait until deleted.
+    groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --timeout
     defaultValue: "3600"
     summary: |-
       Maximum wait in seconds.
+    groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --watcher-name
     summary: |-
       The name of the Network Watcher resource.
+    groupName: Resource Id Arguments
   - name: --watcher-rg -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_network_watcher_connection-monitor_test-configuration_add
 - az_network_watcher_connection-monitor_test-configuration_list
 - az_network_watcher_connection-monitor_test-configuration_remove
 - az_network_watcher_connection-monitor_test-configuration_show
 - az_network_watcher_connection-monitor_test-configuration_wait
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 10/16/2024
   description: Manage test configuration of a connection monitor.

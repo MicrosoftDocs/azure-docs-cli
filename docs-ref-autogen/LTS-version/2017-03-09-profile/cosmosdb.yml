@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_cosmosdb
 name: az cosmosdb
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **cosmosdb-preview** extension for the Azure CLI (version 2.17.1 or higher). The extension will automatically install the first time you run an **az cosmosdb** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure Cosmos DB database accounts.
@@ -21,7 +20,7 @@ directCommands:
   syntax: >-
     az cosmosdb create --name
                        --resource-group
-                       [--analytical-storage-schema-type {FullFidelity, WellDefined}]
+                       [--analytical-storage-schema-type --as-schema {FullFidelity, WellDefined}]
                        [--assign-identity]
                        [--backup-interval]
                        [--backup-policy-type {Continuous, Periodic}]
@@ -39,10 +38,10 @@ directCommands:
                        [--enable-automatic-failover {false, true}]
                        [--enable-burst-capacity {false, true}]
                        [--enable-free-tier {false, true}]
-                       [--enable-materialized-views {false, true}]
+                       [--enable-materialized-views --enable-mv {false, true}]
                        [--enable-multiple-write-locations {false, true}]
                        [--enable-partition-merge {false, true}]
-                       [--enable-pbe {false, true}]
+                       [--enable-pbe --enable-priority-based-execution {false, true}]
                        [--enable-prpp-autoscale {false, true}]
                        [--enable-virtual-network {false, true}]
                        [--gremlin-databases-to-restore]
@@ -86,103 +85,110 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --analytical-storage-schema-type --as-schema
-    parameterValueGroup: "FullFidelity, WellDefined"
+    acceptedValues: FullFidelity, WellDefined
     summary: |-
       Schema type for analytical storage.
+    groupName: Analytical Storage Configuration Arguments
   - name: --assign-identity
     summary: |-
       Assign system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity.
   - name: --backup-interval
     summary: |-
       The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
+    groupName: Backup Policy Arguments
   - name: --backup-policy-type
-    parameterValueGroup: "Continuous, Periodic"
+    acceptedValues: Continuous, Periodic
     summary: |-
       The type of backup policy of the account to create.
+    groupName: Backup Policy Arguments
   - name: --backup-redundancy
-    parameterValueGroup: "Geo, Local, Zone"
+    acceptedValues: Geo, Local, Zone
     summary: |-
       The redundancy type of the backup Storage account.
+    groupName: Backup Policy Arguments
   - name: --backup-retention
     summary: |-
       The time(in hours) for which each backup is retained (only for accounts with periodic mode backups).
+    groupName: Backup Policy Arguments
   - name: --capabilities
     summary: |-
       Set custom capabilities on the Cosmos DB database account.
   - name: --capacity-mode
-    parameterValueGroup: "None, Provisioned, Serverless"
+    acceptedValues: None, Provisioned, Serverless
     summary: |-
       CapacityMode of the account.
     isPreview: true
   - name: --continuous-tier
-    parameterValueGroup: "Continuous30Days, Continuous7Days"
+    acceptedValues: Continuous30Days, Continuous7Days
     summary: |-
       The tier of Continuous backup.
+    groupName: Backup Policy Arguments
   - name: --databases-to-restore
     summary: |-
       Add a database and its collection names to restore.
     description: |-
       Usage:          --databases-to-restore name=DatabaseName collections=collection1 [collection2 ...].
     isPreview: true
+    groupName: Restore Arguments
   - name: --default-consistency-level
-    parameterValueGroup: "BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong"
+    acceptedValues: BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong
     summary: |-
       Default consistency level of the Cosmos DB database account.
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more.
   - name: --default-priority-level
-    parameterValueGroup: "High, Low"
+    acceptedValues: High, Low
     summary: |-
       Default Priority Level of Request if not specified.
     isPreview: true
   - name: --disable-key-based-metadata-write-access
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Disable write operations on metadata resources (databases, containers, throughput) via account keys.
   - name: --enable-analytical-storage
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable log storage on the account.
   - name: --enable-automatic-failover
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account.
   - name: --enable-burst-capacity
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable burst capacity on the account.
     isPreview: true
   - name: --enable-free-tier
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       If enabled the account is free-tier.
     isPreview: true
   - name: --enable-materialized-views --enable-mv
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable MaterializedViews on the account.
     isPreview: true
   - name: --enable-multiple-write-locations
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable Multiple Write Locations.
   - name: --enable-partition-merge
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable partition merge on the account.
   - name: --enable-pbe --enable-priority-based-execution
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable priority based execution on the account.
     isPreview: true
   - name: --enable-prpp-autoscale
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable or disable PerRegionPerPartitionAutoscale.
     isPreview: true
   - name: --enable-virtual-network
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enables virtual network on the Cosmos DB database account.
   - name: --gremlin-databases-to-restore
@@ -191,20 +197,22 @@ directCommands:
     description: |-
       Usage:          --gremlin-databases-to-restore name=DatabaseName graphs=graph1 [graph2 ...].
     isPreview: true
+    groupName: Restore Arguments
   - name: --ip-range-filter
     summary: |-
       Firewall support. Specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. IP addresses/ranges must be comma-separated and must not contain any spaces.
   - name: --is-restore-request -r
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Restore from an existing/deleted account.
     isPreview: true
+    groupName: Restore Arguments
   - name: --key-uri
     summary: |-
       The URI of the key vault.
   - name: --kind
-    defaultValue: "GlobalDocumentDB"
-    parameterValueGroup: "GlobalDocumentDB, MongoDB, Parse"
+    defaultValue: GlobalDocumentDB
+    acceptedValues: GlobalDocumentDB, MongoDB, Parse
     summary: |-
       The type of Cosmos DB database account to create.
   - name: --locations
@@ -226,26 +234,28 @@ directCommands:
     summary: |-
       When used with Bounded Staleness consistency, this value represents the number of stale requests tolerated. Accepted range for this value is 1 - 2,147,483,647.
   - name: --network-acl-bypass
-    parameterValueGroup: "AzureServices, None"
+    acceptedValues: AzureServices, None
     summary: |-
       Flag to enable or disable Network Acl Bypass.
   - name: --network-acl-bypass-resource-ids -i
     summary: |-
       List of Resource Ids to allow Network Acl Bypass.
   - name: --public-network-access -p
-    parameterValueGroup: "DISABLED, ENABLED, SECUREDBYPERIMETER"
+    acceptedValues: DISABLED, ENABLED, SECUREDBYPERIMETER
     summary: |-
       Sets public network access in server to either Enabled, Disabled, or SecuredByPerimeter.
   - name: --restore-source
     summary: |-
       The restorable-database-account Id of the source account from which the account has to be restored. Required if --is-restore-request is set to true.
     isPreview: true
+    groupName: Restore Arguments
   - name: --restore-timestamp
     summary: |-
       The timestamp to which the account has to be restored to. Required if --is-restore-request is set to true.
     isPreview: true
+    groupName: Restore Arguments
   - name: --server-version
-    parameterValueGroup: "3.2, 3.6, 4.0, 4.2, 5.0, 6.0, 7.0"
+    acceptedValues: 3.2, 3.6, 4.0, 4.2, 5.0, 6.0, 7.0
     summary: |-
       Valid only for MongoDB accounts.
   - name: --tables-to-restore
@@ -254,12 +264,40 @@ directCommands:
     description: |-
       Usage:          --tables-to-restore tables=table1 [table2 ...].
     isPreview: true
+    groupName: Restore Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --virtual-network-rules
     summary: |-
       ACL's for virtual network.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_cosmosdb_list
   name: az cosmosdb list
   summary: |-
@@ -271,6 +309,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_cosmosdb_restore
   name: az cosmosdb restore
   summary: |-
@@ -341,7 +406,7 @@ directCommands:
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more.
   - name: --disable-ttl
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable or disable restoring with ttl disabled.
     isPreview: true
@@ -352,7 +417,7 @@ directCommands:
       Usage:          --gremlin-databases-to-restore name=DatabaseName graphs=graph1 [graph2 ...].
     isPreview: true
   - name: --public-network-access -p
-    parameterValueGroup: "DISABLED, ENABLED"
+    acceptedValues: DISABLED, ENABLED
     summary: |-
       Sets public network access in server to either Enabled or Disabled.
   - name: --source-backup-location
@@ -365,6 +430,33 @@ directCommands:
     description: |-
       Usage:          --tables-to-restore table1 [table2 ...].
     isPreview: true
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_cosmosdb_show
   name: az cosmosdb show
   summary: |-
@@ -384,15 +476,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Name of the Cosmos DB database account.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_cosmosdb_update
   name: az cosmosdb update
   summary: |-
@@ -400,7 +520,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az cosmosdb update [--analytical-storage-schema-type {FullFidelity, WellDefined}]
+    az cosmosdb update [--analytical-storage-schema-type --as-schema {FullFidelity, WellDefined}]
                        [--backup-interval]
                        [--backup-policy-type {Continuous, Periodic}]
                        [--backup-redundancy {Geo, Local, Zone}]
@@ -415,10 +535,10 @@ directCommands:
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
                        [--enable-burst-capacity {false, true}]
-                       [--enable-materialized-views {false, true}]
+                       [--enable-materialized-views --enable-mv {false, true}]
                        [--enable-multiple-write-locations {false, true}]
                        [--enable-partition-merge {false, true}]
-                       [--enable-pbe {false, true}]
+                       [--enable-pbe --enable-priority-based-execution {false, true}]
                        [--enable-prpp-autoscale {false, true}]
                        [--enable-virtual-network {false, true}]
                        [--ids]
@@ -444,94 +564,101 @@ directCommands:
     syntax: az cosmosdb update --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --enable-materialized-views true
   optionalParameters:
   - name: --analytical-storage-schema-type --as-schema
-    parameterValueGroup: "FullFidelity, WellDefined"
+    acceptedValues: FullFidelity, WellDefined
     summary: |-
       Schema type for analytical storage.
+    groupName: Analytical Storage Configuration Arguments
   - name: --backup-interval
     summary: |-
       The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
+    groupName: Backup Policy Arguments
   - name: --backup-policy-type
-    parameterValueGroup: "Continuous, Periodic"
+    acceptedValues: Continuous, Periodic
     summary: |-
       The type of backup policy of the account to create.
+    groupName: Backup Policy Arguments
   - name: --backup-redundancy
-    parameterValueGroup: "Geo, Local, Zone"
+    acceptedValues: Geo, Local, Zone
     summary: |-
       The redundancy type of the backup Storage account.
+    groupName: Backup Policy Arguments
   - name: --backup-retention
     summary: |-
       The time(in hours) for which each backup is retained (only for accounts with periodic mode backups).
+    groupName: Backup Policy Arguments
   - name: --capabilities
     summary: |-
       Set custom capabilities on the Cosmos DB database account.
   - name: --capacity-mode
-    parameterValueGroup: "None, Provisioned, Serverless"
+    acceptedValues: None, Provisioned, Serverless
     summary: |-
       CapacityMode of the account.
     isPreview: true
   - name: --continuous-tier
-    parameterValueGroup: "Continuous30Days, Continuous7Days"
+    acceptedValues: Continuous30Days, Continuous7Days
     summary: |-
       The tier of Continuous backup.
+    groupName: Backup Policy Arguments
   - name: --default-consistency-level
-    parameterValueGroup: "BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong"
+    acceptedValues: BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong
     summary: |-
       Default consistency level of the Cosmos DB database account.
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more.
   - name: --default-priority-level
-    parameterValueGroup: "High, Low"
+    acceptedValues: High, Low
     summary: |-
       Default Priority Level of Request if not specified.
     isPreview: true
   - name: --disable-key-based-metadata-write-access
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Disable write operations on metadata resources (databases, containers, throughput) via account keys.
   - name: --enable-analytical-storage
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable log storage on the account.
   - name: --enable-automatic-failover
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account.
   - name: --enable-burst-capacity
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable burst capacity on the account.
     isPreview: true
   - name: --enable-materialized-views --enable-mv
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable MaterializedViews on the account.
     isPreview: true
   - name: --enable-multiple-write-locations
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable Multiple Write Locations.
   - name: --enable-partition-merge
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable partition merge on the account.
   - name: --enable-pbe --enable-priority-based-execution
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable priority based execution on the account.
     isPreview: true
   - name: --enable-prpp-autoscale
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable or disable PerRegionPerPartitionAutoscale.
     isPreview: true
   - name: --enable-virtual-network
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enables virtual network on the Cosmos DB database account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --ip-range-filter
     summary: |-
       Firewall support. Specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. IP addresses/ranges must be comma-separated and must not contain any spaces.
@@ -554,33 +681,60 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the Cosmos DB database account.
+    groupName: Resource Id Arguments
   - name: --network-acl-bypass
-    parameterValueGroup: "AzureServices, None"
+    acceptedValues: AzureServices, None
     summary: |-
       Flag to enable or disable Network Acl Bypass.
   - name: --network-acl-bypass-resource-ids -i
     summary: |-
       List of Resource Ids to allow Network Acl Bypass.
   - name: --public-network-access -p
-    parameterValueGroup: "DISABLED, ENABLED, SECUREDBYPERIMETER"
+    acceptedValues: DISABLED, ENABLED, SECUREDBYPERIMETER
     summary: |-
       Sets public network access in server to either Enabled, Disabled, or SecuredByPerimeter.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --server-version
-    parameterValueGroup: "3.2, 3.6, 4.0, 4.2, 5.0, 6.0, 7.0"
+    acceptedValues: 3.2, 3.6, 4.0, 4.2, 5.0, 6.0, 7.0
     summary: |-
       Valid only for MongoDB accounts.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --virtual-network-rules
     summary: |-
       ACL's for virtual network.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_cosmosdb_copy
 - az_cosmosdb_copy_cancel
@@ -695,29 +849,5 @@ commands:
 - az_cosmosdb_table_role_definition_show
 - az_cosmosdb_table_role_definition_update
 - az_cosmosdb_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage Azure Cosmos DB database accounts.

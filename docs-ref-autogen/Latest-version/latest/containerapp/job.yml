@@ -110,21 +110,26 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --cron-expression
     summary: |-
       Cron expression. Only supported for trigger type "Schedule".
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    groupName: Container Arguments
   - name: --environment
     summary: |-
       Name or resource ID of the container app's environment.
@@ -134,9 +139,11 @@ directCommands:
   - name: --max-executions
     summary: |-
       Maximum number of job executions to run per polling interval.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --mi-system-assigned
     defaultValue: "False"
     summary: |-
@@ -147,6 +154,7 @@ directCommands:
   - name: --min-executions
     summary: |-
       Minimum number of job executions to run per polling interval.
+    groupName: Scale Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -157,21 +165,26 @@ directCommands:
   - name: --polling-interval
     summary: |-
       Interval to check each event source in seconds. Defaults to 30s.
+    groupName: Scale Arguments
   - name: --rcc --replica-completion-count
     summary: |-
       Number of replicas that need to complete successfully for execution to succeed.
   - name: --registry-identity
     summary: |-
       A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
+    groupName: Configuration Arguments
   - name: --registry-password
     summary: |-
       The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Configuration Arguments
   - name: --registry-server
     summary: |-
       The container registry server hostname, e.g. myregistry.azurecr.io.
+    groupName: Configuration Arguments
   - name: --registry-username
     summary: |-
       The username to log in to container registry.
+    groupName: Configuration Arguments
   - name: --replica-retry-limit
     summary: |-
       Maximum number of retries before the replica fails.
@@ -181,18 +194,23 @@ directCommands:
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "{triggerParameter}={secretRef} {triggerParameter}={secretRef} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "{key}={value} {key}={value} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule.
+    groupName: Scale Arguments
   - name: --secrets -s
     summary: |-
       A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+    groupName: Configuration Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -205,6 +223,33 @@ directCommands:
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://learn.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_create(containerapp)
   name: az containerapp job create
   extensionSuffix: containerapp
@@ -254,7 +299,7 @@ directCommands:
       Create a container apps job with Trigger Type as Manual.
     syntax: >-
       az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
-          --environment MyContainerappEnv
+          --environment MyContainerappEnv \
           --trigger-type Manual \
           --replica-timeout 5 \
           --replica-retry-limit 2 \
@@ -266,7 +311,7 @@ directCommands:
       Create a container apps job with Trigger Type as Schedule.
     syntax: >-
       az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
-          --environment MyContainerappEnv
+          --environment MyContainerappEnv \
           --trigger-type Schedule \
           --replica-timeout 5 \
           --replica-retry-limit 2 \
@@ -278,7 +323,7 @@ directCommands:
       Create a container apps job with Trigger Type as Event.
     syntax: >-
       az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
-          --environment MyContainerappEnv
+          --environment MyContainerappEnv \
           --trigger-type Event \
           --replica-timeout 5 \
           --replica-retry-limit 2 \
@@ -340,27 +385,32 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --cron-expression
     summary: |-
       Cron expression. Only supported for trigger type "Schedule".
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    groupName: Container Arguments
   - name: --environment
     summary: |-
       Name or resource ID of the container app's environment.
   - name: --environment-type
-    defaultValue: "managed"
-    parameterValueGroup: "connected, managed"
+    defaultValue: managed
+    acceptedValues: connected, managed
     summary: |-
       Type of environment.
     isPreview: true
@@ -371,9 +421,11 @@ directCommands:
     defaultValue: "100"
     summary: |-
       Maximum number of job executions that are created for a trigger.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --mi-system-assigned
     defaultValue: "False"
     summary: |-
@@ -385,6 +437,7 @@ directCommands:
     defaultValue: "0"
     summary: |-
       Minimum number of job executions that are created for a trigger. Default: 0.
+    groupName: Scale Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -397,6 +450,7 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Interval to check each event source in seconds.
+    groupName: Scale Arguments
   - name: --rcc --replica-completion-count
     defaultValue: "1"
     summary: |-
@@ -404,15 +458,19 @@ directCommands:
   - name: --registry-identity
     summary: |-
       The managed identity with which to authenticate to the Azure Container Registry (instead of username/password). Use 'system' for a system-defined identity, Use 'system-environment' for an environment level system-defined identity or a resource id for a user-defined environment/containerappjob level identity. The managed identity should have been assigned acrpull permissions on the ACR before deployment (use 'az role assignment create --role acrpull ...').
+    groupName: Configuration Arguments
   - name: --registry-password
     summary: |-
       The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Configuration Arguments
   - name: --registry-server
     summary: |-
       The container registry server hostname, e.g. myregistry.azurecr.io.
+    groupName: Configuration Arguments
   - name: --registry-username
     summary: |-
       The username to log in to container registry.
+    groupName: Configuration Arguments
   - name: --replica-retry-limit
     defaultValue: "0"
     summary: |-
@@ -424,22 +482,28 @@ directCommands:
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "{triggerParameter}={secretRef} {triggerParameter}={secretRef} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-identity --sri
     summary: |-
       Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
     isPreview: true
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "{key}={value} {key}={value} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule.
+    groupName: Scale Arguments
   - name: --secrets -s
     summary: |-
       A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+    groupName: Configuration Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -452,6 +516,33 @@ directCommands:
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://learn.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_delete
   name: az containerapp job delete
   summary: |-
@@ -474,9 +565,11 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -484,13 +577,39 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_delete(containerapp)
   name: az containerapp job delete
   extensionSuffix: containerapp
@@ -513,9 +632,11 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -523,13 +644,39 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_list
   name: az containerapp job list
   summary: |-
@@ -549,6 +696,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_list(containerapp)
   name: az containerapp job list
   extensionSuffix: containerapp
@@ -568,6 +742,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_show
   name: az containerapp job show
   summary: |-
@@ -588,15 +789,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_show(containerapp)
   name: az containerapp job show
   extensionSuffix: containerapp
@@ -617,15 +846,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_start
   name: az containerapp job start
   summary: |-
@@ -659,30 +916,38 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    groupName: Container Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --image
     summary: |-
       Container image, e.g. publisher/image-name:tag.
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -690,15 +955,42 @@ directCommands:
   - name: --registry-identity
     summary: |-
       A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
+    groupName: Configuration Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://learn.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_stop
   name: az containerapp job stop
   summary: |-
@@ -727,12 +1019,14 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --job-execution-name
     summary: |-
       Name of the specific job execution which needs to be stopped.
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -740,9 +1034,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_update
   name: az containerapp job update
   summary: |-
@@ -791,36 +1111,45 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --cron-expression
     summary: |-
       Cron expression. Only supported for trigger type "Schedule".
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --image
     summary: |-
       Container image, e.g. publisher/image-name:tag.
   - name: --max-executions
     summary: |-
       Maximum number of job executions to run per polling interval.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --min-executions
     summary: |-
       Minimum number of job executions to run per polling interval.
+    groupName: Scale Arguments
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -831,6 +1160,7 @@ directCommands:
   - name: --polling-interval
     summary: |-
       Interval to check each event source in seconds. Defaults to 30s.
+    groupName: Scale Arguments
   - name: --rcc --replica-completion-count
     summary: |-
       Number of replicas that need to complete successfully for execution to succeed.
@@ -838,12 +1168,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Remove all environment variable(s) from container..
+    groupName: Environment variables Arguments
   - name: --remove-env-vars
     summary: |-
       Remove environment variable(s) from container. Space-separated environment variable names.
+    groupName: Environment variables Arguments
   - name: --replace-env-vars
     summary: |-
       Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --replica-retry-limit
     summary: |-
       Maximum number of retries before the replica fails.
@@ -853,24 +1186,31 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "{triggerParameter}={secretRef} {triggerParameter}={secretRef} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "{key}={value} {key}={value} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule.
+    groupName: Scale Arguments
   - name: --set-env-vars
     summary: |-
       Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -880,6 +1220,30 @@ directCommands:
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://learn.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_job_update(containerapp)
   name: az containerapp job update
   extensionSuffix: containerapp
@@ -929,36 +1293,45 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --cron-expression
     summary: |-
       Cron expression. Only supported for trigger type "Schedule".
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --image
     summary: |-
       Container image, e.g. publisher/image-name:tag.
   - name: --max-executions
     summary: |-
       Maximum number of job executions to run per polling interval.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --min-executions
     summary: |-
       Minimum number of job executions to run per polling interval.
+    groupName: Scale Arguments
   - name: --name -n
     summary: |-
       The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -969,6 +1342,7 @@ directCommands:
   - name: --polling-interval
     summary: |-
       Interval to check each event source in seconds. Defaults to 30s.
+    groupName: Scale Arguments
   - name: --rcc --replica-completion-count
     summary: |-
       Number of replicas that need to complete successfully for execution to succeed.
@@ -976,12 +1350,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Remove all environment variable(s) from container..
+    groupName: Environment variables Arguments
   - name: --remove-env-vars
     summary: |-
       Remove environment variable(s) from container. Space-separated environment variable names.
+    groupName: Environment variables Arguments
   - name: --replace-env-vars
     summary: |-
       Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --replica-retry-limit
     summary: |-
       Maximum number of retries before the replica fails.
@@ -991,28 +1368,36 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "{triggerParameter}={secretRef} {triggerParameter}={secretRef} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-identity --sri
     summary: |-
       Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
     isPreview: true
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "{key}={value} {key}={value} ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule.
+    groupName: Scale Arguments
   - name: --set-env-vars
     summary: |-
       Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -1022,6 +1407,30 @@ directCommands:
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://learn.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_containerapp_job_create
 - az_containerapp_job_create(containerapp)
@@ -1057,29 +1466,5 @@ commands:
 - az_containerapp_job_stop
 - az_containerapp_job_update
 - az_containerapp_job_update(containerapp)
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Commands to manage Container Apps jobs.

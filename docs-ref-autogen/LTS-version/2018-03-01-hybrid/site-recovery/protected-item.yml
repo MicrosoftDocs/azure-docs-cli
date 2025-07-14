@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_site-recovery_protected-item
 name: az site-recovery protected-item
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **site-recovery** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az site-recovery protected-item** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Protected Item.
@@ -18,14 +17,14 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az site-recovery protected-item create --fabric-name
-                                           --name
-                                           --protection-container
+                                           --name --replicated-protected-item-name
+                                           --protection-container --protection-container-name
                                            --resource-group
                                            --vault-name
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--policy-id]
                                            [--protectable-item-id]
-                                           [--provider-details]
+                                           [--provider-details --provider-specific-details]
   examples:
   - summary: |-
       protected-item create for A2A
@@ -59,18 +58,48 @@ directCommands:
       The name of the recovery services vault.
   optionalParameters:
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --policy-id
     summary: |-
       The Policy Id.
+    groupName: Properties Arguments
   - name: --protectable-item-id
     summary: |-
       The protectable item Id.
+    groupName: Properties Arguments
   - name: --provider-details --provider-specific-details
     summary: |-
       The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_delete
   name: az site-recovery protected-item delete
   summary: |-
@@ -80,9 +109,9 @@ directCommands:
   syntax: >-
     az site-recovery protected-item delete [--fabric-name]
                                            [--ids]
-                                           [--name]
+                                           [--name --replicated-protected-item-name]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--protection-container]
+                                           [--protection-container --protection-container-name]
                                            [--resource-group]
                                            [--subscription]
                                            [--vault-name]
@@ -95,32 +124,63 @@ directCommands:
   - name: --fabric-name
     summary: |-
       Fabric name.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_failover-commit
   name: az site-recovery protected-item failover-commit
   summary: |-
@@ -131,7 +191,7 @@ directCommands:
     az site-recovery protected-item failover-commit [--fabric-name]
                                                     [--ids]
                                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                    [--protection-container]
+                                                    [--protection-container --protection-container-name]
                                                     [--replicated-protected-item-name]
                                                     [--resource-group]
                                                     [--subscription]
@@ -144,28 +204,59 @@ directCommands:
   - name: --fabric-name
     summary: |-
       Unique fabric name.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_list
   name: az site-recovery protected-item list
   summary: |-
@@ -174,7 +265,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az site-recovery protected-item list --fabric-name
-                                         --protection-container
+                                         --protection-container --protection-container-name
                                          --resource-group
                                          --vault-name
                                          [--max-items]
@@ -204,9 +295,38 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_planned-failover
   name: az site-recovery protected-item planned-failover
   summary: |-
@@ -217,10 +337,10 @@ directCommands:
     az site-recovery protected-item planned-failover [--fabric-name]
                                                      [--failover-direction]
                                                      [--ids]
-                                                     [--name]
+                                                     [--name --replicated-protected-item-name]
                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                     [--protection-container]
-                                                     [--provider-details]
+                                                     [--protection-container --protection-container-name]
+                                                     [--provider-details --provider-specific-details]
                                                      [--resource-group]
                                                      [--subscription]
                                                      [--vault-name]
@@ -235,34 +355,67 @@ directCommands:
   - name: --fabric-name
     summary: |-
       Unique fabric name.
+    groupName: Resource Id Arguments
   - name: --failover-direction
     summary: |-
       Failover direction.
+    groupName: Properties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --provider-details --provider-specific-details
     summary: |-
       Provider specific settings.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_remove
   name: az site-recovery protected-item remove
   summary: |-
@@ -270,13 +423,13 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az site-recovery protected-item remove [--disable-protection-reason {MigrationComplete, NotSpecified}]
+    az site-recovery protected-item remove [--disable-protection-reason --disable-reason {MigrationComplete, NotSpecified}]
                                            [--fabric-name]
                                            [--ids]
-                                           [--name]
+                                           [--name --replicated-protected-item-name]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--protection-container]
-                                           [--provider-input]
+                                           [--protection-container --protection-container-name]
+                                           [--provider-input --replication-provider-input]
                                            [--resource-group]
                                            [--subscription]
                                            [--vault-name]
@@ -286,37 +439,70 @@ directCommands:
     syntax: az site-recovery protected-item remove -g rg --fabric-name fabric_recovery_name -n protected_item_name --protection-container container_recovery_name --vault-name vault_name
   optionalParameters:
   - name: --disable-protection-reason --disable-reason
-    parameterValueGroup: "MigrationComplete, NotSpecified"
+    acceptedValues: MigrationComplete, NotSpecified
     summary: |-
       Disable protection reason. It can have values NotSpecified/MigrationComplete.
+    groupName: Properties Arguments
   - name: --fabric-name
     summary: |-
       Fabric name.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --provider-input --replication-provider-input
     summary: |-
       Replication provider specific input.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_reprotect
   name: az site-recovery protected-item reprotect
   summary: |-
@@ -327,10 +513,10 @@ directCommands:
     az site-recovery protected-item reprotect [--fabric-name]
                                               [--failover-direction]
                                               [--ids]
-                                              [--name]
+                                              [--name --replicated-protected-item-name]
                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                              [--protection-container]
-                                              [--provider-details]
+                                              [--protection-container --protection-container-name]
+                                              [--provider-details --provider-specific-details]
                                               [--resource-group]
                                               [--subscription]
                                               [--vault-name]
@@ -342,34 +528,67 @@ directCommands:
   - name: --fabric-name
     summary: |-
       Unique fabric name.
+    groupName: Resource Id Arguments
   - name: --failover-direction
     summary: |-
       Failover direction.
+    groupName: Properties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --provider-details --provider-specific-details
     summary: |-
       Provider specific reverse replication input.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_show
   name: az site-recovery protected-item show
   summary: |-
@@ -379,8 +598,8 @@ directCommands:
   syntax: >-
     az site-recovery protected-item show [--fabric-name]
                                          [--ids]
-                                         [--name]
-                                         [--protection-container]
+                                         [--name --replicated-protected-item-name]
+                                         [--protection-container --protection-container-name]
                                          [--resource-group]
                                          [--subscription]
                                          [--vault-name]
@@ -392,24 +611,55 @@ directCommands:
   - name: --fabric-name
     summary: |-
       Fabric unique name.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_unplanned-failover
   name: az site-recovery protected-item unplanned-failover
   summary: |-
@@ -420,10 +670,10 @@ directCommands:
     az site-recovery protected-item unplanned-failover [--fabric-name]
                                                        [--failover-direction]
                                                        [--ids]
-                                                       [--name]
+                                                       [--name --replicated-protected-item-name]
                                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                       [--protection-container]
-                                                       [--provider-details]
+                                                       [--protection-container --protection-container-name]
+                                                       [--provider-details --provider-specific-details]
                                                        [--resource-group]
                                                        [--source-site-operations]
                                                        [--subscription]
@@ -445,37 +695,71 @@ directCommands:
   - name: --fabric-name
     summary: |-
       Unique fabric name.
+    groupName: Resource Id Arguments
   - name: --failover-direction
     summary: |-
       Failover direction.
+    groupName: Properties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --provider-details --provider-specific-details
     summary: |-
       Provider specific settings.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --source-site-operations
     summary: |-
       Source site operations status.
+    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_site-recovery_protected-item_update
   name: az site-recovery protected-item update
   summary: |-
@@ -487,12 +771,12 @@ directCommands:
                                            [--fabric-name]
                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--ids]
-                                           [--name]
+                                           [--name --replicated-protected-item-name]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--policy-id]
                                            [--protectable-item-id]
-                                           [--protection-container]
-                                           [--provider-details]
+                                           [--protection-container --protection-container-name]
+                                           [--provider-details --provider-specific-details]
                                            [--remove]
                                            [--resource-group]
                                            [--set]
@@ -506,50 +790,88 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --fabric-name
     summary: |-
       Fabric unique name.
+    groupName: Resource Id Arguments
   - name: --force-string
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --replicated-protected-item-name -n
     summary: |-
       Replication protected item name.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --policy-id
     summary: |-
       The Policy Id.
+    groupName: Properties Arguments
   - name: --protectable-item-id
     summary: |-
       The protectable item Id.
+    groupName: Properties Arguments
   - name: --protection-container --protection-container-name
     summary: |-
       Protection container name.
+    groupName: Resource Id Arguments
   - name: --provider-details --provider-specific-details
     summary: |-
       The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vault-name
     summary: |-
       The name of the recovery services vault.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_site-recovery_protected-item_create
 - az_site-recovery_protected-item_delete
@@ -561,29 +883,5 @@ commands:
 - az_site-recovery_protected-item_show
 - az_site-recovery_protected-item_unplanned-failover
 - az_site-recovery_protected-item_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage Protected Item.

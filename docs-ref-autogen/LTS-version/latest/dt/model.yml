@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_dt_model
 name: az dt model
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az dt model** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage DTDL models and definitions on a Digital Twins instance.
@@ -19,10 +18,10 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt model create --dt-name
-                       [--failure-policy {None, Rollback}]
-                       [--fd]
-                       [--max-models-per-batch]
+    az dt model create --dt-name --dtn
+                       [--failure-policy --fp {None, Rollback}]
+                       [--fd --from-directory]
+                       [--max-models-per-batch --mmpb]
                        [--models]
                        [--resource-group]
   examples:
@@ -39,24 +38,55 @@ directCommands:
       Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
   optionalParameters:
   - name: --failure-policy --fp
-    defaultValue: "Rollback"
-    parameterValueGroup: "None, Rollback"
+    defaultValue: Rollback
+    acceptedValues: None, Rollback
     summary: |-
       Indicates the failure policy when an error occurs while processing a models batch. In the 'Rollback' mode all models created in previous batches are deleted one at a time. When selected as 'None' the models created in previous batches are not deleted from DT instance.
+    groupName: Models Input Arguments
   - name: --fd --from-directory
     summary: |-
       The directory JSON model files will be parsed from. Please Note: Models are created atomically when directory contains 250 or lesser models, hence in case of an error none of the models get created.Input model set is chunked & created in batches when directory has more than 250 models(API limit). In case of an error processing a batch, the behavior is determined by the --failure-policy parameter.
+    groupName: Models Input Arguments
   - name: --max-models-per-batch --mmpb
     defaultValue: "30"
     summary: |-
       The maximum model size per batch when creating more than 250 models.Reduce this number to prevent a DTDLParser error.
     isExperimental: true
+    groupName: Models Input Arguments
   - name: --models
     summary: |-
       Inline model JSON or file path to model JSON. Please Note: Models are created atomically when model JSON contains 250 or lesser models, hence in case of an error none of the models get created.Input model set is chunked & created in batches when model JSON has more than 250 models(API limit). In case of an error processing a batch, the behavior is determined by the --failure-policy parameter.
+    groupName: Models Input Arguments
   - name: --resource-group -g
     summary: |-
       Digital Twins instance resource group. You can configure the default group using `az configure --defaults group={name}`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_dt_model_delete
   name: az dt model delete
   summary: |-
@@ -64,8 +94,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt model delete --dt-name
-                       --dtmi
+    az dt model delete --dt-name --dtn
+                       --dtmi --model-id
                        [--resource-group]
   examples:
   - summary: |-
@@ -84,6 +114,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Digital Twins instance resource group. You can configure the default group using `az configure --defaults group={name}`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_dt_model_delete-all
   name: az dt model delete-all
   summary: |-
@@ -93,7 +150,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt model delete-all --dt-name
+    az dt model delete-all --dt-name --dtn
                            [--resource-group]
                            [--yes]
   examples:
@@ -113,6 +170,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_dt_model_list
   name: az dt model list
   summary: |-
@@ -120,8 +204,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt model list --dt-name
-                     [--def {false, true}]
+    az dt model list --dt-name --dtn
+                     [--def --definition {false, true}]
                      [--dependencies-for]
                      [--resource-group]
   examples:
@@ -142,7 +226,7 @@ directCommands:
   optionalParameters:
   - name: --def --definition
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The operation will retrieve the model definition.
   - name: --dependencies-for
@@ -151,6 +235,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Digital Twins instance resource group. You can configure the default group using `az configure --defaults group={name}`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_dt_model_show
   name: az dt model show
   summary: |-
@@ -158,9 +269,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt model show --dt-name
-                     --dtmi
-                     [--def {false, true}]
+    az dt model show --dt-name --dtn
+                     --dtmi --model-id
+                     [--def --definition {false, true}]
                      [--resource-group]
   examples:
   - summary: |-
@@ -181,12 +292,39 @@ directCommands:
   optionalParameters:
   - name: --def --definition
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The operation will retrieve the model definition.
   - name: --resource-group -g
     summary: |-
       Digital Twins instance resource group. You can configure the default group using `az configure --defaults group={name}`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_dt_model_update
   name: az dt model update
   summary: |-
@@ -194,8 +332,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt model update --dt-name
-                       --dtmi
+    az dt model update --dt-name --dtn
+                       --dtmi --model-id
                        [--decommission {false, true}]
                        [--resource-group]
   examples:
@@ -213,12 +351,39 @@ directCommands:
       Digital Twins model Id. Example: dtmi:com:example:Room;2.
   optionalParameters:
   - name: --decommission
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicates intent to decommission a target model.
   - name: --resource-group -g
     summary: |-
       Digital Twins instance resource group. You can configure the default group using `az configure --defaults group={name}`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_dt_model_create
 - az_dt_model_delete
@@ -226,29 +391,5 @@ commands:
 - az_dt_model_list
 - az_dt_model_show
 - az_dt_model_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage DTDL models and definitions on a Digital Twins instance.

@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_iot_edge_devices
 name: az iot edge devices
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot edge devices** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage IoT Edge devices.
@@ -25,20 +24,20 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot edge devices create [--auth-type {key, login}]
-                               [--cfg]
+                               [--cfg --config --config-file]
                                [--clean {false, true}]
-                               [--dct]
-                               [--dea]
+                               [--dct --device-config-template]
+                               [--dea --default-agent --default-edge-agent]
                                [--device]
-                               [--device-auth {shared_private_key, x509_thumbprint}]
+                               [--device-auth --device-auth-type {shared_private_key, x509_thumbprint}]
                                [--hub-name]
                                [--login]
-                               [--out]
-                               [--rc]
+                               [--out --output-path]
+                               [--rc --root-cert]
                                [--resource-group]
-                               [--rk]
-                               [--root-pass]
-                               [--vis {false, true}]
+                               [--rk --root-key]
+                               [--root-pass --rp]
+                               [--vis --visualize {false, true}]
                                [--yes {false, true}]
   examples:
   - summary: |-
@@ -81,16 +80,17 @@ directCommands:
       --device id=child1 parent=parent1
   optionalParameters:
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --cfg --config --config-file
     summary: |-
       Path to devices configuration file. Sample configuration file: https://aka.ms/aziotcli-edge-devices-config.
   - name: --clean -c
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Deletes all devices in target hub before creating new devices.
   - name: --dct --device-config-template
@@ -103,65 +103,73 @@ directCommands:
     summary: |-
       Space-separated key=value pairs corresponding to properties of the edge device to create. The following key values are supported: `id` (device_id), `deployment` (inline json or path to file), `hostname`, `parent` (device_id), `edge_agent` (image URL), and `container_auth` (inline json or path to file). --device can be used 1 or more times. Review help examples for full parameter usage  - these parameters also refer to their corresponding values in our sample configuration file: https://aka.ms/aziotcli-edge-devices-config.
   - name: --device-auth --device-auth-type
-    parameterValueGroup: "shared_private_key, x509_thumbprint"
+    acceptedValues: shared_private_key, x509_thumbprint
     summary: |-
       Device to hub authorization mechanism.
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --out --output-path
     summary: |-
       Directory path to output device configuration bundles. If this value is not specified, no file output will be created.
   - name: --rc --root-cert
     summary: |-
       Path to root public key certificate to sign nested edge device certs.
+    groupName: Root Certificate Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --rk --root-key
     summary: |-
       Path to root private key to sign nested edge device certs.
+    groupName: Root Certificate Arguments
   - name: --root-pass --rp
     summary: |-
       Root key password.
+    groupName: Root Certificate Arguments
   - name: --vis --visualize -v
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Shows visualizations of devices and progress of various tasks (device creation, setting parents, updating configs, etc).
   - name: --yes -y
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Do not prompt for confirmation when --clean switch is used to delete existing hub devices.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_edge_devices_create
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Commands to manage IoT Edge devices.
