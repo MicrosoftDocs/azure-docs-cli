@@ -1,15 +1,15 @@
 ---
-title: Output formats - Azure CLI | Microsoft Docs
-description: The Azure CLI offers various output formats such as JSON and YAML. Learn how to format the output of Azure CLI commands to tables, lists or json.
-ms.date: 09/19/2024
+title: Output formats for Azure CLI commands | Microsoft Docs
+description: The Azure CLI offers various output formats such as JSON and YAML. Learn how to format the output of Azure CLI commands to tables, lists, or JSON.
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli commands 
 ---
+
 # Output formats for Azure CLI commands
 
-The Azure CLI uses JSON as its default output format, but offers other formats. Use the `--output` (`--out` or `-o`) parameter
-to format CLI output. The argument values and types of output are:
+The Azure CLI uses JSON as its default output format, but offers other formats. Use the `--output`
+(`--out` or `-o`) parameter to format Azure CLI output. The argument values and types of output are:
 
 --output | Description
 ---------|-------------------------------
@@ -22,12 +22,15 @@ to format CLI output. The argument values and types of output are:
 `none`   | No output other than errors and warnings
 
 > [!WARNING]
-> Use an output format of `none` or store command output in a variable to avoid exposing secrets such as API keys and credentials. **Note:** Certain CI/CD environments may store the output of the executed commands in logs. It is a good practice to confirm what is written in those log files and who has access to the logs.
-> For more information, see [None output format](#none-output-format).
+> To avoid exposing secrets such as API keys and credentials, use an output format of `none` or
+> store command output in a variable. **Note:** Certain CI/CD environments might store the output of
+> the executed commands in logs. It's a good practice to confirm the contents of those log files
+> and who has access to the logs. For more information, see [None output format][08].
 
 ## JSON output format (default)
 
-The following example displays the list of virtual machines in your subscriptions in the default JSON format.
+The following example displays the list of virtual machines in your subscriptions in the default
+JSON format.
 
 ```azurecli-interactive
 az vm list --output json
@@ -65,8 +68,9 @@ The following output has some fields omitted for brevity, and identifying inform
 
 ## YAML output format
 
-The `yaml` format prints output as [YAML](http://yaml.org/), a plain-text data serialization format. YAML tends to be easier to read than JSON, and easily maps to
-that format. Some applications and CLI commands take YAML as configuration input, instead of JSON.
+The `yaml` format prints output as [YAML][09], a plain-text data serialization format. YAML tends to
+be easier to read than JSON, and maps to that format. Some applications and Azure CLI commands take
+YAML as configuration input, instead of JSON.
 
 ```azurecli-interactive
 az vm list --output yaml
@@ -96,7 +100,10 @@ The following output has some fields omitted for brevity, and identifying inform
 
 ## Table output format
 
-The `table` format prints output as an ASCII table, making it easy to read and scan. Nested objects aren't included in table output, but can still be filtered as part of a query. Some fields aren't included in the table, so this format is best when you want a quick, human-searchable overview of data.
+The `table` format prints output as an ASCII table, making it easy to read and scan. Nested objects
+aren't included in table output, but can still be filtered as part of a query. Some fields aren't
+included in the table, so this format is best when you want a quick, human-searchable overview of
+data.
 
 ```azurecli-interactive
 az vm list --output table
@@ -112,7 +119,9 @@ KBDemo001VM  RGDEMO001        westus
 KBDemo020    RGDEMO001        westus
 ```
 
-You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
+You can use the `--query` parameter to customize the properties and columns you want to show in the
+list output. The following example shows how to select just the VM Name and the Resource Group Name
+in the `list` command.
 
 ```azurecli-interactive
 az vm list --query "[].{resource:resourceGroup, name:name}" --output table
@@ -129,18 +138,21 @@ RGDEMO001   KBDemo020
 ```
 
 > [!NOTE]
-> Some keys are not printed in the table view by default. These are `id`, `type`, and `etag`. If you need to see these
-> in your output, you can use the JMESPath re-keying feature to change the key name and avoid filtering.
+> Some keys aren't printed in the table view by default. These keys include `id`, `type`, and
+> `etag`. If you need them in your output, you can use the JMESPath rekeying feature to change the
+> key name and avoid filtering.
 >
 > ```azurecli-interactive
 > az vm list --query "[].{objectID:id}" --output table
 > ```
 
-For more about using queries to filter data, see [Use JMESPath queries with Azure CLI](./use-azure-cli-successfully-query.md).
+For more about using queries to filter data, see [Use JMESPath queries with Azure CLI][03].
 
 ## TSV output format
 
-The `tsv` output format returns tab- and newline-separated values without extra formatting, keys, or other symbols. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Like the `table` format, `tsv` doesn't print nested objects.
+The `tsv` output format returns tab and newline separated values without extra formatting, keys, or
+other symbols. This format makes it easy to consume the output into other commands and tools that
+need to process the text in some form. Like the `table` format, `tsv` doesn't print nested objects.
 
 Using the preceding example with the `tsv` option outputs the tab-separated result.
 
@@ -156,13 +168,17 @@ None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Micros
 None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo020   None    None    westus    KBDemo020            None    Succeeded    RGDEMO001    None            Microsoft.Compute/virtualMachines    36baa9-9b80-48a8-b4a9-854c7a858ece
 ```
 
-One restriction of the TSV output format is that there isn't a guarantee on output ordering. The CLI makes a best effort to preserve ordering by sorting keys in the response JSON alphabetically,
-and then printing their values in order for TSV output. There is no guarantee that the order is always identical, since the Azure service response format can change.
+One restriction of the `tsv` output format is that there isn't a guarantee on output ordering. The
+Azure CLI makes a best effort to preserve ordering by sorting keys in the response JSON
+alphabetically, and then printing their values in order for `tsv` output. There's no guarantee that
+the order is always identical, since the Azure service response format can change.
 
-In order to enforce consistent ordering, you'll need to use the `--query` parameter and the [multiselect list](use-azure-cli-successfully-query.md#get-multiple-values) format. When a CLI command returns a single
-JSON dictionary, use the general format `[key1, key2, ..., keyN]` to force a key order.  For CLI commands that return an array, use the general format `[].[key1, key2, ..., keyN]` to order column values.
+To enforce consistent ordering, you need to use the `--query` parameter and the
+[multiselect list][10] format. When an Azure CLI command returns a single JSON dictionary, use the
+general format `[key1, key2, ..., keyN]` to force a key order. For Azure CLI commands that return an
+array, use the general format `[].[key1, key2, ..., keyN]` to order column values.
 
-For example, to order the information displayed above by ID, location, resource group, and VM name:
+For example, to order this information displayed by ID, location, resource group, and VM name:
 
 ```azurecli-interactive
 az vm list --output tsv --query '[].[id, location, resourceGroup, name]'
@@ -176,7 +192,8 @@ az vm list --output tsv --query '[].[id, location, resourceGroup, name]'
 /subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo020       westus  RGDEMO001       KBDemo020
 ```
 
-The next example shows how `tsv` output can be piped to other commands in bash. The query is used to filter output and force ordering, `grep` selects items that have text "RGD" in them, then the `cut`
+The next example shows how you can pipe `tsv` output to other commands in Bash. The query is used to
+filter output and force ordering, `grep` selects items that have text `RGD` in them, then the `cut`
 command selects the fourth field to show the name of the VM in output.
 
 ```azurecli-interactive
@@ -188,7 +205,8 @@ KBDemo001VM
 KBDemo020
 ```
 
-The `tsv` output format is often used when assigning values to variables. This example gets the active subscription ID and stores it into a variable for use in a script.
+The `tsv` output format is often used when assigning values to variables. This example gets the
+active subscription ID and stores it into a variable for use in a script.
 
 # [Bash](#tab/bash)
 
@@ -208,30 +226,33 @@ echo "Using subscription ID $subscriptionID"
 
 ---
 
-For more `--query` parameter examples, see [How to query Azure CLI command output](./use-azure-cli-successfully-query.md).
+For more `--query` parameter examples, see [How to query Azure CLI command output][03].
 
 ## None output format
 
 Some Azure CLI commands output information you must protect. Here are four examples:
 
-- passwords
-- connection strings
-- secrets
-- keys
+- Passwords
+- Connection strings
+- Secrets
+- Keys
 
 To protect secrets and keys when using Azure CLI commands, choose one of these options:
 
 |Option|Benefit|Use case|
 |-|-|-|
-|`--output none` output format| Keeps sensitive information from being displayed in your console. If your command fails, you'll still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
+|`--output none` output format| Keeps sensitive information from being displayed in your console. If your command fails, you still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
 | | | 2. Use when you have no need for output.
 | | | 3. A common choice when a managed identity or a service principal is being used to manage Azure resources.
 |`--query` parameter | Stores output in a variable. |1. Use when command output _can't be_ retrieved at a later time.|
 | | | 2. Use when you need to use a command output value in a script.
 
-### Use `none` and retrieve security information at a later time
+### Retrieve security information at a later time
 
-_Some_ Azure secrets can be retrieved at a later time. A good example is secrets stored in Azure Key Vault. In this example, create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
+_Some_ Azure secrets can be retrieved at a later time. An example is secrets stored in Azure Key
+Vault. In this example, create an Azure Key Vault secret using [az keyvault secret set][06] with the
+`--output none` option. You can retrieve the secret later using the [az keyvault secret show][07]
+command.
 
 ```azurecli-interactive
 az keyvault secret set --name MySecretName \
@@ -240,9 +261,11 @@ az keyvault secret set --name MySecretName \
                        --output none
 ```
 
-### Use `--query` and return security information to a variable
+### Store security information to a variable
 
-The use of `--query` to store output in a variable is technically not an output format. It is a solution to protect secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password can't be retrieved again.
+The use of `--query` to store output in a variable is technically not an output format. It's a
+solution to protect secrets, and is an alternative to using `--output none`. For example, when you
+reset a service principal credential, the password can't be retrieved again.
 
 Reset a service principal credential returning output in the default json format:
 
@@ -282,11 +305,14 @@ echo "New password: $myNewPassword"
 $myNewPassword = (az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
 
 # Display the new password (remove this line in production for security)
-echo "New password: $myNewPassword"
+Write-Output "New password: $myNewPassword"
 ```
 
 ---
-For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-azure-cli-successfully-tips.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./use-azure-cli-successfully-query.md).
+
+For more examples on storing output to a variable, see
+[Use the Azure CLI successfully - pass values to another command][05]. To learn more about `--query`
+parameter syntax, see [How to query Azure CLI command output][03].
 
 ## Set the default output format
 
@@ -294,16 +320,18 @@ Azure CLI commands provide output that can be controlled in two ways:
 
 |Output control | Benefit | How-to
 |-|-|-|
-|Global setting| Select a default output value that you use the most so you don't have to continually provide an `--output` parameter for each reference command.| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
+|Global setting| Select a default output value that you use the most so you don't have to continually provide an `--output` parameter for each reference command.| Specify a default output format using [az config set][02].
 |Command parameter| Specify output at the command level and give your scripts maximum flexibility. You control console output and variable input for each reference command. | Override the default setting using a reference command's `--output` parameter.
 
-The default output for the Azure CLI is `json`. Set the default output to `none` when console output isn't needed.
+The default output for the Azure CLI is `json`. Set the default output to `none` when console output
+isn't needed.
 
 ```azurecli-interactive
 az config set core.output=none
 ```
 
-You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter. Here's a script of commands that alter and test command output:
+You can overwrite the default output of any Azure CLI reference command using the `--output`
+parameter. Here's a script of commands that alter and test command output:
 
 ```azurecli-interactive
 # set your default output to table
@@ -322,6 +350,19 @@ az config set core.output=json
 
 ## See also
 
-- [Azure CLI configuration](./azure-cli-configuration.md)
-- [How to query Azure CLI command output](./use-azure-cli-successfully-query.md)
-- [Tips to use the Azure CLI successfully](./use-azure-cli-successfully-tips.md)
+- [Azure CLI configuration][01]
+- [How to query Azure CLI command output][03]
+- [Tips to use the Azure CLI successfully][04]
+
+<!-- link references -->
+
+[01]: ./azure-cli-configuration.md
+[02]: ./azure-cli-configuration.md#cli-configuration-values-and-environment-variables
+[03]: ./use-azure-cli-successfully-query.md
+[04]: ./use-azure-cli-successfully-tips.md
+[05]: ./use-azure-cli-successfully-tips.md#pass-values-to-another-command
+[06]: /cli/azure/keyvault/secret#az-keyvault-secret-set
+[07]: /cli/azure/keyvault/secret#az-keyvault-secret-show
+[08]: #none-output-format
+[09]: http://yaml.org/
+[10]: use-azure-cli-successfully-query.md#get-multiple-values
