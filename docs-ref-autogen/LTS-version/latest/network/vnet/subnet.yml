@@ -20,16 +20,16 @@ directCommands:
                                   --resource-group
                                   --vnet-name
                                   [--address-prefixes]
-                                  [--default-outbound {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--default-outbound --default-outbound-access {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--delegations]
                                   [--disable-private-endpoint-network-policies {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--disable-private-link-service-network-policies {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--endpoints]
                                   [--nat-gateway]
-                                  [--network-security-group]
+                                  [--network-security-group --nsg]
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                  [--ple-network-policies {Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled}]
-                                  [--pls-network-policies {Disabled, Enabled}]
+                                  [--ple-network-policies --private-endpoint-network-policies {Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled}]
+                                  [--pls-network-policies --private-link-service-network-policies {Disabled, Enabled}]
                                   [--route-table]
                                   [--service-endpoint-policy]
                                   [--service-endpoints]
@@ -59,18 +59,18 @@ directCommands:
     summary: |-
       Space-separated list of address prefixes in CIDR format.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --default-outbound --default-outbound-access
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Set this property to false to disable default outbound connectivity for all VMs in the subnet. This property can only be set at the time of subnet creation and cannot be updated for an existing subnet.
   - name: --delegations
     summary: |-
       Space-separated list of services to whom the subnet should be delegated, e.g., Microsoft.Sql/servers.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --disable-private-endpoint-network-policies
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Disable private endpoint network policies on the subnet. Please note that it will be replaced by `--private-endpoint-network-policies` soon.
   - name: --disable-private-link-service-network-policies
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Disable private link service network policies on the subnet. Please note that it will be replaced by `--private-link-service-network-policies` soon.
   - name: --endpoints
@@ -83,17 +83,17 @@ directCommands:
     summary: |-
       Name or ID of a network security group (NSG).
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --ple-network-policies --private-endpoint-network-policies
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled
     summary: |-
       Manage network policies for private endpoint.
   - name: --pls-network-policies --private-link-service-network-policies
-    defaultValue: "Enabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Enabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Manage network policy for private link service.
   - name: --route-table
@@ -106,9 +106,36 @@ directCommands:
     summary: |-
       Space-separated list of services allowed private access to this subnet. Values from: az network vnet list-endpoint-services.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --sharing-scope
-    parameterValueGroup: "DelegatedServices, Tenant"
+    acceptedValues: DelegatedServices, Tenant
     summary: |-
       Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_vnet_subnet_delete
   name: az network vnet subnet delete
   summary: |-
@@ -131,22 +158,51 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The subnet name.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vnet-name
     summary: |-
       The virtual network (VNet) name.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_vnet_subnet_list
   name: az network vnet subnet list
   summary: |-
@@ -176,9 +232,38 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_vnet_subnet_list-available-delegations
   name: az network vnet subnet list-available-delegations
   summary: |-
@@ -205,12 +290,41 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_vnet_subnet_list-available-ips
   name: az network vnet subnet list-available-ips
   summary: |-
@@ -234,18 +348,47 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The subnet name.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vnet-name
     summary: |-
       The virtual network (VNet) name.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_vnet_subnet_show
   name: az network vnet subnet show
   summary: |-
@@ -271,18 +414,47 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The subnet name.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vnet-name
     summary: |-
       The virtual network (VNet) name.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_vnet_subnet_update
   name: az network vnet subnet update
   summary: |-
@@ -293,7 +465,7 @@ directCommands:
   syntax: >-
     az network vnet subnet update [--add]
                                   [--address-prefixes]
-                                  [--default-outbound {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--default-outbound --default-outbound-access {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--delegations]
                                   [--disable-private-endpoint-network-policies {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--disable-private-link-service-network-policies {0, 1, f, false, n, no, t, true, y, yes}]
@@ -302,10 +474,10 @@ directCommands:
                                   [--ids]
                                   [--name]
                                   [--nat-gateway]
-                                  [--network-security-group]
+                                  [--network-security-group --nsg]
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                  [--ple-network-policies {Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled}]
-                                  [--pls-network-policies {Disabled, Enabled}]
+                                  [--ple-network-policies --private-endpoint-network-policies {Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled}]
+                                  [--pls-network-policies --private-link-service-network-policies {Disabled, Enabled}]
                                   [--remove]
                                   [--resource-group]
                                   [--route-table]
@@ -332,37 +504,41 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --address-prefixes
     summary: |-
       Space-separated list of address prefixes in CIDR format.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --default-outbound --default-outbound-access
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Set this property to false to disable default outbound connectivity for all VMs in the subnet. This property can only be set at the time of subnet creation and cannot be updated for an existing subnet.
   - name: --delegations
     summary: |-
       Space-separated list of services to whom the subnet should be delegated, e.g., Microsoft.Sql/servers.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --disable-private-endpoint-network-policies
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Disable private endpoint network policies on the subnet. Please note that it will be replaced by `--private-endpoint-network-policies` soon.
   - name: --disable-private-link-service-network-policies
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Disable private link service network policies on the subnet. Please note that it will be replaced by `--private-link-service-network-policies` soon.
   - name: --endpoints
     summary: |-
       An array of service endpoints.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The subnet name.
+    groupName: Resource Id Arguments
   - name: --nat-gateway
     summary: |-
       Name or ID of a NAT gateway to attach. Use null to detach it.
@@ -370,23 +546,25 @@ directCommands:
     summary: |-
       Name or ID of a network security group (NSG). Use null to detach it.
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --ple-network-policies --private-endpoint-network-policies
-    parameterValueGroup: "Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled"
+    acceptedValues: Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled
     summary: |-
       Manage network policy for private endpoint.
   - name: --pls-network-policies --private-link-service-network-policies
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Manage network policy for private link service.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --route-table
     summary: |-
       Name or ID of a route table to associate with the subnet. Use null to detach it.
@@ -399,16 +577,43 @@ directCommands:
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --sharing-scope
-    parameterValueGroup: "DelegatedServices, Tenant"
+    acceptedValues: DelegatedServices, Tenant
     summary: |-
       Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vnet-name
     summary: |-
       The virtual network (VNet) name.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_vnet_subnet_wait
   name: az network vnet subnet wait
   summary: |-
@@ -435,47 +640,83 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
       Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
       Wait until deleted.
+    groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --expand
     summary: |-
       Expands referenced resources. Default value is None.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --name -n
     summary: |-
       The subnet name.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --timeout
     defaultValue: "3600"
     summary: |-
       Maximum wait in seconds.
+    groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --vnet-name
     summary: |-
       The virtual network (VNet) name.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_network_vnet_subnet_create
 - az_network_vnet_subnet_delete
@@ -485,30 +726,6 @@ commands:
 - az_network_vnet_subnet_show
 - az_network_vnet_subnet_update
 - az_network_vnet_subnet_wait
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 10/16/2024
   description: To learn more about subnets visit https://docs.microsoft.com/azure/virtual-network/virtual-network-manage-subnet.

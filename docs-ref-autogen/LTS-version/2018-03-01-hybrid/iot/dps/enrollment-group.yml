@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_iot_dps_enrollment-group
 name: az iot dps enrollment-group
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot dps enrollment-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage enrollment groups in an Azure IoT Hub Device Provisioning Service.
@@ -17,11 +16,11 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot dps enrollment-group compute-device-key --registration-id
+    az iot dps enrollment-group compute-device-key --registration-id --rid
                                                    [--auth-type {key, login}]
                                                    [--dps-name]
-                                                   [--eid]
-                                                   [--key]
+                                                   [--eid --enrollment-id --gid --group-id]
+                                                   [--key --symmetric-key]
                                                    [--login]
                                                    [--resource-group]
   examples:
@@ -38,13 +37,15 @@ directCommands:
       ID of device registration.
   optionalParameters:
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iotdps-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --eid --enrollment-id --gid --group-id
     summary: |-
       Enrollment group ID.
@@ -54,9 +55,37 @@ directCommands:
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_dps_enrollment-group_create
   name: az iot dps enrollment-group create
   summary: |-
@@ -68,26 +97,26 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot dps enrollment-group create --eid
-                                       [--allocation-policy {custom, geoLatency, hashed, static}]
-                                       [--api-version]
+    az iot dps enrollment-group create --eid --enrollment-id --gid --group-id
+                                       [--allocation-policy --ap {custom, geoLatency, hashed, static}]
+                                       [--api-version --av]
                                        [--auth-type {key, login}]
-                                       [--ca-name]
-                                       [--certificate-path]
+                                       [--ca-name --cn --root-ca-name]
+                                       [--certificate-path --cp]
                                        [--dps-name]
-                                       [--edge-enabled {false, true}]
-                                       [--ih]
-                                       [--initial-twin-properties]
-                                       [--initial-twin-tags]
+                                       [--edge-enabled --ee {false, true}]
+                                       [--ih --iot-hubs]
+                                       [--initial-twin-properties --props]
+                                       [--initial-twin-tags --tags]
                                        [--login]
-                                       [--pk]
-                                       [--provisioning-status {disabled, enabled}]
-                                       [--reprovision-policy {never, reprovisionandmigratedata, reprovisionandresetdata}]
+                                       [--pk --primary-key]
+                                       [--provisioning-status --ps {disabled, enabled}]
+                                       [--reprovision-policy --rp {never, reprovisionandmigratedata, reprovisionandresetdata}]
                                        [--resource-group]
-                                       [--scn]
-                                       [--scp]
-                                       [--secondary-key]
-                                       [--webhook-url]
+                                       [--scn --secondary-ca-name --secondary-root-ca-name]
+                                       [--scp --secondary-certificate-path]
+                                       [--secondary-key --sk]
+                                       [--webhook-url --wh]
   examples:
   - summary: |-
       Create an enrollment group '{enrollment_id}' in the Azure IoT provisioning service '{dps_name}' in the resource group '{resource_group_name} using an intermediate certificate as primary certificate'.
@@ -111,34 +140,41 @@ directCommands:
       Enrollment group ID.
   optionalParameters:
   - name: --allocation-policy --ap
-    parameterValueGroup: "custom, geoLatency, hashed, static"
+    acceptedValues: custom, geoLatency, hashed, static
     summary: |-
       Type of allocation policy to determine how a device is assigned to an IoT Hub. If not provided, the allocation policy will be the current allocation policy default set for the Device Provisioning Service instance.
+    groupName: Allocation Policy Arguments
   - name: --api-version --av
     summary: |-
       The API version of the provisioning service types sent in the custom allocation request. Minimum supported version: 2018-09-01-preview.
+    groupName: Allocation Policy Arguments
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iotdps-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --ca-name --cn --root-ca-name
     summary: |-
       The name of the primary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
+    groupName: Authentication Arguments
   - name: --certificate-path --cp
     summary: |-
       The path to the file containing the primary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
+    groupName: Authentication Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --edge-enabled --ee
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag indicating edge enablement.
   - name: --ih --iot-hubs
     summary: |-
       Host name of target IoT Hub associated with the allocation policy. Use space-separated list for multiple IoT Hubs.
+    groupName: Allocation Policy Arguments
   - name: --initial-twin-properties --props
     summary: |-
       Initial device twin properties.
@@ -148,15 +184,17 @@ directCommands:
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --pk --primary-key
     summary: |-
       The primary symmetric shared access key stored in base64 format.
+    groupName: Authentication Arguments
   - name: --provisioning-status --ps
-    parameterValueGroup: "disabled, enabled"
+    acceptedValues: disabled, enabled
     summary: |-
       Enable or disable enrollment entry.
   - name: --reprovision-policy --rp
-    parameterValueGroup: "never, reprovisionandmigratedata, reprovisionandresetdata"
+    acceptedValues: never, reprovisionandmigratedata, reprovisionandresetdata
     summary: |-
       Policy to determine how device data should be handled on re-provision to a different IoT Hub.
   - name: --resource-group -g
@@ -165,15 +203,46 @@ directCommands:
   - name: --scn --secondary-ca-name --secondary-root-ca-name
     summary: |-
       The name of the secondary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
+    groupName: Authentication Arguments
   - name: --scp --secondary-certificate-path
     summary: |-
       The path to the file containing the secondary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
+    groupName: Authentication Arguments
   - name: --secondary-key --sk
     summary: |-
       The secondary symmetric shared access key stored in base64 format.
+    groupName: Authentication Arguments
   - name: --webhook-url --wh
     summary: |-
       The Azure Function webhook URL used for custom allocation requests.
+    groupName: Allocation Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_dps_enrollment-group_delete
   name: az iot dps enrollment-group delete
   summary: |-
@@ -181,7 +250,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot dps enrollment-group delete --eid
+    az iot dps enrollment-group delete --eid --enrollment-id --gid --group-id
                                        [--auth-type {key, login}]
                                        [--dps-name]
                                        [--etag]
@@ -194,22 +263,52 @@ directCommands:
       Enrollment group ID.
   optionalParameters:
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iotdps-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_dps_enrollment-group_list
   name: az iot dps enrollment-group list
   summary: |-
@@ -224,22 +323,52 @@ directCommands:
                                      [--top]
   optionalParameters:
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iotdps-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --top
     summary: |-
       Maximum number of elements to return. Use -1 for unlimited.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_dps_enrollment-group_show
   name: az iot dps enrollment-group show
   summary: |-
@@ -247,10 +376,10 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot dps enrollment-group show --eid
+    az iot dps enrollment-group show --eid --enrollment-id --gid --group-id
                                      [--auth-type {key, login}]
                                      [--dps-name]
-                                     [--keys {false, true}]
+                                     [--keys --show-keys {false, true}]
                                      [--login]
                                      [--resource-group]
   examples:
@@ -267,23 +396,53 @@ directCommands:
       Enrollment group ID.
   optionalParameters:
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iotdps-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --keys --show-keys
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Include attestation keys and information in enrollment group results.
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_dps_enrollment-group_update
   name: az iot dps enrollment-group update
   summary: |-
@@ -295,29 +454,29 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot dps enrollment-group update --eid
-                                       [--allocation-policy {custom, geoLatency, hashed, static}]
-                                       [--api-version]
+    az iot dps enrollment-group update --eid --enrollment-id --gid --group-id
+                                       [--allocation-policy --ap {custom, geoLatency, hashed, static}]
+                                       [--api-version --av]
                                        [--auth-type {key, login}]
-                                       [--ca-name]
-                                       [--certificate-path]
+                                       [--ca-name --cn --root-ca-name]
+                                       [--certificate-path --cp]
                                        [--dps-name]
-                                       [--edge-enabled {false, true}]
+                                       [--edge-enabled --ee {false, true}]
                                        [--etag]
-                                       [--ih]
-                                       [--initial-twin-properties]
-                                       [--initial-twin-tags]
+                                       [--ih --iot-hubs]
+                                       [--initial-twin-properties --props]
+                                       [--initial-twin-tags --tags]
                                        [--login]
-                                       [--pk]
-                                       [--provisioning-status {disabled, enabled}]
-                                       [--rc {false, true}]
-                                       [--remove-secondary-certificate {false, true}]
-                                       [--reprovision-policy {never, reprovisionandmigratedata, reprovisionandresetdata}]
+                                       [--pk --primary-key]
+                                       [--provisioning-status --ps {disabled, enabled}]
+                                       [--rc --remove-certificate {false, true}]
+                                       [--remove-secondary-certificate --rsc {false, true}]
+                                       [--reprovision-policy --rp {never, reprovisionandmigratedata, reprovisionandresetdata}]
                                        [--resource-group]
-                                       [--scn]
-                                       [--scp]
-                                       [--secondary-key]
-                                       [--webhook-url]
+                                       [--scn --secondary-ca-name --secondary-root-ca-name]
+                                       [--scp --secondary-certificate-path]
+                                       [--secondary-key --sk]
+                                       [--webhook-url --wh]
   examples:
   - summary: |-
       Update enrollment group '{enrollment_id}' in the Azure IoT provisioning service '{dps_name}' in the resource group '{resource_group_name}' with initial twin properties and initial twin tags.
@@ -338,28 +497,34 @@ directCommands:
       Enrollment group ID.
   optionalParameters:
   - name: --allocation-policy --ap
-    parameterValueGroup: "custom, geoLatency, hashed, static"
+    acceptedValues: custom, geoLatency, hashed, static
     summary: |-
       Type of allocation policy to determine how a device is assigned to an IoT Hub. If not provided, the allocation policy will be the current allocation policy default set for the Device Provisioning Service instance.
+    groupName: Allocation Policy Arguments
   - name: --api-version --av
     summary: |-
       The API version of the provisioning service types sent in the custom allocation request. Minimum supported version: 2018-09-01-preview.
+    groupName: Allocation Policy Arguments
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iotdps-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --ca-name --cn --root-ca-name
     summary: |-
       The name of the primary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
+    groupName: Authentication Arguments
   - name: --certificate-path --cp
     summary: |-
       The path to the file containing the primary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
+    groupName: Authentication Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --edge-enabled --ee
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag indicating edge enablement.
   - name: --etag -e
@@ -368,6 +533,7 @@ directCommands:
   - name: --ih --iot-hubs
     summary: |-
       Host name of target IoT Hub associated with the allocation policy. Use space-separated list for multiple IoT Hubs.
+    groupName: Allocation Policy Arguments
   - name: --initial-twin-properties --props
     summary: |-
       Initial device twin properties.
@@ -377,23 +543,27 @@ directCommands:
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided.
+    groupName: Device Provisioning Service Identifier Arguments
   - name: --pk --primary-key
     summary: |-
       The primary symmetric shared access key stored in base64 format.
+    groupName: Authentication Arguments
   - name: --provisioning-status --ps
-    parameterValueGroup: "disabled, enabled"
+    acceptedValues: disabled, enabled
     summary: |-
       Enable or disable enrollment entry.
   - name: --rc --remove-certificate
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to remove current primary certificate.
+    groupName: Authentication Arguments
   - name: --remove-secondary-certificate --rsc
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to remove current secondary certificate.
+    groupName: Authentication Arguments
   - name: --reprovision-policy --rp
-    parameterValueGroup: "never, reprovisionandmigratedata, reprovisionandresetdata"
+    acceptedValues: never, reprovisionandmigratedata, reprovisionandresetdata
     summary: |-
       Policy to determine how device data should be handled on re-provision to a different IoT Hub.
   - name: --resource-group -g
@@ -402,15 +572,46 @@ directCommands:
   - name: --scn --secondary-ca-name --secondary-root-ca-name
     summary: |-
       The name of the secondary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
+    groupName: Authentication Arguments
   - name: --scp --secondary-certificate-path
     summary: |-
       The path to the file containing the secondary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
+    groupName: Authentication Arguments
   - name: --secondary-key --sk
     summary: |-
       The secondary symmetric shared access key stored in base64 format.
+    groupName: Authentication Arguments
   - name: --webhook-url --wh
     summary: |-
       The Azure Function webhook URL used for custom allocation requests.
+    groupName: Allocation Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_dps_enrollment-group_compute-device-key
 - az_iot_dps_enrollment-group_create
@@ -422,29 +623,5 @@ commands:
 - az_iot_dps_enrollment-group_registration_show
 - az_iot_dps_enrollment-group_show
 - az_iot_dps_enrollment-group_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage enrollment groups in an Azure IoT Hub Device Provisioning Service.

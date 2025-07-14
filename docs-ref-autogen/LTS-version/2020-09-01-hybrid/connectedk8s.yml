@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_connectedk8s
 name: az connectedk8s
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **connectedk8s** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az connectedk8s** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage connected kubernetes clusters.
@@ -20,18 +19,18 @@ directCommands:
     az connectedk8s connect --name
                             --resource-group
                             [--azure-hybrid-benefit {False, NotApplicable, True}]
-                            [--config]
-                            [--config-protected]
+                            [--config --configuration-settings]
+                            [--config-protected --config-protected-settings]
                             [--container-log-path]
                             [--correlation-id]
-                            [--custom-ca-cert]
+                            [--custom-ca-cert --proxy-cert]
                             [--custom-locations-oid]
                             [--disable-auto-upgrade]
                             [--distribution {aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
                             [--distribution-version]
                             [--enable-oidc-issuer {false, true}]
                             [--enable-private-link {false, true}]
-                            [--enable-wi {false, true}]
+                            [--enable-wi --enable-workload-identity {false, true}]
                             [--gateway-resource-id]
                             [--infrastructure {LTSCWindows 10 Enterprise LTSC, Windows 10 Enterprise, Windows 10 Enterprise LTSC 2019, Windows 10 Enterprise LTSC 2021, Windows 10 Enterprise N, Windows 10 Enterprise N LTSC 2019, Windows 10 Enterprise N LTSC 2021, Windows 10 IoT Enterprise, Windows 10 IoT Enterprise LTSC 2019, Windows 10 IoT Enterprise LTSC 2021, Windows 10 Pro, Windows 11 Enterprise, Windows 11 Enterprise N, Windows 11 IoT Enterprise, Windows 11 Pro, Windows Server 2019, Windows Server 2019 Datacenter, Windows Server 2019 Standard, Windows Server 2022, Windows Server 2022 Datacenter, Windows Server 2022 Standard, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server}]
                             [--kube-config]
@@ -39,7 +38,7 @@ directCommands:
                             [--location]
                             [--no-wait]
                             [--onboarding-timeout]
-                            [--pls-arm-id]
+                            [--pls-arm-id --private-link-scope-resource-id]
                             [--proxy-http]
                             [--proxy-https]
                             [--proxy-skip-range]
@@ -89,7 +88,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --azure-hybrid-benefit
-    parameterValueGroup: "False, NotApplicable, True"
+    acceptedValues: False, NotApplicable, True
     summary: |-
       Flag to enable/disable Azure Hybrid Benefit feature.
   - name: --config --configuration-settings
@@ -109,6 +108,7 @@ directCommands:
   - name: --custom-ca-cert --proxy-cert
     summary: |-
       Path to the certificate file for proxy or custom Certificate Authority.
+    groupName: Proxy Arguments
   - name: --custom-locations-oid
     summary: |-
       OID of 'custom-locations' app.
@@ -117,8 +117,8 @@ directCommands:
     summary: |-
       Flag to disable auto upgrade of arc agents.
   - name: --distribution
-    defaultValue: "generic"
-    parameterValueGroup: "aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg"
+    defaultValue: generic
+    acceptedValues: aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg
     summary: |-
       The Kubernetes distribution which will be running on this connected cluster.
   - name: --distribution-version
@@ -126,28 +126,32 @@ directCommands:
       The Kubernetes distribution version of the connected cluster.
   - name: --enable-oidc-issuer
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable creation of OIDC issuer url used for workload identity federation.
     isPreview: true
+    groupName: Workload Identity Arguments
   - name: --enable-private-link
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable/disable private link support on a connected cluster resource. Allowed values: false, true.
     isPreview: true
+    groupName: PrivateLink Arguments
   - name: --enable-wi --enable-workload-identity
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable workload identity webhook.
     isPreview: true
+    groupName: Workload Identity Arguments
   - name: --gateway-resource-id
     summary: |-
       ArmID of the Arc Gateway resource.
     isPreview: true
+    groupName: Gateway Arguments
   - name: --infrastructure
-    defaultValue: "generic"
-    parameterValueGroup: "LTSCWindows 10 Enterprise LTSC, Windows 10 Enterprise, Windows 10 Enterprise LTSC 2019, Windows 10 Enterprise LTSC 2021, Windows 10 Enterprise N, Windows 10 Enterprise N LTSC 2019, Windows 10 Enterprise N LTSC 2021, Windows 10 IoT Enterprise, Windows 10 IoT Enterprise LTSC 2019, Windows 10 IoT Enterprise LTSC 2021, Windows 10 Pro, Windows 11 Enterprise, Windows 11 Enterprise N, Windows 11 IoT Enterprise, Windows 11 Pro, Windows Server 2019, Windows Server 2019 Datacenter, Windows Server 2019 Standard, Windows Server 2022, Windows Server 2022 Datacenter, Windows Server 2022 Standard, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server"
+    defaultValue: generic
+    acceptedValues: LTSCWindows 10 Enterprise LTSC, Windows 10 Enterprise, Windows 10 Enterprise LTSC 2019, Windows 10 Enterprise LTSC 2021, Windows 10 Enterprise N, Windows 10 Enterprise N LTSC 2019, Windows 10 Enterprise N LTSC 2021, Windows 10 IoT Enterprise, Windows 10 IoT Enterprise LTSC 2019, Windows 10 IoT Enterprise LTSC 2021, Windows 10 Pro, Windows 11 Enterprise, Windows 11 Enterprise N, Windows 11 IoT Enterprise, Windows 11 Pro, Windows Server 2019, Windows Server 2019 Datacenter, Windows Server 2019 Standard, Windows Server 2022, Windows Server 2022 Datacenter, Windows Server 2022 Standard, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server
     summary: |-
       The infrastructure on which the Kubernetes cluster represented by this connected cluster will be running on.
   - name: --kube-config
@@ -163,27 +167,34 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+    groupName: Timeout Arguments
   - name: --onboarding-timeout
     defaultValue: "1200"
     summary: |-
       Time required (in seconds) for the arc-agent pods to be installed on the kubernetes cluster. Override this value if the hardware/network constraints on your cluster requires more time for installing the arc-agent pods.
+    groupName: Timeout Arguments
   - name: --pls-arm-id --private-link-scope-resource-id
     summary: |-
       ARM resource id of the private link scope resource to which this connected cluster is associated.
     isPreview: true
+    groupName: PrivateLink Arguments
   - name: --proxy-http
     summary: |-
       Http proxy URL to be used.
+    groupName: Proxy Arguments
   - name: --proxy-https
     summary: |-
       Https proxy URL to be used.
+    groupName: Proxy Arguments
   - name: --proxy-skip-range
     summary: |-
       List of URLs/CIDRs for which proxy should not to be used.
+    groupName: Proxy Arguments
   - name: --self-hosted-issuer
     summary: |-
       Self hosted issuer url for public cloud clusters - AKS, GKE, EKS.
     isPreview: true
+    groupName: Workload Identity Arguments
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
@@ -195,6 +206,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_delete
   name: az connectedk8s delete
   summary: |-
@@ -227,6 +265,7 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --kube-config
     summary: |-
       Path to the kube config file.
@@ -236,6 +275,7 @@ directCommands:
   - name: --name -n
     summary: |-
       The name of the connected cluster.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -243,6 +283,7 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
@@ -250,10 +291,35 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_disable-features
   name: az connectedk8s disable-features
   summary: |-
@@ -282,13 +348,14 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --features
-    parameterValueGroup: "azure-rbac, cluster-connect, custom-locations"
+    acceptedValues: azure-rbac, cluster-connect, custom-locations
     summary: |-
       Space-separated list of features you want to disable.
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --kube-config
     summary: |-
       Path to the kube config file.
@@ -298,9 +365,11 @@ directCommands:
   - name: --name -n
     summary: |-
       The name of the connected cluster.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
@@ -308,10 +377,35 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_enable-features
   name: az connectedk8s enable-features
   summary: |-
@@ -344,7 +438,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --features
-    parameterValueGroup: "azure-rbac, cluster-connect, custom-locations"
+    acceptedValues: azure-rbac, cluster-connect, custom-locations
     summary: |-
       Space-separated list of features you want to enable.
   optionalParameters:
@@ -354,6 +448,7 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --kube-config
     summary: |-
       Path to the kube config file.
@@ -363,12 +458,15 @@ directCommands:
   - name: --name -n
     summary: |-
       The name of the connected cluster.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --skip-azure-rbac-list
     summary: |-
       Comma separated list of names of usernames/email/oid. Azure RBAC will be skipped for these users. Specify when enabling azure-rbac.
+    groupName: Azure RBAC Arguments
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
@@ -376,6 +474,31 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_list
   name: az connectedk8s list
   summary: |-
@@ -394,6 +517,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_proxy
   name: az connectedk8s proxy
   summary: |-
@@ -427,18 +577,20 @@ directCommands:
     syntax: az connectedk8s proxy -n clusterName -g resourceGroupName --kube-context contextName
   optionalParameters:
   - name: --file -f
-    defaultValue: "~\\.kube\\config"
+    defaultValue: ~\.kube\config
     summary: |-
       Kubernetes configuration file to update. If not provided, updates the file '~/.kube/config'. Use '-' to print YAML to stdout instead.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --kube-context
     summary: |-
       If specified, overwrite the default context name.
   - name: --name -n
     summary: |-
       The name of the connected cluster.
+    groupName: Resource Id Arguments
   - name: --port
     defaultValue: "47011"
     summary: |-
@@ -446,12 +598,38 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --token
     summary: |-
       Service account token to use to authenticate to the kubernetes cluster.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_show
   name: az connectedk8s show
   summary: |-
@@ -471,15 +649,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the connected cluster.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_troubleshoot
   name: az connectedk8s troubleshoot
   summary: |-
@@ -522,6 +728,33 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_update
   name: az connectedk8s update
   summary: |-
@@ -531,17 +764,17 @@ directCommands:
   syntax: >-
     az connectedk8s update [--auto-upgrade {false, true}]
                            [--azure-hybrid-benefit {False, NotApplicable, True}]
-                           [--config]
-                           [--config-protected]
+                           [--config --configuration-settings]
+                           [--config-protected --config-protected-settings]
                            [--container-log-path]
-                           [--custom-ca-cert]
+                           [--custom-ca-cert --proxy-cert]
                            [--disable-gateway {false, true}]
                            [--disable-proxy]
-                           [--disable-wi {false, true}]
+                           [--disable-wi --disable-workload-identity {false, true}]
                            [--distribution {aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
                            [--distribution-version]
                            [--enable-oidc-issuer {false, true}]
-                           [--enable-wi {false, true}]
+                           [--enable-wi --enable-workload-identity {false, true}]
                            [--gateway-resource-id]
                            [--ids]
                            [--kube-config]
@@ -583,11 +816,11 @@ directCommands:
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --disable-gateway
   optionalParameters:
   - name: --auto-upgrade
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to enable/disable auto upgrade of arc agents. By default, auto upgrade of agents is enabled.
   - name: --azure-hybrid-benefit
-    parameterValueGroup: "False, NotApplicable, True"
+    acceptedValues: False, NotApplicable, True
     summary: |-
       Flag to enable/disable Azure Hybrid Benefit feature.
   - name: --config --configuration-settings
@@ -604,45 +837,53 @@ directCommands:
   - name: --custom-ca-cert --proxy-cert
     summary: |-
       Path to the certificate file for proxy or custom Certificate Authority.
+    groupName: Proxy Arguments
   - name: --disable-gateway
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to disable Arc Gateway.
     isPreview: true
+    groupName: Gateway Arguments
   - name: --disable-proxy
     defaultValue: "False"
     summary: |-
       Disables proxy settings for agents.
+    groupName: Proxy Arguments
   - name: --disable-wi --disable-workload-identity
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Disable workload identity webhook.
     isPreview: true
+    groupName: Workload Identity Arguments
   - name: --distribution
-    parameterValueGroup: "aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg"
+    acceptedValues: aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg
     summary: |-
       The Kubernetes distribution which will be running on this connected cluster.
   - name: --distribution-version
     summary: |-
       The Kubernetes distribution version of the connected cluster.
   - name: --enable-oidc-issuer
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable creation of OIDC issuer url used for workload identity federation.
     isPreview: true
+    groupName: Workload Identity Arguments
   - name: --enable-wi --enable-workload-identity
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable workload identity webhook.
     isPreview: true
+    groupName: Workload Identity Arguments
   - name: --gateway-resource-id
     summary: |-
       ArmID of the Arc Gateway resource.
     isPreview: true
+    groupName: Gateway Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --kube-config
     summary: |-
       Path to the kube config file.
@@ -652,22 +893,28 @@ directCommands:
   - name: --name -n
     summary: |-
       The name of the connected cluster.
+    groupName: Resource Id Arguments
   - name: --proxy-http
     summary: |-
       Http proxy URL to be used.
+    groupName: Proxy Arguments
   - name: --proxy-https
     summary: |-
       Https proxy URL to be used.
+    groupName: Proxy Arguments
   - name: --proxy-skip-range
     summary: |-
       List of URLs/CIDRs for which proxy should not to be used.
+    groupName: Proxy Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --self-hosted-issuer
     summary: |-
       Self hosted issuer url for public cloud clusters - AKS, GKE, EKS.
     isPreview: true
+    groupName: Workload Identity Arguments
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
@@ -675,6 +922,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -682,6 +930,30 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_connectedk8s_upgrade
   name: az connectedk8s upgrade
   summary: |-
@@ -715,6 +987,7 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --kube-config
     summary: |-
       Path to the kube config file.
@@ -724,9 +997,11 @@ directCommands:
   - name: --name -n
     summary: |-
       The name of the connected cluster.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
@@ -734,10 +1009,35 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --upgrade-timeout
     defaultValue: "600"
     summary: |-
       Time required (in seconds) for the arc-agent pods to be upgraded on the kubernetes cluster. Override this value if the hardware/network constraints on your cluster requires more time for upgrading the arc-agent pods.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_connectedk8s_connect
 - az_connectedk8s_delete
@@ -749,29 +1049,5 @@ commands:
 - az_connectedk8s_troubleshoot
 - az_connectedk8s_update
 - az_connectedk8s_upgrade
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Commands to manage connected kubernetes clusters.

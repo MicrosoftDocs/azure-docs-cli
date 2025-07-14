@@ -21,8 +21,8 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link create --distributed-availability-group-name
-                          --instance-name
+    az sql mi link create --distributed-availability-group-name --link --name
+                          --instance-name --managed-instance --managed-instance-name --mi
                           --resource-group
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--primary-ag]
@@ -51,38 +51,72 @@ directCommands:
       Name of the resource group.
   optionalParameters:
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --primary-ag
     summary: |-
       Name of the primary availability group.
+    groupName: Properties Arguments
   - name: --primary-availability-group-name
     summary: |-
       Name of the primary availability group.
     isDeprecated: true
     deprecateInfo: Option '--primary-availability-group-name' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--partner-availability-group-name' instead.
+    groupName: Properties Arguments
   - name: --secondary-ag
     summary: |-
       Name of the secondary availability group.
+    groupName: Properties Arguments
   - name: --secondary-availability-group-name
     summary: |-
       Name of the secondary availability group.
     isDeprecated: true
     deprecateInfo: Option '--secondary-availability-group-name' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--instance-availability-group-name' instead.
+    groupName: Properties Arguments
   - name: --source-endpoint
     summary: |-
       IP adress of the source endpoint.
     isDeprecated: true
     deprecateInfo: Argument '--source-endpoint' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--partner-endpoint' instead.
+    groupName: Properties Arguments
   - name: --target-database
     summary: |-
       Name of the target database.
     isDeprecated: true
     deprecateInfo: Option '--target-database' has been deprecated and will be removed in next breaking change release(2.67.0). Use '--databases' instead.
+    groupName: Properties Arguments
   - name: --target-db
     summary: |-
       Name of the target database.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sql_mi_link_delete
   name: az sql mi link delete
   summary: |-
@@ -93,9 +127,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link delete [--distributed-availability-group-name]
+    az sql mi link delete [--distributed-availability-group-name --link --name]
                           [--ids]
-                          [--instance-name]
+                          [--instance-name --managed-instance --managed-instance-name --mi]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--resource-group]
                           [--subscription]
@@ -108,26 +142,55 @@ directCommands:
   - name: --distributed-availability-group-name --link --name -n
     summary: |-
       Name of the instance link.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-name --managed-instance --managed-instance-name --mi
     summary: |-
       Name of Azure SQL Managed Instance.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of the resource group.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sql_mi_link_list
   name: az sql mi link list
   summary: |-
@@ -141,7 +204,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link list --instance-name
+    az sql mi link list --instance-name --managed-instance --managed-instance-name --mi
                         --resource-group
   examples:
   - summary: |-
@@ -156,6 +219,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of the resource group.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sql_mi_link_show
   name: az sql mi link show
   summary: |-
@@ -169,9 +259,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link show [--distributed-availability-group-name]
+    az sql mi link show [--distributed-availability-group-name --link --name]
                         [--ids]
-                        [--instance-name]
+                        [--instance-name --managed-instance --managed-instance-name --mi]
                         [--resource-group]
                         [--subscription]
   examples:
@@ -182,18 +272,47 @@ directCommands:
   - name: --distributed-availability-group-name --link --name -n
     summary: |-
       Name of the instance link.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-name --managed-instance --managed-instance-name --mi
     summary: |-
       Name of Azure SQL Managed Instance.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of the resource group.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sql_mi_link_update
   name: az sql mi link update
   summary: |-
@@ -207,9 +326,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql mi link update [--distributed-availability-group-name]
+    az sql mi link update [--distributed-availability-group-name --link --name]
                           [--ids]
-                          [--instance-name]
+                          [--instance-name --managed-instance --managed-instance-name --mi]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--replication-mode {Async, Sync}]
                           [--resource-group]
@@ -222,56 +341,61 @@ directCommands:
   - name: --distributed-availability-group-name --link --name -n
     summary: |-
       Name of the instance link.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-name --managed-instance --managed-instance-name --mi
     summary: |-
       Name of Azure SQL Managed Instance.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --replication-mode
-    parameterValueGroup: "Async, Sync"
+    acceptedValues: Async, Sync
     summary: |-
       Replication mode value. Possible values include 'Sync' and 'Async'.
   - name: --resource-group -g
     summary: |-
       Name of the resource group.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_sql_mi_link_create
 - az_sql_mi_link_delete
 - az_sql_mi_link_list
 - az_sql_mi_link_show
 - az_sql_mi_link_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 09/13/2024
   description: Instance link management commands.

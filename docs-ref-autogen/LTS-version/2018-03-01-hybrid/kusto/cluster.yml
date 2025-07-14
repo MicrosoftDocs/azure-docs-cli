@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_kusto_cluster
 name: az kusto cluster
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **kusto** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az kusto cluster** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage cluster with kusto.
@@ -21,7 +20,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster add-language-extension [--cluster-name]
+    az kusto cluster add-language-extension [--cluster-name --name]
                                             [--ids]
                                             [--no-wait]
                                             [--resource-group]
@@ -35,9 +34,11 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -45,9 +46,11 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --value
     summary: |-
       The list of language extensions.
@@ -57,6 +60,30 @@ directCommands:
       language-extension-name: The language extension name.
 
       Multiple actions can be specified by using more than one --value argument.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_create
   name: az kusto cluster create
   summary: |-
@@ -66,7 +93,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster create --cluster-name
+    az kusto cluster create --cluster-name --name
                             --resource-group
                             --sku
                             [--accepted-audiences]
@@ -84,14 +111,14 @@ directCommands:
                             [--location]
                             [--no-wait]
                             [--optimized-autoscale]
-                            [--outbound-net-access {Disabled, Enabled}]
+                            [--outbound-net-access --restrict-outbound-network-access {Disabled, Enabled}]
                             [--public-ip-type {DualStack, IPv4}]
                             [--public-network-access {Disabled, Enabled}]
                             [--tags]
                             [--trusted-external-tenants]
                             [--type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
-                            [--user-assigned]
-                            [--vcluster-graduation]
+                            [--user-assigned --user-assigned-identities]
+                            [--vcluster-graduation --virtual-cluster-graduation-properties]
                             [--virtual-network-configuration]
                             [--zones]
   examples:
@@ -128,27 +155,27 @@ directCommands:
     summary: |-
       The list of ips in the format of CIDR allowed to connect to the cluster.
   - name: --enable-auto-stop
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days).
   - name: --enable-disk-encryption
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the cluster's disks are encrypted.
   - name: --enable-double-encryption
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if double encryption is enabled.
   - name: --enable-purge
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the purge operations are enabled.
   - name: --enable-streaming-ingest
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the streaming ingest is enabled.
   - name: --engine-type
-    parameterValueGroup: "V2, V3"
+    acceptedValues: V2, V3
     summary: |-
       The engine type.
   - name: --if-match
@@ -185,15 +212,15 @@ directCommands:
       minimum: Required. Minimum allowed instances count.
       maximum: Required. Maximum allowed instances count.
   - name: --outbound-net-access --restrict-outbound-network-access
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
   - name: --public-ip-type
-    parameterValueGroup: "DualStack, IPv4"
+    acceptedValues: DualStack, IPv4
     summary: |-
       Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6).
   - name: --public-network-access
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed.
   - name: --tags
@@ -209,12 +236,14 @@ directCommands:
 
       Multiple actions can be specified by using more than one --trusted-external-tenants argument.
   - name: --type
-    parameterValueGroup: "None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned"
+    acceptedValues: None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned
     summary: |-
       The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
+    groupName: Identity Arguments
   - name: --user-assigned --user-assigned-identities
     summary: |-
       The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/json-file/@json-file.
+    groupName: Identity Arguments
   - name: --vcluster-graduation --virtual-cluster-graduation-properties
     summary: |-
       Virtual Cluster graduation properties.
@@ -230,6 +259,33 @@ directCommands:
   - name: --zones
     summary: |-
       The availability zones of the cluster.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_delete
   name: az kusto cluster delete
   summary: |-
@@ -239,7 +295,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster delete [--cluster-name]
+    az kusto cluster delete [--cluster-name --name]
                             [--ids]
                             [--no-wait]
                             [--resource-group]
@@ -253,9 +309,11 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -263,13 +321,39 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_detach-follower-database
   name: az kusto cluster detach-follower-database
   summary: |-
@@ -281,7 +365,7 @@ directCommands:
   syntax: >-
     az kusto cluster detach-follower-database --attached-database-configuration-name
                                               --cluster-resource-id
-                                              [--cluster-name]
+                                              [--cluster-name --name]
                                               [--ids]
                                               [--no-wait]
                                               [--resource-group]
@@ -303,9 +387,11 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -313,9 +399,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_diagnose-virtual-network
   name: az kusto cluster diagnose-virtual-network
   summary: |-
@@ -325,7 +437,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster diagnose-virtual-network [--cluster-name]
+    az kusto cluster diagnose-virtual-network [--cluster-name --name]
                                               [--ids]
                                               [--no-wait]
                                               [--resource-group]
@@ -338,9 +450,11 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -348,9 +462,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_list
   name: az kusto cluster list
   summary: |-
@@ -371,6 +511,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_list-follower-database
   name: az kusto cluster list-follower-database
   summary: |-
@@ -380,7 +547,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster list-follower-database --cluster-name
+    az kusto cluster list-follower-database --cluster-name --name
                                             --resource-group
   examples:
   - summary: |-
@@ -395,6 +562,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_list-language-extension
   name: az kusto cluster list-language-extension
   summary: |-
@@ -404,7 +598,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster list-language-extension --cluster-name
+    az kusto cluster list-language-extension --cluster-name --name
                                              --resource-group
   examples:
   - summary: |-
@@ -419,6 +613,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_list-outbound-network-dependency-endpoint
   name: az kusto cluster list-outbound-network-dependency-endpoint
   summary: |-
@@ -428,7 +649,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster list-outbound-network-dependency-endpoint --cluster-name
+    az kusto cluster list-outbound-network-dependency-endpoint --cluster-name --name
                                                                --resource-group
   examples:
   - summary: |-
@@ -443,6 +664,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_list-sku
   name: az kusto cluster list-sku
   summary: |-
@@ -452,7 +700,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster list-sku [--cluster-name]
+    az kusto cluster list-sku [--cluster-name --name]
                               [--resource-group]
   examples:
   - summary: |-
@@ -468,6 +716,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_remove-language-extension
   name: az kusto cluster remove-language-extension
   summary: |-
@@ -477,7 +752,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster remove-language-extension [--cluster-name]
+    az kusto cluster remove-language-extension [--cluster-name --name]
                                                [--ids]
                                                [--no-wait]
                                                [--resource-group]
@@ -491,9 +766,11 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -501,9 +778,11 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --value
     summary: |-
       The list of language extensions.
@@ -513,6 +792,30 @@ directCommands:
       language-extension-name: The language extension name.
 
       Multiple actions can be specified by using more than one --value argument.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_show
   name: az kusto cluster show
   summary: |-
@@ -522,7 +825,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster show [--cluster-name]
+    az kusto cluster show [--cluster-name --name]
                           [--ids]
                           [--resource-group]
                           [--subscription]
@@ -534,15 +837,43 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_start
   name: az kusto cluster start
   summary: |-
@@ -552,7 +883,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster start [--cluster-name]
+    az kusto cluster start [--cluster-name --name]
                            [--ids]
                            [--no-wait]
                            [--resource-group]
@@ -565,9 +896,11 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -575,9 +908,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_stop
   name: az kusto cluster stop
   summary: |-
@@ -587,7 +946,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster stop [--cluster-name]
+    az kusto cluster stop [--cluster-name --name]
                           [--ids]
                           [--no-wait]
                           [--resource-group]
@@ -600,9 +959,11 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -610,9 +971,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_update
   name: az kusto cluster update
   summary: |-
@@ -625,7 +1012,7 @@ directCommands:
     az kusto cluster update [--accepted-audiences]
                             [--allowed-fqdn-list]
                             [--allowed-ip-range-list]
-                            [--cluster-name]
+                            [--cluster-name --name]
                             [--enable-auto-stop {false, true}]
                             [--enable-disk-encryption {false, true}]
                             [--enable-double-encryption {false, true}]
@@ -638,7 +1025,7 @@ directCommands:
                             [--location]
                             [--no-wait]
                             [--optimized-autoscale]
-                            [--outbound-net-access {Disabled, Enabled}]
+                            [--outbound-net-access --restrict-outbound-network-access {Disabled, Enabled}]
                             [--public-ip-type {DualStack, IPv4}]
                             [--public-network-access {Disabled, Enabled}]
                             [--resource-group]
@@ -647,8 +1034,8 @@ directCommands:
                             [--tags]
                             [--trusted-external-tenants]
                             [--type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
-                            [--user-assigned]
-                            [--vcluster-graduation]
+                            [--user-assigned --user-assigned-identities]
+                            [--vcluster-graduation --virtual-cluster-graduation-properties]
                             [--virtual-network-configuration]
   examples:
   - summary: |-
@@ -667,33 +1054,35 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --enable-auto-stop
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days).
   - name: --enable-disk-encryption
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the cluster's disks are encrypted.
   - name: --enable-double-encryption
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if double encryption is enabled.
   - name: --enable-purge
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the purge operations are enabled.
   - name: --enable-streaming-ingest
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       A boolean value that indicates if the streaming ingest is enabled.
   - name: --engine-type
-    parameterValueGroup: "V2, V3"
+    acceptedValues: V2, V3
     summary: |-
       The engine type.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --if-match
     summary: |-
       The ETag of the cluster. Omit this value to always overwrite the current cluster. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
@@ -725,20 +1114,21 @@ directCommands:
       minimum: Required. Minimum allowed instances count.
       maximum: Required. Maximum allowed instances count.
   - name: --outbound-net-access --restrict-outbound-network-access
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
   - name: --public-ip-type
-    parameterValueGroup: "DualStack, IPv4"
+    acceptedValues: DualStack, IPv4
     summary: |-
       Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6).
   - name: --public-network-access
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --sku
     summary: |-
       The SKU of the cluster.
@@ -751,6 +1141,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -764,12 +1155,14 @@ directCommands:
 
       Multiple actions can be specified by using more than one --trusted-external-tenants argument.
   - name: --type
-    parameterValueGroup: "None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned"
+    acceptedValues: None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned
     summary: |-
       The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
+    groupName: Identity Arguments
   - name: --user-assigned --user-assigned-identities
     summary: |-
       The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/json-file/@json-file.
+    groupName: Identity Arguments
   - name: --vcluster-graduation --virtual-cluster-graduation-properties
     summary: |-
       Virtual Cluster graduation properties.
@@ -782,6 +1175,30 @@ directCommands:
       subnet-id: Required. The subnet resource id.
       engine-public-ip-id: Required. Engine service's public IP address resource id.
       data-management-public-ip-id: Required. Data management's service public IP address resource id.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_kusto_cluster_wait
   name: az kusto cluster wait
   summary: |-
@@ -791,7 +1208,7 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'kusto' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az kusto cluster wait [--cluster-name]
+    az kusto cluster wait [--cluster-name --name]
                           [--created]
                           [--custom]
                           [--deleted]
@@ -816,42 +1233,77 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       The name of the Kusto cluster.
+    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
       Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
       Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
       Wait until deleted.
+    groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --timeout
     defaultValue: "3600"
     summary: |-
       Maximum wait in seconds.
+    groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_kusto_cluster_add-language-extension
 - az_kusto_cluster_create
@@ -869,29 +1321,5 @@ commands:
 - az_kusto_cluster_stop
 - az_kusto_cluster_update
 - az_kusto_cluster_wait
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage cluster with kusto.

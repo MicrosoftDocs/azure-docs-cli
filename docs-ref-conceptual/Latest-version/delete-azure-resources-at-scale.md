@@ -1,6 +1,7 @@
 ---
-title: How to delete resources at scale using the Azure CLI
+title: Delete multiple resources from a script using Azure CLI
 description: Learn how to delete multiple Azure resources from a script and log progress to a file.
+ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 #customer intent: As an Azure resource manager, I want to create Azure resources at scale using a script. I want to log progress to a local TXT file so I don't have to sort through my Windows log for results.
@@ -8,19 +9,16 @@ ms.custom: devx-track-azurecli
 
 # How to delete resources at scale using the Azure CLI
 
-As an Azure cloud resource administrator, you often have to delete several Azure resources when
-removing an old environment. Some Azure CLI devTest environments also require periodic cleanup to
-prevent charges for temporary Azure resources that might persist longer than necessary.
+As an Azure resource manager, you frequently have to delete multiple Azure resources when tearing down an old environment. Some CLI devTest environments also need a periodic clean up so charges are not incurred for temporary Azure resources that have lingered longer.
 
-In this Azure CLI sample, you learn the following items:
+In this Azure CLI sample you will learn the following:
 
 > [!div class="checklist"]
 >
-> - Delete multiple Azure resources from a script
-> - Log script progress to a local TXT file
+> * Delete multiple Azure resources from a script
+> * Log script progress to a local TXT file
 
-This sample script was tested in [Azure Cloud Shell][02] using a Bash environment. This script was
-also tested successfully in Ubuntu 22.04.3 LTS using [Windows Terminal][03].
+This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in a Bash environment. This script has also been tested successfully in Ubuntu 22.04.3 LTS using [Windows Terminal](/windows/terminal/).
 
 ## Delete Azure resources filtering by name
 
@@ -84,7 +82,7 @@ clear
 cat $logFileLocation
 ```
 
-## Delete all Azure resources of a type
+## Delete all azure resources of a type
 
 Delete all Virtual Machines in a resource group
 
@@ -97,10 +95,4 @@ az group delete -n $rgName --force-deletion-types Microsoft.Compute/virtualMachi
 
 ## See also
 
-* [Create Azure resources at scale][01]
-
-<!-- link references -->
-
-[01]: ./create-azure-resources-at-scale.md
-[02]: /azure/cloud-shell/overview
-[03]: /windows/terminal/
+* [Create Azure resources at scale](./create-azure-resources-at-scale.md)

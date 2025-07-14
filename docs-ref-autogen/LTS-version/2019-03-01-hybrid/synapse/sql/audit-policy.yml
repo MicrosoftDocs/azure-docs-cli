@@ -29,6 +29,33 @@ directCommands:
     name: --workspace-name
     summary: |-
       The workspace name.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_synapse_sql_audit-policy_update
   name: az synapse sql audit-policy update
   summary: |-
@@ -44,16 +71,16 @@ directCommands:
                                        [--actions]
                                        [--add]
                                        [--blob-auditing-policy-name]
-                                       [--blob-storage-target-state {Disabled, Enabled}]
-                                       [--eh]
-                                       [--ehari]
-                                       [--ehts {Disabled, Enabled}]
+                                       [--blob-storage-target-state --bsts {Disabled, Enabled}]
+                                       [--eh --event-hub]
+                                       [--ehari --event-hub-authorization-rule-id]
+                                       [--ehts --event-hub-target-state {Disabled, Enabled}]
                                        [--enable-azure-monitor {false, true}]
                                        [--force-string]
-                                       [--lats {Disabled, Enabled}]
-                                       [--lawri]
+                                       [--lats --log-analytics-target-state {Disabled, Enabled}]
+                                       [--lawri --log-analytics-workspace-resource-id]
                                        [--no-wait]
-                                       [--queue-delay-milliseconds]
+                                       [--queue-delay-milliseconds --queue-delay-time]
                                        [--remove]
                                        [--retention-days]
                                        [--set]
@@ -134,41 +161,50 @@ directCommands:
   - name: --actions
     summary: |-
       List of actions and action groups to audit.
+    groupName: Policy Arguments
   - name: --add
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --blob-auditing-policy-name
-    defaultValue: "default"
+    defaultValue: default
   - name: --blob-storage-target-state --bsts
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Indicate whether blob storage is a destination for audit records.
+    groupName: Storage Arguments
   - name: --eh --event-hub
     summary: |-
       The name of the event hub. If none is specified when providing event_hub_authorization_rule_id, the default event hub will be selected.
+    groupName: Event Hub Arguments
   - name: --ehari --event-hub-authorization-rule-id
     summary: |-
       The resource Id for the event hub authorization rule.
+    groupName: Event Hub Arguments
   - name: --ehts --event-hub-target-state
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Indicate whether event hub is a destination for audit records.
+    groupName: Event Hub Arguments
   - name: --enable-azure-monitor
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Whether enabling azure monitor target or not.
   - name: --force-string
     defaultValue: "False"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --lats --log-analytics-target-state
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Indicate whether log analytics is a destination for audit records.
+    groupName: Log Analytics Arguments
   - name: --lawri --log-analytics-workspace-resource-id
     summary: |-
       The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Audit Logs.
+    groupName: Log Analytics Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -177,36 +213,72 @@ directCommands:
     summary: |-
       The amount of time in milliseconds that can elapse before audit actions are forced to be processed.
   - name: --remove
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --retention-days
     summary: |-
       The number of days to retain audit logs.
+    groupName: Policy Arguments
   - name: --set
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --state
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Auditing policy state.
+    groupName: Policy Arguments
   - name: --storage-account
     summary: |-
       Name of the storage account.
+    groupName: Storage Arguments
   - name: --storage-endpoint
     summary: |-
       The storage account endpoint.
+    groupName: Storage Arguments
   - name: --storage-key
     summary: |-
       Access key for the storage account.
+    groupName: Storage Arguments
   - name: --storage-subscription
     summary: |-
       The subscription id of storage account.
+    groupName: Storage Arguments
   - name: --use-secondary-key
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicates whether using the secondary storeage key or not.
+    groupName: Storage Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_synapse_sql_audit-policy_wait
   name: az synapse sql audit-policy wait
   summary: |-
@@ -243,57 +315,67 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
       Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
       Wait until deleted.
+    groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --timeout
     defaultValue: "3600"
     summary: |-
       Maximum wait in seconds.
+    groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_synapse_sql_audit-policy_show
 - az_synapse_sql_audit-policy_update
 - az_synapse_sql_audit-policy_wait
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 10/27/2021
   description: Manage SQL auditing policy.

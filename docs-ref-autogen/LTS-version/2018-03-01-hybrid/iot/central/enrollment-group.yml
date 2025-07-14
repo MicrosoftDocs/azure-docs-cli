@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_iot_central_enrollment-group
 name: az iot central enrollment-group
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot central enrollment-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage and configure IoT Central enrollment group.
@@ -18,18 +17,18 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot central enrollment-group create --app-id
-                                           --at {symmetricKey, x509}
+                                           --at --attestation-type {symmetricKey, x509}
                                            --display-name
-                                           --group-id
+                                           --group-id --id
                                            --type
-                                           [--api-version {2022-06-30-preview, 2022-07-31}]
-                                           [--central-api-uri]
-                                           [--certificate-path]
+                                           [--api-version --av {2022-06-30-preview, 2022-07-31}]
+                                           [--central-api-uri --central-dns-suffix]
+                                           [--certificate-path --cp]
                                            [--etag]
-                                           [--pk]
-                                           [--provisioning-status {disabled, enabled}]
-                                           [--scp]
-                                           [--secondary-key]
+                                           [--pk --primary-key]
+                                           [--provisioning-status --ps {disabled, enabled}]
+                                           [--scp --secondary-certificate-path]
+                                           [--secondary-key --sk]
                                            [--token]
   examples:
   - summary: |-
@@ -48,8 +47,8 @@ directCommands:
       The App ID of the IoT Central app you want to manage. You can find the App ID in the "About" page for your application under the help menu.
   - isRequired: true
     name: --at --attestation-type
-    defaultValue: "symmetricKey"
-    parameterValueGroup: "symmetricKey, x509"
+    defaultValue: symmetricKey
+    acceptedValues: symmetricKey, x509
     summary: |-
       The attestation mechanism for the enrollment group. Only 'x509' or 'symmetricKey' are allowed.By default 'symmetricKey' will be used for attestation.
   - isRequired: true
@@ -66,14 +65,14 @@ directCommands:
       Type of devices that connect through the group.
   optionalParameters:
   - name: --api-version --av
-    defaultValue: "2022-07-31"
-    parameterValueGroup: "2022-06-30-preview, 2022-07-31"
+    defaultValue: 2022-07-31
+    acceptedValues: 2022-06-30-preview, 2022-07-31
     summary: |-
       This command parameter has been deprecated and will be ignored.In the future release, we will only support IoT Central APIs from latest GA version.If any API is not GA yet, we will call latest preview version.
     isDeprecated: true
     deprecateInfo: Argument 'api_version' has been deprecated and will be removed in a future release.
   - name: --central-api-uri --central-dns-suffix
-    defaultValue: "azureiotcentral.com"
+    defaultValue: azureiotcentral.com
     summary: |-
       The IoT Central DNS suffix associated with your application.
   - name: --certificate-path --cp
@@ -86,8 +85,8 @@ directCommands:
     summary: |-
       The primary symmetric shared access key stored in base64 format.
   - name: --provisioning-status --ps
-    defaultValue: "enabled"
-    parameterValueGroup: "disabled, enabled"
+    defaultValue: enabled
+    acceptedValues: disabled, enabled
     summary: |-
       Whether the devices using the group are allowed to connect to IoT Central. True or False.
   - name: --scp --secondary-certificate-path
@@ -99,6 +98,33 @@ directCommands:
   - name: --token
     summary: |-
       If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_central_enrollment-group_delete
   name: az iot central enrollment-group delete
   summary: |-
@@ -107,9 +133,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot central enrollment-group delete --app-id
-                                           --group-id
-                                           [--api-version {2022-06-30-preview, 2022-07-31}]
-                                           [--central-api-uri]
+                                           --group-id --id
+                                           [--api-version --av {2022-06-30-preview, 2022-07-31}]
+                                           [--central-api-uri --central-dns-suffix]
                                            [--token]
   examples:
   - summary: |-
@@ -126,19 +152,46 @@ directCommands:
       Unique identifier for the enrollment group.
   optionalParameters:
   - name: --api-version --av
-    defaultValue: "2022-07-31"
-    parameterValueGroup: "2022-06-30-preview, 2022-07-31"
+    defaultValue: 2022-07-31
+    acceptedValues: 2022-06-30-preview, 2022-07-31
     summary: |-
       This command parameter has been deprecated and will be ignored.In the future release, we will only support IoT Central APIs from latest GA version.If any API is not GA yet, we will call latest preview version.
     isDeprecated: true
     deprecateInfo: Argument 'api_version' has been deprecated and will be removed in a future release.
   - name: --central-api-uri --central-dns-suffix
-    defaultValue: "azureiotcentral.com"
+    defaultValue: azureiotcentral.com
     summary: |-
       The IoT Central DNS suffix associated with your application.
   - name: --token
     summary: |-
       If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_central_enrollment-group_generate-verification-code
   name: az iot central enrollment-group generate-verification-code
   summary: |-
@@ -147,10 +200,10 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot central enrollment-group generate-verification-code --app-id
-                                                               --group-id
-                                                               [--api-version {2022-06-30-preview, 2022-07-31}]
-                                                               [--central-api-uri]
-                                                               [--certificate-entry {primary, secondary}]
+                                                               --group-id --id
+                                                               [--api-version --av {2022-06-30-preview, 2022-07-31}]
+                                                               [--central-api-uri --central-dns-suffix]
+                                                               [--certificate-entry --entry {primary, secondary}]
                                                                [--token]
   examples:
   - summary: |-
@@ -167,23 +220,50 @@ directCommands:
       Unique identifier for the enrollment group.
   optionalParameters:
   - name: --api-version --av
-    defaultValue: "2022-07-31"
-    parameterValueGroup: "2022-06-30-preview, 2022-07-31"
+    defaultValue: 2022-07-31
+    acceptedValues: 2022-06-30-preview, 2022-07-31
     summary: |-
       This command parameter has been deprecated and will be ignored.In the future release, we will only support IoT Central APIs from latest GA version.If any API is not GA yet, we will call latest preview version.
     isDeprecated: true
     deprecateInfo: Argument 'api_version' has been deprecated and will be removed in a future release.
   - name: --central-api-uri --central-dns-suffix
-    defaultValue: "azureiotcentral.com"
+    defaultValue: azureiotcentral.com
     summary: |-
       The IoT Central DNS suffix associated with your application.
   - name: --certificate-entry --entry
-    parameterValueGroup: "primary, secondary"
+    acceptedValues: primary, secondary
     summary: |-
       Entry type of the x509 certificate which only allows 'primary' and 'secondary'.
   - name: --token
     summary: |-
       If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_central_enrollment-group_list
   name: az iot central enrollment-group list
   summary: |-
@@ -192,8 +272,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot central enrollment-group list --app-id
-                                         [--api-version {2022-06-30-preview, 2022-07-31}]
-                                         [--central-api-uri]
+                                         [--api-version --av {2022-06-30-preview, 2022-07-31}]
+                                         [--central-api-uri --central-dns-suffix]
                                          [--token]
   examples:
   - summary: |-
@@ -206,19 +286,46 @@ directCommands:
       The App ID of the IoT Central app you want to manage. You can find the App ID in the "About" page for your application under the help menu.
   optionalParameters:
   - name: --api-version --av
-    defaultValue: "2022-07-31"
-    parameterValueGroup: "2022-06-30-preview, 2022-07-31"
+    defaultValue: 2022-07-31
+    acceptedValues: 2022-06-30-preview, 2022-07-31
     summary: |-
       This command parameter has been deprecated and will be ignored.In the future release, we will only support IoT Central APIs from latest GA version.If any API is not GA yet, we will call latest preview version.
     isDeprecated: true
     deprecateInfo: Argument 'api_version' has been deprecated and will be removed in a future release.
   - name: --central-api-uri --central-dns-suffix
-    defaultValue: "azureiotcentral.com"
+    defaultValue: azureiotcentral.com
     summary: |-
       The IoT Central DNS suffix associated with your application.
   - name: --token
     summary: |-
       If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_central_enrollment-group_show
   name: az iot central enrollment-group show
   summary: |-
@@ -227,10 +334,10 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot central enrollment-group show --app-id
-                                         --group-id
-                                         [--api-version {2022-06-30-preview, 2022-07-31}]
-                                         [--central-api-uri]
-                                         [--certificate-entry {primary, secondary}]
+                                         --group-id --id
+                                         [--api-version --av {2022-06-30-preview, 2022-07-31}]
+                                         [--central-api-uri --central-dns-suffix]
+                                         [--certificate-entry --entry {primary, secondary}]
                                          [--token]
   examples:
   - summary: |-
@@ -247,23 +354,50 @@ directCommands:
       Unique identifier for the enrollment group.
   optionalParameters:
   - name: --api-version --av
-    defaultValue: "2022-07-31"
-    parameterValueGroup: "2022-06-30-preview, 2022-07-31"
+    defaultValue: 2022-07-31
+    acceptedValues: 2022-06-30-preview, 2022-07-31
     summary: |-
       This command parameter has been deprecated and will be ignored.In the future release, we will only support IoT Central APIs from latest GA version.If any API is not GA yet, we will call latest preview version.
     isDeprecated: true
     deprecateInfo: Argument 'api_version' has been deprecated and will be removed in a future release.
   - name: --central-api-uri --central-dns-suffix
-    defaultValue: "azureiotcentral.com"
+    defaultValue: azureiotcentral.com
     summary: |-
       The IoT Central DNS suffix associated with your application.
   - name: --certificate-entry --entry
-    parameterValueGroup: "primary, secondary"
+    acceptedValues: primary, secondary
     summary: |-
       Entry type of the x509 certificate which only allows 'primary' and 'secondary'.
   - name: --token
     summary: |-
       If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_central_enrollment-group_update
   name: az iot central enrollment-group update
   summary: |-
@@ -272,16 +406,16 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot central enrollment-group update --app-id
-                                           --group-id
-                                           [--api-version {2022-06-30-preview, 2022-07-31}]
-                                           [--central-api-uri]
-                                           [--certificate-entry {primary, secondary}]
-                                           [--certificate-path]
+                                           --group-id --id
+                                           [--api-version --av {2022-06-30-preview, 2022-07-31}]
+                                           [--central-api-uri --central-dns-suffix]
+                                           [--certificate-entry --entry {primary, secondary}]
+                                           [--certificate-path --cp]
                                            [--display-name]
                                            [--etag]
-                                           [--provisioning-status {disabled, enabled}]
+                                           [--provisioning-status --ps {disabled, enabled}]
                                            [--remove-x509 {false, true}]
-                                           [--scp]
+                                           [--scp --secondary-certificate-path]
                                            [--token]
                                            [--type]
   examples:
@@ -302,18 +436,18 @@ directCommands:
       Unique identifier for the enrollment group.
   optionalParameters:
   - name: --api-version --av
-    defaultValue: "2022-07-31"
-    parameterValueGroup: "2022-06-30-preview, 2022-07-31"
+    defaultValue: 2022-07-31
+    acceptedValues: 2022-06-30-preview, 2022-07-31
     summary: |-
       This command parameter has been deprecated and will be ignored.In the future release, we will only support IoT Central APIs from latest GA version.If any API is not GA yet, we will call latest preview version.
     isDeprecated: true
     deprecateInfo: Argument 'api_version' has been deprecated and will be removed in a future release.
   - name: --central-api-uri --central-dns-suffix
-    defaultValue: "azureiotcentral.com"
+    defaultValue: azureiotcentral.com
     summary: |-
       The IoT Central DNS suffix associated with your application.
   - name: --certificate-entry --entry
-    parameterValueGroup: "primary, secondary"
+    acceptedValues: primary, secondary
     summary: |-
       Entry type of the x509 certificate which only allows 'primary' and 'secondary'.
   - name: --certificate-path --cp
@@ -326,12 +460,12 @@ directCommands:
     summary: |-
       ETag used to prevent conflict in enrollment group updates.
   - name: --provisioning-status --ps
-    defaultValue: "enabled"
-    parameterValueGroup: "disabled, enabled"
+    defaultValue: enabled
+    acceptedValues: disabled, enabled
     summary: |-
       Whether the devices using the group are allowed to connect to IoT Central. True or False.
   - name: --remove-x509
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Whether the x509 certificate should be removed from the group. True or False.
   - name: --scp --secondary-certificate-path
@@ -343,6 +477,33 @@ directCommands:
   - name: --type
     summary: |-
       Type of devices that connect through the group.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_central_enrollment-group_verify-certificate
   name: az iot central enrollment-group verify-certificate
   summary: |-
@@ -362,11 +523,11 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot central enrollment-group verify-certificate --app-id
-                                                       --group-id
-                                                       [--api-version {2022-06-30-preview, 2022-07-31}]
-                                                       [--central-api-uri]
-                                                       [--certificate-path]
-                                                       [--scp]
+                                                       --group-id --id
+                                                       [--api-version --av {2022-06-30-preview, 2022-07-31}]
+                                                       [--central-api-uri --central-dns-suffix]
+                                                       [--certificate-path --cp]
+                                                       [--scp --secondary-certificate-path]
                                                        [--token]
   examples:
   - summary: |-
@@ -383,14 +544,14 @@ directCommands:
       Unique identifier for the enrollment group.
   optionalParameters:
   - name: --api-version --av
-    defaultValue: "2022-07-31"
-    parameterValueGroup: "2022-06-30-preview, 2022-07-31"
+    defaultValue: 2022-07-31
+    acceptedValues: 2022-06-30-preview, 2022-07-31
     summary: |-
       This command parameter has been deprecated and will be ignored.In the future release, we will only support IoT Central APIs from latest GA version.If any API is not GA yet, we will call latest preview version.
     isDeprecated: true
     deprecateInfo: Argument 'api_version' has been deprecated and will be removed in a future release.
   - name: --central-api-uri --central-dns-suffix
-    defaultValue: "azureiotcentral.com"
+    defaultValue: azureiotcentral.com
     summary: |-
       The IoT Central DNS suffix associated with your application.
   - name: --certificate-path --cp
@@ -402,6 +563,33 @@ directCommands:
   - name: --token
     summary: |-
       If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_central_enrollment-group_create
 - az_iot_central_enrollment-group_delete
@@ -410,29 +598,5 @@ commands:
 - az_iot_central_enrollment-group_show
 - az_iot_central_enrollment-group_update
 - az_iot_central_enrollment-group_verify-certificate
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage and configure IoT Central enrollment group.
