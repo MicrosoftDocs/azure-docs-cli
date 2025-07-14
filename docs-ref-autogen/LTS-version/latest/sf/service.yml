@@ -13,17 +13,17 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az sf service create --application
+    az sf service create --application --application-name
                          --cluster-name
-                         --name
+                         --name --service-name
                          --resource-group
                          --service-type
                          --state {stateful, stateless}
                          [--default-move-cost {High, Low, Medium, Zero}]
                          [--instance-count]
-                         [--min-replica]
+                         [--min-replica --min-replica-set-size]
                          [--partition-scheme {named, singleton, uniformInt64}]
-                         [--target-replica]
+                         [--target-replica --target-replica-set-size]
   examples:
   - summary: |-
       Create a new stateless service "testApp~testService1" with instance count -1 (on all the nodes).
@@ -58,12 +58,12 @@ directCommands:
       Specify the service type name of the application, it should exist in the application manifest.
   - isRequired: true
     name: --state
-    parameterValueGroup: "stateful, stateless"
+    acceptedValues: stateful, stateless
     summary: |-
       Specify if the service is stateless or stateful.
   optionalParameters:
   - name: --default-move-cost
-    parameterValueGroup: "High, Low, Medium, Zero"
+    acceptedValues: High, Low, Medium, Zero
     summary: |-
       Specify the default cost for a move. Higher costs make it less likely that the Cluster Resource Manager will move the replica when trying to balance the cluster.
   - name: --instance-count
@@ -73,13 +73,40 @@ directCommands:
     summary: |-
       Specify the min replica set size for the stateful service.
   - name: --partition-scheme
-    defaultValue: "singleton"
-    parameterValueGroup: "named, singleton, uniformInt64"
+    defaultValue: singleton
+    acceptedValues: named, singleton, uniformInt64
     summary: |-
       Specify what partition scheme to use. Singleton partitions are typically used when the service does not require any additional routing. UniformInt64 means that each partition owns a range of int64 keys. Named is usually for services with data that can be bucketed, within a bounded set. Some common examples of data fields used as named partition keys would be regions, postal codes, customer groups, or other business boundaries.
   - name: --target-replica --target-replica-set-size
     summary: |-
       Specify the target replica set size for the stateful service.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sf_service_delete
   name: az sf service delete
   summary: |-
@@ -89,7 +116,7 @@ directCommands:
   syntax: >-
     az sf service delete --application-name
                          --cluster-name
-                         --name
+                         --name --service-name
                          --resource-group
   examples:
   - summary: |-
@@ -112,6 +139,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Specify the resource group name. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sf_service_list
   name: az sf service list
   summary: |-
@@ -139,6 +193,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Specify the resource group name. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sf_service_show
   name: az sf service show
   summary: |-
@@ -148,7 +229,7 @@ directCommands:
   syntax: >-
     az sf service show --application-name
                        --cluster-name
-                       --name
+                       --name --service-name
                        --resource-group
   examples:
   - summary: |-
@@ -171,34 +252,37 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Specify the resource group name. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_sf_service_create
 - az_sf_service_delete
 - az_sf_service_list
 - az_sf_service_show
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage services running on an Azure Service Fabric cluster. Only support ARM deployed services.

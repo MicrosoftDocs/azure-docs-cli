@@ -28,6 +28,7 @@ directCommands:
     name: --admin-user -u
     summary: |-
       The login username of the administrator.
+    groupName: Authentication Arguments
   - isRequired: true
     name: --name -n
     summary: |-
@@ -36,6 +37,7 @@ directCommands:
   - name: --admin-password -p
     summary: |-
       The login password of the administrator.
+    groupName: Authentication Arguments
   - name: --database-name -d
     summary: |-
       The name of a database.
@@ -47,6 +49,33 @@ directCommands:
       A query to run against the flexible server.
     isDeprecated: true
     deprecateInfo: Argument 'querytext' has been deprecated and will be removed in a future release. Use 'execute' instead.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_create
   name: az postgres flexible-server create
   summary: |-
@@ -293,14 +322,16 @@ directCommands:
   - name: --admin-password -p
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
+    groupName: Authentication Arguments
   - name: --admin-type -t
-    parameterValueGroup: "Group, ServicePrincipal, Unknown, User"
+    acceptedValues: Group, ServicePrincipal, Unknown, User
     summary: |-
       Type of the Microsoft Entra administrator.
   - name: --admin-user -u
-    defaultValue: "curiousgnat4"
+    defaultValue: boredpepper8
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
+    groupName: Authentication Arguments
   - name: --backup-identity
     summary: |-
       The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
@@ -312,26 +343,26 @@ directCommands:
     summary: |-
       The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
   - name: --cluster-option
-    defaultValue: "Server"
-    parameterValueGroup: "ElasticCluster, Server"
+    defaultValue: Server
+    acceptedValues: ElasticCluster, Server
     summary: |-
       Cluster option for the server. Servers are for workloads that can fit on one node. Elastic clusters provides schema- and row-based sharding on a database. Default value is Server.
   - name: --create-default-database -c
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Enable or disable the creation of default database flexibleserverdb. Default value is Disabled.
   - name: --database-name -d
     summary: |-
       The name of the database to be created when provisioning the database server. Database name must begin with a letter (a-z) or underscore (_). Subsequent characters in a name can be letters, digits (0-9), hyphens (-), or underscores. Database name length must be less than 64 characters.
   - name: --geo-redundant-backup
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether or not geo redundant backup is enabled.
   - name: --high-availability
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, SameZone, ZoneRedundant"
+    defaultValue: Disabled
+    acceptedValues: Disabled, SameZone, ZoneRedundant
     summary: |-
       Enable (ZoneRedundant or SameZone) or disable high availability feature.
   - name: --identity
@@ -347,8 +378,8 @@ directCommands:
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --microsoft-entra-auth
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether Microsoft Entra authentication is enabled.
   - name: --name -n
@@ -358,8 +389,8 @@ directCommands:
     summary: |-
       The number of nodes for elastic cluster. Range of 1 to 10. Default is 2 nodes.
   - name: --password-auth
-    defaultValue: "Enabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Enabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether password authentication is enabled.
   - name: --performance-tier
@@ -381,8 +412,8 @@ directCommands:
     summary: |-
       The availability zone information of the standby server when high availability is enabled.
   - name: --storage-auto-grow
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Enable or disable autogrow of the storage. Default value is Enabled.
   - name: --storage-size
@@ -390,7 +421,7 @@ directCommands:
     summary: |-
       The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
   - name: --storage-type
-    parameterValueGroup: "PremiumV2_LRS, Premium_LRS"
+    acceptedValues: PremiumV2_LRS, Premium_LRS
     summary: |-
       Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS. Default value is Premium_LRS.Must set iops and throughput if using PremiumV2_LRS.
   - name: --subnet
@@ -406,7 +437,7 @@ directCommands:
     summary: |-
       Storage throughput in (MB/sec) for the server. This value can only be updated if flexible server is using Premium SSD v2 Disks.
   - name: --tier
-    defaultValue: "GeneralPurpose"
+    defaultValue: GeneralPurpose
     summary: |-
       Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.
   - name: --version
@@ -423,6 +454,33 @@ directCommands:
   - name: --zone -z
     summary: |-
       Availability zone into which to provision the resource.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_delete
   name: az postgres flexible-server delete
   summary: |-
@@ -446,19 +504,47 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_execute
   name: az postgres flexible-server execute
   summary: |-
@@ -477,10 +563,12 @@ directCommands:
     name: --admin-password -p
     summary: |-
       The login password of the administrator.
+    groupName: Authentication Arguments
   - isRequired: true
     name: --admin-user -u
     summary: |-
       The login username of the administrator.
+    groupName: Authentication Arguments
   - isRequired: true
     name: --name -n
     summary: |-
@@ -495,6 +583,33 @@ directCommands:
   - name: --querytext -q
     summary: |-
       A query to run against the flexible server.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_geo-restore
   name: az postgres flexible-server geo-restore
   summary: |-
@@ -558,8 +673,8 @@ directCommands:
     summary: |-
       The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --geo-redundant-backup
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether or not geo redundant backup is enabled.
   - name: --identity
@@ -568,12 +683,14 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --key
     summary: |-
       The resource ID of the primary keyvault key for data encryption.
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -584,8 +701,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: "2025-07-11T11:10:01+00:00"
+    defaultValue: 2025-07-14T06:02:34+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --subnet
@@ -597,6 +715,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vnet
     summary: |-
       Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
@@ -607,6 +726,30 @@ directCommands:
   - name: --zone -z
     summary: |-
       Availability zone into which to provision the resource.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_list
   name: az postgres flexible-server list
   summary: |-
@@ -633,6 +776,33 @@ directCommands:
   - name: --show-cluster
     summary: |-
       Only show elastic clusters.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_list-skus
   name: az postgres flexible-server list-skus
   summary: |-
@@ -645,6 +815,33 @@ directCommands:
     name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_restart
   name: az postgres flexible-server restart
   summary: |-
@@ -674,15 +871,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_restore
   name: az postgres flexible-server restore
   summary: |-
@@ -746,8 +971,8 @@ directCommands:
     summary: |-
       The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --geo-redundant-backup
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether or not geo redundant backup is enabled.
   - name: --identity
@@ -756,12 +981,14 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --key
     summary: |-
       The resource ID of the primary keyvault key for data encryption.
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -772,12 +999,13 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: "2025-07-11T11:10:01+00:00"
+    defaultValue: 2025-07-14T06:02:34+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --storage-type
-    parameterValueGroup: "PremiumV2_LRS"
+    acceptedValues: PremiumV2_LRS
     summary: |-
       Storage type for the new server. Allowed value is PremiumV2_LRS. Default value is none.
   - name: --subnet
@@ -789,6 +1017,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vnet
     summary: |-
       Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
@@ -799,6 +1028,30 @@ directCommands:
   - name: --zone -z
     summary: |-
       Availability zone into which to provision the resource.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_revive-dropped
   name: az postgres flexible-server revive-dropped
   summary: |-
@@ -854,8 +1107,8 @@ directCommands:
     summary: |-
       The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --geo-redundant-backup
-    defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether or not geo redundant backup is enabled.
   - name: --identity
@@ -864,12 +1117,14 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --key
     summary: |-
       The resource ID of the primary keyvault key for data encryption.
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -880,6 +1135,7 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subnet
     summary: |-
       Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
@@ -889,6 +1145,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vnet
     summary: |-
       Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
@@ -899,6 +1156,30 @@ directCommands:
   - name: --zone -z
     summary: |-
       Availability zone into which to provision the resource.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_show
   name: az postgres flexible-server show
   summary: |-
@@ -918,15 +1199,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_show-connection-string
   name: az postgres flexible-server show-connection-string
   summary: |-
@@ -950,31 +1259,61 @@ directCommands:
     syntax: az postgres flexible-server show-connection-string -s testserver -u username -p password -d databasename --pg-bouncer
   optionalParameters:
   - name: --admin-password -p
-    defaultValue: "{password}"
+    defaultValue: '{password}'
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
+    groupName: Authentication Arguments
   - name: --admin-user -u
-    defaultValue: "{login}"
+    defaultValue: '{login}'
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
+    groupName: Authentication Arguments
   - name: --database-name -d
-    defaultValue: "{database}"
+    defaultValue: '{database}'
     summary: |-
       The name of the database.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --pg-bouncer
     defaultValue: "False"
     summary: |-
       Show connection strings for PgBouncer.
   - name: --server-name -s
-    defaultValue: "{server}"
+    defaultValue: '{server}'
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_start
   name: az postgres flexible-server start
   summary: |-
@@ -995,9 +1334,11 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1005,9 +1346,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_stop
   name: az postgres flexible-server stop
   summary: |-
@@ -1028,9 +1395,11 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1038,9 +1407,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_update
   name: az postgres flexible-server update
   summary: |-
@@ -1128,12 +1523,14 @@ directCommands:
     syntax: az postgres flexible-server update --resource-group testGroup --name testcluster --node-count 6
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --admin-password -p
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
+    groupName: Authentication Arguments
   - name: --backup-identity
     summary: |-
       The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
@@ -1147,8 +1544,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --high-availability
-    parameterValueGroup: "Disabled, SameZone, ZoneRedundant"
+    acceptedValues: Disabled, SameZone, ZoneRedundant
     summary: |-
       Enable (ZoneRedundant or SameZone) or disable high availability feature.
   - name: --identity
@@ -1157,6 +1555,7 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --iops
     summary: |-
       Value of IOPS in (operations/sec) to be allocated for this server. This value can only be updated if flexible server is using Premium SSD v2 Disks.
@@ -1167,17 +1566,18 @@ directCommands:
     summary: |-
       Period of time (UTC) designated for maintenance. Examples: "Sun:23:30" to schedule on Sunday, 11:30pm UTC. To set back to default pass in "Disabled".
   - name: --microsoft-entra-auth
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether Microsoft Entra authentication is enabled.
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --node-count
     summary: |-
       The number of nodes for elastic cluster. Range of 1 to 10.
   - name: --password-auth
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Whether password authentication is enabled.
   - name: --performance-tier
@@ -1187,20 +1587,23 @@ directCommands:
     summary: |-
       This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
   - name: --public-access
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Enable or disable the public access on a server.
   - name: --remove
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --set
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --sku-name
     summary: |-
       The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.
@@ -1208,7 +1611,7 @@ directCommands:
     summary: |-
       The availability zone information of the standby server when high availability is enabled.
   - name: --storage-auto-grow
-    parameterValueGroup: "Disabled, Enabled"
+    acceptedValues: Disabled, Enabled
     summary: |-
       Enable or disable autogrow of the storage. Default value is Enabled.
   - name: --storage-size
@@ -1217,6 +1620,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -1230,6 +1634,30 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_upgrade
   name: az postgres flexible-server upgrade
   summary: |-
@@ -1250,25 +1678,53 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --version -v
-    parameterValueGroup: "13, 14, 15, 16, 17"
+    acceptedValues: 13, 14, 15, 16, 17
     summary: |-
       Server major version.
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_postgres_flexible-server_wait
   name: az postgres flexible-server wait
   summary: |-
@@ -1292,41 +1748,76 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
       Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
       Wait until deleted.
+    groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --timeout
     defaultValue: "3600"
     summary: |-
       Maximum wait in seconds.
+    groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_postgres_flexible-server_advanced-threat-protection-setting
 - az_postgres_flexible-server_advanced-threat-protection-setting_show
@@ -1427,29 +1918,5 @@ commands:
 - az_postgres_flexible-server_virtual-endpoint_show
 - az_postgres_flexible-server_virtual-endpoint_update
 - az_postgres_flexible-server_wait
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage Azure Database for PostgreSQL Flexible Servers.

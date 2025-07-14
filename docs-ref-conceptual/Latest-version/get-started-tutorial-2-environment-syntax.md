@@ -1,39 +1,32 @@
 ---
-title: Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd
+title: Run Azure CLI commands with Bash, PowerShell Cmd syntax | Microsoft Docs
 description: Learn about quoting differences, line continuation and debugging in Bash, PowerShell and Windows Cmd scripting languages.
+ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 
 ---
+# Learn Azure CLI syntax differences in Bash, PowerShell and Cmd
 
-# Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd
-
-Azure CLI commands can be executed in [Bash][17], [PowerShell][14], and Windows command shell
-[(`cmd`)][15] scripting languages. However, there are subtle scripting differences. In this tutorial
-step, learn how to create your first Azure Storage Account and format parameter values for all three
-scripting languages.
+Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash), [PowerShell](/powershell/scripting/overview), and Windows command shell [(Cmd)](/windows-server/administration/windows-commands/windows-commands) scripting languages. However, there are subtile scripting differences. In this tutorial step, learn how to create your first Azure Storage Account and format parameter values for all three scripting languages.
 
 ## Prerequisites
 
-- You completed the prerequisites to [prepare your environment][01].
-- You have access to a resource group with `contributor` or higher permissions at a resource group level.
+* You completed the prerequisites to [prepare your environment](./get-started-tutorial-1-prepare-environment.md).
+* You have access to a resource group with `contributor` or higher permissions at a resource group level.
 
 ## Be aware of line continuation characters
 
-Most Azure CLI documentation is written and tested in Bash using Azure Cloud Shell. One of the first
-things to remember when copying Azure CLI syntax is to verify the line continuation characters for
-your chosen scripting language, as they aren't interchangeable.
+Most Azure CLI documentation is written and tested in Bash using Azure Cloud Shell. One of the first things to remember when copying Azure CLI syntax is to verify the line continuation characters for your chosen scripting language as they aren't interchangeable.
 
-| Scripting language | Line continuation character |
-| ------------------ | --------------------------- |
-| **Bash**           | Backslash (`\`)             |
-| **PowerShell**     | Backtick (`` ` ``)          |
-| **Cmd**            | Caret (`^`)                |
+| scripting language | Line continuation character |
+| - | - |
+| **Bash** | Backslash (`\`)
+| **PowerShell** | Backtick (`` ` ``)
+| **Cmd** | Carrot (`^`)
 
 > [!TIP]
-> The **Copy** button in the upper right corner of Azure CLI code blocks removes the backslash (`\`)
-> and the backtick (`` ` ``) by design. To copy a formatted code block, use your keyboard or mouse
-> to select and copy the example.
+> The **Copy** button in the upper right corner of Azure CLI code blocks removes the backslash (`\`) and the backtick (`` ` ``) by design. If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
 
 ## Understand syntax differences when using variables
 
@@ -45,59 +38,49 @@ The syntax for using variables varies slightly between scripting languages. Here
 |Use variable as parameter value |variableName|$variableName|%variableName%
 |Use variable in `--query` parameter|'$variableName'|'$variableName'|'$variableName'
 
-There are several different ways to return variable information to your console screen, but `echo`
-works in most circumstances. Here's a comparison:
+There are several different ways to return variable information to your console screen, but `echo` works in most circumstances. Here's a comparison:
 
-- **Bash**: echo $varResourceGroup
-- **PowerShell**: echo $varResourceGroup
-- **Cmd**: echo %varResourceGroup%
+* **Bash**: echo $varResourceGroup
+* **PowerShell**: echo $varResourceGroup
+* **Cmd**: echo %varResourceGroup%
 
-In step 3, [Populate variables for use in scripts][02], you work through in-depth examples of
-variable syntax.
+In step three, [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md), you work through in-depth examples of variable syntax.
 
 ## Learn about quoting differences between scripting languages
 
-Every Azure CLI parameter is a string. However, each scripting language has its own rules for
-handling single and double quotes, spaces, and parameter values.
+Every Azure CLI parameter is a string. However, each scripting language has its own rules for handling single and double quotes, spaces and parameter values.
 
-| String value |                 Azure CLI                  |                                     PowerShell                                     |          Cmd          |
-| ------------ | ------------------------------------------ | ---------------------------------------------------------------------------------- | --------------------- |
-| Text         | 'text' or "text"                           | 'text' or "text"                                                                   | "text"                |
-| Number       | \\\`50\\\`                                 | \`\`50\`\`                                                                         | \`50\`                |
-| Boolean      | \\\`true\\\`                               | \`\`false\`\`                                                                      | \'true\'              |
-| Date         | '2021-11-15'                               | '2021-11-15'                                                                       | '2021-11-15'          |
-| JSON         | '{"key":"value"}' or "{\"key\":\"value\"}" | '{\"key\": \"value\"}' or "{\`"key\`": \`"value\`"}" or "{\""key\"": \""value\""}" | "{\"key\":\"value\"}" |
+|String value|Azure CLI|PowerShell|Cmd
+|-|-|-|-|
+|Text|'text' or "text"|'text' or "text"|"text" |
+|Number|\\\`50\\\` | \`\`50\`\` | \`50\` |
+|Boolean|\\\`true\\\` | \`\`false\`\` | \'true\' |
+|Date|'2021-11-15'|'2021-11-15'|'2021-11-15' |
+|JSON|'{"key":"value"}' or "{\"key\":\"value\"}" |'{\"key\": \"value\"}' or "{\`"key\`": \`"value\`"}" or "{\""key\"": \""value\""}" |"{\"key\":\"value\"}" |
 
-Many Azure CLI parameters accept a space-separated list of values. This format impacts quoting.
+Many Azure CLI parameters accept a space-separated list of values. This impacts quoting.
 
-- **Unquoted space-separated list**: --parameterName firstValue secondValue
-- **Quoted space-separated list**: --parameterName "firstValue" "secondValue"
-- **Values that contain a space**: --parameterName "value1a value1b" "value2a value2b" "value3"
+* **Unquoted space-separated list**: --parameterName firstValue secondValue
+* **Quoted space-separated list**: --parameterName "firstValue" "secondValue"
+* **Values that contain a space**: --parameterName "value1a value1b" "value2a value2b" "value3"
 
-If you aren't sure how your string is evaluated by your scripting language, return the value of a
-string to your console or use `--debug` as explained in [Debug Azure CLI reference commands][16].
+If you aren't sure how your string will be evaluated by your scripting language, return the value of a string to your console or use `--debug` as explained in [Debug Azure CLI reference commands](#debug-azure-cli-reference-commands).
 
-## Create a storage account to apply what you learned
+## Create a storage account to apply what you've learned
 
-The remainder of this tutorial step demonstrates quoting rules in Azure CLI commands, using the
-resource group created in [Prepare your environment for the Azure CLI][01]. Substitute
-`<msdocs-tutorial-rg-00000000>` with the name of your resource group.
+The remainder of this tutorial step demonstrates quoting rules in Azure CLI commands, and uses the resource group created in [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md). Substitute `<msdocs-tutorial-rg-00000000>` with the name of your resource group.
 
-Create an Azure storage account to use in this tutorial. This example assigns a random ID to the
-storage account name. However, if you want to use a different name, refer to the
-[Storage account overview][09] for storage account name rules.
+Create an Azure storage account to use in this tutorial. This example assigns a random ID to the storage account name, but if you want to use a different name, see [Storage account overview](/azure/storage/common/storage-account-overview#storage-account-name) for storage account name rules.
 
 > [!IMPORTANT]
-> Before you can create a storage account, the `Microsoft.Storage` resource provider must be
-> registered in your subscription. To learn about registering resource types, see
-> [Register resource provider][08].
+> Before you can create a storage account, the `Microsoft.Storage` resource provider must be registered in your subscription. To learn about registering resource types, see [Register resource provider](/azure/azure-resource-manager/management/resource-providers-and-types#azure-portal).
 
 This next script example demonstrates scripting language-specific syntax for the following:
 
-- Line continuation
-- Variable usage
-- Random identifiers
-- `echo` command
+* Line continuation
+* Variable usage
+* Random identifiers
+* `echo` command
 
 # [Bash](#tab/Bash)
 
@@ -159,12 +142,9 @@ az storage account create --name %storageAccount% ^
 ---
 
 > [!NOTE]
-> Did you receive a "Subscription not found" error? This error occurs when `Microsoft.Storage` isn't
-> registered in the active subscription. To register a resource provider, see
-> [Azure resource providers and types][07].
+> Did you just receive a "Subscription not found" error? This error occurs when `Microsoft.Storage` is not registered in the active subscription. To register a resource provider, see [Azure resource providers and types](/azure/azure-resource-manager/management/resource-providers-and-types).
 
-The Azure CLI returns over 100 lines of JSON as output when a new storage account is created. The
-following JSON dictionary output has fields omitted for brevity.
+The Azure CLI returns over 100 lines of JSON as output when a new storage account is created. The following JSON dictionary output has fields omitted for brevity.
 
 ```output
 {
@@ -199,18 +179,14 @@ following JSON dictionary output has fields omitted for brevity.
 
 ## Create tags to practice quoting differences
 
-Using [az storage account update][10], add tags to help you identify your storage account and learn
-about quoting differences. These script examples demonstrate scripting language-specific syntax for
-the following:
+Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about quoting differences. These script examples demonstrate scripting language-specific syntax for the following:
 
-- Values containing spaces
-- Quoting blank spaces
-- Escaping special characters
-- Using variables
+* Values containing spaces
+* Quoting blank spaces
+* Escaping special characters
+* Using variables
 
-The `--tags` parameter accepts a space-separated list of key:value pairs. Substitute
-`<msdocs-tutorial-rg-00000000>` with the name of your resource group and `<msdocssa00000000>` with
-the name of your Azure storage account.
+The `--tags` parameter accepts a space-separated list of key:value pairs. Substitute `<msdocs-tutorial-rg-00000000>` with the name of your resource group and `<msdocssa00000000>` with the name of your Azure storage account.
 
 # [Bash](#tab/Bash)
 
@@ -242,8 +218,7 @@ az storage account update --name <msdocssa00000000> \
                           --tags "$newTag"
 ```
 
-If you don't want to overwrite previous tags while you work through this tutorial step, use the
-[az tag update][11] command setting the `--operation` parameter to `merge`.
+If you don't want to overwrite previous tags while you work through this tutorial step, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
 
 ```azurecli-interactive
 # Get the resource ID of your storage account.
@@ -297,8 +272,7 @@ az storage account update --name <msdocssa00000000> `
                           --tags "$newTag"
 ```
 
-If you don't want to overwrite previous tags while you work through this tutorial step, use the
-[az tag update][11] command setting the `--operation` parameter to `merge`.
+If you don't want to overwrite previous tags while you work through this tutorial step, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
 
 ```azurecli-interactive
 # Get the resource ID of your storage account.
@@ -339,27 +313,23 @@ az storage account update --name <msdocssa00000000> ^
 
 ```
 
-If you need to modify an Azure resource using a variable, we suggest using Bash. Cmd often doesn't
-interpret variable values with special characters as expected. You often receive an
-"InvalidCharacters" error or your tag value is empty.
+If you need to modify an Azure resource using a variable, we suggest using Bash. Cmd often doesn't interpret variable values with special characters as expected. You often receive an "InvalidCharacters" error or your tag value is empty.
 
 ---
 
 ## Compare more scripting language-specific scripts
 
-Take a deeper look at these script differences. These examples demonstrate quoting differences for
-the following:
+Take a deeper look at these script differences. These examples demonstrate quoting differences for the following:
 
-- Pass a JSON string as a parameter value
-- Filter results with the `--query` parameter
-  - Numbers
-  - Boolean values
-  - Dates
+* Pass a JSON string as a parameter value
+* Filter results with the `--query` parameter
+  * Numbers
+  * Boolean values
+  * Dates
 
 # [Bash](#tab/Bash)
 
-Example of a parameter containing a JSON string. This script is given for future reference as we
-aren't working with `az rest` in this tutorial.
+Example of a parameter containing a JSON string. This script is given for future reference as we are not working with `az rest` in this tutorial.
 
 ```azurecli
 az rest --method patch \
@@ -369,8 +339,7 @@ az rest --method patch \
         --body '{"properties": {"agentUpgrade": {"enableAutomaticUpgrade": false}}}'
 ```
 
-Example of filtering for a numeric value. Unless you have a VM in your current subscription, this
-example is given for future reference.
+Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> \
@@ -404,8 +373,7 @@ az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
 
 # [PowerShell](#tab/powershell)
 
-Example of a parameter containing a JSON string. This script is given for future reference as we
-aren't working with `az rest` in this tutorial.
+Example of a parameter containing a JSON string. This script is given for future reference as we are not working with `az rest` in this tutorial.
 
 ```azurecli
 az rest --method patch `
@@ -449,8 +417,7 @@ az storage account list --resource-group <msdocs-tutorial-rg-00000000> `
 
 # [Cmd](#tab/cmd)
 
-Example of filtering for a numeric value. Unless you have a VM in your current subscription, this
-example is given for future reference.
+Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> `
@@ -490,20 +457,18 @@ az storage account list --resource-group <msdocs-tutorial-rg-00000000> ^
 
 ## Debug Azure CLI reference commands
 
-### Use debug parameter
+### Use `--debug` parameter
 
-The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is
-extensive, but it gives you information including the following:
+The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is extensive, but it gives you information including the following:
 
-- Command arguments (parameter values) as interpreted by your scripting language
-- Location of your log file
-- API call detail
-- Execution errors
+* Command arguments (parameter values) as interpreted by your scripting language
+* Location of your log file
+* API call detail
+* Execution errors
 
-If you experience difficulty understanding and correcting an execution error when working with Azure
-CLI commands, `--debug` is your answer to see the steps Azure CLI is executing.
+If when working with Azure CLI commands you experience difficulty understanding and correcting an execution error, `--debug` is your answer to see the steps Azure CLI is executing.
 
-Here's a portion of the debug output when creating a storage account:
+Here is a small portion of the debug output when creating a storage account:
 
 ```output
  cli.knack.cli: Command arguments: ['storage', 'account', 'create', '--name', 'msdocssa00000000', '--resource-group', 'msdocs-rg-test', '--location', 'eastus', '--sku', 'Standard_RAGRS', '--kind', 'StorageV2', '--output', 'json', '--debug']
@@ -527,13 +492,11 @@ cli.azure.cli.core.sdk.policies: Response status: 200
 ...
 ```
 
-For more troubleshooting tips, see [Troubleshooting Azure CLI][06].
+For more troubleshooting tips, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md).
 
-### Use echo command
+### Use `echo` command
 
-Although `--debug` tells you exactly what the Azure CLI is interpreting, a second option is to
-return the value of an expression to your console. This method is helpful when verifying the results
-of the `--query`, which is covered in detail in [Populate variables for use in scripts][02].
+Although `--debug` tells you exactly what the Azure CLI is interpreting, a second option is to return the value of an expression to your console. This method is helpful when verifying the results of `--query` that is covered in detail in [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md).
 
 # [Bash](#tab/Bash)
 
@@ -558,19 +521,17 @@ echo $strExpression
 ```
 
 > [!NOTE]
-> The Bash `echo` command when run in a PowerShell scripting language is an alias of PowerShell's
-> [Write-Output][13] command.
+> The Bash `echo` command when run in a PowerShell scripting language is an alias of PowerShell's [Write-Host](/powershell/module/microsoft.powershell.utility/write-host) command.
 
 # [Cmd](#tab/cmd)
 
-In Cmd, the `echo` command returns the literal string, including escape characters. Compare the
-`--debug` and `echo` output of Cmd:
+In Cmd, the `echo` command returns the literal string including escape characters. Compare the `--debug` and `echo` output of Cmd:
 
-|                    CLI                     |                      Output                       |
-| ------------------------------------------ | ------------------------------------------------- |
-| az "{\"key\":\"value\"}" --debug           | Command arguments: ['{"key":"value"}', '--debug'] |
-| set strExpression='"{\"key\": \"value\"}"' |                                                   |
-| echo %strExpression%                       | "{\\"key\\": \\"value\\"}"                        |
+|CLI|Output|
+|-|-|
+|az "{\"key\":\"value\"}" --debug | Command arguments: ['{"key":"value"}', '--debug']
+|set strExpression='"{\"key\": \"value\"}"' |
+| echo %strExpression% | "{\\"key\\": \\"value\\"}"
 
 ---
 
@@ -578,58 +539,38 @@ In Cmd, the `echo` command returns the literal string, including escape characte
 
 Here are common errors when an Azure CLI reference command syntax isn't written properly:
 
-- "Bad request ...{something} is invalid" might be caused by a space, single or double quotation
-  mark, or lack of a quote.
-- "Unexpected token..." is seen when there's an extra space or quote.
-- "Invalid jmespath_type value" error often comes from incorrect quoting in the `--query` parameter.
-- "Variable reference isn't valid" is received when a string isn't formatted correctly, often due to
-  concatenation or a missing escape character.
-- "Unrecognized arguments" are often caused by an incorrect line continuation character.
-- "Missing expression after unary operator" is seen when a line continuation character is missing.
+* "Bad request ...{something} is invalid" might be caused by a space, single or double quotation mark, or lack of a quote.
 
-For more troubleshooting tips, see [Troubleshooting Azure CLI commands][06].
+* "Unexpected token..." is seen when there's an extra space or quote.
+
+* "Invalid jmespath_type value" error often comes from incorrect quoting in the `--query` parameter.
+
+* "Variable reference is not valid" is received when a string isn't formatted properly often due to concatenation or a missing escape character.
+
+* "Unrecognized arguments" is often caused by an incorrect line continuation character.
+
+* "Missing expression after unary operator" is seen when a line continuation character is missing.
+
+For additional troubleshooting tips, see [Troubleshooting Azure CLI commands](./use-azure-cli-successfully-troubleshooting.md).
 
 ## Get more details
 
 Do you want more detail on one of the subjects covered in this tutorial step? Use the links in this table to learn more.
 
-|        Subject        |                                             Learn more                                              |
-| --------------------- | --------------------------------------------------------------------------------------------------- |
-| Scripting differences | [Quoting differences between scripting languages][05]                                               |
-|                       | [Bash quoting rules][19]                                                                            |
-|                       | [PowerShell quoting rules][12]                                                                      |
-|                       | [Considerations for running the Azure CLI in a PowerShell scripting language][03]                   |
-|                       | [Windows command-line tips][18]                                                                     |
-| Parameters            | [Use quotation marks in Azure CLI parameters][05]                                                   |
-|                       | Find more syntax examples of Bash, PowerShell, and Cmd in [Query command output using JMESPath][04] |
-| Troubleshooting       | [Troubleshooting Azure CLI commands][06]                                                            |
+|Subject| Learn more|
+|-|-|
+|Scripting differences | [Quoting differences between scripting languages](./use-azure-cli-successfully-quoting.md) |
+| | [Bash quoting rules](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Quoting)|
+| | [PowerShell quoting rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
+| | [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md) |
+| | [Windows command-line tips](https://ss64.com/nt/syntax-esc.html) |
+|Parameters | [Use quotation marks in Azure CLI parameters](./use-azure-cli-successfully-quoting.md) |
+| | Find more syntax examples of Bash, PowerShell and Cmd in [Query command output using JMESPath](./use-azure-cli-successfully-query.md) |
+| Troubleshooting | [Troubleshooting Azure CLI commands](./use-azure-cli-successfully-troubleshooting.md) | 
 
 ## Next Step
 
-Now that you learned how to write Azure CLI syntax for Bash, PowerShell, and Cmd, proceed to the
-next step to learn how to extract values to a variable.
+Now that you learned how to write Azure CLI syntax for Bash, PowerShell and Cmd, proceed to the next step to learn how to extract values to a variable.
 
 > [!div class="nextstepaction"]
-> [Populate variables for use in scripts][02]
-
-<!-- link references -->
-
-[01]: ./get-started-tutorial-1-prepare-environment.md
-[02]: ./get-started-tutorial-3-use-variables.md
-[03]: ./use-azure-cli-successfully-powershell.md
-[04]: ./use-azure-cli-successfully-query.md
-[05]: ./use-azure-cli-successfully-quoting.md
-[06]: ./use-azure-cli-successfully-troubleshooting.md
-[07]: /azure/azure-resource-manager/management/resource-providers-and-types
-[08]: /azure/azure-resource-manager/management/resource-providers-and-types#azure-portal
-[09]: /azure/storage/common/storage-account-overview#storage-account-name
-[10]: /cli/azure/storage/account#az-storage-account-update
-[11]: /cli/azure/tag#az-tag-update
-[12]: /powershell/module/microsoft.powershell.core/about/about_quoting_rules
-[13]: /powershell/module/microsoft.powershell.utility/write-output
-[14]: /powershell/scripting/overview
-[15]: /windows-server/administration/windows-commands/windows-commands
-[16]: #debug-azure-cli-reference-commands
-[17]: https://opensource.com/resources/what-bash
-[18]: https://ss64.com/nt/syntax-esc.html
-[19]: https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Quoting
+> [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md)

@@ -21,11 +21,11 @@ directCommands:
                                            --protocol {All, Tcp, Udp}
                                            --resource-group
                                            [--backend-pool-name]
-                                           [--enable-floating-ip {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--frontend-ip]
+                                           [--enable-floating-ip --floating-ip {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--frontend-ip --frontend-ip-name]
                                            [--load-distribution {Default, SourceIP, SourceIPProtocol}]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--probe]
+                                           [--probe --probe-name]
   examples:
   - summary: |-
       Create a load balancing rule that assigns a front-facing IP configuration and port to an address pool and port.
@@ -41,10 +41,12 @@ directCommands:
     name: --backend-port
     summary: |-
       The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port".
+    groupName: Properties Arguments
   - isRequired: true
     name: --frontend-port
     summary: |-
       The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port".
+    groupName: Properties Arguments
   - isRequired: true
     name: --lb-name
     summary: |-
@@ -55,9 +57,10 @@ directCommands:
       The name of the load balancing rule.
   - isRequired: true
     name: --protocol
-    parameterValueGroup: "All, Tcp, Udp"
+    acceptedValues: All, Tcp, Udp
     summary: |-
       The reference to the transport protocol used by the load balancing rule.
+    groupName: Properties Arguments
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -66,25 +69,57 @@ directCommands:
   - name: --backend-pool-name
     summary: |-
       ID or name of the backend address pools. If only one exists, omit to use as default.
+    groupName: Properties Arguments
   - name: --enable-floating-ip --floating-ip
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint.
+    groupName: Properties Arguments
   - name: --frontend-ip --frontend-ip-name
     summary: |-
       The name of ID of the frontend IP configuration.
+    groupName: Properties Arguments
   - name: --load-distribution
-    defaultValue: "Default"
-    parameterValueGroup: "Default, SourceIP, SourceIPProtocol"
+    defaultValue: Default
+    acceptedValues: Default, SourceIP, SourceIPProtocol
     summary: |-
       The load distribution policy for this rule.
+    groupName: Properties Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --probe --probe-name
     summary: |-
       The ID or Name of an existing probe to associate with this rule.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_cross-region-lb_rule_delete
   name: az network cross-region-lb rule delete
   summary: |-
@@ -116,9 +151,36 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_cross-region-lb_rule_list
   name: az network cross-region-lb rule list
   summary: |-
@@ -142,6 +204,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_cross-region-lb_rule_show
   name: az network cross-region-lb rule show
   summary: |-
@@ -170,6 +259,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_network_cross-region-lb_rule_update
   name: az network cross-region-lb rule update
   summary: |-
@@ -184,13 +300,13 @@ directCommands:
                                            [--add]
                                            [--backend-pool-name]
                                            [--backend-port]
-                                           [--enable-floating-ip {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--enable-floating-ip --floating-ip {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--frontend-ip]
+                                           [--frontend-ip --frontend-ip-name]
                                            [--frontend-port]
                                            [--load-distribution {Default, SourceIP, SourceIPProtocol}]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--probe]
+                                           [--probe --probe-name]
                                            [--protocol {All, Tcp, Udp}]
                                            [--remove]
                                            [--set]
@@ -218,77 +334,92 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --backend-pool-name
     summary: |-
       ID or name of the backend address pools. If only one exists, omit to use as default.
+    groupName: Properties Arguments
   - name: --backend-port
     summary: |-
       The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port".
+    groupName: Properties Arguments
   - name: --enable-floating-ip --floating-ip
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint.
+    groupName: Properties Arguments
   - name: --force-string
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --frontend-ip --frontend-ip-name
     summary: |-
       The name of ID of the frontend IP configuration.
+    groupName: Properties Arguments
   - name: --frontend-port
     summary: |-
       The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port".
+    groupName: Properties Arguments
   - name: --load-distribution
-    parameterValueGroup: "Default, SourceIP, SourceIPProtocol"
+    acceptedValues: Default, SourceIP, SourceIPProtocol
     summary: |-
       The load distribution policy for this rule.
+    groupName: Properties Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --probe --probe-name
     summary: |-
       The ID or Name of an existing probe to associate with this rule.
+    groupName: Properties Arguments
   - name: --protocol
-    parameterValueGroup: "All, Tcp, Udp"
+    acceptedValues: All, Tcp, Udp
     summary: |-
       The reference to the transport protocol used by the load balancing rule.
+    groupName: Properties Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_network_cross-region-lb_rule_create
 - az_network_cross-region-lb_rule_delete
 - az_network_cross-region-lb_rule_list
 - az_network_cross-region-lb_rule_show
 - az_network_cross-region-lb_rule_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 10/16/2024
   description: Manage cross-region load balancing rules.

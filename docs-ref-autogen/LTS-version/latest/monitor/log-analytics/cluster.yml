@@ -14,7 +14,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor log-analytics cluster create --cluster-name
+    az monitor log-analytics cluster create --cluster-name --name
                                             --resource-group
                                             [--billing-type {Cluster, Workspaces}]
                                             [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
@@ -43,48 +43,86 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --billing-type
-    parameterValueGroup: "Cluster, Workspaces"
+    acceptedValues: Cluster, Workspaces
     summary: |-
       The cluster's billing type.
+    groupName: Properties Arguments
   - name: --identity-type
-    defaultValue: "SystemAssigned"
-    parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
+    defaultValue: SystemAssigned
+    acceptedValues: None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned
     summary: |-
       Type of managed service identity.
+    groupName: Identity Arguments
   - name: --key-name
     summary: |-
       The name of the key associated with the Log Analytics cluster.
+    groupName: Key Properties Arguments
   - name: --key-rsa-size
     summary: |-
       Selected key minimum required size.
+    groupName: Key Properties Arguments
   - name: --key-vault-uri
     summary: |-
       The Key Vault uri which holds they key associated with the Log Analytics cluster.
+    groupName: Key Properties Arguments
   - name: --key-version
     summary: |-
       The version of the key associated with the Log Analytics cluster.
+    groupName: Key Properties Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Parameters Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --sku-capacity
-    parameterValueGroup: "100, 1000, 10000, 200, 2000, 25000, 300, 400, 500, 5000, 50000"
+    acceptedValues: 100, 1000, 10000, 200, 2000, 25000, 300, 400, 500, 5000, 50000
     summary: |-
       The capacity of the SKU. It can be decreased only after 31 days.
+    groupName: Sku Arguments
   - name: --sku-name
-    defaultValue: "CapacityReservation"
-    parameterValueGroup: "CapacityReservation"
+    defaultValue: CapacityReservation
+    acceptedValues: CapacityReservation
     summary: |-
       The name of the SKU.
+    groupName: Sku Arguments
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Parameters Arguments
   - name: --user-assigned
     summary: |-
       The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_monitor_log-analytics_cluster_delete
   name: az monitor log-analytics cluster delete
   summary: |-
@@ -93,7 +131,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor log-analytics cluster delete [--cluster-name]
+    az monitor log-analytics cluster delete [--cluster-name --name]
                                             [--ids]
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--resource-group]
@@ -107,23 +145,51 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       Name of the Log Analytics Cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_monitor_log-analytics_cluster_list
   name: az monitor log-analytics cluster list
   summary: |-
@@ -146,12 +212,41 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_monitor_log-analytics_cluster_show
   name: az monitor log-analytics cluster show
   summary: |-
@@ -160,7 +255,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor log-analytics cluster show [--cluster-name]
+    az monitor log-analytics cluster show [--cluster-name --name]
                                           [--ids]
                                           [--resource-group]
                                           [--subscription]
@@ -172,15 +267,43 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       Name of the Log Analytics Cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_monitor_log-analytics_cluster_update
   name: az monitor log-analytics cluster update
   summary: |-
@@ -191,7 +314,7 @@ directCommands:
   syntax: >-
     az monitor log-analytics cluster update [--add]
                                             [--billing-type {Cluster, Workspaces}]
-                                            [--cluster-name]
+                                            [--cluster-name --name]
                                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
                                             [--ids]
@@ -215,62 +338,103 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --billing-type
-    parameterValueGroup: "Cluster, Workspaces"
+    acceptedValues: Cluster, Workspaces
     summary: |-
       The cluster's billing type.
+    groupName: Properties Arguments
   - name: --cluster-name --name -n
     summary: |-
       Name of the Log Analytics Cluster.
+    groupName: Resource Id Arguments
   - name: --force-string
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --identity-type
-    parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
+    acceptedValues: None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned
     summary: |-
       Type of managed service identity.
+    groupName: Identity Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --key-name
     summary: |-
       The name of the key associated with the Log Analytics cluster.
+    groupName: Key Properties Arguments
   - name: --key-rsa-size
     summary: |-
       Selected key minimum required size.
+    groupName: Key Properties Arguments
   - name: --key-vault-uri
     summary: |-
       The Key Vault uri which holds they key associated with the Log Analytics cluster.
+    groupName: Key Properties Arguments
   - name: --key-version
     summary: |-
       The version of the key associated with the Log Analytics cluster.
+    groupName: Key Properties Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --sku-capacity
-    parameterValueGroup: "100, 1000, 10000, 200, 2000, 25000, 300, 400, 500, 5000, 50000"
+    acceptedValues: 100, 1000, 10000, 200, 2000, 25000, 300, 400, 500, 5000, 50000
     summary: |-
       The capacity of the SKU. It can be decreased only after 31 days.
+    groupName: Sku Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Parameters Arguments
   - name: --user-assigned
     summary: |-
       The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_monitor_log-analytics_cluster_wait
   name: az monitor log-analytics cluster wait
   summary: |-
@@ -279,7 +443,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor log-analytics cluster wait [--cluster-name]
+    az monitor log-analytics cluster wait [--cluster-name --name]
                                           [--created]
                                           [--custom]
                                           [--deleted]
@@ -294,42 +458,77 @@ directCommands:
   - name: --cluster-name --name -n
     summary: |-
       Name of the Log Analytics Cluster.
+    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
       Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
       Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
       Wait until deleted.
+    groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --timeout
     defaultValue: "3600"
     summary: |-
       Maximum wait in seconds.
+    groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_monitor_log-analytics_cluster_create
 - az_monitor_log-analytics_cluster_delete
@@ -337,30 +536,6 @@ commands:
 - az_monitor_log-analytics_cluster_show
 - az_monitor_log-analytics_cluster_update
 - az_monitor_log-analytics_cluster_wait
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 10/11/2023
   description: Manage Azure log analytics cluster.

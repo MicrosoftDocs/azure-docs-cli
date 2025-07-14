@@ -42,8 +42,8 @@ directCommands:
       Support star sign as filters, for instance * means all key and abc* means keys with abc as prefix.
   optionalParameters:
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -65,6 +65,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_export
   name: az appconfig kv export
   summary: |-
@@ -139,41 +166,48 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --destination -d
-    parameterValueGroup: "appconfig, appservice, file"
+    acceptedValues: appconfig, appservice, file
     summary: |-
       The destination of exporting. Note that exporting feature flags to appservice is not supported.
   optionalParameters:
   - name: --appservice-account
     summary: |-
       ARM ID for AppService OR the name of the AppService, assuming it is in the same subscription and resource group as the App Configuration store. Required for AppService arguments.
+    groupName: AppService Arguments
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
     summary: |-
       Combination of access key and endpoint of the App Configuration store. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
   - name: --dest-auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Auth mode for connecting to the destination App Configuration store. For details, refer to "--auth-mode" argument.
+    groupName: AppConfig Arguments
   - name: --dest-connection-string
     summary: |-
       Combination of access key and endpoint of the destination store.
+    groupName: AppConfig Arguments
   - name: --dest-endpoint
     summary: |-
       If --dest-auth-mode is "login", provide endpoint URL of the destination App Configuration store.
+    groupName: AppConfig Arguments
   - name: --dest-label
     summary: |-
       Exported KVs will be labeled with this destination label. If neither --dest-label nor --preserve-labels is specified, will assign null label.
+    groupName: AppConfig Arguments
   - name: --dest-name
     summary: |-
       The name of the destination App Configuration store.
+    groupName: AppConfig Arguments
   - name: --dest-tags
     summary: |-
       Exported KVs and feature flags will be assigned with these tags. If no tags are specified, exported KVs and features will retain existing tags. Support space-separated tags: key[=value] [key[=value] ...]. Use  to clear existing tags.
+    groupName: AppConfig Arguments
   - name: --dry-run
     defaultValue: "False"
     summary: |-
@@ -183,13 +217,15 @@ directCommands:
       If auth mode is "login", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
   - name: --export-as-reference -r
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Export key-values as App Configuration references. For more information, see https://learn.microsoft.com/en-us/azure/app-service/app-service-configuration-references.
+    groupName: AppService Arguments
   - name: --format
-    parameterValueGroup: "json, properties, yaml"
+    acceptedValues: json, properties, yaml
     summary: |-
       File format exporting to. Required for file arguments. Currently, feature flags are not supported in properties format.
+    groupName: File Arguments
   - name: --key
     summary: |-
       If no key specified, return all keys by default. Support star sign as filters, for instance abc* means keys with abc as prefix. Key filtering not applicable for feature flags. By default, all feature flags with specified label will be exported.
@@ -200,42 +236,48 @@ directCommands:
     summary: |-
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
   - name: --naming-convention
-    defaultValue: "pascal"
-    parameterValueGroup: "camel, hyphen, pascal, underscore"
+    defaultValue: pascal
+    acceptedValues: camel, hyphen, pascal, underscore
     summary: |-
       Naming convention to be used for "Feature Management" section of file. Example: pascal = FeatureManagement, camel = featureManagement, underscore = feature_management, hyphen = feature-management.
+    groupName: File Arguments
   - name: --path
     summary: |-
       Local configuration file path. Required for file arguments.
+    groupName: File Arguments
   - name: --prefix
     summary: |-
       Prefix to be trimmed from keys. Prefix will be ignored for feature flags.
   - name: --preserve-labels
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to preserve labels from source AppConfig. This argument should NOT be specified along with --dest-label.
+    groupName: AppConfig Arguments
   - name: --profile
-    defaultValue: "appconfig/default"
-    parameterValueGroup: "appconfig/default, appconfig/kvset"
+    defaultValue: appconfig/default
+    acceptedValues: appconfig/default, appconfig/kvset
     summary: |-
       Export profile to be used for exporting the key-values. Options 'depth', 'separator', 'naming-convention', 'prefix', 'dest-label' , 'dest-tags' and, 'resolve-keyvault' are not supported when using 'appconfig/kvset' profile.
+    groupName: File Arguments
   - name: --resolve-keyvault
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Resolve the content of key vault reference.
+    groupName: File Arguments
   - name: --separator
     summary: |-
       Delimiter for flattening the key-value pairs to json or yaml file. Required for exporting hierarchical structure. Separator will be ignored for property files and feature flags. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'.
+    groupName: File Arguments
   - name: --skip-features
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Export items excluding all feature flags. By default, all features with the specified label will be exported to file or appconfig. Not applicable for appservice.
   - name: --skip-keyvault
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Export items excluding all key vault references. By default, all key vault references with the specified label will be exported.
   - name: --snapshot
@@ -248,6 +290,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for preview.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_import
   name: az appconfig kv import
   summary: |-
@@ -325,16 +394,17 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --source -s
-    parameterValueGroup: "appconfig, appservice, file"
+    acceptedValues: appconfig, appservice, file
     summary: |-
       The source of importing. Note that importing feature flags from appservice is not supported.
   optionalParameters:
   - name: --appservice-account
     summary: |-
       ARM ID for AppService OR the name of the AppService, assuming it is in the same subscription and resource group as the App Configuration store. Required for AppService arguments.
+    groupName: AppService Arguments
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -346,6 +416,7 @@ directCommands:
   - name: --depth
     summary: |-
       Depth for flattening the json or yaml file to key-value pairs. Flatten to the deepest level by default if --separator is provided. Not applicable for property files or feature flags.
+    groupName: File Arguments
   - name: --dry-run
     defaultValue: "False"
     summary: |-
@@ -354,12 +425,13 @@ directCommands:
     summary: |-
       If auth mode is "login", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
   - name: --format
-    parameterValueGroup: "json, properties, yaml"
+    acceptedValues: json, properties, yaml
     summary: |-
       Imported file format. Required for file arguments. Currently, feature flags are not supported in properties format.
+    groupName: File Arguments
   - name: --import-mode
-    defaultValue: "ignore-match"
-    parameterValueGroup: "all, ignore-match"
+    defaultValue: ignore-match
+    acceptedValues: all, ignore-match
     summary: |-
       If import mode is "ignore-match", only source key-values that do not already exist or whose value, content-type or tags are different from that of an existing key-value with the same key and label, will be written. Import mode "all" writes all key-values to the destination regardless of whether they exist or not.
   - name: --label
@@ -371,58 +443,71 @@ directCommands:
   - name: --path
     summary: |-
       Local configuration file path. Required for file arguments.
+    groupName: File Arguments
   - name: --prefix
     summary: |-
       This prefix will be appended to the front of imported keys. Prefix will be ignored for feature flags.
   - name: --preserve-labels
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Flag to preserve labels from source AppConfig. This argument should NOT be specified along with --label.
+    groupName: AppConfig Arguments
   - name: --profile
-    defaultValue: "appconfig/default"
-    parameterValueGroup: "appconfig/default, appconfig/kvset"
+    defaultValue: appconfig/default
+    acceptedValues: appconfig/default, appconfig/kvset
     summary: |-
       Import profile to be used for importing the key-values. Options 'depth', 'separator', 'content-type', 'label', 'skip-features', 'tags' and, 'prefix' are not supported when using 'appconfig/kvset' profile.
+    groupName: File Arguments
   - name: --separator
     summary: |-
       Delimiter for flattening the json or yaml file to key-value pairs. Separator will be ignored for property files and feature flags. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'.
+    groupName: File Arguments
   - name: --skip-features
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Import only key values and exclude all feature flags. By default, all feature flags will be imported from file or appconfig. Not applicable for appservice.
   - name: --src-auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Auth mode for connecting to source App Configuration store. For details, refer to "--auth-mode" argument.
+    groupName: AppConfig Arguments
   - name: --src-connection-string
     summary: |-
       Combination of access key and endpoint of the source store.
+    groupName: AppConfig Arguments
   - name: --src-endpoint
     summary: |-
       If --src-auth-mode is "login", provide endpoint URL of the source App Configuration store.
+    groupName: AppConfig Arguments
   - name: --src-key
     summary: |-
       If no key specified, import all keys by default. Support star sign as filters, for instance abc* means keys with abc as prefix. Key filtering not applicable for feature flags. By default, all feature flags with specified label will be imported.
+    groupName: AppConfig Arguments
   - name: --src-label
     summary: |-
       Only keys with this label in source AppConfig will be imported. If no value specified, import keys with null label by default. Support star sign as filters, for instance * means all labels, abc* means labels with abc as prefix.
+    groupName: AppConfig Arguments
   - name: --src-name
     summary: |-
       The name of the source App Configuration store.
+    groupName: AppConfig Arguments
   - name: --src-snapshot
     summary: |-
       Import all keys in a given snapshot of the source App Configuration store. If no snapshot is specified, the keys currently in the store are imported based on the specified key and label filters.
+    groupName: AppConfig Arguments
   - name: --src-tags
     summary: |-
       Key-values which contain the specified tags in source AppConfig will be imported. If no tags are specified, all key-values with any tags can be imported. Support space-separated tag filters: key[=value] [key[=value] ...].
+    groupName: AppConfig Arguments
   - name: --strict
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Delete all other key-values in the store with specified prefix and label.
+    groupName: File Arguments
   - name: --tags
     summary: |-
       Imported KVs and feature flags will be assigned with these tags. If no tags are specified, imported KVs and feature flags will retain existing tags. Support space-separated tags: key[=value] [key[=value] ...]. Use  to clear existing tags.
@@ -430,6 +515,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for preview.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_list
   name: az appconfig kv list
   summary: |-
@@ -488,8 +600,8 @@ directCommands:
     summary: |-
       List all items.
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -502,7 +614,7 @@ directCommands:
     summary: |-
       If auth mode is "login", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
   - name: --fields
-    parameterValueGroup: "content_type, etag, key, label, last_modified, locked, tags, value"
+    acceptedValues: content_type, etag, key, label, last_modified, locked, tags, value
     summary: |-
       Space-separated customized output fields.
   - name: --key
@@ -516,7 +628,7 @@ directCommands:
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
   - name: --resolve-keyvault
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Resolve the content of key vault reference. This argument should NOT be specified along with --fields. Instead use --query for customized query.
   - name: --snapshot
@@ -528,6 +640,33 @@ directCommands:
   - name: --top -t
     summary: |-
       Maximum number of items to return. Must be a positive integer. Default to 100.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_lock
   name: az appconfig kv lock
   summary: |-
@@ -557,8 +696,8 @@ directCommands:
       Key to be locked.
   optionalParameters:
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -577,6 +716,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_restore
   name: az appconfig kv restore
   summary: |-
@@ -615,8 +781,8 @@ directCommands:
       Format: "YYYY-MM-DDThh:mm:ss["Z"/±hh:mm]. If no time zone or offset specified, use UTC by default.
   optionalParameters:
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -645,6 +811,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_set
   name: az appconfig kv set
   summary: |-
@@ -689,8 +882,8 @@ directCommands:
       Key to be set. Key cannot be a '.' or '..', or contain the '%' character.
   optionalParameters:
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -718,6 +911,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_set-keyvault
   name: az appconfig kv set-keyvault
   summary: |-
@@ -753,8 +973,8 @@ directCommands:
       ID of the Key Vault object. Can be found using 'az keyvault {collection} show' command, where collection is key, secret or certificate. To set reference to the latest version of your secret, remove version information from secret identifier.
   optionalParameters:
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -776,6 +996,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_show
   name: az appconfig kv show
   summary: |-
@@ -808,8 +1055,8 @@ directCommands:
       Key to be showed.
   optionalParameters:
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -827,6 +1074,33 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_appconfig_kv_unlock
   name: az appconfig kv unlock
   summary: |-
@@ -856,8 +1130,8 @@ directCommands:
       Key to be unlocked.
   optionalParameters:
   - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
   - name: --connection-string
@@ -876,6 +1150,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_appconfig_kv_delete
 - az_appconfig_kv_export
@@ -887,30 +1188,6 @@ commands:
 - az_appconfig_kv_set-keyvault
 - az_appconfig_kv_show
 - az_appconfig_kv_unlock
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 06/23/2025
   description: Manage key-values stored in an App Configuration store.

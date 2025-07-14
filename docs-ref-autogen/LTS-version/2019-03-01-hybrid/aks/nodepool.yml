@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_aks_nodepool
 name: az aks nodepool
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **aks-preview** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az aks nodepool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage node pools in managed Kubernetes cluster.
@@ -18,7 +17,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool add --cluster-name
-                        --name
+                        --name --nodepool-name
                         --resource-group
                         [--aks-custom-headers]
                         [--allowed-host-ports]
@@ -145,7 +144,7 @@ directCommands:
     summary: |-
       When nodes are drain how many minutes to wait for all pods to be evicted.
   - name: --driver-type
-    parameterValueGroup: "CUDA, GRID"
+    acceptedValues: CUDA, GRID
     summary: |-
       Specify the type of GPU driver to install when creating Windows agent pools. Valid values are "GRID" and "CUDA". If not provided, AKS selects the driver based on system compatibility. This option cannot be changed once the AgentPool has been created. The default is system selected.
     isPreview: true
@@ -189,8 +188,8 @@ directCommands:
       Enable vTPM on agent node pool. Must use VMSS agent pool type.
     isPreview: true
   - name: --eviction-policy
-    defaultValue: "Delete"
-    parameterValueGroup: "Deallocate, Delete"
+    defaultValue: Delete
+    acceptedValues: Deallocate, Delete
     summary: |-
       The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
   - name: --gateway-prefix-size
@@ -198,7 +197,7 @@ directCommands:
       The size of Public IPPrefix attached to the Gateway-mode node pool. The node pool must be in Gateway mode.
     isPreview: true
   - name: --gpu-instance-profile
-    parameterValueGroup: "MIG1g, MIG2g, MIG3g, MIG4g, MIG7g"
+    acceptedValues: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
     summary: |-
       GPU instance profile to partition multi-gpu Nvidia GPUs.
   - name: --host-group-id
@@ -245,8 +244,8 @@ directCommands:
     summary: |-
       Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
-    defaultValue: "User"
-    parameterValueGroup: "Gateway, System, User"
+    defaultValue: User
+    acceptedValues: Gateway, System, User
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait
@@ -262,7 +261,7 @@ directCommands:
     summary: |-
       Size in GiB of the OS disk for each node in the agent pool. Minimum 30 GiB.
   - name: --node-osdisk-type
-    parameterValueGroup: "Ephemeral, Managed"
+    acceptedValues: Ephemeral, Managed
     summary: |-
       OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation. ('Ephemeral' or 'Managed').
   - name: --node-public-ip-prefix-id
@@ -281,14 +280,14 @@ directCommands:
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes.
   - name: --os-sku
-    parameterValueGroup: "AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022, WindowsAnnual"
+    acceptedValues: AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022, WindowsAnnual
     summary: |-
       The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019, Windows2022 or WindowsAnnual when os-type is Windows, the current default is Windows2022 if not set.
   - name: --os-type
     summary: |-
       The OS Type. Linux or Windows. Windows not supported yet for "VirtualMachines" VM set type.
   - name: --pod-ip-allocation-mode
-    parameterValueGroup: "DynamicIndividual, StaticBlock"
+    acceptedValues: DynamicIndividual, StaticBlock
     summary: |-
       Set the ip allocation mode for how Pod IPs from the Azure Pod Subnet are allocated to the nodes in the AKS cluster. The choice is between dynamic batches of individual IPs or static allocation of a set of CIDR blocks. Accepted Values are "DynamicIndividual" or "StaticBlock".
     description: |-
@@ -301,13 +300,13 @@ directCommands:
     summary: |-
       The ID of a PPG. Must use VMSS agent pool type.
   - name: --priority
-    defaultValue: "Regular"
-    parameterValueGroup: "Regular, Spot"
+    defaultValue: Regular
+    acceptedValues: Regular, Spot
     summary: |-
       The priority of the node pool.
   - name: --scale-down-mode
-    defaultValue: "Delete"
-    parameterValueGroup: "Deallocate, Delete"
+    defaultValue: Delete
+    acceptedValues: Deallocate, Delete
     summary: |-
       Describes how VMs are added to or removed from nodepools.
   - name: --skip-gpu-driver-install
@@ -319,12 +318,12 @@ directCommands:
     summary: |-
       The source snapshot id used to create this nodepool. Must use VMSS agent pool type.
   - name: --spot-max-price
-    defaultValue: "nan"
+    defaultValue: nan
     summary: |-
       It can only be set when --priority is Spot. Specify the maximum price you are willing to pay in US Dollars. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. It can only include up to 5 decimal places.
   - name: --ssh-access
-    defaultValue: "localuser"
-    parameterValueGroup: "disabled, localuser"
+    defaultValue: localuser
+    acceptedValues: disabled, localuser
     summary: |-
       Configure SSH setting for the node pool. Use "disabled" to disable SSH access, "localuser" to enable SSH access using private key.
     isPreview: true
@@ -345,13 +344,40 @@ directCommands:
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
   - name: --workload-runtime
-    defaultValue: "OCIContainer"
-    parameterValueGroup: "KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi"
+    defaultValue: OCIContainer
+    acceptedValues: KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi
     summary: |-
       Determines the type of workload a node can run. Defaults to OCIContainer.
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones where agent nodes will be placed. Must use VMSS agent pool type.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_delete
   name: az aks nodepool delete
   summary: |-
@@ -360,7 +386,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool delete --cluster-name
-                           --name
+                           --name --nodepool-name
                            --resource-group
                            [--if-match]
                            [--ignore-pod-disruption-budget]
@@ -394,6 +420,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_delete-machines
   name: az aks nodepool delete-machines
   summary: |-
@@ -403,7 +456,7 @@ directCommands:
   syntax: >-
     az aks nodepool delete-machines --cluster-name
                                     --machine-names
-                                    --name
+                                    --name --nodepool-name
                                     --resource-group
                                     [--no-wait]
   examples:
@@ -432,6 +485,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_get-upgrades
   name: az aks nodepool get-upgrades
   summary: |-
@@ -440,7 +520,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool get-upgrades --cluster-name
-                                 --name
+                                 --name --nodepool-name
                                  --resource-group
   examples:
   - summary: |-
@@ -459,6 +539,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_list
   name: az aks nodepool list
   summary: |-
@@ -477,6 +584,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_operation-abort
   name: az aks nodepool operation-abort
   summary: |-
@@ -485,7 +619,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool operation-abort --cluster-name
-                                    --name
+                                    --name --nodepool-name
                                     --resource-group
                                     [--aks-custom-headers]
                                     [--no-wait]
@@ -514,6 +648,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_scale
   name: az aks nodepool scale
   summary: |-
@@ -522,7 +683,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool scale --cluster-name
-                          --name
+                          --name --nodepool-name
                           --resource-group
                           [--aks-custom-headers]
                           [--no-wait]
@@ -552,6 +713,33 @@ directCommands:
     defaultValue: "3"
     summary: |-
       Number of nodes in the Kubernetes node pool.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_show
   name: az aks nodepool show
   summary: |-
@@ -560,7 +748,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool show --cluster-name
-                         --name
+                         --name --nodepool-name
                          --resource-group
   requiredParameters:
   - isRequired: true
@@ -575,6 +763,33 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_start
   name: az aks nodepool start
   summary: |-
@@ -583,7 +798,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool start --cluster-name
-                          --name
+                          --name --nodepool-name
                           --resource-group
                           [--aks-custom-headers]
                           [--no-wait]
@@ -612,6 +827,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_stop
   name: az aks nodepool stop
   summary: |-
@@ -620,7 +862,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool stop --cluster-name
-                         --name
+                         --name --nodepool-name
                          --resource-group
                          [--aks-custom-headers]
                          [--no-wait]
@@ -649,6 +891,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_update
   name: az aks nodepool update
   summary: |-
@@ -659,12 +928,12 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool update --cluster-name
-                           --name
+                           --name --nodepool-name
                            --resource-group
                            [--aks-custom-headers]
                            [--allowed-host-ports]
                            [--asg-ids]
-                           [--dcat]
+                           [--dcat --disable-custom-ca-trust]
                            [--disable-cluster-autoscaler]
                            [--disable-fips-image]
                            [--disable-secure-boot]
@@ -809,7 +1078,7 @@ directCommands:
     summary: |-
       Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
-    parameterValueGroup: "Gateway, System, User"
+    acceptedValues: Gateway, System, User
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait
@@ -823,15 +1092,15 @@ directCommands:
     summary: |-
       The node taints for the node pool.
   - name: --os-sku
-    parameterValueGroup: "AzureLinux, Ubuntu"
+    acceptedValues: AzureLinux, Ubuntu
     summary: |-
       The os-sku of the agent node pool.
   - name: --scale-down-mode
-    parameterValueGroup: "Deallocate, Delete"
+    acceptedValues: Deallocate, Delete
     summary: |-
       Describes how VMs are added to or removed from nodepools.
   - name: --ssh-access
-    parameterValueGroup: "disabled, localuser"
+    acceptedValues: disabled, localuser
     summary: |-
       Update SSH setting for the node pool. Use "disabled" to disable SSH access, "localuser" to enable SSH access using private key.
     isPreview: true
@@ -849,6 +1118,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_nodepool_upgrade
   name: az aks nodepool upgrade
   summary: |-
@@ -857,7 +1153,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az aks nodepool upgrade --cluster-name
-                            --name
+                            --name --nodepool-name
                             --resource-group
                             [--aks-custom-headers]
                             [--drain-timeout]
@@ -928,6 +1224,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
@@ -951,29 +1274,5 @@ commands:
 - az_aks_nodepool_stop
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Commands to manage node pools in managed Kubernetes cluster.

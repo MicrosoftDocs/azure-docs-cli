@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_iot_hub_state
 name: az iot hub state
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot hub state** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage the state of an IoT Hub.
@@ -53,20 +52,23 @@ directCommands:
       The path to the file where the state information will be stored.
   optionalParameters:
   - name: --aspects
-    parameterValueGroup: "arm, configurations, devices"
+    acceptedValues: arm, configurations, devices
     summary: |-
       Hub Aspects (space-separated).
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --replace -r
     defaultValue: "False"
     summary: |-
@@ -74,6 +76,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_hub_state_import
   name: az iot hub state import
   summary: |-
@@ -123,20 +152,23 @@ directCommands:
       The path to the file where the state information will be stored.
   optionalParameters:
   - name: --aspects
-    parameterValueGroup: "arm, configurations, devices"
+    acceptedValues: arm, configurations, devices
     summary: |-
       Hub Aspects (space-separated).
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --replace -r
     defaultValue: "False"
     summary: |-
@@ -144,6 +176,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_hub_state_migrate
   name: az iot hub state migrate
   summary: |-
@@ -170,12 +229,12 @@ directCommands:
   syntax: >-
     az iot hub state migrate [--aspects {arm, configurations, devices}]
                              [--auth-type {key, login}]
-                             [--destination-hub]
-                             [--destination-hub-login]
-                             [--destination-resource-group]
-                             [--og]
-                             [--oh]
-                             [--ol]
+                             [--destination-hub --dh]
+                             [--destination-hub-login --dl]
+                             [--destination-resource-group --dg]
+                             [--og --origin-resource-group]
+                             [--oh --origin-hub]
+                             [--ol --origin-hub-login]
                              [--replace]
   examples:
   - summary: |-
@@ -192,63 +251,73 @@ directCommands:
     syntax: az iot hub state migrate --destination-hub {dest_hub_name} --origin-hub {orig_hub_name} --aspects devices configurations
   optionalParameters:
   - name: --aspects
-    parameterValueGroup: "arm, configurations, devices"
+    acceptedValues: arm, configurations, devices
     summary: |-
       Hub Aspects (space-separated).
   - name: --auth-type
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
+    defaultValue: key
+    acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
   - name: --destination-hub --dh
     summary: |-
       Name of IoT Hub to which the origin hub state will be copied to.
+    groupName: IoT Hub Identifier Arguments
   - name: --destination-hub-login --dl
     summary: |-
       This command supports an entity connection string with rights to perform action on the destination hub. Use to avoid session login via `az login` for this IoT Hub instance. If both an entity connection string and name are provided the connection string takes priority. Required if --destination-hub is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --destination-resource-group --dg
     summary: |-
       Name of resource group of the IoT Hub to which the origin hub state will be copied to. If not provided, will use the origin IoT Hub's resource group.
+    groupName: IoT Hub Identifier Arguments
   - name: --og --origin-resource-group
     summary: |-
       Name of resource group of the IoT Hub which will be copied.
+    groupName: IoT Hub Identifier Arguments
   - name: --oh --origin-hub
     summary: |-
       Name of IoT Hub which will be copied.
+    groupName: IoT Hub Identifier Arguments
   - name: --ol --origin-hub-login
     summary: |-
       This command supports an entity connection string with rights to perform action on the origin hub. Use to avoid session login via `az login` for this IoT Hub instance. If both an entity connection string and name are provided the connection string takes priority. Required if --origin-hub is not provided.
+    groupName: IoT Hub Identifier Arguments
   - name: --replace -r
     defaultValue: "False"
     summary: |-
       If this flag is set, then the command will delete the current devices, configurations, and certificates of the destination hub.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_hub_state_export
 - az_iot_hub_state_import
 - az_iot_hub_state_migrate
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: For more information, see aka.ms/aziotcli-iot-hub-state.

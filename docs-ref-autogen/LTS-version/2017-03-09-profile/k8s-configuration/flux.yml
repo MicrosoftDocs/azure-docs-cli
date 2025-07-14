@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_k8s-configuration_flux
 name: az k8s-configuration flux
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **k8s-configuration** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az k8s-configuration flux** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage Flux v2 Kubernetes configurations.
@@ -28,32 +27,32 @@ directCommands:
                                      [--bucket-insecure {false, true}]
                                      [--bucket-name]
                                      [--bucket-secret-key]
-                                     [--cluster-resource-provider]
+                                     [--cluster-resource-provider --cluster-rp]
                                      [--commit]
                                      [--container-name]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
-                                     [--interval]
+                                     [--interval --sync-interval]
                                      [--kind {azblob, bucket, git}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
-                                     [--local-auth-ref]
-                                     [--managed-identity-client-id]
-                                     [--namespace]
+                                     [--local-auth-ref --local-ref]
+                                     [--managed-identity-client-id --mi-client-id]
+                                     [--namespace --ns]
                                      [--no-wait]
                                      [--provider {azure, generic}]
                                      [--sas-token]
                                      [--scope {cluster, namespace}]
                                      [--semver]
-                                     [--service-principal-client-certificate]
-                                     [--service-principal-client-certificate-password]
-                                     [--service-principal-client-certificate-send-chain]
-                                     [--service-principal-client-id]
-                                     [--service-principal-client-secret]
-                                     [--service-principal-tenant-id]
+                                     [--service-principal-client-certificate --sp-client-cert]
+                                     [--service-principal-client-certificate-password --sp-cert-password]
+                                     [--service-principal-client-certificate-send-chain --sp-cert-send-chain]
+                                     [--service-principal-client-id --sp-client-id]
+                                     [--service-principal-client-secret --sp-client-secret]
+                                     [--service-principal-tenant-id --sp-tenant-id]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
                                      [--suspend {false, true}]
@@ -107,7 +106,7 @@ directCommands:
       Name of the Kubernetes cluster.
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: "connectedClusters, managedClusters, provisionedClusters"
+    acceptedValues: connectedClusters, managedClusters, provisionedClusters
     summary: |-
       Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
   - isRequired: true
@@ -126,15 +125,18 @@ directCommands:
   - name: --account-key
     summary: |-
       The Azure Blob Shared Key for authentication.
+    groupName: Azure Blob Auth Arguments
   - name: --branch
     summary: |-
       Branch within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --bucket-access-key
     summary: |-
       Access Key ID used to authenticate with the bucket.
+    groupName: Bucket Auth Arguments
   - name: --bucket-insecure
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Communicate with a bucket without TLS.
   - name: --bucket-name
@@ -143,52 +145,62 @@ directCommands:
   - name: --bucket-secret-key
     summary: |-
       Secret Key used to authenticate with the bucket.
+    groupName: Bucket Auth Arguments
   - name: --cluster-resource-provider --cluster-rp
     summary: |-
       Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
   - name: --commit
     summary: |-
       Commit within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --container-name
     summary: |-
       Name of the Azure Blob Storage container to sync.
   - name: --https-ca-cert
     summary: |-
       Base64-encoded HTTPS CA certificate for TLS communication with private repository sync.
+    groupName: Git Auth Arguments
   - name: --https-ca-cert-file
     summary: |-
       File path to HTTPS CA certificate file for TLS communication with private repository sync.
+    groupName: Git Auth Arguments
   - name: --https-key
     summary: |-
       HTTPS token/password for private repository sync.
+    groupName: Git Auth Arguments
   - name: --https-user
     summary: |-
       HTTPS username for private repository sync.
+    groupName: Git Auth Arguments
   - name: --interval --sync-interval
     summary: |-
       Time between reconciliations of the source on the cluster.
   - name: --kind
-    defaultValue: "git"
-    parameterValueGroup: "azblob, bucket, git"
+    defaultValue: git
+    acceptedValues: azblob, bucket, git
     summary: |-
       Source kind to reconcile.
   - name: --known-hosts
     summary: |-
       Base64-encoded known_hosts data containing public SSH keys required to access private Git instances.
+    groupName: Git Auth Arguments
   - name: --known-hosts-file
     summary: |-
       File path to known_hosts contents containing public SSH keys required to access private Git instances.
+    groupName: Git Auth Arguments
   - name: --kustomization -k
     summary: |-
       Define kustomizations to sync sources with parameters ['name', 'path', 'depends_on', 'timeout', 'sync_interval', 'retry_interval', 'prune', 'force', 'disable_health_check'].
   - name: --local-auth-ref --local-ref
     summary: |-
       Local reference to a kubernetes secret in the configuration namespace to use for communication to the source.
+    groupName: Auth Arguments
   - name: --managed-identity-client-id --mi-client-id
     summary: |-
       The client ID of the managed identity for authentication with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --namespace --ns
-    defaultValue: "default"
+    defaultValue: default
     summary: |-
       Namespace to deploy the configuration.
   - name: --no-wait
@@ -196,56 +208,95 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --provider
-    parameterValueGroup: "azure, generic"
+    acceptedValues: azure, generic
     summary: |-
       Name of the provider used for authentication, azure provider can be used to authenticate to Azure DevOps repositories using Managed Identity.
+    groupName: Git Auth Arguments
   - name: --sas-token
     summary: |-
       The Azure Blob SAS Token for authentication.
+    groupName: Azure Blob Auth Arguments
   - name: --scope -s
-    defaultValue: "cluster"
-    parameterValueGroup: "cluster, namespace"
+    defaultValue: cluster
+    acceptedValues: cluster, namespace
     summary: |-
       Specify scope of the operator to be 'namespace' or 'cluster'.
   - name: --semver
     summary: |-
       Semver range within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --service-principal-client-certificate --sp-client-cert
     summary: |-
       The Base64 encoded client certificate for authenticating a service principal with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-certificate-password --sp-cert-password
     summary: |-
       The password for the client certificate used to authenticate a service principal with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-certificate-send-chain --sp-cert-send-chain
     defaultValue: "False"
     summary: |-
       Specify whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the client certificate.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-id --sp-client-id
     summary: |-
       The client ID for authenticating a service principal with Azure Blob, required for this authentication method.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-secret --sp-client-secret
     summary: |-
       The client secret for authenticating a service principal with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-tenant-id --sp-tenant-id
     summary: |-
       The tenant ID for authenticating a service principal with Azure Blob, required for this authentication method.
+    groupName: Azure Blob Auth Arguments
   - name: --ssh-private-key
     summary: |-
       Base64-encoded private ssh key for private repository sync.
+    groupName: Git Auth Arguments
   - name: --ssh-private-key-file
     summary: |-
       File path to private ssh key for private repository sync.
+    groupName: Git Auth Arguments
   - name: --suspend
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Suspend the reconciliation of the source and kustomizations associated with this configuration.
   - name: --tag
     summary: |-
       Tag within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --timeout
     summary: |-
       Maximum time to reconcile the source before timing out.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_k8s-configuration_flux_delete
   name: az k8s-configuration flux delete
   summary: |-
@@ -257,7 +308,7 @@ directCommands:
                                      --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                      --name
                                      --resource-group
-                                     [--cluster-resource-provider]
+                                     [--cluster-resource-provider --cluster-rp]
                                      [--force {false, true}]
                                      [--no-wait]
                                      [--yes]
@@ -275,7 +326,7 @@ directCommands:
       Name of the Kubernetes cluster.
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: "connectedClusters, managedClusters, provisionedClusters"
+    acceptedValues: connectedClusters, managedClusters, provisionedClusters
     summary: |-
       Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
   - isRequired: true
@@ -292,7 +343,7 @@ directCommands:
       Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
   - name: --force
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Force delete the flux configuration from the cluster.
   - name: --no-wait
@@ -303,6 +354,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_k8s-configuration_flux_list
   name: az k8s-configuration flux list
   summary: |-
@@ -313,7 +391,7 @@ directCommands:
     az k8s-configuration flux list --cluster-name
                                    --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                    --resource-group
-                                   [--cluster-resource-provider]
+                                   [--cluster-resource-provider --cluster-rp]
   examples:
   - summary: |-
       List Flux v2 Kubernetes configurations on a cluster
@@ -328,7 +406,7 @@ directCommands:
       Name of the Kubernetes cluster.
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: "connectedClusters, managedClusters, provisionedClusters"
+    acceptedValues: connectedClusters, managedClusters, provisionedClusters
     summary: |-
       Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
   - isRequired: true
@@ -339,6 +417,33 @@ directCommands:
   - name: --cluster-resource-provider --cluster-rp
     summary: |-
       Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_k8s-configuration_flux_show
   name: az k8s-configuration flux show
   summary: |-
@@ -350,7 +455,7 @@ directCommands:
                                    --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                    --name
                                    --resource-group
-                                   [--cluster-resource-provider]
+                                   [--cluster-resource-provider --cluster-rp]
   examples:
   - summary: |-
       Show details of a Flux v2 Kubernetes configuration
@@ -365,7 +470,7 @@ directCommands:
       Name of the Kubernetes cluster.
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: "connectedClusters, managedClusters, provisionedClusters"
+    acceptedValues: connectedClusters, managedClusters, provisionedClusters
     summary: |-
       Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
   - isRequired: true
@@ -380,6 +485,33 @@ directCommands:
   - name: --cluster-resource-provider --cluster-rp
     summary: |-
       Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_k8s-configuration_flux_update
   name: az k8s-configuration flux update
   summary: |-
@@ -397,30 +529,30 @@ directCommands:
                                      [--bucket-insecure {false, true}]
                                      [--bucket-name]
                                      [--bucket-secret-key]
-                                     [--cluster-resource-provider]
+                                     [--cluster-resource-provider --cluster-rp]
                                      [--commit]
                                      [--container-name]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
-                                     [--interval]
+                                     [--interval --sync-interval]
                                      [--kind {azblob, bucket, git}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
-                                     [--local-auth-ref]
-                                     [--managed-identity-client-id]
+                                     [--local-auth-ref --local-ref]
+                                     [--managed-identity-client-id --mi-client-id]
                                      [--no-wait]
                                      [--provider {azure, generic}]
                                      [--sas-token]
                                      [--semver]
-                                     [--service-principal-client-certificate]
-                                     [--service-principal-client-certificate-password]
-                                     [--service-principal-client-certificate-send-chain]
-                                     [--service-principal-client-id]
-                                     [--service-principal-client-secret]
-                                     [--service-principal-tenant-id]
+                                     [--service-principal-client-certificate --sp-client-cert]
+                                     [--service-principal-client-certificate-password --sp-cert-password]
+                                     [--service-principal-client-certificate-send-chain --sp-cert-send-chain]
+                                     [--service-principal-client-id --sp-client-id]
+                                     [--service-principal-client-secret --sp-client-secret]
+                                     [--service-principal-tenant-id --sp-tenant-id]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
                                      [--suspend {false, true}]
@@ -462,7 +594,7 @@ directCommands:
       Name of the Kubernetes cluster.
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: "connectedClusters, managedClusters, provisionedClusters"
+    acceptedValues: connectedClusters, managedClusters, provisionedClusters
     summary: |-
       Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
   - isRequired: true
@@ -477,14 +609,17 @@ directCommands:
   - name: --account-key
     summary: |-
       The Azure Blob Shared Key for authentication.
+    groupName: Azure Blob Auth Arguments
   - name: --branch
     summary: |-
       Branch within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --bucket-access-key
     summary: |-
       Access Key ID used to authenticate with the bucket.
+    groupName: Bucket Auth Arguments
   - name: --bucket-insecure
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Communicate with a bucket without TLS.
   - name: --bucket-name
@@ -493,95 +628,117 @@ directCommands:
   - name: --bucket-secret-key
     summary: |-
       Secret Key used to authenticate with the bucket.
+    groupName: Bucket Auth Arguments
   - name: --cluster-resource-provider --cluster-rp
     summary: |-
       Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
   - name: --commit
     summary: |-
       Commit within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --container-name
     summary: |-
       Name of the Azure Blob Storage container to sync.
   - name: --https-ca-cert
     summary: |-
       Base64-encoded HTTPS CA certificate for TLS communication with private repository sync.
+    groupName: Git Auth Arguments
   - name: --https-ca-cert-file
     summary: |-
       File path to HTTPS CA certificate file for TLS communication with private repository sync.
+    groupName: Git Auth Arguments
   - name: --https-key
     summary: |-
       HTTPS token/password for private repository sync.
+    groupName: Git Auth Arguments
   - name: --https-user
     summary: |-
       HTTPS username for private repository sync.
+    groupName: Git Auth Arguments
   - name: --interval --sync-interval
     summary: |-
       Time between reconciliations of the source on the cluster.
   - name: --kind
-    parameterValueGroup: "azblob, bucket, git"
+    acceptedValues: azblob, bucket, git
     summary: |-
       Source kind to reconcile.
   - name: --known-hosts
     summary: |-
       Base64-encoded known_hosts data containing public SSH keys required to access private Git instances.
+    groupName: Git Auth Arguments
   - name: --known-hosts-file
     summary: |-
       File path to known_hosts contents containing public SSH keys required to access private Git instances.
+    groupName: Git Auth Arguments
   - name: --kustomization -k
     summary: |-
       Define kustomizations to sync sources with parameters ['name', 'path', 'depends_on', 'timeout', 'sync_interval', 'retry_interval', 'prune', 'force', 'disable_health_check'].
   - name: --local-auth-ref --local-ref
     summary: |-
       Local reference to a kubernetes secret in the configuration namespace to use for communication to the source.
+    groupName: Auth Arguments
   - name: --managed-identity-client-id --mi-client-id
     summary: |-
       The client ID of the managed identity for authentication with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --provider
-    parameterValueGroup: "azure, generic"
+    acceptedValues: azure, generic
     summary: |-
       Name of the provider used for authentication, azure provider can be used to authenticate to Azure DevOps repositories using Managed Identity.
+    groupName: Git Auth Arguments
   - name: --sas-token
     summary: |-
       The Azure Blob SAS Token for authentication.
+    groupName: Azure Blob Auth Arguments
   - name: --semver
     summary: |-
       Semver range within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --service-principal-client-certificate --sp-client-cert
     summary: |-
       The Base64 encoded client certificate for authenticating a service principal with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-certificate-password --sp-cert-password
     summary: |-
       The password for the client certificate used to authenticate a service principal with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-certificate-send-chain --sp-cert-send-chain
     defaultValue: "False"
     summary: |-
       Specify whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the client certificate.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-id --sp-client-id
     summary: |-
       The client ID for authenticating a service principal with Azure Blob, required for this authentication method.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-client-secret --sp-client-secret
     summary: |-
       The client secret for authenticating a service principal with Azure Blob.
+    groupName: Azure Blob Auth Arguments
   - name: --service-principal-tenant-id --sp-tenant-id
     summary: |-
       The tenant ID for authenticating a service principal with Azure Blob, required for this authentication method.
+    groupName: Azure Blob Auth Arguments
   - name: --ssh-private-key
     summary: |-
       Base64-encoded private ssh key for private repository sync.
+    groupName: Git Auth Arguments
   - name: --ssh-private-key-file
     summary: |-
       File path to private ssh key for private repository sync.
+    groupName: Git Auth Arguments
   - name: --suspend
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Suspend the reconciliation of the source and kustomizations associated with this configuration.
   - name: --tag
     summary: |-
       Tag within the git source to reconcile with the cluster.
+    groupName: Git Repo Ref Arguments
   - name: --timeout
     summary: |-
       Maximum time to reconcile the source before timing out.
@@ -592,6 +749,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_k8s-configuration_flux_create
 - az_k8s-configuration_flux_delete
@@ -607,29 +791,5 @@ commands:
 - az_k8s-configuration_flux_list
 - az_k8s-configuration_flux_show
 - az_k8s-configuration_flux_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Commands to manage Flux v2 Kubernetes configurations.
