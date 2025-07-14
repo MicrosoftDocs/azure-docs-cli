@@ -20,7 +20,7 @@ directCommands:
                    --resource-group
                    [--accelerated-networking {false, true}]
                    [--accept-term]
-                   [--additional-events {false, true}]
+                   [--additional-events --additional-scheduled-events --scheduled-event-additional-publishing-target-event-grid-and-resource-graph {false, true}]
                    [--admin-password]
                    [--admin-username]
                    [--app-gateway]
@@ -34,7 +34,7 @@ directCommands:
                    [--automatic-repairs-grace-period]
                    [--backend-pool-name]
                    [--backend-port]
-                   [--capacity-reservation-group]
+                   [--capacity-reservation-group --crg]
                    [--computer-name-prefix]
                    [--custom-data]
                    [--data-disk-caching]
@@ -56,8 +56,8 @@ directCommands:
                    [--enable-integrity-monitoring]
                    [--enable-osimage-notification {false, true}]
                    [--enable-proxy-agent {false, true}]
-                   [--enable-reboot {false, true}]
-                   [--enable-redeploy {false, true}]
+                   [--enable-reboot --enable-user-reboot-scheduled-events {false, true}]
+                   [--enable-redeploy --enable-user-redeploy-scheduled-events {false, true}]
                    [--enable-resilient-creation {false, true}]
                    [--enable-resilient-deletion {false, true}]
                    [--enable-secure-boot {false, true}]
@@ -65,16 +65,16 @@ directCommands:
                    [--enable-vtpm {false, true}]
                    [--encryption-at-host {false, true}]
                    [--ephemeral-os-disk {false, true}]
-                   [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
+                   [--ephemeral-os-disk-placement --ephemeral-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
-                   [--exclude-extensions]
+                   [--exclude-extensions --security-posture-reference-exclude-extensions]
                    [--generate-ssh-keys]
                    [--health-probe]
                    [--host-group]
                    [--image]
                    [--instance-count]
-                   [--lb]
-                   [--lb-nat-rule-name]
+                   [--lb --load-balancer]
+                   [--lb-nat-rule-name --nat-rule-name]
                    [--lb-sku {Basic, Gateway, Standard}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
                    [--location]
@@ -116,10 +116,10 @@ directCommands:
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
                    [--scope]
                    [--secrets]
-                   [--security-posture-id]
+                   [--security-posture-id --security-posture-reference-id]
                    [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--single-placement-group {false, true}]
-                   [--sku-allocat-strat {CapacityOptimized, LowestPrice}]
+                   [--sku-allocat-strat --skuprofile-allocation-strategy {CapacityOptimized, LowestPrice}]
                    [--skuprofile-vmsizes]
                    [--specialized {false, true}]
                    [--spot-restore-timeout]
@@ -228,48 +228,58 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --accelerated-networking
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable accelerated networking. Unless specified, CLI will enable it based on machine image and size.
+    groupName: Network Arguments
   - name: --accept-term
     summary: |-
       Accept the license agreement and privacy statement.
   - name: --additional-events --additional-scheduled-events --scheduled-event-additional-publishing-target-event-grid-and-resource-graph
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The configuration parameter used while creating event grid and resource graph scheduled event setting.
   - name: --admin-password
     summary: |-
       Password for the VM if authentication type is 'Password'.
+    groupName: Authentication Arguments
   - name: --admin-username
     summary: |-
       Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
+    groupName: Authentication Arguments
   - name: --app-gateway
     summary: |-
       Name to use when creating a new application gateway (default) or referencing an existing one. Can also reference an existing application gateway by ID or specify "" for none.
+    groupName: Network Balancer Arguments
   - name: --app-gateway-capacity
     defaultValue: "10"
     summary: |-
       The number of instances to use when creating a new application gateway.
+    groupName: Network Balancer Arguments
   - name: --app-gateway-sku
-    defaultValue: "Standard_Large"
+    defaultValue: Standard_Large
     summary: |-
       SKU when creating a new application gateway.
+    groupName: Network Balancer Arguments
   - name: --app-gateway-subnet-address-prefix
     summary: |-
       The subnet IP address prefix to use when creating a new application gateway in CIDR format.
+    groupName: Network Balancer Arguments
   - name: --asgs
     summary: |-
       Space-separated list of existing application security groups to associate with the VM.
+    groupName: Network Arguments
   - name: --assign-identity
     summary: |-
       Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
+    groupName: Managed Service Identity Arguments
   - name: --authentication-type
-    parameterValueGroup: "all, password, ssh"
+    acceptedValues: all, password, ssh
     summary: |-
       Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux. "all" enables both ssh and password authentication.
+    groupName: Authentication Arguments
   - name: --automatic-repairs-action
-    parameterValueGroup: "Reimage, Replace, Restart"
+    acceptedValues: Reimage, Replace, Restart
     summary: |-
       Type of repair action that will be used for repairing unhealthy virtual machines in the scale set.
   - name: --automatic-repairs-grace-period
@@ -278,9 +288,11 @@ directCommands:
   - name: --backend-pool-name
     summary: |-
       Name to use for the backend pool when creating a new load balancer or application gateway.
+    groupName: Network Balancer Arguments
   - name: --backend-port
     summary: |-
       When creating a new load balancer, backend port to open with NAT rules (Defaults to 22 on Linux and 3389 on Windows). When creating an application gateway, the backend port to use for the backend HTTP settings.
+    groupName: Network Balancer Arguments
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
@@ -294,22 +306,28 @@ directCommands:
   - name: --data-disk-caching
     summary: |-
       Storage caching type for data disk(s), including 'None', 'ReadOnly', 'ReadWrite', etc. Use a singular value to apply on all disks, or use `<lun>=<vaule1> <lun>=<value2>` to configure individual disk.
+    groupName: Storage Arguments
   - name: --data-disk-delete-option
-    parameterValueGroup: "Delete, Detach"
+    acceptedValues: Delete, Detach
     summary: |-
       Specify whether data disk should be deleted or detached upon VMSS Flex deletion (This feature is only for VMSS with flexible orchestration mode).
+    groupName: Storage Arguments
   - name: --data-disk-encryption-sets
     summary: |-
       Names or IDs (space delimited) of disk encryption sets for data disks.
+    groupName: Storage Arguments
   - name: --data-disk-iops
     summary: |-
       Specify the Read-Write IOPS (space delimited) for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB.
+    groupName: Storage Arguments
   - name: --data-disk-mbps
     summary: |-
       Specify the bandwidth in MB per second (space delimited) for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB.
+    groupName: Storage Arguments
   - name: --data-disk-sizes-gb
     summary: |-
       Space-separated empty managed data disk sizes in GB to create.
+    groupName: Storage Arguments
   - name: --disable-integrity-monitoring-autoupgrade
     defaultValue: "False"
     summary: |-
@@ -318,34 +336,36 @@ directCommands:
     summary: |-
       Overprovision option (see https://azure.microsoft.com/documentation/articles/virtual-machine-scale-sets-overview/ for details).
   - name: --disk-controller-type
-    parameterValueGroup: "NVMe, SCSI"
+    acceptedValues: NVMe, SCSI
     summary: |-
       Specify the disk controller type configured for the VM or VMSS.
     isPreview: true
+    groupName: Storage Arguments
   - name: --dns-servers
     summary: |-
       Space-separated IP addresses of DNS servers, e.g. 10.0.0.5 10.0.0.6.
+    groupName: Network Arguments
   - name: --edge-zone
     summary: |-
       The name of edge zone.
   - name: --enable-agent
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicate whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later.
   - name: --enable-auto-os-upgrade
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicate whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available.
   - name: --enable-auto-update
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicate whether Automatic Updates is enabled for the Windows virtual machine.
   - name: --enable-cross-zone-upgrade
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Set this Boolean property will allow VMSS to ignore AZ boundaries when constructing upgrade batches, and only consider Update Domain and maxBatchInstancePercent to determine the batch size.
   - name: --enable-hibernation
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The flag that enable or disable hibernation capability on the VMSS.
   - name: --enable-integrity-monitoring
@@ -353,55 +373,58 @@ directCommands:
     summary: |-
       Enable installing Microsoft propietary and not security supported guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
   - name: --enable-osimage-notification
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Specify whether the OS Image Scheduled event is enabled or disabled.
   - name: --enable-proxy-agent
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
   - name: --enable-reboot --enable-user-reboot-scheduled-events
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The configuration parameter used while publishing scheduled events additional publishing targets.
   - name: --enable-redeploy --enable-user-redeploy-scheduled-events
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The configuration parameter used while creating user initiated redeploy scheduled event setting creation.
   - name: --enable-resilient-creation
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Automatically recover customers from OS Provisioning Timeout and VM Start Timeout errors experienced during a VM Create operation by deleting and recreating the affected VM.
   - name: --enable-resilient-deletion
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Retry VM Delete requests asynchronously in the event of a failed delete operation.
   - name: --enable-secure-boot
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable secure boot.
   - name: --enable-spot-restore
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable the Spot-Try-Restore feature where evicted VMSS SPOT instances will be tried to be restored opportunistically based on capacity availability and pricing constraints.
   - name: --enable-vtpm
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable vTPM.
   - name: --encryption-at-host
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable Host Encryption for the VM or VMSS. This will enable the encryption for all the disks including Resource/Temp disk at host itself.
+    groupName: Storage Arguments
   - name: --ephemeral-os-disk
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
+    groupName: Storage Arguments
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: "CacheDisk, NvmeDisk, ResourceDisk"
+    acceptedValues: CacheDisk, NvmeDisk, ResourceDisk
     summary: |-
       Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
+    groupName: Storage Arguments
   - name: --eviction-policy
-    parameterValueGroup: "Deallocate, Delete"
+    acceptedValues: Deallocate, Delete
     summary: |-
       The eviction policy for virtual machines in a Spot priority scale set. Default eviction policy is Deallocate for a Spot priority scale set.
   - name: --exclude-extensions --security-posture-reference-exclude-extensions
@@ -411,6 +434,7 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
+    groupName: Authentication Arguments
   - name: --health-probe
     summary: |-
       Probe name from the existing load balancer, mainly used for rolling upgrade or automatic repairs.
@@ -428,16 +452,19 @@ directCommands:
   - name: --lb --load-balancer
     summary: |-
       Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify "" for none.
+    groupName: Network Balancer Arguments
   - name: --lb-nat-rule-name --nat-rule-name
     summary: |-
       Name to use for the NAT rule v2 when creating a new load balancer. (NAT rule V2 is used to replace NAT pool).
+    groupName: Network Balancer Arguments
   - name: --lb-sku
-    defaultValue: "Standard"
-    parameterValueGroup: "Basic, Gateway, Standard"
+    defaultValue: Standard
+    acceptedValues: Basic, Gateway, Standard
     summary: |-
       Sku of the Load Balancer to create. The public IP is supported to be created on edge zone only when it is 'Standard'.
+    groupName: Network Balancer Arguments
   - name: --license-type
-    parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server"
+    acceptedValues: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server
     summary: |-
       Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
   - name: --location -l
@@ -451,7 +478,7 @@ directCommands:
       The maximum price (in US Dollars) you are willing to pay for a Spot VM/VMSS. -1 indicates that the Spot VM/VMSS should not be evicted for price reasons.
     isPreview: true
   - name: --max-surge
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Specify it to create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines.
     isPreview: true
@@ -471,41 +498,48 @@ directCommands:
   - name: --nsg
     summary: |-
       Name or ID of an existing Network Security Group.
+    groupName: Network Arguments
   - name: --orchestration-mode
-    defaultValue: "Flexible"
-    parameterValueGroup: "Flexible, Uniform"
+    defaultValue: Flexible
+    acceptedValues: Flexible, Uniform
     summary: |-
       Choose how virtual machines are managed by the scale set. In Uniform mode, you define a virtual machine model and Azure will generate identical instances based on that model. In Flexible mode, you manually create and add a virtual machine of any configuration to the scale set or generate identical instances based on virtual machine model defined for the scale set.
   - name: --os-disk-caching
-    parameterValueGroup: "None, ReadOnly, ReadWrite"
+    acceptedValues: None, ReadOnly, ReadWrite
     summary: |-
       Storage caching type for the VM OS disk. Default: ReadWrite.
+    groupName: Storage Arguments
   - name: --os-disk-delete-option
-    parameterValueGroup: "Delete, Detach"
+    acceptedValues: Delete, Detach
     summary: |-
       Specify whether OS disk should be deleted or detached upon VMSS Flex deletion (This feature is only for VMSS with flexible orchestration mode).
+    groupName: Storage Arguments
   - name: --os-disk-encryption-set
     summary: |-
       Name or ID of disk encryption set for OS disk.
+    groupName: Storage Arguments
   - name: --os-disk-name
     summary: |-
       The name of the new VM OS disk.
+    groupName: Storage Arguments
   - name: --os-disk-secure-vm-disk-encryption-set
     summary: |-
       Specify the customer managed disk encryption set resource ID or name for the managed disk that is used for customer managed key encrypted Confidential VM OS disk and VM guest blob.
   - name: --os-disk-security-encryption-type
-    parameterValueGroup: "DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly"
+    acceptedValues: DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly
     summary: |-
       Specify the encryption type of the OS managed disk.
   - name: --os-disk-size-gb
     summary: |-
       OS disk size in GB to create.
+    groupName: Storage Arguments
   - name: --os-type
-    parameterValueGroup: "linux, windows"
+    acceptedValues: linux, windows
     summary: |-
       Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
+    groupName: Storage Arguments
   - name: --patch-mode
-    parameterValueGroup: "AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual"
+    acceptedValues: AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual
     summary: |-
       Mode of in-guest patching to IaaS virtual machine. Allowed values for Windows VM: AutomaticByOS, AutomaticByPlatform, Manual. Allowed values for Linux VM: AutomaticByPlatform, ImageDefault. Manual - You control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the paramater --enable-auto-update must be false. AutomaticByOS - The virtual machine will automatically be updated by the OS. The parameter --enable-auto-update must be true. AutomaticByPlatform - the virtual machine will automatically updated by the OS. ImageDefault - The virtual machine's default patching configuration is used. The parameter --enable-agent and --enable-auto-update must be true.
   - name: --pause-time-between-batches
@@ -514,15 +548,19 @@ directCommands:
   - name: --plan-name
     summary: |-
       Plan name.
+    groupName: Marketplace Image Plan Arguments
   - name: --plan-product
     summary: |-
       Plan product.
+    groupName: Marketplace Image Plan Arguments
   - name: --plan-promotion-code
     summary: |-
       Plan promotion code.
+    groupName: Marketplace Image Plan Arguments
   - name: --plan-publisher
     summary: |-
       Plan publisher.
+    groupName: Marketplace Image Plan Arguments
   - name: --platform-fault-domain-count
     summary: |-
       Fault Domain count for each placement group in the availability zone.
@@ -530,29 +568,33 @@ directCommands:
     summary: |-
       The name or ID of the proximity placement group the VMSS should be associated with.
   - name: --prioritize-unhealthy-instances
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Set this Boolean property will lead to all unhealthy instances in a scale set getting upgraded before any healthy instances.
   - name: --priority
-    parameterValueGroup: "Low, Regular, Spot"
+    acceptedValues: Low, Regular, Spot
     summary: |-
       Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
   - name: --proxy-agent-mode
-    parameterValueGroup: "Audit, Enforce"
+    acceptedValues: Audit, Enforce
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --public-ip-address
     summary: |-
       Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None ('""' in Azure CLI using PowerShell or --% operator). For Azure CLI using powershell core edition 7.3.4, specify  or "" (--public-ip-address  or --public-ip-address "").
+    groupName: Network Arguments
   - name: --public-ip-address-allocation
-    parameterValueGroup: "dynamic, static"
+    acceptedValues: dynamic, static
+    groupName: Network Arguments
   - name: --public-ip-address-dns-name
     summary: |-
       Globally unique DNS name for a newly created public IP.
+    groupName: Network Arguments
   - name: --public-ip-per-vm
     defaultValue: "False"
     summary: |-
       Each VM instance will have a public ip. For security, you can use '--nsg' to apply appropriate rules.
+    groupName: Network Arguments
   - name: --regular-priority-count
     summary: |-
       The base number of regular priority VMs that will be created in this scale set as it scales out. Must be greater than 0.
@@ -564,13 +606,15 @@ directCommands:
   - name: --role
     summary: |-
       Role name or id the system assigned identity will have.
+    groupName: Managed Service Identity Arguments
   - name: --scale-in-policy
-    parameterValueGroup: "Default, NewestVM, OldestVM"
+    acceptedValues: Default, NewestVM, OldestVM
     summary: |-
       Specify the scale-in policy (space delimited) that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
   - name: --scope
     summary: |-
       Scope that the system assigned identity can access.
+    groupName: Managed Service Identity Arguments
   - name: --secrets
     summary: |-
       One or many Key Vault secrets as JSON strings or files via `@{path}` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.
@@ -578,51 +622,59 @@ directCommands:
     summary: |-
       The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest.
   - name: --security-type
-    parameterValueGroup: "ConfidentialVM, Standard, TrustedLaunch"
+    acceptedValues: ConfidentialVM, Standard, TrustedLaunch
     summary: |-
       Specify the security type of the virtual machine.
   - name: --single-placement-group
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Limit the scale set to a single placement group. See https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-placement-groups for details.
   - name: --sku-allocat-strat --skuprofile-allocation-strategy
-    parameterValueGroup: "CapacityOptimized, LowestPrice"
+    acceptedValues: CapacityOptimized, LowestPrice
     summary: |-
       Allocation strategy for vm sizes in SKU profile.
   - name: --skuprofile-vmsizes
     summary: |-
       A list of VM sizes in the scale set. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
   - name: --specialized
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicate whether the source image is specialized.
+    groupName: Storage Arguments
   - name: --spot-restore-timeout
     summary: |-
       Timeout value expressed as an ISO 8601 time duration after which the platform will not try to restore the VMSS SPOT instances.
   - name: --ssh-dest-key-path
     summary: |-
       Destination file path on the VM for the SSH key. If the file already exists, the specified key(s) are appended to the file. Destination path for SSH public keys is currently limited to its default value "/home/username/.ssh/authorized_keys" due to a known issue in Linux provisioning agent.
+    groupName: Authentication Arguments
   - name: --ssh-key-type
-    defaultValue: "RSA"
-    parameterValueGroup: "Ed25519, RSA"
+    defaultValue: RSA
+    acceptedValues: Ed25519, RSA
     summary: |-
       Specify the type of SSH public and private key files to be generated if missing.
+    groupName: Authentication Arguments
   - name: --ssh-key-values
     summary: |-
       Space-separated list of SSH public keys or public key file paths.
+    groupName: Authentication Arguments
   - name: --storage-container-name
-    defaultValue: "vhds"
+    defaultValue: vhds
     summary: |-
       Only applicable when used with `--use-unmanaged-disk`. Name of the storage container for the VM OS disk. Default: vhds.
+    groupName: Storage Arguments
   - name: --storage-sku
     summary: |-
       The SKU of the storage account with which to persist VM. Use a singular sku that would be applied across all disks, or specify individual disks. Usage: [--storage-sku SKU | --storage-sku ID=SKU ID=SKU ID=SKU...], where each ID is "os" or a 0-indexed lun. Allowed values: Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, PremiumV2_LRS.
+    groupName: Storage Arguments
   - name: --subnet
     summary: |-
       The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If both vnet-name and subnet are omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
+    groupName: Network Arguments
   - name: --subnet-address-prefix
     summary: |-
       The subnet IP address prefix to use when creating a new VNet in CIDR format.
+    groupName: Network Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -630,18 +682,20 @@ directCommands:
     summary: |-
       Length of time (in minutes, between 5 and 15) a notification to be sent to the VM on the instance metadata server till the VM gets deleted.
   - name: --ultra-ssd-enabled
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enables or disables the capability to have 1 or more managed data disks with UltraSSD_LRS storage account.
+    groupName: Storage Arguments
   - name: --upgrade-policy-mode
-    defaultValue: "manual"
-    parameterValueGroup: "Automatic, Manual, Rolling"
+    defaultValue: manual
+    acceptedValues: Automatic, Manual, Rolling
     summary: |-
       Specify the mode of an upgrade to virtual machines in the scale set.
   - name: --use-unmanaged-disk
     defaultValue: "False"
     summary: |-
       Do not use managed disk to persist VM.
+    groupName: Storage Arguments
   - name: --user-data
     summary: |-
       UserData for the virtual machines in the scale set. It can be passed in as file or string.
@@ -658,19 +712,49 @@ directCommands:
   - name: --vm-domain-name
     summary: |-
       Domain name of VM instances, once configured, the FQDN is `vm<vm-index>.<vm-domain-name>.<..rest..>`.
+    groupName: Network Arguments
   - name: --vm-sku
     summary: |-
       Size of VMs in the scale set. Default to "Standard_DS1_v2". See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
   - name: --vnet-address-prefix
-    defaultValue: "10.0.0.0/16"
+    defaultValue: 10.0.0.0/16
     summary: |-
       The IP address prefix to use when creating a new VNet in CIDR format.
+    groupName: Network Arguments
   - name: --vnet-name
     summary: |-
       Name of the virtual network when creating a new one or referencing an existing one.
+    groupName: Network Arguments
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_deallocate
   name: az vmss deallocate
   summary: |-
@@ -699,7 +783,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --hibernate
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Hibernate a virtual machine from the VM scale set. Available for VMSS with Flexible OrchestrationMode only.
   - name: --instance-ids
@@ -709,6 +793,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_delete
   name: az vmss delete
   summary: |-
@@ -719,31 +830,59 @@ directCommands:
   syntax: >-
     az vmss delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
                    [--ids]
-                   [--name]
+                   [--name --vm-scale-set-name]
                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                    [--resource-group]
                    [--subscription]
   optionalParameters:
   - name: --force-deletion
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Optional parameter to force delete a VM scale set. (Feature in Preview).
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name --vm-scale-set-name -n
     summary: |-
       The name of the VM scale set.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_delete-instances
   name: az vmss delete-instances
   summary: |-
@@ -778,6 +917,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_get-instance-view
   name: az vmss get-instance-view
   summary: |-
@@ -799,18 +965,47 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-id
     summary: |-
       A VM instance ID or "*" to list instance view for all VMs in a scale set.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_get-os-upgrade-history
   name: az vmss get-os-upgrade-history
   summary: |-
@@ -819,7 +1014,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss get-os-upgrade-history --name
+    az vmss get-os-upgrade-history --name --vm-scale-set-name
                                    --resource-group
                                    [--max-items]
                                    [--next-token]
@@ -836,9 +1031,38 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_list
   name: az vmss list
   summary: |-
@@ -858,12 +1082,41 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_list-instance-connection-info
   name: az vmss list-instance-connection-info
   summary: |-
@@ -884,15 +1137,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_list-instance-public-ips
   name: az vmss list-instance-public-ips
   summary: |-
@@ -913,15 +1194,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_list-instances
   name: az vmss list-instances
   summary: |-
@@ -932,7 +1241,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss list-instances --name
+    az vmss list-instances --name --virtual-machine-scale-set-name
                            --resource-group
                            [--expand]
                            [--filter]
@@ -958,12 +1267,41 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --select
     summary: |-
       The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_list-skus
   name: az vmss list-skus
   summary: |-
@@ -972,7 +1310,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss list-skus --name
+    az vmss list-skus --name --vm-scale-set-name
                       --resource-group
                       [--max-items]
                       [--next-token]
@@ -989,9 +1327,38 @@ directCommands:
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_perform-maintenance
   name: az vmss perform-maintenance
   summary: |-
@@ -1002,7 +1369,7 @@ directCommands:
   syntax: >-
     az vmss perform-maintenance [--ids]
                                 [--instance-ids]
-                                [--name]
+                                [--name --vm-scale-set-name]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--resource-group]
                                 [--subscription]
@@ -1010,22 +1377,51 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-ids
     summary: |-
       The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: VmInstanceIDs Arguments
   - name: --name --vm-scale-set-name -n
     summary: |-
       The name of the VM scale set.
+    groupName: Resource Id Arguments
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_reimage
   name: az vmss reimage
   summary: |-
@@ -1034,7 +1430,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss reimage [--force-update-os-disk-for-ephemeral {false, true}]
+    az vmss reimage [--force-update-os-disk-for-ephemeral --update-os-disk {false, true}]
                     [--ids]
                     [--instance-ids]
                     [--name]
@@ -1053,18 +1449,20 @@ directCommands:
     syntax: az vmss reimage --name MyScaleSet --resource-group MyResourceGroup --subscription MySubscription
   optionalParameters:
   - name: --force-update-os-disk-for-ephemeral --update-os-disk
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Force update ephemeral OS disk for a virtual machine scale set VM.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-ids
     summary: |-
       Space-separated list of VM instance ID. If missing, reimage all instances.
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1072,9 +1470,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_restart
   name: az vmss restart
   summary: |-
@@ -1108,6 +1532,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_scale
   name: az vmss scale
   summary: |-
@@ -1135,9 +1586,11 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1145,9 +1598,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_set-orchestration-service-state
   name: az vmss set-orchestration-service-state
   summary: |-
@@ -1170,21 +1649,23 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --action
-    parameterValueGroup: "Resume, Suspend"
+    acceptedValues: Resume, Suspend
     summary: |-
       The action to be performed.
   - isRequired: true
     name: --service-name
-    parameterValueGroup: "AutomaticRepairs, DummyOrchestrationServiceName"
+    acceptedValues: AutomaticRepairs, DummyOrchestrationServiceName
     summary: |-
       The name of the orchestration service.
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1192,9 +1673,35 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_show
   name: az vmss show
   summary: |-
@@ -1228,6 +1735,33 @@ directCommands:
   - name: --instance-id
     summary: |-
       VM instance ID. If missing, show the VMSS.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_simulate-eviction
   name: az vmss simulate-eviction
   summary: |-
@@ -1238,7 +1772,7 @@ directCommands:
   syntax: >-
     az vmss simulate-eviction [--ids]
                               [--instance-id]
-                              [--name]
+                              [--name --vm-scale-set-name]
                               [--resource-group]
                               [--subscription]
   examples:
@@ -1249,18 +1783,47 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-id
     summary: |-
       The instance ID of the virtual machine.
+    groupName: Resource Id Arguments
   - name: --name --vm-scale-set-name -n
     summary: |-
       The name of the VM scale set.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_start
   name: az vmss start
   summary: |-
@@ -1294,6 +1857,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_stop
   name: az vmss stop
   summary: |-
@@ -1337,6 +1927,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Skip shutdown and power-off immediately.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_update
   name: az vmss update
   summary: |-
@@ -1346,10 +1963,10 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
     az vmss update [--add]
-                   [--additional-events {false, true}]
+                   [--additional-events --additional-scheduled-events --scheduled-event-additional-publishing-target-event-grid-and-resource-graph {false, true}]
                    [--automatic-repairs-action {Reimage, Replace, Restart}]
                    [--automatic-repairs-grace-period]
-                   [--capacity-reservation-group]
+                   [--capacity-reservation-group --crg]
                    [--custom-data]
                    [--disk-controller-type {NVMe, SCSI}]
                    [--enable-auto-os-upgrade {false, true}]
@@ -1358,18 +1975,18 @@ directCommands:
                    [--enable-hibernation {false, true}]
                    [--enable-osimage-notification {false, true}]
                    [--enable-proxy-agent {false, true}]
-                   [--enable-reboot {false, true}]
-                   [--enable-redeploy {false, true}]
+                   [--enable-reboot --enable-user-reboot-scheduled-events {false, true}]
+                   [--enable-redeploy --enable-user-redeploy-scheduled-events {false, true}]
                    [--enable-resilient-creation {false, true}]
                    [--enable-resilient-deletion {false, true}]
                    [--enable-secure-boot {false, true}]
                    [--enable-spot-restore {false, true}]
                    [--enable-terminate-notification {false, true}]
                    [--enable-vtpm {false, true}]
-                   [--ephemeral-option {Local}]
+                   [--ephemeral-option --ephemeral-os-disk-option {Local}]
                    [--ephemeral-os-disk {false, true}]
-                   [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
-                   [--exclude-extensions]
+                   [--ephemeral-os-disk-placement --ephemeral-placement {CacheDisk, NvmeDisk, ResourceDisk}]
+                   [--exclude-extensions --security-posture-reference-exclude-extensions]
                    [--force-deletion]
                    [--force-string]
                    [--ids]
@@ -1394,10 +2011,10 @@ directCommands:
                    [--remove]
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
-                   [--security-posture-id]
+                   [--security-posture-id --security-posture-reference-id]
                    [--security-type {Standard, TrustedLaunch}]
                    [--set]
-                   [--sku-allocat-strat {CapacityOptimized, LowestPrice}]
+                   [--sku-allocat-strat --skuprofile-allocation-strategy {CapacityOptimized, LowestPrice}]
                    [--skuprofile-vmsizes]
                    [--spot-restore-timeout]
                    [--subscription]
@@ -1438,20 +2055,23 @@ directCommands:
           --security-posture-reference-exclude-extensions "c:\tmp\exclude_extensions.json"
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --additional-events --additional-scheduled-events --scheduled-event-additional-publishing-target-event-grid-and-resource-graph
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The configuration parameter used while creating event grid and resource graph scheduled event setting.
   - name: --automatic-repairs-action
-    parameterValueGroup: "Reimage, Replace, Restart"
+    acceptedValues: Reimage, Replace, Restart
     summary: |-
       Type of repair action that will be used for repairing unhealthy virtual machines in the scale set.
+    groupName: Automatic Repairs Arguments
   - name: --automatic-repairs-grace-period
     summary: |-
       The amount of time (in minutes, between 30 and 90) for which automatic repairs are suspended due to a state change on VM.
+    groupName: Automatic Repairs Arguments
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
@@ -1460,76 +2080,78 @@ directCommands:
     summary: |-
       Custom init script file or text (cloud-init, cloud-config, etc..).
   - name: --disk-controller-type
-    parameterValueGroup: "NVMe, SCSI"
+    acceptedValues: NVMe, SCSI
     summary: |-
       Specify the disk controller type configured for the VM or VMSS.
     isPreview: true
+    groupName: Storage Arguments
   - name: --enable-auto-os-upgrade
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicate whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available.
   - name: --enable-automatic-repairs
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable automatic repairs.
+    groupName: Automatic Repairs Arguments
   - name: --enable-cross-zone-upgrade
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Set this Boolean property will allow VMSS to ignore AZ boundaries when constructing upgrade batches, and only consider Update Domain and maxBatchInstancePercent to determine the batch size.
   - name: --enable-hibernation
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The flag that enable or disable hibernation capability on the VMSS.
   - name: --enable-osimage-notification
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Specify whether the OS Image Scheduled event is enabled or disabled.
   - name: --enable-proxy-agent
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
   - name: --enable-reboot --enable-user-reboot-scheduled-events
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The configuration parameter used while publishing scheduled events additional publishing targets.
   - name: --enable-redeploy --enable-user-redeploy-scheduled-events
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       The configuration parameter used while creating user initiated redeploy scheduled event setting creation.
   - name: --enable-resilient-creation
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Automatically recover customers from OS Provisioning Timeout and VM Start Timeout errors experienced during a VM Create operation by deleting and recreating the affected VM.
   - name: --enable-resilient-deletion
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Retry VM Delete requests asynchronously in the event of a failed delete operation.
   - name: --enable-secure-boot
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable secure boot.
   - name: --enable-spot-restore
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable the Spot-Try-Restore feature where evicted VMSS SPOT instances will be tried to be restored opportunistically based on capacity availability and pricing constraints.
   - name: --enable-terminate-notification
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable terminate notification.
   - name: --enable-vtpm
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable vTPM.
   - name: --ephemeral-option --ephemeral-os-disk-option
-    parameterValueGroup: "Local"
+    acceptedValues: Local
     summary: |-
       Specify the ephemeral disk settings for operating system disk.
   - name: --ephemeral-os-disk
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Allow you to specify the ephemeral disk settings for the operating system disk. Specify it to false to set ephemeral disk setting as empty and migrate it to non ephemeral.
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: "CacheDisk, NvmeDisk, ResourceDisk"
+    acceptedValues: CacheDisk, NvmeDisk, ResourceDisk
     summary: |-
       Only applicable when used with `--vm-sku`. Allows you to choose the Ephemeral OS disk provisioning location.
   - name: --exclude-extensions --security-posture-reference-exclude-extensions
@@ -1543,14 +2165,17 @@ directCommands:
     defaultValue: "False"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-id
     summary: |-
       Update the VM instance with this ID. If missing, Update the VMSS.
+    groupName: Resource Id Arguments
   - name: --license-type
-    parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server"
+    acceptedValues: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server
     summary: |-
       Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
   - name: --max-batch-instance-percent
@@ -1561,7 +2186,7 @@ directCommands:
       The maximum price (in US Dollars) you are willing to pay for a Spot VM/VMSS. -1 indicates that the Spot VM/VMSS should not be evicted for price reasons.
     isPreview: true
   - name: --max-surge
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Specify it to create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines.
     isPreview: true
@@ -1574,6 +2199,7 @@ directCommands:
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1585,23 +2211,25 @@ directCommands:
     summary: |-
       The name or ID of the proximity placement group the VMSS should be associated with.
   - name: --prioritize-unhealthy-instances
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Set this Boolean property will lead to all unhealthy instances in a scale set getting upgraded before any healthy instances.
   - name: --priority
-    parameterValueGroup: "Low, Regular, Spot"
+    acceptedValues: Low, Regular, Spot
     summary: |-
       Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
   - name: --protect-from-scale-in
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Protect the VM instance from scale-in operations.
+    groupName: Protection Policy Arguments
   - name: --protect-from-scale-set-actions
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Protect the VM instance from scale set actions (including scale-in).
+    groupName: Protection Policy Arguments
   - name: --proxy-agent-mode
-    parameterValueGroup: "Audit, Enforce"
+    acceptedValues: Audit, Enforce
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --regular-priority-count
@@ -1613,29 +2241,32 @@ directCommands:
       The percentage of VM instances, after the base regular priority count has been reached, that are expected to use regular priority. Must be between 0 and 100.
     isPreview: true
   - name: --remove
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --scale-in-policy
-    parameterValueGroup: "Default, NewestVM, OldestVM"
+    acceptedValues: Default, NewestVM, OldestVM
     summary: |-
       Specify the scale-in policy (space delimited) that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
   - name: --security-posture-id --security-posture-reference-id
     summary: |-
       The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest.
   - name: --security-type
-    parameterValueGroup: "Standard, TrustedLaunch"
+    acceptedValues: Standard, TrustedLaunch
     summary: |-
       Specify the security type of the virtual machine scale set.
   - name: --set
-    defaultValue: "[]"
+    defaultValue: '[]'
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --sku-allocat-strat --skuprofile-allocation-strategy
-    parameterValueGroup: "CapacityOptimized, LowestPrice"
+    acceptedValues: CapacityOptimized, LowestPrice
     summary: |-
       Allocation strategy for vm sizes in SKU profile.
   - name: --skuprofile-vmsizes
@@ -1647,15 +2278,16 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --terminate-notification-time
     summary: |-
       Length of time (in minutes, between 5 and 15) a notification to be sent to the VM on the instance metadata server till the VM gets deleted.
   - name: --ultra-ssd-enabled
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enables or disables the capability to have 1 or more managed data disks with UltraSSD_LRS storage account.
   - name: --upgrade-policy-mode
-    parameterValueGroup: "Automatic, Manual, Rolling"
+    acceptedValues: Automatic, Manual, Rolling
     summary: |-
       Specify the mode of an upgrade to virtual machines in the scale set.
   - name: --user-data
@@ -1674,6 +2306,30 @@ directCommands:
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_update-domain-walk
   name: az vmss update-domain-walk
   summary: |-
@@ -1702,21 +2358,49 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --placement-group-id
     summary: |-
       The placement group id for which the manual recovery walk is requested.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --vmss-name
     summary: |-
       The name of the VM scale set.
+    groupName: Resource Id Arguments
   - name: --zone
     summary: |-
       The zone in which the manual recovery walk is requested for cross zone virtual machine scale set.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_update-instances
   name: az vmss update-instances
   summary: |-
@@ -1751,6 +2435,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_vmss_wait
   name: az vmss wait
   summary: |-
@@ -1786,44 +2497,80 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
       Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
       Wait until deleted.
+    groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --instance-id
     summary: |-
       Wait on the VM instance with this ID. If missing, Wait on the VMSS.
+    groupName: Resource Id Arguments
   - name: --interval
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --timeout
     defaultValue: "3600"
     summary: |-
       Maximum wait in seconds.
+    groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_vmss_application
 - az_vmss_application_list
@@ -1892,30 +2639,6 @@ commands:
 - az_vmss_update-domain-walk
 - az_vmss_update-instances
 - az_vmss_wait
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 04/18/2024
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

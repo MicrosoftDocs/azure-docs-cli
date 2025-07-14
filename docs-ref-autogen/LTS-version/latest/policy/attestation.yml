@@ -14,8 +14,8 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy attestation create --attestation-name
-                                 --policy-assignment
+    az policy attestation create --attestation-name --name
+                                 --policy-assignment --policy-assignment-id
                                  [--assessment-date]
                                  [--comments]
                                  [--compliance-state {Compliant, NonCompliant, Unknown}]
@@ -26,7 +26,7 @@ directCommands:
                                  [--namespace]
                                  [--owner]
                                  [--parent]
-                                 [--resource]
+                                 [--resource --resource-id]
                                  [--resource-group]
                                  [--resource-type]
   examples:
@@ -68,47 +68,88 @@ directCommands:
     name: --policy-assignment --policy-assignment-id -a
     summary: |-
       The resource ID of the policy assignment that the attestation is setting the state for.
+    groupName: Properties Arguments
   optionalParameters:
   - name: --assessment-date
     summary: |-
       The time the evidence was assessed.
+    groupName: Properties Arguments
   - name: --comments
     summary: |-
       Comments describing why this attestation was created.
+    groupName: Properties Arguments
   - name: --compliance-state
-    parameterValueGroup: "Compliant, NonCompliant, Unknown"
+    acceptedValues: Compliant, NonCompliant, Unknown
     summary: |-
       The compliance state that should be set on the resource.
+    groupName: Properties Arguments
   - name: --definition-reference-id
     summary: |-
       The policy definition reference ID from a policy set definition that the attestation is setting the state for. If the policy assignment assigns a policy set definition the attestation can choose a definition within the set definition with this property or omit this and set the state for the entire set definition.
+    groupName: Properties Arguments
   - name: --evidence
     summary: |-
       The evidence supporting the compliance state set in this attestation.
+    groupName: Properties Arguments
   - name: --expires-on
     summary: |-
       The time the compliance state should expire.
+    groupName: Properties Arguments
   - name: --metadata
     summary: |-
       Additional metadata in space-separated key=value pairs for an attestation. This overwrites any existing metadata for the attestation.
+    groupName: Properties Arguments
   - name: --namespace
     summary: |-
       Provider namespace (Ex: Microsoft.Provider).
+    groupName: Resource ID Arguments
   - name: --owner
     summary: |-
       The person responsible for setting the state of the resource. This value is typically an Azure Active Directory object ID.
+    groupName: Properties Arguments
   - name: --parent
     summary: |-
       The parent path (Ex: resourceTypeA/nameA/resourceTypeB/nameB).
+    groupName: Resource ID Arguments
   - name: --resource --resource-id
     summary: |-
       Resource ID or resource name. If a name is given, please provide the resource group and other relevant resource id arguments.
+    groupName: Resource ID Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Scope Arguments
   - name: --resource-type
     summary: |-
       Resource type (Ex: resourceTypeC).
+    groupName: Resource ID Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_policy_attestation_delete
   name: az policy attestation delete
   summary: |-
@@ -117,10 +158,10 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy attestation delete --attestation-name
+    az policy attestation delete --attestation-name --name
                                  [--namespace]
                                  [--parent]
-                                 [--resource]
+                                 [--resource --resource-id]
                                  [--resource-group]
                                  [--resource-type]
   examples:
@@ -136,18 +177,50 @@ directCommands:
   - name: --namespace
     summary: |-
       Provider namespace (Ex: Microsoft.Provider).
+    groupName: Resource ID Arguments
   - name: --parent
     summary: |-
       The parent path (Ex: resourceTypeA/nameA/resourceTypeB/nameB).
+    groupName: Resource ID Arguments
   - name: --resource --resource-id
     summary: |-
       Resource ID or resource name. If a name is given, please provide the resource group and other relevant resource id arguments.
+    groupName: Resource ID Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Scope Arguments
   - name: --resource-type
     summary: |-
       Resource type (Ex: resourceTypeC).
+    groupName: Resource ID Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_policy_attestation_list
   name: az policy attestation list
   summary: |-
@@ -157,7 +230,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
     az policy attestation list [--filter]
-                               [--resource]
+                               [--resource --resource-id]
                                [--resource-group]
                                [--top]
   examples:
@@ -183,6 +256,33 @@ directCommands:
   - name: --top
     summary: |-
       Maximum number of records to return.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_policy_attestation_show
   name: az policy attestation show
   summary: |-
@@ -191,10 +291,10 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy attestation show --attestation-name
+    az policy attestation show --attestation-name --name
                                [--namespace]
                                [--parent]
-                               [--resource]
+                               [--resource --resource-id]
                                [--resource-group]
                                [--resource-type]
   examples:
@@ -210,18 +310,50 @@ directCommands:
   - name: --namespace
     summary: |-
       Provider namespace (Ex: Microsoft.Provider).
+    groupName: Resource ID Arguments
   - name: --parent
     summary: |-
       The parent path (Ex: resourceTypeA/nameA/resourceTypeB/nameB).
+    groupName: Resource ID Arguments
   - name: --resource --resource-id
     summary: |-
       Resource ID or resource name. If a name is given, please provide the resource group and other relevant resource id arguments.
+    groupName: Resource ID Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Scope Arguments
   - name: --resource-type
     summary: |-
       Resource type (Ex: resourceTypeC).
+    groupName: Resource ID Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_policy_attestation_update
   name: az policy attestation update
   summary: |-
@@ -230,7 +362,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy attestation update --attestation-name
+    az policy attestation update --attestation-name --name
                                  [--assessment-date]
                                  [--comments]
                                  [--compliance-state {Compliant, NonCompliant, Unknown}]
@@ -241,8 +373,8 @@ directCommands:
                                  [--namespace]
                                  [--owner]
                                  [--parent]
-                                 [--policy-assignment]
-                                 [--resource]
+                                 [--policy-assignment --policy-assignment-id]
+                                 [--resource --resource-id]
                                  [--resource-group]
                                  [--resource-type]
   examples:
@@ -261,76 +393,93 @@ directCommands:
   - name: --assessment-date
     summary: |-
       The time the evidence was assessed.
+    groupName: Properties Arguments
   - name: --comments
     summary: |-
       Comments describing why this attestation was created.
+    groupName: Properties Arguments
   - name: --compliance-state
-    parameterValueGroup: "Compliant, NonCompliant, Unknown"
+    acceptedValues: Compliant, NonCompliant, Unknown
     summary: |-
       The compliance state that should be set on the resource.
+    groupName: Properties Arguments
   - name: --definition-reference-id
     summary: |-
       The policy definition reference ID from a policy set definition that the attestation is setting the state for. If the policy assignment assigns a policy set definition the attestation can choose a definition within the set definition with this property or omit this and set the state for the entire set definition.
+    groupName: Properties Arguments
   - name: --evidence
     summary: |-
       The evidence supporting the compliance state set in this attestation.
+    groupName: Properties Arguments
   - name: --expires-on
     summary: |-
       The time the compliance state should expire.
+    groupName: Properties Arguments
   - name: --metadata
     summary: |-
       Additional metadata in space-separated key=value pairs for an attestation. This overwrites any existing metadata for the attestation.
+    groupName: Properties Arguments
   - name: --namespace
     summary: |-
       Provider namespace (Ex: Microsoft.Provider).
+    groupName: Resource ID Arguments
   - name: --owner
     summary: |-
       The person responsible for setting the state of the resource. This value is typically an Azure Active Directory object ID.
+    groupName: Properties Arguments
   - name: --parent
     summary: |-
       The parent path (Ex: resourceTypeA/nameA/resourceTypeB/nameB).
+    groupName: Resource ID Arguments
   - name: --policy-assignment --policy-assignment-id -a
     summary: |-
       The resource ID of the policy assignment that the attestation is setting the state for.
+    groupName: Properties Arguments
   - name: --resource --resource-id
     summary: |-
       Resource ID or resource name. If a name is given, please provide the resource group and other relevant resource id arguments.
+    groupName: Resource ID Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Scope Arguments
   - name: --resource-type
     summary: |-
       Resource type (Ex: resourceTypeC).
+    groupName: Resource ID Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_policy_attestation_create
 - az_policy_attestation_delete
 - az_policy_attestation_list
 - az_policy_attestation_show
 - az_policy_attestation_update
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   ms.date: 06/24/2024
   description: Manage resource policy attestations.

@@ -1,6 +1,7 @@
 ---
 title: Azure command line tools survey guidance
 description: This article contains guidance about the Azure command line tools survey.
+ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 ---
@@ -33,9 +34,6 @@ You can also use the `AZURE_CORE_SURVEY_MESSAGE` environment variable to disable
 
 ## Privacy statement
 
-Your privacy is important to us. [Microsoft's Privacy Statement][01] explains the personal data
-Microsoft processes, how Microsoft processes it, and for what purposes.
-
-<!-- link references -->
-
-[01]: https://privacy.microsoft.com/privacystatement
+Your privacy is important to us.
+[Microsoft's Privacy Statement](https://privacy.microsoft.com/privacystatement) explains the
+personal data Microsoft processes, how Microsoft processes it, and for what purposes.

@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_iot_ops
 name: az iot ops
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure IoT Operations.
@@ -42,10 +41,10 @@ directCommands:
     az iot ops check [--as-object {false, true}]
                      [--context]
                      [--detail-level {0, 1, 2}]
-                     [--ops-service {akri, broker, dataflow, deviceregistry, opcua}]
+                     [--ops-service --svc {akri, broker, dataflow, deviceregistry, opcua}]
                      [--post {false, true}]
                      [--pre {false, true}]
-                     [--resource-name]
+                     [--resource-name --rn]
                      [--resources {asset, assetendpointprofile, assettype, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile}]
   examples:
   - summary: |-
@@ -65,36 +64,65 @@ directCommands:
     syntax: az iot ops check --svc deviceregistry --resources asset --resource-name 'my-asset-*'
   optionalParameters:
   - name: --as-object
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Output check content and validations in a CI friendly data structure.
+    groupName: Format Arguments
   - name: --context
     summary: |-
       Kubeconfig context name to use for k8s cluster communication. If no context is provided current_context is used.
+    groupName: K8s Cluster Arguments
   - name: --detail-level
     defaultValue: "0"
-    parameterValueGroup: "0, 1, 2"
+    acceptedValues: 0, 1, 2
     summary: |-
       Controls the level of detail displayed in the check output. Choose 0 for a summary view (minimal output), 1 for a detailed view (more comprehensive information), or 2 for a verbose view (all available information).
   - name: --ops-service --svc
-    parameterValueGroup: "akri, broker, dataflow, deviceregistry, opcua"
+    acceptedValues: akri, broker, dataflow, deviceregistry, opcua
     summary: |-
       The IoT Operations service deployment that will be evaluated.
   - name: --post
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Run post-deployment checks.
   - name: --pre
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Run pre-requisite checks to determine if the minimum requirements of a service deployment are fulfilled.
   - name: --resource-name --rn
     summary: |-
       Only run checks for the specific resource name. The name is case insensitive. Glob patterns '*' and '?' are supported. Note: Only alphanumeric characters, hyphens, '?' and '*' are allowed.
   - name: --resources
-    parameterValueGroup: "asset, assetendpointprofile, assettype, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile"
+    acceptedValues: asset, assetendpointprofile, assettype, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_create
   name: az iot ops create
   summary: |-
@@ -112,14 +140,14 @@ directCommands:
                       --resource-group
                       --sr-resource-id
                       [--add-insecure-listener {false, true}]
-                      [--bp]
-                      [--br]
-                      [--broker-backend-workers]
+                      [--bp --broker-backend-part]
+                      [--br --broker-backend-rf]
+                      [--broker-backend-workers --bw]
                       [--broker-config-file]
-                      [--broker-frontend-replicas]
-                      [--broker-frontend-workers]
-                      [--broker-listener-type {ClusterIp, LoadBalancer, NodePort}]
-                      [--broker-mem-profile {High, Low, Medium, Tiny}]
+                      [--broker-frontend-replicas --fr]
+                      [--broker-frontend-workers --fw]
+                      [--broker-listener-type --lt {ClusterIp, LoadBalancer, NodePort}]
+                      [--broker-mem-profile --mp {High, Low, Medium, Tiny}]
                       [--cluster-namespace]
                       [--custom-location]
                       [--description]
@@ -168,44 +196,53 @@ directCommands:
       The schema registry resource Id to use with IoT Operations.
   optionalParameters:
   - name: --add-insecure-listener
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       When enabled the mqtt broker deployment will include a listener of service type LoadBalancer, bound to port 1883 with no authN or authZ. For non-production workloads only.
+    groupName: Broker Arguments
   - name: --bp --broker-backend-part
     defaultValue: "2"
     summary: |-
       Mqtt broker backend partitions. Min value: 1, max value: 16.
+    groupName: Broker Arguments
   - name: --br --broker-backend-rf
     defaultValue: "2"
     summary: |-
       Mqtt broker backend redundancy factor. Min value: 1, max value: 5.
+    groupName: Broker Arguments
   - name: --broker-backend-workers --bw
     defaultValue: "2"
     summary: |-
       Mqtt broker backend workers. Min value: 1, max value: 16.
+    groupName: Broker Arguments
   - name: --broker-config-file
     summary: |-
       Path to a json file with custom broker config properties. File config content is used over individual broker config parameters. Useful for advanced scenarios. The expected format is described at https://aka.ms/aziotops-broker-config.
+    groupName: Broker Arguments
   - name: --broker-frontend-replicas --fr
     defaultValue: "2"
     summary: |-
       Mqtt broker frontend replicas. Min value: 1, max value: 16.
+    groupName: Broker Arguments
   - name: --broker-frontend-workers --fw
     defaultValue: "2"
     summary: |-
       Mqtt broker frontend workers. Min value: 1, max value: 16.
+    groupName: Broker Arguments
   - name: --broker-listener-type --lt
-    defaultValue: "ClusterIp"
-    parameterValueGroup: "ClusterIp, LoadBalancer, NodePort"
+    defaultValue: ClusterIp
+    acceptedValues: ClusterIp, LoadBalancer, NodePort
     summary: |-
       Service type associated with the default mqtt broker listener.
+    groupName: Broker Arguments
   - name: --broker-mem-profile --mp
-    defaultValue: "Medium"
-    parameterValueGroup: "High, Low, Medium, Tiny"
+    defaultValue: Medium
+    acceptedValues: High, Low, Medium, Tiny
     summary: |-
       Mqtt broker memory profile.
+    groupName: Broker Arguments
   - name: --cluster-namespace
-    defaultValue: "azure-iot-operations"
+    defaultValue: azure-iot-operations
     summary: |-
       The cluster namespace IoT Operations infra will be deployed to. Must be lowercase.
   - name: --custom-location
@@ -218,38 +255,70 @@ directCommands:
     defaultValue: "1"
     summary: |-
       The instance count associated with the default dataflow profile.
+    groupName: Dataflow Arguments
   - name: --enable-rsync
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Resource sync rules will be included in the IoT Operations deployment.
   - name: --kubernetes-distro
-    defaultValue: "K8s"
-    parameterValueGroup: "K3s, K8s, MicroK8s"
+    defaultValue: K8s
+    acceptedValues: K3s, K8s, MicroK8s
     summary: |-
       The Kubernetes distro to use for Akri configuration. The selected distro implies the default container runtime socket path when no --runtime-socket value is provided.
+    groupName: Akri Arguments
   - name: --location
     summary: |-
       The region that will be used for provisioned resource collateral. If not provided the connected cluster location will be used.
   - name: --no-progress
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Disable visual representation of work.
   - name: --ops-config
     summary: |-
       IotOperations arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --runtime-socket
     summary: |-
       The default node path of the container runtime socket. If not provided (default), the socket path is determined by --kubernetes-distro.
+    groupName: Akri Arguments
   - name: --tags
     summary: |-
       Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
   - name: --trust-settings
     summary: |-
       Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerName`, `issuerKind`, `configMapName`, `configMapKey`. If not used, a system provided self-signed trust bundle is configured.
+    groupName: Trust Arguments
   - name: --yes -y
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_delete
   name: az iot ops delete
   summary: |-
@@ -296,24 +365,51 @@ directCommands:
     summary: |-
       Target cluster name for IoT Operations deletion.
   - name: --force
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Force the operation to execute.
   - name: --include-deps
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Indicates the command should remove IoT Operations dependencies. This option is intended to reverse the application of init.
   - name: --name -n
     summary: |-
       IoT Operations instance name.
   - name: --no-progress
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Disable visual representation of work.
   - name: --yes -y
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_init
   name: az iot ops init
   summary: |-
@@ -352,7 +448,7 @@ directCommands:
                     [--ensure-latest {false, true}]
                     [--no-progress {false, true}]
                     [--ssc-config]
-                    [--user-trust {false, true}]
+                    [--user-trust --ut {false, true}]
   examples:
   - summary: |-
       Usage with minimum input. This form will deploy the IoT Operations foundation layer.
@@ -382,25 +478,56 @@ directCommands:
   - name: --acs-config
     summary: |-
       ContainerStorage arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --enable-fault-tolerance
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Enable fault tolerance for Azure Arc Container Storage. At least 3 cluster nodes are required.
+    groupName: Container Storage Arguments
   - name: --ensure-latest
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Ensure the latest IoT Ops CLI is being used, raising an error if an upgrade is available.
   - name: --no-progress
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Disable visual representation of work.
   - name: --ssc-config
     summary: |-
       SecretStore arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --user-trust --ut
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Skip the deployment of the system cert-manager and trust-manager in favor of a user-provided configuration.
+    groupName: Trust Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_list
   name: az iot ops list
   summary: |-
@@ -424,6 +551,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_show
   name: az iot ops show
   summary: |-
@@ -454,9 +608,36 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --tree
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Use to visualize the IoT Operations deployment against the backing cluster.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_update
   name: az iot ops update
   summary: |-
@@ -496,6 +677,33 @@ directCommands:
   - name: --tags
     summary: |-
       Instance tags. Property bag in key-value pairs with the following format: a=b c=d. Use --tags "" to remove all tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_upgrade
   name: az iot ops upgrade
   summary: |-
@@ -540,26 +748,58 @@ directCommands:
   - name: --acs-config
     summary: |-
       ContainerStorage arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --no-progress
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Disable visual representation of work.
   - name: --ops-config
     summary: |-
       IotOperations arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --osm-config
     summary: |-
       OpenServiceMesh arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --plat-config
     summary: |-
       Platform arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --ssc-config
     summary: |-
       SecretStore arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --yes -y
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_ops_asset
 - az_iot_ops_asset_create
@@ -662,30 +902,6 @@ commands:
 - az_iot_ops_support_create-bundle
 - az_iot_ops_update
 - az_iot_ops_upgrade
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: >-
     Azure IoT Operations is a set of highly aligned, but loosely coupled, first-party

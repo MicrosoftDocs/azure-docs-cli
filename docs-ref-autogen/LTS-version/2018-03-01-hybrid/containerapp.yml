@@ -30,15 +30,43 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_create
   name: az containerapp create
   summary: |-
@@ -54,12 +82,12 @@ directCommands:
                            [--command]
                            [--container-name]
                            [--cpu]
-                           [--dal]
+                           [--dal --dapr-enable-api-logging]
                            [--dapr-app-id]
                            [--dapr-app-port]
                            [--dapr-app-protocol {grpc, http}]
-                           [--dapr-http-max-request-size]
-                           [--dapr-http-read-buffer-size]
+                           [--dapr-http-max-request-size --dhmrs]
+                           [--dapr-http-read-buffer-size --dhrbs]
                            [--dapr-log-level {debug, error, info, warn}]
                            [--enable-dapr {false, true}]
                            [--env-vars]
@@ -77,17 +105,17 @@ directCommands:
                            [--registry-username]
                            [--revision-suffix]
                            [--revisions-mode {multiple, single}]
-                           [--scale-rule-auth]
-                           [--scale-rule-http-concurrency]
-                           [--scale-rule-metadata]
-                           [--scale-rule-name]
-                           [--scale-rule-type]
+                           [--scale-rule-auth --sra]
+                           [--scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc]
+                           [--scale-rule-metadata --srm]
+                           [--scale-rule-name --srn]
+                           [--scale-rule-type --srt]
                            [--secret-volume-mount]
                            [--secrets]
                            [--system-assigned]
                            [--tags]
                            [--target-port]
-                           [--termination-grace-period]
+                           [--termination-grace-period --tgp]
                            [--transport {auto, http, http2, tcp}]
                            [--user-assigned]
                            [--workload-profile-name]
@@ -158,75 +186,94 @@ directCommands:
   optionalParameters:
   - name: --allow-insecure
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Allow insecure connections for ingress traffic.
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --dal --dapr-enable-api-logging
     defaultValue: "False"
     summary: |-
       Enable API logging for the Dapr sidecar.
+    groupName: Dapr Arguments
   - name: --dapr-app-id
     summary: |-
       The Dapr application identifier.
+    groupName: Dapr Arguments
   - name: --dapr-app-port
     summary: |-
       The port Dapr uses to talk to the application.
+    groupName: Dapr Arguments
   - name: --dapr-app-protocol
-    parameterValueGroup: "grpc, http"
+    acceptedValues: grpc, http
     summary: |-
       The protocol Dapr uses to talk to the application.
+    groupName: Dapr Arguments
   - name: --dapr-http-max-request-size --dhmrs
     summary: |-
       Increase max size of request body http and grpc servers parameter in MB to handle uploading of big files.
+    groupName: Dapr Arguments
   - name: --dapr-http-read-buffer-size --dhrbs
     summary: |-
       Dapr max size of http header read buffer in KB to handle when sending multi-KB headers..
+    groupName: Dapr Arguments
   - name: --dapr-log-level
-    parameterValueGroup: "debug, error, info, warn"
+    acceptedValues: debug, error, info, warn
     summary: |-
       Set the log level for the Dapr sidecar.
+    groupName: Dapr Arguments
   - name: --enable-dapr
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Boolean indicating if the Dapr side car is enabled.
+    groupName: Dapr Arguments
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    groupName: Container Arguments
   - name: --environment
     summary: |-
       Name or resource ID of the container app's environment.
   - name: --exposed-port
     summary: |-
       Additional exposed port. Only supported by tcp transport protocol. Must be unique per environment if the app ingress is external.
+    groupName: Ingress Arguments
   - name: --image -i
     summary: |-
       Container image, e.g. publisher/image-name:tag.
+    groupName: Container Arguments
   - name: --ingress
-    parameterValueGroup: "external, internal"
+    acceptedValues: external, internal
     summary: |-
       The ingress type.
+    groupName: Ingress Arguments
   - name: --max-replicas
     summary: |-
       The maximum number of replicas.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --min-replicas
     summary: |-
       The minimum number of replicas.
+    groupName: Scale Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -234,71 +281,114 @@ directCommands:
   - name: --registry-identity
     summary: |-
       A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
+    groupName: Configuration Arguments
   - name: --registry-password
     summary: |-
       The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Configuration Arguments
   - name: --registry-server
     summary: |-
       The container registry server hostname, e.g. myregistry.azurecr.io.
+    groupName: Configuration Arguments
   - name: --registry-username
     summary: |-
       The username to log in to container registry.
+    groupName: Configuration Arguments
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
+    groupName: Container Arguments
   - name: --revisions-mode
-    defaultValue: "single"
-    parameterValueGroup: "multiple, single"
+    defaultValue: single
+    acceptedValues: multiple, single
     summary: |-
       The active revisions mode for the container app.
+    groupName: Configuration Arguments
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
     summary: |-
       The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.
+    groupName: Scale Arguments
   - name: --secret-volume-mount
     summary: |-
       Path to mount all secrets e.g. mnt/secrets.
   - name: --secrets -s
     summary: |-
       A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+    groupName: Configuration Arguments
   - name: --system-assigned
     defaultValue: "False"
     summary: |-
       Boolean indicating whether to assign system-assigned identity.
+    groupName: Identity Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --target-port
     summary: |-
       The application port used for ingress traffic.
+    groupName: Ingress Arguments
   - name: --termination-grace-period --tgp
     summary: |-
       Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
   - name: --transport
-    defaultValue: "auto"
-    parameterValueGroup: "auto, http, http2, tcp"
+    defaultValue: auto
+    acceptedValues: auto, http, http2, tcp
     summary: |-
       The transport protocol used for ingress traffic.
+    groupName: Ingress Arguments
   - name: --user-assigned
     summary: |-
       Space-separated user identities to be assigned.
+    groupName: Identity Arguments
   - name: --workload-profile-name -w
     summary: |-
       Name of the workload profile to run the app on.
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_create(containerapp)
   name: az containerapp create
   extensionSuffix: containerapp
@@ -320,12 +410,12 @@ directCommands:
                            [--context-path]
                            [--cpu]
                            [--customized-keys]
-                           [--dal]
+                           [--dal --dapr-enable-api-logging]
                            [--dapr-app-id]
                            [--dapr-app-port]
                            [--dapr-app-protocol {grpc, http}]
-                           [--dapr-http-max-request-size]
-                           [--dapr-http-read-buffer-size]
+                           [--dapr-http-max-request-size --dhmrs]
+                           [--dapr-http-read-buffer-size --dhrbs]
                            [--dapr-log-level {debug, error, info, warn}]
                            [--enable-dapr {false, true}]
                            [--enable-java-agent {false, true}]
@@ -350,23 +440,23 @@ directCommands:
                            [--revision-suffix]
                            [--revisions-mode {labels, multiple, single}]
                            [--runtime {generic, java}]
-                           [--scale-rule-auth]
-                           [--scale-rule-http-concurrency]
-                           [--scale-rule-identity]
-                           [--scale-rule-metadata]
-                           [--scale-rule-name]
-                           [--scale-rule-type]
+                           [--scale-rule-auth --sra]
+                           [--scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc]
+                           [--scale-rule-identity --sri]
+                           [--scale-rule-metadata --srm]
+                           [--scale-rule-name --srn]
+                           [--scale-rule-type --srt]
                            [--secret-volume-mount]
                            [--secrets]
-                           [--service-principal-client-id]
-                           [--service-principal-client-secret]
-                           [--service-principal-tenant-id]
+                           [--service-principal-client-id --sp-cid]
+                           [--service-principal-client-secret --sp-sec]
+                           [--service-principal-tenant-id --sp-tid]
                            [--source]
                            [--system-assigned]
                            [--tags]
                            [--target-label]
                            [--target-port]
-                           [--termination-grace-period]
+                           [--termination-grace-period --tgp]
                            [--token]
                            [--transport {auto, http, http2, tcp}]
                            [--user-assigned]
@@ -494,12 +584,13 @@ directCommands:
   optionalParameters:
   - name: --allow-insecure
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Allow insecure connections for ingress traffic.
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --artifact
     summary: |-
       Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
@@ -508,10 +599,12 @@ directCommands:
     summary: |-
       Space separated list of services, bindings or Java components to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
     isPreview: true
+    groupName: Service Binding Arguments
   - name: --branch -b
     summary: |-
       Branch in the provided GitHub repository. Assumed to be the GitHub repository's default branch if not specified.
     isPreview: true
+    groupName: GitHub Repository Arguments
   - name: --build-env-vars
     summary: |-
       A list of environment variable(s) for the build. Space-separated values in 'key=value' format.
@@ -519,79 +612,98 @@ directCommands:
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --context-path
     summary: |-
       Path in the repository to run docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
     isPreview: true
+    groupName: GitHub Repository Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
     isPreview: true
+    groupName: Service Binding Arguments
   - name: --dal --dapr-enable-api-logging
     defaultValue: "False"
     summary: |-
       Enable API logging for the Dapr sidecar.
+    groupName: Dapr Arguments
   - name: --dapr-app-id
     summary: |-
       The Dapr application identifier.
+    groupName: Dapr Arguments
   - name: --dapr-app-port
     summary: |-
       The port Dapr uses to talk to the application.
+    groupName: Dapr Arguments
   - name: --dapr-app-protocol
-    parameterValueGroup: "grpc, http"
+    acceptedValues: grpc, http
     summary: |-
       The protocol Dapr uses to talk to the application.
+    groupName: Dapr Arguments
   - name: --dapr-http-max-request-size --dhmrs
     summary: |-
       Increase max size of request body http and grpc servers parameter in MB to handle uploading of big files.
+    groupName: Dapr Arguments
   - name: --dapr-http-read-buffer-size --dhrbs
     summary: |-
       Dapr max size of http header read buffer in KB to handle when sending multi-KB headers..
+    groupName: Dapr Arguments
   - name: --dapr-log-level
-    parameterValueGroup: "debug, error, info, warn"
+    acceptedValues: debug, error, info, warn
     summary: |-
       Set the log level for the Dapr sidecar.
+    groupName: Dapr Arguments
   - name: --enable-dapr
     defaultValue: "False"
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Boolean indicating if the Dapr side car is enabled.
+    groupName: Dapr Arguments
   - name: --enable-java-agent
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Boolean indicating whether to enable Java agent for the app. Only applicable for Java runtime.
+    groupName: Runtime Arguments
   - name: --enable-java-metrics
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Boolean indicating whether to enable Java metrics for the app. Only applicable for Java runtime.
+    groupName: Runtime Arguments
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    groupName: Container Arguments
   - name: --environment
     summary: |-
       Name or resource ID of the container app's environment.
   - name: --environment-type
-    defaultValue: "managed"
-    parameterValueGroup: "connected, managed"
+    defaultValue: managed
+    acceptedValues: connected, managed
     summary: |-
       Type of environment.
     isPreview: true
   - name: --exposed-port
     summary: |-
       Additional exposed port. Only supported by tcp transport protocol. Must be unique per environment if the app ingress is external.
+    groupName: Ingress Arguments
   - name: --image -i
     summary: |-
       Container image, e.g. publisher/image-name:tag.
+    groupName: Container Arguments
   - name: --ingress
-    parameterValueGroup: "external, internal"
+    acceptedValues: external, internal
     summary: |-
       The ingress type.
+    groupName: Ingress Arguments
   - name: --kind
     summary: |-
       Set to 'functionapp' to get built in support and autoscaling to run Azure functions on Azure Container apps.
@@ -603,12 +715,15 @@ directCommands:
   - name: --max-replicas
     summary: |-
       The maximum number of replicas.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --min-replicas
     summary: |-
       The minimum number of replicas.
+    groupName: Scale Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -616,68 +731,86 @@ directCommands:
   - name: --registry-identity
     summary: |-
       The managed identity with which to authenticate to the Azure Container Registry (instead of username/password). Use 'system' for a system-defined identity, Use 'system-environment' for an environment level system-defined identity or a resource id for a user-defined environment/containerapp level identity. The managed identity should have been assigned acrpull permissions on the ACR before deployment (use 'az role assignment create --role acrpull ...').
+    groupName: Configuration Arguments
   - name: --registry-password
     summary: |-
       The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Configuration Arguments
   - name: --registry-server
     summary: |-
       The container registry server hostname, e.g. myregistry.azurecr.io.
+    groupName: Configuration Arguments
   - name: --registry-username
     summary: |-
       The username to log in to container registry.
+    groupName: Configuration Arguments
   - name: --repo
     summary: |-
       Create an app via GitHub Actions in the format: https://github.com/owner/repository-name or owner/repository-name.
     isPreview: true
+    groupName: GitHub Repository Arguments
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
+    groupName: Container Arguments
   - name: --revisions-mode
-    defaultValue: "single"
-    parameterValueGroup: "labels, multiple, single"
+    defaultValue: single
+    acceptedValues: labels, multiple, single
     summary: |-
       The active revisions mode for the container app.
+    groupName: Configuration Arguments
   - name: --runtime
-    parameterValueGroup: "generic, java"
+    acceptedValues: generic, java
     summary: |-
       The runtime of the container app.
+    groupName: Runtime Arguments
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
     summary: |-
       The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
+    groupName: Scale Arguments
   - name: --scale-rule-identity --sri
     summary: |-
       Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
     isPreview: true
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.
+    groupName: Scale Arguments
   - name: --secret-volume-mount
     summary: |-
       Path to mount all secrets e.g. mnt/secrets.
   - name: --secrets -s
     summary: |-
       A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+    groupName: Configuration Arguments
   - name: --service-principal-client-id --sp-cid
     summary: |-
       The service principal client ID. Used by GitHub Actions to authenticate with Azure.
     isPreview: true
+    groupName: GitHub Repository Arguments
   - name: --service-principal-client-secret --sp-sec
     summary: |-
       The service principal client secret. Used by GitHub Actions to authenticate with Azure.
     isPreview: true
+    groupName: GitHub Repository Arguments
   - name: --service-principal-tenant-id --sp-tid
     summary: |-
       The service principal tenant ID. Used by GitHub Actions to authenticate with Azure.
     isPreview: true
+    groupName: GitHub Repository Arguments
   - name: --source
     summary: |-
       Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://aka.ms/SourceToCloudSupportedVersions.
@@ -686,6 +819,7 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Boolean indicating whether to assign system-assigned identity.
+    groupName: Identity Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -696,6 +830,7 @@ directCommands:
   - name: --target-port
     summary: |-
       The application port used for ingress traffic.
+    groupName: Ingress Arguments
   - name: --termination-grace-period --tgp
     summary: |-
       Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
@@ -703,20 +838,50 @@ directCommands:
     summary: |-
       A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.
     isPreview: true
+    groupName: GitHub Repository Arguments
   - name: --transport
-    defaultValue: "auto"
-    parameterValueGroup: "auto, http, http2, tcp"
+    defaultValue: auto
+    acceptedValues: auto, http, http2, tcp
     summary: |-
       The transport protocol used for ingress traffic.
+    groupName: Ingress Arguments
   - name: --user-assigned
     summary: |-
       Space-separated user identities to be assigned.
+    groupName: Identity Arguments
   - name: --workload-profile-name -w
     summary: |-
       Name of the workload profile to run the app on.
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_debug
   name: az containerapp debug
   summary: |-
@@ -754,6 +919,33 @@ directCommands:
   - name: --revision
     summary: |-
       The name of the container app revision. Default to the latest revision.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_delete
   name: az containerapp delete
   summary: |-
@@ -776,9 +968,11 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -786,13 +980,39 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_delete(containerapp)
   name: az containerapp delete
   extensionSuffix: containerapp
@@ -815,9 +1035,11 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -825,13 +1047,39 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_exec
   name: az containerapp exec
   summary: |-
@@ -867,9 +1115,10 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --command
-    defaultValue: "sh"
+    defaultValue: sh
     summary: |-
       The startup command (bash, zsh, sh, etc.).
+    groupName: Container Arguments
   - name: --container
     summary: |-
       The name of the container to ssh into.
@@ -879,6 +1128,33 @@ directCommands:
   - name: --revision
     summary: |-
       The name of the container app revision to ssh into. Defaults to the latest revision.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_list
   name: az containerapp list
   summary: |-
@@ -903,6 +1179,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_list(containerapp)
   name: az containerapp list
   extensionSuffix: containerapp
@@ -929,14 +1232,41 @@ directCommands:
     summary: |-
       Name or resource ID of the container app's environment.
   - name: --environment-type
-    defaultValue: "all"
-    parameterValueGroup: "connected, managed"
+    defaultValue: all
+    acceptedValues: connected, managed
     summary: |-
       Type of environment.
     isPreview: true
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_list-usages
   name: az containerapp list-usages
   summary: |-
@@ -954,6 +1284,33 @@ directCommands:
     name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_show
   name: az containerapp show
   summary: |-
@@ -975,12 +1332,15 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --show-secrets
     defaultValue: "False"
     summary: |-
@@ -988,6 +1348,31 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_show(containerapp)
   name: az containerapp show
   extensionSuffix: containerapp
@@ -1009,12 +1394,15 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --show-secrets
     defaultValue: "False"
     summary: |-
@@ -1022,6 +1410,31 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_show-custom-domain-verification-id
   name: az containerapp show-custom-domain-verification-id
   summary: |-
@@ -1037,6 +1450,33 @@ directCommands:
   - summary: |-
       Get the verification id, which needs to be added as a TXT record for custom environment DNS suffix to verify domain ownership
     syntax: az containerapp show-custom-domain-verification-id
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_up
   name: az containerapp up
   summary: |-
@@ -1061,9 +1501,9 @@ directCommands:
                        [--registry-username]
                        [--repo]
                        [--resource-group]
-                       [--service-principal-client-id]
-                       [--service-principal-client-secret]
-                       [--service-principal-tenant-id]
+                       [--service-principal-client-id --sp-cid]
+                       [--service-principal-client-secret --sp-sec]
+                       [--service-principal-tenant-id --sp-tid]
                        [--source]
                        [--target-port]
                        [--token]
@@ -1090,6 +1530,7 @@ directCommands:
   - name: --branch -b
     summary: |-
       The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
+    groupName: Github Repo Arguments
   - name: --browse
     defaultValue: "False"
     summary: |-
@@ -1097,9 +1538,11 @@ directCommands:
   - name: --context-path
     summary: |-
       Path in the repo from which to run the docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
+    groupName: Github Repo Arguments
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    groupName: Container Arguments
   - name: --environment
     summary: |-
       Name or resource ID of the container app's environment.
@@ -1107,54 +1550,93 @@ directCommands:
     summary: |-
       Container image, e.g. publisher/image-name:tag.
   - name: --ingress
-    parameterValueGroup: "external, internal"
+    acceptedValues: external, internal
     summary: |-
       The ingress type.
+    groupName: Ingress Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --logs-workspace-id
     summary: |-
       Workspace ID of the Log Analytics workspace to send diagnostics logs to. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
+    groupName: Log Analytics (Environment) Arguments
   - name: --logs-workspace-key
     summary: |-
       Log Analytics workspace key to configure your Log Analytics workspace. You can use "az monitor log-analytics workspace get-shared-keys" to retrieve the key.
+    groupName: Log Analytics (Environment) Arguments
   - name: --registry-password
     summary: |-
       The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Configuration Arguments
   - name: --registry-server
     summary: |-
       The container registry server hostname, e.g. myregistry.azurecr.io.
+    groupName: Configuration Arguments
   - name: --registry-username
     summary: |-
       The username to log in to container registry.
+    groupName: Configuration Arguments
   - name: --repo
     summary: |-
       Create an app via Github Actions. In the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.
+    groupName: Github Repo Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --service-principal-client-id --sp-cid
     summary: |-
       The service principal client ID. Used by Github Actions to authenticate with Azure.
+    groupName: Github Repo Arguments
   - name: --service-principal-client-secret --sp-sec
     summary: |-
       The service principal client secret. Used by Github Actions to authenticate with Azure.
+    groupName: Github Repo Arguments
   - name: --service-principal-tenant-id --sp-tid
     summary: |-
       The service principal tenant ID. Used by Github Actions to authenticate with Azure.
+    groupName: Github Repo Arguments
   - name: --source
     summary: |-
       Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.
   - name: --target-port
     summary: |-
       The application port used for ingress traffic.
+    groupName: Ingress Arguments
   - name: --token
     summary: |-
       A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.
+    groupName: Github Repo Arguments
   - name: --workload-profile-name -w
     summary: |-
       The friendly name for the workload profile.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_up(containerapp)
   name: az containerapp up
   extensionSuffix: containerapp
@@ -1185,9 +1667,9 @@ directCommands:
                        [--repo]
                        [--resource-group]
                        [--revisions-mode {labels, multiple, single}]
-                       [--service-principal-client-id]
-                       [--service-principal-client-secret]
-                       [--service-principal-tenant-id]
+                       [--service-principal-client-id --sp-cid]
+                       [--service-principal-client-secret --sp-sec]
+                       [--service-principal-tenant-id --sp-tid]
                        [--source]
                        [--system-assigned]
                        [--target-label]
@@ -1227,6 +1709,7 @@ directCommands:
   - name: --branch -b
     summary: |-
       The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
+    groupName: Github Repo Arguments
   - name: --browse
     defaultValue: "False"
     summary: |-
@@ -1242,6 +1725,7 @@ directCommands:
   - name: --context-path
     summary: |-
       Path in the repo from which to run the docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
+    groupName: Github Repo Arguments
   - name: --custom-location
     summary: |-
       Resource ID of custom location. List using 'az customlocation list'.
@@ -1249,6 +1733,7 @@ directCommands:
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    groupName: Container Arguments
   - name: --environment
     summary: |-
       Name or resource ID of the container app's managed environment or connected environment.
@@ -1256,55 +1741,68 @@ directCommands:
     summary: |-
       Container image, e.g. publisher/image-name:tag.
   - name: --ingress
-    parameterValueGroup: "external, internal"
+    acceptedValues: external, internal
     summary: |-
       The ingress type.
+    groupName: Ingress Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --logs-workspace-id
     summary: |-
       Workspace ID of the Log Analytics workspace to send diagnostics logs to. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
+    groupName: Log Analytics (Environment) Arguments
   - name: --logs-workspace-key
     summary: |-
       Log Analytics workspace key to configure your Log Analytics workspace. You can use "az monitor log-analytics workspace get-shared-keys" to retrieve the key.
+    groupName: Log Analytics (Environment) Arguments
   - name: --registry-identity
     summary: |-
       A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
+    groupName: Configuration Arguments
   - name: --registry-password
     summary: |-
       The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Configuration Arguments
   - name: --registry-server
     summary: |-
       The container registry server hostname, e.g. myregistry.azurecr.io.
+    groupName: Configuration Arguments
   - name: --registry-username
     summary: |-
       The username to log in to container registry.
+    groupName: Configuration Arguments
   - name: --repo
     summary: |-
       Create an app via Github Actions. In the format: https://github.com/owner/repository-name or owner/repository-name.
+    groupName: Github Repo Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --revisions-mode
-    parameterValueGroup: "labels, multiple, single"
+    acceptedValues: labels, multiple, single
     summary: |-
       The active revisions mode for the container app.
+    groupName: Configuration Arguments
   - name: --service-principal-client-id --sp-cid
     summary: |-
       The service principal client ID. Used by Github Actions to authenticate with Azure.
+    groupName: Github Repo Arguments
   - name: --service-principal-client-secret --sp-sec
     summary: |-
       The service principal client secret. Used by Github Actions to authenticate with Azure.
+    groupName: Github Repo Arguments
   - name: --service-principal-tenant-id --sp-tid
     summary: |-
       The service principal tenant ID. Used by Github Actions to authenticate with Azure.
+    groupName: Github Repo Arguments
   - name: --source
     summary: |-
       Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.
   - name: --system-assigned
     summary: |-
       Boolean indicating whether to assign system-assigned identity.
+    groupName: Identity Arguments
   - name: --target-label
     summary: |-
       The label to apply to new revisions. Required for revisions-mode 'labels'.
@@ -1312,15 +1810,45 @@ directCommands:
   - name: --target-port
     summary: |-
       The application port used for ingress traffic.
+    groupName: Ingress Arguments
   - name: --token
     summary: |-
       A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.
+    groupName: Github Repo Arguments
   - name: --user-assigned
     summary: |-
       Space-separated user identities to be assigned.
+    groupName: Identity Arguments
   - name: --workload-profile-name -w
     summary: |-
       The friendly name for the workload profile.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_update
   name: az containerapp update
   summary: |-
@@ -1345,16 +1873,16 @@ directCommands:
                            [--replace-env-vars]
                            [--resource-group]
                            [--revision-suffix]
-                           [--scale-rule-auth]
-                           [--scale-rule-http-concurrency]
-                           [--scale-rule-metadata]
-                           [--scale-rule-name]
-                           [--scale-rule-type]
+                           [--scale-rule-auth --sra]
+                           [--scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc]
+                           [--scale-rule-metadata --srm]
+                           [--scale-rule-name --srn]
+                           [--scale-rule-type --srt]
                            [--secret-volume-mount]
                            [--set-env-vars]
                            [--subscription]
                            [--tags]
-                           [--termination-grace-period]
+                           [--termination-grace-period --tgp]
                            [--workload-profile-name]
                            [--yaml]
   examples:
@@ -1387,33 +1915,43 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --image -i
     summary: |-
       Container image, e.g. publisher/image-name:tag.
+    groupName: Container Arguments
   - name: --max-replicas
     summary: |-
       The maximum number of replicas.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --min-replicas
     summary: |-
       The minimum number of replicas.
+    groupName: Scale Arguments
   - name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1422,54 +1960,93 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Remove all environment variable(s) from container..
+    groupName: Environment variables Arguments
   - name: --remove-env-vars
     summary: |-
       Remove environment variable(s) from container. Space-separated environment variable names.
+    groupName: Environment variables Arguments
   - name: --replace-env-vars
     summary: |-
       Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
+    groupName: Container Arguments
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
     summary: |-
       The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.
+    groupName: Scale Arguments
   - name: --secret-volume-mount
     summary: |-
       Path to mount all secrets e.g. mnt/secrets.
+    groupName: Container Arguments
   - name: --set-env-vars
     summary: |-
       Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --termination-grace-period --tgp
     summary: |-
       Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
+    groupName: Container Arguments
   - name: --workload-profile-name -w
     summary: |-
       The friendly name for the workload profile.
+    groupName: Container Arguments
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_containerapp_update(containerapp)
   name: az containerapp update
   extensionSuffix: containerapp
@@ -1503,19 +2080,19 @@ directCommands:
                            [--revision-suffix]
                            [--revisions-mode {labels, multiple, single}]
                            [--runtime {generic, java}]
-                           [--scale-rule-auth]
-                           [--scale-rule-http-concurrency]
-                           [--scale-rule-identity]
-                           [--scale-rule-metadata]
-                           [--scale-rule-name]
-                           [--scale-rule-type]
+                           [--scale-rule-auth --sra]
+                           [--scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc]
+                           [--scale-rule-identity --sri]
+                           [--scale-rule-metadata --srm]
+                           [--scale-rule-name --srn]
+                           [--scale-rule-type --srt]
                            [--secret-volume-mount]
                            [--set-env-vars]
                            [--source]
                            [--subscription]
                            [--tags]
                            [--target-label]
-                           [--termination-grace-period]
+                           [--termination-grace-period --tgp]
                            [--unbind]
                            [--workload-profile-name]
                            [--yaml]
@@ -1567,6 +2144,7 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --artifact
     summary: |-
       Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
@@ -1575,6 +2153,7 @@ directCommands:
     summary: |-
       Space separated list of services, bindings or Java components to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
     isPreview: true
+    groupName: Service Binding Arguments
   - name: --build-env-vars
     summary: |-
       A list of environment variable(s) for the build. Space-separated values in 'key=value' format.
@@ -1582,30 +2161,38 @@ directCommands:
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    groupName: Container Arguments
   - name: --container-name
     summary: |-
       Name of the container.
+    groupName: Container Arguments
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    groupName: Container Arguments
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
     isPreview: true
+    groupName: Service Binding Arguments
   - name: --enable-java-agent
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Boolean indicating whether to enable Java agent for the app. Only applicable for Java runtime.
+    groupName: Runtime Arguments
   - name: --enable-java-metrics
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Boolean indicating whether to enable Java metrics for the app. Only applicable for Java runtime.
+    groupName: Runtime Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --image -i
     summary: |-
       Container image, e.g. publisher/image-name:tag.
+    groupName: Container Arguments
   - name: --max-inactive-revisions
     summary: |-
       Max inactive revisions a Container App can have.
@@ -1613,15 +2200,19 @@ directCommands:
   - name: --max-replicas
     summary: |-
       The maximum number of replicas.
+    groupName: Scale Arguments
   - name: --memory
     summary: |-
       Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    groupName: Container Arguments
   - name: --min-replicas
     summary: |-
       The minimum number of replicas.
+    groupName: Scale Arguments
   - name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    groupName: Resource Id Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1630,51 +2221,66 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Remove all environment variable(s) from container..
+    groupName: Environment variables Arguments
   - name: --remove-env-vars
     summary: |-
       Remove environment variable(s) from container. Space-separated environment variable names.
+    groupName: Environment variables Arguments
   - name: --replace-env-vars
     summary: |-
       Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
+    groupName: Container Arguments
   - name: --revisions-mode
-    parameterValueGroup: "labels, multiple, single"
+    acceptedValues: labels, multiple, single
     summary: |-
       The active revisions mode for the container app.
+    groupName: Configuration Arguments
   - name: --runtime
-    parameterValueGroup: "generic, java"
+    acceptedValues: generic, java
     summary: |-
       The runtime of the container app.
+    groupName: Runtime Arguments
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
     summary: |-
       The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
+    groupName: Scale Arguments
   - name: --scale-rule-identity --sri
     summary: |-
       Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
     isPreview: true
+    groupName: Scale Arguments
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
+    groupName: Scale Arguments
   - name: --scale-rule-name --srn
     summary: |-
       The name of the scale rule.
+    groupName: Scale Arguments
   - name: --scale-rule-type --srt
     summary: |-
       The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.
+    groupName: Scale Arguments
   - name: --secret-volume-mount
     summary: |-
       Path to mount all secrets e.g. mnt/secrets.
+    groupName: Container Arguments
   - name: --set-env-vars
     summary: |-
       Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    groupName: Environment variables Arguments
   - name: --source
     summary: |-
       Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://aka.ms/SourceToCloudSupportedVersions.
@@ -1682,6 +2288,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -1692,16 +2299,43 @@ directCommands:
   - name: --termination-grace-period --tgp
     summary: |-
       Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
+    groupName: Container Arguments
   - name: --unbind
     summary: |-
       Space separated list of services, bindings or Java components to be removed from this app. e.g. BIND_NAME1...
     isPreview: true
+    groupName: Service Binding Arguments
   - name: --workload-profile-name -w
     summary: |-
       The friendly name for the workload profile.
+    groupName: Container Arguments
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_containerapp_add-on
 - az_containerapp_add-on_kafka
@@ -2116,29 +2750,5 @@ commands:
 - az_containerapp_up(containerapp)
 - az_containerapp_update
 - az_containerapp_update(containerapp)
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage Azure Container Apps.

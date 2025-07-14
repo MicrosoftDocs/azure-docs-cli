@@ -1,9 +1,8 @@
 ### YamlMime:AzureCLIGroup
 uid: az_dt_endpoint_create
 name: az dt endpoint create
-extensionInformation: >-
+extensionInformation: |-
   > [!NOTE]
-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az dt endpoint create** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Add egress endpoints to a Digital Twins instance.
@@ -19,13 +18,13 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt endpoint create eventgrid --dt-name
-                                    --egt
-                                    --en
-                                    [--deadletter-sas-uri]
-                                    [--deadletter-uri]
-                                    [--egg]
-                                    [--egs]
+    az dt endpoint create eventgrid --dt-name --dtn
+                                    --egt --eventgrid-topic
+                                    --en --endpoint-name
+                                    [--deadletter-sas-uri --dsu]
+                                    [--deadletter-uri --du]
+                                    [--egg --eventgrid-resource-group]
+                                    [--egs --eventgrid-subscription]
                                     [--no-wait]
                                     [--resource-group]
   examples:
@@ -41,6 +40,7 @@ directCommands:
     name: --egt --eventgrid-topic
     summary: |-
       Name of EventGrid Topic to integrate with.
+    groupName: Event Grid Topic Arguments
   - isRequired: true
     name: --en --endpoint-name
     summary: |-
@@ -49,15 +49,19 @@ directCommands:
   - name: --deadletter-sas-uri --dsu
     summary: |-
       Dead-letter storage container URL with SAS token for Key based authentication.
+    groupName: Dead-letter Endpoint Arguments
   - name: --deadletter-uri --du
     summary: |-
       Dead-letter storage container URL for Identity based authentication.
+    groupName: Dead-letter Endpoint Arguments
   - name: --egg --eventgrid-resource-group
     summary: |-
       Name of EventGrid Topic resource group. If not provided, the Digital Twin instance resource group will be used.
+    groupName: Event Grid Topic Arguments
   - name: --egs --eventgrid-subscription
     summary: |-
       Name or id of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
+    groupName: Event Grid Topic Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -65,6 +69,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Digital Twins instance resource group. You can configure the default group using `az configure --defaults group={name}`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_dt_endpoint_create_eventhub
   name: az dt endpoint create eventhub
   summary: |-
@@ -78,18 +109,18 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt endpoint create eventhub --dt-name
-                                   --eh
-                                   --ehn
-                                   --en
+    az dt endpoint create eventhub --dt-name --dtn
+                                   --eh --eventhub
+                                   --ehn --eventhub-namespace
+                                   --en --endpoint-name
                                    [--auth-type {IdentityBased, KeyBased}]
-                                   [--deadletter-sas-uri]
-                                   [--deadletter-uri]
-                                   [--ehg]
-                                   [--ehp]
-                                   [--ehs]
-                                   [--mi-system-assigned {false, true}]
-                                   [--mi-user-assigned]
+                                   [--deadletter-sas-uri --dsu]
+                                   [--deadletter-uri --du]
+                                   [--ehg --eventhub-resource-group]
+                                   [--ehp --eventhub-policy]
+                                   [--ehs --eventhub-subscription]
+                                   [--mi-system-assigned --system {false, true}]
+                                   [--mi-user-assigned --user]
                                    [--no-wait]
                                    [--resource-group]
   examples:
@@ -111,18 +142,20 @@ directCommands:
     name: --eh --eventhub
     summary: |-
       Name of EventHub to integrate with.
+    groupName: Event Hub Arguments
   - isRequired: true
     name: --ehn --eventhub-namespace
     summary: |-
       EventHub Namespace identifier.
+    groupName: Event Hub Arguments
   - isRequired: true
     name: --en --endpoint-name
     summary: |-
       Endpoint name.
   optionalParameters:
   - name: --auth-type
-    defaultValue: "KeyBased"
-    parameterValueGroup: "IdentityBased, KeyBased"
+    defaultValue: KeyBased
+    acceptedValues: IdentityBased, KeyBased
     summary: |-
       Endpoint authentication type.
     isDeprecated: true
@@ -130,20 +163,25 @@ directCommands:
   - name: --deadletter-sas-uri --dsu
     summary: |-
       Dead-letter storage container URL with SAS token for Key based authentication.
+    groupName: Dead-letter Endpoint Arguments
   - name: --deadletter-uri --du
     summary: |-
       Dead-letter storage container URL for Identity based authentication.
+    groupName: Dead-letter Endpoint Arguments
   - name: --ehg --eventhub-resource-group
     summary: |-
       Name of EventHub resource group. If not provided, the Digital Twin instance resource group will be used.
+    groupName: Event Hub Arguments
   - name: --ehp --eventhub-policy
     summary: |-
       EventHub policy to use for endpoint configuration. Required when --auth-type is KeyBased.
+    groupName: Event Hub Arguments
   - name: --ehs --eventhub-subscription
     summary: |-
       Name or id of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
+    groupName: Event Hub Arguments
   - name: --mi-system-assigned --system
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Use the system-assigned managed identity for endpoint authentication.
   - name: --mi-user-assigned --user
@@ -156,6 +194,33 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Digital Twins instance resource group. You can configure the default group using `az configure --defaults group={name}`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_dt_endpoint_create_servicebus
   name: az dt endpoint create servicebus
   summary: |-
@@ -169,20 +234,20 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dt endpoint create servicebus --dt-name
-                                     --en
-                                     --sbn
-                                     --sbt
+    az dt endpoint create servicebus --dt-name --dtn
+                                     --en --endpoint-name
+                                     --sbn --servicebus-namespace
+                                     --sbt --servicebus-topic
                                      [--auth-type {IdentityBased, KeyBased}]
-                                     [--deadletter-sas-uri]
-                                     [--deadletter-uri]
-                                     [--mi-system-assigned {false, true}]
-                                     [--mi-user-assigned]
+                                     [--deadletter-sas-uri --dsu]
+                                     [--deadletter-uri --du]
+                                     [--mi-system-assigned --system {false, true}]
+                                     [--mi-user-assigned --user]
                                      [--no-wait]
                                      [--resource-group]
-                                     [--sbg]
-                                     [--sbp]
-                                     [--sbs]
+                                     [--sbg --servicebus-resource-group]
+                                     [--sbp --servicebus-policy]
+                                     [--sbs --servicebus-subscription]
   examples:
   - summary: |-
       Adds a ServiceBus Topic endpoint to a target instance using Key based auth.
@@ -206,14 +271,16 @@ directCommands:
     name: --sbn --servicebus-namespace
     summary: |-
       ServiceBus Namespace identifier.
+    groupName: Service Bus Topic Arguments
   - isRequired: true
     name: --sbt --servicebus-topic
     summary: |-
       Name of ServiceBus Topic to integrate with.
+    groupName: Service Bus Topic Arguments
   optionalParameters:
   - name: --auth-type
-    defaultValue: "KeyBased"
-    parameterValueGroup: "IdentityBased, KeyBased"
+    defaultValue: KeyBased
+    acceptedValues: IdentityBased, KeyBased
     summary: |-
       Endpoint authentication type.
     isDeprecated: true
@@ -221,11 +288,13 @@ directCommands:
   - name: --deadletter-sas-uri --dsu
     summary: |-
       Dead-letter storage container URL with SAS token for Key based authentication.
+    groupName: Dead-letter Endpoint Arguments
   - name: --deadletter-uri --du
     summary: |-
       Dead-letter storage container URL for Identity based authentication.
+    groupName: Dead-letter Endpoint Arguments
   - name: --mi-system-assigned --system
-    parameterValueGroup: "false, true"
+    acceptedValues: false, true
     summary: |-
       Use the system-assigned managed identity for endpoint authentication.
   - name: --mi-user-assigned --user
@@ -241,39 +310,45 @@ directCommands:
   - name: --sbg --servicebus-resource-group
     summary: |-
       Name of ServiceBus resource group. If not provided, the Digital Twin instance resource group will be used.
+    groupName: Service Bus Topic Arguments
   - name: --sbp --servicebus-policy
     summary: |-
       ServiceBus Topic policy to use for endpoint configuration. Required when --auth-type is KeyBased.
+    groupName: Service Bus Topic Arguments
   - name: --sbs --servicebus-subscription
     summary: |-
       Name or id of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
+    groupName: Service Bus Topic Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_dt_endpoint_create_eventgrid
 - az_dt_endpoint_create_eventhub
 - az_dt_endpoint_create_servicebus
-globalParameters:
-- name: --debug
-  summary: |-
-    Increase logging verbosity to show all debug logs.
-- name: --help -h
-  summary: |-
-    Show this help message and exit.
-- name: --only-show-errors
-  summary: |-
-    Only show errors, suppressing warnings.
-- name: --output -o
-  defaultValue: "json"
-  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
-  summary: |-
-    Output format.
-- name: --query
-  summary: |-
-    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-- name: --subscription
-  summary: |-
-    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- name: --verbose
-  summary: |-
-    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Add egress endpoints to a Digital Twins instance.
