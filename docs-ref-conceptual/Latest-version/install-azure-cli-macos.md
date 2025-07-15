@@ -13,7 +13,7 @@ locally on macOS computers. You can use the Azure CLI to connect to Azure and ex
 commands on Azure resources using interactive command-line prompts or a script.
 
 For the macOS platform, install the Azure CLI with [homebrew package manager][03]. Homebrew makes it
-easy to keep your installation of the Azure CLI update to date. The Azure CLI package requires macOS
+easy to keep your installation of the Azure CLI up to date. The Azure CLI package requires macOS
 13 or higher.
 
 [!INCLUDE [current-version](includes/current-version.md)]
