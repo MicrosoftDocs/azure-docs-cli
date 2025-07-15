@@ -1,9 +1,6 @@
 ---
 title: Install the Azure CLI on Linux | Microsoft Docs
 description: Learn how to install and run the Azure CLI on Linux manually. You can install the Azure CLI on Linux computers with one command or a step-by-step process.
-author: jiasli
-ms.author: jiasli
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, linux-related-content
 zone_pivot_group_filename: azure/zone-pivot-groups.json
@@ -13,8 +10,10 @@ keywords: linux cli, azure cli linux, install azure cli ubuntu, install azure cl
 
 # Install the Azure CLI on Linux
 
-This article explains how to install the Azure CLI on Linux. Select the appropriate package manager for your distribution from the options at the top of the page.
-Using a Linux distribution's package manager is recommended, but you may manually install the Azure CLI on Linux by selecting the [Install script](?pivots=script) option.
+This article explains how to install the Azure CLI on Linux. Select the appropriate package manager
+for your distribution from the options at the top of the page. Using a Linux distribution's package
+manager is recommended. However, you can manually install the Azure CLI on Linux by selecting the
+[Install script][01] option.
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
@@ -50,7 +49,12 @@ Using a Linux distribution's package manager is recommended, but you may manuall
 
 ## Next Steps
 
-Now that you've installed the Azure CLI, take a short tour of its features and common commands.
+Now that you installed the Azure CLI, take a short tour of its features and common commands.
 
 > [!div class="nextstepaction"]
-> [Get started with the Azure CLI](get-started-with-azure-cli.md)
+> [Get started with the Azure CLI][02]
+
+<!-- link references -->
+
+[01]: ?pivots=script
+[02]: get-started-with-azure-cli.md
