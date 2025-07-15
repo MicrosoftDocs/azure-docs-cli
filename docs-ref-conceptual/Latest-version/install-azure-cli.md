@@ -63,7 +63,7 @@ output looks like this:
 
 ### What extensions are installed?
 
-Use the `az extension list` command to see installed extension. You can also use `az version`, but
+Use the `az extension list` command to see installed extensions. You can also use `az version`, but
 `az extension list` provides more information including the installation path and status. For
 information on managing extensions, see [Use and manage extensions with the Azure CLI][02].
 
