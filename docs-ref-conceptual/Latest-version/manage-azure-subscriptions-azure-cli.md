@@ -1,6 +1,6 @@
 ---
 title: How to manage Azure subscriptions with the Azure CLI
-description: Learn about Azure tenants, users, and subscriptions. Use Azure CLI to manage your subscriptions, create management groups, and lock subscriptions.
+description: Learn how to manage Azure subscriptions with the Azure CLI. Use the Azure CLI to create management groups, lock subscriptions, and manage Azure tenants and users.
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: Azure subscriptions, manage azure subscriptions, azure management groups, azure cli set subscription, azure cli select subscription
