@@ -1,7 +1,6 @@
 ---
-title: How to manage Azure subscriptions – Azure CLI | Microsoft Docs
+title: How to manage Azure subscriptions with the Azure CLI
 description: Learn about Azure tenants, users, and subscriptions. Use Azure CLI to manage your subscriptions, create management groups, and lock subscriptions.
-ms.date: 03/24/2025
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: Azure subscriptions, manage azure subscriptions, azure management groups, azure cli set subscription, azure cli select subscription
@@ -9,23 +8,33 @@ keywords: Azure subscriptions, manage azure subscriptions, azure management grou
 
 # How to manage Azure subscriptions with the Azure CLI
 
-The Azure CLI helps you manage your Azure subscription, create management groups, and lock subscriptions.You might have multiple subscriptions within Azure. You can be part of more than one organization or your organization might divide access to certain resources across groupings. The Azure CLI supports selecting a subscription both globally and per command.
+The Azure CLI helps you manage your Azure subscription, create management groups, and lock
+subscriptions. You might have several subscriptions within Azure. You can be part of more than one
+organization, or your organization might divide access to specific resources across groupings. The
+Azure CLI supports selecting a subscription both globally and per command.
 
-For detailed information on subscriptions, billing, and cost management, see the [billing and cost management documentation](/azure/billing/).
+For detailed information on subscriptions, billing, and cost management, see the
+[billing and cost management documentation][09].
 
 ## Terminology
 
-A _tenant_ is an instance of Microsoft Entra ID in which information about a single organization resides. A _[multi-tenant organization](/azure/active-directory/multi-tenant-organizations/overview)_ is an organization that has more than one instance of Microsoft Entra ID. A tenant has one or more _subscriptions_ and _users_.
+A _tenant_ is an instance of Microsoft Entra ID in which information about a single organization
+resides. A _[multitenant organization][07]_ is an organization that has more than one instance of
+Microsoft Entra ID. A tenant has one or more _subscriptions_ and _users_.
 
-Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _tenants_ and _subscriptions_.
+Users are those accounts that sign in to Azure to create, manage, and use resources. A user might
+have access to several _tenants_ and _subscriptions_.
 
-_[Subscriptions](/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-subscriptions)_ are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription. Subscriptions contain resource groups.
+_[Subscriptions][10]_ are agreements with Microsoft to use cloud services, including Azure. Every
+resource is associated with a subscription. Subscriptions contain resource groups.
 
-An Azure _resource group_ is a container that holds related resources for an Azure solution. To learn how to manage resource groups within your subscription, see [How to manage Azure resource groups with the Azure CLI](manage-azure-groups-azure-cli.md)
+An Azure _resource group_ is a container that holds related resources for an Azure solution. To
+learn how to manage resource groups within your subscription, see
+[How to manage Azure resource groups with the Azure CLI][30]
 
 ## Get the active tenant
 
-Use [az account tenant list](/cli/azure/account/tenant) or [az account show](/cli/azure/account#az-account-show) to get the active tenant ID.
+Use [az account tenant list][22] or [az account show][26] to get the active tenant ID.
 
 ```azurecli-interactive
 az account tenant list
@@ -37,9 +46,10 @@ az account show
 
 To switch tenants, you have two options.
 
-- [Change the active subscription.](#change-the-active-subscription)
+- [Change the active subscription.][28]
 
-- Sign in as a user within the desired tenant. Use [az login](/cli/azure/reference-index#az-login-examples) to change the active tenant and update the subscription list to which you belong.
+- Sign in as a user within the desired tenant. Use [az login][27] to change the active tenant and
+  update the subscription list to which you belong.
 
     ```azurecli-interactive
     # sign in as a different user
@@ -49,19 +59,27 @@ To switch tenants, you have two options.
     az login --tenant <myTenantID>
     ```
 
-    If your organization requires multi-factor authentication, you may receive this error when using `az login --user`:
+    If your organization requires multifactor authentication, you might receive this error when
+    using `az login --user`:
 
-    ```output
-    Due to a configuration change made by your administrator, or because you moved to a new location, you must use multi-factor authentication to access...
+    ```Output
+    Due to a configuration change made by your administrator, or because you moved to a new
+    location, you must use multi-factor authentication to access...
     ```
 
-    Using the alternative `az login --tenant` command prompts you to open an HTTPS page and enter the code provided. You can then use multi-factor authentication and successfully sign in. To learn more about sign in options with the azure CLI, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
+    Using the alternative `az login --tenant` command prompts you to open an HTTPS page and enter
+    the code provided. You can then use multifactor authentication and successfully sign in. To
+    learn more about sign in options with the Azure CLI, see [Sign in with the Azure CLI][03].
 
 ## Get subscription information
 
-Most Azure CLI commands act within a subscription. You can specify which subscription to work in by using the `--subscription` parameter in your command. If you don't specify a subscription, the command uses your current, active subscription.
+Most Azure CLI commands act within a subscription. You can specify which subscription to work in
+using the `--subscription` parameter in your command. If you don't specify a subscription, the
+command uses your current, active subscription.
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command. Go to [Learn to use Bash with the Azure CLI](use-azure-cli-successfully-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of ways to use these commands.
+To see the subscription you're currently using or to get a list of available subscriptions, run the
+[az account show][26] or [az account list][24] command. For more examples of ways to use these
+commands, see [Learn to use Bash with the Azure CLI][31].
 
 Here are examples showing how to get subscription information:
 
@@ -75,6 +93,7 @@ az account list --query "[?isDefault]"
 # get a subscription that contains search words or phrases
 az account list --query "[?contains(name,'search phrase')].{SubscriptionName:name, SubscriptionID:id, TenantID:tenantId}" --output table
 ```
+
 You can also store subscription information in a variable for use within a script.
 
 # [Bash](#tab/bash)
@@ -102,12 +121,16 @@ Write-Host $subscriptionId
 ```
 
 ---
+
 > [!TIP]
-> The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
+> The `--output` parameter is a global parameter, available for all commands. The `table` value
+> presents output in a friendly format. For more information, see
+> [Output formats for Azure CLI commands][04].
 
 ## Change the active subscription
 
-Azure subscriptions have both a name and an ID. You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the desired subscription ID or name.
+Azure subscriptions have both a name and an ID. You can switch to a different subscription using
+[az account set][25], specifying the desired subscription ID or name.
 
 ```azurecli-interactive
 # change the active subscription using the subscription name
@@ -116,7 +139,8 @@ az account set --subscription "My Demos"
 # change the active subscription using the subscription ID
 az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
-You can also change your subscription using a variable. Here is an example:
+
+You can also change your subscription using a variable. Here's an example:
 
  # [Bash](#tab/bash)
 
@@ -136,13 +160,17 @@ az account set --subscription $subscriptionId
 
 ---
 
-If you change to a subscription that is in a different tenant, you will also be changing the active tenant. To learn how to add a new subscription to your Microsoft Entra tenant, see [Associate or add an Azure subscription to your Microsoft Entra tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
+If you change to a subscription that's in a different tenant, you also change the active tenant. To
+learn how to add a new subscription to your Microsoft Entra tenant, see
+[Associate or add an Azure subscription to your Microsoft Entra tenant][06].
 
-If you received a "The subscription of ... doesn't exist..." error, see [Troubleshooting](#troubleshooting) for possible solutions.
+If you receive a "The subscription of ... doesn't exist..." error, see [Troubleshooting][29] for
+possible solutions.
 
 ## Clear your subscription cache
 
-To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear) command. You will need to sign in again to see an updated list.
+To update your subscription list, use the [az account clear][23] command. You must sign in again to
+see the updated list.
 
 ```Azure CLI
 az account clear
@@ -150,40 +178,46 @@ az account clear
 az login
 ```
 
-Clearing your subscription cache is not technically the same process as logging out of Azure. However, when you clear your subscription cache, you cannot run Azure CLI commands, including `az account set`, until you sign in again.
+Clearing your subscription cache isn't technically the same process as logging out of Azure.
+However, when you clear your subscription cache, you can't run Azure CLI commands, including
+`az account set`, until you sign in again.
 
 ## Create Azure management groups
 
-Azure management groups contain subscriptions. Management groups provide a way to manage access, policies, and compliance for those subscriptions. For more information, see [What are Azure management groups](/azure/governance/management-groups/overview).
+Azure management groups contain subscriptions. Management groups provide a way to manage access,
+policies, and compliance for those subscriptions. For more information, see
+[What are Azure management groups][11].
 
-Use the [az account management-group](../../docs-ref-autogen/Latest-version/latest/account/management-group.yml) commands to create and manage Azure Management Groups.
+Use the [az account management-group][02] commands to create and manage Azure Management Groups.
 
-You can create a management group for several of your subscriptions by using the [az account management-group create](/cli/azure/account/management-group#az-account-management-group-create) command:
+You can create a management group for several of your subscriptions using the
+[az account management-group create][19] command:
 
 ```azurecli-interactive
 az account management-group create --name Contoso01
 ```
 
-To see all your management groups, use the [az account management-group list](/cli/azure/account/management-group#az-account-management-group-list) command:
+To see all your management groups, use the [az account management-group list][21] command:
 
 ```azurecli-interactive
 az account management-group list
 ```
 
-Add subscriptions to your new group by using the [az account management-group subscription add](/cli/azure/account/management-group/subscription#az-account-management-group-subscription-add) command:
+Add subscriptions to your new group using the [az account management-group subscription add][17]
+command:
 
 ```azurecli-interactive
 az account management-group subscription add --name Contoso01 --subscription "My Demos"
 az account management-group subscription add --name Contoso01 --subscription "My Second Demos"
 ```
 
-To remove a subscription, use the [az account management-group subscription remove](/cli/azure/account/management-group/subscription#az-account-management-group-subscription-remove) command:
+To remove a subscription, use the [az account management-group subscription remove][18] command:
 
 ```azurecli-interactive
 az account management-group subscription remove --name Contoso01 --subscription "My Demos"
 ```
 
-To remove a management group, run the [az account management-group delete](/cli/azure/account/management-group#az-account-management-group-delete) command:
+To remove a management group, run the [az account management-group delete][20] command:
 
 ```azurecli-interactive
 az account management-group delete --name Contoso01
@@ -193,9 +227,11 @@ Removing a subscription or deleting a management group doesn't delete or deactiv
 
 ## Set an Azure subscription lock
 
-As an administrator, you may need to lock a subscription to prevent users from deleting or modifying it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
+As an administrator, you might need to lock a subscription to prevent users from deleting or
+modifying it.
 
-In Azure CLI, use the [az account lock](../../docs-ref-autogen/Latest-version/latest/account/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a subscription:
+In Azure CLI, use the [az account lock][01] commands. For instance, the
+[az account lock create][13] command can prevent users from deleting a subscription:
 
 ```azurecli-interactive
 az account lock create --name "Cannot delete subscription" --lock-type CanNotDelete
@@ -204,33 +240,40 @@ az account lock create --name "Cannot delete subscription" --lock-type CanNotDel
 > [!NOTE]
 > You need to have `contributor` permissions on a subscription to create or change locks.
 
-To see the current locks on your subscription, use the [az account lock list](/cli/azure/account/lock#az-account-lock-list) command:
+To see the current locks on your subscription, use the [az account lock list][15] command:
 
 ```azurecli-interactive
 az account lock list --output table
 ```
 
-If you make an account read-only, the result resembles assigning permissions of the Reader role to all users. To learn about setting permissions for individual users and roles, see [Add or remove Azure role assignments using Azure CLI](/azure/role-based-access-control/role-assignments-cli).
+If you make an account read-only, the result resembles assigning permissions of the _Reader_ role to
+all users. To learn about setting permissions for individual users and roles, see
+[Add or remove Azure role assignments using Azure CLI][12].
 
-To see details for a lock, use the [az account lock show](/cli/azure/account/lock#az-account-lock-show) command:
+To see details for a lock, use the [az account lock show][16] command:
 
 ```azurecli-interactive
 az account lock show --name "Cannot delete subscription"
 ```
 
-You can remove a lock by using the [az account lock delete](/cli/azure/account/lock#az-account-lock-delete) command:
+You can remove a lock using the [az account lock delete][14] command:
 
 ```azurecli-interactive
 az account lock delete --name "Cannot delete subscription"
 ```
 
+For more information, see [Lock resources to prevent unexpected changes][08].
+
 ## Troubleshooting
 
 ### The subscription doesn't exist
 
-In addition to a typographical error, you can receive this error when there is a permissions timing issue. For example, if you have been given permissions to a new subscriptions _while your current terminal window is open_, this error can occur. The solution is to either close and reopen your terminal window, or use `az logout` then `az login` to refresh your available subscriptions list.
+In addition to a typographical error, you can receive this error when there's a permissions timing
+issue. For example, if you're granted permissions to a new subscription _while your current terminal
+window is open_, this error can occur. The solution is to either close and reopen your terminal
+window or use `az logout` and then `az login` to refresh your available subscriptions list.
 
-Here is a script to help you find and change a subscription.
+Here's a script to help you find and change a subscription.
 
 ```azurecli
 # See what subscription you are currently using.
@@ -264,5 +307,39 @@ az account set --subscription 00000000-0000-0000-0000-00000000000
 
 ## See also
 
-- [Associate or add an Azure subscription to your Microsoft Entra tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory)
-- [Manage Azure resource groups](./manage-azure-groups-azure-cli.md)
+- [Associate or add an Azure subscription to your Microsoft Entra tenant][06]
+- [Manage Azure resource groups][05]
+
+<!-- link references -->
+
+[01]: ../../docs-ref-autogen/Latest-version/latest/account/lock.yml
+[02]: ../../docs-ref-autogen/Latest-version/latest/account/management-group.yml
+[03]: ./authenticate-azure-cli.md
+[04]: ./format-output-azure-cli.md
+[05]: ./manage-azure-groups-azure-cli.md
+[06]: /azure/active-directory/active-directory-how-subscriptions-associated-directory
+[07]: /azure/active-directory/multi-tenant-organizations/overview
+[08]: /azure/azure-resource-manager/management/lock-resources
+[09]: /azure/billing/
+[10]: /azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-subscriptions
+[11]: /azure/governance/management-groups/overview
+[12]: /azure/role-based-access-control/role-assignments-cli
+[13]: /cli/azure/account/lock#az-account-lock-create
+[14]: /cli/azure/account/lock#az-account-lock-delete
+[15]: /cli/azure/account/lock#az-account-lock-list
+[16]: /cli/azure/account/lock#az-account-lock-show
+[17]: /cli/azure/account/management-group/subscription#az-account-management-group-subscription-add
+[18]: /cli/azure/account/management-group/subscription#az-account-management-group-subscription-remove
+[19]: /cli/azure/account/management-group#az-account-management-group-create
+[20]: /cli/azure/account/management-group#az-account-management-group-delete
+[21]: /cli/azure/account/management-group#az-account-management-group-list
+[22]: /cli/azure/account/tenant
+[23]: /cli/azure/account#az-account-clear
+[24]: /cli/azure/account#az-account-list
+[25]: /cli/azure/account#az-account-set
+[26]: /cli/azure/account#az-account-show
+[27]: /cli/azure/reference-index#az-login-examples
+[28]: #change-the-active-subscription
+[29]: #troubleshooting
+[30]: manage-azure-groups-azure-cli.md
+[31]: use-azure-cli-successfully-bash.md#querying-and-formatting-single-values-and-nested-values
