@@ -381,6 +381,7 @@ directCommands:
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
+                  [--vm-sizes]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
@@ -502,6 +503,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/SubID/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/SubID/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a kubernetes cluster with VirtualMachines vm set type.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -768,7 +772,7 @@ directCommands:
   - name: --enable-node-public-ip
     defaultValue: "False"
     summary: |-
-      Enable VMSS node public IP.
+      Enable VMSS or VMs node public IP.
   - name: --enable-oidc-issuer
     defaultValue: "False"
     summary: |-
@@ -784,7 +788,7 @@ directCommands:
   - name: --enable-secure-boot
     defaultValue: "False"
     summary: |-
-      Enable Secure Boot on all node pools in the cluster. Must use VMSS agent pool type.
+      Enable Secure Boot on all node pools in the cluster. Must use VMSS or VMs agent pool type.
   - name: --enable-sgxquotehelper
     defaultValue: "False"
     summary: |-
@@ -809,7 +813,7 @@ directCommands:
   - name: --enable-vtpm
     defaultValue: "False"
     summary: |-
-      Enable vTPM on all node pools in the cluster. Must use VMSS agent pool type.
+      Enable vTPM on all node pools in the cluster. Must use VMSS or VMs agent pool type.
   - name: --enable-windows-gmsa
     defaultValue: "False"
     summary: |-
@@ -1025,7 +1029,7 @@ directCommands:
       OS disk type to be used for machines in a given agent pool: Ephemeral or Managed. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation.
   - name: --node-public-ip-prefix-id
     summary: |-
-      Public IP prefix ID used to assign public IPs to VMSS nodes.
+      Public IP prefix ID used to assign public IPs to VMSS or VMs nodes.
   - name: --node-public-ip-tags
     summary: |-
       The ipTags of the node public IPs.
@@ -1072,14 +1076,14 @@ directCommands:
       Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway and none. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
   - name: --pod-cidr
     summary: |-
-      A CIDR notation IP range from which to assign pod IPs when kubenet is used.
+      A CIDR notation IP range from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
     description: |-
-      This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+      This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16. See https://aka.ms/aks/azure-cni-overlay.
   - name: --pod-cidrs
     summary: |-
-      A comma-separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
+      A comma-separated list of CIDR notation IP ranges from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
     description: |-
-      Each range must not overlap with any Subnet IP ranges. For example, "172.244.0.0/16,fd0:abcd::/64".
+      Each range must not overlap with any Subnet IP ranges. For example, "172.244.0.0/16,fd0:abcd::/64". See https://aka.ms/aks/azure-cni-overlay.
   - name: --pod-ip-allocation-mode
     acceptedValues: DynamicIndividual, StaticBlock
     summary: |-
@@ -1153,7 +1157,10 @@ directCommands:
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
   - name: --vm-set-type
     summary: |-
-      Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet. Defaults to 'VirtualMachineScaleSets'.
+      Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet or VirtualMachines. Defaults to 'VirtualMachineScaleSets'.
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of VM sizes. Valid for VirtualMachines node pool only. If `--vm-sizes` not specified but `--node-vm-size` specified, value of `--node-vm-size` will be used. If neither of them specified, defaults to Standard_DS2_v2 for Linux or Standard_D2s_v3 for Windows.
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -6934,8 +6941,11 @@ commands:
 - az_aks_nodepool_list(aks-preview)
 - az_aks_nodepool_manual-scale
 - az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_add(aks-preview)
 - az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_delete(aks-preview)
 - az_aks_nodepool_manual-scale_update
+- az_aks_nodepool_manual-scale_update(aks-preview)
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_operation-abort(aks-preview)
 - az_aks_nodepool_scale
