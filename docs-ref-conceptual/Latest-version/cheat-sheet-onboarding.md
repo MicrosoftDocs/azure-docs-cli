@@ -103,7 +103,7 @@ try new commands without incurring costs.
 [10]: ./interactive-azure-cli.md
 [11]: ./use-azure-cli-successfully-bash.md
 [12]: ./use-azure-cli-successfully-query.md
-[13]: ./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter
+[13]: ./use-azure-cli-successfully-troubleshooting.md#the-debug-parameter
 [14]: /azure/cloud-shell/quickstart?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json
 [15]: /cli/azure/azure-cli-configuration#configure-settings-using-az-config
 [16]: /cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison

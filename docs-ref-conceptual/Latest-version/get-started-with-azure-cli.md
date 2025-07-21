@@ -222,7 +222,7 @@ az feedback
 [manage-default-sub]: ./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription
 [resource-random-name]: ./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id
 [environment-variables]: ./get-started-tutorial-1-prepare-environment.md#set-environment-variables
-[debug]: ./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter
+[debug]: ./use-azure-cli-successfully-troubleshooting.md#the-debug-parameter
 [delete-resources]: ./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script
 [syntax-diffs]: ./get-started-tutorial-2-environment-syntax.md
 [feedback]: https://github.com/azure/azure-cli/issues
