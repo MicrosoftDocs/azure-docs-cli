@@ -309,7 +309,7 @@ flag reveals the actual arguments received by the Azure CLI in [Python's syntax]
 
 
 
-For more information on troubleshooting Azure CLI commands with `--debug`, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter).
+For more information on troubleshooting Azure CLI commands with `--debug`, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the-debug-parameter).
 
 ## Scripting language rules
 
