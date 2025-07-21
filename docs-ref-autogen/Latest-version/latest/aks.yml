@@ -1301,6 +1301,7 @@ directCommands:
                   [--enable-imds-restriction]
                   [--enable-keda]
                   [--enable-managed-identity]
+                  [--enable-managed-system-pool]
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
                   [--enable-oidc-issuer]
@@ -1535,6 +1536,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a VirtualMachines nodepool
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
+  - summary: |-
+      Create a kubernetes cluster with a fully managed system node pool
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-managed-system-pool
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1849,6 +1853,13 @@ directCommands:
   - name: --enable-managed-identity
     summary: |-
       Using managed identity to manage cluster resource group. You can explicitly specify "--service-principal" and "--client-secret" to disable managed identity, otherwise it will be enabled.
+  - name: --enable-managed-system-pool
+    defaultValue: "False"
+    summary: |-
+      Create a default ManagedSystem mode that is fully managed by AKS.
+    description: |-
+      When set, the default system node pool is created with ManagedSystem mode, where all properties except name and mode are managed by AKS. Learn more at https://aka.ms/aks/nodepool/mode.
+    isPreview: true
   - name: --enable-msi-auth-for-monitoring
     defaultValue: "True"
     acceptedValues: false, true
