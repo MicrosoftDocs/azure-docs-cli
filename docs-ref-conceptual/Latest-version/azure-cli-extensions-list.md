@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/21/2025
+ms.date: 07/22/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -44,7 +44,7 @@ You will be prompted to install an extension on first use.
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.5.0](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.24](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[arcgateway](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway) | 2.57.0 | Microsoft Azure Command-Line Tools Arcgateway Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway/HISTORY.rst) |
-|[arize-ai](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai) | 2.75.0 | Microsoft Azure Command-Line Tools ArizeAi Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai/HISTORY.rst) |
+|[arize-ai](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai) | 2.75.0 | Microsoft Azure Command-Line Tools ArizeAi Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai/HISTORY.rst) |
 |[astronomer](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer) | 2.70.0 | Microsoft Azure Command-Line Tools Astronomer Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer/HISTORY.rst) |
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.55.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
@@ -117,7 +117,6 @@ You will be prompted to install an extension on first use.
 |[guestconfig](https://github.com/Azure/azure-cli-extensions/tree/master/src/guestconfig) | 2.3.1 | Microsoft Azure Command-Line Tools GuestConfigurationClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/guestconfig/HISTORY.rst) |
 |[hack](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack) | 2.0.67 | Microsoft Azure Command-Line Tools Hack Extension | Preview | [0.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack/HISTORY.rst) |
 |[hardware-security-modules](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules) | 2.15.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules/HISTORY.rst) |
-|[hdinsightonaks](https://github.com/Azure/azure-cli-extensions/tree/main/src/hdinsightonaks) | 2.57.0 | Microsoft Azure Command-Line Tools Hdinsightonaks Extension. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/hdinsightonaks/HISTORY.rst) |
 |[healthbot](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot/HISTORY.rst) |
 |[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.66.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 2.3.0 | Microsoft Azure Command-Line Tools StorageCache Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache/HISTORY.rst) |
