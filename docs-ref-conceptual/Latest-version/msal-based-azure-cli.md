@@ -20,7 +20,7 @@ provide enhanced functionality and increase security for token cache.
 
 Previous versions of Azure CLI saved Azure AD Authentication Library (ADAL) tokens and service
 principal entries to `~/.azure/accessToken.json`. The latest versions of the Azure CLI use MSAL and
-no longer generate `accessTokens.json`. Existing workflow depending on `accessTokens.json` no longer
+no longer generate `accessTokens.json`. Existing workflows depending on `accessTokens.json` no longer
 work.
 
 The MSAL token cache and service principal entries are saved as encrypted files on Windows, and
