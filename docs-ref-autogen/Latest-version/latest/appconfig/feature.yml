@@ -21,6 +21,7 @@ directCommands:
                                 [--key]
                                 [--label]
                                 [--name]
+                                [--tags]
                                 [--yes]
   examples:
   - summary: |-
@@ -35,6 +36,9 @@ directCommands:
   - summary: |-
       Delete a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta".
     syntax: az appconfig feature delete -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta --yes
+  - summary: |-
+      Delete a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta" with tags "tag1=value1" and "tag2=value2".
+    syntax: az appconfig feature delete -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta --tags tag1=value1 tag2=value2 --yes
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -59,6 +63,9 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+  - name: --tags
+    summary: |-
+      If no tags are specified, delete all feature flags with any tags. Support space-separated tags: key[=value] [key[=value] ...].
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -269,6 +276,7 @@ directCommands:
                               [--key]
                               [--label]
                               [--name]
+                              [--tags]
                               [--top]
   examples:
   - summary: |-
@@ -292,6 +300,12 @@ directCommands:
   - summary: |-
       List all features starting with "MyApp1".
     syntax: az appconfig feature list -n MyAppConfiguration --key .appconfig.featureflag/MyApp1*
+  - summary: |-
+      List all feature flags with specific tags.
+    syntax: az appconfig feature list -n MyAppConfiguration --tags tag1=value1 tag2=value2
+  - summary: |-
+      List all feature flags with tag name "tag1" with empty value.
+    syntax: az appconfig feature list -n MyAppConfiguration --tags tag1=
   optionalParameters:
   - name: --all
     defaultValue: "False"
@@ -324,6 +338,9 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+  - name: --tags
+    summary: |-
+      If no tags are specified, list all feature flags with any tags. Support space-separated tags: key[=value] [key[=value] ...].
   - name: --top -t
     summary: |-
       Maximum number of items to return. Must be a positive integer. Default to 100.
@@ -452,6 +469,7 @@ directCommands:
                              [--label]
                              [--name]
                              [--requirement-type {All, Any}]
+                             [--tags]
                              [--yes]
   examples:
   - summary: |-
@@ -466,6 +484,9 @@ directCommands:
   - summary: |-
       Set a feature flag with name "Beta" and custom key ".appconfig.featureflag/MyApp1:Beta".
     syntax: az appconfig feature set -n MyAppConfiguration --feature Beta --key .appconfig.featureflag/MyApp1:Beta
+  - summary: |-
+      Set a feature flag with name "Beta" and custom key ".appconfig.featureflag/MyApp1:Beta" with tags "tag1=value1" and "tag2=value2".
+    syntax: az appconfig feature set -n MyAppConfiguration --feature Beta --key .appconfig.featureflag/MyApp1:Beta --tags tag1=value1 tag2=value2
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -497,6 +518,9 @@ directCommands:
     acceptedValues: All, Any
     summary: |-
       Requirement type determines if filters should use "Any" or "All" logic when evaluating the state of a feature.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -709,5 +733,5 @@ commands:
 - az_appconfig_feature_show
 - az_appconfig_feature_unlock
 metadata:
-  ms.date: 06/23/2025
+  ms.date: 07/24/2025
   description: Manage feature flags stored in an App Configuration store.
