@@ -3,7 +3,7 @@ uid: az_iot_ops
 name: az iot ops
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.62.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure IoT Operations.
 description: |-
@@ -27,9 +27,10 @@ directCommands:
     Note: Resource kind (--resources) and name (--resource-name) filtering can only be used with the '--svc' argument.
 
     {Supported service APIs}
-    - deviceregistry.microsoft.com/[v1]
-    - mqttbroker.iotoperations.azure.com/[v1]
-    - connectivity.iotoperations.azure.com/[v1]
+    - deviceregistry.microsoft.com/[v1,v1beta1]
+    - namespaces.deviceregistry.microsoft.com/[v1beta1]
+    - mqttbroker.iotoperations.azure.com/[v1,v1beta1]
+    - connectivity.iotoperations.azure.com/[v1,v1beta1]
 
     For more information on cluster requirements, please check https://aka.ms/iot-ops-cluster-requirements.
   status: Preview
@@ -44,7 +45,7 @@ directCommands:
                      [--post {false, true}]
                      [--pre {false, true}]
                      [--resource-name --rn]
-                     [--resources {asset, assetendpointprofile, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile}]
+                     [--resources {asset, assetendpointprofile, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile, registryendpoint}]
   examples:
   - summary: |-
       Basic usage. Checks overall IoT Operations health with summary output.
@@ -92,7 +93,7 @@ directCommands:
     summary: |-
       Only run checks for the specific resource name. The name is case insensitive. Glob patterns '*' and '?' are supported. Note: Only alphanumeric characters, hyphens, '?' and '*' are allowed.
   - name: --resources
-    acceptedValues: asset, assetendpointprofile, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile
+    acceptedValues: asset, assetendpointprofile, broker, brokerauthentication, brokerauthorization, brokerlistener, dataflow, dataflowendpoint, dataflowprofile, registryendpoint
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
   globalParameters:
@@ -137,7 +138,7 @@ directCommands:
     The clone definition being a generic ARM template, can be deployed via existing tools.
     See https://aka.ms/aio-clone for details.
 
-    Clone is compatible with the following instance version range: `1.0.34>=,<1.2.0`.
+    Clone is compatible with the following instance version range: `1.0.34>=,<1.3.0`.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -203,7 +204,7 @@ directCommands:
       Disable visual representation of work.
   - name: --param -p
     summary: |-
-      Parameter overrides when replicating the clone to a connected cluster. If omitted default values from the model instance are used. Format is space-separated key=value pairs where the key represents a clone definition parameter. The following keys can be set: instanceName, clusterName, clusterNamespace, customLocationName, opsExtensionName, schemaRegistryId, resourceSlug, location, applyRoleAssignments. Can be used one or more times.
+      Parameter overrides when replicating the clone to a connected cluster. If omitted default values from the model instance are used. Format is space-separated key=value pairs where the key represents a clone definition parameter. The following keys can be set: instanceName, clusterName, clusterNamespace, customLocationName, opsExtensionName, schemaRegistryId, resourceSlug, location, applyRoleAssignments, adrNamespaceId. Can be used one or more times.
     groupName: Cluster Target Arguments
   - name: --self-hosted-issuer
     acceptedValues: false, true
@@ -264,6 +265,11 @@ directCommands:
     The result of the command nets an IoT Operations instance with
     a set of default resources configured for cohesive function.
 
+    To enable broker disk persistence at least a value for --persist-max-size
+    must be provided. When enabled the default configuration is constrained to
+    dynamic persistence across state store, retain messages and subscriber
+    queues.
+
     To enable edge to cloud resource hydration please use the
     `az iot ops rsync enable` command post instance creation.
   status: GA
@@ -271,6 +277,7 @@ directCommands:
   syntax: >-
     az iot ops create --cluster
                       --name
+                      --ns-resource-id
                       --resource-group
                       --sr-resource-id
                       [--add-insecure-listener {false, true}]
@@ -285,35 +292,34 @@ directCommands:
                       [--custom-location]
                       [--description]
                       [--df-profile-instances]
-                      [--enable-rsync {false, true}]
                       [--feature]
-                      [--kubernetes-distro {K3s, K8s, MicroK8s}]
                       [--location]
                       [--no-progress {false, true}]
                       [--ops-config]
-                      [--runtime-socket]
+                      [--persist-max-size]
+                      [--persist-mode]
+                      [--persist-pvc-sc]
                       [--tags]
                       [--trust-settings]
-                      [--yes {false, true}]
   examples:
   - summary: |-
       Create the target instance with minimum input.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID
   - summary: |-
       The following example adds customization to the default broker instance resource as well as an instance description and tags.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --broker-mem-profile High --broker-backend-workers 4 --description 'Contoso Factory' --tags tier=testX1
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID --broker-mem-profile High --broker-backend-workers 4 --description 'Contoso Factory' --tags tier=testX1
   - summary: |-
       This example shows deploying an additional insecure (no authn or authz) broker listener configured for port 1883 of service type load balancer. Useful for testing and/or demos. Do not use the insecure option in production.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --add-insecure-listener
-  - summary: |-
-      This form shows how to enable resource sync for the instance deployment. To enable resource sync role assignment write is necessary on the target resource group.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --enable-rsync
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID --add-insecure-listener
   - summary: |-
       This example highlights trust settings for a user provided cert-manager config. Note that the cluster must have been initialized with `--user-trust` and a user cert-manager deployment must be present.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --trust-settings configMapName=example-bundle configMapKey=trust-bundle.pem issuerKind=ClusterIssuer issuerName=trust-manager-selfsigned-issuer
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID --trust-settings configMapName=example-bundle configMapKey=trust-bundle.pem issuerKind=ClusterIssuer issuerName=trust-manager-selfsigned-issuer
   - summary: |-
-      To configure component features such as preview settings, use the --feature option.
-    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --feature connectors.settings.preview=Enabled
+      Deploy the mqtt broker with the min options to enable disk persistence.
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID --persist-max-size 10Gi
+  - summary: |-
+      Deploy the mqtt broker with disk persistence, configuring volume claim storage class and persistence mode.
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID --persist-max-size 10Gi --persist-pvc-sc mystorageclass --persist-mode retain=All stateStore=None
   requiredParameters:
   - isRequired: true
     name: --cluster
@@ -323,6 +329,10 @@ directCommands:
     name: --name -n
     summary: |-
       IoT Operations instance name.
+  - isRequired: true
+    name: --ns-resource-id
+    summary: |-
+      The device registry namespace resource Id to use with IoT Operations.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -345,7 +355,7 @@ directCommands:
   - name: --br --broker-backend-rf
     defaultValue: "2"
     summary: |-
-      Mqtt broker backend redundancy factor. Min value: 1, max value: 5.
+      Mqtt broker backend redundancy factor. Indicates the desired numbers of backend replicas (pods) in a physical partition. Min value: 1, max value: 5.
     groupName: Broker Arguments
   - name: --broker-backend-workers --bw
     defaultValue: "2"
@@ -387,21 +397,9 @@ directCommands:
     summary: |-
       The instance count associated with the default dataflow profile.
     groupName: Dataflow Arguments
-  - name: --enable-rsync
-    acceptedValues: false, true
-    summary: |-
-      Resource sync rules will be included in the IoT Operations deployment.
-    isDeprecated: true
-    deprecateInfo: Option '--enable-rsync' has been deprecated and will be removed in a future release. Use 'az iot ops rsync enable' instead.
   - name: --feature
     summary: |-
       Instance feature config. The settings of a component and/or it's mode can be configured. Component mode syntax is `{component}.mode={mode}` where known mode values are: `Stable`, `Preview` and `Disabled`. Component setting syntax is `{component}.settings.{setting}={value}` where known setting values are `Enabled` or `Disabled`. This option can be used one or more times.
-  - name: --kubernetes-distro
-    defaultValue: K8s
-    acceptedValues: K3s, K8s, MicroK8s
-    summary: |-
-      The Kubernetes distro to use for Akri configuration. The selected distro implies the default container runtime socket path when no --runtime-socket value is provided.
-    groupName: Akri Arguments
   - name: --location
     summary: |-
       The region that will be used for provisioned resource collateral. If not provided the connected cluster location will be used.
@@ -413,10 +411,18 @@ directCommands:
     summary: |-
       IotOperations arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
     groupName: Extension Config Arguments
-  - name: --runtime-socket
+  - name: --persist-max-size
     summary: |-
-      The default node path of the container runtime socket. If not provided (default), the socket path is determined by --kubernetes-distro.
-    groupName: Akri Arguments
+      The max size of the message buffer on disk. Setting a value will enable disk persistence. Kubernetes resource units must be used e.g. the following value suffixes are supported: E, P, T, G, M, K. You can also use the power-of-two equivalents: Ei, Pi, Ti, Gi, Mi, Ki.
+    groupName: Disk Persistence Arguments
+  - name: --persist-mode
+    summary: |-
+      Configure disk persistence mode for state store, retain messages and subscriber queues. Format is space-separated key=value pairs. Supported keys include: 'stateStore', 'retain', 'subscriberQueue'. Supported values for each key include: 'None', 'All', 'Custom'. By default each mode is set to min Custom with dynamic persistence enabled. This option can be used one or more times.
+    groupName: Disk Persistence Arguments
+  - name: --persist-pvc-sc
+    summary: |-
+      Name of the storage class required by the persistent volume claim.
+    groupName: Disk Persistence Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -424,10 +430,6 @@ directCommands:
     summary: |-
       Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerName`, `issuerKind`, `configMapName`, `configMapKey`. If not used, a system provided self-signed trust bundle is configured.
     groupName: Trust Arguments
-  - name: --yes -y
-    acceptedValues: false, true
-    summary: |-
-      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -519,6 +521,46 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_get-versions
+  name: az iot ops get-versions
+  summary: |-
+    Opens the version guide located at https://aka.ms/aio-versions in the default browser.
+  status: Experimental
+  isExperimental: true
+  previewOrExperimentalInfo: 'This command is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: az iot ops get-versions
+  examples:
+  - summary: |-
+      Route to the version guide in a new browser window.
+    syntax: az iot ops get-versions
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -812,9 +854,6 @@ directCommands:
   - summary: |-
       Update the instance description.
     syntax: az iot ops update --name myinstance -g myresourcegroup --desc "Fabrikam Widget Factory B42"
-  - summary: |-
-      Update an instance to enable preview config for connectors.
-    syntax: az iot ops update --name myinstance -g myresourcegroup --feature connectors.settings.preview=Enabled
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -878,7 +917,6 @@ directCommands:
                        [--acs-config]
                        [--no-progress {false, true}]
                        [--ops-config]
-                       [--osm-config]
                        [--plat-config]
                        [--ssc-config]
                        [--yes {false, true}]
@@ -913,10 +951,6 @@ directCommands:
   - name: --ops-config
     summary: |-
       IotOperations arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
-    groupName: Extension Config Arguments
-  - name: --osm-config
-    summary: |-
-      OpenServiceMesh arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
     groupName: Extension Config Arguments
   - name: --plat-config
     summary: |-
@@ -1008,6 +1042,8 @@ commands:
 - az_iot_ops_broker_listener_port_add
 - az_iot_ops_broker_listener_port_remove
 - az_iot_ops_broker_listener_show
+- az_iot_ops_broker_persist
+- az_iot_ops_broker_persist_update
 - az_iot_ops_broker_show
 - az_iot_ops_check
 - az_iot_ops_clone
@@ -1065,12 +1101,147 @@ commands:
 - az_iot_ops_dataflow_profile_update
 - az_iot_ops_dataflow_show
 - az_iot_ops_delete
+- az_iot_ops_get-versions
 - az_iot_ops_identity
 - az_iot_ops_identity_assign
 - az_iot_ops_identity_remove
 - az_iot_ops_identity_show
 - az_iot_ops_init
 - az_iot_ops_list
+- az_iot_ops_ns
+- az_iot_ops_ns_asset
+- az_iot_ops_ns_asset_custom
+- az_iot_ops_ns_asset_custom_create
+- az_iot_ops_ns_asset_custom_dataset
+- az_iot_ops_ns_asset_custom_dataset_add
+- az_iot_ops_ns_asset_custom_dataset_list
+- az_iot_ops_ns_asset_custom_dataset_point
+- az_iot_ops_ns_asset_custom_dataset_point_add
+- az_iot_ops_ns_asset_custom_dataset_point_list
+- az_iot_ops_ns_asset_custom_dataset_point_remove
+- az_iot_ops_ns_asset_custom_dataset_remove
+- az_iot_ops_ns_asset_custom_dataset_show
+- az_iot_ops_ns_asset_custom_dataset_update
+- az_iot_ops_ns_asset_custom_event
+- az_iot_ops_ns_asset_custom_event_add
+- az_iot_ops_ns_asset_custom_event_list
+- az_iot_ops_ns_asset_custom_event_point
+- az_iot_ops_ns_asset_custom_event_point_add
+- az_iot_ops_ns_asset_custom_event_point_list
+- az_iot_ops_ns_asset_custom_event_point_remove
+- az_iot_ops_ns_asset_custom_event_remove
+- az_iot_ops_ns_asset_custom_event_show
+- az_iot_ops_ns_asset_custom_event_update
+- az_iot_ops_ns_asset_custom_mgmt
+- az_iot_ops_ns_asset_custom_mgmt_action
+- az_iot_ops_ns_asset_custom_mgmt_action_add
+- az_iot_ops_ns_asset_custom_mgmt_action_list
+- az_iot_ops_ns_asset_custom_mgmt_action_remove
+- az_iot_ops_ns_asset_custom_mgmt_add
+- az_iot_ops_ns_asset_custom_mgmt_list
+- az_iot_ops_ns_asset_custom_mgmt_remove
+- az_iot_ops_ns_asset_custom_mgmt_show
+- az_iot_ops_ns_asset_custom_mgmt_update
+- az_iot_ops_ns_asset_custom_stream
+- az_iot_ops_ns_asset_custom_stream_add
+- az_iot_ops_ns_asset_custom_stream_list
+- az_iot_ops_ns_asset_custom_stream_remove
+- az_iot_ops_ns_asset_custom_stream_show
+- az_iot_ops_ns_asset_custom_stream_update
+- az_iot_ops_ns_asset_custom_update
+- az_iot_ops_ns_asset_delete
+- az_iot_ops_ns_asset_media
+- az_iot_ops_ns_asset_media_create
+- az_iot_ops_ns_asset_media_stream
+- az_iot_ops_ns_asset_media_stream_add
+- az_iot_ops_ns_asset_media_stream_list
+- az_iot_ops_ns_asset_media_stream_remove
+- az_iot_ops_ns_asset_media_stream_show
+- az_iot_ops_ns_asset_media_stream_update
+- az_iot_ops_ns_asset_media_update
+- az_iot_ops_ns_asset_onvif
+- az_iot_ops_ns_asset_onvif_create
+- az_iot_ops_ns_asset_onvif_event
+- az_iot_ops_ns_asset_onvif_event_add
+- az_iot_ops_ns_asset_onvif_event_list
+- az_iot_ops_ns_asset_onvif_event_remove
+- az_iot_ops_ns_asset_onvif_event_show
+- az_iot_ops_ns_asset_onvif_event_update
+- az_iot_ops_ns_asset_onvif_mgmt
+- az_iot_ops_ns_asset_onvif_mgmt_add
+- az_iot_ops_ns_asset_onvif_mgmt_list
+- az_iot_ops_ns_asset_onvif_mgmt_remove
+- az_iot_ops_ns_asset_onvif_mgmt_show
+- az_iot_ops_ns_asset_onvif_mgmt_update
+- az_iot_ops_ns_asset_onvif_update
+- az_iot_ops_ns_asset_opcua
+- az_iot_ops_ns_asset_opcua_create
+- az_iot_ops_ns_asset_opcua_dataset
+- az_iot_ops_ns_asset_opcua_dataset_add
+- az_iot_ops_ns_asset_opcua_dataset_list
+- az_iot_ops_ns_asset_opcua_dataset_point
+- az_iot_ops_ns_asset_opcua_dataset_point_add
+- az_iot_ops_ns_asset_opcua_dataset_point_list
+- az_iot_ops_ns_asset_opcua_dataset_point_remove
+- az_iot_ops_ns_asset_opcua_dataset_remove
+- az_iot_ops_ns_asset_opcua_dataset_show
+- az_iot_ops_ns_asset_opcua_dataset_update
+- az_iot_ops_ns_asset_opcua_event
+- az_iot_ops_ns_asset_opcua_event_add
+- az_iot_ops_ns_asset_opcua_event_list
+- az_iot_ops_ns_asset_opcua_event_remove
+- az_iot_ops_ns_asset_opcua_event_show
+- az_iot_ops_ns_asset_opcua_event_update
+- az_iot_ops_ns_asset_opcua_mgmt
+- az_iot_ops_ns_asset_opcua_mgmt_action
+- az_iot_ops_ns_asset_opcua_mgmt_action_add
+- az_iot_ops_ns_asset_opcua_mgmt_action_list
+- az_iot_ops_ns_asset_opcua_mgmt_action_remove
+- az_iot_ops_ns_asset_opcua_mgmt_add
+- az_iot_ops_ns_asset_opcua_mgmt_list
+- az_iot_ops_ns_asset_opcua_mgmt_remove
+- az_iot_ops_ns_asset_opcua_mgmt_show
+- az_iot_ops_ns_asset_opcua_mgmt_update
+- az_iot_ops_ns_asset_opcua_update
+- az_iot_ops_ns_asset_query
+- az_iot_ops_ns_asset_rest
+- az_iot_ops_ns_asset_rest_create
+- az_iot_ops_ns_asset_rest_dataset
+- az_iot_ops_ns_asset_rest_dataset_add
+- az_iot_ops_ns_asset_rest_dataset_list
+- az_iot_ops_ns_asset_rest_dataset_remove
+- az_iot_ops_ns_asset_rest_dataset_show
+- az_iot_ops_ns_asset_rest_dataset_update
+- az_iot_ops_ns_asset_rest_update
+- az_iot_ops_ns_asset_show
+- az_iot_ops_ns_create
+- az_iot_ops_ns_delete
+- az_iot_ops_ns_device
+- az_iot_ops_ns_device_create
+- az_iot_ops_ns_device_delete
+- az_iot_ops_ns_device_endpoint
+- az_iot_ops_ns_device_endpoint_inbound
+- az_iot_ops_ns_device_endpoint_inbound_add
+- az_iot_ops_ns_device_endpoint_inbound_add_custom
+- az_iot_ops_ns_device_endpoint_inbound_add_media
+- az_iot_ops_ns_device_endpoint_inbound_add_onvif
+- az_iot_ops_ns_device_endpoint_inbound_add_opcua
+- az_iot_ops_ns_device_endpoint_inbound_add_rest
+- az_iot_ops_ns_device_endpoint_inbound_list
+- az_iot_ops_ns_device_endpoint_inbound_remove
+- az_iot_ops_ns_device_endpoint_list
+- az_iot_ops_ns_device_query
+- az_iot_ops_ns_device_show
+- az_iot_ops_ns_device_update
+- az_iot_ops_ns_list
+- az_iot_ops_ns_show
+- az_iot_ops_ns_update
+- az_iot_ops_registry
+- az_iot_ops_registry_add
+- az_iot_ops_registry_list
+- az_iot_ops_registry_remove
+- az_iot_ops_registry_show
+- az_iot_ops_registry_update
 - az_iot_ops_rsync
 - az_iot_ops_rsync_disable
 - az_iot_ops_rsync_enable
