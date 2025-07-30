@@ -69,6 +69,10 @@ Version 2.76.0
 
 * `az container create`: Remove default values for container group to support standby pool reuse scenario
 
+### Core
+
+* Resolve CVE-2024-47081
+
 ### Cosmos DB
 
 * `az cosmosdb restore`: Remove restore validations which would cause timeouts for large restore and incorrect error messages
