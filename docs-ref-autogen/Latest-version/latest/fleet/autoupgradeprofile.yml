@@ -16,13 +16,15 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az fleet autoupgradeprofile create --channel {NodeImage, Rapid, Stable}
+    az fleet autoupgradeprofile create --channel {NodeImage, Rapid, Stable, TargetKubernetesVersion}
                                        --fleet-name
                                        --name
                                        --resource-group
                                        [--disabled]
+                                       [--long-term-support --lts]
                                        [--no-wait]
                                        [--node-image-selection {Consistent, Latest}]
+                                       [--target-kubernetes-version --tkv]
                                        [--update-strategy-id]
   examples:
   - summary: |-
@@ -34,7 +36,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --channel -c
-    acceptedValues: NodeImage, Rapid, Stable
+    acceptedValues: NodeImage, Rapid, Stable, TargetKubernetesVersion
     summary: |-
       The auto upgrade channel type.
   - isRequired: true
@@ -54,6 +56,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       The disabled flag ensures auto upgrade profile does not run by default.
+  - name: --long-term-support --lts
+    defaultValue: "False"
+    summary: |-
+      If upgrade channel is not TargetKubernetesVersion, this field must be False. If set to True: Fleet auto upgrade will generate update runs for patches of minor versions earlier than N-2 (where N is the latest supported minor version) if those minor versions support Long-Term Support (LTS). By default, this is set to False.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -62,6 +68,9 @@ directCommands:
     acceptedValues: Consistent, Latest
     summary: |-
       Node Image Selection is an option that lets you choose how your clusters' nodes are upgraded.
+  - name: --target-kubernetes-version --tkv
+    summary: |-
+      This is the target Kubernetes version for auto-upgrade. The format must be "{major version}.{minor version}". For example, "1.30". By default, this is empty. If the upgrade channel is set to TargetKubernetesVersion, this field must not be empty. If the upgrade channel is Rapid, Stable, or NodeImage, this field must be empty.
   - name: --update-strategy-id
     summary: |-
       The resource ID of the update strategy that the auto upgrade profile should follow.
