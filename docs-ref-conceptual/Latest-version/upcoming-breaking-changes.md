@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 07/08/2025
+ms.date: 07/31/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -24,6 +24,22 @@ The breaking changes listed in this section are planned for the next major relea
 - All Helm charts not stored as an OCI artifact was deleted from Azure Container Registry on March 30th, 2025.
 - Learn how to find all Helm charts stored in a Helm repository here: `az acr helm list`. If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 - For more information on managing and deploying applications for Kubernetes, see https://aka.ms/acr/helm.
+
+## compute_recommender
+
+### `compute-recommender spot-placement-recommender`
+
+[Link to compute-recommender reference group](/cli/azure/compute-recommender)
+
+- 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025. Use 'az compute-recommender spot-placement-score' instead.
+
+## dms
+
+### `dms project create`
+
+[Link to dms project reference group](/cli/azure/dms/project)
+
+- 'location' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
 
 ## resource
 
