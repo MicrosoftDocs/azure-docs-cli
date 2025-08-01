@@ -1,72 +1,66 @@
 ### YamlMime:AzureCLIGroup
-uid: az_capacity_reservation
-name: az capacity reservation
+uid: az_sig_in-vm-access-control-profile
+name: az sig in-vm-access-control-profile
 summary: |-
-  Manage capacity reservation.
+  Manage in VM access control profile.
 status: GA
 sourceType: Core
 directCommands:
-- uid: az_capacity_reservation_create
-  name: az capacity reservation create
+- uid: az_sig_in-vm-access-control-profile_create
+  name: az sig in-vm-access-control-profile create
   summary: |-
-    Create operation to create or update a capacity reservation. Please note some properties can be set only during capacity reservation creation. Please refer to https://aka.ms/CapacityReservation for more details.
+    Create a gallery in VM access control profile.
   status: GA
   sourceType: Core
   syntax: >-
-    az capacity reservation create --capacity-reservation-group
-                                   --capacity-reservation-name --name
-                                   --resource-group
-                                   [--capacity]
-                                   [--location]
-                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--sku]
-                                   [--tags]
-                                   [--zone]
+    az sig in-vm-access-control-profile create --gallery-name
+                                               --name
+                                               --resource-group
+                                               [--applicable-host-endpoint {IMDS, WireServer}]
+                                               [--description]
+                                               [--location]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--os-type {Linux, Windows}]
   examples:
   - summary: |-
-      Create a capacity reservation.
-    syntax: az capacity reservation create -c ReservationGroupName -n ReservationName -g MyResourceGroup --sku Standard_A0
-  - summary: |-
-      Create a capacity reservation with specific capacity and zones.
-    syntax: az capacity reservation create -c ReservationGroupName -n ReservationName -l centraluseuap -g MyResourceGroup  --sku Standard_A1_v2 --capacity 5 --zone 1 --tags key=val
+      Create a gallery in VM access control profile.
+    syntax: az sig in-vm-access-control-profile create --resource-group myResourceGroup --gallery-name myGalleryName --name myInVMAccessControlProfileName --location WestUS --os-type Linux --applicable-host-endpoint WireServer
   requiredParameters:
   - isRequired: true
-    name: --capacity-reservation-group -c
+    name: --gallery-name
     summary: |-
-      The name of the capacity reservation group.
+      The name of the Shared Image Gallery in which the in VM access control profile is to be created.
   - isRequired: true
-    name: --capacity-reservation-name --name -n
+    name: --name -n
     summary: |-
-      The name of the capacity reservation.
+      The name of the gallery in VM access control profile to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --capacity
+  - name: --applicable-host-endpoint
+    acceptedValues: IMDS, WireServer
     summary: |-
-      Specify the number of virtual machines in the scale set.
-    groupName: Sku Arguments
+      This property allows you to specify the Endpoint type for which this profile is defining the access control for. Possible values are: 'WireServer' or 'IMDS'.
+    groupName: Properties Arguments
+  - name: --description
+    summary: |-
+      The description of this gallery in VM access control profile resources. This property is updatable.
+    groupName: Properties Arguments
   - name: --location -l
     summary: |-
       Resource location  When not specified, the location of the resource group will be used.
-    groupName: Parameters Arguments
+    groupName: GalleryInVMAccessControlProfile Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --sku -s
+  - name: --os-type
+    acceptedValues: Linux, Windows
     summary: |-
-      The SKU of the resource for which capacity needs be reserved. Currently VM Skus with the capability called \"CapacityReservationSupported\" set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://learn.microsoft.com/rest/api/compute/resourceskus/list) for supported values.
-    groupName: Sku Arguments
-  - name: --tags
-    summary: |-
-      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Parameters Arguments
-  - name: --zone -z
-    summary: |-
-      Availability Zone to use for this capacity reservation. The zone has to be single value and also should be part for the list of zones specified during the capacity reservation group creation. The zone can be assigned only during creation. If not provided, the reservation supports only non-zonal deployments. If provided, enforces VM/VMSS using this capacity reservation to be in same zone.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Parameters Arguments
+      This property allows you to specify the OS type of the VMs/VMSS for which this profile can be used against. Possible values are: 'Windows' or 'Linux'.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -94,36 +88,36 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_capacity_reservation_delete
-  name: az capacity reservation delete
+- uid: az_sig_in-vm-access-control-profile_delete
+  name: az sig in-vm-access-control-profile delete
   summary: |-
-    Delete operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details.
+    Delete a gallery in VM access control profile.
   status: GA
   sourceType: Core
   syntax: >-
-    az capacity reservation delete [--capacity-reservation-group]
-                                   [--capacity-reservation-name --name]
-                                   [--ids]
-                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--resource-group]
-                                   [--subscription]
-                                   [--yes]
+    az sig in-vm-access-control-profile delete [--gallery-name]
+                                               [--ids]
+                                               [--name]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--resource-group]
+                                               [--subscription]
+                                               [--yes]
   examples:
   - summary: |-
-      Delete a capacity reservation.
-    syntax: az capacity reservation delete -c ReservationGroupName -n ReservationName -g MyResourceGroup --yes
+      Delete a gallery in VM access control profile.
+    syntax: az sig in-vm-access-control-profile delete --resource-group myResourceGroup --gallery-name myGalleryName --name myInVMAccessControlProfileName
   optionalParameters:
-  - name: --capacity-reservation-group -c
+  - name: --gallery-name
     summary: |-
-      The name of the capacity reservation group.
-    groupName: Resource Id Arguments
-  - name: --capacity-reservation-name --name -n
-    summary: |-
-      The name of the capacity reservation.
+      The name of the Shared Image Gallery in which the in VM access control profile resides.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the gallery in VM access control profile to be deleted.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -165,26 +159,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_capacity_reservation_list
-  name: az capacity reservation list
+- uid: az_sig_in-vm-access-control-profile_list
+  name: az sig in-vm-access-control-profile list
   summary: |-
-    List all of the capacity reservations in the specified capacity reservation group. Use the nextLink property in the response to get the next page of capacity reservations.
+    List gallery in VM access control profiles in a gallery.
   status: GA
   sourceType: Core
   syntax: >-
-    az capacity reservation list --capacity-reservation-group
-                                 --resource-group
-                                 [--max-items]
-                                 [--next-token]
+    az sig in-vm-access-control-profile list --gallery-name
+                                             --resource-group
+                                             [--max-items]
+                                             [--next-token]
   examples:
   - summary: |-
-      List capacity reservation.
-    syntax: az capacity reservation list -c ReservationGroupName -g MyResourceGroup
+      List gallery in VM access control profiles in a gallery.
+    syntax: az sig in-vm-access-control-profile list --resource-group myResourceGroup --gallery-name myGalleryName
   requiredParameters:
   - isRequired: true
-    name: --capacity-reservation-group -c
+    name: --gallery-name
     summary: |-
-      The name of the capacity reservation group.
+      The name of the Shared Image Gallery from which the InVMAccessControlProfiles are to be listed.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -225,43 +219,35 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_capacity_reservation_show
-  name: az capacity reservation show
+- uid: az_sig_in-vm-access-control-profile_show
+  name: az sig in-vm-access-control-profile show
   summary: |-
-    Retrieve information about the capacity reservation.
+    Get information about a gallery in VM access control profile.
   status: GA
   sourceType: Core
   syntax: >-
-    az capacity reservation show [--capacity-reservation-group]
-                                 [--capacity-reservation-name --name]
-                                 [--ids]
-                                 [--instance-view {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--resource-group]
-                                 [--subscription]
+    az sig in-vm-access-control-profile show [--gallery-name]
+                                             [--ids]
+                                             [--name]
+                                             [--resource-group]
+                                             [--subscription]
   examples:
   - summary: |-
-      Get a capacity reservation.
-    syntax: az capacity reservation show -c ReservationGroupName -n ReservationName -g MyResourceGroup
-  - summary: |-
-      Get a capacity reservation containing the instance views.
-    syntax: az capacity reservation show -c ReservationGroupName -n ReservationName -g MyResourceGroup --instance-view
+      Get a gallery in VM access control profile.
+    syntax: az sig in-vm-access-control-profile show --resource-group myResourceGroup --gallery-name myGalleryName --name myInVMAccessControlProfileName
   optionalParameters:
-  - name: --capacity-reservation-group -c
+  - name: --gallery-name
     summary: |-
-      The name of the capacity reservation group.
-    groupName: Resource Id Arguments
-  - name: --capacity-reservation-name --name -n
-    summary: |-
-      The name of the capacity reservation.
+      The name of the Shared Image Gallery from which the in VM access control profiles are to be retrieved.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --instance-view -i
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+  - name: --name -n
     summary: |-
-      Retrieve a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations.
+      The name of the gallery in VM access control profile to be deleted.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -294,58 +280,80 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_capacity_reservation_update
-  name: az capacity reservation update
+- uid: az_sig_in-vm-access-control-profile_update
+  name: az sig in-vm-access-control-profile update
   summary: |-
-    Update operation to update a capacity reservation.
+    Update a gallery in VM access control profile.
   status: GA
   sourceType: Core
   syntax: >-
-    az capacity reservation update [--capacity]
-                                   [--capacity-reservation-group]
-                                   [--capacity-reservation-name --name]
-                                   [--ids]
-                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--resource-group]
-                                   [--subscription]
-                                   [--tags]
+    az sig in-vm-access-control-profile update [--add]
+                                               [--applicable-host-endpoint {IMDS, WireServer}]
+                                               [--description]
+                                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--gallery-name]
+                                               [--ids]
+                                               [--name]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--remove]
+                                               [--resource-group]
+                                               [--set]
+                                               [--subscription]
   examples:
   - summary: |-
-      Update a capacity reservation.
-    syntax: az capacity reservation update -c ReservationGroupName -n ReservationName -g MyResourceGroup --capacity 5 --tags key=val
+      Update a gallery in VM access control profile.
+    syntax: az sig in-vm-access-control-profile update --resource-group myResourceGroup --gallery-name myGalleryName --name myInVMAccessControlProfileName --description test
   optionalParameters:
-  - name: --capacity
+  - name: --add
     summary: |-
-      Specify the number of virtual machines in the scale set.
-    groupName: Sku Arguments
-  - name: --capacity-reservation-group -c
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --applicable-host-endpoint
+    acceptedValues: IMDS, WireServer
     summary: |-
-      The name of the capacity reservation group.
-    groupName: Resource Id Arguments
-  - name: --capacity-reservation-name --name -n
+      This property allows you to specify the Endpoint type for which this profile is defining the access control for. Possible values are: 'WireServer' or 'IMDS'.
+    groupName: Properties Arguments
+  - name: --description
     summary: |-
-      The name of the capacity reservation.
+      The description of this gallery in VM access control profile resources. This property is updatable.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --gallery-name
+    summary: |-
+      The name of the Shared Image Gallery from which the in VM access control profiles are to be retrieved.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the gallery in VM access control profile to be deleted.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
-  - name: --tags
-    summary: |-
-      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Parameters Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -370,35 +378,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_capacity_reservation_wait
-  name: az capacity reservation wait
+- uid: az_sig_in-vm-access-control-profile_wait
+  name: az sig in-vm-access-control-profile wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   syntax: >-
-    az capacity reservation wait [--capacity-reservation-group]
-                                 [--capacity-reservation-name --name]
-                                 [--created]
-                                 [--custom]
-                                 [--deleted]
-                                 [--exists]
-                                 [--expand {instanceView}]
-                                 [--ids]
-                                 [--interval]
-                                 [--resource-group]
-                                 [--subscription]
-                                 [--timeout]
-                                 [--updated]
+    az sig in-vm-access-control-profile wait [--created]
+                                             [--custom]
+                                             [--deleted]
+                                             [--exists]
+                                             [--gallery-name]
+                                             [--ids]
+                                             [--interval]
+                                             [--name]
+                                             [--resource-group]
+                                             [--subscription]
+                                             [--timeout]
+                                             [--updated]
   optionalParameters:
-  - name: --capacity-reservation-group -c
-    summary: |-
-      The name of the capacity reservation group.
-    groupName: Resource Id Arguments
-  - name: --capacity-reservation-name --name -n
-    summary: |-
-      The name of the capacity reservation.
-    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -418,10 +417,10 @@ directCommands:
     summary: |-
       Wait until the resource exists.
     groupName: Wait Condition Arguments
-  - name: --expand
-    acceptedValues: instanceView
+  - name: --gallery-name
     summary: |-
-      The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations.
+      The name of the Shared Image Gallery from which the in VM access control profiles are to be retrieved.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -431,6 +430,10 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
+  - name: --name -n
+    summary: |-
+      The name of the gallery in VM access control profile to be deleted.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -474,17 +477,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_capacity_reservation_create
-- az_capacity_reservation_delete
-- az_capacity_reservation_group
-- az_capacity_reservation_group_create
-- az_capacity_reservation_group_delete
-- az_capacity_reservation_group_list
-- az_capacity_reservation_group_show
-- az_capacity_reservation_group_update
-- az_capacity_reservation_list
-- az_capacity_reservation_show
-- az_capacity_reservation_update
-- az_capacity_reservation_wait
+- az_sig_in-vm-access-control-profile_create
+- az_sig_in-vm-access-control-profile_delete
+- az_sig_in-vm-access-control-profile_list
+- az_sig_in-vm-access-control-profile_show
+- az_sig_in-vm-access-control-profile_update
+- az_sig_in-vm-access-control-profile_wait
 metadata:
-  description: Manage capacity reservation.
+  description: Manage in VM access control profile.

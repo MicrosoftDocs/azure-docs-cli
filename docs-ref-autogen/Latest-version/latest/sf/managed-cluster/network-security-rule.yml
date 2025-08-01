@@ -2,7 +2,7 @@
 uid: az_sf_managed-cluster_network-security-rule
 name: az sf managed-cluster network-security-rule
 summary: |-
-  Network security rule of a managed cluster.
+  Manage network security rules of a managed cluster.
 status: GA
 sourceType: Core
 directCommands:
@@ -17,18 +17,25 @@ directCommands:
                                                     --resource-group
                                                     [--access {allow, deny}]
                                                     [--description]
+                                                    [--dest-addr-prefix]
                                                     [--dest-addr-prefixes]
+                                                    [--dest-port-range]
                                                     [--dest-port-ranges]
                                                     [--direction {inbound, outbound}]
                                                     [--name]
                                                     [--priority]
                                                     [--protocol {ah, any, esp, http, https, icmp, tcp, udp}]
+                                                    [--source-addr-prefix]
                                                     [--source-addr-prefixes]
+                                                    [--source-port-range]
                                                     [--source-port-ranges]
   examples:
   - summary: |-
-      Add network security rule.
+      Add network security rule with multiple source and destination address prefixes.
     syntax: az sf managed-cluster network-security-rule add -g testRG -c testCluster --name 'network security rule name' --access allow --description 'network security rule description' --direction inbound --protocol tcp --priority 1200           --source-port-ranges 1-1000 --dest-port-ranges 1-65535 --source-addr-prefixes 167.220.242.0/27 167.220.0.0/23 131.107.132.16/28 167.220.81.128/26 --dest-addr-prefixes 194.69.104.0/25 194.69.119.64/26 167.220.249.128/26 255.255.255.255/32
+  - summary: |-
+      Add network security rule with single source and destination address prefix.
+    syntax: az sf managed-cluster network-security-rule add -g testRG -c testCluster --name 'network security rule name' --access deny --description 'network security rule description' --direction inbound --protocol any --priority 1300           --source-port-range * --dest-port-ranges 19000 19080 --source-addr-prefix Internet --dest-addr-prefix *
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -46,9 +53,15 @@ directCommands:
   - name: --description
     summary: |-
       Network security rule description.
+  - name: --dest-addr-prefix
+    summary: |-
+      The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used.
   - name: --dest-addr-prefixes
     summary: |-
       CIDR or destination IP ranges. A single or space separated list of destination address prefixes.
+  - name: --dest-port-range
+    summary: |-
+      The destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports.
   - name: --dest-port-ranges
     summary: |-
       A single or space separated list of destination port ranges.
@@ -66,9 +79,15 @@ directCommands:
     acceptedValues: ah, any, esp, http, https, icmp, tcp, udp
     summary: |-
       Network protocol.
+  - name: --source-addr-prefix
+    summary: |-
+      The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from.
   - name: --source-addr-prefixes
     summary: |-
       The CIDR or source IP ranges. A single or space separated list of source address prefixes.
+  - name: --source-port-range
+    summary: |-
+      The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports.
   - name: --source-port-ranges
     summary: |-
       A single or space separated list of source port ranges.
@@ -102,7 +121,7 @@ directCommands:
 - uid: az_sf_managed-cluster_network-security-rule_delete
   name: az sf managed-cluster network-security-rule delete
   summary: |-
-    Delete a network security rule to a managed cluster.
+    Delete a network security rule from a managed cluster.
   status: GA
   sourceType: Core
   syntax: >-
@@ -210,7 +229,7 @@ directCommands:
 - uid: az_sf_managed-cluster_network-security-rule_list
   name: az sf managed-cluster network-security-rule list
   summary: |-
-    List of network security rules in a cluster.
+    List network security rules in a cluster.
   status: GA
   sourceType: Core
   syntax: >-
@@ -218,7 +237,7 @@ directCommands:
                                                      --resource-group
   examples:
   - summary: |-
-      list network security rules.
+      List network security rules.
     syntax: az sf managed-cluster network-security-rule list -g testRG -c testCluster
   requiredParameters:
   - isRequired: true
@@ -357,4 +376,4 @@ commands:
 - az_sf_managed-cluster_network-security-rule_list
 - az_sf_managed-cluster_network-security-rule_update
 metadata:
-  description: Network security rule of a managed cluster.
+  description: Manage network security rules of a managed cluster.
