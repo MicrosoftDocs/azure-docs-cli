@@ -124,6 +124,80 @@ examples:
 > If you can get an article example to execute in Bash, but it doesn't execute in PowerShell, review
 > your use of single and double quotes, and escape characters.
 
+## Troubleshooting multifactor authentication (MFA)
+
+### Interactive login failures
+
+If you encounter errors when running Azure CLI commands that create, modify, or delete resources,
+the issue might be caused by a Microsoft Entra ID Conditional Access policy that requires
+multifactor authentication (MFA).
+
+These errors typically occur when MFA is required by policy but isn't enforced during login.
+
+#### Resource was disallowed by policy
+
+You might see one of the following errors when using:
+
+- Azure CLI version 2.75.0 or earlier
+
+```Output
+Due to a configuration change made by your administrator, or because you moved to a new location,
+you must enroll in multi-factor authentication. Interactive authentication is needed.
+```
+
+Or:
+
+```Output
+Resource was disallowed by policy. Reasons: MFA is required. See error details for policy resource
+IDs. RequestDisallowedByPolicy Message: Resource policy resource IDs was disallowed by policy.
+Reasons: MFA is required.
+```
+
+Or:
+
+```Output
+Unauthorized. RequestDisallowedByPolicy. Resource was disallowed by policy. Reasons: MFA is
+required. See error details for policy resource IDs. MFA is required. Users must authenticate with
+multi-factor authentication to create or update resources.
+```
+
+Upgrade to the following versions or later to receive more informative error messages and policy
+details:
+
+- Azure CLI version 2.76.0 or later
+
+The following error occurs in Azure CLI 2.76.0+, where MFA is required by Conditional Access for
+specific operations.
+
+```Output
+Run the command below to authenticate interactively; additional arguments may be added as needed:
+az logout 
+az login --tenant "aaaabbbb-0000-cccc-1111-dddd2222eeee" --scope "https://management.core.windows.net//.default" --claims-challenge "<claims-challenge-token>"
+
+(RequestDisallowedByPolicy) Resource was disallowed by policy. Policy identifiers. Users must use
+MFA for Create/Update operations. Users must authenticate with multi-factor authentication to create
+or update resources. Users must use MFA for Create operation. Users must authenticate with
+multi-factor authentication to create or update resources. Users must use MFA for Create/Update
+operations. Users must authenticate with multi-factor authentication to create or update resources.
+Users must use MFA for Create operation. Users must authenticate with multi-factor authentication to
+create or update resources.
+```
+
+#### Resolution options
+
+- Ask your Azure administrator to enforce MFA at sign-in. This allows your session to meet
+  Conditional Access requirements without additional steps.
+- If MFA enforcement at sign-in isn't possible, use the `--claims-challenge` parameter to
+  authenticate interactively:
+
+  ```azurecli
+  az logout
+  az login --tenant "aaaabbbb-0000-cccc-1111-dddd2222eeee" --scope "https://management.core.windows.net//.default" --claims-challenge "<claims-challenge-token>"
+  ```
+
+For more information, see
+[Planning for mandatory multifactor authentication for Azure and other admin portals][19]
+
 ## Error: Invalid value or doesn't exist
 
 These errors often occur when trying to use variable values that contain an incorrect format. The
@@ -287,3 +361,4 @@ If you experience a product issue with Azure CLI not listed in this article,
 [16]: #work-behind-a-proxy
 [17]: https://github.com/Azure/azure-cli/issues/new/choose
 [18]: https://github.com/kennethreitz/requests
+[19]: /entra/identity/authentication/concept-mandatory-multifactor-authentication
