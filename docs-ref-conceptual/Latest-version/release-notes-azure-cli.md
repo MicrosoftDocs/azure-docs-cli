@@ -72,6 +72,7 @@ Version 2.76.0
 ### Core
 
 * Resolve CVE-2024-47081
+* Provide actionable error recommendation when a command fails because of Multi-Factor Authentication (MFA) policy violation
 
 ### Cosmos DB
 
