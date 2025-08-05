@@ -23,6 +23,7 @@ directCommands:
                         [--enable-arm-private-network-access {false, true}]
                         [--enable-public-network {false, true}]
                         [--enable-purge-protection {false, true}]
+                        [--kv-revision-retention-period]
                         [--no-replica {false, true}]
                         [--replica-location]
                         [--replica-name]
@@ -57,6 +58,9 @@ directCommands:
   - summary: |-
       Create an App Configuration store with name, location and resource group with ARM authentication mode set to Pass-through and private network access via ARM Private Link enabled.
     syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --arm-auth-mode pass-through --enable-arm-private-network-access true
+  - summary: |-
+      Create an App Configuration store with a key-value revision retention period of one day (in seconds).
+    syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --sku Standard --kv-revision-retention-period 86400
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -94,6 +98,9 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Property specifying whether protection against purge is enabled for this App Configuration store. Setting this property to true activates protection against purge for this App Configuration store and its contents. Enabling this functionality is irreversible.
+  - name: --kv-revision-retention-period
+    summary: |-
+      Duration in seconds to retain key-value revisions in the App Configuration store. For Free and Developer sku stores, revisions can be retained for a maximum of 7 days (604,800s); for Standard and Premium sku stores, up to 30 days (2,592,000s). Only Non-Free tiers can update this value. If specified, retention period must be at least 1 hour (3600s).
   - name: --no-replica
     acceptedValues: false, true
     summary: |-
@@ -511,6 +518,7 @@ directCommands:
                         [--encryption-key-vault]
                         [--encryption-key-version]
                         [--identity-client-id]
+                        [--kv-revision-retention-period]
                         [--resource-group]
                         [--sku {Developer, Free, Premium, Standard}]
                         [--tags]
@@ -539,6 +547,9 @@ directCommands:
   - summary: |-
       Update an App Configuration store to set ARM authentication mode set to Pass-through and enable private network access via ARM Private Link.
     syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --arm-auth-mode pass-through --enable-arm-private-network-access true
+  - summary: |-
+      Update an App Configuration store to set a key-value revision retention period of one day (in seconds).
+    syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --kv-revision-retention-period 86400
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -581,6 +592,9 @@ directCommands:
     summary: |-
       Client ID of the managed identity with wrap and unwrap access to encryption key. Use system-assigned managed identity by default.
     groupName: Customer Managed Key Arguments
+  - name: --kv-revision-retention-period
+    summary: |-
+      Duration in seconds to retain key-value revisions in the App Configuration store. For Free and Developer sku stores, revisions can be retained for a maximum of 7 days (604,800s); for Standard and Premium sku stores, up to 30 days (2,592,000s). Only Non-Free tiers can update this value. If specified, retention period must be at least 1 hour (3600s).
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -675,5 +689,5 @@ commands:
 - az_appconfig_snapshot_show
 - az_appconfig_update
 metadata:
-  ms.date: 06/23/2025
+  ms.date: 07/24/2025
   description: Manage App Configurations.
