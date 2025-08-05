@@ -6,7 +6,7 @@ importantNote: >-
 
   > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Azure Kubernetes Services.
+  Azure Kubernetes Service.
 status: GA
 sourceType: Core and Extension
 directCommands:
@@ -335,6 +335,7 @@ directCommands:
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
+                  [--disable-run-command]
                   [--disable-snapshot-controller]
                   [--dns-name-prefix]
                   [--dns-service-ip]
@@ -343,6 +344,7 @@ directCommands:
                   [--enable-acns]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
                   [--enable-asm --enable-azure-service-mesh]
@@ -421,6 +423,8 @@ directCommands:
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
+                  [--node-provisioning-default-pools {Auto, None}]
+                  [--node-provisioning-mode {Auto, Manual}]
                   [--node-public-ip-prefix-id]
                   [--node-public-ip-tags]
                   [--node-resource-group]
@@ -455,6 +459,7 @@ directCommands:
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
+                  [--vm-sizes]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
@@ -576,6 +581,15 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/SubID/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/SubID/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a kubernetes cluster with VirtualMachines vm set type.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
+  - summary: |-
+      Create a kubernetes cluster with auto node provisioning.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-provisioning-mode Auto
+  - summary: |-
+      Create a kubernetes cluster with auto node provisioning and no default pools.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-provisioning-mode Auto --node-provisioning-default-pools None
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -718,6 +732,10 @@ directCommands:
   - name: --disable-rbac
     summary: |-
       Disable Kubernetes Role-Based Access Control.
+  - name: --disable-run-command
+    defaultValue: "False"
+    summary: |-
+      Disable Run command feature for the cluster.
   - name: --disable-snapshot-controller
     defaultValue: "False"
     summary: |-
@@ -766,6 +784,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+  - name: --enable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Enable AI toolchain operator to the cluster.
   - name: --enable-apiserver-vnet-integration
     defaultValue: "False"
     summary: |-
@@ -842,7 +864,7 @@ directCommands:
   - name: --enable-node-public-ip
     defaultValue: "False"
     summary: |-
-      Enable VMSS node public IP.
+      Enable VMSS or VMs node public IP.
   - name: --enable-oidc-issuer
     defaultValue: "False"
     summary: |-
@@ -858,7 +880,7 @@ directCommands:
   - name: --enable-secure-boot
     defaultValue: "False"
     summary: |-
-      Enable Secure Boot on all node pools in the cluster. Must use VMSS agent pool type.
+      Enable Secure Boot on all node pools in the cluster. Must use VMSS or VMs agent pool type.
   - name: --enable-sgxquotehelper
     defaultValue: "False"
     summary: |-
@@ -883,7 +905,7 @@ directCommands:
   - name: --enable-vtpm
     defaultValue: "False"
     summary: |-
-      Enable vTPM on all node pools in the cluster. Must use VMSS agent pool type.
+      Enable vTPM on all node pools in the cluster. Must use VMSS or VMs agent pool type.
   - name: --enable-windows-gmsa
     defaultValue: "False"
     summary: |-
@@ -1097,9 +1119,22 @@ directCommands:
     acceptedValues: Ephemeral, Managed
     summary: |-
       OS disk type to be used for machines in a given agent pool: Ephemeral or Managed. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation.
+  - name: --node-provisioning-default-pools
+    acceptedValues: Auto, None
+    summary: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+    description: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+      Auto: A standard set of Karpenter NodePools are provisioned.
+      None: No Karpenter NodePools are provisioned.
+      WARNING: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will in turn drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action.
+  - name: --node-provisioning-mode
+    acceptedValues: Auto, Manual
+    summary: |-
+      Set the node provisioning mode of the cluster. Valid values are "Auto" and "Manual". For more information on "Auto" mode see aka.ms/aks/nap.
   - name: --node-public-ip-prefix-id
     summary: |-
-      Public IP prefix ID used to assign public IPs to VMSS nodes.
+      Public IP prefix ID used to assign public IPs to VMSS or VMs nodes.
   - name: --node-public-ip-tags
     summary: |-
       The ipTags of the node public IPs.
@@ -1146,14 +1181,14 @@ directCommands:
       Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway and none. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
   - name: --pod-cidr
     summary: |-
-      A CIDR notation IP range from which to assign pod IPs when kubenet is used.
+      A CIDR notation IP range from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
     description: |-
-      This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+      This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16. See https://aka.ms/aks/azure-cni-overlay.
   - name: --pod-cidrs
     summary: |-
-      A comma-separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
+      A comma-separated list of CIDR notation IP ranges from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
     description: |-
-      Each range must not overlap with any Subnet IP ranges. For example, "172.244.0.0/16,fd0:abcd::/64".
+      Each range must not overlap with any Subnet IP ranges. For example, "172.244.0.0/16,fd0:abcd::/64". See https://aka.ms/aks/azure-cni-overlay.
   - name: --pod-ip-allocation-mode
     acceptedValues: DynamicIndividual, StaticBlock
     summary: |-
@@ -1227,7 +1262,10 @@ directCommands:
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
   - name: --vm-set-type
     summary: |-
-      Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet. Defaults to 'VirtualMachineScaleSets'.
+      Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet or VirtualMachines. Defaults to 'VirtualMachineScaleSets'.
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of VM sizes. Valid for VirtualMachines node pool only. If `--vm-sizes` not specified but `--node-vm-size` specified, value of `--node-vm-size` will be used. If neither of them specified, defaults to Standard_DS2_v2 for Linux or Standard_D2s_v3 for Windows.
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -4489,6 +4527,7 @@ directCommands:
                   [--disable-acns-observability]
                   [--disable-acns-security]
                   [--disable-ahub]
+                  [--disable-ai-toolchain-operator]
                   [--disable-azure-container-storage {all, azureDisk, elasticSan, ephemeralDisk}]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-metrics]
@@ -4505,6 +4544,7 @@ directCommands:
                   [--disable-local-accounts]
                   [--disable-private-cluster]
                   [--disable-public-fqdn]
+                  [--disable-run-command]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
                   [--disable-static-egress-gateway]
@@ -4514,6 +4554,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-acns]
                   [--enable-ahub]
+                  [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
@@ -4533,6 +4574,7 @@ directCommands:
                   [--enable-oidc-issuer]
                   [--enable-private-cluster]
                   [--enable-public-fqdn]
+                  [--enable-run-command]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-static-egress-gateway]
@@ -4560,7 +4602,9 @@ directCommands:
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
+                  [--load-balancer-sku {standard}]
                   [--max-count]
+                  [--migrate-vmas-to-vms]
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
@@ -4570,6 +4614,8 @@ directCommands:
                   [--network-policy {azure, calico, cilium, none}]
                   [--no-wait]
                   [--node-os-upgrade-channel]
+                  [--node-provisioning-default-pools {Auto, None}]
+                  [--node-provisioning-mode {Auto, Manual}]
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
@@ -4675,6 +4721,15 @@ directCommands:
   - summary: |-
       Disable VPA(Vertical Pod Autoscaler) for an existing kubernetes cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --disable-vpa
+  - summary: |-
+      Update a kubernetes cluster to use auto node provisioning.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --node-provisioning-mode Auto
+  - summary: |-
+      Update a kubernetes cluster to use auto node provisioning mode with no default pools.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --node-provisioning-mode Auto --node-provisioning-default-pools None
+  - summary: |-
+      Upgrade load balancer sku to standard
+    syntax: az aks update --load-balancer-sku standard -g MyResourceGroup -n MyManagedCluster
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -4770,6 +4825,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --disable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Disable AI toolchain operator.
   - name: --disable-azure-container-storage
     acceptedValues: all, azureDisk, elasticSan, ephemeralDisk
     summary: |-
@@ -4833,6 +4892,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable public fqdn feature for private cluster.
+  - name: --disable-run-command
+    defaultValue: "False"
+    summary: |-
+      Disable Run command feature for the cluster.
   - name: --disable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -4868,6 +4931,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --enable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Enable AI toolchain operator to the cluster.
   - name: --enable-apiserver-vnet-integration
     defaultValue: "False"
     summary: |-
@@ -4943,6 +5010,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable public fqdn feature for private cluster.
+  - name: --enable-run-command
+    defaultValue: "False"
+    summary: |-
+      Enable Run command feature for the cluster.
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -5057,9 +5128,19 @@ directCommands:
       Load balancer outbound allocated ports.
     description: |-
       Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs.
+  - name: --load-balancer-sku
+    acceptedValues: standard
+    summary: |-
+      Azure Load Balancer SKU selection for your cluster. only standard is accepted.
+    description: |-
+      Upgrade to Standard Azure Load Balancer SKU for your AKS cluster.
   - name: --max-count
     summary: |-
       Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
+  - name: --migrate-vmas-to-vms
+    defaultValue: "False"
+    summary: |-
+      Migrate cluster with VMAS node pool to VMS node pool.
   - name: --min-count
     summary: |-
       Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
@@ -5107,6 +5188,21 @@ directCommands:
   - name: --node-os-upgrade-channel
     summary: |-
       Manner in which the OS on your nodes is updated. It could be NodeImage, None, SecurityPatch or Unmanaged.
+  - name: --node-provisioning-default-pools
+    acceptedValues: Auto, None
+    summary: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+    description: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+      Auto: A standard set of Karpenter NodePools are provisioned.
+      None: No Karpenter NodePools are provisioned.
+      WARNING: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will in turn drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action.
+    isPreview: true
+  - name: --node-provisioning-mode
+    acceptedValues: Auto, Manual
+    summary: |-
+      Set the node provisioning mode of the cluster. Valid values are "Auto" and "Manual". For more information on "Auto" mode see aka.ms/aks/nap.
+    isPreview: true
   - name: --nodepool-labels
     summary: |-
       The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
@@ -7035,8 +7131,11 @@ commands:
 - az_aks_nodepool_list(aks-preview)
 - az_aks_nodepool_manual-scale
 - az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_add(aks-preview)
 - az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_delete(aks-preview)
 - az_aks_nodepool_manual-scale_update
+- az_aks_nodepool_manual-scale_update(aks-preview)
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_operation-abort(aks-preview)
 - az_aks_nodepool_scale
@@ -7083,6 +7182,13 @@ commands:
 - az_aks_remove-dev-spaces
 - az_aks_rotate-certs
 - az_aks_rotate-certs(aks-preview)
+- az_aks_safeguards
+- az_aks_safeguards_create
+- az_aks_safeguards_delete
+- az_aks_safeguards_list
+- az_aks_safeguards_show
+- az_aks_safeguards_update
+- az_aks_safeguards_wait
 - az_aks_scale
 - az_aks_scale(aks-preview)
 - az_aks_show
@@ -7115,4 +7221,4 @@ commands:
 - az_aks_wait
 - az_aks_wait(aks-preview)
 metadata:
-  description: Manage Azure Kubernetes Services.
+  description: Azure Kubernetes Service.

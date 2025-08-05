@@ -28,6 +28,7 @@ directCommands:
                                    [--multi-place-groups --multiple-placement-groups {false, true}]
                                    [--placement-property]
                                    [--primary {false, true}]
+                                   [--tags]
                                    [--vm-image-offer]
                                    [--vm-image-publisher]
                                    [--vm-image-sku]
@@ -38,7 +39,7 @@ directCommands:
       Create primary node type with 5 nodes.
     syntax: az sf managed-node-type create -g testRG -c testCluster -n pnt --instance-count 5 --primary
   - summary: |-
-      Create non primary node type with placement properities, capacities and ports.
+      Create non primary node type with placement properties, capacities and ports.
     syntax: az sf managed-node-type create -g testRG -c testCluster -n snt --instance-count 5 --placement-property NodeColor=Green SomeProperty=5 --capacity ClientConnections=65536 --app-start-port 20575 --app-end-port 20605 --ephemeral-start-port 20606 --ephemeral-end-port 20861
   requiredParameters:
   - isRequired: true
@@ -48,7 +49,7 @@ directCommands:
   - isRequired: true
     name: --instance-count
     summary: |-
-      Essage = "The number of nodes in the node type.
+      "The number of nodes in the node type.
   - isRequired: true
     name: --name --node-type-name -n
     summary: |-
@@ -99,6 +100,9 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Specify if the node type is primary. On this node type will run system services. Only one node type should be marked as primary. Primary node type cannot be deleted or changed for existing clusters.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --vm-image-offer
     defaultValue: WindowsServer
     summary: |-
@@ -320,6 +324,8 @@ directCommands:
                                    [--ephemeral-start-port]
                                    [--instance-count]
                                    [--placement-property]
+                                   [--tags]
+                                   [--vm-size]
   examples:
   - summary: |-
       Update the instance count of the node type.
@@ -327,6 +333,12 @@ directCommands:
   - summary: |-
       Update placement properties of the node type. This will overwrite older placement properties if any.
     syntax: az sf managed-node-type update -g testRG -c testCluster -n snt --placement-property NodeColor=Red SomeProperty=6
+  - summary: |-
+      Update vm size of the node type. This will initiate an in-place swap of the vm size.
+    syntax: az sf managed-node-type update -g testRG -c testCluster -n snt --vm-size Standard_DS2_v2
+  - summary: |-
+      Update the node type tags.
+    syntax: az sf managed-node-type update -g testRG -c testCluster -n snt --tags key1=value1 key2=value2
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -358,10 +370,16 @@ directCommands:
       Ephemeral start port of a range of ports.
   - name: --instance-count
     summary: |-
-      Essage = "The number of nodes in the node type.
+      "The number of nodes in the node type.
   - name: --placement-property
     summary: |-
       Placement tags applied to nodes in the node type as key/value pairs, which can be used to indicate where certain services (workload) should run. Updating this will override the current values.for example: --placement-property NodeColor=Green SomeProperty=5.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --vm-size
+    summary: |-
+      The size of virtual machines in the pool. All virtual machines in a pool are the same size.
   globalParameters:
   - name: --debug
     defaultValue: "False"
