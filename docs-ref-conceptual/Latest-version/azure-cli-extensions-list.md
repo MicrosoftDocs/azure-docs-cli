@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/05/2025
+ms.date: 08/07/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -24,7 +24,7 @@ You will be prompted to install an extension on first use.
 |----|-----------------|-------------|---------|---------------|
 |[acat](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat) | 2.61.0 | Microsoft Azure Command-Line Tools Acat Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat/HISTORY.rst) |
 |[account](https://github.com/Azure/azure-cli-extensions/tree/main/src/account) | 2.38.0 | Microsoft Azure Command-Line Tools SubscriptionClient Extension | GA | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/account/HISTORY.rst) |
-|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.60.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
+|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.76.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
 |[acrquery](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery) | 2.48.0 | Microsoft Azure Command-Line Tools AcrQuery Extension | Preview | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery/HISTORY.rst) |
 |[acrtransfer](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrtransfer) | 2.0.67 | Microsoft Azure Command-Line Tools Acrtransfer Extension | Preview | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrtransfer/HISTORY.rst) |
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
@@ -192,7 +192,7 @@ You will be prompted to install an extension on first use.
 |[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.56.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.28.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [2.0.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.54.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
-|[stack-hci-vm](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) | 2.15.0 | Microsoft Azure Command-Line Tools Stack-HCi-VM Extension | GA | [1.10.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) |
+|[stack-hci-vm](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) | 2.15.0 | Microsoft Azure Command-Line Tools Stack-HCi-VM Extension | GA | [1.10.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) |
 |[standbypool](https://github.com/Azure/azure-cli-extensions/tree/main/src/standbypool) | 2.70.0 | Microsoft Azure Command-Line Tools Standbypool Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/standbypool/HISTORY.rst) |
 |[staticwebapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp) | 2.39.0 | Microsoft Azure Command-Line Tools Staticwebapp Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp/HISTORY.rst) |
 |[storage-actions](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions) | 2.70.0 | Microsoft Azure Command-Line Tools StorageActions Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions/HISTORY.rst) |
