@@ -19,10 +19,22 @@ To install the Azure CLI, follow these steps:
 1. Import the Microsoft repository key.
 
    ```bash
-   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+   sudo rpm --import https://packages.microsoft.com/keys/microsoft-2025.asc
    ```
 
-2. For RHEL 9 or CentOS Stream, add `packages-microsoft-com-prod` repository:
+2. For RHEL 10, add `packages-microsoft-com-prod` repository:
+
+   ```bash
+   sudo dnf install -y https://packages.microsoft.com/config/rhel/10/packages-microsoft-prod.rpm
+   ```
+
+   For CentOS Stream 10, add `packages-microsoft-com-prod` repository:
+
+   ```bash
+   sudo dnf install -y https://packages.microsoft.com/config/centos/10/packages-microsoft-prod.rpm
+   ```
+
+   For RHEL 9 or CentOS Stream 9, add `packages-microsoft-com-prod` repository:
 
    ```bash
    sudo dnf install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
