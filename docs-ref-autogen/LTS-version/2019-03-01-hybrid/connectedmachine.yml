@@ -219,23 +219,18 @@ directCommands:
 - uid: az_connectedmachine_list
   name: az connectedmachine list
   summary: |-
-    List all Azure Arc-Enabled Servers in the specified resource group.
+    List all the hybrid machines in the specified subscription or resource group.
   status: GA
   sourceType: Extension
   syntax: >-
-    az connectedmachine list --resource-group
-                             [--expand]
+    az connectedmachine list [--expand]
                              [--max-items]
                              [--next-token]
+                             [--resource-group]
   examples:
   - summary: |-
-      Sample command for list
-    syntax: az connectedmachine list --resource-group myResourceGroup
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      sample command of list
+    syntax: az connectedmachine list
   optionalParameters:
   - name: --expand
     summary: |-
@@ -248,6 +243,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -339,63 +337,31 @@ directCommands:
 - uid: az_connectedmachine_update
   name: az connectedmachine update
   summary: |-
-    Update an Azure Arc-Enabled Server. Please note some properties can be set only during machine creation.
+    Update operation to update a hybrid machine.
   status: GA
   sourceType: Extension
   syntax: >-
-    az connectedmachine update [--add]
-                               [--agent-upgrade]
-                               [--client-public-key]
-                               [--expand {instanceView}]
-                               [--extensions]
-                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+    az connectedmachine update [--agent-upgrade]
                                [--identity]
                                [--ids]
                                [--kind {AVS, AWS, EPS, GCP, HCI, SCVMM, VMware}]
-                               [--license-profile]
                                [--location-data]
                                [--machine-name --name]
-                               [--mssql-discovered]
                                [--os-profile]
-                               [--os-type]
                                [--parent-cluster-id --parent-cluster-resource-id]
                                [--private-link-scope-id --private-link-scope-resource-id]
-                               [--remove]
                                [--resource-group]
-                               [--service-statuses]
-                               [--set]
                                [--subscription]
                                [--tags]
   examples:
   - summary: |-
-      Sample command for update
+      sample command for update
     syntax: az connectedmachine update --name myMachine --resource-group myResourceGroup --location eastus2euap
   optionalParameters:
-  - name: --add
-    summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
-    groupName: Generic Update Arguments
   - name: --agent-upgrade
     summary: |-
       The info of the machine w.r.t Agent Upgrade  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --client-public-key
-    summary: |-
-      Public Key that the client provides to be used during initial resource onboarding.
-    groupName: Properties Arguments
-  - name: --expand
-    acceptedValues: instanceView
-    summary: |-
-      The expand expression to apply on the operation.
-  - name: --extensions
-    summary: |-
-      Machine Extensions information (deprecated field)  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
-  - name: --force-string
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    groupName: Generic Update Arguments
   - name: --identity
     summary: |-
       Identity for the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -409,10 +375,6 @@ directCommands:
     summary: |-
       Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc.
     groupName: Parameters Arguments
-  - name: --license-profile
-    summary: |-
-      Specifies the License related properties for a machine.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --location-data
     summary: |-
       Metadata pertaining to the geographic location of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -421,17 +383,9 @@ directCommands:
     summary: |-
       The name of the hybrid machine.
     groupName: Resource Id Arguments
-  - name: --mssql-discovered
-    summary: |-
-      Specifies whether any MS SQL instance is discovered on the machine.
-    groupName: Properties Arguments
   - name: --os-profile
     summary: |-
       Specifies the operating system settings for the hybrid machine.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
-  - name: --os-type
-    summary: |-
-      The type of Operating System (windows/linux).
     groupName: Properties Arguments
   - name: --parent-cluster-id --parent-cluster-resource-id
     summary: |-
@@ -441,29 +395,17 @@ directCommands:
     summary: |-
       The resource id of the private link scope this machine is assigned to, if any.
     groupName: Properties Arguments
-  - name: --remove
-    summary: |-
-      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
-    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --service-statuses
-    summary: |-
-      Statuses of dependent services that are reported back to ARM.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
-  - name: --set
-    summary: |-
-      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
-    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --tags
     summary: |-
-      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Parameters Arguments
   globalParameters:
   - name: --debug

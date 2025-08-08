@@ -3,36 +3,81 @@ uid: az_iot_ops_broker_authz
 name: az iot ops broker authz
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops broker authz** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops broker authz** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Broker authorization management.
+  Mqtt broker authorization management.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_broker_authz_delete
-  name: az iot ops broker authz delete
+- uid: az_iot_ops_broker_authz_apply
+  name: az iot ops broker authz apply
   summary: |-
-    Delete an mqtt broker authorization resource.
+    Create or replace an mqtt broker authorization resource.
+  description: |-
+    An example of the config file format is as follows:
+
+    ```
+    {
+        "authorizationPolicies": {
+            "cache": "Enabled",
+            "rules": [
+                {
+                    "principals": {
+                        "clientIds": [
+                            "temperature-sensor",
+                            "humidity-sensor"
+                        ],
+                        "attributes": [
+                            {
+                                "city": "seattle",
+                                "organization": "contoso"
+                            }
+                        ]
+                    },
+                    "brokerResources": [
+                        {
+                            "method": "Connect"
+                        },
+                        {
+                            "method": "Publish",
+                            "topics": [
+                                "/telemetry/{principal.clientId}",
+                                "/telemetry/{principal.attributes.organization}"
+                            ]
+                        },
+                        {
+                            "method": "Subscribe",
+                            "topics": [
+                                "/commands/{principal.attributes.organization}"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+    ```
+
+    When used with apply the above content will create or replace a target authorization
+    resource configured with a single authz rule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker authz delete --broker
-                                   --instance
-                                   --name
-                                   --resource-group
-                                   [--yes {false, true}]
+    az iot ops broker authz apply --config-file
+                                  --instance
+                                  --name
+                                  --resource-group
+                                  [--broker]
   examples:
   - summary: |-
-      Delete the broker authorization resource called 'authz' associated with broker 'broker'.
-    syntax: az iot ops broker authz delete -n authz -b broker --in mycluster-ops-instance -g myresourcegroup
-  - summary: |-
-      Same as prior example but skipping the confirmation prompt.
-    syntax: az iot ops broker authz delete -n authz -b broker --in mycluster-ops-instance -g myresourcegroup -y
+      Create or replace an authorization resource for the default broker using a config file.
+    syntax: az iot ops broker authz apply -n authz --in myinstance -g myresourcegroup --config-file /path/to/authz/config.json
   requiredParameters:
   - isRequired: true
-    name: --broker -b
+    name: --config-file
     summary: |-
-      Mqtt broker name.
+      Path to a config file containing resource properties in json format. The config file should contain an object with properties compatible with the ARM representation of the resource. The object correlates directly with 'properties:{}' of the ARM resource.
+    groupName: Config Arguments
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -46,6 +91,74 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_broker_authz_delete
+  name: az iot ops broker authz delete
+  summary: |-
+    Delete an mqtt broker authorization resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops broker authz delete --instance
+                                   --name
+                                   --resource-group
+                                   [--broker]
+                                   [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete the mqtt broker authorization resource called 'authz' associated with the default broker.
+    syntax: az iot ops broker authz delete -n authz --in myinstance -g myresourcegroup
+  - summary: |-
+      Same as prior example but skipping the confirmation prompt.
+    syntax: az iot ops broker authz delete -n authz --in myinstance -g myresourcegroup -y
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Mqtt broker authorization resource name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
   - name: --yes -y
     acceptedValues: false, true
     summary: |-
@@ -80,22 +193,18 @@ directCommands:
 - uid: az_iot_ops_broker_authz_list
   name: az iot ops broker authz list
   summary: |-
-    List mqtt broker authorization resources associated with an instance.
+    List mqtt broker authorization resources associated with a broker.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker authz list --broker
-                                 --instance
+    az iot ops broker authz list --instance
                                  --resource-group
+                                 [--broker]
   examples:
   - summary: |-
-      Enumerate all broker authorization resources associated with the default broker.
-    syntax: az iot ops broker authz list -b broker --in mycluster-ops-instance -g myresourcegroup
+      Enumerate all mqtt broker authorization resources associated with the default broker.
+    syntax: az iot ops broker authz list --in myinstance -g myresourcegroup
   requiredParameters:
-  - isRequired: true
-    name: --broker -b
-    summary: |-
-      Mqtt broker name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -104,6 +213,11 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -138,19 +252,15 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker authz show --broker
-                                 --instance
+    az iot ops broker authz show --instance
                                  --name
                                  --resource-group
+                                 [--broker]
   examples:
   - summary: |-
-      Show details of a broker authorization resource 'authz' associated with the default broker.
-    syntax: az iot ops broker authz show -n authz -b broker --in mycluster-ops-instance -g myresourcegroup
+      Show details of the default authorization resource associated with the default broker.
+    syntax: az iot ops broker authz show -n authz --in myinstance -g myresourcegroup
   requiredParameters:
-  - isRequired: true
-    name: --broker -b
-    summary: |-
-      Mqtt broker name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -163,6 +273,11 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -191,8 +306,9 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
+- az_iot_ops_broker_authz_apply
 - az_iot_ops_broker_authz_delete
 - az_iot_ops_broker_authz_list
 - az_iot_ops_broker_authz_show
 metadata:
-  description: Broker authorization management.
+  description: Mqtt broker authorization management.
