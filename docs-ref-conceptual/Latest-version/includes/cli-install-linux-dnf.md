@@ -16,11 +16,16 @@ ms.custom: devx-track-azurecli, linux-related-content
 
 To install the Azure CLI, follow these steps:
 
-1. Import the Microsoft repository key.
+1. Import the Microsoft repository key. For RHEL 10 and CentOS Stream 10,
 
    ```bash
    sudo rpm --import https://packages.microsoft.com/keys/microsoft-2025.asc
    ```
+   For lower versions, use the following command:
+
+   ```bash
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    ```
 
 2. For RHEL 10, add `packages-microsoft-com-prod` repository:
 
