@@ -3,36 +3,97 @@ uid: az_iot_ops_broker_authn
 name: az iot ops broker authn
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops broker authn** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops broker authn** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Broker authentication management.
+  Mqtt broker authentication management.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_broker_authn_delete
-  name: az iot ops broker authn delete
+- uid: az_iot_ops_broker_authn_apply
+  name: az iot ops broker authn apply
   summary: |-
-    Delete an mqtt broker authentication resource.
+    Create or replace an mqtt broker authentication resource.
+  description: |-
+    An example of the config file format is as follows:
+
+    ```
+    {
+        "authenticationMethods": [
+            {
+                "method": "Custom",
+                "customSettings": {
+                    "endpoint": "https://auth-server-template",
+                    "caCertConfigMap": "custom-auth-ca",
+                    "auth": {
+                        "x509": {
+                            "secretRef": "custom-auth-client-cert"
+                        }
+                    },
+                    "headers": {
+                        "header_key": "header_value"
+                    }
+                }
+            },
+            {
+                "method": "ServiceAccountToken",
+                "serviceAccountTokenSettings": {
+                    "audiences": [
+                        "aio-internal",
+                        "my-audience"
+                    ]
+                }
+            },
+            {
+                "method": "X509",
+                "x509Settings": {
+                    "trustedClientCaCert": "client-ca",
+                    "authorizationAttributes": {
+                        "root": {
+                            "attributes": {
+                                "organization": "contoso"
+                            },
+                            "subject": "CN = Contoso Root CA Cert, OU = Engineering, C = US"
+                        },
+                        "intermediate": {
+                            "attributes": {
+                                "city": "seattle",
+                                "foo": "bar"
+                            },
+                            "subject": "CN = Contoso Intermediate CA"
+                        },
+                        "smartfan": {
+                            "attributes": {
+                                "building": "17"
+                            },
+                            "subject": "CN = smart-fan"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+    ```
+
+    When used with apply the above content will create or replace a target authentication
+    resource configured with three authn methods.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker authn delete --broker
-                                   --instance
-                                   --name
-                                   --resource-group
-                                   [--yes {false, true}]
+    az iot ops broker authn apply --config-file
+                                  --instance
+                                  --name
+                                  --resource-group
+                                  [--broker]
   examples:
   - summary: |-
-      Delete the broker authentication resource called 'authn' associated with broker 'broker'.
-    syntax: az iot ops broker authn delete -n authn -b broker --in mycluster-ops-instance -g myresourcegroup
-  - summary: |-
-      Same as prior example but skipping the confirmation prompt.
-    syntax: az iot ops broker authn delete -n authn -b broker --in mycluster-ops-instance -g myresourcegroup -y
+      Create or replace an authentication resource for the default broker using a config file.
+    syntax: az iot ops broker authn apply -n authn --in myinstance -g myresourcegroup --config-file /path/to/authn/config.json
   requiredParameters:
   - isRequired: true
-    name: --broker -b
+    name: --config-file
     summary: |-
-      Mqtt broker name.
+      Path to a config file containing resource properties in json format. The config file should contain an object with properties compatible with the ARM representation of the resource. The object correlates directly with 'properties:{}' of the ARM resource.
+    groupName: Config Arguments
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -46,6 +107,74 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_broker_authn_delete
+  name: az iot ops broker authn delete
+  summary: |-
+    Delete an mqtt broker authentication resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops broker authn delete --instance
+                                   --name
+                                   --resource-group
+                                   [--broker]
+                                   [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete the broker authentication resource called 'authn' associated with the default broker.
+    syntax: az iot ops broker authn delete -n authn --in myinstance -g myresourcegroup
+  - summary: |-
+      Same as prior example but skipping the confirmation prompt.
+    syntax: az iot ops broker authn delete -n authn --in myinstance -g myresourcegroup -y
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Mqtt broker authentication resource name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
   - name: --yes -y
     acceptedValues: false, true
     summary: |-
@@ -80,22 +209,18 @@ directCommands:
 - uid: az_iot_ops_broker_authn_list
   name: az iot ops broker authn list
   summary: |-
-    List mqtt broker authentication resources associated with an instance.
+    List mqtt broker authentication resources associated with a broker.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker authn list --broker
-                                 --instance
+    az iot ops broker authn list --instance
                                  --resource-group
+                                 [--broker]
   examples:
   - summary: |-
       Enumerate all broker authentication resources associated with the default broker.
-    syntax: az iot ops broker authn list -b broker --in mycluster-ops-instance -g myresourcegroup
+    syntax: az iot ops broker authn list --in myinstance -g myresourcegroup
   requiredParameters:
-  - isRequired: true
-    name: --broker -b
-    summary: |-
-      Mqtt broker name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -104,6 +229,11 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -138,19 +268,15 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops broker authn show --broker
-                                 --instance
+    az iot ops broker authn show --instance
                                  --name
                                  --resource-group
+                                 [--broker]
   examples:
   - summary: |-
-      Show details of the default broker authentication resource 'authn' associated with the default broker.
-    syntax: az iot ops broker authn show -n authn -b broker --in mycluster-ops-instance -g myresourcegroup
+      Show details of the default authentication resource associated with the default broker.
+    syntax: az iot ops broker authn show -n authn --in myinstance -g myresourcegroup
   requiredParameters:
-  - isRequired: true
-    name: --broker -b
-    summary: |-
-      Mqtt broker name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -163,6 +289,11 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Mqtt broker name.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -191,8 +322,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
+- az_iot_ops_broker_authn_apply
 - az_iot_ops_broker_authn_delete
 - az_iot_ops_broker_authn_list
+- az_iot_ops_broker_authn_method
+- az_iot_ops_broker_authn_method_add
 - az_iot_ops_broker_authn_show
 metadata:
-  description: Broker authentication management.
+  description: Mqtt broker authentication management.

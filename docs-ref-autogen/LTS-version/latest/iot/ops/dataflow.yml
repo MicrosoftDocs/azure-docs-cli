@@ -3,12 +3,200 @@ uid: az_iot_ops_dataflow
 name: az iot ops dataflow
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops dataflow** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops dataflow** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Dataflow management.
 status: GA
 sourceType: Extension
 directCommands:
+- uid: az_iot_ops_dataflow_apply
+  name: az iot ops dataflow apply
+  summary: |-
+    Create or replace a dataflow associated with a dataflow profile.
+  description: |-
+    An example of the config file format is as follows:
+
+    ```
+    {
+      "mode": "Enabled",
+      "operations": [
+        {
+          "operationType": "Source",
+          "sourceSettings": {
+            "endpointRef": "myenpoint1",
+            "assetRef": "",
+            "serializationFormat": "Json",
+            "schemaRef": "myschema1",
+            "dataSources": [
+              "testfrom"
+            ]
+          }
+        },
+        {
+          "operationType": "BuiltInTransformation",
+          "builtInTransformationSettings": {
+            "serializationFormat": "Json",
+            "datasets": [],
+            "filter": [
+              {
+                "type": "Filter",
+                "description": "",
+                "inputs": [
+                  "$metadata.user_property.value"
+                ],
+                "expression": "$1 > 100"
+              }
+            ],
+            "map": [
+              {
+                "type": "PassThrough",
+                "inputs": [
+                  "*"
+                ],
+                "output": "*"
+              }
+            ]
+          }
+        },
+        {
+          "operationType": "Destination",
+          "destinationSettings": {
+            "endpointRef": "myenpoint2",
+            "dataDestination": "test"
+          }
+        }
+      ]
+    }
+    ```
+
+    When used with apply the above content will create or replace a target dataflow resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops dataflow apply --config-file
+                              --instance
+                              --name
+                              --resource-group
+                              [--profile]
+  examples:
+  - summary: |-
+      Create or replace a dataflow 'mydataflow' associated with a profile 'myprofile' using a config file.
+    syntax: az iot ops dataflow apply -n mydataflow -p myprofile --in myinstance -g myresourcegroup --config-file /path/to/dataflow/config.json
+  requiredParameters:
+  - isRequired: true
+    name: --config-file
+    summary: |-
+      Path to a config file containing resource properties in json format. The config file should contain an object with properties compatible with the ARM representation of the resource. The object correlates directly with 'properties:{}' of the ARM resource.
+    groupName: Config Arguments
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Dataflow name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --profile -p
+    defaultValue: default
+    summary: |-
+      Dataflow profile name.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_dataflow_delete
+  name: az iot ops dataflow delete
+  summary: |-
+    Delete a dataflow associated with a dataflow profile.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops dataflow delete --instance
+                               --name
+                               --resource-group
+                               [--profile]
+                               [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete a dataflow 'mydataflow' associated with a profile 'myprofile'.
+    syntax: az iot ops dataflow delete -n mydataflow -p myprofile --in mycluster-ops-instance -g myresourcegroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Dataflow name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --profile -p
+    defaultValue: default
+    summary: |-
+      Dataflow profile name.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_dataflow_list
   name: az iot ops dataflow list
   summary: |-
@@ -17,8 +205,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot ops dataflow list --instance
-                             --profile
                              --resource-group
+                             [--profile]
   examples:
   - summary: |-
       Enumerate dataflows associated with the profile 'myprofile'.
@@ -29,13 +217,14 @@ directCommands:
     summary: |-
       IoT Operations instance name.
   - isRequired: true
-    name: --profile -p
-    summary: |-
-      Dataflow profile name.
-  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --profile -p
+    defaultValue: default
+    summary: |-
+      Dataflow profile name.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -72,8 +261,8 @@ directCommands:
   syntax: >-
     az iot ops dataflow show --instance
                              --name
-                             --profile
                              --resource-group
+                             [--profile]
   examples:
   - summary: |-
       Show details of a dataflow 'mydataflow' associated with a profile 'myprofile'.
@@ -88,13 +277,14 @@ directCommands:
     summary: |-
       Dataflow name.
   - isRequired: true
-    name: --profile -p
-    summary: |-
-      Dataflow profile name.
-  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --profile -p
+    defaultValue: default
+    summary: |-
+      Dataflow profile name.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -123,13 +313,42 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
+- az_iot_ops_dataflow_apply
+- az_iot_ops_dataflow_delete
 - az_iot_ops_dataflow_endpoint
+- az_iot_ops_dataflow_endpoint_apply
+- az_iot_ops_dataflow_endpoint_create
+- az_iot_ops_dataflow_endpoint_create_adls
+- az_iot_ops_dataflow_endpoint_create_adx
+- az_iot_ops_dataflow_endpoint_create_custom-kafka
+- az_iot_ops_dataflow_endpoint_create_custom-mqtt
+- az_iot_ops_dataflow_endpoint_create_eventgrid
+- az_iot_ops_dataflow_endpoint_create_eventhub
+- az_iot_ops_dataflow_endpoint_create_fabric-onelake
+- az_iot_ops_dataflow_endpoint_create_fabric-realtime
+- az_iot_ops_dataflow_endpoint_create_local-mqtt
+- az_iot_ops_dataflow_endpoint_create_local-storage
+- az_iot_ops_dataflow_endpoint_delete
 - az_iot_ops_dataflow_endpoint_list
 - az_iot_ops_dataflow_endpoint_show
+- az_iot_ops_dataflow_endpoint_update
+- az_iot_ops_dataflow_endpoint_update_adls
+- az_iot_ops_dataflow_endpoint_update_adx
+- az_iot_ops_dataflow_endpoint_update_custom-kafka
+- az_iot_ops_dataflow_endpoint_update_custom-mqtt
+- az_iot_ops_dataflow_endpoint_update_eventgrid
+- az_iot_ops_dataflow_endpoint_update_eventhub
+- az_iot_ops_dataflow_endpoint_update_fabric-onelake
+- az_iot_ops_dataflow_endpoint_update_fabric-realtime
+- az_iot_ops_dataflow_endpoint_update_local-mqtt
+- az_iot_ops_dataflow_endpoint_update_local-storage
 - az_iot_ops_dataflow_list
 - az_iot_ops_dataflow_profile
+- az_iot_ops_dataflow_profile_create
+- az_iot_ops_dataflow_profile_delete
 - az_iot_ops_dataflow_profile_list
 - az_iot_ops_dataflow_profile_show
+- az_iot_ops_dataflow_profile_update
 - az_iot_ops_dataflow_show
 metadata:
   description: Dataflow management.
