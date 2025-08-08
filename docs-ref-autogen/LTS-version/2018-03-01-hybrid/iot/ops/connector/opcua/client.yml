@@ -3,7 +3,7 @@ uid: az_iot_ops_connector_opcua_client
 name: az iot ops connector opcua client
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops connector opcua client** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops connector opcua client** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage enterprise grade client application instance certificate for the OPC UA Broker.
 description: |-
@@ -26,35 +26,37 @@ directCommands:
     and secretsync 'aio-opc-ua-broker-client-certificate' will be created
     if not found. The newly added certificate will replace the existing
     certificate if there is any.
+    Note: The subject name and application URI will be auto derived from the provided
+    certificate. Optional parameters may be used to validate the respective values
+    meet expectations before the operation proceeds.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops connector' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops connector opcua client add --application-uri --au
-                                          --instance
+    az iot ops connector opcua client add --instance
                                           --pkf --public-key-file
                                           --private-key-file --prkf
                                           --resource-group
-                                          --sn --subject-name
+                                          [--application-uri --au]
                                           [--overwrite-secret {false, true}]
                                           [--pks --public-key-secret-name]
                                           [--private-key-secret-name --prks]
+                                          [--sn --subject-name]
   examples:
   - summary: |-
       Add a client certificate.
-    syntax: az iot ops connector opcua client add --instance instance --resource-group instanceresourcegroup --public-key-file "newopc.der" --private-key-file "newopc.pem" --subject-name "aio-opc-opcuabroker" --application-uri "urn:microsoft.com:aio:opc:opcuabroker"
+    syntax: az iot ops connector opcua client add --instance instance --resource-group instanceresourcegroup --public-key-file "newopc.der" --private-key-file "newopc.pem"
   - summary: |-
       Add a client certificate and skip the overwrite confirmation prompt when the secret already exists.
-    syntax: az iot ops connector opcua client add --instance instance --resource-group instanceresourcegroup --public-key-file "newopc.der" --private-key-file "newopc.pem" --subject-name "aio-opc-opcuabroker" --application-uri "urn:microsoft.com:aio:opc:opcuabroker" --overwrite-secret
+    syntax: az iot ops connector opcua client add --instance instance --resource-group instanceresourcegroup --public-key-file "newopc.der" --private-key-file "newopc.pem" --overwrite-secret
   - summary: |-
       Add a client certificate with custom public and private key secret name.
+    syntax: az iot ops connector opcua client add --instance instance --resource-group instanceresourcegroup --public-key-file "newopc.der" --private-key-file "newopc.pem" --public-key-secret-name public-secret-name --private-key-secret-name private-secret-name
+  - summary: |-
+      Add a client certificate with subject name and application URI specified. Values will be used to validate the existing certificate values.
     syntax: az iot ops connector opcua client add --instance instance --resource-group instanceresourcegroup --public-key-file "newopc.der" --private-key-file "newopc.pem" --public-key-secret-name public-secret-name --private-key-secret-name private-secret-name --subject-name "aio-opc-opcuabroker" --application-uri "urn:microsoft.com:aio:opc:opcuabroker"
   requiredParameters:
-  - isRequired: true
-    name: --application-uri --au
-    summary: |-
-      The application instance URI embedded in the application instance.Can be found under public key certificate.
   - isRequired: true
     name: --instance -i -n
     summary: |-
@@ -71,11 +73,10 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Instance resource group.
-  - isRequired: true
-    name: --sn --subject-name
-    summary: |-
-      The subject name string embedded in the application instance certificate.Can be found under public key certificate.
   optionalParameters:
+  - name: --application-uri --au
+    summary: |-
+      The application instance URI embedded in the application instance. Can be found under public key certificate. When provided, the value will be used to validate the certificate's application URI.
   - name: --overwrite-secret
     defaultValue: "False"
     acceptedValues: false, true
@@ -87,6 +88,9 @@ directCommands:
   - name: --private-key-secret-name --prks
     summary: |-
       Private key secret name in the Key Vault. If not provided, the certificate file name will be used to generate the secret name.
+  - name: --sn --subject-name
+    summary: |-
+      The subject name string embedded in the application instance certificate. Can be found under public key certificate. When provided, the value will be used to validate the certificate's subject name.
   globalParameters:
   - name: --debug
     defaultValue: "False"

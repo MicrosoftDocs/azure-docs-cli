@@ -1,0 +1,243 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_broker_listener_port
+name: az iot ops broker listener port
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops broker listener port** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Mqtt broker listener port operations.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_broker_listener_port_add
+  name: az iot ops broker listener port add
+  summary: |-
+    Add a tcp port config to an mqtt broker listener service.
+  description: |-
+    This is an add or replace (port) operation. If the target listener resource does not exist the command will create it.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops broker listener port add --instance
+                                        --listener
+                                        --port
+                                        --resource-group
+                                        [--authn-ref]
+                                        [--authz-ref]
+                                        [--broker]
+                                        [--nodeport]
+                                        [--protocol {Mqtt, WebSockets}]
+                                        [--service-name]
+                                        [--service-type {ClusterIp, LoadBalancer, NodePort}]
+                                        [--show-config {false, true}]
+                                        [--tls-duration]
+                                        [--tls-issuer-ref]
+                                        [--tls-key-algo {Ec256, Ec384, Ec521, Ed25519, Rsa2048, Rsa4096, Rsa8192}]
+                                        [--tls-key-rotation {Always, Never}]
+                                        [--tls-man-secret-ref]
+                                        [--tls-renew-before]
+                                        [--tls-san-dns]
+                                        [--tls-san-ip]
+                                        [--tls-secret-name]
+  examples:
+  - summary: |-
+      Add a port config to the default cluster Ip listener, using port 8883 and an authn resource.
+    syntax: az iot ops broker listener port add --port 8883 --authn authn --listener default --in myinstance -g mygroup
+  - summary: |-
+      Create a new listener with service type load balancer using a port config accepting tcp connections on port 1883 with no authz or authn.
+    syntax: az iot ops broker listener port add --port 1883 --listener newlistener --in myinstance -g mygroup
+  - summary: |-
+      Add a port config to an existing listener using basic auto tls settings on port 8883 with authn.
+    syntax: az iot ops broker listener port add --port 8883 --authn authn --tls-issuer-ref issuer=azure-iot-operations-aio-certificate-issuer kind=ClusterIssuer --listener newlistener --in myinstance -g mygroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --listener -n
+    summary: |-
+      Listener name.
+  - isRequired: true
+    name: --port
+    summary: |-
+      Listener service port.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --authn-ref
+    summary: |-
+      Authentication reference (name).
+    groupName: Auth Arguments
+  - name: --authz-ref
+    summary: |-
+      Authorization reference (name).
+    groupName: Auth Arguments
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Broker name.
+  - name: --nodeport
+    summary: |-
+      The listener service will exposes a static port on each Node's IP address. Only relevant when this port is associated with a NodePort listener.
+    groupName: Node Port Arguments
+  - name: --protocol
+    acceptedValues: Mqtt, WebSockets
+    summary: |-
+      Protocol to use for client connections.
+  - name: --service-name
+    summary: |-
+      Kubernetes service name of the listener. Used when a target listener does not exist.
+  - name: --service-type
+    defaultValue: LoadBalancer
+    acceptedValues: ClusterIp, LoadBalancer, NodePort
+    summary: |-
+      Kubernetes service type of the listener. Used when a target listener does not exist.
+  - name: --show-config
+    acceptedValues: false, true
+    summary: |-
+      Show the generated resource config instead of invoking the API with it.
+  - name: --tls-duration
+    summary: |-
+      Lifetime of certificate. Must be specified using a time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes.
+    groupName: TLS Auto Arguments
+  - name: --tls-issuer-ref
+    summary: |-
+      Cert-manager issuer reference. Format is space-separated key=value pairs. The following keys are supported: `group`, `kind`, `name`. `kind` and `name` are required, while `group` has a default value of 'cert-manager.io'.
+    groupName: TLS Auto Arguments
+  - name: --tls-key-algo
+    acceptedValues: Ec256, Ec384, Ec521, Ed25519, Rsa2048, Rsa4096, Rsa8192
+    summary: |-
+      Algorithm for private key.
+    groupName: TLS Auto Arguments
+  - name: --tls-key-rotation
+    acceptedValues: Always, Never
+    summary: |-
+      Cert-manager private key rotation policy.
+    groupName: TLS Auto Arguments
+  - name: --tls-man-secret-ref
+    summary: |-
+      Secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself.
+    groupName: TLS Manual Arguments
+  - name: --tls-renew-before
+    summary: |-
+      When to begin renewing certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes.
+    groupName: TLS Auto Arguments
+  - name: --tls-san-dns
+    summary: |-
+      DNS subject alternative names for the certificate. Use space-separated values.
+    groupName: TLS Auto Arguments
+  - name: --tls-san-ip
+    summary: |-
+      IP subject alternative names for the certificate. Use space-separated values.
+    groupName: TLS Auto Arguments
+  - name: --tls-secret-name
+    summary: |-
+      Secret for storing server certificate. Any existing data will be overwritten. This is a reference to the secret through an identifying name, not the secret itself.
+    groupName: TLS Auto Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_broker_listener_port_remove
+  name: az iot ops broker listener port remove
+  summary: |-
+    Remove a tcp port config from an mqtt broker listener service.
+  description: |-
+    If no tcp ports will exist after removal the command will delete the listener resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops broker listener port remove --instance
+                                           --listener
+                                           --port
+                                           --resource-group
+                                           [--broker]
+                                           [--yes {false, true}]
+  examples:
+  - summary: |-
+      Remove tcp port 1883 config from a listener. The listener will be deleted if no ports remain.
+    syntax: az iot ops broker listener port remove --port 1883 --listener mylistener --in myinstance -g mygroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --listener -n
+    summary: |-
+      Listener name.
+  - isRequired: true
+    name: --port
+    summary: |-
+      Listener service port.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --broker -b
+    defaultValue: default
+    summary: |-
+      Broker name.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_ops_broker_listener_port_add
+- az_iot_ops_broker_listener_port_remove
+metadata:
+  description: Mqtt broker listener port operations.

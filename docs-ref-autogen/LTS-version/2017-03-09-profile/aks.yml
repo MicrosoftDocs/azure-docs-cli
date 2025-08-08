@@ -10,6 +10,80 @@ summary: |-
 status: GA
 sourceType: Core and Extension
 directCommands:
+- uid: az_aks_bastion
+  name: az aks bastion
+  summary: |-
+    Connect to a managed Kubernetes cluster using Azure Bastion.
+  description: |-
+    The command will launch a subshell with the kubeconfig set to connect to the cluster via Bastion. Use exit or Ctrl-D (i.e. EOF) to exit the subshell.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks bastion --name
+                   --resource-group
+                   [--admin]
+                   [--bastion]
+                   [--port]
+                   [--yes]
+  examples:
+  - summary: |-
+      Connect to a managed Kubernetes cluster using Azure Bastion with custom port and admin credentials.
+    syntax: az aks bastion -g MyResourceGroup --name MyManagedCluster --bastion MyBastionResource --port 50001 --admin
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the managed cluster.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --admin
+    defaultValue: "False"
+    summary: |-
+      Use the cluster admin credentials to connect to the bastion.
+  - name: --bastion
+    summary: |-
+      The name or resource ID of a pre-deployed Bastion resource configured to connect to the current AKS cluster.
+    description: |-
+      If not specified, the command will try to identify an existing Bastion resource within the cluster's node resource group.
+  - name: --port
+    summary: |-
+      The local port number used for the bastion connection.
+    description: |-
+      If not provided, a random port will be used.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_browse
   name: az aks browse
   summary: |-
@@ -93,6 +167,8 @@ directCommands:
                   [--aad-admin-group-object-ids]
                   [--aad-tenant-id]
                   [--aci-subnet-name]
+                  [--acns-advanced-networkpolicies {FQDN, L7, None}]
+                  [--acns-transit-encryption-type {None, WireGuard}]
                   [--admin-username]
                   [--aks-custom-headers]
                   [--ampls-resource-id]
@@ -129,6 +205,7 @@ directCommands:
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
+                  [--disable-run-command]
                   [--disable-snapshot-controller]
                   [--disk-driver-version {v1, v2}]
                   [--dns-name-prefix]
@@ -137,7 +214,6 @@ directCommands:
                   [--edge-zone]
                   [--enable-aad]
                   [--enable-acns]
-                  [--enable-addon-autoscaling]
                   [--enable-addons]
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
@@ -162,12 +238,15 @@ directCommands:
                   [--enable-imds-restriction]
                   [--enable-keda]
                   [--enable-managed-identity]
+                  [--enable-managed-system-pool]
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
                   [--enable-oidc-issuer]
+                  [--enable-optimized-addon-scaling]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
                   [--enable-private-cluster]
+                  [--enable-retina-flow-logs]
                   [--enable-secret-rotation]
                   [--enable-secure-boot]
                   [--enable-sgxquotehelper]
@@ -227,6 +306,7 @@ directCommands:
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
+                  [--node-provisioning-default-pools {Auto, None}]
                   [--node-provisioning-mode {Auto, Manual}]
                   [--node-public-ip-prefix-id]
                   [--node-public-ip-tags]
@@ -239,7 +319,7 @@ directCommands:
                   [--nodepool-tags]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
-                  [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu}]
+                  [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {block, loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
@@ -393,6 +473,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a VirtualMachines nodepool
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
+  - summary: |-
+      Create a kubernetes cluster with a fully managed system node pool
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-managed-system-pool
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -412,6 +495,16 @@ directCommands:
   - name: --aci-subnet-name
     summary: |-
       The name of a subnet in an existing VNet into which to deploy the virtual nodes.
+  - name: --acns-advanced-networkpolicies
+    acceptedValues: FQDN, L7, None
+    summary: |-
+      Used to enable advanced network policies (None, FQDN or L7) on a cluster when enabling advanced networking features with "--enable-acns".
+    isPreview: true
+  - name: --acns-transit-encryption-type
+    acceptedValues: None, WireGuard
+    summary: |-
+      Specify the transit encryption type for ACNS. Available values are 'None' and 'WireGuard'.
+    isPreview: true
   - name: --admin-username -u
     defaultValue: azureuser
     summary: |-
@@ -554,6 +647,10 @@ directCommands:
   - name: --disable-rbac
     summary: |-
       Disable Kubernetes Role-Based Access Control.
+  - name: --disable-run-command
+    defaultValue: "False"
+    summary: |-
+      Disable Run command feature for the cluster.
   - name: --disable-snapshot-controller
     defaultValue: "False"
     summary: |-
@@ -572,7 +669,7 @@ directCommands:
       This address must be within the Kubernetes service address range specified by "--service-cidr". For example, 10.0.0.10.
   - name: --dns-zone-resource-ids
     summary: |-
-      A comma separated list of resource IDs of the DNS zone resource to use with the web_application_routing addon.
+      A comma separated list of resource IDs of the DNS zone resource to use with the App Routing addon.
     isPreview: true
   - name: --edge-zone
     summary: |-
@@ -584,17 +681,11 @@ directCommands:
   - name: --enable-acns
     summary: |-
       Enable advanced network functionalities on a cluster. Enabling this will incur additional costs. For non-cilium clusters, acns security will be disabled by default until further notice.
-  - name: --enable-addon-autoscaling
-    defaultValue: "False"
-    summary: |-
-      Enable addon autoscaling for cluster.
-    isPreview: true
   - name: --enable-addons -a
     summary: |-
       Enable the Kubernetes addons in a comma-separated list.
     description: |-
       These addons are available:
-      - http_application_routing        : configure ingress with automatic public DNS name creation.
       - monitoring                      :  turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect
       - virtual-node                    : enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use. aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
       - azure-policy                    : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling deployment safeguards. Learn more at aka.ms/aks/policy.
@@ -603,7 +694,7 @@ directCommands:
       - open-service-mesh               : enable Open Service Mesh addon (PREVIEW).
       - gitops                          : enable GitOps (PREVIEW).
       - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
-      - web_application_routing         : enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
+      - web_application_routing         : enable the App Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
@@ -703,6 +794,13 @@ directCommands:
   - name: --enable-managed-identity
     summary: |-
       Using managed identity to manage cluster resource group. You can explicitly specify "--service-principal" and "--client-secret" to disable managed identity, otherwise it will be enabled.
+  - name: --enable-managed-system-pool
+    defaultValue: "False"
+    summary: |-
+      Create a default ManagedSystem mode that is fully managed by AKS.
+    description: |-
+      When set, the default system node pool is created with ManagedSystem mode, where all properties except name and mode are managed by AKS. Learn more at https://aka.ms/aks/nodepool/mode.
+    isPreview: true
   - name: --enable-msi-auth-for-monitoring
     defaultValue: "True"
     acceptedValues: false, true
@@ -717,6 +815,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable OIDC issuer.
+  - name: --enable-optimized-addon-scaling
+    defaultValue: "False"
+    summary: |-
+      Enable optimized addon scaling feature for cluster.
+    isPreview: true
   - name: --enable-pod-identity
     defaultValue: "False"
     summary: |-
@@ -729,6 +832,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable private cluster.
+  - name: --enable-retina-flow-logs
+    summary: |-
+      Enable advanced network flow log collection functionalities on a cluster.
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -985,6 +1091,16 @@ directCommands:
     acceptedValues: Ephemeral, Managed
     summary: |-
       OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation. ('Ephemeral' or 'Managed').
+  - name: --node-provisioning-default-pools
+    acceptedValues: Auto, None
+    summary: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+    description: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+      Auto: A standard set of Karpenter NodePools are provisioned.
+      None: No Karpenter NodePools are provisioned.
+      WARNING: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will in turn drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action.
+    isPreview: true
   - name: --node-provisioning-mode
     acceptedValues: Auto, Manual
     summary: |-
@@ -1001,7 +1117,7 @@ directCommands:
       The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
   - name: --node-vm-size -s
     summary: |-
-      Size of Virtual Machines to create as Kubernetes nodes.
+      Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
   - name: --nodepool-allowed-host-ports
     summary: |-
       Expose host ports on the node pool. When specified, format should be a comma-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
@@ -1030,7 +1146,7 @@ directCommands:
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --os-sku
-    acceptedValues: AzureLinux, CBLMariner, Mariner, Ubuntu
+    acceptedValues: AzureLinux, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404
     summary: |-
       The os-sku of the agent node pool. Ubuntu or CBLMariner.
   - name: --outbound-type
@@ -1041,14 +1157,14 @@ directCommands:
       Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway, none and block. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
   - name: --pod-cidr
     summary: |-
-      A CIDR notation IP range from which to assign pod IPs when kubenet is used.
+      A CIDR notation IP range from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
     description: |-
-      This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+      This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16. See https://aka.ms/aks/azure-cni-overlay.
   - name: --pod-cidrs
     summary: |-
-      A comma separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
+      A comma-separated list of CIDR notation IP ranges from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
     description: |-
-      Each range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+      Each range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16. See https://aka.ms/aks/azure-cni-overlay.
   - name: --pod-ip-allocation-mode
     acceptedValues: DynamicIndividual, StaticBlock
     summary: |-
@@ -1366,7 +1482,7 @@ directCommands:
         open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
         gitops                          - enable GitOps (PREVIEW).
         azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon.
-        web_application_routing         - enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
+        web_application_routing         - enable the App Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -1448,7 +1564,7 @@ directCommands:
     isPreview: true
   - name: --dns-zone-resource-ids
     summary: |-
-      A comma separated list of resource IDs of the DNS zone resource to use with the web_application_routing addon.
+      A comma separated list of resource IDs of the DNS zone resource to use with the App Routing addon.
     isPreview: true
   - name: --enable-high-log-scale-mode
     defaultValue: "False"
@@ -2238,6 +2354,8 @@ directCommands:
                   --resource-group
                   [--aad-admin-group-object-ids]
                   [--aad-tenant-id]
+                  [--acns-advanced-networkpolicies {FQDN, L7, None}]
+                  [--acns-transit-encryption-type {None, WireGuard}]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
                   [--apiserver-subnet-id]
@@ -2261,7 +2379,6 @@ directCommands:
                   [--disable-acns]
                   [--disable-acns-observability]
                   [--disable-acns-security]
-                  [--disable-addon-autoscaling]
                   [--disable-ahub]
                   [--disable-ai-toolchain-operator]
                   [--disable-azure-container-storage {all, azureDisk, elasticSan, ephemeralDisk}]
@@ -2276,15 +2393,18 @@ directCommands:
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-force-upgrade]
+                  [--disable-http-proxy]
                   [--disable-image-cleaner]
                   [--disable-image-integrity]
                   [--disable-imds-restriction]
                   [--disable-keda]
                   [--disable-local-accounts]
+                  [--disable-optimized-addon-scaling]
                   [--disable-pod-identity]
-                  [--disable-pod-security-policy]
                   [--disable-private-cluster]
                   [--disable-public-fqdn]
+                  [--disable-retina-flow-logs]
+                  [--disable-run-command]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
                   [--disable-static-egress-gateway]
@@ -2293,7 +2413,6 @@ directCommands:
                   [--disk-driver-version {v1, v2}]
                   [--enable-aad]
                   [--enable-acns]
-                  [--enable-addon-autoscaling]
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
@@ -2309,6 +2428,7 @@ directCommands:
                   [--enable-disk-driver]
                   [--enable-file-driver]
                   [--enable-force-upgrade]
+                  [--enable-http-proxy]
                   [--enable-image-cleaner]
                   [--enable-image-integrity]
                   [--enable-imds-restriction]
@@ -2316,10 +2436,13 @@ directCommands:
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-oidc-issuer]
+                  [--enable-optimized-addon-scaling]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
                   [--enable-private-cluster]
                   [--enable-public-fqdn]
+                  [--enable-retina-flow-logs]
+                  [--enable-run-command]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-static-egress-gateway]
@@ -2348,7 +2471,9 @@ directCommands:
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
+                  [--load-balancer-sku {standard}]
                   [--max-count]
+                  [--migrate-vmas-to-vms]
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
@@ -2359,6 +2484,7 @@ directCommands:
                   [--no-wait]
                   [--node-init-taints --nodepool-initialization-taints]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
+                  [--node-provisioning-default-pools {Auto, None}]
                   [--node-provisioning-mode {Auto, Manual}]
                   [--nodepool-labels]
                   [--nodepool-taints]
@@ -2396,8 +2522,8 @@ directCommands:
       Update min-count or max-count for cluster autoscaler.
     syntax: az aks update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n MyManagedCluster
   - summary: |-
-      Disable pod security policy.
-    syntax: az aks update --disable-pod-security-policy -g MyResourceGroup -n MyManagedCluster
+      Upgrade load balancer sku to standard
+    syntax: az aks update --load-balancer-sku standard -g MyResourceGroup -n MyManagedCluster
   - summary: |-
       Update a kubernetes cluster with standard SKU load balancer to use two AKS created IPs for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
@@ -2495,6 +2621,16 @@ directCommands:
   - name: --aad-tenant-id
     summary: |-
       The ID of an Azure Active Directory tenant.
+  - name: --acns-advanced-networkpolicies
+    acceptedValues: FQDN, L7, None
+    summary: |-
+      Used to enable advanced network policies (None, FQDN or L7) on a cluster when enabling advanced networking features with "--enable-acns".
+    isPreview: true
+  - name: --acns-transit-encryption-type
+    acceptedValues: None, WireGuard
+    summary: |-
+      Specify the transit encryption type for ACNS. Available values are 'None' and 'WireGuard'.
+    isPreview: true
   - name: --aks-custom-headers
     summary: |-
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
@@ -2582,11 +2718,6 @@ directCommands:
   - name: --disable-acns-security
     summary: |-
       Used to disable advanced networking security features on a clusters when enabling advanced networking features with "--enable-acns".
-  - name: --disable-addon-autoscaling
-    defaultValue: "False"
-    summary: |-
-      Disable addon autoscaling for cluster.
-    isPreview: true
   - name: --disable-ahub
     defaultValue: "False"
     summary: |-
@@ -2644,6 +2775,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable forceUpgrade cluster upgrade settings override.
+  - name: --disable-http-proxy
+    defaultValue: "False"
+    summary: |-
+      Disable HTTP Proxy Configuration on the cluster.
+    isPreview: true
   - name: --disable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -2667,17 +2803,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (Preview) If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-optimized-addon-scaling
+    defaultValue: "False"
+    summary: |-
+      Disable optimized addon scaling feature for cluster.
+    isPreview: true
   - name: --disable-pod-identity
     defaultValue: "False"
     summary: |-
       (PREVIEW) Disable Pod Identity addon for cluster.
-  - name: --disable-pod-security-policy
-    defaultValue: "False"
-    summary: |-
-      Disable pod security policy.
-    description: |-
-      PodSecurityPolicy is deprecated. See https://aka.ms/aks/psp for details.
-    isPreview: true
   - name: --disable-private-cluster
     defaultValue: "False"
     summary: |-
@@ -2687,6 +2821,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable public fqdn feature for private cluster.
+  - name: --disable-retina-flow-logs
+    summary: |-
+      Disable advanced network flow log collection functionalities on a cluster.
+  - name: --disable-run-command
+    defaultValue: "False"
+    summary: |-
+      Disable Run command feature for the cluster.
   - name: --disable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -2720,11 +2861,6 @@ directCommands:
   - name: --enable-acns
     summary: |-
       Enable advanced network functionalities on a cluster. Enabling this will incur additional costs. For non-cilium clusters, acns security will be disabled by default until further notice.
-  - name: --enable-addon-autoscaling
-    defaultValue: "False"
-    summary: |-
-      Enable addon autoscaling for cluster.
-    isPreview: true
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
@@ -2787,6 +2923,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable forceUpgrade cluster upgrade settings override.
+  - name: --enable-http-proxy
+    defaultValue: "False"
+    summary: |-
+      Enable HTTP Proxy Configuration on the cluster.
+    isPreview: true
   - name: --enable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -2817,6 +2958,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable OIDC issuer.
+  - name: --enable-optimized-addon-scaling
+    defaultValue: "False"
+    summary: |-
+      Enable optimized addon scaling feature for cluster.
+    isPreview: true
   - name: --enable-pod-identity
     defaultValue: "False"
     summary: |-
@@ -2834,6 +2980,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable public fqdn feature for private cluster.
+  - name: --enable-retina-flow-logs
+    summary: |-
+      Enable advanced network flow log collection functionalities on a cluster.
+  - name: --enable-run-command
+    defaultValue: "False"
+    summary: |-
+      Enable Run command feature for the cluster.
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -2952,9 +3105,20 @@ directCommands:
       Load balancer outbound allocated ports.
     description: |-
       Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs. Please specify a value in the range of [0, 64000] that is a multiple of 8.
+  - name: --load-balancer-sku
+    acceptedValues: standard
+    summary: |-
+      Azure Load Balancer SKU selection for your cluster. only standard is accepted.
+    description: |-
+      Upgrade to Standard Azure Load Balancer SKU for your AKS cluster.
   - name: --max-count
     summary: |-
       Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
+  - name: --migrate-vmas-to-vms
+    defaultValue: "False"
+    summary: |-
+      Migrate cluster with VMAS node pool to VMS node pool.
+    isPreview: true
   - name: --min-count
     summary: |-
       Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
@@ -3005,6 +3169,16 @@ directCommands:
     acceptedValues: NodeImage, None, SecurityPatch, Unmanaged
     summary: |-
       Manner in which the OS on your nodes is updated. It could be NodeImage, None, SecurityPatch or Unmanaged.
+  - name: --node-provisioning-default-pools
+    acceptedValues: Auto, None
+    summary: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+    description: |-
+      The set of default Karpenter NodePools configured for node provisioning. Valid values are "Auto" and "None".
+      Auto: A standard set of Karpenter NodePools are provisioned.
+      None: No Karpenter NodePools are provisioned.
+      WARNING: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will in turn drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action.
+    isPreview: true
   - name: --node-provisioning-mode
     acceptedValues: Auto, Manual
     summary: |-
@@ -3439,6 +3613,7 @@ commands:
 - az_aks_approuting_zone_delete
 - az_aks_approuting_zone_list
 - az_aks_approuting_zone_update
+- az_aks_bastion
 - az_aks_browse
 - az_aks_check-network
 - az_aks_check-network_outbound
@@ -3517,12 +3692,31 @@ commands:
 - az_aks_egress-endpoints
 - az_aks_egress-endpoints_list
 - az_aks_enable-addons
+- az_aks_extension
+- az_aks_extension_create
+- az_aks_extension_delete
+- az_aks_extension_list
+- az_aks_extension_show
+- az_aks_extension_type
+- az_aks_extension_type_list
+- az_aks_extension_type_show
+- az_aks_extension_type_version
+- az_aks_extension_type_version_list
+- az_aks_extension_type_version_show
+- az_aks_extension_update
 - az_aks_get-credentials
 - az_aks_get-upgrades
 - az_aks_get-versions
 - az_aks_kanalyze
 - az_aks_kollect
 - az_aks_list
+- az_aks_loadbalancer
+- az_aks_loadbalancer_add
+- az_aks_loadbalancer_delete
+- az_aks_loadbalancer_list
+- az_aks_loadbalancer_rebalance-nodes
+- az_aks_loadbalancer_show
+- az_aks_loadbalancer_update
 - az_aks_machine
 - az_aks_machine_list
 - az_aks_machine_show
@@ -3545,6 +3739,13 @@ commands:
 - az_aks_mesh_upgrade_complete
 - az_aks_mesh_upgrade_rollback
 - az_aks_mesh_upgrade_start
+- az_aks_namespace
+- az_aks_namespace_add
+- az_aks_namespace_delete
+- az_aks_namespace_get-credentials
+- az_aks_namespace_list
+- az_aks_namespace_show
+- az_aks_namespace_update
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
@@ -3591,15 +3792,6 @@ commands:
 - az_aks_snapshot_show
 - az_aks_start
 - az_aks_stop
-- az_aks_trustedaccess
-- az_aks_trustedaccess_role
-- az_aks_trustedaccess_role_list
-- az_aks_trustedaccess_rolebinding
-- az_aks_trustedaccess_rolebinding_create
-- az_aks_trustedaccess_rolebinding_delete
-- az_aks_trustedaccess_rolebinding_list
-- az_aks_trustedaccess_rolebinding_show
-- az_aks_trustedaccess_rolebinding_update
 - az_aks_update
 - az_aks_upgrade
 - az_aks_use-dev-spaces

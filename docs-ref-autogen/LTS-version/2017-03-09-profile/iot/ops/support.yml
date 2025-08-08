@@ -3,7 +3,7 @@ uid: az_iot_ops_support
 name: az iot ops support
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops support** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops support** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   IoT Operations support operations.
 status: Preview
@@ -18,15 +18,12 @@ directCommands:
   description: |-
     {Supported service APIs}
     - mqttbroker.iotoperations.azure.com/[v1]
-    - opcuabroker.iotoperations.azure.com/[v1beta1]
     - deviceregistry.microsoft.com/[v1]
     - cert-manager.io/v1
     - clusterconfig.azure.com/[v1]
     - connectivity.iotoperations.azure.com/[v1]
     - arccontainerstorage.azure.net/v1
     - containerstorage.azure.com/v1
-    - config.openservicemesh.io/v1alpha2
-    - policy.openservicemesh.io/v1alpha1
     - secret-sync.x-k8s.io/v1alpha1
     - secrets-store.csi.x-k8s.io/v1
     - trust.cert-manager.io/v1alpha1
@@ -38,11 +35,12 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'iot ops support' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops support create-bundle [--broker-traces {false, true}]
+    az iot ops support create-bundle [--bn --bundle-name]
+                                     [--broker-traces {false, true}]
                                      [--bundle-dir]
                                      [--context]
                                      [--log-age]
-                                     [--ops-service --svc {acs, akri, azuremonitor, billing, broker, certmanager, connectors, dataflow, deviceregistry, openservicemesh, schemaregistry, secretstore}]
+                                     [--ops-service --svc {acs, akri, azuremonitor, billing, broker, certmanager, connectors, dataflow, deviceregistry, meso, schemaregistry, secretstore}]
   examples:
   - summary: |-
       Basic usage with default options. This form of the command will auto detect IoT Operations APIs and build a suitable bundle capturing the last 24 hours of container logs. The bundle will be produced in the current working directory.
@@ -50,6 +48,9 @@ directCommands:
   - summary: |-
       Constrain data capture on a specific service as well as producing the bundle in a custom output dir.
     syntax: az iot ops support create-bundle --ops-service connectors --bundle-dir ~/ops
+  - summary: |-
+      Produce the bundle in a custom output directory and use a custom name.
+    syntax: az iot ops support create-bundle --bundle-name mybundle --bundle-dir ~/ops
   - summary: |-
       Specify a custom container log age in seconds.
     syntax: az iot ops support create-bundle --ops-service broker --log-age 172800
@@ -69,6 +70,9 @@ directCommands:
       Include multiple services in the support bundle with multiple --ops-service flags.
     syntax: az iot ops support create-bundle --ops-service broker --ops-service connectors --ops-service deviceregistry
   optionalParameters:
+  - name: --bn --bundle-name
+    summary: |-
+      The file name for the support bundle zip file. If not provided, the following format will be used: 'support_bundle_{timestamp}_aio'.
   - name: --broker-traces
     acceptedValues: false, true
     summary: |-
@@ -85,7 +89,7 @@ directCommands:
     summary: |-
       Container log age in seconds.
   - name: --ops-service --svc
-    acceptedValues: acs, akri, azuremonitor, billing, broker, certmanager, connectors, dataflow, deviceregistry, openservicemesh, schemaregistry, secretstore
+    acceptedValues: acs, akri, azuremonitor, billing, broker, certmanager, connectors, dataflow, deviceregistry, meso, schemaregistry, secretstore
     summary: |-
       The IoT Operations service the support bundle creation should apply to. If no service is provided, the operation will default to capture all services. --ops-service can be used one or more times.
   globalParameters:
