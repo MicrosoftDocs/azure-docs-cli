@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/10/2025
+ms.date: 08/11/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -173,7 +173,7 @@ You will be prompted to install an extension on first use.
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated) | 2.56.0 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated/HISTORY.rst) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub) | 2.57.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
-|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.76.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
+|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.76.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b8](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
 |[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.70.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.54.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
