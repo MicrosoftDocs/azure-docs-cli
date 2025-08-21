@@ -102,8 +102,9 @@ Using WAM has several benefits:
 - Streamlined single sign-on.
 - Bug fixes and enhancements shipped with Windows.
 
-If you encounter an issue and want to revert to the previous browser-based authentication method,
-Set the [core.enable_broker_on_windows][03] configuration property to `false`.
+If you encounter an issue such as `User cancelled the Accounts Control Operation` and want to revert
+to the previous browser-based authentication method, Set the [core.enable_broker_on_windows][03]
+configuration property to `false`.
 
 ```azurecli-interactive
 az account clear
