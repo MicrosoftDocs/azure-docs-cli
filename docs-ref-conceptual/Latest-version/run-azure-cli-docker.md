@@ -41,7 +41,7 @@ docker run -it mcr.microsoft.com/azure-cli:azurelinux3.0
 > docker run -it --mount type=bind,src="$HOME"/.ssh,dst=/root/.ssh mcr.microsoft.com/azure-cli:azurelinux3.0
 > ```
 
-The Azure CLI is available in the image as the `az` command, located at `/usr/local/bin/az`.
+The Azure CLI is available in the image as the `az` command, located at `/usr/bin/az`.
 
 ## Run the Docker container with a specific version of the Azure CLI
 
