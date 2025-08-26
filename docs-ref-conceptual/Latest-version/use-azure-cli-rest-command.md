@@ -32,7 +32,7 @@ Here's some helpful information when working with [az rest][03]:
   parameter starts with an endpoint from the output of the `az cloud show --query endpoints`
   command. The `--url` parameter required.
 - Use the `--resource` parameter for a custom resource.
-- If Content-Type header is not set and `--body` is a valid JSON string, Content-Type header will
+- If Content-Type header isn't set and `--body` is a valid JSON string, Content-Type header will
   default to "application/json".
 - When using `--uri-parameters` for requests in the form of OData, make sure to escape `$` in
   different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``.
