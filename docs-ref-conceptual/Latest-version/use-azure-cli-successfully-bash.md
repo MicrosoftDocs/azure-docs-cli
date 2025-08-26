@@ -1,16 +1,16 @@
 --- 
 title: How-to use the Azure CLI in a Bash environment | Microsoft Docs
 description: Learn how to use Bash with Azure CLI. Query, format output, filter, use variables, and use Bash constructs of loops, if/exists/then and case statements.
-ms.date: 06/26/2024
 ms.custom: devx-track-azurecli
 #customer intent: As a new user of the Azure CLI and a primary Azure Portal user, I need to learn the Bash scripting language to automate Azure resource management tasks.
 ---
+
 # How-to use the Azure CLI in a Bash scripting language
 
-Azure CLI reference commands can execute in several [scripting languages](choose-the-right-azure-command-line-tool.md#different-shell-environments).
-If you're new to Bash and also the Azure CLI, this article a great place to begin your learning
-journey. Work through this article much like you would a tutorial to learn how to use the Azure CLI
-in a Bash scripting language with ease.
+Azure CLI reference commands can execute in several [scripting languages][25]. If you're new to Bash
+and also the Azure CLI, this article a great place to begin your learning journey. Work through this
+article much like you would a tutorial to learn how to use the Azure CLI in a Bash scripting
+language with ease.
 
 In this article, you learn how to:
 
@@ -24,20 +24,19 @@ In this article, you learn how to:
 > - Use grep, sed, paste, and bc commands
 > - Populate and use shell and environment variables
 
-If you don't have an Azure subscription, create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)
-before you begin.
+If you don't have an Azure subscription, create an [Azure free account][26] before you begin.
 
 ## Starting Bash
 
-Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a [local install of the Azure CLI](./install-azure-cli.md).
-This article assumes that you're running Bash either using Azure Cloud Shell or running Azure CLI
-locally in a docker container.
+Start Bash using [Azure Cloud Shell][13] or a [local install of the Azure CLI][05]. This article
+assumes that you're running Bash either using Azure Cloud Shell or running Azure CLI locally in a
+docker container.
 
 ## Querying dictionary results
 
 A command that always returns only a single object returns a JSON dictionary. Dictionaries are
-unordered objects accessed with keys. For this article, we're going to start by querying the [Account](/cli/azure/account)
-object using the [Account Show](/cli/azure/account#az-account-show) command.
+unordered objects accessed with keys. For this article, we're going to start by querying the
+[Account][14] object using the [Account Show][15] command.
 
 ```azurecli-interactive
 az account show
@@ -64,16 +63,15 @@ bash-5.1# az account show
 
 ### Formatting the output as YAML
 
-Use the `--output yaml` argument (or `-o yaml`) to format the output in [yaml](https://yaml.org/)
-format, a plain-text data serialization format. YAML tends to be easier to read than JSON, and
-easily maps to that format. Some applications and CLI commands take YAML as configuration input,
-instead of JSON.
+Use the `--output yaml` argument (or `-o yaml`) to format the output in [yaml][27] format, a
+plain-text data serialization format. YAML tends to be easier to read than JSON, and easily maps to
+that format. Some applications and CLI commands take YAML as configuration input, instead of JSON.
 
 ```azurecli-interactive
 az account show --output yaml
 ```
 
-For more information about formatting the output as yaml, see [YAML output format](./format-output-azure-cli.md#yaml-output-format).
+For more information about formatting the output as yaml, see [YAML output format][03].
 
 ### Formatting the output as a table
 
@@ -84,7 +82,7 @@ objects aren't included in table output, but can still be filtered as part of a 
 az account show --output table
 ```
 
-For more information about formatting the output as a table, see [Table output format](./format-output-azure-cli.md#table-output-format).
+For more information about formatting the output as a table, see [Table output format][02].
 
 ### Querying and formatting single values and nested values
 
@@ -133,7 +131,7 @@ az account show --query [name,id,user.name] # return multiple values
 az account show --query [name,id,user.name] -o table # return multiple values as a table
 ```
 
-For more information about returning multiple values, see [Get multiple values](./use-azure-cli-successfully-query.md#get-multiple-values).
+For more information about returning multiple values, see [Get multiple values][10].
 
 ### Renaming properties in a query
 
@@ -146,7 +144,7 @@ az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: 
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table # Rename the values returned in a table
 ```
 
-For more information on renaming properties in a query, see [Rename properties in a query](./use-azure-cli-successfully-query.md#rename-properties-in-a-query).
+For more information on renaming properties in a query, see [Rename properties in a query][11].
 
 ### Querying boolean values
 
@@ -179,9 +177,9 @@ subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv
 az account set -s $subscriptionId # Sets the current active subscription
 ```
 
-- For more information about filtering arrays and querying boolean values, see [Filter arrays with boolean expressions](./use-azure-cli-successfully-query.md#filter-arrays-with-boolean-expressions).
-- For more information about using variables, see [How to use variables](./azure-cli-variables.md).
-- For more information on working with subscriptions, see [Managing subscriptions](./manage-azure-subscriptions-azure-cli.md).
+- For more information about filtering arrays and querying boolean values, see [Filter arrays with boolean expressions][09].
+- For more information about using variables, see [How to use variables][01].
+- For more information on working with subscriptions, see [Managing subscriptions][06].
 
 ## Creating objects using variables and randomization
 
@@ -207,7 +205,7 @@ shell sees the first quote mark, it ignores special characters until the closing
 However, sometimes you want the Bash shell to parse certain special characters, such as dollar
 signs, back quotes, and backslashes. For this scenario, use double quotes.
 
-The following commands use the [az group create](/cli/azure/group#az-group-create) command to
+The following commands use the [az group create][16] command to
 illustrate the use of single and double quote marks. These commands are used to handle spaces and
 evaluate special characters when working with variables and creating an object.
 
@@ -229,7 +227,9 @@ In the JSON dictionary output, review the properties of the resource group that 
 
 ### Using If Then Else to determine if variable is null
 
-To evaluate strings, use `!=` and to evaluate numbers use `-ne`. The following If Then Else statement evaluates whether the $resourceGroup variable has been set. If yes, it returns the value of the variable. If no, it sets the variable.
+To evaluate strings, use `!=` and to evaluate numbers use `-ne`. The following If Then Else
+statement evaluates whether the $resourceGroup variable has been set. If yes, it returns the value
+of the variable. If no, it sets the variable.
 
 ```azurecli
 if [ $resourceGroup != '' ]; then
@@ -241,7 +241,8 @@ fi
 
 ### Using If Then to create or delete a resource group
 
-The following script creates a new resource group only if one with the specified name doesn't already exist.
+The following script creates a new resource group only if one with the specified name doesn't
+already exist.
 
 ```azurecli
 if [ $(az group exists --name $resourceGroup) = false ]; then 
@@ -254,8 +255,9 @@ fi
 The following script deletes an existing new resource group if one with the specified name already
 exists. You could use the `--no-wait` argument to return control without waiting for the command to
 complete. However, for this article, we want to wait for the resource group to be deleted before
-continuing. For more information on asynchronous operations, see [Tips for using the Azure CLI successfully - Asynchronous operations](./use-azure-cli-successfully-tips.md#asynchronous-operations).
-We demonstrate the use of the `--no-wait` argument at the end of this article.
+continuing. For more information on asynchronous operations, see
+[Tips for using the Azure CLI successfully - Asynchronous operations][12]. We demonstrate the use of
+the `--no-wait` argument at the end of this article.
 
 ```azurecli
 if [ $(az group exists --name $resourceGroup) = true ]; then 
@@ -263,7 +265,6 @@ if [ $(az group exists --name $resourceGroup) = true ]; then
 else
    echo The $resourceGroup resource group does not exist
 fi
-
 ```
 
 ### Using Grep to determine if a resource group exists, and create the resource group if it doesn't
@@ -299,7 +300,8 @@ and containers. We also demonstrate querying JSON arrays and working with enviro
 
 ### Create storage account
 
-The following command uses the [az storage account create](/cli/azure/storage/account#az-storage-account-create) command to create a storage account that we use when creating storage containers.
+The following command uses the [az storage account create][18] command to create a storage account
+that we use when creating storage containers.
 
 ```azurecli
 storageAccount="learnbash$randomIdentifier"
@@ -308,9 +310,8 @@ az storage account create --name $storageAccount --location "$location" --resour
 
 ### Get the storage account keys
 
-The following commands use the [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
-command to return storage account key values. We then store a key value in a variable for use when
-creating storage containers.
+The following commands use the [az storage account keys list][17] command to return storage account
+key values. We then store a key value in a variable for use when creating storage containers.
 
 ```azurecli
 az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[].value" -o tsv # returns both storage account key values
@@ -324,9 +325,8 @@ echo $accountKey
 
 ### Create storage container
 
-We start by using the [az storage container create](/cli/azure/storage/container#az-storage-container-create)
-to create a single storage container and then use the [az storage container list](/cli/azure/storage/container#az-storage-container-list)
-to query the name of the created container.
+We start by using the [az storage container create][22] to create a single storage container and
+then use the [az storage container list][24] to query the name of the created container.
 
 ```azurecli
 container="learningbash"
@@ -345,7 +345,7 @@ for i in `seq 1 3`; do
 done
 ```
 
-The following script uses the [az storage blob upload-batch](/cli/azure/storage/blob#az-storage-blob-upload-batch)
+The following script uses the [az storage blob upload-batch][20]
 command to upload the blobs to the storage container.
 
 ```azurecli
@@ -357,7 +357,7 @@ az storage blob upload-batch \
     --account-name $storageAccount
 ```
 
-The following script uses the [az storage blob list](/cli/azure/storage/blob#az-storage-blob-list)
+The following script uses the [az storage blob list][19]
 command to list the blobs in the container.
 
 ```azurecli
@@ -412,8 +412,9 @@ export AZURE_STORAGE_KEY=$accountKey
 az storage container list # Uses the environment variables to display the list of containers.
 ```
 
-The following script creates a metadata string and then uses the [az storage container metadata update](/cli/azure/storage/container/metadata#az-storage-container-metadata-update)
-command to update a container with that string, again using the environment variables.
+The following script creates a metadata string and then uses the
+[az storage container metadata update][21] command to update a container with that string, again
+using the environment variables.
 
 ```azurecli
 metadata="key=value pie=delicious" # Define metadata
@@ -424,8 +425,8 @@ az storage container metadata show \
     --name $containerName # Show the metadata
 ```
 
-The following command uses the [az storage container delete](/cli/azure/storage/container#az-storage-container-delete)
-command to delete a single named container and then delete multiple containers in a loop.
+The following command uses the [az storage container delete][23] command to delete a single named
+container and then delete multiple containers in a loop.
 
 ```azurecli
 az storage container delete \
@@ -483,7 +484,39 @@ fi
 
 ## See also
 
-- [Tutorial: Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md)
-- [How to use the Azure CLI successfully](use-azure-cli-successfully-tips.md)
-- [How to query Azure CLI command output](use-azure-cli-successfully-query.md)
-- Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)
+- [Tutorial: Learn to use the Azure CLI][04]
+- [How to use the Azure CLI successfully][29]
+- [How to query Azure CLI command output][28]
+- Find Azure CLI [samples][08] and [published articles][07]
+
+<!-- link references -->
+
+[01]: ./azure-cli-variables.md
+[02]: ./format-output-azure-cli.md#table-output-format
+[03]: ./format-output-azure-cli.md#yaml-output-format
+[04]: ./get-started-tutorial-0-before-you-begin.md
+[05]: ./install-azure-cli.md
+[06]: ./manage-azure-subscriptions-azure-cli.md
+[07]: ./reference-docs-index.md
+[08]: ./samples-index.md
+[09]: ./use-azure-cli-successfully-query.md#filter-arrays-with-boolean-expressions
+[10]: ./use-azure-cli-successfully-query.md#get-multiple-values
+[11]: ./use-azure-cli-successfully-query.md#rename-properties-in-a-query
+[12]: ./use-azure-cli-successfully-tips.md#asynchronous-operations
+[13]: /azure/cloud-shell/quickstart
+[14]: /cli/azure/account
+[15]: /cli/azure/account#az-account-show
+[16]: /cli/azure/group#az-group-create
+[17]: /cli/azure/storage/account/keys#az-storage-account-keys-list
+[18]: /cli/azure/storage/account#az-storage-account-create
+[19]: /cli/azure/storage/blob#az-storage-blob-list
+[20]: /cli/azure/storage/blob#az-storage-blob-upload-batch
+[21]: /cli/azure/storage/container/metadata#az-storage-container-metadata-update
+[22]: /cli/azure/storage/container#az-storage-container-create
+[23]: /cli/azure/storage/container#az-storage-container-delete
+[24]: /cli/azure/storage/container#az-storage-container-list
+[25]: choose-the-right-azure-command-line-tool.md#different-shell-environments
+[26]: https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio
+[27]: https://yaml.org/
+[28]: use-azure-cli-successfully-query.md
+[29]: use-azure-cli-successfully-tips.md
