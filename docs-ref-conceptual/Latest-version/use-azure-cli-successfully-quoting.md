@@ -1,7 +1,6 @@
 ---
 title: Quoting differences in scripting languages | Microsoft Docs
 description: Learn about quoting difference between Bash, PowerShell, and Cmd. Find examples for escape characters, single and double quotes.
-ms.date: 09/22/2024
 ms.custom: devx-track-azurecli
 #customer intent: As a manager of Azure resources, I want to quickly find solutions to quoting errors in Azure CLI commands. I want all tips and techniques for quoting to be in one place so I don't have to review multiple how-to guides and tutorials.
 ---
@@ -17,14 +16,14 @@ characters, here are a few suggestions:
 
 ## White spaces and quotation marks
 
-* If you provide a parameter value that contains white space, wrap the value in quotation marks.
+- If you provide a parameter value that contains white space, wrap the value in quotation marks.
 
-* In Bash and PowerShell, if your variable value contains single quotes, wrap the value in double
+- In Bash and PowerShell, if your variable value contains single quotes, wrap the value in double
   quotes, and vice-versa.
 
-* In Bash, double quotes that are escaped, are treated as part of the string.
+- In Bash, double quotes that are escaped, are treated as part of the string.
 
-* In Windows Command Prompt, quotes inside variable values are treated as part of the value.
+- In Windows Command Prompt, quotes inside variable values are treated as part of the value.
 
 Here are a few examples:
 
@@ -51,7 +50,8 @@ my string " " wrapped in single quotes
 my string with escaped " " double quotes wrapped in double quotes
 ```
 
-If you want the quotes included in the output, escape the variable like this: `echo \"$myVariable\"`.
+If you want the quotes included in the output, escape the variable like this:
+`echo \"$myVariable\"`.
 
 ```output
 echo \"$myVariable\"
@@ -86,7 +86,8 @@ my string ' ' wrapped in double quotes
 my string " " wrapped in single quotes
 ```
 
-For more quoting considerations and examples when working in a PowerShell scripting language, see [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md).
+For more quoting considerations and examples when working in a PowerShell scripting language, see
+[Considerations for running the Azure CLI in a PowerShell scripting language][02].
 
 ### [Cmd](#tab/cmd1)
 
@@ -101,9 +102,9 @@ set myVariable='my second value with ' ' single quotes'
 echo %myVariable%
 ```
 
-Cmd.exe is the only scripting language in our examples that allow embedded quotes that are the same
-as the string wrapper. However, also note that Cmd.exe returns the outer quotation marks. Bash and
-PowerShell don't.
+`Cmd.exe` is the only scripting language in our examples that allow embedded quotes that are the
+same as the string wrapper. However, also note that Cmd.exe returns the outer quotation marks. Bash
+and PowerShell don't.
 
 ```output
 "my value with ' ' single quotes"
@@ -117,15 +118,18 @@ PowerShell don't.
 
 ## JSON strings
 
-* Use single quotes to preserve the content inside a JSON string. Single quotes are necessary when supplying inline JSON values. For example, this JSON is correct in both Bash and PowerShell: `'{"key": "value"}'`.
+- Use single quotes to preserve the content inside a JSON string. Single quotes are necessary when
+  supplying inline JSON values. For example, this JSON is correct in both Bash and PowerShell:
+  `'{"key": "value"}'`.
 
-* If your command runs at a Windows Command Prompt, you must use double quotes. The equivalent of the above JSON string in Cmd.exe is `"{"key":"value"}" `.
+- If your command runs at a Windows Command Prompt, you must use double quotes. The equivalent of
+  the above JSON string in Cmd.exe is `"{"key":"value"}" `.
 
-* If the JSON value contains double quotes, you must escape them.
-  
-* When working with JSON parameter values, consider using Azure CLI's `@<file>` convention and
+- If the JSON value contains double quotes, you must escape them.
+
+- When working with JSON parameter values, consider using Azure CLI's `@<file>` convention and
   bypass the shell's interpretation mechanisms.
-  
+
   ```azurecli
   az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
   ```
@@ -196,14 +200,14 @@ These next three examples are all **incorrect** in Windows Command.
 
 ---
 
-Learn more about working with JSON parameter values in [How to use shorthand syntax with Azure CLI](./use-azure-cli-successfully-shorthand.md).
+Learn more about working with JSON parameter values in
+[How to use shorthand syntax with Azure CLI][04].
 
 ## Empty strings
 
-* In PowerShell, if your value is an empty quotes string (`''`), use `'""'`.
+- In PowerShell, if your value is an empty quotes string (`''`), use `'""'`.
+- In Bash or PowerShell, if your value is an empty quotes string (`''`), use `"''"`.
 
-* In Bash or PowerShell, if your value is an empty quotes string (`''`), use `"''"`.
-  
   ```azurecli
   # Correct in Bash
   myVariable="''"
@@ -224,11 +228,12 @@ az web app config app settings set --resource-group myResourceGroup --name myWeb
 
 When a CLI parameter states that it accepts a space-separated list, one of two formats is expected:
 
-* Example of unquoted, space-separated list: `--parameterName firstValue secondValue`
+- Example of unquoted, space-separated list: `--parameterName firstValue secondValue`
 
-* Example of quoted space-separated list: `--parameterName "firstValue" "secondValue"`
+- Example of quoted space-separated list: `--parameterName "firstValue" "secondValue"`
 
-**This example is a string with a space in it. It isn't a space-separated list**: `--parameterName "firstValue secondValue"`
+**This example is a string with a space in it. It isn't a space-separated list**:
+`--parameterName "firstValue secondValue"`
 
 ## Special characters
 
@@ -253,7 +258,8 @@ parse it as value, use `=` to concatenate the parameter name and value: `--passw
 
 ## The `--query` parameter
 
-When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
+When you use the `--query` parameter with a command, some characters of [JMESPath][08] need to be
+escaped in the shell.
 
 ### [Bash](#tab/bash3)
 
@@ -300,32 +306,49 @@ az version --query \"azure-cli\"
 
 ---
 
-For more example comparisons between Bash, PowerShell, and Cmd, see [Query Azure CLI command output](./use-azure-cli-successfully-query.md).
+For more example comparisons between Bash, PowerShell, and Cmd, see
+[Query Azure CLI command output][03].
 
 ## The `--debug` parameter
 
 The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This
-flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
+flag reveals the actual arguments received by the Azure CLI in [Python's syntax][07].
 
 
 
-For more information on troubleshooting Azure CLI commands with `--debug`, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the-debug-parameter).
+For more information on troubleshooting Azure CLI commands with `--debug`, see
+[Troubleshooting Azure CLI][05].
 
 ## Scripting language rules
 
 Here are quick links to scripting language rules as published by their respective organizations:
 
-* Bash scripting language: [Bash quoting rules](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
-* PowerShell scripting language: [PowerShell Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
-* Windows Command Prompt: [How-to: Escape Characters, Delimiters, and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
+- Bash scripting language: [Bash quoting rules][10]
+- PowerShell scripting language: [PowerShell Quoting Rules][06]
+- Windows Command Prompt:
+  [How-to: Escape Characters, Delimiters, and Quotes at the Windows command line][09]
 
 > [!NOTE]
-> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md).
+> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see
+> [Considerations for running the Azure CLI in a PowerShell scripting language][02].
 
 ## See also
 
 Find many more scripting language comparisons in these articles:
 
-* [Learn syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
-* [Query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md)
-* [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
+- [Learn syntax differences in Bash, PowerShell, and Cmd][01] tutorial
+- [Query Azure CLI command output using a JMESPath query][03]
+- [Considerations for running the Azure CLI in a PowerShell scripting language][02]
+
+<!-- link references -->
+
+[01]: ./get-started-tutorial-2-environment-syntax.md
+[02]: ./use-azure-cli-successfully-powershell.md
+[03]: ./use-azure-cli-successfully-query.md
+[04]: ./use-azure-cli-successfully-shorthand.md
+[05]: ./use-azure-cli-successfully-troubleshooting.md#the-debug-parameter
+[06]: /powershell/module/microsoft.powershell.core/about/about_quoting_rules
+[07]: https://docs.python.org/3/tutorial/introduction.html#strings
+[08]: https://jmespath.org/specification.html
+[09]: https://ss64.com/nt/syntax-esc.html
+[10]: https://www.gnu.org/software/bash/manual/html_node/Quoting.html
