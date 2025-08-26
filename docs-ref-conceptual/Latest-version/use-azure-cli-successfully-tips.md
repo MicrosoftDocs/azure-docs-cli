@@ -1,27 +1,33 @@
 ---
 title: Tips for using the Azure CLI | Microsoft Docs
 description: Learn tips for using Azure CLI successfully, such as output formats, passing parameter values, and quoting rules for different shells.
-ms.date: 03/24/2025
 ms.custom: devx-track-azurecli
 #customer intent: As a new user of the Azure CLI, I would like getting-started tips so I can avoid potential mistakes.
 ---
 
 # Tips for using the Azure CLI successfully
 
-Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments. After you [choose your preferred shell environment](./choose-the-right-azure-command-line-tool.md#different-shell-environments) and [install the Azure CLI](./install-azure-cli.md), use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
+Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many
+shell environments. After you [choose your preferred shell environment][07] and
+[install the Azure CLI][09], use this article to discover useful tips on how to avoid common
+pitfalls and use the Azure CLI successfully.
 
-To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](../../docs-ref-autogen/Latest-version/latest/reference-index.yml).
+To learn more about specific Azure CLI commands, see the [Azure CLI Reference list][01].
 
 ## Choose a scripting language
 
 The Azure CLI is an open source _tool_ that you can run in many _scripting languages_.
 
-* It's the scripting language that determines the quoting, escape character, and line continuation rules for Azure CLI commands.
-* It can be challenging to copy Azure CLI command syntax _containing single or double quotes, escape characters, or line continuation characters_ between languages.
-* **Most Microsoft documentation for the Azure CLI is written and tested in Bash.** 
-* If PowerShell is your scripting language of choice, consider using the tool, [Azure PowerShell](/powershell/azure/), which has native [PowerShell](/powershell/) scripting language functionality.
+- It's the scripting language that determines the quoting, escape character, and line continuation
+  rules for Azure CLI commands.
+- It can be challenging to copy Azure CLI command syntax _containing single or double quotes, escape
+  characters, or line continuation characters_ between languages.
+- **Most Microsoft documentation for the Azure CLI is written and tested in Bash.**
+- If PowerShell is your scripting language of choice, consider using the tool,
+  [Azure PowerShell][25], which has native [PowerShell][24] scripting language functionality.
 
-For more information on scripting language options for Azure CLI, see [Choose the right command-line tool](./choose-the-right-azure-command-line-tool.md).
+For more information on scripting language options for Azure CLI, see
+[Choose the right command-line tool][06].
 
 ## FAQ
 
@@ -29,22 +35,24 @@ Here are some links to help you answer the most frequently asked Azure CLI quest
 
 | Subject area with article link | Tip |
 |-|-|
-| [Work behind a proxy](./use-azure-cli-successfully-troubleshooting.md#work-behind-a-proxy) | Information on how to work over a proxy server.
-| [Web Account Manager (WAM)](./authenticate-azure-cli-interactively.md#sign-in-with-web-account-manager-wam-on-windows) | Information on WAM and how to disable it.
-| [Configuration settings](./azure-cli-configuration.md) | List of available Azure CLI configuration settings, how to turn on/off Azure CLI features, and set default values.
-| [Output formats](./format-output-azure-cli.md) | Instructions on how to store Azure resource IDs in variables, and protect secrets returned by Azure CLI commands.
-| [Passing JSON values in a string](./use-azure-cli-successfully-troubleshooting.md#error-failed-to-parse-string-as-json) | Quoting examples for JSON parameter values.
-| [Support lifecycle](./azure-cli-support-lifecycle.md) | Information about supported operating systems, scripting languages and the end of service for Azure CLI versions and dependencies.
-| [REST API](./use-azure-cli-rest-command.md) | Alternative [az rest](/cli/azure/reference-index) command to use when a specific Azure CLI command isn't available for an Azure resource.
-| [Azure CLI reference groups](./reference-docs-index.md) | A to Z list of Azure CLI reference groups with drill-down to subgroups and all Azure CLI commands.
-| [Azure CLI articles](/cli/azure/reference-index) | A to Z list of Quickstarts, How-to guides, and Tutorials that use Azure CLI reference commands. The list is grouped by reference group and subgroup for easy search.
-| [Azure CLI samples](./samples-index.md) | A to Z list of Samples, including those samples in the Azure-samples/azure-cli-samples GitHub repository.
-| [Troubleshooting](./use-azure-cli-successfully-troubleshooting.md) | Error cause and remediation tips.
-| [What's new](./whats-new-overview.md) | Short summary of new Azure CLI features.
+| [Work behind a proxy][16] | Information on how to work over a proxy server.
+| [Web Account Manager (WAM)][03] | Information on WAM and how to disable it.
+| [Configuration settings][04] | List of available Azure CLI configuration settings, how to turn on/off Azure CLI features, and set default values.
+| [Output formats][08] | Instructions on how to store Azure resource IDs in variables, and protect secrets returned by Azure CLI commands.
+| [Passing JSON values in a string][15] | Quoting examples for JSON parameter values.
+| [Support lifecycle][05] | Information about supported operating systems, scripting languages and the end of service for Azure CLI versions and dependencies.
+| [REST API][26] | Alternative [az rest][18] command to use when a specific Azure CLI command isn't available for an Azure resource.
+| [Azure CLI reference groups][10] | A to Z list of Azure CLI reference groups with drill-down to subgroups and all Azure CLI commands.
+| [Azure CLI articles][18] | A to Z list of Quickstarts, How-to guides, and Tutorials that use Azure CLI reference commands. The list is grouped by reference group and subgroup for easy search.
+| [Azure CLI samples][11] | A to Z list of Samples, including those samples in the Azure-samples/azure-cli-samples GitHub repository.
+| [Troubleshooting][14] | Error cause and remediation tips.
+| [What's new][17] | Short summary of new Azure CLI features.
 
 ## Pass values to another command
 
-If the value is used more than once, assign it to a variable. Variables allow you to use values more than once or to create more general scripts. This example assigns an ID found by the [az vm list](/cli/azure/vm#az-vm-list) command to a variable.
+If the value is used more than once, assign it to a variable. Variables allow you to use values more
+than once or to create more general scripts. This example assigns an ID found by the
+[az vm list][20] command to a variable.
 
   ```azurecli
   # assign the list of running VMs to a variable
@@ -55,7 +63,8 @@ If the value is used more than once, assign it to a variable. Variables allow yo
   echo $running_vm_ids
   ```
 
-If the value is used only once, consider piping. (Piping passes the output of one command as input to a second command.)
+If the value is used only once, consider piping. (Piping passes the output of one command as input
+to a second command.)
 
   ```azurecli
   az vm list --query "[?powerState=='VM running'].name" --output tsv | grep my_vm
@@ -78,7 +87,8 @@ For multi-value lists, consider the following options:
   done
   ```
 
-1. Alternatively, use `xargs` and consider using the `-P` flag to run the operations in parallel for improved performance:
+1. Alternatively, use `xargs` and consider using the `-P` flag to run the operations in parallel for
+   improved performance:
 
   ```azurecli
   az vm list --resource-group MyResourceGroup --show-details \
@@ -86,7 +96,8 @@ For multi-value lists, consider the following options:
       --output tsv | xargs -I {} -P 10 az vm start --ids "{}"
   ```
 
-1. Finally, Azure CLI has built-in support to process commands with multiple `--ids` in parallel to achieve the same effect of xargs. `@-` is used to get values from the pipe:
+1. Finally, Azure CLI has built-in support to process commands with multiple `--ids` in parallel to
+   achieve the same effect of xargs. `@-` is used to get values from the pipe:
 
   ```azurecli
   az vm list --resource-group MyResourceGroup --show-details \
@@ -94,19 +105,25 @@ For multi-value lists, consider the following options:
       --output tsv | az vm start --ids @-
   ```
 
-For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./use-azure-cli-successfully-bash.md).
+For more information on using Bash constructs with the Azure CLI including loops, case statements,
+if..then..else, and error handling, see [Learn to use Bash with the Azure CLI][13].
 
 ## Common update parameters
 
-Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az-vm-update) command. Most update commands offer the three common parameters: `--add`, `--set`, and `--remove`.
+Azure CLI command groups often feature an update command. For instance,
+[Azure Virtual Machines][19] includes the [az vm update][22] command. Most update commands offer the
+three common parameters: `--add`, `--set`, and `--remove`.
 
-The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az-vm-show).
+The `--set` and `--add` parameters take a list of space-separated key-value pairs:
+`key1=value1 key2=value2`. To see what properties you can update, use a show command, such as
+[az vm show][21].
 
 ```azurecli
 az vm show --resource-group VMResources --name virtual-machine-01
 ```
 
-To simplify the command, consider using a JSON string. For example, to attach a new data disk to a virtual machine, use the following value:
+To simplify the command, consider using a JSON string. For example, to attach a new data disk to a
+virtual machine, use the following value:
 
 ```azurecli
 az vm update --resource-group VMResources --name virtual-machine-01 \
@@ -118,13 +135,18 @@ az vm update --resource-group VMResources --name virtual-machine-01 \
 
 ## Generic resource commands
 
-A service you want to work with might not have Azure CLI support. You can use the [az resource](../../docs-ref-autogen/Latest-version/latest/resource.yml) or [az rest](./use-azure-cli-rest-command.md) commands to work with these resources.
+A service you want to work with might not have Azure CLI support. You can use the [az resource][02]
+or [az rest][12] commands to work with these resources.
 
 ## Concurrent execution
 
-If you run Azure CLI commands concurrently on the same machine, write conflicts can happen if multiple Azure CLI commands write to the same Microsoft Authentication Library (MSAL) token cache.
+If you run Azure CLI commands concurrently on the same machine, write conflicts can happen if
+multiple Azure CLI commands write to the same Microsoft Authentication Library (MSAL) token cache.
 
-To avoid potential failures, isolate the Azure CLI configuration folder for each script by setting environment variable `AZURE_CONFIG_DIR` for each script to a separate directory. Azure CLI commands in that script save the configuration and token cache to the configured location instead of the default `~/.azure` folder.
+To avoid potential failures, isolate the Azure CLI configuration folder for each script by setting
+environment variable `AZURE_CONFIG_DIR` for each script to a separate directory. Azure CLI commands
+in that script save the configuration and token cache to the configured location instead of the
+default `~/.azure` folder.
 
 ### [Bash](#tab/bash)
 
@@ -148,15 +170,20 @@ set AZURE_CONFIG_DIR=D:\my\config\dir
 
 ## Asynchronous operations
 
-Operations in Azure can take a noticeable amount of time. For instance, configuring a virtual machine at a data center isn't instantaneous. Azure CLI waits until the command finishes to accept other commands. Many commands therefore offer a `--no-wait` parameter as shown here:
+Operations in Azure can take a noticeable amount of time. For instance, configuring a virtual
+machine at a data center isn't instantaneous. Azure CLI waits until the command finishes to accept
+other commands. Many commands therefore offer a `--no-wait` parameter as shown here:
 
 ```azurecli
 az group delete --name MyResourceGroup --no-wait
 ```
 
-When you delete a resource group, all the resources that belong to it are also removed. Removing these resources can take a long time. When you run the command with the `--no-wait` parameter, the console accepts new commands without interrupting the removal.
+When you delete a resource group, all the resources that belong to it are also removed. Removing
+these resources can take a long time. When you run the command with the `--no-wait` parameter, the
+console accepts new commands without interrupting the removal.
 
-Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az-vm-wait) command to support creating independent resources in parallel:
+Many commands offer a wait option, pausing the console until some condition is met. The following
+example uses the [az vm wait][23] command to support creating independent resources in parallel:
 
 ```azurecli
 az vm create --resource-group VMResources --name virtual-machine-01 --image centos --no-wait
@@ -172,7 +199,9 @@ After both IDs are created, you can use the console again.
 
 ## Script examples
 
-Here are examples for using variables and looping through a list when working with Azure Virtual Machines. For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./use-azure-cli-successfully-bash.md).
+Here are examples for using variables and looping through a list when working with Azure Virtual
+Machines. For in-depth examples on using Bash constructs with the Azure CLI including loops, case
+statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI][13].
 
 Use these scripts to save IDs to variables:
 
@@ -227,4 +256,33 @@ foreach ($vm_id in $vm_ids) {
 
 ## See also
 
-* [Troubleshooting the Azure CLI](./use-azure-cli-successfully-troubleshooting.md)
+- [Troubleshooting the Azure CLI][14]
+
+<!-- link references -->
+
+[01]: ../../docs-ref-autogen/Latest-version/latest/reference-index.yml
+[02]: ../../docs-ref-autogen/Latest-version/latest/resource.yml
+[03]: ./authenticate-azure-cli-interactively.md#sign-in-with-web-account-manager-wam-on-windows
+[04]: ./azure-cli-configuration.md
+[05]: ./azure-cli-support-lifecycle.md
+[06]: ./choose-the-right-azure-command-line-tool.md
+[07]: ./choose-the-right-azure-command-line-tool.md#different-shell-environments
+[08]: ./format-output-azure-cli.md
+[09]: ./install-azure-cli.md
+[10]: ./reference-docs-index.md
+[11]: ./samples-index.md
+[12]: ./use-azure-cli-rest-command.md
+[13]: ./use-azure-cli-successfully-bash.md
+[14]: ./use-azure-cli-successfully-troubleshooting.md
+[15]: ./use-azure-cli-successfully-troubleshooting.md#error-failed-to-parse-string-as-json
+[16]: ./use-azure-cli-successfully-troubleshooting.md#work-behind-a-proxy
+[17]: ./whats-new-overview.md
+[18]: /cli/azure/reference-index
+[19]: /cli/azure/vm
+[20]: /cli/azure/vm#az-vm-list
+[21]: /cli/azure/vm#az-vm-show
+[22]: /cli/azure/vm#az-vm-update
+[23]: /cli/azure/vm#az-vm-wait
+[24]: /powershell/
+[25]: /powershell/azure/
+[26]: /cli/azure/reference-index#az-rest
