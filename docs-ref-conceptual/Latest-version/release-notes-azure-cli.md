@@ -54,6 +54,11 @@ Version 2.77.0
 * Fix #31762: `az containerapp job list`: Fix bug only 20 items are returned
 * `az containerapp job update`: Fix `--min-executions` and `--max-executions` not accepting 0 values
 
+### Core
+
+* Resolve CVE-2025-4517
+* Add global policy arguments `--acquire-policy-token` and `--change-reference` to support Change Safety feature
+
 ### IoT
 
 * `az iot hub devicestream`: Mirgate this command group to `azure-iot` extension
