@@ -11,9 +11,7 @@ ms.custom: devx-track-azurecli, linux-related-content
     | Distribution | Version                                                                |
     |:-------------|:-----------------------------------------------------------------------|
     | Debian       | 11 (Bullseye), 12 (Bookworm)                                           |
-    | Ubuntu       | 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish), 24.04 (Noble Numbat) |
-
-- Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  For more information on `apt remove`, see the [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove).
+    | Ubuntu       | 22.04 (Jammy Jellyfish), 24.04 (Noble Numbat) |
 
 ## Install Azure CLI
 
@@ -154,10 +152,6 @@ You can also use `apt-get upgrade` to update the CLI package. This command upgra
 Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](/cli/azure/release-notes-azure-cli#march-07-2023).
-
-### No module issue on Ubuntu 20.04 (Focal)/WSL
-
-If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#option-1-install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install-azure-cli) to install the latest `azure-cli` package.
 
 ### lsb_release doesn't return the correct base distribution version
 
