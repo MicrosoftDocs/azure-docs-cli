@@ -1,13 +1,98 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 08/05/2025
+ms.date: 09/02/2025
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## September 02, 2025
+
+Version 2.77.0
+
+### ACR
+
+* `az acr task create`: Fix error message when `--context` is not provided
+
+### AKS
+
+* `az aks create`: Change description for `--os-sku` parameter
+* `az aks create/update`: Support installing latest version of acstor on the cx cluster by `--enable-azure-container-storage` parameter
+* `az aks create/update`: Support specifying installation version of acstor by `--container-storage-version` when setting `--enable-azure-container-storage`
+* `az aks update`: Support uninstalling acstor from the cx cluster by `--disable-azure-container-storage` regardless of the installed version
+* `az aks create/update`: Add `--sku` parameter to support automatic feature
+* `az aks update`: Fix typo on validation error for disabling Azure Container Storage
+
+### App Config
+
+* `az appconfig kv import`: Support importing key-values from AKS ConfigMap
+
+### App Service
+
+* `az webapp deploy`: Add `--enable-kudu-warmup` parameter to support warm-up Kudu before making deployment
+* `az functionapp flex-migration`: Add commands to support migrating CV1 apps to Flex
+
+### ARM
+
+* `az ts`: Capture subscription id from template resource id
+
+### Backup
+
+* `az backup restore restore-azurefileshare`: Fix a bug where the source storage account is deleted and the required sourceResourceId property is missing from the restore request payload
+
+### Compute
+
+* Fix #31885: `az vm encryption`: Fix request body serialization
+* `az disk create/grant-access`: Support Confidential VM OS Disks
+* `az snapshot create`: Add new parameter `--instant-access-duration-minutes` to support creating instant access snapshot for premium SSD v2 and ultra disk
+
+### Container app
+
+* Fix #31762: `az containerapp job list`: Fix bug only 20 items are returned
+* `az containerapp job update`: Fix `--min-executions` and `--max-executions` not accepting 0 values
+
+### IoT
+
+* `az iot hub devicestream`: Mirgate this command group to `azure-iot` extension
+
+### MySQL
+
+* `az mysql flexible-server upgrade`: Add new option `8.4` for `--version`
+
+### Network
+
+* `az network nat gateway`: Support Standard V2 SKU and Public IP (Prefixes) V6
+* `az network public-ip`: Support Standard V2 SKU
+* `az network public-ip prefix`: Support Standard V2 SKU
+* `az network vnet show/list`: Support `defaultPublicNatGateway` output for StandardV2 NAT Gateway
+* Fix #31954: `az network application-gateway waf-policy custom-rule`: Deserialization errors within `computedDisabledRules`
+* `az network vnet-gateway`: Support VNET Gateway insights
+* `az network vnet-gateway`: Support VNET Gateway failover
+
+### Packaging
+
+* Support Python 3.13
+* Bump embedded Python to 3.13.7
+
+### Profile
+
+* `az account get-access-token`: Specifying `--tenant` with the current tenant is now allowed for Cloud Shell and managed identity account
+* `az login`: Support `--claims-challenge` in device code flow
+
+### RDBMS
+
+* `az postgres flexible-server create/update/restore`: Premium SSD V2 is no longer supported with Burstable compute tier
+* `az postgres flexible-server update`: Bypass fabric mirroring validation to allow updating high availability status for PG11 and PG12 servers
+
+### Service Fabric
+
+* `az sf managed-application update`: Add breaking change pre-announcement warnings for argument option removal
+* `az sf managed-application-type version update`: Add breaking change pre-announcement warnings for required argument `--package-url`
+* Fix #5338: `az sf cluster create`: Fix the bug where key-vault not placed in location specifed by `--location`
+* Fix #5180: `az sf cluster create`: Change behavior to read cluster_name from parameters file if provided
 
 ## August 05, 2025
 
