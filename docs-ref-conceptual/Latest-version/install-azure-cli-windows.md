@@ -17,7 +17,7 @@ the Azure Cloud Shell or run from inside a Docker container.
 
 For Windows, the Azure CLI is installed via an MSI or a ZIP package, which gives you access to the
 Azure CLI through PowerShell or the Windows Command Prompt (`cmd.exe`). When you perform an
-installation for Windows Subsystem for Linux (WSL), packages are available for your Linux
+installation for [Windows Subsystem for Linux (WSL)](/windows/wsl), packages are available for your Linux
 distribution. See the [main install page][07] for the list of supported package managers or how to
 install manually under WSL.
 
