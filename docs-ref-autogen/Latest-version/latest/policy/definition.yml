@@ -2,7 +2,9 @@
 uid: az_policy_definition
 name: az policy definition
 summary: |-
-  Manage resource policy definitions.
+  Manage policy definitions.
+description: |-
+  Policy definitions are rules that specify allowed or disallowed Azure resource configurations.
 status: GA
 sourceType: Core
 directCommands:
@@ -10,6 +12,8 @@ directCommands:
   name: az policy definition create
   summary: |-
     Create a policy definition.
+  description: |-
+    Create a policy definition in the given subscription or management group with the given name and other properties.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
@@ -21,72 +25,59 @@ directCommands:
                                 [--metadata]
                                 [--mode]
                                 [--params]
-                                [--rules]
-                                [--subscription]
+                                [--rule --rules]
+                                [--version]
   examples:
   - summary: |-
-      Create a read-only policy.
-    syntax: >-
-      az policy definition create --name readOnlyStorage --rules "{ \"if\": \
-          { \"field\": \"type\", \"equals\": \"Microsoft.Storage/storageAccounts/write\" }, \
-              \"then\": { \"effect\": \"deny\" } }"
+      Create a read-only storage policy
+    syntax: "az policy definition create --name readOnlyStorage --rules \"{ 'if': { 'field': 'type', 'equals': 'Microsoft.Storage/storageAccounts/write' }, 'then': { 'effect': 'deny' } }\""
   - summary: |-
-      Create a policy parameter definition.
-    syntax: >-
-      az policy definition create --name allowedLocations \
-          --rules "{ \"if\": { \"allOf\": [ \
-              { \"field\": \"location\",\"notIn\": \"[parameters('listOfAllowedLocations')]\" }, \
-                  { \"field\": \"location\", \"notEquals\": \"global\" }, \
-                      { \"field\": \"type\", \"notEquals\": \
-                          \"Microsoft.AzureActiveDirectory/b2cDirectories\"} \
-                              ] }, \"then\": { \"effect\": \"deny\" } }" \
-          --params "{ \"allowedLocations\": { \
-              \"type\": \"array\", \"metadata\": { \"description\": \
-                  \"The list of locations that can be specified when deploying resources\", \
-                      \"strongType\": \"location\", \"displayName\": \"Allowed locations\" } } }"
+      Create a policy definition with parameters
+    syntax: "az policy definition create --name allowedLocations --rules \"{ 'if': { 'allOf': [{ 'field': 'location','notIn': '[parameters(\\'listOfAllowedLocations\\')]' }, { 'field': 'location', 'notEquals': 'global' }, { 'field': 'type', 'notEquals': 'Microsoft.AzureActiveDirectory/b2cDirectories'}] }, 'then': { 'effect': 'deny' } }\" --params \"{ 'allowedLocations': {'type': 'array', 'metadata': { 'description': 'The list of locations that can be specified when deploying resources', 'strongType': 'location', 'displayName': 'Allowed locations' } } }\""
   - summary: |-
-      Create a read-only policy that can be applied within a management group.
-    syntax: >-
-      az policy definition create -n readOnlyStorage --management-group "MyManagementGroup" \
-          --rules "{ \"if\": { \"field\": \"type\", \
-              \"equals\": \"Microsoft.Storage/storageAccounts/write\" }, \
-                  \"then\": { \"effect\": \"deny\" } }"
+      Create a read-only storage policy that can be applied within a management group
+    syntax: "az policy definition create -n readOnlyStorage --management-group \"MyManagementGroup\" --rules \"{ 'if': { 'field': 'type', 'equals': 'Microsoft.Storage/storageAccounts/write' }, 'then': { 'effect': 'deny' } }\""
   - summary: |-
-      Create a policy definition with mode. The mode 'Indexed' indicates the policy should be evaluated only for resource types that support tags and location.
-    syntax: >-
-      az policy definition create --name TagsPolicyDefinition --subscription "MySubscription" \
-          --mode Indexed --rules "{ \"if\": { \"field\": \"tags\", \"exists\": \"false\" }, \
-              \"then\": { \"effect\": \"deny\" } }"
+      Create a policy definition with mode
+    syntax: "az policy definition create --name TagsPolicyDefinition --subscription \"MySubscription\" --mode Indexed --rules \"{ 'if': { 'field': 'tags', 'exists': 'false' }, 'then': { 'effect': 'deny' } }\""
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the new policy definition.
+      The name of the policy definition.
   optionalParameters:
   - name: --description
     summary: |-
-      Description of policy definition.
+      Policy definition description.
+    groupName: Properties Arguments
   - name: --display-name
     summary: |-
-      Display name of policy definition.
+      The display name of the policy definition.
+    groupName: Properties Arguments
   - name: --management-group
     summary: |-
-      Name of the management group the new policy definition can be assigned in.
+      The management group.
   - name: --metadata
     summary: |-
-      Metadata in space-separated key=value pairs.
+      The policy definition metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --mode -m
+    defaultValue: Indexed
     summary: |-
-      Mode of the policy definition, e.g. All, Indexed. Please visit https://aka.ms/azure-policy-mode for more information.
-  - name: --params
+      The policy definition mode.
+    groupName: Properties Arguments
+  - name: --params -p
     summary: |-
-      JSON formatted string or a path to a file or uri with parameter definitions.
-  - name: --rules
+      The policy rule parameter definitions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --rule --rules
     summary: |-
-      Policy rules in JSON format, or a path to a file containing JSON rules.
-  - name: --subscription
+      The policy rule.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --version
     summary: |-
-      Name or id of the subscription the new policy definition can be assigned in.
+      The policy definition version.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -107,6 +98,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -115,6 +109,8 @@ directCommands:
   name: az policy definition delete
   summary: |-
     Delete a policy definition.
+  description: |-
+    Delete the policy definition in the given subscription or management group with the given name and other properties.
   status: GA
   isBreakingChange: true
   breakingChangeInfo: Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
@@ -123,23 +119,19 @@ directCommands:
   syntax: >-
     az policy definition delete --name
                                 [--management-group]
-                                [--subscription]
   examples:
   - summary: |-
-      Delete a policy definition. (autogenerated)
+      Delete a policy definition
     syntax: az policy definition delete --name MyPolicyDefinition
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      The policy definition name.
+      The name of the policy definition.
   optionalParameters:
   - name: --management-group
     summary: |-
-      The name of the management group of the policy [set] definition. This parameter is required if your policy set is scoped to a management group.
-  - name: --subscription
-    summary: |-
-      The subscription id of the policy [set] definition.
+      The management group.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -160,6 +152,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -167,20 +162,42 @@ directCommands:
 - uid: az_policy_definition_list
   name: az policy definition list
   summary: |-
-    List policy definitions.
+    Retrieve policy definitions.
+  description: |-
+    Retrieve the list of all policy definitions in the given subscription or management group.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy definition list [--management-group]
-                              [--subscription]
+    az policy definition list [--filter]
+                              [--management-group]
+                              [--max-items]
+                              [--next-token]
+  examples:
+  - summary: |-
+      List built-in policy definitions
+    syntax: az policy definition list --filter atScopeAndBelow()
+  - summary: |-
+      List policy definitions by management group
+    syntax: az policy definition list --management-group MyManagementGroup
+  - summary: |-
+      List policy definitions by subscription
+    syntax: az policy definition list
   optionalParameters:
+  - name: --filter
+    summary: |-
+      Filter list results.
   - name: --management-group
     summary: |-
-      The name of the management group of the policy [set] definition. This parameter is required if your policy set is scoped to a management group.
-  - name: --subscription
+      The management group.
+  - name: --max-items
     summary: |-
-      The subscription id of the policy [set] definition.
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -201,6 +218,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -208,30 +228,31 @@ directCommands:
 - uid: az_policy_definition_show
   name: az policy definition show
   summary: |-
-    Show a policy definition.
+    Retrieves a policy definition.
+  description: |-
+    Retrieve and show the details of the policy definition in the given subscription or management group with the given name.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
     az policy definition show --name
                               [--management-group]
-                              [--subscription]
   examples:
   - summary: |-
-      Show a policy definition. (autogenerated)
-    syntax: az policy definition show --name MyPolicyDefinition
+      Retrieve a policy definition at management group level
+    syntax: az policy definition show --management-group MyManagementGroup --name ResourceNaming
+  - summary: |-
+      Retrieve a policy definition
+    syntax: az policy definition show --name ResourceNaming
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      The policy definition name.
+      The name of the policy definition.
   optionalParameters:
   - name: --management-group
     summary: |-
-      The name of the management group of the policy [set] definition. This parameter is required if your policy set is scoped to a management group.
-  - name: --subscription
-    summary: |-
-      The subscription id of the policy [set] definition.
+      The management group.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -252,6 +273,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -260,53 +284,83 @@ directCommands:
   name: az policy definition update
   summary: |-
     Update a policy definition.
+  description: |-
+    Update the policy definition in the given subscription or management group with the given name by applying the given properties.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
     az policy definition update --name
+                                [--add]
                                 [--description]
                                 [--display-name]
+                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--management-group]
                                 [--metadata]
                                 [--mode]
                                 [--params]
-                                [--rules]
-                                [--subscription]
+                                [--remove]
+                                [--rule --rules]
+                                [--set]
+                                [--version]
   examples:
   - summary: |-
-      Update a policy definition. (autogenerated)
-    syntax: az policy definition update --name MyPolicyDefinition
+      Update a policy definition display name
+    syntax: az policy definition update --name MyPolicyDefinition --display-name "Updated display name goes here"
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      The policy definition name.
+      The name of the policy definition.
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --description
     summary: |-
-      Description of policy definition.
+      Policy definition description.
+    groupName: Properties Arguments
   - name: --display-name
     summary: |-
-      Display name of policy definition.
+      The display name of the policy definition.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --management-group
     summary: |-
-      The name of the management group of the policy [set] definition. This parameter is required if your policy set is scoped to a management group.
+      The management group.
   - name: --metadata
     summary: |-
-      Metadata in space-separated key=value pairs.
+      The policy definition metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --mode -m
     summary: |-
-      Mode of the policy definition, e.g. All, Indexed. Please visit https://aka.ms/azure-policy-mode for more information.
-  - name: --params
+      The policy definition mode.
+    groupName: Properties Arguments
+  - name: --params -p
     summary: |-
-      JSON formatted string or a path to a file or uri with parameter definitions.
-  - name: --rules
+      The policy rule parameter definitions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --remove
     summary: |-
-      JSON formatted string or a path to a file with such content.
-  - name: --subscription
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --rule --rules
     summary: |-
-      The subscription id of the policy [set] definition.
+      The policy rule.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --version
+    summary: |-
+      The policy definition version.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -327,6 +381,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -338,5 +395,5 @@ commands:
 - az_policy_definition_show
 - az_policy_definition_update
 metadata:
-  ms.date: 01/06/2025
-  description: Manage resource policy definitions.
+  ms.date: 08/26/2025
+  description: Policy definitions are rules that specify allowed or disallowed Azure resource configurations.

@@ -2,14 +2,18 @@
 uid: az_policy_assignment_non-compliance-message
 name: az policy assignment non-compliance-message
 summary: |-
-  Manage a policy assignment's non-compliance messages.
+  Non-compliance message used by the policy assignment.
+description: |-
+  Customized message used by the enclosing policy assignment to report non-compliance.
 status: GA
 sourceType: Core
 directCommands:
 - uid: az_policy_assignment_non-compliance-message_create
   name: az policy assignment non-compliance-message create
   summary: |-
-    Add a non-compliance message to a policy assignment.
+    Create a non-compliance message.
+  description: |-
+    Create a customized message used to report non-compliance by the policy assignment matching the given name and scope.
   status: GA
   isBreakingChange: true
   breakingChangeInfo: The return value will change in a future release of the resource commands. It will be the single created message object rather than the full array of message objects.
@@ -23,30 +27,30 @@ directCommands:
                                                        [--scope]
   examples:
   - summary: |-
-      Add a non-compliance message to a policy assignment.
+      Add a non-compliance message to a policy assignment
     syntax: az policy assignment non-compliance-message create -g MyResourceGroup -n MyPolicyAssignment -m 'Resources must follow naming standards'
   - summary: |-
-      Add a non-compliance message for a specific policy in an assigned policy set definition.
+      Add a non-compliance message for a specific policy in an assigned policy set definition
     syntax: az policy assignment non-compliance-message create -g MyResourceGroup -n MyPolicySetAssignment -m 'Resources must use allowed SKUs' --policy-definition-reference-id SkuPolicyRefId
   requiredParameters:
   - isRequired: true
     name: --message -m
     summary: |-
-      Message that will be shown when a resource is denied by policy or evaluation details are inspected.
+      A custom non-compliance message.
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the policy assignment.
+      The name of the policy assignment.
   optionalParameters:
   - name: --policy-definition-reference-id -r
     summary: |-
-      Policy definition reference ID within the assigned initiative (policy set) that the message applies to.
+      The policy definition reference ID.
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --scope
     summary: |-
-      Scope at which this policy assignment subcommand applies. Defaults to current context subscription.
+      The scope of the policy assignment.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -77,7 +81,9 @@ directCommands:
 - uid: az_policy_assignment_non-compliance-message_delete
   name: az policy assignment non-compliance-message delete
   summary: |-
-    Remove one or more non-compliance messages from a policy assignment.
+    Delete a non-compliance message.
+  description: |-
+    Delete a non-compliance message from the policy assignment matching the given name and scope.
   status: GA
   isBreakingChange: true
   breakingChangeInfo: The return value will change in a future release of the resource commands. It will be empty rather than the full array of remaining message objects.
@@ -91,30 +97,30 @@ directCommands:
                                                        [--scope]
   examples:
   - summary: |-
-      Remove non-compliance messages from a policy assignment that contain a specific message and no policy definition reference ID.
+      Remove non-compliance messages from a policy assignment that contain a specific message and no policy definition reference ID
     syntax: az policy assignment non-compliance-message delete -g MyResourceGroup -n MyPolicyAssignment -m 'Resources must follow naming standards'
   - summary: |-
-      Remove non-compliance messages from a policy assignment that contain a specific message and a specific policy definition reference ID.
+      Remove non-compliance messages from a policy assignment that contain a specific message and a specific policy definition reference ID
     syntax: az policy assignment non-compliance-message delete -g MyResourceGroup -n MyPolicySetAssignment -m 'Resources must use allowed SKUs' --policy-definition-reference-id SkuPolicyRefId
   requiredParameters:
   - isRequired: true
     name: --message -m
     summary: |-
-      Message that will be shown when a resource is denied by policy or evaluation details are inspected.
+      A custom non-compliance message.
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the policy assignment.
+      The name of the policy assignment.
   optionalParameters:
   - name: --policy-definition-reference-id -r
     summary: |-
-      Policy definition reference ID within the assigned initiative (policy set) that the message applies to.
+      The policy definition reference ID.
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --scope
     summary: |-
-      Scope at which this policy assignment subcommand applies. Defaults to current context subscription.
+      The scope of the policy assignment.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -145,7 +151,9 @@ directCommands:
 - uid: az_policy_assignment_non-compliance-message_list
   name: az policy assignment non-compliance-message list
   summary: |-
-    List the non-compliance messages for a policy assignment.
+    Retrieve non-compliance messages.
+  description: |-
+    Retrieve all non-compliance messages from the policy assignment matching the given name and scope.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
@@ -155,20 +163,171 @@ directCommands:
                                                      [--scope]
   examples:
   - summary: |-
-      List the non-compliance messages for a policy assignment.
+      List the non-compliance messages for a policy assignment
     syntax: az policy assignment non-compliance-message list -g MyResourceGroup -n MyPolicyAssignment
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the policy assignment.
+      The name of the policy assignment.
   optionalParameters:
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --scope
     summary: |-
-      Scope at which this policy assignment subcommand applies. Defaults to current context subscription.
+      The scope of the policy assignment.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_policy_assignment_non-compliance-message_show
+  name: az policy assignment non-compliance-message show
+  summary: |-
+    Retrieve a non-compliance message.
+  description: |-
+    Retrieve and show the details of a non-compliance message belonging to the policy assignment matching the given name and scope.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  syntax: >-
+    az policy assignment non-compliance-message show --message
+                                                     --name
+                                                     [--policy-definition-reference-id]
+                                                     [--resource-group]
+                                                     [--scope]
+  examples:
+  - summary: |-
+      Show the non-compliance message from a policy assignment that contains a specific message and policy definition reference ID
+    syntax: az policy assignment non-compliance-message show -g MyResourceGroup -n MyPolicySetAssignment -m 'Resources must use allowed SKUs' --policy-definition-reference-id SkuPolicyRefId
+  requiredParameters:
+  - isRequired: true
+    name: --message -m
+    summary: |-
+      A custom non-compliance message.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the policy assignment.
+  optionalParameters:
+  - name: --policy-definition-reference-id -r
+    summary: |-
+      The policy definition reference ID.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --scope
+    summary: |-
+      The scope of the policy assignment.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_policy_assignment_non-compliance-message_update
+  name: az policy assignment non-compliance-message update
+  summary: |-
+    Update a non-compliance message.
+  description: |-
+    Update a non-compliance message belonging to the policy assignment matching the given name and scope.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  syntax: >-
+    az policy assignment non-compliance-message update --message
+                                                       --name
+                                                       [--add]
+                                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                       [--policy-definition-reference-id]
+                                                       [--remove]
+                                                       [--resource-group]
+                                                       [--scope]
+                                                       [--set]
+  examples:
+  - summary: |-
+      Update the non-compliance message for a specific policy in an assigned policy set definition
+    syntax: az policy assignment non-compliance-message update -g MyResourceGroup -n MyPolicySetAssignment -m 'Resources may only use SKUs from [preferredSKU, anotherGoodSKU]' --policy-definition-reference-id SkuPolicyRefId
+  requiredParameters:
+  - isRequired: true
+    name: --message -m
+    summary: |-
+      A custom non-compliance message.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the policy assignment.
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --policy-definition-reference-id -r
+    summary: |-
+      The policy definition reference ID.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --scope
+    summary: |-
+      The scope of the policy assignment.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -200,6 +359,8 @@ commands:
 - az_policy_assignment_non-compliance-message_create
 - az_policy_assignment_non-compliance-message_delete
 - az_policy_assignment_non-compliance-message_list
+- az_policy_assignment_non-compliance-message_show
+- az_policy_assignment_non-compliance-message_update
 metadata:
-  ms.date: 01/06/2025
-  description: Manage a policy assignment's non-compliance messages.
+  ms.date: 08/26/2025
+  description: Customized message used by the enclosing policy assignment to report non-compliance.

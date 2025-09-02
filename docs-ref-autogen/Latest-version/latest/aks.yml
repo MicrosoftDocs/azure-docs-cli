@@ -325,6 +325,7 @@ directCommands:
                   [--ca-certs --custom-ca-trust-certificates]
                   [--ca-profile --cluster-autoscaler-profile]
                   [--client-secret]
+                  [--container-storage-version]
                   [--crg-id]
                   [--data-collection-settings]
                   [--defender-config]
@@ -348,7 +349,7 @@ directCommands:
                   [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
                   [--enable-asm --enable-azure-service-mesh]
-                  [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
+                  [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
@@ -450,6 +451,7 @@ directCommands:
                   [--service-cidrs]
                   [--service-principal]
                   [--skip-subnet-role-assignment]
+                  [--sku {automatic, base}]
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--storage-pool-name]
@@ -698,6 +700,9 @@ directCommands:
   - name: --client-secret
     summary: |-
       Secret associated with the service principal. This argument is required if `--service-principal` is specified.
+  - name: --container-storage-version
+    summary: |-
+      Set azure container storage version, the latest version will be installed by default.
   - name: --crg-id
     summary: |-
       The crg id used to associate the new cluster with the existed Capacity Reservation Group resource.
@@ -800,9 +805,8 @@ directCommands:
     summary: |-
       Enable Azure Service Mesh addon.
   - name: --enable-azure-container-storage
-    acceptedValues: azureDisk, elasticSan, ephemeralDisk
     summary: |-
-      Enable azure container storage and define storage pool type.
+      Enable azure container storage. Can be used as a flag (defaults to True) or with a storage pool type value: (azureDisk, ephemeralDisk, elasticSan).
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -1172,7 +1176,7 @@ directCommands:
   - name: --os-sku
     acceptedValues: AzureLinux, CBLMariner, Mariner, Ubuntu, Ubuntu2204
     summary: |-
-      The OS SKU of the agent node pool. Ubuntu or CBLMariner.
+      The OS SKU of the agent node pool. Ubuntu or AzureLinux.
   - name: --outbound-type
     acceptedValues: loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting
     summary: |-
@@ -1232,6 +1236,10 @@ directCommands:
       Skip role assignment for subnet (advanced networking).
     description: |-
       If specified, please make sure your service principal has the access to your subnet.
+  - name: --sku
+    acceptedValues: automatic, base
+    summary: |-
+      Specify SKU name for managed clusters. Use '--sku base' enables a base managed cluster. Use '--sku automatic' enables an automatic managed cluster.
   - name: --snapshot-id
     summary: |-
       The source snapshot id used to create this cluster.
@@ -1429,6 +1437,7 @@ directCommands:
                   [--enable-static-egress-gateway]
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
+                  [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-vtpm]
                   [--enable-windows-gmsa]
@@ -2039,6 +2048,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable UltraSSD on agent node pool.
+  - name: --enable-upstream-kubescheduler-user-configuration
+    defaultValue: "False"
+    summary: |-
+      Enable user-defined scheduler configuration for kube-scheduler upstream on the cluster.
+    isPreview: true
   - name: --enable-vpa
     defaultValue: "False"
     summary: |-
@@ -4521,6 +4535,7 @@ directCommands:
                   [--bootstrap-container-registry-resource-id]
                   [--ca-certs --custom-ca-trust-certificates]
                   [--ca-profile --cluster-autoscaler-profile]
+                  [--container-storage-version]
                   [--defender-config]
                   [--detach-acr]
                   [--disable-acns]
@@ -4528,7 +4543,7 @@ directCommands:
                   [--disable-acns-security]
                   [--disable-ahub]
                   [--disable-ai-toolchain-operator]
-                  [--disable-azure-container-storage {all, azureDisk, elasticSan, ephemeralDisk}]
+                  [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
@@ -4556,7 +4571,7 @@ directCommands:
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
-                  [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
+                  [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
@@ -4623,6 +4638,7 @@ directCommands:
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
+                  [--sku {automatic, base}]
                   [--storage-pool-name]
                   [--storage-pool-option {NVMe, Temp, all}]
                   [--storage-pool-size]
@@ -4806,6 +4822,9 @@ directCommands:
   - name: --ca-profile --cluster-autoscaler-profile
     summary: |-
       Comma-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+  - name: --container-storage-version
+    summary: |-
+      Set azure container storage version, the latest version will be installed by default.
   - name: --defender-config
     summary: |-
       Path to JSON file containing Microsoft Defender profile configurations.
@@ -4830,9 +4849,8 @@ directCommands:
     summary: |-
       Disable AI toolchain operator.
   - name: --disable-azure-container-storage
-    acceptedValues: all, azureDisk, elasticSan, ephemeralDisk
     summary: |-
-      Disable azure container storage or any one of the storage pool types.
+      Disable azure container storage or any one of the storage pool types. Can be used as a flag (defaults to True) or with a storagepool type value: azureDisk, ephemeralDisk, elasticSan, all (to disable all storage pools).
   - name: --disable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -4940,9 +4958,8 @@ directCommands:
     summary: |-
       Enable integration of user vnet with control plane apiserver pods.
   - name: --enable-azure-container-storage
-    acceptedValues: azureDisk, elasticSan, ephemeralDisk
     summary: |-
-      Enable azure container storage and define storage pool type.
+      Enable azure container storage. Can be used as a flag (defaults to True) or with a storage pool type value: (azureDisk, ephemeralDisk, elasticSan).
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -5232,6 +5249,10 @@ directCommands:
   - name: --rotation-poll-interval
     summary: |-
       Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
+  - name: --sku
+    acceptedValues: automatic, base
+    summary: |-
+      Specify SKU name for managed clusters. Use '--sku base' enables a base managed cluster. Use '--sku automatic' enables an automatic managed cluster.
   - name: --storage-pool-name
     summary: |-
       Set storage pool name for azure container storage.
@@ -5373,6 +5394,7 @@ directCommands:
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
                   [--disable-static-egress-gateway]
+                  [--disable-upstream-kubescheduler-user-configuration]
                   [--disable-vpa]
                   [--disable-workload-identity]
                   [--disk-driver-version {v1, v2}]
@@ -5411,6 +5433,7 @@ directCommands:
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-static-egress-gateway]
+                  [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
                   [--enable-windows-recording-rules]
@@ -5806,6 +5829,11 @@ directCommands:
     summary: |-
       Disable Static Egress Gateway addon to the cluster.
     isPreview: true
+  - name: --disable-upstream-kubescheduler-user-configuration
+    defaultValue: "False"
+    summary: |-
+      Disable user-defined scheduler configuration for kube-scheduler upstream on the cluster.
+    isPreview: true
   - name: --disable-vpa
     defaultValue: "False"
     summary: |-
@@ -5964,6 +5992,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Static Egress Gateway addon to the cluster.
+    isPreview: true
+  - name: --enable-upstream-kubescheduler-user-configuration
+    defaultValue: "False"
+    summary: |-
+      Enable user-defined scheduler configuration for kube-scheduler upstream on the cluster.
     isPreview: true
   - name: --enable-vpa
     defaultValue: "False"

@@ -1,71 +1,76 @@
 ### YamlMime:AzureCLIGroup
-uid: az_neon_postgres_branch
-name: az neon postgres branch
+uid: az_neon_organization
+name: az neon organization
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **neon** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az neon postgres branch** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **neon** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az neon organization** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage branches within a Neon Postgres database.
+  Manage Neon organizations, which are entities created on the Neon side.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_neon_postgres_branch_create
-  name: az neon postgres branch create
+- uid: az_neon_organization_create
+  name: az neon organization create
   summary: |-
-    Create a new branch within a Neon Postgres database.
+    Create a new Neon organization within a specified Azure resource group in Azure. This is typically the first step in provisioning Neon Serverless Postgres.
   status: GA
   sourceType: Extension
   syntax: >-
-    az neon postgres branch create --branch-name --name
-                                   --organization-name
-                                   --project-name
-                                   --resource-group
-                                   [--database-name]
-                                   [--entity-name]
-                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--parent-id]
-                                   [--role-name]
+    az neon organization create --name
+                                --resource-group
+                                [--company-details]
+                                [--location]
+                                [--marketplace-details]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--partner-org-props --partner-organization-properties]
+                                [--project-properties --project-props]
+                                [--tags]
+                                [--user-details]
   examples:
   - summary: |-
-      Create a Branch
-    syntax: az neon postgres branch create --resource-group rgneon --organization-name org-cli-test --project-name old-frost-16758796 --branch-name test-branch --entity-name test-branch --role-name test_role --database-name testneondb
+      Create Neon Postgres Organization
+    syntax: az neon organization create --resource-group sralluri_rg --name Org-cli-test --location "Central US EUAP" --subscription 68a546de-5736-48e8-a69a-5cc636794112 --marketplace-details "{subscription-id:329b25d9-168d-48d5-de4b-28b2324db159,subscription-status:Pending-fullfilment,offer-details:{publisher-id:neon1722366567200,offer-id:neon_serverless_postgres_azure_prod,plan-id:neon_serverless_postgres_azure_prod_free,plan-name:'Free Plan',term-unit:P1M,term-id:gmz7xq9ge3py}}" --user-details "{first-name:User,last-name:Conotoso,email-address:contoso@outlook.com,upn:contoso@outlook.com,phone-number:''}" --company-details "{company-name:'',country:'',business-phone:''}" --partner-organization-properties "{organization-name:Org-cli-test}" --project-properties "{region:'Central US EUAP',pgVersion:17,branch:{branch-name:main,database-name:neondb,role-name:owner_role},project-name:Org-cli-test-project}"
   requiredParameters:
   - isRequired: true
-    name: --branch-name --name -n
+    name: --name -n
     summary: |-
-      Name of the Neon branch.
-  - isRequired: true
-    name: --organization-name
-    summary: |-
-      Name of the Neon organization.  If value is blank it's asked from the tty.
-  - isRequired: true
-    name: --project-name
-    summary: |-
-      Name of the Neon project.
+      Name of the Neon organization.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of the Azure resource group.
   optionalParameters:
-  - name: --database-name
+  - name: --company-details
     summary: |-
-      Neon Database name associated with the branch.
+      Details of the company.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --entity-name
+  - name: --location -l
     summary: |-
-      Name of the resource.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --marketplace-details
+    summary: |-
+      Marketplace details of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --parent-id
+  - name: --partner-org-props --partner-organization-properties
     summary: |-
-      The ID of the parent branch.
+      Organization properties  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --role-name
+  - name: --project-properties --project-props
     summary: |-
-      Role name associated with the branch.
+      Neon Project Properties  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --user-details
+    summary: |-
+      Details of the user.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -94,41 +99,36 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_neon_postgres_branch_delete
-  name: az neon postgres branch delete
+- uid: az_neon_organization_delete
+  name: az neon organization delete
   summary: |-
-    Delete an existing branch within a Neon Postgres database.
+    Delete an existing Neon organization within Azure.
   status: GA
   sourceType: Extension
   syntax: >-
-    az neon postgres branch delete [--branch-id]
-                                   [--ids]
-                                   [--organization-name]
-                                   [--project-id]
-                                   [--resource-group]
-                                   [--subscription]
-                                   [--yes]
+    az neon organization delete [--ids]
+                                [--name]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--resource-group]
+                                [--subscription]
+                                [--yes]
   examples:
   - summary: |-
-      Delete Branch
-    syntax: az neon postgres branch delete --subscription 38a546de-5736-48e8-a69a-5cc636794112 --resource-group rgneon --organization-name org-cli-test --project-id old-frost-16758796 --branch-id br-spring-field-a8vje3tr
+      Delete Neon Postgres Organization
+    syntax: az neon organization delete --subscription 12345678-1234-1234-1234-123456789abc --resource-group demoResourceGroup --name demoNeonResource
   optionalParameters:
-  - name: --branch-id
-    summary: |-
-      Id of the Neon branch.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --organization-name
+  - name: --name -n
     summary: |-
-      Name of the Neon organization.  If value is blank it's asked from the tty.
+      Name of the Neon organization.
     groupName: Resource Id Arguments
-  - name: --project-id
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Id of the Neon project.
-    groupName: Resource Id Arguments
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of the Azure resource group.
@@ -165,35 +165,20 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_neon_postgres_branch_list
-  name: az neon postgres branch list
+- uid: az_neon_organization_list
+  name: az neon organization list
   summary: |-
-    List all branch resources within a specific project in Neon Postgres.
+    List all Neon organizations associated with a specific subscription ID.
   status: GA
   sourceType: Extension
   syntax: >-
-    az neon postgres branch list --organization-name
-                                 --project-id
-                                 --resource-group
-                                 [--max-items]
-                                 [--next-token]
+    az neon organization list [--max-items]
+                              [--next-token]
+                              [--resource-group]
   examples:
   - summary: |-
-      List Branches under a Project
-    syntax: az neon postgres branch list --subscription 38a546de-5736-48e8-a69a-5cc636794112 --resource-group rgneon --organization-name org-cli-test --project-id old-frost-16758796
-  requiredParameters:
-  - isRequired: true
-    name: --organization-name
-    summary: |-
-      Name of the Neon organization.  If value is blank it's asked from the tty.
-  - isRequired: true
-    name: --project-id
-    summary: |-
-      Id of the Neon project.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of the Azure resource group.
+      List Neon Postgres Organization
+    syntax: az neon organization list --subscription 12345678-1234-1234-1234-123456789abc --resource-group demoResourceGroup
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -203,6 +188,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of the Azure resource group.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -230,39 +218,29 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_neon_postgres_branch_show
-  name: az neon postgres branch show
+- uid: az_neon_organization_show
+  name: az neon organization show
   summary: |-
-    Retrieve details of a specific branch within a Neon Postgres database.
+    Retrieve details of a specific Neon organization.
   status: GA
   sourceType: Extension
   syntax: >-
-    az neon postgres branch show [--branch-id]
-                                 [--ids]
-                                 [--organization-name]
-                                 [--project-id]
-                                 [--resource-group]
-                                 [--subscription]
+    az neon organization show [--ids]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: |-
-      Show Branch Details
-    syntax: az neon postgres branch show --subscription 38a546de-5736-48e8-a69a-5cc636794112 --resource-group rgneon --organization-name org-cli-test --project-id old-frost-16758796 --branch-id br-spring-field-a8vje3tr
+      Show Neon Postgres Organization
+    syntax: az neon organization show --resource-group demoResourceGroup --name demoNeonResource
   optionalParameters:
-  - name: --branch-id
-    summary: |-
-      Id of the Neon branch.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --organization-name
+  - name: --name -n
     summary: |-
-      Name of the Neon organization.  If value is blank it's asked from the tty.
-    groupName: Resource Id Arguments
-  - name: --project-id
-    summary: |-
-      Id of the Neon project.
+      Name of the Neon organization.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -296,48 +274,37 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_neon_postgres_branch_update
-  name: az neon postgres branch update
+- uid: az_neon_organization_update
+  name: az neon organization update
   summary: |-
-    Update the properties of an existing branch within a Neon Postgres database.
+    Update the properties of an existing Neon organization within Azure.
   status: GA
   sourceType: Extension
   syntax: >-
-    az neon postgres branch update [--add]
-                                   [--branch-name --name]
-                                   [--database-name]
-                                   [--entity-name]
-                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--ids]
-                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--organization-name]
-                                   [--parent-id]
-                                   [--project-name]
-                                   [--remove]
-                                   [--resource-group]
-                                   [--role-name]
-                                   [--set]
-                                   [--subscription]
+    az neon organization update [--add]
+                                [--company-details]
+                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--ids]
+                                [--marketplace-details]
+                                [--name]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--remove]
+                                [--resource-group]
+                                [--set]
+                                [--subscription]
+                                [--tags]
   examples:
   - summary: |-
-      Update a Branch
-    syntax: az neon postgres branch update --resource-group rgneon --organization-name org-cli-test --project-name old-frost-16758796 --project-id old-frost-16758796 --branch-name test-branch --entity-name test-branch2 --role-name test_role --database-name testneondb
+      Update Neon Postgres Organization
+    syntax: az neon create --resource-group demoResourceGroup --name demoNeonResource --location eastus2 --subscription 12345678-1234-1234-1234-123456789abc --marketplace-details "{subscription-id:abcd1234-5678-90ab-cdef-12345678abcd,subscription-status:Subscribed,offer-details:{publisher-id:neon1722366567200,offer-id:neon_serverless_postgres_azure_prod,plan-id:neon_serverless_postgres_azure_prod_scale,plan-name:Scale Plan,term-unit:P1M,term-id:gmz7xq9ge3py}}"  --company-details "{}" --partner-organization-properties "{}"
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
-  - name: --branch-name --name -n
+  - name: --company-details
     summary: |-
-      Name of the Neon branch.
-    groupName: Resource Id Arguments
-  - name: --database-name
-    summary: |-
-      Neon Database name associated with the branch.
-    groupName: Properties Arguments
-  - name: --entity-name
-    summary: |-
-      Name of the resource.
+      Details of the company.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -348,22 +315,18 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --marketplace-details
+    summary: |-
+      Marketplace details of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --name -n
+    summary: |-
+      Name of the Neon organization.
+    groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --organization-name
-    summary: |-
-      Name of the Neon organization.  If value is blank it's asked from the tty.
-    groupName: Resource Id Arguments
-  - name: --parent-id
-    summary: |-
-      The ID of the parent branch.
-    groupName: Properties Arguments
-  - name: --project-name
-    summary: |-
-      Name of the Neon project.
-    groupName: Resource Id Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -372,10 +335,6 @@ directCommands:
     summary: |-
       Name of the Azure resource group.
     groupName: Resource Id Arguments
-  - name: --role-name
-    summary: |-
-      Role name associated with the branch.
-    groupName: Properties Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
@@ -384,6 +343,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -408,31 +371,25 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_neon_postgres_branch_wait
-  name: az neon postgres branch wait
+- uid: az_neon_organization_wait
+  name: az neon organization wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az neon postgres branch wait [--branch-id]
-                                 [--created]
-                                 [--custom]
-                                 [--deleted]
-                                 [--exists]
-                                 [--ids]
-                                 [--interval]
-                                 [--organization-name]
-                                 [--project-id]
-                                 [--resource-group]
-                                 [--subscription]
-                                 [--timeout]
-                                 [--updated]
+    az neon organization wait [--created]
+                              [--custom]
+                              [--deleted]
+                              [--exists]
+                              [--ids]
+                              [--interval]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
   optionalParameters:
-  - name: --branch-id
-    summary: |-
-      Id of the Neon branch.
-    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -461,13 +418,9 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
-  - name: --organization-name
+  - name: --name -n
     summary: |-
-      Name of the Neon organization.  If value is blank it's asked from the tty.
-    groupName: Resource Id Arguments
-  - name: --project-id
-    summary: |-
-      Id of the Neon project.
+      Name of the Neon organization.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -512,11 +465,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_neon_postgres_branch_create
-- az_neon_postgres_branch_delete
-- az_neon_postgres_branch_list
-- az_neon_postgres_branch_show
-- az_neon_postgres_branch_update
-- az_neon_postgres_branch_wait
+- az_neon_organization_create
+- az_neon_organization_delete
+- az_neon_organization_list
+- az_neon_organization_show
+- az_neon_organization_update
+- az_neon_organization_wait
 metadata:
-  description: Manage branches within a Neon Postgres database.
+  description: Manage Neon organizations, which are entities created on the Neon side.
