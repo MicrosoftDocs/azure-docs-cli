@@ -2,88 +2,97 @@
 uid: az_policy_exemption
 name: az policy exemption
 summary: |-
-  Manage resource policy exemptions.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  Manage policy exemptions.
+description: |-
+  Policy exemptions specify resources that a policy assignment does not apply to.
+status: GA
 sourceType: Core
 directCommands:
 - uid: az_policy_exemption_create
   name: az policy exemption create
   summary: |-
     Create a policy exemption.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'policy exemption' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  description: |-
+    Create a policy exemption with the given name and scope. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or higher scope level, the exemption exempts all applicable resources in the resource group from applying to that policy assignment.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy exemption create --name
+    az policy exemption create --exemption-category {Mitigated, Waiver}
+                               --policy-assignment
+                               [--assignment-scope-validation {Default, DoNotValidate}]
                                [--description]
                                [--display-name]
-                               [--exemption-category {Mitigated, Waiver}]
                                [--expires-on]
                                [--metadata]
-                               [--policy-assignment]
+                               [--name]
                                [--policy-definition-reference-ids]
                                [--resource-group]
+                               [--resource-selectors]
                                [--scope]
   examples:
   - summary: |-
-      Create a policy exemption in default subscription.
-    syntax: >-
-      az policy exemption create -n exemptTestVM \
-          --policy-assignment "/subscriptions/mySubId/providers/Microsoft.Authorization/policyAssignments/limitVMSku" \
-          --exemption-category "Waiver"
+      Create a policy exemption in default subscription
+    syntax: az policy exemption create -n exemptTestVM --policy-assignment "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyAssignments/limitVMSku" --exemption-category "Waiver"
   - summary: |-
-      Create a policy exemption in the resource group.
-    syntax: >-
-      az policy exemption create -n exemptTestVM \
-          --policy-assignment "/subscriptions/mySubId/providers/Microsoft.Authorization/policyAssignments/limitVMSku" \
-          --exemption-category "Waiver" \
-          --resource-group "myResourceGroup"
+      Create a policy exemption in the resource group
+    syntax: az policy exemption create -n exemptTestVM --policy-assignment "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyAssignments/limitVMSku" --exemption-category "Waiver" --resource-group "myResourceGroup"
   - summary: |-
-      Create a policy exemption in a management group.
-    syntax: >-
-      az policy exemption create -n exemptTestVM \
-          --policy-assignment "/providers/Microsoft.Management/managementGroups/myMG/providers/Microsoft.Authorization/policyAssignments/limitVMSku" \
-          --exemption-category "Waiver" \
-          --scope "/providers/Microsoft.Management/managementGroups/myMG"
+      Create a policy exemption in a management group
+    syntax: az policy exemption create -n exemptTestVM --policy-assignment "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policyAssignments/limitVMSku" --exemption-category "Waiver" --scope "/providers/Microsoft.Management/managementGroups/{managementGroupName}"
   requiredParameters:
   - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the new policy exemption.
-  optionalParameters:
-  - name: --description
-    summary: |-
-      Description of policy exemption.
-  - name: --display-name
-    summary: |-
-      Display name of the policy exemption.
-  - name: --exemption-category -e
+    name: --exemption-category -e
     acceptedValues: Mitigated, Waiver
     summary: |-
-      The policy exemption category of the policy exemption.
+      The policy exemption category.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --policy-assignment -a
+    summary: |-
+      The policy assignment to exempt.
+    groupName: Properties Arguments
+  optionalParameters:
+  - name: --assignment-scope-validation -v
+    defaultValue: Default
+    acceptedValues: Default, DoNotValidate
+    summary: |-
+      The assignment scope validation.
+    groupName: Properties Arguments
+  - name: --description
+    summary: |-
+      Policy exemption description.
+    groupName: Properties Arguments
+  - name: --display-name
+    summary: |-
+      The display name of the policy exemption.
+    groupName: Properties Arguments
   - name: --expires-on
     summary: |-
-      The expiration date and time (in UTC ISO 8601 format yyyy-MM-ddTHH:mm:ssZ) of the policy exemption.
+      The expiration date and time.
     isBreakingChange: true
+    groupName: Properties Arguments
   - name: --metadata
     summary: |-
-      Metadata in space-separated key=value pairs.
-  - name: --policy-assignment -a
+      The policy exemption metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --name -n
     summary: |-
-      The referenced policy assignment Id for the policy exemption.
+      The name of the policy exemption.
   - name: --policy-definition-reference-ids -r
     summary: |-
-      The policy definition reference ids to exempt in the initiative (policy set).
+      The policy definition reference IDs.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --resource-selectors
+    summary: |-
+      The resource selectors list to filter policies by resource properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --scope
     summary: |-
-      Scope to which this policy exemption applies.
+      The scope of the policy assignment.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -104,6 +113,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -112,9 +124,9 @@ directCommands:
   name: az policy exemption delete
   summary: |-
     Delete a policy exemption.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'policy exemption' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  description: |-
+    Delete the policy exemption with the given name and scope.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
@@ -123,20 +135,20 @@ directCommands:
                                [--scope]
   examples:
   - summary: |-
-      Delete a policy exemption.
+      Delete a policy exemption
     syntax: az policy exemption delete --name MyPolicyExemption --resource-group "myResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the policy exemption.
+      The name of the policy exemption.
   optionalParameters:
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --scope
     summary: |-
-      Scope to which this policy exemption applies.
+      The scope of the policy assignment.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -157,6 +169,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -164,26 +179,55 @@ directCommands:
 - uid: az_policy_exemption_list
   name: az policy exemption list
   summary: |-
-    List policy exemptions.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'policy exemption' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Retrieve all applicable policy exemptions.
+  description: |-
+    Retrieve the list of all policy assignments applicable to the given subscription or management group.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy exemption list [--disable-scope-strict-match]
+    az policy exemption list [--disable-scope-strict-match {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--filter]
+                             [--management-group]
+                             [--max-items]
+                             [--next-token]
                              [--resource-group]
                              [--scope]
+  examples:
+  - summary: |-
+      List policy exemptions that apply to a management group
+    syntax: az policy exemption list --management-group DevOrg --filter atScopeAndBelow()
+  - summary: |-
+      List policy exemptions that apply to a resource group
+    syntax: az policy exemption list --resource-group TestResourceGroup
+  - summary: |-
+      List policy exemptions that apply to a subscription
+    syntax: az policy exemption list
   optionalParameters:
-  - name: --disable-scope-strict-match -i
+  - name: --disable-scope-strict-match -d
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Include policy exemptions either inherited from parent scope or at child scope.
+      Include policy exemptions either inherited from parent scopes or at child scopes.
+  - name: --filter
+    summary: |-
+      Filter list results.
+  - name: --management-group
+    summary: |-
+      The management group.
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      The resource group.
   - name: --scope
     summary: |-
-      Scope to which this policy exemption applies.
+      Scope at which to list applicable policy exemptions. If scope is not provided, the scope will be the implied or specified subscription.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -204,6 +248,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -211,10 +258,10 @@ directCommands:
 - uid: az_policy_exemption_show
   name: az policy exemption show
   summary: |-
-    Show a policy exemption.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'policy exemption' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Retrieve a policy exemption.
+  description: |-
+    Retrieve and show the details of the policy exemption with the given name and scope.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
@@ -223,20 +270,20 @@ directCommands:
                              [--scope]
   examples:
   - summary: |-
-      Show a policy exemption.
+      Show a policy exemption
     syntax: az policy exemption show --name MyPolicyExemption --resource-group "myResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the policy exemption.
+      The name of the policy exemption.
   optionalParameters:
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --scope
     summary: |-
-      Scope to which this policy exemption applies.
+      The scope of the policy assignment.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -257,6 +304,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -265,71 +315,106 @@ directCommands:
   name: az policy exemption update
   summary: |-
     Update a policy exemption.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'policy exemption' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  description: |-
+    Update the policy exemption with the given name and scope by applying the given property values.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
     az policy exemption update --name
+                               [--add]
+                               [--assignment-scope-validation {Default, DoNotValidate}]
                                [--description]
                                [--display-name]
                                [--exemption-category {Mitigated, Waiver}]
                                [--expires-on]
+                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                [--metadata]
+                               [--policy-assignment]
                                [--policy-definition-reference-ids]
+                               [--remove]
                                [--resource-group]
+                               [--resource-selectors]
                                [--scope]
+                               [--set]
   examples:
   - summary: |-
-      Update a policy exemption.
-    syntax: >-
-      az policy exemption update -n exemptTestVM \
-          --exemption-category "Mitigated"
+      Update a policy exemption category
+    syntax: az policy exemption update -n exemptTestVM --exemption-category "Mitigated"
   - summary: |-
-      Update a policy exemption in the resource group.
-    syntax: >-
-      az policy exemption update -n exemptTestVM \
-          --exemption-category "Mitigated" \
-          --resource-group "myResourceGroup"
+      Update a policy exemption in a resource group
+    syntax: az policy exemption update -n exemptTestVM --display-name "Updated display name" --resource-group myResourceGroup
   - summary: |-
-      Update a policy exemption in a management group.
-    syntax: >-
-      az policy exemption update -n exemptTestVM \
-          --exemption-category "Mitigated" \
-          --scope "/providers/Microsoft.Management/managementGroups/myMG"
+      Update a policy exemption at scope
+    syntax: az policy exemption update -n exemptTestVM --description "This exemption is very cool." --scope "/providers/Microsoft.Management/managementGroups/{managementGroupName}"
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the policy exemption.
+      The name of the policy exemption.
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --assignment-scope-validation -v
+    acceptedValues: Default, DoNotValidate
+    summary: |-
+      The assignment scope validation.
+    groupName: Properties Arguments
   - name: --description
     summary: |-
-      Description of policy exemption.
+      Policy exemption description.
+    groupName: Properties Arguments
   - name: --display-name
     summary: |-
-      Display name of the policy exemption.
+      The display name of the policy exemption.
+    groupName: Properties Arguments
   - name: --exemption-category -e
     acceptedValues: Mitigated, Waiver
     summary: |-
-      The policy exemption category of the policy exemption.
+      The policy exemption category.
+    groupName: Properties Arguments
   - name: --expires-on
     summary: |-
-      The expiration date and time (in UTC ISO 8601 format yyyy-MM-ddTHH:mm:ssZ) of the policy exemption.
+      The expiration date and time.
     isBreakingChange: true
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --metadata
     summary: |-
-      Metadata in space-separated key=value pairs.
+      The policy exemption metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --policy-assignment -a
+    summary: |-
+      The policy assignment to exempt.
+    groupName: Properties Arguments
   - name: --policy-definition-reference-ids -r
     summary: |-
-      The policy definition reference ids to exempt in the initiative (policy set).
+      The policy definition reference IDs.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
-      The resource group where the policy will be applied.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --resource-selectors
+    summary: |-
+      The resource selectors list to filter policies by resource properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --scope
     summary: |-
-      Scope to which this policy exemption applies.
+      The scope of the policy assignment.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -350,6 +435,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -361,5 +449,5 @@ commands:
 - az_policy_exemption_show
 - az_policy_exemption_update
 metadata:
-  ms.date: 01/06/2025
-  description: Manage resource policy exemptions.
+  ms.date: 08/26/2025
+  description: Policy exemptions specify resources that a policy assignment does not apply to.
