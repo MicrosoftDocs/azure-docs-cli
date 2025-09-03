@@ -1462,7 +1462,7 @@ ms.custom: devx-track-azurecli
 |---|---|
 | [az databricks workspace](/cli/azure/databricks/workspace) | [Get Microsoft Entra ID tokens for service principals](/azure/databricks/dev-tools/service-prin-aad-token)
 |  | [Build a data pipeline by using Azure Data Factory, DevOps, and machine learning](/azure/devops/pipelines/apps/cd/azure/build-data-pipeline)
-|  | [Azure CLI login with a Microsoft Entra ID service principal](/azure/databricks/dev-tools/azure-cli-login-service-principal)
+|  | [Azure CLI login with a Microsoft Entra ID service principal](/cli/azure/authenticate-azure-cli-service-principal)
 |  | [Get Microsoft Entra ID tokens for users by using the Azure CLI](/azure/databricks/dev-tools/user-aad-token)
 |  | [Configure customer-managed keys for Azure managed disks](/azure/databricks/security/keys/cmk-managed-disks-azure/cmk-managed-disks-azure)
 |  | [Enable customer-managed keys for managed services](/azure/databricks/security/keys/cmk-managed-services-azure/customer-managed-key-managed-services-azure)
