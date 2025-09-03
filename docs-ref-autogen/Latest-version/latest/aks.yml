@@ -10,6 +10,172 @@ summary: |-
 status: GA
 sourceType: Core and Extension
 directCommands:
+- uid: az_aks_agent
+  name: az aks agent
+  summary: |-
+    Run AI assistant to analyze and troubleshoot Kubernetes clusters.
+  description: |-
+    This command allows you to ask questions about your Azure Kubernetes cluster and get answers using AI models.
+    Environment variables must be set to use the AI model, please refer to https://docs.litellm.ai/docs/providers to learn more about supported AI providers and models and required environment variables.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks agent [--api-key]
+                 [--config-file]
+                 [--max-steps]
+                 [--model]
+                 [--name]
+                 [--no-echo-request]
+                 [--no-interactive]
+                 [--refresh-toolsets]
+                 [--resource-group]
+                 [--show-tool-output]
+                 []
+  examples:
+  - summary: |-
+      Ask about pod issues in the cluster with Azure OpenAI
+    syntax: >-
+      export AZURE_API_BASE="https://my-azureopenai-service.openai.azure.com/"
+
+      export AZURE_API_VERSION="2025-01-01-preview"
+
+      export AZURE_API_KEY="sk-xxx"
+
+      az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Ask about pod issues in the cluster with OpenAI
+    syntax: >-
+      export OPENAI_API_KEY="sk-xxx"
+
+      az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model gpt-4o
+  - summary: |-
+      Run in interactive mode without a question
+    syntax: az aks agent "Check the pod status in my cluster" --name MyManagedCluster --resource-group MyResourceGroup --model azure/my-gpt4.1-deployment --api-key "sk-xxx"
+  - summary: |-
+      Run in non-interactive batch mode
+    syntax: az aks agent "Diagnose networking issues" --no-interactive --max-steps 15 --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Show detailed tool output during analysis
+    syntax: az aks agent "Why is my service workload unavailable in namespace workload-ns?" --show-tool-output --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Use custom configuration file
+    syntax: az aks agent "Check kubernetes pod resource usage" --config-file /path/to/custom.yaml --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Run agent with no echo of the original question
+    syntax: az aks agent "What is the status of my cluster?" --no-echo-request --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Refresh toolsets to get the latest available tools
+    syntax: az aks agent "What is the status of my cluster?" --refresh-toolsets --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Run agent with config file
+    syntax: >-
+      az aks agent "Check kubernetes pod resource usage" --config-file /path/to/custom.yaml
+
+      Here is an example of config file:
+
+      ```json
+
+      model: "gpt-4o"
+
+      api_key: "..."
+
+      # define a list of mcp servers, mcp server can be defined
+
+      mcp_servers:
+        aks_mcp:
+          description: "The AKS-MCP is a Model Context Protocol (MCP) server that enables AI assistants to interact with Azure Kubernetes Service (AKS) clusters"
+          url: "http://localhost:8003/sse"
+
+      # try adding your own tools or toggle the built-in toolsets here
+
+      # e.g. query company-specific data, fetch logs from your existing observability tools, etc
+
+      # To check how to add a customized toolset, please refer to https://docs.robusta.dev/master/configuration/holmesgpt/custom_toolsets.html#custom-toolsets
+
+      # To find all built-in toolsets, please refer to https://docs.robusta.dev/master/configuration/holmesgpt/builtin_toolsets.html
+
+      toolsets:
+        # add a new json processor toolset
+        json_processor:
+          description: "A toolset for processing JSON data using jq"
+          prerequisites:
+            - command: "jq --version"  # Ensure jq is installed
+          tools:
+            - name: "process_json"
+              description: "A tool that uses jq to process JSON input"
+              command: "echo '{{ json_input }}' | jq '.'"  # Example jq command to format JSON
+        # disable a built-in toolsets
+        aks/core:
+          enabled: false
+        ```
+  optionalParameters:
+  - name: --api-key
+    summary: |-
+      API key to use for the LLM (if not given, uses environment variables AZURE_API_KEY, OPENAI_API_KEY).
+  - name: --config-file
+    defaultValue: C:\azureCli\aksAgent.yaml
+    summary: |-
+      Path to configuration file.
+  - name: --max-steps
+    defaultValue: "10"
+    summary: |-
+      Maximum number of steps the LLM can take to investigate the issue.
+  - name: --model
+    summary: |-
+      Model to use for the LLM.
+  - name: --name -n
+    summary: |-
+      Name of the managed cluster.
+  - name: --no-echo-request
+    defaultValue: "False"
+    summary: |-
+      Disable echoing back the question provided to AKS Agent in the output.
+  - name: --no-interactive
+    defaultValue: "False"
+    summary: |-
+      Disable interactive mode. When set, the agent will not prompt for input and will run in batch mode.
+  - name: --refresh-toolsets
+    defaultValue: "False"
+    summary: |-
+      Refresh the toolsets status.
+  - name: --resource-group -g
+    summary: |-
+      Name of the resource group.
+  - name: --show-tool-output
+    defaultValue: "False"
+    summary: |-
+      Show the output of each tool that was called during the analysis.
+  - name: <PROMPT>
+    summary: |-
+      Ask any question and answer using available tools.
+    groupName: Positional
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_bastion
   name: az aks bastion
   summary: |-
@@ -1458,6 +1624,7 @@ directCommands:
                   [--image-cleaner-interval-hours]
                   [--ip-families]
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
+                  [--kms-infrastructure-encryption {Disabled, Enabled}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--kube-proxy-config]
@@ -2133,6 +2300,14 @@ directCommands:
     acceptedValues: AKSLongTermSupport, KubernetesOfficial
     summary: |-
       Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
+  - name: --kms-infrastructure-encryption
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable encryption at rest of Kubernetes resource objects using service-managed keys.
+    description: |-
+      Enable infrastructure encryption for Kubernetes resource objects. This feature provides encryption at rest for cluster secrets and configuration using service-managed keys. For more information see https://aka.ms/aks/kubernetesResourceObjectEncryption.
+    isPreview: true
   - name: --ksm-metric-annotations-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
@@ -2417,7 +2592,6 @@ directCommands:
     acceptedValues: automatic, base
     summary: |-
       Specify SKU name for managed clusters. '--sku base' enables a base managed cluster. '--sku automatic' enables an automatic managed cluster.
-    isPreview: true
   - name: --snapshot-id
     summary: |-
       The source nodepool snapshot id used to create this cluster.
@@ -6229,7 +6403,6 @@ directCommands:
     acceptedValues: automatic, base
     summary: |-
       Specify SKU name for managed clusters. '--sku base' enables a base managed cluster. '--sku automatic' enables an automatic managed cluster.
-    isPreview: true
   - name: --ssh-key-value
     summary: |-
       Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
@@ -6966,6 +7139,7 @@ commands:
 - az_aks_addon_list-available
 - az_aks_addon_show
 - az_aks_addon_update
+- az_aks_agent
 - az_aks_app
 - az_aks_app_up
 - az_aks_approuting
