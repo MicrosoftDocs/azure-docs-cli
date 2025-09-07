@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/04/2025
+ms.date: 09/07/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -70,7 +70,7 @@ You will be prompted to install an extension on first use.
 |[command-change](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change) | 2.19.0 | Microsoft Azure Command-Line Tools CommandChange Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change/HISTORY.rst) |
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.67.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.13.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[computeschedule](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule) | 2.67.0 | Microsoft Azure Command-Line Tools Computeschedule Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule/HISTORY.rst) |
-|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
+|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.2.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.67.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.70.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.70.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.10.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
@@ -130,7 +130,7 @@ You will be prompted to install an extension on first use.
 |[internet-analyzer](https://github.com/Azure/azure-cli-extensions/tree/main/src/internet-analyzer) | 2.0.67 | Microsoft Azure Command-Line Tools Internet Analyzer Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/internet-analyzer/HISTORY.rst) |
 |[ip-group](https://github.com/Azure/azure-cli-extensions/tree/main/src/ip-group) | 2.50.0 | Microsoft Azure Command-Line Tools IpGroup Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/ip-group/HISTORY.rst) |
 |[k8s-configuration](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration) | 2.15.0 | Microsoft Azure Command-Line Tools K8s-configuration Extension | GA | [2.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration/HISTORY.rst) |
-|[k8s-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension) | 2.51.0 | Microsoft Azure Command-Line Tools K8s-extension Extension | GA | [1.6.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension/HISTORY.rst) |
+|[k8s-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension) | 2.51.0 | Microsoft Azure Command-Line Tools K8s-extension Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension/HISTORY.rst) |
 |[k8s-runtime](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime) | 2.70.0 | Microsoft Azure Command-Line Tools K8sRuntime Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime/HISTORY.rst) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
 |[lambda-test](https://github.com/Azure/azure-cli-extensions/tree/main/src/lambda-test) | 2.75.0 | Microsoft Azure Command-Line Tools LambdaTest Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/lambda-test/HISTORY.rst) |
@@ -185,7 +185,7 @@ You will be prompted to install an extension on first use.
 |[resource-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-mover) | 2.50.0 | Microsoft Azure Command-Line Tools ResourceMoverServiceAPI Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-mover/HISTORY.rst) |
 |[scenario-guide](https://github.com/Azure/azure-cli-extensions/tree/main/src/scenario-guide) | 2.20.0 | Microsoft Azure Command-Line Tools Scenario Guidance Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/scenario-guide/HISTORY.rst) |
 |[scheduled-query](https://github.com/Azure/azure-cli-extensions/tree/main/src/scheduled-query) | 2.54.0 | Microsoft Azure Command-Line Tools Scheduled_query Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/scheduled-query/HISTORY.rst) |
-|[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
+|[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
 |[self-help](https://github.com/Azure/azure-cli-extensions/tree/main/src/self-help) | 2.57.0 | Microsoft Azure Command-Line Tools SelfHelp Extension. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/self-help/HISTORY.rst) |
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console/HISTORY.rst) |
