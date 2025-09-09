@@ -18,21 +18,21 @@ directCommands:
   syntax: >-
     az datadog monitor create --monitor-name --name
                               --resource-group
-                              [--datadog-organization-properties]
                               [--identity]
                               [--location]
                               [--monitoring-status {Disabled, Enabled}]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--org-properties]
                               [--sku]
                               [--tags]
                               [--user-info]
   examples:
   - summary: |-
       Monitors_Create
-    syntax: az datadog monitor create --name "myMonitor" --resource-group "myResourceGroup" --location "West US 2" --tags Environment="Dev" --user-info name="Alice" email-address="alice@microsoft.com" phone-number="123-456-7890" --type "SystemAssigned" --sku-name "payg_v2_Monthly"
+    syntax: az datadog monitor create --name "myMonitor" --resource-group "myResourceGroup" --location "West US 2" --org-properties name="myResourceGroup" --tags Environment="Dev" --user-info name="Alice" email-address="alice@microsoft.com" phone-number="123-456-7890" --sku name="payg_v3_Monthly" --identity type="SystemAssigned" --monitoring-status "Enabled"
   - summary: |-
       Monitors creation with linking to Datadog organization.
-    syntax: az datadog monitor create --name "myMonitor" --resource-group "myResourceGroup" --location "West US 2" --datadog-organization-properties api-key=XX application-key=XX --tags Environment="Dev" --user-info name="Alice" email-address="alice@microsoft.com" phone-number="123-456-7890" --type "SystemAssigned" --sku-name "Linked"
+    syntax: az datadog monitor create --name "myMonitor-link" --resource-group "myResourceGroup" --location "West US 2" --org-properties api-key=XX application-key=XX --tags Environment="Dev" --user-info name="Alice" email-address="alice@microsoft.com" phone-number="123-456-7890"  --identity type="SystemAssigned" --sku name="Linked"
   requiredParameters:
   - isRequired: true
     name: --monitor-name --name -n
@@ -43,10 +43,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --datadog-organization-properties
-    summary: |-
-      Datadog organization properties  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --identity
     summary: |-
       Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -65,6 +61,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --org-properties
+    summary: |-
+      Datadog organization properties  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --sku
     summary: |-
       Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -722,6 +722,7 @@ directCommands:
                               [--monitor-name --name]
                               [--monitoring-status {Disabled, Enabled}]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--org-properties]
                               [--remove]
                               [--resource-group]
                               [--set]
@@ -768,6 +769,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --org-properties
+    summary: |-
+      Specify the Datadog organization name. In the case of linking to existing organizations, Id, ApiKey, and Applicationkey is required as well.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
