@@ -2,7 +2,6 @@
 title: How to use variables in Azure CLI commands | Microsoft Docs
 description: Learn about specifying values directly in Azure CLI commands by using shell variables, setting a subscription, creating default values, or using persistent values.
 ms.service: azure-cli
-ms.date: 09/19/2024
 ms.custom: template-how-to, devx-track-azurecli
 keywords: azure cli variables, azure cli commands, value of variable, shell variables
 ---
