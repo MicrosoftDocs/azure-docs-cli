@@ -1,5 +1,4 @@
 ---
-ms.date: 01/27/2025
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---

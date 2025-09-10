@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/08/2025
+ms.date: 09/09/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -84,7 +84,7 @@ You will be prompted to install an extension on first use.
 |[data-transfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer) | 2.0.24 | Microsoft Azure Command-Line Tools DataTransfer Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer/HISTORY.rst) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.70.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
-|[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.70.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
+|[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.70.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Preview | [1.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
 |[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.67.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
@@ -210,7 +210,7 @@ You will be prompted to install an extension on first use.
 |[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights) | 2.50.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights/HISTORY.rst) |
 |[traffic-collector](https://github.com/Azure/azure-cli-extensions/tree/main/src/traffic-collector) | 2.40.0 | Microsoft Azure Command-Line Tools TrafficCollector Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/traffic-collector/HISTORY.rst) |
 |[trustedsigning](https://github.com/Azure/azure-cli-extensions/tree/main/src/trustedsigning) | 2.57.0 | Microsoft Azure Command-Line Tools Trustedsigning Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/trustedsigning/HISTORY.rst) |
-|[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.61.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
+|[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.75.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [2.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap) | 2.61.0 | Manage virtual network taps (VTAP). | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap/HISTORY.rst) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.55.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
 |[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [2.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |

@@ -1,10 +1,6 @@
 ---
 title: Install the Azure CLI on macOS | Microsoft Docs
 description: Learn how to install and run the Azure CLI on macOS using the homebrew package manager. The Azure CLI has been tested on macOS versions 10.9 and later.
-author: jiasli
-ms.author: jiasli
-manager: yonzhan
-ms.date: 10/07/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos

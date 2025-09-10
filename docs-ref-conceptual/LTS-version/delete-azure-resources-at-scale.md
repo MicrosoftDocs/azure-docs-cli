@@ -1,7 +1,6 @@
 ---
 title: Delete multiple resources from a script using Azure CLI
 description: Learn how to delete multiple Azure resources from a script and log progress to a file.
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 #customer intent: As an Azure resource manager, I want to create Azure resources at scale using a script. I want to log progress to a local TXT file so I don't have to sort through my Windows log for results.

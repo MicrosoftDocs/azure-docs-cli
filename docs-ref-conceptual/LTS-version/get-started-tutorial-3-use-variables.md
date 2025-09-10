@@ -1,7 +1,6 @@
 ---
 title: Get variable values from Azure resources or a local JSON file | Microsoft Docs
 description: Learn how to use variables to store JSON file properties and query output.
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 
