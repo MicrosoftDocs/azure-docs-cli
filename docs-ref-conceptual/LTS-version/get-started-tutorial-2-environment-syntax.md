@@ -1,7 +1,6 @@
 ---
 title: Run Azure CLI commands with Bash, PowerShell Cmd syntax | Microsoft Docs
 description: Learn about quoting differences, line continuation and debugging in Bash, PowerShell and Windows Cmd scripting languages.
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 

@@ -1,7 +1,6 @@
 ---
 title: Query Azure CLI command results | Microsoft Docs
 description: Learn to use the Azure CLI --query parameter syntax and return information about Azure resources. Find tips to JMESPath syntax.
-ms.date: 06/26/2024
 ms.custom: devx-track-azurecli
 #customer intent: As a new user of the Azure CLI, I keep receiving errors when trying to use the --query parameter in commands.  I need to see examples that include syntax differences between Bash and PowerShell scripting languages.
 ---

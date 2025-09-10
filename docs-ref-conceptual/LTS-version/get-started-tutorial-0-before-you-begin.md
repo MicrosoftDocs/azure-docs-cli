@@ -1,7 +1,6 @@
 ---
 title: Learn about Azure CLI environments, terms, and compare the Azure CLI to Azure PowerShell | Microsoft Docs
 description: Learn the environments you can use to execute Azure CLI commands, Azure CLI terms, how the Azure CLI compares to Azure PowerShell.
-ms.date: 09/19/2024
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, devx-track-azurepowershell
 keywords: azure, az account, az group, az config, az init, configuration
