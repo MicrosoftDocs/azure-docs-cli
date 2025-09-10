@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/09/2025
+ms.date: 09/10/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -36,7 +36,7 @@ You will be prompted to install an extension on first use.
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
-|[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.61.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [2.8.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
+|[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.61.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [2.8.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
 |[amlfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs) | 2.70.0 | Microsoft Azure Command-Line Tools Amlfs Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs/HISTORY.rst) |
 |[aosm](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm) | 2.54.0 | Microsoft Azure Command-Line Tools Aosm Extension | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm/HISTORY.rst) |
 |[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.57.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | Preview | [1.2.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
