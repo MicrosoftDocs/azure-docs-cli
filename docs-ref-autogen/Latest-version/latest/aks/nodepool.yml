@@ -2046,6 +2046,7 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
+                           [--node-vm-size]
                            [--os-sku {AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404}]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--ssh-access {disabled, localuser}]
@@ -2069,6 +2070,9 @@ directCommands:
   - summary: |-
       Change a node pool to system mode
     syntax: az aks nodepool update --mode System -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: |-
+      Update cluster autoscaler vm size, min-count and max-count for virtual machines node pool
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --update-cluster-autoscaler --node-vm-size "Standard_D2s_v3" --min-count 2 --max-count 4
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -2187,6 +2191,9 @@ directCommands:
   - name: --node-taints
     summary: |-
       The node taints for the node pool.
+  - name: --node-vm-size -s
+    summary: |-
+      VM size for Kubernetes nodes. Only configurable when updating the autoscale settings of a VirtualMachines node pool.
   - name: --os-sku
     acceptedValues: AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404
     summary: |-
