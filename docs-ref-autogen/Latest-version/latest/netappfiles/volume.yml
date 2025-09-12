@@ -116,6 +116,7 @@ directCommands:
                                  --name --volume-name
                                  --pool-name
                                  --resource-group
+                                 [--accept-grow-capacity-pool-for-short-term-clone-split --grow-pool-clone-split {Accepted, Declined}]
                                  [--allowed-clients]
                                  [--avs-data-store {Disabled, Enabled}]
                                  [--backup-id]
@@ -163,7 +164,7 @@ directCommands:
                                  [--replication-schedule {_10minutely, daily, hourly}]
                                  [--rule-index]
                                  [--security-style {ntfs, unix}]
-                                 [--service-level {Premium, Standard, StandardZRS, Ultra}]
+                                 [--service-level {Flexible, Premium, Standard, StandardZRS, Ultra}]
                                  [--smb-access-based-enumeration --smb-access-enumeration {Disabled, Enabled}]
                                  [--smb-ca --smb-continuously-available --smb-continuously-avl {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--smb-encryption {0, 1, f, false, n, no, t, true, y, yes}]
@@ -215,6 +216,11 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --accept-grow-capacity-pool-for-short-term-clone-split --grow-pool-clone-split
+    acceptedValues: Accepted, Declined
+    summary: |-
+      While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted.
+    groupName: Properties Arguments
   - name: --allowed-clients
     summary: |-
       Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
@@ -308,6 +314,8 @@ directCommands:
     acceptedValues: dst, src
     summary: |-
       Indicates whether the local volume is the source or destination for the Volume Replication.
+    isDeprecated: true
+    deprecateInfo: Argument '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
     groupName: Replication Arguments
   - name: --export-policy-rules --rules
     summary: |-
@@ -443,7 +451,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --service-level
     defaultValue: Premium
-    acceptedValues: Premium, Standard, StandardZRS, Ultra
+    acceptedValues: Flexible, Premium, Standard, StandardZRS, Ultra
     summary: |-
       ServiceLevel.
     groupName: Properties Arguments
@@ -772,6 +780,8 @@ directCommands:
     acceptedValues: dst, src
     summary: |-
       Indicates whether the local volume is the source or destination for the Volume Replication.
+    isDeprecated: true
+    deprecateInfo: Argument '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
     groupName: Replication Arguments
   - name: --export-policy-rules --rules
     summary: |-
@@ -2293,6 +2303,81 @@ directCommands:
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume splitclonefromparent [--account-name]
+                                               [--ids]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--pool-name]
+                                               [--resource-group]
+                                               [--subscription]
+                                               [--volume-name]
+  examples:
+  - summary: |-
+      Volumes_SplitClone
+    syntax: az netappfiles volume splitclonefromparent --resource-group myRG --account-name account1 --pool-name pool1 --volume-name volume1
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --volume-name -n -v
+    summary: |-
+      The name of the volume.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_volume_splitclonefromparent(netappfiles-preview)
+  name: az netappfiles volume splitclonefromparent
+  extensionSuffix: netappfiles-preview
+  summary: |-
+    Split operation to convert clone volume to an independent volume.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az netappfiles volume splitclonefromparent [--account-name]
@@ -2396,7 +2481,7 @@ directCommands:
                                  [--remove]
                                  [--replication-schedule {_10minutely, daily, hourly}]
                                  [--resource-group]
-                                 [--service-level {Premium, Standard, StandardZRS, Ultra}]
+                                 [--service-level {Flexible, Premium, Standard, StandardZRS, Ultra}]
                                  [--set]
                                  [--smb-access-based-enumeration --smb-access-enumeration {Disabled, Enabled}]
                                  [--smb-ca --smb-continuously-available --smb-continuously-avl {0, 1, f, false, n, no, t, true, y, yes}]
@@ -2488,6 +2573,8 @@ directCommands:
     acceptedValues: dst, src
     summary: |-
       Indicates whether the local volume is the source or destination for the Volume Replication.
+    isDeprecated: true
+    deprecateInfo: Argument '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
     groupName: Replication Arguments
   - name: --export-policy-rules --rules
     summary: |-
@@ -2562,7 +2649,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --service-level
-    acceptedValues: Premium, Standard, StandardZRS, Ultra
+    acceptedValues: Flexible, Premium, Standard, StandardZRS, Ultra
     summary: |-
       ServiceLevel.
     groupName: Properties Arguments
@@ -2801,6 +2888,8 @@ directCommands:
     acceptedValues: dst, src
     summary: |-
       Indicates whether the local volume is the source or destination for the Volume Replication.
+    isDeprecated: true
+    deprecateInfo: Argument '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
     groupName: Replication Arguments
   - name: --export-policy-rules --rules
     summary: |-
@@ -3263,6 +3352,7 @@ commands:
 - az_netappfiles_volume_show
 - az_netappfiles_volume_show(netappfiles-preview)
 - az_netappfiles_volume_splitclonefromparent
+- az_netappfiles_volume_splitclonefromparent(netappfiles-preview)
 - az_netappfiles_volume_update
 - az_netappfiles_volume_update(netappfiles-preview)
 - az_netappfiles_volume_wait
