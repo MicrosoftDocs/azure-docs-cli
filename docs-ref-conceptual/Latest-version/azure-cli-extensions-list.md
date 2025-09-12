@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/10/2025
+ms.date: 09/11/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -31,7 +31,7 @@ You will be prompted to install an extension on first use.
 |[aem](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem/HISTORY.rst) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
 |[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [18.0.0b36](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [18.0.0b37](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.62](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
@@ -54,7 +54,7 @@ You will be prompted to install an extension on first use.
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.2](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.67.0 | Manage Azure Firewall resources. | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
-|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.59.0 | The Azure IoT extension for Azure CLI. | GA | [0.26.0](https://github.com/azure/azure-iot-cli-extension) |
+|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.59.0 | The Azure IoT extension for Azure CLI. | GA | [0.27.0](https://github.com/azure/azure-iot-cli-extension) |
 |[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.67.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [2.0.0b2](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.75.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.4](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.57.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
@@ -191,7 +191,7 @@ You will be prompted to install an extension on first use.
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console/HISTORY.rst) |
 |[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.60.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | GA | [3.3.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
 |[site-recovery](https://github.com/Azure/azure-cli-extensions/tree/main/src/site-recovery) | 2.51.0 | Microsoft Azure Command-Line Tools SiteRecovery Extension. | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/site-recovery/HISTORY.rst) |
-|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.56.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.28.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
+|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.56.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.28.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [2.0.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.54.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
 |[stack-hci-vm](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) | 2.15.0 | Microsoft Azure Command-Line Tools Stack-HCi-VM Extension | GA | [1.10.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) |
