@@ -21,6 +21,18 @@ for your own custom deployments.
 > To suppress warning messages, run: `az config set core.only_show_errors=yes`. For details on
 > configuration options, see [Azure CLI configuration values and environment variables][01].
 
+## Finding available images
+
+Follow Docker's official [instructions][05] to install Docker. The release containers derive from
+the official distribution image, install dependencies, and install Azure CLI.
+
+You can find a complete list of Azure CLI Docker images on our [Docker image][04] page.
+
+> [!IMPORTANT]
+> These images are built from official operating system (OS) images provided by the OS distributor.
+> These images might not have the latest security updates. Microsoft recommends that you update the
+> OS packages to the latest version to ensure the latest security updates are applied.
+
 ## Start the Docker container with Azure CLI preinstalled
 
 Open a command prompt and start a Docker container with the Azure CLI preinstalled using the
@@ -88,3 +100,5 @@ features and commonly used commands to get started.
 [01]: ./azure-cli-configuration.md#cli-configuration-values-and-environment-variables
 [02]: ./release-notes-azure-cli.md
 [03]: get-started-with-azure-cli.md
+[04]: https://aka.ms/azcli-docker-images
+[05]: https://docs.docker.com/engine/installation/
