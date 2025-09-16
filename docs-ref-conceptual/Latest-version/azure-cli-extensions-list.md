@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/15/2025
+ms.date: 09/16/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -106,7 +106,7 @@ You will be prompted to install an extension on first use.
 |[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.70.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | Preview | [1.3.1b1](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection) | 2.61.0 | Microsoft Azure Command-Line Tools ExpressRouteCrossConnection Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection/HISTORY.rst) |
-|[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.55.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
+|[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.75.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | Preview | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
 |[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.6.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
 |[footprint](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint/HISTORY.rst) |
