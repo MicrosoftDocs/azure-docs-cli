@@ -9,6 +9,10 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 # Azure CLI release notes
 
+> [!NOTE]  
+> Previous Azure CLI versions and their release notes are available on the [Azure CLI GitHub Releases](https://github.com/Azure/azure-cli/releases) page.
+
+
 ## September 02, 2025
 
 Version 2.77.0
