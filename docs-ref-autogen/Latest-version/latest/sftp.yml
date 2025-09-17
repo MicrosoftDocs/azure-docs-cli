@@ -1,0 +1,244 @@
+### YamlMime:AzureCLIGroup
+uid: az_sftp
+name: az sftp
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **sftp** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az sftp** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Generate SSH certificates and access Azure Storage blob data via SFTP.
+description: |-
+  These commands allow you to generate certificates and connect to Azure Storage Accounts using SFTP.
+
+  PREREQUISITES:
+  - Azure Storage Account with SFTP enabled
+  - Appropriate RBAC permissions (Storage Blob Data Contributor or similar)
+  - Azure CLI authentication (az login)
+  - Network connectivity to Azure Storage endpoints
+
+  The SFTP extension provides two main capabilities:
+  1. Certificate generation using Azure AD authentication (similar to 'az ssh cert')
+  2. Fully managed SFTP connections to Azure Storage with automatic credential handling
+
+  AUTHENTICATION MODES:
+  - Fully managed: No credentials needed - automatically generates SSH certificate
+  - Certificate-based: Use existing SSH certificate file
+  - Key-based: Use SSH public/private key pair (generates certificate automatically)
+
+  This extension closely follows the patterns established by the SSH extension.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_sftp_cert
+  name: az sftp cert
+  summary: |-
+    Generate SSH certificate for SFTP authentication.
+  description: |-
+    Generate an SSH certificate that can be used for authenticating to Azure Storage SFTP endpoints.
+    This uses Azure AD authentication to generate a certificate similar to 'az ssh cert'.
+
+    CERTIFICATE NAMING:
+    - Generated certificates have '-aadcert.pub' suffix (e.g., id_rsa-aadcert.pub)
+    - Certificates are valid for a limited time (typically 1 hour)
+    - Private keys are generated with 'id_rsa' name when key pair is created
+
+    The certificate can be used with 'az sftp connect' or with standard SFTP clients.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az sftp cert [--file]
+                 [--public-key-file]
+                 [--ssh-client-folder]
+  examples:
+  - summary: |-
+      Generate a certificate using an existing public key
+    syntax: az sftp cert --public-key-file ~/.ssh/id_rsa.pub --file ~/my_cert.pub
+  - summary: |-
+      Generate a certificate and create a new key pair in the same directory
+    syntax: az sftp cert --file ~/my_cert.pub
+  - summary: |-
+      Generate a certificate with custom SSH client folder
+    syntax: az sftp cert --file ~/my_cert.pub --ssh-client-folder "C:\Program Files\OpenSSH"
+  optionalParameters:
+  - name: --file -f
+    summary: |-
+      The file path to write the SSH cert to, defaults to public key path with -aadcert.pub appended.
+  - name: --public-key-file -p
+    summary: |-
+      The RSA public key file path. If not provided, generated key pair is stored in the same directory as --file.
+  - name: --ssh-client-folder
+    summary: |-
+      Folder path that contains ssh executables (ssh-keygen, ssh). Default to ssh executables in your PATH or C:\Windows\System32\OpenSSH on Windows.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_sftp_connect
+  name: az sftp connect
+  summary: |-
+    Access Azure Storage blob data via SFTP.
+  description: |-
+    Establish an SFTP connection to an Azure Storage Account.
+
+    AUTHENTICATION MODES:
+    1. Fully managed (RECOMMENDED): Run without credentials - automatically generates SSH certificate
+       and establishes connection. Credentials are cleaned up after use.
+
+    2. Certificate-based: Use existing SSH certificate file. Certificate must be generated with
+       'az sftp cert' or compatible with Azure AD authentication.
+
+    3. Key-based: Provide SSH keys - command will generate certificate automatically from your keys.
+
+    CONNECTION DETAILS:
+    - Username format: {storage-account}.{azure-username}
+    - Port: Uses SSH default (typically 22) unless specified with --port
+    - Endpoints resolved automatically based on Azure cloud environment:
+      * Azure Public: {storage-account}.blob.core.windows.net
+      * Azure China: {storage-account}.blob.core.chinacloudapi.cn
+      * Azure Government: {storage-account}.blob.core.usgovcloudapi.net
+
+    SECURITY:
+    - Generated credentials are automatically cleaned up after connection
+    - Temporary files stored in secure temporary directories
+    - OpenSSH handles certificate validation during connection.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az sftp connect --storage-account
+                    [--certificate-file]
+                    [--port]
+                    [--private-key-file]
+                    [--public-key-file]
+                    [--sftp-args]
+                    [--ssh-client-folder]
+  examples:
+  - summary: |-
+      Connect with automatic certificate generation (fully managed - RECOMMENDED)
+    syntax: az sftp connect --storage-account mystorageaccount
+  - summary: |-
+      Connect to storage account with existing certificate
+    syntax: az sftp connect --storage-account mystorageaccount --certificate-file ~/my_cert.pub
+  - summary: |-
+      Connect with existing SSH key pair
+    syntax: az sftp connect --storage-account mystorageaccount --public-key-file ~/.ssh/id_rsa.pub --private-key-file ~/.ssh/id_rsa
+  - summary: |-
+      Connect with custom port
+    syntax: az sftp connect --storage-account mystorageaccount --port 2222
+  - summary: |-
+      Connect with additional SFTP arguments for debugging
+    syntax: az sftp connect --storage-account mystorageaccount --sftp-args="-v"
+  - summary: |-
+      Connect with custom SSH client folder (Windows)
+    syntax: az sftp connect --storage-account mystorageaccount --ssh-client-folder "C:\Program Files\OpenSSH"
+  - summary: |-
+      Connect with custom connection timeout
+    syntax: az sftp connect --storage-account mystorageaccount --sftp-args="-o ConnectTimeout=30"
+  requiredParameters:
+  - isRequired: true
+    name: --storage-account -s
+    summary: |-
+      Azure Storage Account name for SFTP connection. Must have SFTP enabled.
+  optionalParameters:
+  - name: --certificate-file -c
+    summary: |-
+      Path to SSH certificate file for authentication. Must be generated with "az sftp cert" or compatible Azure AD certificate. If not provided, certificate will be generated automatically.
+  - name: --port
+    summary: |-
+      SFTP port. If not specified, uses SSH default port (typically 22).
+  - name: --private-key-file -i
+    summary: |-
+      Path to RSA private key file. If provided without certificate, a certificate will be generated automatically from this key.
+  - name: --public-key-file -p
+    summary: |-
+      Path to RSA public key file. If provided without certificate, a certificate will be generated automatically from this key.
+  - name: --sftp-args
+    summary: |-
+      Additional arguments to pass to the SFTP client. Example: "-v" for verbose output, "-b batchfile.txt" for batch commands, "-o ConnectTimeout=30" for custom timeout.
+  - name: --ssh-client-folder
+    summary: |-
+      Path to folder containing SSH client executables (ssh, sftp, ssh-keygen). Default: Uses executables from PATH or C:\Windows\System32\OpenSSH on Windows.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_sftp_cert
+- az_sftp_connect
+metadata:
+  description: >-
+    These commands allow you to generate certificates and connect to Azure Storage Accounts using SFTP.
+
+
+    PREREQUISITES:
+
+    - Azure Storage Account with SFTP enabled
+
+    - Appropriate RBAC permissions (Storage Blob Data Contributor or similar)
+
+    - Azure CLI authentication (az login)
+
+    - Network connectivity to Azure Storage endpoints
+
+
+    The SFTP extension provides two main capabilities:
+
+    1. Certificate generation using Azure AD authentication (similar to 'az ssh cert')
+
+    2. Fully managed SFTP connections to Azure Storage with automatic credential handling
+
+
+    AUTHENTICATION MODES:
+
+    - Fully managed: No credentials needed - automatically generates SSH certificate
+
+    - Certificate-based: Use existing SSH certificate file
+
+    - Key-based: Use SSH public/private key pair (generates certificate automatically)
+
+
+    This extension closely follows the patterns established by the SSH extension.
