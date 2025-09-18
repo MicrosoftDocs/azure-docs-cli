@@ -358,9 +358,12 @@ directCommands:
                         [--aks-custom-headers]
                         [--allowed-host-ports]
                         [--asg-ids]
+                        [--batch-soak-duration]
                         [--crg-id]
                         [--disable-windows-outbound-nat]
+                        [--drain-batch-size]
                         [--drain-timeout]
+                        [--drain-timeout-bg]
                         [--driver-type {CUDA, GRID}]
                         [--enable-artifact-streaming]
                         [--enable-cluster-autoscaler]
@@ -372,6 +375,7 @@ directCommands:
                         [--enable-ultra-ssd]
                         [--enable-vtpm]
                         [--eviction-policy {Deallocate, Delete}]
+                        [--final-soak-duration]
                         [--gateway-prefix-size]
                         [--gpu-driver {Install, None}]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
@@ -412,6 +416,7 @@ directCommands:
                         [--ssh-access {disabled, localuser}]
                         [--tags]
                         [--undrainable-node-behavior]
+                        [--upgrade-strategy {BlueGreen, Rolling}]
                         [--vm-set-type]
                         [--vm-sizes]
                         [--vnet-subnet-id]
@@ -448,6 +453,9 @@ directCommands:
   - summary: |-
       Create a nodepool with ManagedSystem mode
     syntax: az aks nodepool add -g MyResourceGroup -n managedsystem1 --cluster-name MyManagedCluster --mode ManagedSystem
+  - summary: |-
+      Create a node pool with blue-green upgrade strategy and default parameters
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --upgrade-strategy BlueGreen
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -473,6 +481,9 @@ directCommands:
     summary: |-
       The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a comma-separated list of IDs. Must use VMSS agent pool type.
     isPreview: true
+  - name: --batch-soak-duration
+    summary: |-
+      Wait time (in minutes) after draining a batch of nodes before proceeding to the next batch. Default is 15 minutes. Only for blue-green upgrades.
   - name: --crg-id
     summary: |-
       The crg-id used to associate the new nodepool with the existed Capacity Reservation Group resource. Must use VMSS agent pool type.
@@ -481,9 +492,19 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Windows OutboundNAT on Windows agent node pool. Must use VMSS agent pool type.
+  - name: --drain-batch-size
+    summary: |-
+      Number or percentage of nodes to drain per batch during blue-green upgrades. Accepts an integer (e.g. '5') or percentage (e.g. '50%'). Default is 10%.
+    description: |-
+      Specifies how many nodes to drain in each batch during a blue-green upgrade. Must be a non-zero value, either as an integer (e.g. '5') or a percentage (e.g. '50%') of the total blue nodes at the start of the upgrade. Fractional nodes are rounded up. For more details and best practices, see https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster.
   - name: --drain-timeout
     summary: |-
       When nodes are drain how many minutes to wait for all pods to be evicted.
+  - name: --drain-timeout-bg
+    summary: |-
+      Timeout (in minutes) to evict pods and gracefully terminate per node during blue-green upgrades. Default is 30 minutes.
+    description: |-
+      Maximum time (in minutes) to wait for pod eviction and graceful termination per node during blue-green upgrades. Honors pod disruption budgets. If exceeded, the upgrade fails. Default is 30 minutes.
   - name: --driver-type
     acceptedValues: CUDA, GRID
     summary: |-
@@ -533,6 +554,9 @@ directCommands:
     acceptedValues: Deallocate, Delete
     summary: |-
       The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
+  - name: --final-soak-duration
+    summary: |-
+      Wait time (in minutes) after all old nodes are drained before removing them. Default is 60 minutes. Only for blue-green upgrades.
   - name: --gateway-prefix-size
     summary: |-
       The size of Public IPPrefix attached to the Gateway-mode node pool. The node pool must be in Gateway mode.
@@ -679,6 +703,10 @@ directCommands:
   - name: --undrainable-node-behavior
     summary: |-
       Define the behavior for undrainable nodes during upgrade. The value should be "Cordon" or "Schedule". The default value is "Schedule".
+  - name: --upgrade-strategy
+    acceptedValues: BlueGreen, Rolling
+    summary: |-
+      Upgrade strategy for the node pool. Allowed values are "Rolling" or "BlueGreen". Default is "Rolling".
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
@@ -2021,18 +2049,22 @@ directCommands:
                            [--aks-custom-headers]
                            [--allowed-host-ports]
                            [--asg-ids]
+                           [--batch-soak-duration]
                            [--dcat --disable-custom-ca-trust]
                            [--disable-cluster-autoscaler]
                            [--disable-fips-image]
                            [--disable-secure-boot]
                            [--disable-vtpm]
+                           [--drain-batch-size]
                            [--drain-timeout]
+                           [--drain-timeout-bg]
                            [--enable-artifact-streaming]
                            [--enable-cluster-autoscaler]
                            [--enable-custom-ca-trust]
                            [--enable-fips-image]
                            [--enable-secure-boot]
                            [--enable-vtpm]
+                           [--final-soak-duration]
                            [--if-match]
                            [--if-none-match]
                            [--labels]
@@ -2053,6 +2085,7 @@ directCommands:
                            [--tags]
                            [--undrainable-node-behavior]
                            [--update-cluster-autoscaler]
+                           [--upgrade-strategy {BlueGreen, Rolling}]
                            [--yes]
   examples:
   - summary: |-
@@ -2073,6 +2106,9 @@ directCommands:
   - summary: |-
       Update cluster autoscaler vm size, min-count and max-count for virtual machines node pool
     syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --update-cluster-autoscaler --node-vm-size "Standard_D2s_v3" --min-count 2 --max-count 4
+  - summary: |-
+      Update a node pool with blue-green upgrade settings
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --drain-batch-size 50% --drain-timeout-bg 5 --batch-soak-duration 10 --final-soak-duration 10
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -2098,6 +2134,9 @@ directCommands:
     summary: |-
       The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a comma-separated list of IDs. Must use VMSS agent pool type.
     isPreview: true
+  - name: --batch-soak-duration
+    summary: |-
+      Wait time (in minutes) after draining a batch of nodes before proceeding to the next batch. Default is 15 minutes. Only for blue-green upgrades.
   - name: --dcat --disable-custom-ca-trust
     defaultValue: "False"
     summary: |-
@@ -2120,9 +2159,19 @@ directCommands:
     summary: |-
       Disable vTPM on an existing Trusted Launch enabled agent node pool.
     isPreview: true
+  - name: --drain-batch-size
+    summary: |-
+      Number or percentage of nodes to drain per batch during blue-green upgrades. Accepts an integer (e.g. '5') or percentage (e.g. '50%'). Default is 10%.
+    description: |-
+      Specifies how many nodes to drain in each batch during a blue-green upgrade. Must be a non-zero value, either as an integer (e.g. '5') or a percentage (e.g. '50%') of the total blue nodes at the start of the upgrade. Fractional nodes are rounded up. For more details and best practices, see: https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster.
   - name: --drain-timeout
     summary: |-
       When nodes are drain how many minutes to wait for all pods to be evicted.
+  - name: --drain-timeout-bg
+    summary: |-
+      Timeout (in minutes) to evict pods and gracefully terminate per node during blue-green upgrades. Default is 30 minutes.
+    description: |-
+      Maximum time (in minutes) to wait for pod eviction and graceful termination per node during blue-green upgrades. Honors pod disruption budgets. If exceeded, the upgrade fails. Default is 30 minutes.
   - name: --enable-artifact-streaming
     defaultValue: "False"
     summary: |-
@@ -2150,6 +2199,9 @@ directCommands:
     summary: |-
       Enable vTPM on an existing Trusted Launch enabled agent node pool. Must use VMSS agent pool type.
     isPreview: true
+  - name: --final-soak-duration
+    summary: |-
+      Wait time (in minutes) after all old nodes are drained before removing them. Default is 60 minutes. Only for blue-green upgrades.
   - name: --if-match
     summary: |-
       The value provided will be compared to the ETag of the node pool, if it matches the operation will proceed. If it does not match, the request will be rejected to prevent accidental overwrites. This must not be specified when creating a new agentpool.
@@ -2217,6 +2269,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update min-count or max-count for cluster autoscaler.
+  - name: --upgrade-strategy
+    acceptedValues: BlueGreen, Rolling
+    summary: |-
+      Upgrade strategy for the node pool. Allowed values are "Rolling" or "BlueGreen". Default is "Rolling".
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -2367,7 +2423,11 @@ directCommands:
                             --name --nodepool-name
                             --resource-group
                             [--aks-custom-headers]
+                            [--batch-soak-duration]
+                            [--drain-batch-size]
                             [--drain-timeout]
+                            [--drain-timeout-bg]
+                            [--final-soak-duration]
                             [--if-match]
                             [--if-none-match]
                             [--kubernetes-version]
@@ -2379,6 +2439,7 @@ directCommands:
                             [--node-soak-duration]
                             [--snapshot-id]
                             [--undrainable-node-behavior]
+                            [--upgrade-strategy {BlueGreen, Rolling}]
                             [--yes]
   requiredParameters:
   - isRequired: true
@@ -2397,9 +2458,25 @@ directCommands:
   - name: --aks-custom-headers
     summary: |-
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+  - name: --batch-soak-duration
+    summary: |-
+      Wait time (in minutes) after draining a batch of nodes before proceeding to the next batch. Default is 15 minutes. Only for blue-green upgrades.
+  - name: --drain-batch-size
+    summary: |-
+      Number or percentage of nodes to drain per batch during blue-green upgrades. Accepts an integer (e.g. '5') or percentage (e.g. '50%'). Default is 10%.
+    description: |-
+      Specifies how many nodes to drain in each batch during a blue-green upgrade. Must be a non-zero value, either as an integer (e.g. '5') or a percentage (e.g. '50%') of the total blue nodes at the start of the upgrade. Fractional nodes are rounded up. For more details and best practices, see: https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster.
   - name: --drain-timeout
     summary: |-
       When nodes are drain how many minutes to wait for all pods to be evicted.
+  - name: --drain-timeout-bg
+    summary: |-
+      Timeout (in minutes) to evict pods and gracefully terminate per node during blue-green upgrades. Default is 30 minutes.
+    description: |-
+      Maximum time (in minutes) to wait for pod eviction and graceful termination per node during blue-green upgrades. Honors pod disruption budgets. If exceeded, the upgrade fails. Default is 30 minutes.
+  - name: --final-soak-duration
+    summary: |-
+      Wait time (in minutes) after all old nodes are drained before removing them. Default is 60 minutes. Only for blue-green upgrades.
   - name: --if-match
     summary: |-
       The value provided will be compared to the ETag of the node pool, if it matches the operation will proceed. If it does not match, the request will be rejected to prevent accidental overwrites. This must not be specified when creating a new agentpool. For upgrade node image version requests this will be ignored.
@@ -2435,6 +2512,10 @@ directCommands:
   - name: --undrainable-node-behavior
     summary: |-
       Define the behavior for undrainable nodes during upgrade. The value should be "Cordon" or "Schedule". The default value is "Schedule".
+  - name: --upgrade-strategy
+    acceptedValues: BlueGreen, Rolling
+    summary: |-
+      Upgrade strategy for the node pool. Allowed values are "Rolling" or "BlueGreen". Default is "Rolling".
   - name: --yes -y
     defaultValue: "False"
     summary: |-
