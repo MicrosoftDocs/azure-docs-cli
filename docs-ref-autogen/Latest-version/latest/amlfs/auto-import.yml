@@ -1,73 +1,82 @@
 ### YamlMime:AzureCLIGroup
-uid: az_amlfs_import
-name: az amlfs import
+uid: az_amlfs_auto-import
+name: az amlfs auto-import
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **amlfs** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az amlfs import** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **amlfs** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az amlfs auto-import** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Import Job.
+  Manage Auto Import Job.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_amlfs_import_create
-  name: az amlfs import create
+- uid: az_amlfs_auto-import_create
+  name: az amlfs auto-import create
   summary: |-
-    Create an import job.
+    Create an auto import job.
   status: GA
   sourceType: Extension
   syntax: >-
-    az amlfs import create --aml-filesystem-name
-                           --import-job-name --name
-                           --resource-group
-                           [--admin-status {Active, Cancel}]
-                           [--conflict-mode --conflict-resolution-mode {Fail, OverwriteAlways, OverwriteIfDirty, Skip}]
-                           [--import-prefixes]
-                           [--location]
-                           [--maximum-errors]
-                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                           [--tags]
+    az amlfs auto-import create --aml-filesystem-name
+                                --auto-import-job-name --name
+                                --resource-group
+                                [--admin-status {Disable, Enable}]
+                                [--auto-import-prefixes]
+                                [--conflict-mode --conflict-resolution-mode {Fail, OverwriteAlways, OverwriteIfDirty, Skip}]
+                                [--enable-deletions {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--location]
+                                [--maximum-errors]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--tags]
   examples:
   - summary: |-
-      importJobs_CreateOrUpdate
-    syntax: az amlfs import create --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1 --tags "{Dept:ContosoAds}" --location eastus --import-prefixes "[/]" --conflict-resolution-mode OverwriteAlways --maximum-errors 0
+      autoImportJobs_CreateOrUpdate
+    syntax: >-
+      az amlfs auto-import create --resource-group scgroup --aml-filesystem-name fs1 --auto-import-job-name autojob1 --tags "{Dept:ContosoAds}" --location eastus --auto-import-prefixes "[/]" --conflict-resolution-mode Skip --enable-deletions False --maximum-errors 0
+
+      az amlfs auto-import create --resource-group scgroup --aml-filesystem-name fs1 --auto-import-job-name autojob1 --tags "{Dept:ContosoAds}" --location eastus --auto-import-prefixes "[/a,/b]" --conflict-resolution-mode Skip --enable-deletions False --maximum-errors 0 --admin-status Enable
   requiredParameters:
   - isRequired: true
     name: --aml-filesystem-name
     summary: |-
       Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
   - isRequired: true
-    name: --import-job-name --name -n
+    name: --auto-import-job-name --name -n
     summary: |-
-      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+      Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --admin-status
-    defaultValue: Active
-    acceptedValues: Active, Cancel
+    defaultValue: Enable
+    acceptedValues: Disable, Enable
     summary: |-
-      The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job. By default it is set to 'Active'.
+      The administrative status of the auto import job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto import job. By default it is set to 'Enable'.
+    groupName: Properties Arguments
+  - name: --auto-import-prefixes
+    summary: |-
+      An array of blob paths/prefixes that get auto imported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths is 100.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --conflict-mode --conflict-resolution-mode
-    defaultValue: Fail
+    defaultValue: Skip
     acceptedValues: Fail, OverwriteAlways, OverwriteIfDirty, Skip
     summary: |-
-      How the import job will handle conflicts. For example, if the import job is trying to bring in a directory, but a file is at that path, how it handles it. Fail indicates that the import job should stop immediately and not do anything with the conflict. Skip indicates that it should pass over the conflict. OverwriteIfDirty causes the import job to delete and re-import the file or directory if it is a conflicting type, is dirty, or was not previously imported. OverwriteAlways extends OverwriteIfDirty to include releasing files that had been restored but were not dirty. Please reference https://learn.microsoft.com/en-us/azure/azure-managed-lustre/ for a thorough explanation of these resolution modes.
+      How the auto import job will handle conflicts. For example, if the auto import job is trying to bring in a directory, but a file is at that path, how it handles it. Fail indicates that the auto import job should stop immediately and not do anything with the conflict. Skip indicates that it should pass over the conflict. OverwriteIfDirty causes the auto import job to delete and re-import the file or directory if it is a conflicting type, is dirty, or is currently released. OverwriteAlways extends OverwriteIfDirty to include releasing files that had been restored but were not dirty. Please reference https://learn.microsoft.com/en-us/azure/azure-managed-lustre/blob-integration#conflict-resolution-mode for a thorough explanation of these resolution modes.
     groupName: Properties Arguments
-  - name: --import-prefixes
+  - name: --enable-deletions
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      An array of blob paths/prefixes that get imported into the cluster namespace. It has '/' as the default value.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Whether or not to enable deletions during auto import. This only affects overwrite-dirty.
     groupName: Properties Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
-    groupName: ImportJob Arguments
+    groupName: AutoImportJob Arguments
   - name: --maximum-errors
-    defaultValue: "0"
     summary: |-
-      Total non-conflict oriented errors the import job will tolerate before exiting with failure. -1 means infinite. 0 means exit immediately and is the default.
+      Total non-conflict-oriented errors (e.g., OS errors) Import will tolerate before exiting with failure. -1 means infinite. 0 means exit immediately on any error.
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -76,7 +85,7 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: ImportJob Arguments
+    groupName: AutoImportJob Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -104,36 +113,36 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_amlfs_import_delete
-  name: az amlfs import delete
+- uid: az_amlfs_auto-import_delete
+  name: az amlfs auto-import delete
   summary: |-
-    Delete an import job for deletion.
+    Delete an auto import job for deletion.
   status: GA
   sourceType: Extension
   syntax: >-
-    az amlfs import delete [--aml-filesystem-name]
-                           [--ids]
-                           [--import-job-name --name]
-                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                           [--resource-group]
-                           [--subscription]
-                           [--yes]
+    az amlfs auto-import delete [--aml-filesystem-name]
+                                [--auto-import-job-name --name]
+                                [--ids]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--resource-group]
+                                [--subscription]
+                                [--yes]
   examples:
   - summary: |-
-      importJobs_Delete
-    syntax: az amlfs import delete --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1
+      autoImportJobs_Delete
+    syntax: az amlfs auto-import delete --resource-group scgroup --aml-filesystem-name fs1 --auto-import-job-name autojob1
   optionalParameters:
   - name: --aml-filesystem-name
     summary: |-
       Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
+  - name: --auto-import-job-name --name -n
+    summary: |-
+      Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --import-job-name --name -n
-    summary: |-
-      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -175,21 +184,21 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_amlfs_import_list
-  name: az amlfs import list
+- uid: az_amlfs_auto-import_list
+  name: az amlfs auto-import list
   summary: |-
-    List all import jobs the user has access to under an AML File System.
+    List all the auto import jobs the user has access to under an AML File System.
   status: GA
   sourceType: Extension
   syntax: >-
-    az amlfs import list --aml-filesystem-name
-                         --resource-group
-                         [--max-items]
-                         [--next-token]
+    az amlfs auto-import list --aml-filesystem-name
+                              --resource-group
+                              [--max-items]
+                              [--next-token]
   examples:
   - summary: |-
-      importJobs_ListByAmlFilesystem
-    syntax: az amlfs import list --resource-group scgroup --aml-filesystem-name fs1
+      autoImportJobs_ListByAmlFilesystem
+    syntax: az amlfs auto-import list --resource-group scgroup --aml-filesystem-name fs1
   requiredParameters:
   - isRequired: true
     name: --aml-filesystem-name
@@ -235,34 +244,34 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_amlfs_import_show
-  name: az amlfs import show
+- uid: az_amlfs_auto-import_show
+  name: az amlfs auto-import show
   summary: |-
-    Get an import job.
+    Get an auto import job.
   status: GA
   sourceType: Extension
   syntax: >-
-    az amlfs import show [--aml-filesystem-name]
-                         [--ids]
-                         [--import-job-name --name]
-                         [--resource-group]
-                         [--subscription]
+    az amlfs auto-import show [--aml-filesystem-name]
+                              [--auto-import-job-name --name]
+                              [--ids]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: |-
-      importJobs_Get
-    syntax: az amlfs import show --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1
+      autoImportJobs_Get
+    syntax: az amlfs auto-import show --resource-group scgroup --aml-filesystem-name fs1 --auto-import-job-name autojob1
   optionalParameters:
   - name: --aml-filesystem-name
     summary: |-
       Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
+  - name: --auto-import-job-name --name -n
+    summary: |-
+      Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --import-job-name --name -n
-    summary: |-
-      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -296,42 +305,45 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_amlfs_import_update
-  name: az amlfs import update
+- uid: az_amlfs_auto-import_update
+  name: az amlfs auto-import update
   summary: |-
-    Update an import job instance.
+    Update an auto import job instance.
   status: GA
   sourceType: Extension
   syntax: >-
-    az amlfs import update [--admin-status {Active, Cancel}]
-                           [--aml-filesystem-name]
-                           [--ids]
-                           [--import-job-name --name]
-                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                           [--resource-group]
-                           [--subscription]
-                           [--tags]
+    az amlfs auto-import update [--admin-status {Disable, Enable}]
+                                [--aml-filesystem-name]
+                                [--auto-import-job-name --name]
+                                [--ids]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--resource-group]
+                                [--subscription]
+                                [--tags]
   examples:
   - summary: |-
-      importJobs_CreateOrUpdate
-    syntax: az amlfs import update --resource-group scgroup --aml-filesystem-name fs1 --import-job-name job1 --admin-status Cancel
+      autoImportJobs_Update
+    syntax: >-
+      az amlfs auto-import update --resource-group scgroup --aml-filesystem-name fs1 --auto-import-job-name autojob1 --admin-status Disable
+
+      az amlfs auto-import update --resource-group scgroup --aml-filesystem-name fs1 --auto-import-job-name autojob1 --tags "{Dept:ContosoAds}"
   optionalParameters:
   - name: --admin-status
-    acceptedValues: Active, Cancel
+    acceptedValues: Disable, Enable
     summary: |-
-      The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job.
+      The administrative status of the auto import job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto import job. By default it is set to 'Enable'.
     groupName: Properties Arguments
   - name: --aml-filesystem-name
     summary: |-
       Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
+  - name: --auto-import-job-name --name -n
+    summary: |-
+      Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --import-job-name --name -n
-    summary: |-
-      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -348,7 +360,7 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: ImportJob Arguments
+    groupName: AutoImportJob Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -373,29 +385,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_amlfs_import_wait
-  name: az amlfs import wait
+- uid: az_amlfs_auto-import_wait
+  name: az amlfs auto-import wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az amlfs import wait [--aml-filesystem-name]
-                         [--created]
-                         [--custom]
-                         [--deleted]
-                         [--exists]
-                         [--ids]
-                         [--import-job-name --name]
-                         [--interval]
-                         [--resource-group]
-                         [--subscription]
-                         [--timeout]
-                         [--updated]
+    az amlfs auto-import wait [--aml-filesystem-name]
+                              [--auto-import-job-name --name]
+                              [--created]
+                              [--custom]
+                              [--deleted]
+                              [--exists]
+                              [--ids]
+                              [--interval]
+                              [--resource-group]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
   optionalParameters:
   - name: --aml-filesystem-name
     summary: |-
       Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
+    groupName: Resource Id Arguments
+  - name: --auto-import-job-name --name -n
+    summary: |-
+      Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
@@ -419,10 +435,6 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --import-job-name --name -n
-    summary: |-
-      Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric.
     groupName: Resource Id Arguments
   - name: --interval
     defaultValue: "30"
@@ -472,11 +484,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_amlfs_import_create
-- az_amlfs_import_delete
-- az_amlfs_import_list
-- az_amlfs_import_show
-- az_amlfs_import_update
-- az_amlfs_import_wait
+- az_amlfs_auto-import_create
+- az_amlfs_auto-import_delete
+- az_amlfs_auto-import_list
+- az_amlfs_auto-import_show
+- az_amlfs_auto-import_update
+- az_amlfs_auto-import_wait
 metadata:
-  description: Manage Import Job.
+  description: Manage Auto Import Job.
