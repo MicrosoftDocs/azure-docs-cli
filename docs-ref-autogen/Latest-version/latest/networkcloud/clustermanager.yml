@@ -3,23 +3,28 @@ uid: az_networkcloud_clustermanager
 name: az networkcloud clustermanager
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **networkcloud** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az networkcloud clustermanager** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **networkcloud** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az networkcloud clustermanager** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage cluster manager.
-status: GA
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'az networkcloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
 - uid: az_networkcloud_clustermanager_create
   name: az networkcloud clustermanager create
   summary: |-
     Create a new cluster manager or update properties of the cluster manager if it exists.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az networkcloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az networkcloud clustermanager create --cluster-manager-name --name
                                           --fabric-controller-id
                                           --resource-group
                                           [--analytics-workspace-id]
+                                          [--availability-zones]
                                           [--if-match]
                                           [--if-none-match]
                                           [--location]
@@ -28,6 +33,7 @@ directCommands:
                                           [--mi-user-assigned]
                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                           [--tags]
+                                          [--vm-size]
   examples:
   - summary: |-
       Create or update cluster manager
@@ -38,6 +44,9 @@ directCommands:
   - summary: |-
       Create or update cluster manager with user assigned identity
     syntax: az networkcloud clustermanager create --name "clusterManagerName" --location "location" --analytics-workspace-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/microsoft.operationalInsights/workspaces/logAnalyticsWorkspaceName" --fabric-controller-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/fabricControllerName" --managed-resource-group-configuration name="my-managed-rg" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --mi-user-assigned "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUAI"
+  - summary: |-
+      Create or update cluster manager with the provided VM SKU and availability zones
+    syntax: az networkcloud clustermanager create --name "clusterManagerName" --location "location" --analytics-workspace-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/microsoft.operationalInsights/workspaces/logAnalyticsWorkspaceName" --fabric-controller-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/fabricControllerName" --managed-resource-group-configuration name="my-managed-rg" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --vm-size Standard_D8s_v3 --availability-zones "[2,3]"
   requiredParameters:
   - isRequired: true
     name: --cluster-manager-name --name -n
@@ -56,6 +65,10 @@ directCommands:
   - name: --analytics-workspace-id
     summary: |-
       The resource ID of the Log Analytics workspace that is used for the logs collection.
+    groupName: Properties Arguments
+  - name: --availability-zones
+    summary: |-
+      The Azure availability zones within the region that will be used to support the cluster manager resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --if-match
     summary: |-
@@ -88,6 +101,10 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: ClusterManagerParameters Arguments
+  - name: --vm-size
+    summary: |-
+      The size of the Azure virtual machines to use for hosting the cluster manager resource.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -119,7 +136,9 @@ directCommands:
   name: az networkcloud clustermanager delete
   summary: |-
     Delete the provided cluster manager.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az networkcloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az networkcloud clustermanager delete [--cluster-manager-name --name]
@@ -193,12 +212,16 @@ directCommands:
   name: az networkcloud clustermanager list
   summary: |-
     List cluster managers in the provided resource group or subscription.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az networkcloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az networkcloud clustermanager list [--max-items]
                                         [--next-token]
                                         [--resource-group]
+                                        [--skip-token]
+                                        [--top]
   examples:
   - summary: |-
       List cluster managers for subscription
@@ -218,6 +241,12 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --skip-token
+    summary: |-
+      The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets.
+  - name: --top
+    summary: |-
+      The maximum number of resources to return from the operation. Example: '$top=10'.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -249,7 +278,9 @@ directCommands:
   name: az networkcloud clustermanager show
   summary: |-
     Get the properties of the provided cluster manager.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az networkcloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az networkcloud clustermanager show [--cluster-manager-name --name]
@@ -305,7 +336,9 @@ directCommands:
   name: az networkcloud clustermanager update
   summary: |-
     Update properties of the provided cluster manager, or update the tags assigned to the cluster manager. Properties and tag updates can be done independently.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az networkcloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az networkcloud clustermanager update [--cluster-manager-name --name]
@@ -391,7 +424,9 @@ directCommands:
   name: az networkcloud clustermanager wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az networkcloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az networkcloud clustermanager wait [--cluster-manager-name --name]
