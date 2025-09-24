@@ -3,7 +3,7 @@ uid: az_iot_ops
 name: az iot ops
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.62.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure IoT Operations.
 description: |-
@@ -604,15 +604,6 @@ directCommands:
 
     Note: --*-config options allow override of default config settings.
 
-    The default config settings for container storage are:
-      edgeStorageConfiguration.create=true
-      feature.diskStorageClass=default,local-path
-
-    If --enable-fault-tolerance is used the following config delta applies to container storage:
-      feature.diskStorageClass=acstor-arccontainerstorage-storage-pool
-      acstorConfiguration.create=true
-      acstorConfiguration.properties.diskMountPoint=/mnt
-
     The default config settings for secret store are:
       rotationPollIntervalInSeconds=120
       validatingAdmissionPolicies.applyPolicies=false.
@@ -621,10 +612,8 @@ directCommands:
   syntax: >-
     az iot ops init --cluster
                     --resource-group
-                    [--acs-config]
                     [--check-cluster {false, true}]
                     [--context]
-                    [--enable-fault-tolerance {false, true}]
                     [--ensure-latest {false, true}]
                     [--no-progress {false, true}]
                     [--ssc-config]
@@ -634,14 +623,8 @@ directCommands:
       Usage with minimum input. This form will deploy the IoT Operations foundation layer.
     syntax: az iot ops init --cluster mycluster -g myresourcegroup
   - summary: |-
-      Similar to the prior example but with Arc Container Storage fault-tolerance enabled (requires at least 3 nodes).
-    syntax: az iot ops init --cluster mycluster -g myresourcegroup --enable-fault-tolerance
-  - summary: |-
-      This example highlights enabling user trust settings for a custom cert-manager config. This will skip deployment of the system cert-manager and trust-manager.
+      The following example highlights enabling user trust settings for a custom cert-manager config. This will skip deployment of the system cert-manager and trust-manager.
     syntax: az iot ops init --cluster mycluster -g myresourcegroup --user-trust
-  - summary: |-
-      Provide custom deploy-time configs for Arc Container Storage.
-    syntax: az iot ops init --cluster mycluster -g myresourcegroup --enable-fault-tolerance --acs-config acstorConfiguration.properties.diskMountPoint=/mnt
   - summary: |-
       Provide custom deploy-time configs for Arc Secret Store.
     syntax: az iot ops init --cluster mycluster -g myresourcegroup --ssc-config rotationPollIntervalInSeconds=60
@@ -658,10 +641,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --acs-config
-    summary: |-
-      ContainerStorage arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
-    groupName: Extension Config Arguments
   - name: --check-cluster
     acceptedValues: false, true
     summary: |-
@@ -671,11 +650,6 @@ directCommands:
     summary: |-
       Kubeconfig context name to use for k8s cluster communication. If no context is provided current_context is used.
     groupName: K8s Cluster Arguments
-  - name: --enable-fault-tolerance
-    acceptedValues: false, true
-    summary: |-
-      Enable fault tolerance for Azure Arc Container Storage. At least 3 cluster nodes are required.
-    groupName: Container Storage Arguments
   - name: --ensure-latest
     acceptedValues: false, true
     summary: |-
@@ -743,6 +717,106 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_migrate-assets
+  name: az iot ops migrate-assets
+  summary: |-
+    Migrate root assets to a namespace.
+  description: |-
+    Requires an instance version >= 1.2.36.
+
+    The target set of root assets will be converted to an equivalent namespace representation
+    replacing the original root assets.
+
+    During the migration, namespace devices will be created in-place of the endpoint profiles
+    referenced by the assets. If multiple assets reference the same endpoint profile, a
+    single namespace device will be referenced by the migrated assets.
+
+    Post migration use the `az iot ops ns asset` and `az iot ops ns device` command groups to
+    manage namespace assets and devices.
+
+    It is highly recommended to take a snapshot of the target instance via `az iot ops clone`
+    before migration is executed. You can use the clone to restore the instance if needed.
+
+    For glob-style pattern matching via --name-pattern, '*' or '?' or '[...]' can be used.
+
+    By default the command will check if the Device Registry service principal has the
+    `Azure Kubernetes Service Arc Contributor` built-in role against the custom location
+    associated with the instance, applying the role if needed. This can be skipped with
+    the `--skip-ra` flag.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az iot ops migrate-assets --name
+                              --resource-group
+                              [--adr-sp-oid]
+                              [--pattern]
+                              [--skip-ra {false, true}]
+                              [--yes {false, true}]
+  examples:
+  - summary: |-
+      Migrate all root assets associated with the instance.
+    syntax: az iot ops migrate-assets -n myinstance --resource-group myresourcegroup
+  - summary: |-
+      Migrate specific assets associated with the instance.
+    syntax: az iot ops migrate-assets -n myinstance --resource-group myresourcegroup --pattern asset1 asset2 asset3
+  - summary: |-
+      Migrate assets associated with the instance that match glob-style patterns.
+    syntax: az iot ops migrate-assets -n myinstance --resource-group myresourcegroup --pattern asset-p1-* asset-eng?-01
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --adr-sp-oid
+    summary: |-
+      Provide an explicit Device Registry service principal OID for the custom location role assignment. This is useful if the logged-in principal does not have permission to query apps from MS Graph.
+    groupName: Role Assignment Arguments
+  - name: --pattern -p
+    summary: |-
+      Space-separated glob-style patterns to match asset names. '*' or '?' or '[...]' can be used.
+  - name: --skip-ra
+    acceptedValues: false, true
+    summary: |-
+      When used the role assignment step of the operation will be skipped.
+    groupName: Role Assignment Arguments
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -914,7 +988,6 @@ directCommands:
   syntax: >-
     az iot ops upgrade --name
                        --resource-group
-                       [--acs-config]
                        [--no-progress {false, true}]
                        [--ops-config]
                        [--plat-config]
@@ -940,10 +1013,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --acs-config
-    summary: |-
-      ContainerStorage arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
-    groupName: Extension Config Arguments
   - name: --no-progress
     acceptedValues: false, true
     summary: |-
@@ -1108,6 +1177,7 @@ commands:
 - az_iot_ops_identity_show
 - az_iot_ops_init
 - az_iot_ops_list
+- az_iot_ops_migrate-assets
 - az_iot_ops_ns
 - az_iot_ops_ns_asset
 - az_iot_ops_ns_asset_custom
