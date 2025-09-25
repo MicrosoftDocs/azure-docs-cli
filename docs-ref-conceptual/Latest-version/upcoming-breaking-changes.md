@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 09/17/2025
+ms.date: 09/25/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -90,24 +90,6 @@ The breaking changes listed in this section are planned for the next major relea
 
 ## resource
 
-### `policy set-definition delete`
-
-[Link to policy set-definition reference group](/cli/azure/policy/set-definition)
-
-- Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
-
-### `policy exemption create`
-
-[Link to policy exemption reference group](/cli/azure/policy/exemption)
-
-- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
-
-### `policy exemption update`
-
-[Link to policy exemption reference group](/cli/azure/policy/exemption)
-
-- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
-
 ### `policy assignment identity assign`
 
 [Link to policy assignment identity reference group](/cli/azure/policy/assignment/identity)
@@ -132,6 +114,24 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to policy assignment non-compliance-message reference group](/cli/azure/policy/assignment/non-compliance-message)
 
 - The return value will change in a future release of the resource commands. It will be empty rather than the full array of remaining message objects.
+
+### `policy set-definition delete`
+
+[Link to policy set-definition reference group](/cli/azure/policy/set-definition)
+
+- Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
+
+### `policy exemption create`
+
+[Link to policy exemption reference group](/cli/azure/policy/exemption)
+
+- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
+
+### `policy exemption update`
+
+[Link to policy exemption reference group](/cli/azure/policy/exemption)
+
+- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
 
 ### `policy definition delete`
 
