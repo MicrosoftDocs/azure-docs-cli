@@ -145,36 +145,11 @@ includes two steps: **module searching** and **module installation**.
 Azure CLI uses `https://aka.ms/azure-cli-extension-index-v1` to fetch a list of extensions for
 **module searching**, whose endpoint is `azcliextensionsync.blob.core.windows.net`.
 
-All extensions use endpoint `azcliprod.blob.core.windows.net` for **module installation**, with the
-following exceptions:
+All extensions use endpoint `azcliprod.blob.core.windows.net` for **module installation**.
 
-|       Extension name       |                    Endpoint                    |
-| -------------------------- | ---------------------------------------------- |
-| aksarc                     | hybridaksstorage.z13.web.core.windows.net      |
-| akshybrid                  | hybridaksstorage.z13.web.core.windows.net      |
-| arcappliance               | arcplatformcliextprod.z13.web.core.windows.net |
-| arcdata                    | azurearcdatacli.blob.core.windows.net          |
-| azure-batch-cli-extensions | github.com                                     |
-| azure-cli-ml               | azurecliext.blob.core.windows.net              |
-| azure-devops               | github.com                                     |
-| azure-iot                  | github.com                                     |
-| azure-iot-ops              | github.com                                     |
-| azure-sphere               | software-static.download.prss.microsoft.com    |
-| azurestackhci              | hybridaksstorage.z13.web.core.windows.net      |
-| csvmware                   | github.com                                     |
-| customlocation             | arcplatformcliextprod.z13.web.core.windows.net |
-| deploy-to-azure            | github.com                                     |
-| fzf                        | pahealyfzf.blob.core.windows.net               |
-| hybridaks                  | hybridaksstorage.z13.web.core.windows.net      |
-| partnercenter              | github.com                                     |
-| sap-hana                   | github.com                                     |
-| stack-hci-vm               | hciarcvmsstorage.z13.web.core.windows.net      |
-
-For example, if you're installing the `azure-devops` extension, you need to add
-`azcliextensionsync.blob.core.windows.net` (for searching) and `github.com` (for installation) to
-your allowlist. If you're installing extension `account` that's not in the previous list, you need
-to allow `azcliextensionsync.blob.core.windows.net` (for searching) and
-`azcliprod.blob.core.windows.net` (for installation).
+For example, if you're installing an extension, you need to add
+`azcliextensionsync.blob.core.windows.net` (for searching) and `azcliprod.blob.core.windows.net` (for installation) to
+your allowlist.
 
 For users who rely on the dynamic extension module installation from Azure CLI recommendations must
 also add `azurecliextensionsync.blob.core.windows.net` into your allowlist for cmd indexing.
