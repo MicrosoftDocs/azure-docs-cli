@@ -198,6 +198,33 @@ create or update resources.
 For more information, see
 [Planning for mandatory multifactor authentication for Azure and other admin portals][19]
 
+## DLL load failed while importing win32file
+
+You might experience the following error when attempting to use the Azure CLI:
+
+```Output
+DLL load failed while importing win32file: The specified module could not be found.
+The command failed with an unexpected error. Here is the traceback:
+DLL load failed while importing win32file: The specified module could not be found.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/__main__.py", line 13, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/telemetry.py", line 19, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/telemetry/__init__.py", line 9, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\portalocker/__init__.py", line 4, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\portalocker/portalocker.py", line 11, in <module>
+ImportError: DLL load failed while importing win32file: The specified module could not be found.
+PS C:\Users\dsevilla>
+```
+
+This issue can occur due to a corrupted installation. To resolve the problem:
+
+1. Uninstall the Azure CLI.
+1. [Reinstall the Azure CLI](/cli/azure/install-azure-cli) using your preferred installation method.
+
+For more information, see [GitHub issue #32045](https://github.com/Azure/azure-cli/issues/32045).
+
 ## Error: Invalid value or doesn't exist
 
 These errors often occur when trying to use variable values that contain an incorrect format. The
