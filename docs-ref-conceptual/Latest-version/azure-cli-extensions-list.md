@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/28/2025
+ms.date: 09/29/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -31,14 +31,14 @@ You will be prompted to install an extension on first use.
 |[aem](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem/HISTORY.rst) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
 |[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [18.0.0b39](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [18.0.0b40](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.62](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
 |[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.61.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [2.8.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
 |[amlfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs) | 2.75.0 | Microsoft Azure Command-Line Tools Amlfs Extension. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs/HISTORY.rst) |
-|[aosm](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm) | 2.54.0 | Microsoft Azure Command-Line Tools Aosm Extension | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm/HISTORY.rst) |
+|[aosm](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm) | 2.70.0 | Microsoft Azure Command-Line Tools Aosm Extension | Preview | [2.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm/HISTORY.rst) |
 |[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.57.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | Preview | [1.2.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.71.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.60.0 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.11](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
@@ -218,6 +218,6 @@ You will be prompted to install an extension on first use.
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.70.0 | Azure VMware Solution commands. | GA | [8.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.56.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.7.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
-|[workload-orchestration](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration) | 2.67.0 | Microsoft Azure Command-Line Tools WorkloadOperations Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration/HISTORY.rst) |
+|[workload-orchestration](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration) | 2.67.0 | Microsoft Azure Command-Line Tools WorkloadOperations Extension. | GA | [4.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration/HISTORY.rst) |
 |[workloads](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads) | 2.61.0 | Microsoft Azure Command-Line Tools Workloads Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads/HISTORY.rst) |
 |[zones](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones) | 2.72.0 | Microsoft Azure Command-Line Tools Zones Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones/HISTORY.rst) |
