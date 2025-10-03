@@ -2,7 +2,7 @@
 uid: az_backup_protection
 name: az backup protection
 summary: |-
-  Manage protection of your items, enable protection or disable it, or take on-demand backups.
+  Manage protection of items in a Recovery Services vault.
 status: GA
 sourceType: Core
 directCommands:
@@ -617,6 +617,134 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_backup_protection_reconfigure
+  name: az backup protection reconfigure
+  summary: |-
+    Reconfigures backup protection from an old vault to a new vault.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
+  syntax: >-
+    az backup protection reconfigure --backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}
+                                     --new-policy-name
+                                     --new-rg --new-vault-resource-group
+                                     --new-vault-name
+                                     [--container-name]
+                                     [--ids]
+                                     [--item-name]
+                                     [--resource-group]
+                                     [--retain-as-per-policy {false, true}]
+                                     [--subscription]
+                                     [--tenant-id]
+                                     [--vault-name]
+                                     [--workload-type {AzureFileShare, MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase, VM}]
+  examples:
+  - summary: |-
+      Reconfigure VM backup from one vault to another
+    syntax: >-
+      az backup protection reconfigure \
+          --vault-name OldVault \
+          --resource-group OldVaultRG \
+          --container-name myVM \
+          --item-name myVM \
+          --backup-management-type AzureIaasVM \
+          --new-vault-name NewVault \
+          --new-vault-resource-group NewVaultRG \
+          --new-policy-name DailyPolicy \
+          --retain-as-per-policy
+  - summary: |-
+      Reconfigure VM backup with cross-tenant MUA scenario
+    syntax: >-
+      az backup protection reconfigure \
+          --vault-name OldVault \
+          --resource-group OldVaultRG \
+          --container-name myVM \
+          --item-name myVM \
+          --backup-management-type AzureIaasVM \
+          --new-vault-name NewVault \
+          --new-vault-resource-group NewVaultRG \
+          --new-policy-name DailyPolicy \
+          --retain-as-per-policy \
+          --tenant-id 12345678-1234-1234-1234-123456789012
+  requiredParameters:
+  - isRequired: true
+    name: --backup-management-type
+    acceptedValues: AzureIaasVM, AzureStorage, AzureWorkload
+    summary: |-
+      Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.
+  - isRequired: true
+    name: --new-policy-name
+    summary: |-
+      Name of the backup policy in the destination vault.
+  - isRequired: true
+    name: --new-rg --new-vault-resource-group
+    summary: |-
+      Resource group name of the destination Recovery Services vault.
+  - isRequired: true
+    name: --new-vault-name
+    summary: |-
+      Name of the destination Recovery Services vault.
+  optionalParameters:
+  - name: --container-name -c
+    summary: |-
+      Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --item-name -i
+    summary: |-
+      Name of the backed up item.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --retain-as-per-policy
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Retain existing recovery points as per current backup policy when stopping protection in the source vault (the source vault is always the one specified by --vault-name/--resource-group).
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tenant-id
+    summary: |-
+      ID of the tenant if the Resource Guard protecting the source vault exists in a different tenant.
+  - name: --vault-name -v
+    summary: |-
+      Name of the Recovery services vault.
+    groupName: Resource Id Arguments
+  - name: --workload-type
+    acceptedValues: AzureFileShare, MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase, VM
+    summary: |-
+      Specify the type of applications within the Resource which should be discovered and protected by Azure Backup. 'MSSQL' and 'SQLDataBase' can be used interchangeably for SQL in Azure VM, as can 'SAPHANA' and 'SAPHanaDatabase' for SAP HANA in Azure VM.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_backup_protection_resume
   name: az backup protection resume
   summary: |-
@@ -867,9 +995,10 @@ commands:
 - az_backup_protection_enable-for-azurefileshare
 - az_backup_protection_enable-for-azurewl
 - az_backup_protection_enable-for-vm
+- az_backup_protection_reconfigure
 - az_backup_protection_resume
 - az_backup_protection_undelete
 - az_backup_protection_update-for-vm
 metadata:
-  ms.date: 12/04/2024
-  description: Manage protection of your items, enable protection or disable it, or take on-demand backups.
+  ms.date: 09/30/2025
+  description: Manage protection of items in a Recovery Services vault.
