@@ -184,7 +184,7 @@ directCommands:
 - uid: az_fleet_get-credentials
   name: az fleet get-credentials
   summary: |-
-    For hubful fleets, gets the kubeconfig for the fleet's hub cluster.
+    For hubful fleets, gets the kubeconfig for the fleet's hub cluster. For fleet members, gets kubeconfig from the member's managed cluster.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -192,6 +192,7 @@ directCommands:
                              --resource-group
                              [--context]
                              [--file]
+                             [--member]
                              [--overwrite-existing]
   examples:
   - summary: |-
@@ -200,6 +201,9 @@ directCommands:
   - summary: |-
       Get a fleet's hub cluster kubeconfig, and save it to a specific file.
     syntax: az fleet get-credentials -g MyFleetResourceGroup -n MyFleetName -f ~/mykubeconfigfile.txt
+  - summary: |-
+      Get kubeconfig from a specific fleet member's managed cluster.
+    syntax: az fleet get-credentials -g MyFleetResourceGroup -n MyFleetName --member MyFleetMember
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -217,6 +221,9 @@ directCommands:
     defaultValue: ~\.kube\config
     summary: |-
       Kubernetes configuration file to update. Use "-" to print YAML to stdout instead.
+  - name: --member -m
+    summary: |-
+      Specify the fleet member name to get credentials from its associated managed cluster.
   - name: --overwrite-existing
     defaultValue: "False"
     summary: |-
@@ -585,6 +592,14 @@ commands:
 - az_fleet_member_show
 - az_fleet_member_update
 - az_fleet_member_wait
+- az_fleet_namespace
+- az_fleet_namespace_create
+- az_fleet_namespace_delete
+- az_fleet_namespace_get-credentials
+- az_fleet_namespace_list
+- az_fleet_namespace_show
+- az_fleet_namespace_update
+- az_fleet_namespace_wait
 - az_fleet_reconcile
 - az_fleet_show
 - az_fleet_update
