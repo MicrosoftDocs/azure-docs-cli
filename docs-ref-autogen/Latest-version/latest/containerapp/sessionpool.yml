@@ -27,13 +27,16 @@ directCommands:
                                        [--env-vars]
                                        [--environment]
                                        [--image]
+                                       [--lifecycle-type {OnContainerExit, Timed}]
                                        [--location]
+                                       [--max-alive-period]
                                        [--max-sessions]
                                        [--memory]
                                        [--mi-system-assigned]
                                        [--mi-user-assigned]
                                        [--network-status {EgressDisabled, EgressEnabled}]
                                        [--no-wait]
+                                       [--probe-yaml]
                                        [--ready-sessions]
                                        [--registry-identity]
                                        [--registry-password]
@@ -97,6 +100,12 @@ directCommands:
       az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
           --environment MyEnvironment --cpu 0.5 --memory 1Gi --target-port 80 --container-type CustomContainer \
           --cooldown-period 360 --location eastasia
+  - summary: |-
+      Create or update a Session Pool with container type CustomContainer with container probes
+    syntax: >-
+      az containerapp sessionpool create -n mysessionpool -g MyResourceGroup \
+          --environment MyEnvironment --cpu 0.5 --memory 1Gi --target-port 80 --container-type CustomContainer \
+          --probe-yaml config.yaml --location eastasia
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -126,7 +135,7 @@ directCommands:
     groupName: Configuration Arguments
   - name: --cooldown-period
     summary: |-
-      Period (in seconds), after which the session will be deleted, default=300.
+      Period (in seconds), after which the session will be deleted, this is only applicable for lifecycle type 'Timed', default=300.
     groupName: Configuration Arguments
   - name: --cpu
     summary: |-
@@ -144,9 +153,19 @@ directCommands:
     summary: |-
       Container image, e.g. publisher/image-name:tag.
     groupName: Container Arguments
+  - name: --lifecycle-type
+    defaultValue: Timed
+    acceptedValues: OnContainerExit, Timed
+    summary: |-
+      The lifecycle type of the Session Pool.
+    groupName: Configuration Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --max-alive-period
+    summary: |-
+      Period (in seconds), before the session be deleted if its container was not exited earlier, this is only applicable for lifecycle type 'OnContainerExit', default=3600.
+    groupName: Configuration Arguments
   - name: --max-sessions
     summary: |-
       Max count of sessions can be run at the same time.
@@ -171,6 +190,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --probe-yaml
+    summary: |-
+      Path to a .yaml file with the configuration of the container probes. Only applicable for Custom Container Session Pool.
+    isPreview: true
+    groupName: Container Arguments
   - name: --ready-sessions
     summary: |-
       The number of sessions that will be ready in the session pool all the time.
@@ -411,7 +435,9 @@ directCommands:
                                        [--env-vars]
                                        [--ids]
                                        [--image]
+                                       [--lifecycle-type {OnContainerExit, Timed}]
                                        [--location]
+                                       [--max-alive-period]
                                        [--max-sessions]
                                        [--memory]
                                        [--mi-system-assigned]
@@ -419,6 +445,7 @@ directCommands:
                                        [--name]
                                        [--network-status {EgressDisabled, EgressEnabled}]
                                        [--no-wait]
+                                       [--probe-yaml]
                                        [--ready-sessions]
                                        [--registry-identity]
                                        [--registry-password]
@@ -431,6 +458,9 @@ directCommands:
   - summary: |-
       Update a session pool's max concurrent sessions configuration and image.
     syntax: az containerapp sessionpool update -n mysessionpool -g MyResourceGroup --max-sessions 20 --image MyNewImage
+  - summary: |-
+      Update the container probes of a CustomContainer type session pool.
+    syntax: az containerapp sessionpool update -n mysessionpool -g MyResourceGroup --probe-yaml config.yaml
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -451,7 +481,7 @@ directCommands:
     groupName: Container Arguments
   - name: --cooldown-period
     summary: |-
-      Period (in seconds), after which the session will be deleted, default=300.
+      Period (in seconds), after which the session will be deleted, this is only applicable for lifecycle type 'Timed', default=300.
     groupName: Configuration Arguments
   - name: --cpu
     summary: |-
@@ -469,9 +499,18 @@ directCommands:
     summary: |-
       Container image, e.g. publisher/image-name:tag.
     groupName: Container Arguments
+  - name: --lifecycle-type
+    acceptedValues: OnContainerExit, Timed
+    summary: |-
+      The lifecycle type of the Session Pool.
+    groupName: Configuration Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --max-alive-period
+    summary: |-
+      Period (in seconds), before the session be deleted if its container was not exited earlier, this is only applicable for lifecycle type 'OnContainerExit', default=3600.
+    groupName: Configuration Arguments
   - name: --max-sessions
     summary: |-
       Max count of sessions can be run at the same time.
@@ -500,6 +539,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --probe-yaml
+    summary: |-
+      Path to a .yaml file with the configuration of the container probes. Only applicable for Custom Container Session Pool.
+    isPreview: true
+    groupName: Container Arguments
   - name: --ready-sessions
     summary: |-
       The number of sessions that will be ready in the session pool all the time.

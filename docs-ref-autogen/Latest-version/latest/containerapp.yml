@@ -426,7 +426,7 @@ directCommands:
                            [--exposed-port]
                            [--image]
                            [--ingress {external, internal}]
-                           [--kind]
+                           [--kind {functionapp}]
                            [--max-inactive-revisions]
                            [--max-replicas]
                            [--memory]
@@ -567,7 +567,7 @@ directCommands:
           --image my-app:v1.0 --environment MyContainerappEnv \
           --enable-java-agent
   - summary: |-
-      Create a container app with kind as functionapp
+      Create an Azure Functions on Azure Container Apps (kind=functionapp)
     syntax: >-
       az containerapp create -n my-containerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappEnv \
@@ -705,8 +705,9 @@ directCommands:
       The ingress type.
     groupName: Ingress Arguments
   - name: --kind
+    acceptedValues: functionapp
     summary: |-
-      Set to 'functionapp' to get built in support and autoscaling to run Azure functions on Azure Container apps.
+      Set to 'functionapp' to enable built-in support and autoscaling for Azure Functions on Azure Container Apps.
     isPreview: true
   - name: --max-inactive-revisions
     summary: |-
@@ -1657,6 +1658,7 @@ directCommands:
                        [--environment]
                        [--image]
                        [--ingress {external, internal}]
+                       [--kind {functionapp}]
                        [--location]
                        [--logs-workspace-id]
                        [--logs-workspace-key]
@@ -1702,6 +1704,9 @@ directCommands:
   - summary: |-
       Create a container app and deploy a model from Azure AI Foundry
     syntax: az containerapp up -n my-containerapp -l westus3 --model-registry azureml --model-name Phi-4 --model-version 7
+  - summary: |-
+      Create an Azure Functions on Azure Container Apps (kind=functionapp)
+    syntax: az containerapp up -n my-containerapp --image my-app:v1.0 --kind functionapp
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1751,6 +1756,11 @@ directCommands:
     summary: |-
       The ingress type.
     groupName: Ingress Arguments
+  - name: --kind
+    acceptedValues: functionapp
+    summary: |-
+      Set to 'functionapp' to enable built-in support and autoscaling for Azure Functions on Azure Container Apps.
+    isPreview: true
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -2765,6 +2775,7 @@ commands:
 - az_containerapp_session_code-interpreter_show-file-content
 - az_containerapp_session_code-interpreter_show-file-metadata
 - az_containerapp_session_code-interpreter_upload-file
+- az_containerapp_session_stop
 - az_containerapp_sessionpool
 - az_containerapp_sessionpool_create
 - az_containerapp_sessionpool_delete
