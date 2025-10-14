@@ -47,6 +47,7 @@ directCommands:
                           [--disable-app-insights {false, true}]
                           [--docker-registry-server-password]
                           [--docker-registry-server-user]
+                          [--domain-name-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse}]
                           [--enable-dapr {false, true}]
                           [--environment]
                           [--flexconsumption-location]
@@ -103,7 +104,6 @@ directCommands:
   - name: --always-ready-instances
     summary: |-
       Space-separated configuration for the number of pre-allocated instances in the format `<name>=<value>`.
-    isPreview: true
   - name: --app-insights
     summary: |-
       Name of the existing App Insights project to be added to the function app. Must be in the same resource group.
@@ -163,19 +163,15 @@ directCommands:
     acceptedValues: StorageAccountConnectionString, SystemAssignedIdentity, UserAssignedIdentity
     summary: |-
       The deployment storage account authentication type.
-    isPreview: true
   - name: --deployment-storage-auth-value --dsav
     summary: |-
       The deployment storage account authentication value. For the user-assigned managed identity authentication type, this should be the user assigned identity resource id. For the storage account connection string authentication type, this should be the name of the app setting that will contain the storage account connection string. For the system assigned managed-identity authentication type, this parameter is not applicable and should be left empty.
-    isPreview: true
   - name: --deployment-storage-container-name --dscn
     summary: |-
       The deployment storage account container name.
-    isPreview: true
   - name: --deployment-storage-name --dsn
     summary: |-
       The deployment storage account name.
-    isPreview: true
   - name: --disable-app-insights
     acceptedValues: false, true
     summary: |-
@@ -190,6 +186,10 @@ directCommands:
       The container registry server username.
     isDeprecated: true
     deprecateInfo: Option '--docker-registry-server-user' has been deprecated and will be removed in a future release. Use '--registry-username' instead.
+  - name: --domain-name-scope
+    acceptedValues: NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse
+    summary: |-
+      Specify the scope of uniqueness for the default hostname during resource creation.
   - name: --enable-dapr
     defaultValue: "False"
     acceptedValues: false, true
@@ -202,7 +202,6 @@ directCommands:
   - name: --flexconsumption-location -f
     summary: |-
       Geographic location where function app will be hosted. Use `az functionapp list-flexconsumption-locations` to view available locations.
-    isPreview: true
   - name: --functions-version
     acceptedValues: "4"
     summary: |-
@@ -218,7 +217,6 @@ directCommands:
   - name: --instance-memory
     summary: |-
       The instance memory size in MB. See https://aka.ms/flex-instance-sizes for more information on the supported values.
-    isPreview: true
   - name: --max-replicas
     summary: |-
       The maximum number of replicas when create function app on container app.
@@ -226,7 +224,6 @@ directCommands:
   - name: --maximum-instance-count
     summary: |-
       The maximum number of instances.
-    isPreview: true
   - name: --memory
     summary: |-
       The memory size of the container app. e.g. 1.0Gi,.
@@ -286,7 +283,6 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enable zone redundancy for high availability. Applies to Flex Consumption SKU only.
-    isPreview: true
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -749,19 +745,16 @@ directCommands:
   - name: --runtime
     summary: |-
       Limit the output to just the specified runtime.
-    isPreview: true
   - name: --show-details
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       Include the runtime details of the regions.
-    isPreview: true
   - name: --zone-redundant
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       Filter the list to return only locations which support zone redundancy.
-    isPreview: true
   globalParameters:
   - name: --debug
     defaultValue: "False"

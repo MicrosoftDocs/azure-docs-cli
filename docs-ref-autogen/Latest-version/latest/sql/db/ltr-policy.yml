@@ -15,28 +15,33 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
     az sql db ltr-policy set [--ids]
-                             [--make-backups-immutable {false, true}]
+                             [--make-backups-immutable --tb-immutability]
                              [--monthly-retention]
                              [--name]
                              [--resource-group]
                              [--server]
                              [--subscription]
+                             [--tb-immutability-mode]
                              [--week-of-year]
                              [--weekly-retention]
                              [--yearly-retention]
+                             [--yes]
   examples:
   - summary: |-
       Set long term retention for a database.
-    syntax: az sql db ltr-policy set -g mygroup -s myserver -n mydb --weekly-retention "P1W" --monthly-retention "P6M" --yearly-retention "P1Y" --week-of-year 26 --make-backups-immutable true
+    syntax: az sql db ltr-policy set -g mygroup -s myserver -n mydb --weekly-retention "P1W" --monthly-retention "P6M" --yearly-retention "P1Y" --week-of-year 26 --make-backups-immutable Enabled
+  - summary: |-
+      Set long term retention for a database with time based immutability enabled and immutability mode locked.
+    syntax: az sql db ltr-policy set -g mygroup -s myserver -n mydb --weekly-retention "P0W" --monthly-retention "P0M" --yearly-retention "P0Y" --tb-immutability Enabled --tb-immutability-mode Locked
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --make-backups-immutable
-    acceptedValues: false, true
+  - name: --make-backups-immutable --tb-immutability
     summary: |-
-      Whether to make the LTR backups immutable.
+      Whether to enable time based immutability on the LTR backups. Possible values are: 'True', 'False', 'Enabled', 'Disabled'.
+    isPreview: true
   - name: --monthly-retention
     summary: |-
       Retention for the monthly backup. If just a number is passed instead of an ISO 8601 string, days will be assumed as the units.There is a minimum of 7 days and a maximum of 10 years.
@@ -56,6 +61,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tb-immutability-mode
+    summary: |-
+      The mode of time based immutability to be set on the LTR backups. Possible values are: 'Locked', 'Unlocked'. This is only valid if make-backups-immutable is enabled.
+    isPreview: true
   - name: --week-of-year
     summary: |-
       The Week of Year, 1 to 52, in which to take the yearly LTR backup.
@@ -65,6 +74,9 @@ directCommands:
   - name: --yearly-retention
     summary: |-
       Retention for the yearly backup. If just a number is passed instead of an ISO 8601 string, days will be assumed as the units.There is a minimum of 7 days and a maximum of 10 years.
+  - name: --yes -y
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -155,5 +167,5 @@ commands:
 - az_sql_db_ltr-policy_set
 - az_sql_db_ltr-policy_show
 metadata:
-  ms.date: 07/15/2025
+  ms.date: 09/24/2025
   description: Manage SQL database long term retention policy.

@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 10/02/2025
+ms.date: 10/14/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -13,6 +13,12 @@ ms.custom: devx-track-azurecli
 The breaking changes listed in this section are planned for the next major release of the Azure CLI unless otherwise noted. Per our [Support lifecycle](./azure-cli-support-lifecycle.md), breaking changes in Azure Core CLI reference groups occur twice a year.
 
 ## acr
+
+### `acr config content-trust`
+
+[Link to acr config content-trust reference group](/cli/azure/acr/config/content-trust)
+
+- Content Trust is being deprecated and will be completely removed on March 31, 2028. Refer to https://aka.ms/acr/dctdeprecation for details and transition guidance
 
 ### `acr helm`
 
