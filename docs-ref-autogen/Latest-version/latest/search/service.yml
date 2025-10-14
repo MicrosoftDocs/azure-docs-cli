@@ -2,14 +2,63 @@
 uid: az_search_service
 name: az search service
 summary: |-
-  Manage Azure Search services.
+  Manage Service.
 status: GA
 sourceType: Core
 directCommands:
+- uid: az_search_service_check-name-availability
+  name: az search service check-name-availability
+  summary: |-
+    Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://`<name>`.search.windows.net).
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
+  syntax: >-
+    az search service check-name-availability --name
+                                              --type {searchServices}
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length.
+    groupName: CheckNameAvailabilityInput Arguments
+  - isRequired: true
+    name: --type
+    acceptedValues: searchServices
+    summary: |-
+      The type of the resource whose name is to be validated. This value must always be 'searchServices'.
+    groupName: CheckNameAvailabilityInput Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_search_service_create
   name: az search service create
   summary: |-
-    Create a search service in the given resource group. If the search service already exists, all properties will be updated with the given values.
+    Creates or updates a search service in the given resource group. If the search service already exists, all properties will be updated with the given values.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
@@ -19,14 +68,18 @@ directCommands:
                              --sku {basic, free, standard, standard2, standard3, storage_optimized_l1, storage_optimized_l2}
                              [--aad-auth-failure-mode {http401WithBearerChallenge, http403}]
                              [--auth-options {aadOrApiKey, apiKeyOnly}]
+                             [--bypass {AzureServices, None}]
+                             [--compute-type {confidential, default}]
+                             [--data--protections --data-exfiltration-protections]
                              [--disable-local-auth {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--encryption-with-cmk]
                              [--hosting-mode {default, highDensity}]
-                             [--identity-type {None, SystemAssigned}]
+                             [--identity-type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
                              [--ip-rules]
                              [--location]
                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                              [--partition-count]
-                             [--public-access --public-network-access {disabled, enabled}]
+                             [--public-access --public-network-access {disabled, enabled, securedByPerimeter}]
                              [--replica-count]
                              [--semantic-search {disabled, free, standard}]
                              [--tags]
@@ -34,7 +87,7 @@ directCommands:
   - isRequired: true
     name: --name --search-service-name -n
     summary: |-
-      The name of the Azure Cognitive Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be globally unique since they are part of the service URI (`https://<name>.search.windows.net`). You cannot change the service name after the service is created.
+      The name of the Azure AI Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be unique since they are part of the service URI (https://`<name>`.search.windows.net). You cannot change the service name after the service is created.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -44,7 +97,7 @@ directCommands:
     acceptedValues: basic, free, standard, standard2, standard3, storage_optimized_l1, storage_optimized_l2
     summary: |-
       The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'.
-    groupName: Sku Arguments
+    groupName: Service Arguments
   optionalParameters:
   - name: --aad-auth-failure-mode
     acceptedValues: http401WithBearerChallenge, http403
@@ -56,10 +109,28 @@ directCommands:
     summary: |-
       Some Help.
     groupName: Properties Arguments
+  - name: --bypass
+    acceptedValues: AzureServices, None
+    summary: |-
+      Possible origins of inbound traffic that can bypass the rules defined in the 'ipRules' section.
+    groupName: NetworkRuleSet Arguments
+  - name: --compute-type
+    acceptedValues: confidential, default
+    summary: |-
+      Configure this property to support the search service using either the Default Compute or Azure Confidential Compute.
+    groupName: Properties Arguments
+  - name: --data--protections --data-exfiltration-protections
+    summary: |-
+      A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --disable-local-auth
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined.
+    groupName: Properties Arguments
+  - name: --encryption-with-cmk
+    summary: |-
+      Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --hosting-mode
     defaultValue: default
@@ -68,14 +139,14 @@ directCommands:
       Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'.
     groupName: Properties Arguments
   - name: --identity-type
-    acceptedValues: None, SystemAssigned
+    acceptedValues: None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned
     summary: |-
       The identity type.
     groupName: Identity Arguments
   - name: --ip-rules
     summary: |-
-      Some help.
-    groupName: Properties Arguments
+      A list of IP defineing the inbound network(s) allowed to access to the search service endpoint.
+    groupName: NetworkRuleSet Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
@@ -91,7 +162,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --public-access --public-network-access
     defaultValue: enabled
-    acceptedValues: disabled, enabled
+    acceptedValues: disabled, enabled, securedByPerimeter
     summary: |-
       This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method.
     groupName: Properties Arguments
@@ -103,7 +174,7 @@ directCommands:
   - name: --semantic-search
     acceptedValues: disabled, free, standard
     summary: |-
-      Sets options that control the availability of semantic search. This configuration is only possible for certain Azure Cognitive Search SKUs in certain locations.
+      Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations.
     groupName: Properties Arguments
   - name: --tags
     summary: |-
@@ -156,7 +227,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --name --search-service-name -n
     summary: |-
-      The name of the Azure Cognitive Search service associated with the specified resource group.
+      The name of the Azure AI Search service associated with the specified resource group.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -253,7 +324,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --name --search-service-name -n
     summary: |-
-      The name of the Azure Cognitive Search service associated with the specified resource group.
+      The name of the Azure AI Search service associated with the specified resource group.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -290,7 +361,7 @@ directCommands:
 - uid: az_search_service_update
   name: az search service update
   summary: |-
-    Update a search service in the given resource group. If the search service already exists, all properties will be updated with the given values.
+    Update an existing search service in the given resource group.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
@@ -298,7 +369,9 @@ directCommands:
     az search service update [--aad-auth-failure-mode {http401WithBearerChallenge, http403}]
                              [--add]
                              [--auth-options {aadOrApiKey, apiKeyOnly}]
+                             [--data--protections --data-exfiltration-protections]
                              [--disable-local-auth {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--encryption-with-cmk]
                              [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                              [--identity-type {None, SystemAssigned}]
                              [--ids]
@@ -312,6 +385,7 @@ directCommands:
                              [--resource-group]
                              [--semantic-search {disabled, free, standard}]
                              [--set]
+                             [--sku {basic, free, standard, standard2, standard3, storage_optimized_l1, storage_optimized_l2}]
                              [--subscription]
                              [--tags]
   optionalParameters:
@@ -329,10 +403,18 @@ directCommands:
     summary: |-
       Some Help.
     groupName: Properties Arguments
+  - name: --data--protections --data-exfiltration-protections
+    summary: |-
+      A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --disable-local-auth
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined.
+    groupName: Properties Arguments
+  - name: --encryption-with-cmk
+    summary: |-
+      Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -350,11 +432,11 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --ip-rules
     summary: |-
-      Some help.
-    groupName: Properties Arguments
+      A list of IP defineing the inbound network(s) allowed to access to the search service endpoint.
+    groupName: NetworkRuleSet Arguments
   - name: --name --search-service-name -n
     summary: |-
-      The name of the Azure Cognitive Search service associated with the specified resource group.
+      The name of the Azure AI Search service to update.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -390,6 +472,11 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
+  - name: --sku
+    acceptedValues: basic, free, standard, standard2, standard3, storage_optimized_l1, storage_optimized_l2
+    summary: |-
+      The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'.
+    groupName: Service Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -398,6 +485,64 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Service Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_search_service_upgrade
+  name: az search service upgrade
+  summary: |-
+    Upgrades the Azure AI Search service to the latest version available.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
+  syntax: >-
+    az search service upgrade [--ids]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--resource-group]
+                              [--search-service-name]
+                              [--subscription]
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --search-service-name
+    summary: |-
+      The name of the Azure AI Search service associated with the specified resource group.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -472,7 +617,7 @@ directCommands:
     groupName: Wait Condition Arguments
   - name: --name --search-service-name -n
     summary: |-
-      The name of the Azure Cognitive Search service associated with the specified resource group.
+      The name of the Azure AI Search service associated with the specified resource group.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -517,12 +662,39 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
+- az_search_service_admin-key
+- az_search_service_admin-key_list
+- az_search_service_admin-key_regenerate
+- az_search_service_check-name-availability
 - az_search_service_create
 - az_search_service_delete
 - az_search_service_list
+- az_search_service_network-security-perimeter-configuration
+- az_search_service_network-security-perimeter-configuration_list
+- az_search_service_network-security-perimeter-configuration_reconcile
+- az_search_service_network-security-perimeter-configuration_show
+- az_search_service_private-endpoint-connection
+- az_search_service_private-endpoint-connection_delete
+- az_search_service_private-endpoint-connection_list
+- az_search_service_private-endpoint-connection_show
+- az_search_service_private-endpoint-connection_update
+- az_search_service_private-link-resource
+- az_search_service_private-link-resource_list
+- az_search_service_query-key
+- az_search_service_query-key_create
+- az_search_service_query-key_delete
+- az_search_service_query-key_list
+- az_search_service_shared-private-link-resource
+- az_search_service_shared-private-link-resource_create
+- az_search_service_shared-private-link-resource_delete
+- az_search_service_shared-private-link-resource_list
+- az_search_service_shared-private-link-resource_show
+- az_search_service_shared-private-link-resource_update
+- az_search_service_shared-private-link-resource_wait
 - az_search_service_show
 - az_search_service_update
+- az_search_service_upgrade
 - az_search_service_wait
 metadata:
-  ms.date: 04/01/2021
-  description: Manage Azure Search services.
+  ms.date: 09/17/2025
+  description: Manage Service.
