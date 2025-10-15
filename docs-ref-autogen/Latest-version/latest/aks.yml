@@ -1585,7 +1585,6 @@ directCommands:
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-cost-analysis]
-                  [--enable-custom-ca-trust]
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
@@ -1807,9 +1806,6 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with no CNI installed.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
-  - summary: |-
-      Create a kubernetes cluster with Custom CA Trust enabled.
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
   - summary: |-
       Create a kubernetes cluster with safeguards set to "Warning"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --enable-addons azure-policy
@@ -2117,10 +2113,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable exporting Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. For more information see aka.ms/aks/docs/cost-analysis.
-  - name: --enable-custom-ca-trust
-    defaultValue: "False"
-    summary: |-
-      Enable Custom CA Trust on agent node pool.
   - name: --enable-defender
     defaultValue: "False"
     summary: |-
@@ -5633,6 +5625,7 @@ directCommands:
                   [--image-cleaner-interval-hours]
                   [--ip-families]
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
+                  [--kms-infrastructure-encryption {Disabled, Enabled}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--kube-proxy-config]
@@ -6250,6 +6243,13 @@ directCommands:
     acceptedValues: AKSLongTermSupport, KubernetesOfficial
     summary: |-
       Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
+  - name: --kms-infrastructure-encryption
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable encryption at rest of Kubernetes resource objects using service-managed keys.
+    description: |-
+      Enable infrastructure encryption for Kubernetes resource objects. This feature provides encryption at rest for cluster secrets and configuration using service-managed keys. For more information see https://aka.ms/aks/kubernetesResourceObjectEncryption.
+    isPreview: true
   - name: --ksm-metric-annotations-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
