@@ -3,7 +3,7 @@ uid: az_connectedmachine_extension_image
 name: az connectedmachine extension image
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **connectedmachine** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az connectedmachine extension image** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **connectedmachine** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az connectedmachine extension image** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage VM extension metadata available for Azure Arc-Enabled Servers.
 status: GA
@@ -19,10 +19,12 @@ directCommands:
     az connectedmachine extension image list --extension-type --type
                                              --location
                                              --publisher
+                                             [--max-items]
+                                             [--next-token]
   examples:
   - summary: |-
-      Sample command for extension image list
-    syntax: az connectedmachine extension image list --publisher microsoft.azure.monitor --extension-type azuremonitorlinuxagent --location eastus
+      GET a list of extension metadata
+    syntax: az connectedmachine extension image list --location EastUS --publisher microsoft.azure.monitor --extension-type azuremonitorlinuxagent
   requiredParameters:
   - isRequired: true
     name: --extension-type --type
@@ -36,6 +38,15 @@ directCommands:
     name: --publisher -p
     summary: |-
       The publisher of the Extension being received.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -70,41 +81,31 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az connectedmachine extension image show [--extension-type --type]
-                                             [--ids]
-                                             [--location]
-                                             [--name --version]
-                                             [--publisher]
-                                             [--subscription]
+    az connectedmachine extension image show --extension-type --type
+                                             --location
+                                             --name --version
+                                             --publisher
   examples:
   - summary: |-
-      Sample command for extension image show
-    syntax: az connectedmachine extension image show --publisher microsoft.azure.monitor --extension-type azuremonitorlinuxagent --location eastus --version 1.9.1
-  optionalParameters:
-  - name: --extension-type --type
+      GET an extension metadata
+    syntax: az connectedmachine extension image show --location EastUS --publisher microsoft.azure.monitor --extension-type azuremonitorlinuxagent --version 1.33.0
+  requiredParameters:
+  - isRequired: true
+    name: --extension-type --type
     summary: |-
       The extensionType of the Extension being received.
-    groupName: Resource Id Arguments
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --location -l
+  - isRequired: true
+    name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-    groupName: Resource Id Arguments
-  - name: --name --version -n
+  - isRequired: true
+    name: --name --version -n
     summary: |-
       The version of the Extension being received.
-    groupName: Resource Id Arguments
-  - name: --publisher -p
+  - isRequired: true
+    name: --publisher -p
     summary: |-
       The publisher of the Extension being received.
-    groupName: Resource Id Arguments
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -125,6 +126,9 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
