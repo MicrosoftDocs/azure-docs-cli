@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 10/14/2025
+ms.date: 10/16/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -198,6 +198,27 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to vmss reference group](/cli/azure/vmss)
 
 - The default value of '--vm-sku' will be changed to 'Standard_D2s_v5' from 'Standard_DS1_v2' in a future release.
+
+## azext_aks_preview
+
+### `aks create`
+
+[Link to aks reference group](/cli/azure/aks)
+
+- Default SSH key behavior will change. When no SSH key parameters are provided, the command will behave as if '--no-ssh-key' was passed instead of failing in next breaking change release(2.79.0) scheduled for Nov 2025.
+
+## azext_blueprint
+
+### `blueprint`
+
+[Link to blueprint reference group](/cli/azure/blueprint)
+
+- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
+- Blueprints and associated commands will be deprecated
+- as early as July 2026. Customers are encouraged to transition to
+- Template Specs and Deployments Stacks to support their scenarios beyond that date.
+- Migration documentation is available at
+- https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/migrate-blueprint.
 
 > [!NOTE]
 > This article provides information on upcoming breaking changes. For previously published breaking changes, see [Azure CLI release notes](./release-notes-azure-cli.md).
