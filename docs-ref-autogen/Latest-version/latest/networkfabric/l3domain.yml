@@ -19,16 +19,20 @@ directCommands:
     az networkfabric l3domain create --network-fabric-id --nf-id
                                      --resource-group
                                      --resource-name
-                                     [--aggregate-route-configuration]
+                                     [--aggr-route-config --aggregate-route-configuration]
                                      [--annotation]
-                                     [--connected-subnet-route-policy]
+                                     [--connected-subnet-route-policy --cs-route-policy]
+                                     [--export-policy-config]
                                      [--location]
+                                     [--mi-system-assigned --system-assigned]
+                                     [--mi-user-assigned --user-assigned]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                     [--redistribute-connected-subnets {False, True}]
-                                     [--redistribute-static-routes {False, True}]
-                                     [--route-prefix-limit]
-                                     [--static-route-route-policy]
+                                     [--redist-conn-subnets --redistribute-connected-subnets {False, True}]
+                                     [--redist-static-routes --redistribute-static-routes {False, True}]
+                                     [--sr-route-policy --static-route-route-policy]
                                      [--tags]
+                                     [--v4route-prefix-limit]
+                                     [--v6route-prefix-limit]
   examples:
   - summary: |-
       Create an L3 Isolation Domain
@@ -51,7 +55,7 @@ directCommands:
     summary: |-
       Name of the L3 Isolation Domain.
   optionalParameters:
-  - name: --aggregate-route-configuration
+  - name: --aggr-route-config --aggregate-route-configuration
     summary: |-
       Aggregate route configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -59,37 +63,43 @@ directCommands:
     summary: |-
       Switch configuration description.
     groupName: Properties Arguments
-  - name: --connected-subnet-route-policy
+  - name: --connected-subnet-route-policy --cs-route-policy
     summary: |-
       Connected Subnet RoutePolicy  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --export-policy-config
+    summary: |-
+      BMP Export Policy configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     groupName: Resource Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --redistribute-connected-subnets
+  - name: --redist-conn-subnets --redistribute-connected-subnets
     defaultValue: "True"
     acceptedValues: False, True
     summary: |-
       Advertise Connected Subnets. Ex: "True" | "False".
     groupName: Properties Arguments
-  - name: --redistribute-static-routes
+  - name: --redist-static-routes --redistribute-static-routes
     defaultValue: "False"
     acceptedValues: False, True
     summary: |-
       Advertise Static Routes. Ex: "True" | "False".
     groupName: Properties Arguments
-  - name: --route-prefix-limit
-    summary: |-
-      VRF Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isDeprecated: true
-    deprecateInfo: Argument '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
-    groupName: Properties Arguments
-  - name: --static-route-route-policy
+  - name: --sr-route-policy --static-route-route-policy
     summary: |-
       Static Route - route policy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -97,6 +107,14 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Resource Arguments
+  - name: --v4route-prefix-limit
+    summary: |-
+      IPv4 VRF Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --v6route-prefix-limit
+    summary: |-
+      IPv6 VRF Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -304,19 +322,23 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az networkfabric l3domain update [--aggregate-route-configuration]
+    az networkfabric l3domain update [--aggr-route-config --aggregate-route-configuration]
                                      [--annotation]
-                                     [--connected-subnet-route-policy]
+                                     [--connected-subnet-route-policy --cs-route-policy]
+                                     [--export-policy-config]
                                      [--ids]
+                                     [--mi-system-assigned --system-assigned]
+                                     [--mi-user-assigned --user-assigned]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                     [--redistribute-connected-subnets {False, True}]
-                                     [--redistribute-static-routes {False, True}]
+                                     [--redist-conn-subnets --redistribute-connected-subnets {False, True}]
+                                     [--redist-static-routes --redistribute-static-routes {False, True}]
                                      [--resource-group]
                                      [--resource-name]
-                                     [--route-prefix-limit]
-                                     [--static-route-route-policy]
+                                     [--sr-route-policy --static-route-route-policy]
                                      [--subscription]
                                      [--tags]
+                                     [--v4route-prefix-limit]
+                                     [--v6route-prefix-limit]
   examples:
   - summary: |-
       Update the L3 Isolation Domain
@@ -325,7 +347,7 @@ directCommands:
       Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
     syntax: az networkfabric l3domain update --connected-subnet-route-policy "??"
   optionalParameters:
-  - name: --aggregate-route-configuration
+  - name: --aggr-route-config --aggregate-route-configuration
     summary: |-
       Aggregate route configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -333,24 +355,36 @@ directCommands:
     summary: |-
       Switch configuration description.
     groupName: Properties Arguments
-  - name: --connected-subnet-route-policy
+  - name: --connected-subnet-route-policy --cs-route-policy
     summary: |-
       Connected Subnet RoutePolicy  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --export-policy-config
+    summary: |-
+      BMP Export Policy configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --redistribute-connected-subnets
+  - name: --redist-conn-subnets --redistribute-connected-subnets
     acceptedValues: False, True
     summary: |-
       Advertise Connected Subnets. Ex: "True" | "False".
     groupName: Properties Arguments
-  - name: --redistribute-static-routes
+  - name: --redist-static-routes --redistribute-static-routes
     acceptedValues: False, True
     summary: |-
       Advertise Static Routes. Ex: "True" | "False".
@@ -363,13 +397,7 @@ directCommands:
     summary: |-
       Name of the L3 Isolation Domain.
     groupName: Resource Id Arguments
-  - name: --route-prefix-limit
-    summary: |-
-      Virtual Routing and Forwarding (VRF) Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isDeprecated: true
-    deprecateInfo: Argument '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
-    groupName: Properties Arguments
-  - name: --static-route-route-policy
+  - name: --sr-route-policy --static-route-route-policy
     summary: |-
       Static Route - route policy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -380,6 +408,14 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --v4route-prefix-limit
+    summary: |-
+      IPv4 VRF Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --v6route-prefix-limit
+    summary: |-
+      IPv6 VRF Limit configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
