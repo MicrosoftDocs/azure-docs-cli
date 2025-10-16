@@ -20,7 +20,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aks agent [--api-key]
+    az aks agent [--aks-mcp {false, true}]
+                 [--api-key]
                  [--config-file]
                  [--max-steps]
                  [--model]
@@ -30,6 +31,7 @@ directCommands:
                  [--refresh-toolsets]
                  [--resource-group]
                  [--show-tool-output]
+                 [--status]
                  []
   examples:
   - summary: |-
@@ -41,7 +43,7 @@ directCommands:
 
       export AZURE_API_KEY="sk-xxx"
 
-      az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model azure/my-gpt4.1-deployment
+      az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model azure/gpt-4.1
   - summary: |-
       Ask about pod issues in the cluster with OpenAI
     syntax: >-
@@ -49,33 +51,15 @@ directCommands:
 
       az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model gpt-4o
   - summary: |-
-      Run in interactive mode without a question
-    syntax: az aks agent "Check the pod status in my cluster" --name MyManagedCluster --resource-group MyResourceGroup --model azure/my-gpt4.1-deployment --api-key "sk-xxx"
-  - summary: |-
-      Run in non-interactive batch mode
-    syntax: az aks agent "Diagnose networking issues" --no-interactive --max-steps 15 --model azure/my-gpt4.1-deployment
-  - summary: |-
-      Show detailed tool output during analysis
-    syntax: az aks agent "Why is my service workload unavailable in namespace workload-ns?" --show-tool-output --model azure/my-gpt4.1-deployment
-  - summary: |-
-      Use custom configuration file
-    syntax: az aks agent "Check kubernetes pod resource usage" --config-file /path/to/custom.yaml --model azure/my-gpt4.1-deployment
-  - summary: |-
-      Run agent with no echo of the original question
-    syntax: az aks agent "What is the status of my cluster?" --no-echo-request --model azure/my-gpt4.1-deployment
-  - summary: |-
-      Refresh toolsets to get the latest available tools
-    syntax: az aks agent "What is the status of my cluster?" --refresh-toolsets --model azure/my-gpt4.1-deployment
-  - summary: |-
       Run agent with config file
     syntax: >-
-      az aks agent "Check kubernetes pod resource usage" --config-file /path/to/custom.yaml
+      az aks agent "Check kubernetes pod resource usage" --config-file /path/to/custom.yaml --name MyManagedCluster --resource-group MyResourceGroup
 
       Here is an example of config file:
 
       ```json
 
-      model: "gpt-4o"
+      model: "azure/gpt-4.1"
 
       api_key: "..."
 
@@ -108,7 +92,51 @@ directCommands:
         aks/core:
           enabled: false
         ```
+  - summary: |-
+      Run in interactive mode without a question
+    syntax: az aks agent "Check the pod status in my cluster" --name MyManagedCluster --resource-group MyResourceGroup --model azure/gpt-4.1 --api-key "sk-xxx"
+  - summary: |-
+      Run in non-interactive batch mode
+    syntax: az aks agent "Diagnose networking issues" --no-interactive --max-steps 15 --model azure/gpt-4.1
+  - summary: |-
+      Show detailed tool output during analysis
+    syntax: az aks agent "Why is my service workload unavailable in namespace workload-ns?" --show-tool-output --model azure/gpt-4.1
+  - summary: |-
+      Use custom configuration file
+    syntax: az aks agent "Check kubernetes pod resource usage" --config-file /path/to/custom.yaml --model azure/gpt-4.1
+  - summary: |-
+      Run agent with no echo of the original question
+    syntax: az aks agent "What is the status of my cluster?" --no-echo-request --model azure/gpt-4.1
+  - summary: |-
+      Refresh toolsets to get the latest available tools
+    syntax: az aks agent "What is the status of my cluster?" --refresh-toolsets --model azure/gpt-4.1
+  - summary: |-
+      Show agent status (MCP readiness)
+    syntax: az aks agent --status
+  - summary: |-
+      Run in interactive mode without a question
+    syntax: az aks agent "Check the pod status in my cluster" --name MyManagedCluster --resource-group MyResourceGroup --model azure/my-gpt4.1-deployment --api-key "sk-xxx"
+  - summary: |-
+      Run in non-interactive batch mode
+    syntax: az aks agent "Diagnose networking issues" --no-interactive --max-steps 15 --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Show detailed tool output during analysis
+    syntax: az aks agent "Why is my service workload unavailable in namespace workload-ns?" --show-tool-output --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Use custom configuration file
+    syntax: az aks agent "Check kubernetes pod resource usage" --config-file /path/to/custom.yaml --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Run agent with no echo of the original question
+    syntax: az aks agent "What is the status of my cluster?" --no-echo-request --model azure/my-gpt4.1-deployment
+  - summary: |-
+      Refresh toolsets to get the latest available tools
+    syntax: az aks agent "What is the status of my cluster?" --refresh-toolsets --model azure/my-gpt4.1-deployment
   optionalParameters:
+  - name: --aks-mcp
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Enable AKS MCP integration for enhanced capabilities. Traditional mode is the default.
   - name: --api-key
     summary: |-
       API key to use for the LLM (if not given, uses environment variables AZURE_API_KEY, OPENAI_API_KEY).
@@ -117,12 +145,19 @@ directCommands:
     summary: |-
       Path to configuration file.
   - name: --max-steps
-    defaultValue: "10"
+    defaultValue: "40"
     summary: |-
       Maximum number of steps the LLM can take to investigate the issue.
   - name: --model
     summary: |-
-      Model to use for the LLM.
+      Specify the LLM provider and model or deployment to use for the AI assistant.
+    description: |-
+      The --model parameter determines which large language model (LLM) and provider will be used to analyze your cluster.
+      For OpenAI, use the model name directly (e.g., gpt-4o).
+      For Azure OpenAI, use `azure/<deployment name>` (e.g., azure/gpt-4.1).
+      Each provider may require different environment variables and model naming conventions.
+      For a full list of supported providers, model patterns, and required environment variables, see https://docs.litellm.ai/docs/providers.
+      Note: For Azure OpenAI, it is recommended to set the deployment name as the model name until https://github.com/BerriAI/litellm/issues/13950 is resolved.
   - name: --name -n
     summary: |-
       Name of the managed cluster.
@@ -145,6 +180,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Show the output of each tool that was called during the analysis.
+  - name: --status
+    defaultValue: "False"
+    summary: |-
+      Show AKS agent configuration and status information.
   - name: <PROMPT>
     summary: |-
       Ask any question and answer using available tools.
@@ -1560,6 +1599,8 @@ directCommands:
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-local-accounts]
+                  [--disable-opentelemetry-logs]
+                  [--disable-opentelemetry-metrics]
                   [--disable-public-fqdn]
                   [--disable-rbac]
                   [--disable-run-command]
@@ -1580,6 +1621,7 @@ directCommands:
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-app-monitoring]
+                  [--enable-azure-monitor-logs]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -1597,6 +1639,8 @@ directCommands:
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
                   [--enable-oidc-issuer]
+                  [--enable-opentelemetry-logs]
+                  [--enable-opentelemetry-metrics]
                   [--enable-optimized-addon-scaling]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
@@ -1676,6 +1720,8 @@ directCommands:
                   [--nodepool-tags]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
+                  [--opentelemetry-logs-port]
+                  [--opentelemetry-metrics-port]
                   [--os-sku {AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, CBLMariner, Flatcar, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {block, loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
@@ -1821,6 +1867,21 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with Azure Monitor App Monitoring enabled
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-app-monitoring
+  - summary: |-
+      Create a kubernetes cluster with OpenTelemetry metrics collection enabled
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --enable-azuremonitormetrics
+  - summary: |-
+      Create a kubernetes cluster with OpenTelemetry logs collection enabled
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs --enable-addons monitoring
+  - summary: |-
+      Create a kubernetes cluster with Azure Monitor logs enabled (shorthand)
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
+  - summary: |-
+      Create a kubernetes cluster with OpenTelemetry metrics on custom port
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port 8888 --enable-azuremonitormetrics
+  - summary: |-
+      Create a kubernetes cluster with OpenTelemetry logs on custom port
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs --opentelemetry-logs-port 4317 --enable-azure-monitor-logs
   - summary: |-
       Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
@@ -2003,6 +2064,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (Preview) If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-opentelemetry-logs
+    defaultValue: "False"
+    summary: |-
+      Disable OpenTelemetry logs collection.
+    isPreview: true
+  - name: --disable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Disable OpenTelemetry metrics collection.
+    isPreview: true
   - name: --disable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -2092,6 +2163,12 @@ directCommands:
     summary: |-
       Enable Azure Monitor Application Monitoring.
     isPreview: true
+  - name: --enable-azure-monitor-logs
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor logs for the cluster.
+    description: |-
+      This is equivalent to using "--enable-addons monitoring". Turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -2166,6 +2243,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable OIDC issuer.
+  - name: --enable-opentelemetry-logs
+    defaultValue: "False"
+    summary: |-
+      Enable OpenTelemetry logs collection. Requires Azure Monitor logs to be enabled.
+    isPreview: true
+  - name: --enable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Enable OpenTelemetry metrics collection. Requires Azure Monitor metrics to be enabled.
+    isPreview: true
   - name: --enable-optimized-addon-scaling
     defaultValue: "False"
     summary: |-
@@ -2509,6 +2596,14 @@ directCommands:
       Restriction level on the managed node resource group.
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
+  - name: --opentelemetry-logs-port
+    summary: |-
+      Port for OpenTelemetry logs collection (default port will be used if not specified).
+    isPreview: true
+  - name: --opentelemetry-metrics-port
+    summary: |-
+      Port for OpenTelemetry metrics collection (default port will be used if not specified).
+    isPreview: true
   - name: --os-sku
     acceptedValues: AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, CBLMariner, Flatcar, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404
     summary: |-
@@ -5518,6 +5613,7 @@ directCommands:
                   [--acns-datapath-acceleration-mode {BpfVeth, None}]
                   [--acns-transit-encryption-type {None, WireGuard}]
                   [--aks-custom-headers]
+                  [--ampls-resource-id]
                   [--api-server-authorized-ip-ranges]
                   [--apiserver-subnet-id]
                   [--assign-identity]
@@ -5536,6 +5632,7 @@ directCommands:
                   [--cluster-service-load-balancer-health-probe-mode {Servicenodeport, Shared}]
                   [--cluster-snapshot-id]
                   [--container-storage-version {1, 2}]
+                  [--data-collection-settings]
                   [--defender-config]
                   [--detach-acr]
                   [--disable-acns]
@@ -5546,6 +5643,7 @@ directCommands:
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-app-monitoring]
+                  [--disable-azure-monitor-logs]
                   [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
                   [--disable-blob-driver]
@@ -5561,6 +5659,8 @@ directCommands:
                   [--disable-imds-restriction]
                   [--disable-keda]
                   [--disable-local-accounts]
+                  [--disable-opentelemetry-logs]
+                  [--disable-opentelemetry-metrics]
                   [--disable-optimized-addon-scaling]
                   [--disable-pod-identity]
                   [--disable-private-cluster]
@@ -5582,6 +5682,7 @@ directCommands:
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-app-monitoring]
+                  [--enable-azure-monitor-logs]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -5591,6 +5692,7 @@ directCommands:
                   [--enable-disk-driver]
                   [--enable-file-driver]
                   [--enable-force-upgrade]
+                  [--enable-high-log-scale-mode {false, true}]
                   [--enable-http-proxy]
                   [--enable-image-cleaner]
                   [--enable-image-integrity]
@@ -5598,7 +5700,10 @@ directCommands:
                   [--enable-keda]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
+                  [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-oidc-issuer]
+                  [--enable-opentelemetry-logs]
+                  [--enable-opentelemetry-metrics]
                   [--enable-optimized-addon-scaling]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
@@ -5609,6 +5714,7 @@ directCommands:
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-static-egress-gateway]
+                  [--enable-syslog {false, true}]
                   [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
@@ -5654,6 +5760,8 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
+                  [--opentelemetry-logs-port]
+                  [--opentelemetry-metrics-port]
                   [--outbound-type {block, loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--private-dns-zone]
@@ -5672,6 +5780,7 @@ directCommands:
                   [--update-cluster-autoscaler]
                   [--upgrade-override-until]
                   [--windows-admin-password]
+                  [--workspace-resource-id]
                   [--yes]
   examples:
   - summary: |-
@@ -5768,8 +5877,32 @@ directCommands:
       Update a kubernetes cluster with safeguards set to "Warning" and some namespaces excluded. Assumes azure policy addon is already enabled
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --safeguards-excluded-ns ns1,ns2
   - summary: |-
+      Enable Azure Monitor logs for a kubernetes cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
+  - summary: |-
+      Disable Azure Monitor logs for a kubernetes cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-azure-monitor-logs
+  - summary: |-
       Update a kubernetes cluster to clear any namespaces excluded from safeguards. Assumes azure policy addon is already enabled
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-excluded-ns ""
+  - summary: |-
+      Enable OpenTelemetry metrics collection on an existing cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics
+  - summary: |-
+      Enable OpenTelemetry logs collection on an existing cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs
+  - summary: |-
+      Configure OpenTelemetry metrics with custom port
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port 8888
+  - summary: |-
+      Configure OpenTelemetry logs with custom port
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs --opentelemetry-logs-port 4317
+  - summary: |-
+      Disable OpenTelemetry metrics collection on an existing cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-opentelemetry-metrics
+  - summary: |-
+      Disable OpenTelemetry logs collection on an existing cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-opentelemetry-logs
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -5804,6 +5937,10 @@ directCommands:
   - name: --aks-custom-headers
     summary: |-
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+  - name: --ampls-resource-id
+    summary: |-
+      Resource ID of Azure Monitor Private Link scope for Monitoring Addon.
+    isPreview: true
   - name: --api-server-authorized-ip-ranges
     summary: |-
       Comma-separated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
@@ -5877,6 +6014,10 @@ directCommands:
     acceptedValues: 1, 2
     summary: |-
       Set azure container storage version, the latest version will be installed by default.
+  - name: --data-collection-settings
+    summary: |-
+      Path to JSON file containing data collection settings for Monitoring addon.
+    isPreview: true
   - name: --defender-config
     summary: |-
       Path to JSON file containing Microsoft Defender profile configurations.
@@ -5913,6 +6054,12 @@ directCommands:
     summary: |-
       Disable Azure Monitor Application Monitoring.
     isPreview: true
+  - name: --disable-azure-monitor-logs
+    defaultValue: "False"
+    summary: |-
+      Disable Azure Monitor logs for the cluster.
+    description: |-
+      This is equivalent to using "az aks disable-addons -a monitoring". Disables Log Analytics monitoring for the cluster.
   - name: --disable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -5976,6 +6123,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (Preview) If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-opentelemetry-logs
+    defaultValue: "False"
+    summary: |-
+      Disable OpenTelemetry logs collection.
+    isPreview: true
+  - name: --disable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Disable OpenTelemetry metrics collection.
+    isPreview: true
   - name: --disable-optimized-addon-scaling
     defaultValue: "False"
     summary: |-
@@ -6065,6 +6222,12 @@ directCommands:
     summary: |-
       Enable Azure Monitor Application Monitoring.
     isPreview: true
+  - name: --enable-azure-monitor-logs
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor logs for the cluster.
+    description: |-
+      This is equivalent to using "az aks enable-addons -a monitoring". Enables Log Analytics monitoring for the cluster. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -6100,6 +6263,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable forceUpgrade cluster upgrade settings override.
+  - name: --enable-high-log-scale-mode
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Enable High Log Scale Mode for Container Logs.
+    isPreview: true
   - name: --enable-http-proxy
     defaultValue: "False"
     summary: |-
@@ -6131,10 +6300,25 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update current cluster to managed identity to manage cluster resource group.
+  - name: --enable-msi-auth-for-monitoring
+    acceptedValues: false, true
+    summary: |-
+      Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
+    isPreview: true
   - name: --enable-oidc-issuer
     defaultValue: "False"
     summary: |-
       Enable OIDC issuer.
+  - name: --enable-opentelemetry-logs
+    defaultValue: "False"
+    summary: |-
+      Enable OpenTelemetry logs collection. Requires Azure Monitor logs to be enabled.
+    isPreview: true
+  - name: --enable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Enable OpenTelemetry metrics collection. Requires Azure Monitor metrics to be enabled.
+    isPreview: true
   - name: --enable-optimized-addon-scaling
     defaultValue: "False"
     summary: |-
@@ -6176,6 +6360,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Static Egress Gateway addon to the cluster.
+    isPreview: true
+  - name: --enable-syslog
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Enable syslog data collection for Monitoring addon.
     isPreview: true
   - name: --enable-upstream-kubescheduler-user-configuration
     defaultValue: "False"
@@ -6385,6 +6575,14 @@ directCommands:
       Restriction level on the managed node resource.
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
+  - name: --opentelemetry-logs-port
+    summary: |-
+      Port for OpenTelemetry logs collection (default port will be used if not specified).
+    isPreview: true
+  - name: --opentelemetry-metrics-port
+    summary: |-
+      Port for OpenTelemetry metrics collection (default port will be used if not specified).
+    isPreview: true
   - name: --outbound-type
     acceptedValues: block, loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting
     summary: |-
@@ -6466,6 +6664,9 @@ directCommands:
             * Has a special character (Regex match [\W_])
           - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
       Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
+  - name: --workspace-resource-id
+    summary: |-
+      The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
   - name: --yes -y
     defaultValue: "False"
     summary: |-

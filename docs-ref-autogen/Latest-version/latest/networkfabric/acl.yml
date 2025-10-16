@@ -19,15 +19,16 @@ directCommands:
     az networkfabric acl create --configuration-type {File, Inline}
                                 --resource-group
                                 --resource-name
-                                [--acl-type {ControlPlaneTrafficPolicy, Management, Tenant}]
+                                [--acl-type {ControlPlaneAcl, ControlPlaneTrafficPolicy, Management, Tenant}]
                                 [--acls-url]
                                 [--annotation]
+                                [--control-plane-acl-configuration --cp-acl-config]
                                 [--default-action {Deny, Permit}]
                                 [--device-role {CE, ManagementSwitch, NPB, ToR}]
-                                [--dynamic-match-configurations]
-                                [--global-access-control-list-actions]
+                                [--dynamic-match-configs --dynamic-match-configurations]
+                                [--global-access-control-list-actions --global-acl-actions]
                                 [--location]
-                                [--match-configurations]
+                                [--match-configs --match-configurations]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--tags]
   examples:
@@ -57,7 +58,7 @@ directCommands:
       Name of the Access Control List.
   optionalParameters:
   - name: --acl-type
-    acceptedValues: ControlPlaneTrafficPolicy, Management, Tenant
+    acceptedValues: ControlPlaneAcl, ControlPlaneTrafficPolicy, Management, Tenant
     summary: |-
       Access Control List (ACL) Type.
     groupName: Properties Arguments
@@ -68,6 +69,10 @@ directCommands:
   - name: --annotation
     summary: |-
       Switch configuration description.
+    groupName: Properties Arguments
+  - name: --control-plane-acl-configuration --cp-acl-config
+    summary: |-
+      Access Control List (ACL) configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --default-action
     defaultValue: Permit
@@ -80,11 +85,11 @@ directCommands:
     summary: |-
       Device Role.
     groupName: Properties Arguments
-  - name: --dynamic-match-configurations
+  - name: --dynamic-match-configs --dynamic-match-configurations
     summary: |-
       List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --global-access-control-list-actions
+  - name: --global-access-control-list-actions --global-acl-actions
     summary: |-
       Global Access Control List (ACL) actions  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -92,7 +97,7 @@ directCommands:
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     groupName: Resource Arguments
-  - name: --match-configurations
+  - name: --match-configs --match-configurations
     summary: |-
       List of match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -311,16 +316,17 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az networkfabric acl update [--acl-type {ControlPlaneTrafficPolicy, Management, Tenant}]
+    az networkfabric acl update [--acl-type {ControlPlaneAcl, ControlPlaneTrafficPolicy, Management, Tenant}]
                                 [--acls-url]
                                 [--annotation]
                                 [--configuration-type {File, Inline}]
+                                [--control-plane-acl-configuration --cp-acl-config]
                                 [--default-action {Deny, Permit}]
                                 [--device-role {CE, ManagementSwitch, NPB, ToR}]
-                                [--dynamic-match-configurations]
-                                [--global-access-control-list-actions]
+                                [--dynamic-match-configs --dynamic-match-configurations]
+                                [--global-access-control-list-actions --global-acl-actions]
                                 [--ids]
-                                [--match-configurations]
+                                [--match-configs --match-configurations]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--resource-group]
                                 [--resource-name]
@@ -332,7 +338,7 @@ directCommands:
     syntax: az networkfabric acl update -g "example-rg" --resource-name "example-acl" --configuration-type "Inline" --default-action "Permit"  --dynamic-match-configurations "[{ipGroups:[{name:'example-ipGroup',ipAddressType:IPv4,ipPrefixes:['10.20.3.1/20']}],vlanGroups:[{name:'example-vlanGroup',vlans:['20-30']}],portGroups:[{name:'example-portGroup',ports:['100-200']}]}]" --match-configurations "[{matchConfigurationName:'example-match',sequenceNumber:123,ipAddressType:IPv4,matchConditions:[{etherTypes:['0x1'],fragments:['0xff00-0xffff'],ipLengths:['4094-9214'],ttlValues:[23],dscpMarkings:[32],portCondition:{flags:[established],portType:SourcePort,layer4Protocol:TCP,ports:['1-20'],portGroupNames:['example-portGroup']},protocolTypes:[TCP],vlanMatchCondition:{vlans:['20-30'],innerVlans:[30],vlanGroupNames:['example-vlanGroup']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.20.20.20/12'],ipGroupNames:['example-ipGroup']}}],actions:[{type:Count,counterName:'example-counter'}]}]"
   optionalParameters:
   - name: --acl-type
-    acceptedValues: ControlPlaneTrafficPolicy, Management, Tenant
+    acceptedValues: ControlPlaneAcl, ControlPlaneTrafficPolicy, Management, Tenant
     summary: |-
       Access Control List (ACL) Type.
     groupName: Properties Arguments
@@ -349,6 +355,10 @@ directCommands:
     summary: |-
       Input method to configure Access Control List.
     groupName: Properties Arguments
+  - name: --control-plane-acl-configuration --cp-acl-config
+    summary: |-
+      Access Control List (ACL) configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --default-action
     acceptedValues: Deny, Permit
     summary: |-
@@ -359,11 +369,11 @@ directCommands:
     summary: |-
       Device Role.
     groupName: Properties Arguments
-  - name: --dynamic-match-configurations
+  - name: --dynamic-match-configs --dynamic-match-configurations
     summary: |-
       List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --global-access-control-list-actions
+  - name: --global-access-control-list-actions --global-acl-actions
     summary: |-
       Global Access Control List (ACL) actions  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -371,7 +381,7 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --match-configurations
+  - name: --match-configs --match-configurations
     summary: |-
       List of match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
