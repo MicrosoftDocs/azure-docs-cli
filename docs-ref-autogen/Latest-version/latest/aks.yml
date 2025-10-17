@@ -16,7 +16,7 @@ directCommands:
     Run AI assistant to analyze and troubleshoot Kubernetes clusters.
   description: |-
     This command allows you to ask questions about your Azure Kubernetes cluster and get answers using AI models.
-    Environment variables must be set to use the AI model, please refer to https://docs.litellm.ai/docs/providers to learn more about supported AI providers and models and required environment variables.
+    No need to manually set environment variables! All model and credential information can be configured interactively using `az aks agent-init` or via a config file.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -35,21 +35,14 @@ directCommands:
                  []
   examples:
   - summary: |-
+      Ask about pod issues in the cluster with last configured model
+    syntax: az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup
+  - summary: |-
       Ask about pod issues in the cluster with Azure OpenAI
-    syntax: >-
-      export AZURE_API_BASE="https://my-azureopenai-service.openai.azure.com/"
-
-      export AZURE_API_VERSION="2025-01-01-preview"
-
-      export AZURE_API_KEY="sk-xxx"
-
-      az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model azure/gpt-4.1
+    syntax: az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model azure/gpt-4.1
   - summary: |-
       Ask about pod issues in the cluster with OpenAI
-    syntax: >-
-      export OPENAI_API_KEY="sk-xxx"
-
-      az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model gpt-4o
+    syntax: az aks agent "Why are my pods not starting?" --name MyManagedCluster --resource-group MyResourceGroup --model gpt-4o
   - summary: |-
       Run agent with config file
     syntax: >-
@@ -59,10 +52,11 @@ directCommands:
 
       ```json
 
-      model: "azure/gpt-4.1"
-
-      api_key: "..."
-
+      llms:
+        - provider: "azure"
+          MODEL_NAME: "gpt-4.1"
+          AZURE_API_BASE: "https://<your-base-url>"
+          AZURE_API_KEY: "<your-api-key>"
       # define a list of mcp servers, mcp server can be defined
 
       mcp_servers:
@@ -139,7 +133,7 @@ directCommands:
       Enable AKS MCP integration for enhanced capabilities. Traditional mode is the default.
   - name: --api-key
     summary: |-
-      API key to use for the LLM (if not given, uses environment variables AZURE_API_KEY, OPENAI_API_KEY).
+      API key to use for the LLM (if not given, uses environment variables AZURE_API_KEY, OPENAI_API_KEY). (Deprecated).
   - name: --config-file
     defaultValue: C:\azureCli\aksAgent.yaml
     summary: |-
@@ -188,6 +182,47 @@ directCommands:
     summary: |-
       Ask any question and answer using available tools.
     groupName: Positional
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_agent-init
+  name: az aks agent-init
+  summary: |-
+    Initialize and validate LLM provider/model configuration for AKS agent.
+  description: |-
+    This command interactively guides you to select an LLM provider and model, validates the connection, and saves the configuration for later use.
+    You can run this command multiple times to add or update different model configurations.
+  status: GA
+  sourceType: Extension
+  syntax: az aks agent-init
+  examples:
+  - summary: |-
+      Initialize configuration for Azure OpenAI, OpenAI or other llms
+    syntax: az aks agent-init
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -7358,6 +7393,7 @@ commands:
 - az_aks_addon_show
 - az_aks_addon_update
 - az_aks_agent
+- az_aks_agent-init
 - az_aks_app
 - az_aks_app_up
 - az_aks_approuting
