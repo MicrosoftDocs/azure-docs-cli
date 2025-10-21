@@ -1665,7 +1665,9 @@ directCommands:
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
+                  [--enable-gateway-api]
                   [--enable-high-log-scale-mode {false, true}]
+                  [--enable-hosted-system]
                   [--enable-image-cleaner]
                   [--enable-image-integrity]
                   [--enable-imds-restriction]
@@ -1926,6 +1928,12 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a fully managed system node pool
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-managed-system-pool
+  - summary: |-
+      Create a kubernetes cluster with the Azure Service Mesh addon enabled with a managed installation of Gateway API CRDs from the standard release channel.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh --enable-gateway-api
+  - summary: |-
+      Create an automatic cluster with hosted system components enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --sku automatic --enable-hosted-system
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -2237,11 +2245,20 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Use FIPS-enabled OS on agent nodes.
+  - name: --enable-gateway-api
+    defaultValue: "False"
+    summary: |-
+      Enable managed installation of Gateway API CRDs from the standard release channel. Requires at least one managed Gateway API ingress provider to be enabled.
   - name: --enable-high-log-scale-mode
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       Enable High Log Scale Mode for Container Logs.
+    isPreview: true
+  - name: --enable-hosted-system
+    defaultValue: "False"
+    summary: |-
+      Create a cluster with fully hosted system components. This applies only when creating a new automatic cluster.
     isPreview: true
   - name: --enable-image-cleaner
     defaultValue: "False"
@@ -5688,6 +5705,7 @@ directCommands:
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-force-upgrade]
+                  [--disable-gateway-api]
                   [--disable-http-proxy]
                   [--disable-image-cleaner]
                   [--disable-image-integrity]
@@ -5727,6 +5745,7 @@ directCommands:
                   [--enable-disk-driver]
                   [--enable-file-driver]
                   [--enable-force-upgrade]
+                  [--enable-gateway-api]
                   [--enable-high-log-scale-mode {false, true}]
                   [--enable-http-proxy]
                   [--enable-image-cleaner]
@@ -5920,6 +5939,12 @@ directCommands:
   - summary: |-
       Update a kubernetes cluster to clear any namespaces excluded from safeguards. Assumes azure policy addon is already enabled
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-excluded-ns ""
+  - summary: |-
+      Update a kubernetes cluster to enable a managed installation of Gateway API CRDs from the standard release channel.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-gateway-api
+  - summary: |-
+      Update a kubernetes cluster to disable the managed installation of Gateway API CRDs.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-gateway-api
   - summary: |-
       Enable OpenTelemetry metrics collection on an existing cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics
@@ -6130,6 +6155,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable forceUpgrade cluster upgrade settings override.
+  - name: --disable-gateway-api
+    defaultValue: "False"
+    summary: |-
+      Disable managed installation of Gateway API CRDs.
   - name: --disable-http-proxy
     defaultValue: "False"
     summary: |-
@@ -6298,6 +6327,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable forceUpgrade cluster upgrade settings override.
+  - name: --enable-gateway-api
+    defaultValue: "False"
+    summary: |-
+      Enable managed installation of Gateway API CRDs from the standard release channel. Requires at least one managed Gateway API ingress provider to be enabled.
   - name: --enable-high-log-scale-mode
     defaultValue: "False"
     acceptedValues: false, true
