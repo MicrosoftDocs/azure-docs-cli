@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/19/2025
+ms.date: 10/20/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -102,7 +102,7 @@ You will be prompted to install an extension on first use.
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.70.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | GA | [1.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
 |[edgezones](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones) | 2.57.0 | Microsoft Azure Command-Line Tools Edgezones Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones/HISTORY.rst) |
-|[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.61.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
+|[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.75.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
 |[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.70.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | Preview | [1.3.1b1](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection) | 2.61.0 | Microsoft Azure Command-Line Tools ExpressRouteCrossConnection Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection/HISTORY.rst) |
