@@ -30,23 +30,29 @@ directCommands:
                                      [--cluster-resource-provider --cluster-rp]
                                      [--commit]
                                      [--container-name]
+                                     [--digest]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
                                      [--interval --sync-interval]
-                                     [--kind {azblob, bucket, git}]
+                                     [--kind {azblob, bucket, git, oci}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
                                      [--local-auth-ref --local-ref]
                                      [--managed-identity-client-id --mi-client-id]
+                                     [--match-oidc-identity]
                                      [--namespace --ns]
                                      [--no-wait]
+                                     [--oci-insecure {false, true}]
+                                     [--oci-layer-selector-media-type --oci-media-type]
+                                     [--oci-layer-selector-operation --oci-operation {copy, extract}]
                                      [--provider {azure, generic}]
                                      [--sas-token]
                                      [--scope {cluster, namespace}]
                                      [--semver]
+                                     [--service-account-name]
                                      [--service-principal-client-certificate --sp-client-cert]
                                      [--service-principal-client-certificate-password --sp-cert-password]
                                      [--service-principal-client-certificate-send-chain --sp-cert-send-chain]
@@ -58,6 +64,12 @@ directCommands:
                                      [--suspend {false, true}]
                                      [--tag]
                                      [--timeout]
+                                     [--tls-ca-certificate]
+                                     [--tls-client-certificate]
+                                     [--tls-private-key]
+                                     [--use-workload-identity {false, true}]
+                                     [--verification-config]
+                                     [--verification-provider]
   examples:
   - summary: |-
       Create a Flux v2 Kubernetes configuration
@@ -99,6 +111,18 @@ directCommands:
       --container-name my-container --kustomization name=my-kustomization \
 
       --account-key my-account-key
+  - summary: |-
+      Create a Kubernetes v2 Flux Configuration with OCI Source Kind
+    syntax: >-
+      az k8s-configuration flux create --resource-group my-resource-group \
+
+      --cluster-name mycluster --cluster-type connectedClusters \
+
+      --name myconfig --scope cluster --namespace my-namespace \
+
+      --kind oci --url oci://ghcr.io/owner/repo/manifests/podinfo \
+
+      --kustomization name=my-kustomization --use-workload-identity
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -156,6 +180,10 @@ directCommands:
   - name: --container-name
     summary: |-
       Name of the Azure Blob Storage container to sync.
+  - name: --digest
+    summary: |-
+      Digest of the OCI artifact to reconcile with the cluster.
+    groupName: OCI Repo Ref Arguments
   - name: --https-ca-cert
     summary: |-
       Base64-encoded HTTPS CA certificate for TLS communication with private repository sync.
@@ -177,7 +205,7 @@ directCommands:
       Time between reconciliations of the source on the cluster.
   - name: --kind
     defaultValue: git
-    acceptedValues: azblob, bucket, git
+    acceptedValues: azblob, bucket, git, oci
     summary: |-
       Source kind to reconcile.
   - name: --known-hosts
@@ -199,6 +227,10 @@ directCommands:
     summary: |-
       The client ID of the managed identity for authentication with Azure Blob.
     groupName: Azure Blob Auth Arguments
+  - name: --match-oidc-identity
+    summary: |-
+      List of OIDC identities to match for verification of OCI artifacts. Each entry should be a JSON string with 'issuer' and 'subject' fields.
+    groupName: OCI Repository Auth Arguments
   - name: --namespace --ns
     defaultValue: default
     summary: |-
@@ -207,6 +239,19 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --oci-insecure
+    acceptedValues: false, true
+    summary: |-
+      Allow connecting to an insecure (HTTP) OCI container registry.
+  - name: --oci-layer-selector-media-type --oci-media-type
+    summary: |-
+      OCI artifact layer media type to select for extraction or copy.
+    groupName: OCI Repo Ref Arguments
+  - name: --oci-layer-selector-operation --oci-operation
+    acceptedValues: copy, extract
+    summary: |-
+      Operation to perform on the selected OCI artifact layer: 'extract' to extract the layer, 'copy' to copy the tarball as-is (default: extract).
+    groupName: OCI Repo Ref Arguments
   - name: --provider
     acceptedValues: azure, generic
     summary: |-
@@ -223,8 +268,12 @@ directCommands:
       Specify scope of the operator to be 'namespace' or 'cluster'.
   - name: --semver
     summary: |-
-      Semver range within the git source to reconcile with the cluster.
-    groupName: Git Repo Ref Arguments
+      Semver range within the git or OCI source to reconcile with the cluster.
+    groupName: Git Repo Ref / OCI Repo Ref Arguments
+  - name: --service-account-name
+    summary: |-
+      Name of the Kubernetes service account to use for accessing the OCI repository.
+    groupName: OCI Repository Auth Arguments
   - name: --service-principal-client-certificate --sp-client-cert
     summary: |-
       The Base64 encoded client certificate for authenticating a service principal with Azure Blob.
@@ -265,11 +314,36 @@ directCommands:
       Suspend the reconciliation of the source and kustomizations associated with this configuration.
   - name: --tag
     summary: |-
-      Tag within the git source to reconcile with the cluster.
-    groupName: Git Repo Ref Arguments
+      Tag within the git or OCI source to reconcile with the cluster.
+    groupName: Git Repo Ref / OCI Repo Ref Arguments
   - name: --timeout
     summary: |-
       Maximum time to reconcile the source before timing out.
+  - name: --tls-ca-certificate
+    summary: |-
+      Base64-encoded CA certificate for TLS communication with OCI repository.
+    groupName: OCI Repository Auth Arguments
+  - name: --tls-client-certificate
+    summary: |-
+      Base64-encoded client certificate for TLS authentication with OCI repository.
+    groupName: OCI Repository Auth Arguments
+  - name: --tls-private-key
+    summary: |-
+      Base64-encoded private key for TLS authentication with OCI repository.
+    groupName: OCI Repository Auth Arguments
+  - name: --use-workload-identity
+    acceptedValues: false, true
+    summary: |-
+      Use workload identity for authentication with OCI repository.
+    groupName: OCI Repository Auth Arguments
+  - name: --verification-config
+    summary: |-
+      An object containing trusted public keys of trusted authors for OCI artifacts.
+    groupName: OCI Repository Auth Arguments
+  - name: --verification-provider
+    summary: |-
+      Provider used for OCI verification.
+    groupName: OCI Repository Auth Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -532,21 +606,27 @@ directCommands:
                                      [--cluster-resource-provider --cluster-rp]
                                      [--commit]
                                      [--container-name]
+                                     [--digest]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
                                      [--interval --sync-interval]
-                                     [--kind {azblob, bucket, git}]
+                                     [--kind {azblob, bucket, git, oci}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
                                      [--local-auth-ref --local-ref]
                                      [--managed-identity-client-id --mi-client-id]
+                                     [--match-oidc-identity]
                                      [--no-wait]
+                                     [--oci-insecure {false, true}]
+                                     [--oci-layer-selector-media-type --oci-media-type]
+                                     [--oci-layer-selector-operation --oci-operation {copy, extract}]
                                      [--provider {azure, generic}]
                                      [--sas-token]
                                      [--semver]
+                                     [--service-account-name]
                                      [--service-principal-client-certificate --sp-client-cert]
                                      [--service-principal-client-certificate-password --sp-cert-password]
                                      [--service-principal-client-certificate-send-chain --sp-cert-send-chain]
@@ -558,7 +638,13 @@ directCommands:
                                      [--suspend {false, true}]
                                      [--tag]
                                      [--timeout]
+                                     [--tls-ca-certificate]
+                                     [--tls-client-certificate]
+                                     [--tls-private-key]
                                      [--url]
+                                     [--use-workload-identity {false, true}]
+                                     [--verification-config]
+                                     [--verification-provider]
                                      [--yes]
   examples:
   - summary: |-
@@ -587,6 +673,14 @@ directCommands:
       --cluster-name mycluster --cluster-type connectedClusters --name myconfig \
 
       --container-name other-container
+  - summary: |-
+      Update a Flux v2 Kubernetes configuration with OCI Source Kind to use connect insecurely
+    syntax: >-
+      az k8s-configuration flux update --resource-group my-resource-group \
+
+      --cluster-name mycluster --cluster-type connectedClusters --name myconfig \
+
+      --oci-insecure
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -639,6 +733,10 @@ directCommands:
   - name: --container-name
     summary: |-
       Name of the Azure Blob Storage container to sync.
+  - name: --digest
+    summary: |-
+      Digest of the OCI artifact to reconcile with the cluster.
+    groupName: OCI Repo Ref Arguments
   - name: --https-ca-cert
     summary: |-
       Base64-encoded HTTPS CA certificate for TLS communication with private repository sync.
@@ -659,7 +757,7 @@ directCommands:
     summary: |-
       Time between reconciliations of the source on the cluster.
   - name: --kind
-    acceptedValues: azblob, bucket, git
+    acceptedValues: azblob, bucket, git, oci
     summary: |-
       Source kind to reconcile.
   - name: --known-hosts
@@ -681,10 +779,27 @@ directCommands:
     summary: |-
       The client ID of the managed identity for authentication with Azure Blob.
     groupName: Azure Blob Auth Arguments
+  - name: --match-oidc-identity
+    summary: |-
+      List of OIDC identities to match for verification of OCI artifacts. Each entry should be a JSON string with 'issuer' and 'subject' fields.
+    groupName: OCI Repository Auth Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --oci-insecure
+    acceptedValues: false, true
+    summary: |-
+      Allow connecting to an insecure (HTTP) OCI container registry.
+  - name: --oci-layer-selector-media-type --oci-media-type
+    summary: |-
+      OCI artifact layer media type to select for extraction or copy.
+    groupName: OCI Repo Ref Arguments
+  - name: --oci-layer-selector-operation --oci-operation
+    acceptedValues: copy, extract
+    summary: |-
+      Operation to perform on the selected OCI artifact layer: 'extract' to extract the layer, 'copy' to copy the tarball as-is (default: extract).
+    groupName: OCI Repo Ref Arguments
   - name: --provider
     acceptedValues: azure, generic
     summary: |-
@@ -696,8 +811,12 @@ directCommands:
     groupName: Azure Blob Auth Arguments
   - name: --semver
     summary: |-
-      Semver range within the git source to reconcile with the cluster.
-    groupName: Git Repo Ref Arguments
+      Semver range within the git or OCI source to reconcile with the cluster.
+    groupName: Git Repo Ref / OCI Repo Ref Arguments
+  - name: --service-account-name
+    summary: |-
+      Name of the Kubernetes service account to use for accessing the OCI repository.
+    groupName: OCI Repository Auth Arguments
   - name: --service-principal-client-certificate --sp-client-cert
     summary: |-
       The Base64 encoded client certificate for authenticating a service principal with Azure Blob.
@@ -737,14 +856,39 @@ directCommands:
       Suspend the reconciliation of the source and kustomizations associated with this configuration.
   - name: --tag
     summary: |-
-      Tag within the git source to reconcile with the cluster.
-    groupName: Git Repo Ref Arguments
+      Tag within the git or OCI source to reconcile with the cluster.
+    groupName: Git Repo Ref / OCI Repo Ref Arguments
   - name: --timeout
     summary: |-
       Maximum time to reconcile the source before timing out.
+  - name: --tls-ca-certificate
+    summary: |-
+      Base64-encoded CA certificate for TLS communication with OCI repository.
+    groupName: OCI Repository Auth Arguments
+  - name: --tls-client-certificate
+    summary: |-
+      Base64-encoded client certificate for TLS authentication with OCI repository.
+    groupName: OCI Repository Auth Arguments
+  - name: --tls-private-key
+    summary: |-
+      Base64-encoded private key for TLS authentication with OCI repository.
+    groupName: OCI Repository Auth Arguments
   - name: --url -u
     summary: |-
       URL of the source to reconcile.
+  - name: --use-workload-identity
+    acceptedValues: false, true
+    summary: |-
+      Use workload identity for authentication with OCI repository.
+    groupName: OCI Repository Auth Arguments
+  - name: --verification-config
+    summary: |-
+      An object containing trusted public keys of trusted authors for OCI artifacts.
+    groupName: OCI Repository Auth Arguments
+  - name: --verification-provider
+    summary: |-
+      Provider used for OCI verification.
+    groupName: OCI Repository Auth Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
