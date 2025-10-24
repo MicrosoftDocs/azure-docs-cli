@@ -39,6 +39,8 @@ directCommands:
                         [--encryption-key-name]
                         [--encryption-key-version]
                         [--encryption-vault-uri]
+                        [--entra-uid --entra-user-identity]
+                        [--entra-uinfo --entra-user-full-info]
                         [--esp]
                         [--headnode-size]
                         [--host-sku]
@@ -247,6 +249,76 @@ directCommands:
       -p "HttpPassword1234!" --storage-account MyStorageAccount \
 
       --enable-compute-isolation --workernode-size "Standard_E8S_V3" --headnode-size "Standard_E8S_V3"
+  - summary: |-
+      Create a cluster with WASB + MSI.
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --storage-account-managed-identity MyMSI
+  - summary: |-
+      Create a entra user cluster with Entra User By objectId or upn (comma-separated)
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      --ssh-password "sshPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --entra-user-identity "00000000-0000-0000-0000-000000000000","00000000-0000-0000-0000-000000000000","user@contoso.com"
+  - summary: |-
+      Create a entra user cluster with Entra User By objectId or upn (comma-separated, use short name)
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      --ssh-password "sshPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --entra-uid "00000000-0000-0000-0000-000000000000","00000000-0000-0000-0000-000000000000","user@contoso.com"
+  - summary: |-
+      Create a entra user cluster with Entra User By objectId or upn (space-separated)
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      --ssh-password "sshPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --entra-user-identity "00000000-0000-0000-0000-000000000000" "00000000-0000-0000-0000-000000000000" "user@contoso.com"
+  - summary: |-
+      Create a entra user cluster with Entra User By a JSON string
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      --ssh-password "sshPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --entra-user-full-info '[{"objectId": "00000000-0000-0000-0000-000000000000","displayName": "name","upn": "user@contoso.com"}]'
+  - summary: |-
+      Create a entra user cluster with Entra User By a JSON string (use short name)
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      --ssh-password "sshPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --entra-uinfo '[{"objectId": "00000000-0000-0000-0000-000000000000","displayName": "name","upn": "user@contoso.com"}]'
+  - summary: |-
+      Create a entra user cluster with Entra User By a JSON file
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      --ssh-password "sshPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --entra-user-full-info @config.json
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -359,6 +431,14 @@ directCommands:
     summary: |-
       Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net.
     groupName: Customer Managed Key Arguments
+  - name: --entra-uid --entra-user-identity
+    summary: |-
+      One or more Entra user identities (object ID or user principal name) to associate with the cluster. Multiple values can be separated by spaces or commas.
+    groupName: HTTP Arguments
+  - name: --entra-uinfo --entra-user-full-info
+    summary: |-
+      The Entra user information to associate with the cluster. This can be provided as a JSON string or from a file using the `@{path}` syntax. Each entry should include "objectId", "upn", and "displayName" fields. Please see: `https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/tests/latest/entrauserconfig.json`.
+    groupName: HTTP Arguments
   - name: --esp
     defaultValue: "False"
     summary: |-
@@ -1070,6 +1150,10 @@ commands:
 - az_hdinsight_azure-monitor_enable
 - az_hdinsight_azure-monitor_show
 - az_hdinsight_create
+- az_hdinsight_credentials
+- az_hdinsight_credentials_show
+- az_hdinsight_credentials_update
+- az_hdinsight_credentials_wait
 - az_hdinsight_delete
 - az_hdinsight_host
 - az_hdinsight_host_list
@@ -1093,5 +1177,5 @@ commands:
 - az_hdinsight_update
 - az_hdinsight_wait
 metadata:
-  ms.date: 02/18/2025
+  ms.date: 10/22/2025
   description: Manage HDInsight resources.
