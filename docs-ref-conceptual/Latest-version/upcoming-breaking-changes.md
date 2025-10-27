@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 10/21/2025
+ms.date: 10/27/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -219,6 +219,94 @@ The breaking changes listed in this section are planned for the next major relea
 - Template Specs and Deployments Stacks to support their scenarios beyond that date.
 - Migration documentation is available at
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/migrate-blueprint.
+
+## azext_connectedk8s
+
+### `connectedk8s enable-features`
+
+[Link to connectedk8s reference group](/cli/azure/connectedk8s)
+
+- '--app-id' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
+- '--app-secret' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
+
+## azext_dms
+
+### `dms project create`
+
+[Link to dms project reference group](/cli/azure/dms/project)
+
+- 'location' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
+
+## azext_managednetworkfabric
+
+### `networkfabric device upgrade`
+
+[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
+
+- The argument '--version' will become required in 9.0.x.
+
+### `networkfabric l3domain create`
+
+[Link to networkfabric l3domain reference group](/cli/azure/networkfabric/l3domain)
+
+- '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
+
+### `networkfabric l3domain update`
+
+[Link to networkfabric l3domain reference group](/cli/azure/networkfabric/l3domain)
+
+- '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
+
+## azext_netappfiles_preview
+
+### `netappfiles volume create`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
+
+### `netappfiles volume update`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.79.0) scheduled for Nov 2025.
+
+## azext_redisenterprise
+
+### `redisenterprise create`
+
+[Link to redisenterprise reference group](/cli/azure/redisenterprise)
+
+- The argument '--public-network-access' will become required in next breaking change release(2.79.0) scheduled for Nov 2025.
+- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.79.0) scheduled for Nov 2025.
+
+## azext_spring
+
+### `spring`
+
+[Link to spring reference group](/cli/azure/spring)
+
+- 'spring' has been deprecated and will be removed in Mar 2028.
+
+## azext_ssh
+
+### `ssh vm`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh commands connecting to ARC machines on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
+
+### `ssh config`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh commands connecting to ARC machines on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
+
+### `ssh arc`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh arc commands on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
 
 > [!NOTE]
 > This article provides information on upcoming breaking changes. For previously published breaking changes, see [Azure CLI release notes](./release-notes-azure-cli.md).
