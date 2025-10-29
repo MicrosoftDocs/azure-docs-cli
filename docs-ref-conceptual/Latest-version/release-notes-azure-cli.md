@@ -47,6 +47,11 @@ Version 2.79.0
 * `az containerapp env premium-ingress`: Add command group to configure premium ingress settings for the environment
 * Fix #32107: `az containerapp registry show`: Fix NoneType error when container app doesn't have any registry server
 
+### Core
+
+* Resolve CVE-2025-9230
+* Resolve CVE-2025-9232
+
 ### HDInsight
 
 * `az hdinsight create`: Support creating Entra-enabled clusters and creating clusters with WASB + MSI
