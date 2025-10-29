@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/27/2025
+ms.date: 10/28/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -157,7 +157,7 @@ You will be prompted to install an extension on first use.
 |[neon](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon) | 2.75.0 | Microsoft Azure Command-Line Tools Neon Extension. | Preview | [1.0.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview) | 2.61.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview/HISTORY.rst) |
 |[network-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics) | 2.51.0 | Microsoft Azure Command-Line Tools NetworkAnalytics Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics/HISTORY.rst) |
-|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.75.0 | Support for Azure Operator Nexus network cloud commands based on 2025-07-01-preview API version. | GA | [4.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
+|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.75.0 | Support for Azure Operator Nexus network cloud commands based on 2025-09-01 API version. | GA | [4.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
 |[new-relic](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic) | 2.61.0 | Microsoft Azure Command-Line Tools NewRelic Extension. | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic/HISTORY.rst) |
 |[next](https://github.com/Azure/azure-cli-extensions/tree/main/src/next) | 2.20.0 | Microsoft Azure Command-Line Tools Next Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/next/HISTORY.rst) |
 |[nexusidentity](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity) | 2.61.0 | Microsoft Azure Command-Line Tools Nexusidentity Extension | Preview | [1.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity/HISTORY.rst) |
@@ -179,7 +179,7 @@ You will be prompted to install an extension on first use.
 |[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.70.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.54.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
-|[redisenterprise](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise) | 2.70.0 | Microsoft Azure Command-Line Tools RedisEnterprise Extension. | GA | [1.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise/HISTORY.rst) |
+|[redisenterprise](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise) | 2.75.0 | Microsoft Azure Command-Line Tools RedisEnterprise Extension. | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise/HISTORY.rst) |
 |[reservation](https://github.com/Azure/azure-cli-extensions/tree/main/src/reservation) | 2.50.0 | Microsoft Azure Command-Line Tools Reservation Extension | GA | [0.3.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/reservation/HISTORY.rst) |
 |[resource-graph](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-graph) | 2.22.0 | Support for querying Azure resources with Resource Graph. | GA | [2.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-graph/HISTORY.rst) |
 |[resource-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-mover) | 2.50.0 | Microsoft Azure Command-Line Tools ResourceMoverServiceAPI Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-mover/HISTORY.rst) |
