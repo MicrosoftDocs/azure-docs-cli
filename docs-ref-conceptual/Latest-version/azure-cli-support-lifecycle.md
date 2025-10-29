@@ -225,6 +225,15 @@ Azure CLI can only be supported on operating systems where the above versions of
     > On RHEL 7, only Azure CLI 2.38 is supported. Microsoft is no longer providing updates or bug
     > fixes for this distribution.
 
+## Azure CLI application ID guidance
+
+The Azure CLI application ID is reserved exclusively for that tool and must not be used for other
+purposes. For questions or concerns, use the official support channels.
+
+> [!NOTE]
+> This application ID is subject to change or limitation at any time, and its continued availability
+> isn't guaranteed.
+
 ## See also
 
 - [Azure CLI terminology][03]
