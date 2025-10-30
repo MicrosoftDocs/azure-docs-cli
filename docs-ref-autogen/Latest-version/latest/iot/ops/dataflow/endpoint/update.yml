@@ -66,7 +66,7 @@ directCommands:
     groupName: User Assigned Managed Identity Arguments
   - name: --latency -l
     summary: |-
-      The batching latency in seconds. Min value: 0, max value: 65535.
+      The batching latency in milliseconds. Min value: 0, max value: 65535.
     groupName: Batching Configuration Arguments
   - name: --mc --message-count
     summary: |-
@@ -181,7 +181,7 @@ directCommands:
       Host of the Azure Data Explorer is Azure Data Explorer cluster URI. In the form of https://cluster.region.kusto.windows.net.
   - name: --latency -l
     summary: |-
-      The batching latency in seconds. Min value: 0, max value: 65535.
+      The batching latency in milliseconds. Min value: 0, max value: 65535.
     groupName: Batching Configuration Arguments
   - name: --mc --message-count
     summary: |-
@@ -942,7 +942,7 @@ directCommands:
       The Microsoft Fabric lakehouse name under provided workspace.
   - name: --latency -l
     summary: |-
-      The batching latency in seconds. Min value: 0, max value: 65535.
+      The batching latency in milliseconds. Min value: 0, max value: 65535.
     groupName: Batching Configuration Arguments
   - name: --mc --message-count
     summary: |-
@@ -1375,6 +1375,120 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_dataflow_endpoint_update_otel
+  name: az iot ops dataflow endpoint update otel
+  summary: |-
+    Update the properties of an existing OpenTelemetry dataflow endpoint.
+  description: |-
+    For more information on OpenTelemetry dataflow endpoint, see https://aka.ms/opentelemetry-endpoint.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops dataflow endpoint update otel --instance
+                                             --name
+                                             --resource-group
+                                             [--aud --audience]
+                                             [--auth-type {ServiceAccountToken, X509Certificate}]
+                                             [--cm --config-map-ref]
+                                             [--disable-tls {false, true}]
+                                             [--hostname]
+                                             [--latency]
+                                             [--mc --message-count]
+                                             [--no-auth {false, true}]
+                                             [--port]
+                                             [--secret-name]
+                                             [--show-config {false, true}]
+  examples:
+  - summary: |-
+      Update the config map reference for trusted CA certificate of the dataflow endpoint resource called 'myendpoint'.
+    syntax: az iot ops dataflow endpoint update otel --name myendpoint --instance mycluster-ops-instance --resource-group myresourcegroup --config-map-ref mynewconfigmap
+  - summary: |-
+      Update to use Kubernetes Service Account Token authentication method of the dataflow endpoint resource called 'myendpoint'.
+    syntax: az iot ops dataflow endpoint update otel --name myendpoint --instance mycluster-ops-instance --resource-group myresourcegroup --auth-type ServiceAccountToken --audience myaudience
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Dataflow endpoint name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --aud --audience
+    summary: |-
+      Audience of the service to authenticate against.
+    groupName: System Assigned Managed Identity Arguments
+  - name: --auth-type
+    acceptedValues: ServiceAccountToken, X509Certificate
+    summary: |-
+      The authentication type for the dataflow endpoint. Note: When not specified, the authentication type is determinded by other authentication parameters.
+  - name: --cm --config-map-ref
+    summary: |-
+      Config map reference for Trusted CA certificate for Kafka/MQTT endpoint. Note: This ConfigMap should contain the CA certificate in PEM format. The ConfigMap must be in the same namespace as the Kafka/MQTT data flow resource.
+    groupName: Transport Layer Security (TLS) Arguments
+  - name: --disable-tls
+    acceptedValues: false, true
+    summary: |-
+      The data flow uses an insecure connection to the Kafka/MQTT broker.
+    groupName: Transport Layer Security (TLS) Arguments
+  - name: --hostname
+    summary: |-
+      The hostname of the open telemetry setting.
+  - name: --latency -l
+    summary: |-
+      The batching latency in milliseconds. Min value: 0, max value: 65535.
+    groupName: Batching Configuration Arguments
+  - name: --mc --message-count
+    summary: |-
+      Maximum number of messages in a batch. Min value: 0, max value: 4294967295.
+    groupName: Batching Configuration Arguments
+  - name: --no-auth
+    acceptedValues: false, true
+    summary: |-
+      No authentication for the endpoint.
+  - name: --port
+    summary: |-
+      The port number of the open telemetry setting.
+  - name: --secret-name -s
+    summary: |-
+      The name for the kubernetes secret that contains the X509 client certificate, private key corresponding to the client certificate, and intermediate certificates for the client certificate chain. Note: The certificate and private key must be in PEM format and not password protected.
+    groupName: X509 Authentication Arguments
+  - name: --show-config
+    acceptedValues: false, true
+    summary: |-
+      Show the generated resource config instead of invoking the API with it.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_ops_dataflow_endpoint_update_adls
 - az_iot_ops_dataflow_endpoint_update_adx
@@ -1386,5 +1500,6 @@ commands:
 - az_iot_ops_dataflow_endpoint_update_fabric-realtime
 - az_iot_ops_dataflow_endpoint_update_local-mqtt
 - az_iot_ops_dataflow_endpoint_update_local-storage
+- az_iot_ops_dataflow_endpoint_update_otel
 metadata:
   description: Update the properties of an existing dataflow endpoint resource.

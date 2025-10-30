@@ -1,92 +1,81 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_opcua_mgmt_action
-name: az iot ops ns asset opcua mgmt action
+uid: az_iot_ops_ns_asset_custom_datapoint
+name: az iot ops ns asset custom datapoint
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua mgmt action** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset custom datapoint** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage actions within OPC UA asset management groups.
-description: |-
-  Actions within management groups define specific operations that can be performed on OPC UA assets.
-  Each action has a target URI and can include timeout and topic configuration.
+  Manage datapoints for custom asset datasets in Device Registry namespaces.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_opcua_mgmt_action_add
-  name: az iot ops ns asset opcua mgmt action add
+- uid: az_iot_ops_ns_asset_custom_datapoint_add
+  name: az iot ops ns asset custom datapoint add
   summary: |-
-    Add an action to an OPC UA asset management group.
+    Add a datapoint to a custom asset dataset in a Device Registry namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua mgmt action add --asset
-                                              --group
-                                              --instance
-                                              --name
-                                              --resource-group
-                                              --target-uri --uri
-                                              [--action-type --at {Call, Read, Write}]
-                                              [--replace {false, true}]
-                                              [--timeout --to]
-                                              [--topic]
+    az iot ops ns asset custom datapoint add --asset
+                                             --data-source --ds
+                                             --dataset
+                                             --instance
+                                             --name
+                                             --resource-group
+                                             [--config]
+                                             [--replace {false, true}]
+                                             [--tr --type-ref]
   examples:
   - summary: |-
-      Add a basic action to a management group.
-    syntax: az iot ops ns asset opcua mgmt action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile1
+      Add a basic datapoint
+    syntax: az iot ops ns asset custom datapoint add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --dataset myDataset --name temp1 --data-source "sensor.temp1"
   - summary: |-
-      Add an action with timeout and topic.
-    syntax: az iot ops ns asset opcua mgmt action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile1 --timeout 45 --topic factory/opcua/actions
+      Add a datapoint with custom configuration
+    syntax: 'az iot ops ns asset custom datapoint add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --dataset myDataset --name pressure1 --data-source "sensor.pressure1" --config "{\"samplingInterval\": 500, \"priority\": \"high\"}"'
   - summary: |-
-      Add an action with specific action type.
-    syntax: az iot ops ns asset opcua mgmt action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile1 --action-type Call --timeout 30
-  - summary: |-
-      Replace an existing action with the same name.
-    syntax: az iot ops ns asset opcua mgmt action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile2 --timeout 60 --replace
+      Add a datapoint and replace existing one with same name
+    syntax: az iot ops ns asset custom datapoint add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --dataset myDataset --name temp1 --data-source "sensor.temp1.v2" --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --group
+    name: --data-source --ds
     summary: |-
-      Management group name.
+      Data source for the data point.
+  - isRequired: true
+    name: --dataset -d
+    summary: |-
+      Dataset name.
   - isRequired: true
     name: --instance -i
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name -n
+    name: --name
     summary: |-
-      Action name.
+      Data point name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       The resource group of the Azure IoT Operations instance.
-  - isRequired: true
-    name: --target-uri --uri
-    summary: |-
-      Target URI for the management action.
   optionalParameters:
-  - name: --action-type --at
-    acceptedValues: Call, Read, Write
+  - name: --config
     summary: |-
-      Type of management action.
+      Custom data point configuration as a JSON string or file path.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the action if another action with the same name is already present.
-  - name: --timeout --to
+      Replace the data point if another point with the same name is already present.
+  - name: --tr --type-ref
     summary: |-
-      Timeout in seconds for this specific action. Minimum: 0.
-  - name: --topic -t
-    summary: |-
-      Topic override for this specific action.
+      Type definition ID or URI.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -114,32 +103,32 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_mgmt_action_list
-  name: az iot ops ns asset opcua mgmt action list
+- uid: az_iot_ops_ns_asset_custom_datapoint_list
+  name: az iot ops ns asset custom datapoint list
   summary: |-
-    List actions in an OPC UA asset management group.
+    List data points for a custom asset dataset in a Device Registry namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua mgmt action list --asset
-                                               --group
-                                               --instance
-                                               --resource-group
+    az iot ops ns asset custom datapoint list --asset
+                                              --dataset
+                                              --instance
+                                              --resource-group
   examples:
   - summary: |-
-      List all actions in a management group.
-    syntax: az iot ops ns asset opcua mgmt action list --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup
+      List all data points for a dataset
+    syntax: az iot ops ns asset custom datapoint list --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --dataset myDataset
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --group
+    name: --dataset -d
     summary: |-
-      Management group name.
+      Dataset name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -175,41 +164,41 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_mgmt_action_remove
-  name: az iot ops ns asset opcua mgmt action remove
+- uid: az_iot_ops_ns_asset_custom_datapoint_remove
+  name: az iot ops ns asset custom datapoint remove
   summary: |-
-    Remove an action from an OPC UA asset management group.
+    Remove a datapoint from a custom asset dataset in a Device Registry namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua mgmt action remove --asset
-                                                 --group
-                                                 --instance
-                                                 --name
-                                                 --resource-group
+    az iot ops ns asset custom datapoint remove --asset
+                                                --dataset
+                                                --instance
+                                                --name
+                                                --resource-group
   examples:
   - summary: |-
-      Remove an action from a management group.
-    syntax: az iot ops ns asset opcua mgmt action remove --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction
+      Remove a datapoint from a dataset
+    syntax: az iot ops ns asset custom datapoint remove --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --dataset myDataset --name temp1
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --group
+    name: --dataset -d
     summary: |-
-      Management group name.
+      Dataset name.
   - isRequired: true
     name: --instance -i
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name -n
+    name: --name
     summary: |-
-      Action name.
+      Data point name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -242,11 +231,8 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_opcua_mgmt_action_add
-- az_iot_ops_ns_asset_opcua_mgmt_action_list
-- az_iot_ops_ns_asset_opcua_mgmt_action_remove
+- az_iot_ops_ns_asset_custom_datapoint_add
+- az_iot_ops_ns_asset_custom_datapoint_list
+- az_iot_ops_ns_asset_custom_datapoint_remove
 metadata:
-  description: >-
-    Actions within management groups define specific operations that can be performed on OPC UA assets.
-
-    Each action has a target URI and can include timeout and topic configuration.
+  description: Manage datapoints for custom asset datasets in Device Registry namespaces.

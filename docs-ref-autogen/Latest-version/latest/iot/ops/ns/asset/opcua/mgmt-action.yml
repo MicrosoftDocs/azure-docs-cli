@@ -1,52 +1,51 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_custom_mgmt_action
-name: az iot ops ns asset custom mgmt action
+uid: az_iot_ops_ns_asset_opcua_mgmt-action
+name: az iot ops ns asset opcua mgmt-action
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset custom mgmt action** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua mgmt-action** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage actions within custom asset management groups.
+  Manage actions within OPC UA asset management groups.
 description: |-
-  Actions within management groups define specific operations that can be performed on custom assets.
-  Each action has a target URI and can include custom configuration.
+  Actions within management groups define specific operations that can be performed on OPC UA assets.
+  Each action has a target URI and can include timeout and topic configuration.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_custom_mgmt_action_add
-  name: az iot ops ns asset custom mgmt action add
+- uid: az_iot_ops_ns_asset_opcua_mgmt-action_add
+  name: az iot ops ns asset opcua mgmt-action add
   summary: |-
-    Add an action to a custom asset management group.
+    Add an action to an OPC UA asset management group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom mgmt action add --asset
-                                               --group
-                                               --instance
-                                               --name
-                                               --resource-group
-                                               --target-uri --uri
-                                               [--action-type --at {Call, Read, Write}]
-                                               [--config]
-                                               [--replace {false, true}]
-                                               [--timeout --to]
-                                               [--topic]
+    az iot ops ns asset opcua mgmt-action add --asset
+                                              --group
+                                              --instance
+                                              --name
+                                              --resource-group
+                                              --target-uri --uri
+                                              [--action-type --at {Call, Read, Write}]
+                                              [--replace {false, true}]
+                                              [--timeout --to]
+                                              [--topic]
   examples:
   - summary: |-
       Add a basic action to a management group.
-    syntax: az iot ops ns asset custom mgmt action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile1
+    syntax: az iot ops ns asset opcua mgmt-action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile1
   - summary: |-
-      Add an action with custom configuration and timeout.
-    syntax: "az iot ops ns asset custom mgmt action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile1 --config '{\"method\": \"start\", \"parameters\": {\"speed\": 100}}' --timeout 45"
+      Add an action with timeout and topic.
+    syntax: az iot ops ns asset opcua mgmt-action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile1 --timeout 45 --topic factory/opcua/actions
   - summary: |-
-      Add an action with specific action type and topic.
-    syntax: az iot ops ns asset custom mgmt action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile1 --action-type Control --topic factory/control/actions --timeout 30
+      Add an action with specific action type.
+    syntax: az iot ops ns asset opcua mgmt-action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile1 --action-type Call --timeout 30
   - summary: |-
       Replace an existing action with the same name.
-    syntax: "az iot ops ns asset custom mgmt action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile2 --config '{\"method\": \"restart\", \"priority\": \"high\"}' --replace"
+    syntax: az iot ops ns asset opcua mgmt-action add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /opcua/device_service?OPCUAProfile=Profile2 --timeout 60 --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -74,12 +73,10 @@ directCommands:
       Target URI for the management action.
   optionalParameters:
   - name: --action-type --at
+    defaultValue: Call
     acceptedValues: Call, Read, Write
     summary: |-
       Type of management action.
-  - name: --config
-    summary: |-
-      Custom action configuration as a JSON string or file path.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
@@ -118,23 +115,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_mgmt_action_list
-  name: az iot ops ns asset custom mgmt action list
+- uid: az_iot_ops_ns_asset_opcua_mgmt-action_list
+  name: az iot ops ns asset opcua mgmt-action list
   summary: |-
-    List actions in a custom asset management group.
+    List actions in an OPC UA asset management group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom mgmt action list --asset
-                                                --group
-                                                --instance
-                                                --resource-group
+    az iot ops ns asset opcua mgmt-action list --asset
+                                               --group
+                                               --instance
+                                               --resource-group
   examples:
   - summary: |-
       List all actions in a management group.
-    syntax: az iot ops ns asset custom mgmt action list --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup
+    syntax: az iot ops ns asset opcua mgmt-action list --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -179,24 +176,24 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_mgmt_action_remove
-  name: az iot ops ns asset custom mgmt action remove
+- uid: az_iot_ops_ns_asset_opcua_mgmt-action_remove
+  name: az iot ops ns asset opcua mgmt-action remove
   summary: |-
-    Remove an action from a custom asset management group.
+    Remove an action from an OPC UA asset management group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom mgmt action remove --asset
-                                                  --group
-                                                  --instance
-                                                  --name
-                                                  --resource-group
+    az iot ops ns asset opcua mgmt-action remove --asset
+                                                 --group
+                                                 --instance
+                                                 --name
+                                                 --resource-group
   examples:
   - summary: |-
       Remove an action from a management group.
-    syntax: az iot ops ns asset custom mgmt action remove --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction
+    syntax: az iot ops ns asset opcua mgmt-action remove --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -246,11 +243,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_custom_mgmt_action_add
-- az_iot_ops_ns_asset_custom_mgmt_action_list
-- az_iot_ops_ns_asset_custom_mgmt_action_remove
+- az_iot_ops_ns_asset_opcua_mgmt-action_add
+- az_iot_ops_ns_asset_opcua_mgmt-action_list
+- az_iot_ops_ns_asset_opcua_mgmt-action_remove
 metadata:
   description: >-
-    Actions within management groups define specific operations that can be performed on custom assets.
+    Actions within management groups define specific operations that can be performed on OPC UA assets.
 
-    Each action has a target URI and can include custom configuration.
+    Each action has a target URI and can include timeout and topic configuration.

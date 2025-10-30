@@ -299,6 +299,7 @@ directCommands:
                       [--persist-max-size]
                       [--persist-mode]
                       [--persist-pvc-sc]
+                      [--skip-sr-ra {false, true}]
                       [--tags]
                       [--trust-settings]
   examples:
@@ -423,6 +424,10 @@ directCommands:
     summary: |-
       Name of the storage class required by the persistent volume claim.
     groupName: Disk Persistence Arguments
+  - name: --skip-sr-ra
+    acceptedValues: false, true
+    summary: |-
+      When used the role assignment between the IoT Operations extension system-managed identity and schema registry will be skipped.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -548,6 +553,72 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_enable-rsync
+  name: az iot ops enable-rsync
+  summary: |-
+    Enable edge to cloud hydration.
+  description: |-
+    This operation will lookup the K8 Bridge service principal then assign
+    it to the scope of the IoT Operations instance custom location with the built-in
+    role of Azure Kubernetes Service Arc Contributor by default.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops enable-rsync --name
+                            --resource-group
+                            [--custom-role-id]
+                            [--k8-bridge-sp-oid]
+  examples:
+  - summary: |-
+      Enable resource sync for the instance.
+    syntax: az iot ops enable-rsync -n myinstance -g myresourcegroup
+  - summary: |-
+      Enable resource sync for the instance and explictly provide the K8 Bridge principal OID.
+    syntax: az iot ops enable-rsync -n myinstance -g myresourcegroup --k8-bridge-sp-oid $TENANT_K8_BRIDGE_SP_OID
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --custom-role-id
+    summary: |-
+      Fully qualified role definition Id in the following format: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/{roleId}.
+    groupName: Role Assignment Arguments
+  - name: --k8-bridge-sp-oid
+    summary: |-
+      Provide an explicit K8 Bridge service principal OID for the custom location role assignment. This is useful if the logged-in principal does not have permission to query apps from MS Graph.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_ops_get-versions
   name: az iot ops get-versions
   summary: |-
@@ -556,11 +627,16 @@ directCommands:
   isExperimental: true
   previewOrExperimentalInfo: 'This command is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
-  syntax: az iot ops get-versions
+  syntax: az iot ops get-versions [--inline {false, true}]
   examples:
   - summary: |-
       Route to the version guide in a new browser window.
     syntax: az iot ops get-versions
+  optionalParameters:
+  - name: --inline
+    acceptedValues: false, true
+    summary: |-
+      Provides key version attributes in console output.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -613,6 +689,7 @@ directCommands:
     az iot ops init --cluster
                     --resource-group
                     [--check-cluster {false, true}]
+                    [--cm-config]
                     [--context]
                     [--ensure-latest {false, true}]
                     [--no-progress {false, true}]
@@ -646,6 +723,10 @@ directCommands:
     summary: |-
       Enforce a check for minimum cluster requirements before bootstrapping.
     isPreview: true
+  - name: --cm-config
+    summary: |-
+      CertManager arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
   - name: --context
     summary: |-
       Kubeconfig context name to use for k8s cluster communication. If no context is provided current_context is used.
@@ -770,9 +851,7 @@ directCommands:
     `Azure Kubernetes Service Arc Contributor` built-in role against the custom location
     associated with the instance, applying the role if needed. This can be skipped with
     the `--skip-ra` flag.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  status: GA
   sourceType: Extension
   syntax: >-
     az iot ops migrate-assets --name
@@ -988,9 +1067,11 @@ directCommands:
   syntax: >-
     az iot ops upgrade --name
                        --resource-group
+                       [--cm-config]
+                       [--no-cm-install {false, true}]
                        [--no-progress {false, true}]
+                       [--ns-resource-id]
                        [--ops-config]
-                       [--plat-config]
                        [--ssc-config]
                        [--yes {false, true}]
   examples:
@@ -1013,17 +1094,25 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --cm-config
+    summary: |-
+      CertManager arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
+    groupName: Extension Config Arguments
+  - name: --no-cm-install
+    acceptedValues: false, true
+    summary: |-
+      Flag to disable cert-manager arc extension installation.
+    groupName: Extension Config Arguments
   - name: --no-progress
     acceptedValues: false, true
     summary: |-
       Disable visual representation of work.
+  - name: --ns-resource-id
+    summary: |-
+      The device registry namespace resource Id to use with IoT Operations.
   - name: --ops-config
     summary: |-
       IotOperations arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
-    groupName: Extension Config Arguments
-  - name: --plat-config
-    summary: |-
-      Platform arc extension custom config. Format is space-separated key=value pairs or just the key. This option can be used one or more times.
     groupName: Extension Config Arguments
   - name: --ssc-config
     summary: |-
@@ -1147,6 +1236,7 @@ commands:
 - az_iot_ops_dataflow_endpoint_create_fabric-realtime
 - az_iot_ops_dataflow_endpoint_create_local-mqtt
 - az_iot_ops_dataflow_endpoint_create_local-storage
+- az_iot_ops_dataflow_endpoint_create_otel
 - az_iot_ops_dataflow_endpoint_delete
 - az_iot_ops_dataflow_endpoint_list
 - az_iot_ops_dataflow_endpoint_show
@@ -1161,6 +1251,7 @@ commands:
 - az_iot_ops_dataflow_endpoint_update_fabric-realtime
 - az_iot_ops_dataflow_endpoint_update_local-mqtt
 - az_iot_ops_dataflow_endpoint_update_local-storage
+- az_iot_ops_dataflow_endpoint_update_otel
 - az_iot_ops_dataflow_list
 - az_iot_ops_dataflow_profile
 - az_iot_ops_dataflow_profile_create
@@ -1170,6 +1261,7 @@ commands:
 - az_iot_ops_dataflow_profile_update
 - az_iot_ops_dataflow_show
 - az_iot_ops_delete
+- az_iot_ops_enable-rsync
 - az_iot_ops_get-versions
 - az_iot_ops_identity
 - az_iot_ops_identity_assign
@@ -1182,36 +1274,36 @@ commands:
 - az_iot_ops_ns_asset
 - az_iot_ops_ns_asset_custom
 - az_iot_ops_ns_asset_custom_create
+- az_iot_ops_ns_asset_custom_datapoint
+- az_iot_ops_ns_asset_custom_datapoint_add
+- az_iot_ops_ns_asset_custom_datapoint_list
+- az_iot_ops_ns_asset_custom_datapoint_remove
 - az_iot_ops_ns_asset_custom_dataset
 - az_iot_ops_ns_asset_custom_dataset_add
 - az_iot_ops_ns_asset_custom_dataset_list
-- az_iot_ops_ns_asset_custom_dataset_point
-- az_iot_ops_ns_asset_custom_dataset_point_add
-- az_iot_ops_ns_asset_custom_dataset_point_list
-- az_iot_ops_ns_asset_custom_dataset_point_remove
 - az_iot_ops_ns_asset_custom_dataset_remove
 - az_iot_ops_ns_asset_custom_dataset_show
 - az_iot_ops_ns_asset_custom_dataset_update
 - az_iot_ops_ns_asset_custom_event
+- az_iot_ops_ns_asset_custom_event-group
+- az_iot_ops_ns_asset_custom_event-group_add
+- az_iot_ops_ns_asset_custom_event-group_list
+- az_iot_ops_ns_asset_custom_event-group_remove
+- az_iot_ops_ns_asset_custom_event-group_show
+- az_iot_ops_ns_asset_custom_event-group_update
 - az_iot_ops_ns_asset_custom_event_add
 - az_iot_ops_ns_asset_custom_event_list
-- az_iot_ops_ns_asset_custom_event_point
-- az_iot_ops_ns_asset_custom_event_point_add
-- az_iot_ops_ns_asset_custom_event_point_list
-- az_iot_ops_ns_asset_custom_event_point_remove
 - az_iot_ops_ns_asset_custom_event_remove
-- az_iot_ops_ns_asset_custom_event_show
-- az_iot_ops_ns_asset_custom_event_update
-- az_iot_ops_ns_asset_custom_mgmt
-- az_iot_ops_ns_asset_custom_mgmt_action
-- az_iot_ops_ns_asset_custom_mgmt_action_add
-- az_iot_ops_ns_asset_custom_mgmt_action_list
-- az_iot_ops_ns_asset_custom_mgmt_action_remove
-- az_iot_ops_ns_asset_custom_mgmt_add
-- az_iot_ops_ns_asset_custom_mgmt_list
-- az_iot_ops_ns_asset_custom_mgmt_remove
-- az_iot_ops_ns_asset_custom_mgmt_show
-- az_iot_ops_ns_asset_custom_mgmt_update
+- az_iot_ops_ns_asset_custom_mgmt-action
+- az_iot_ops_ns_asset_custom_mgmt-action_add
+- az_iot_ops_ns_asset_custom_mgmt-action_list
+- az_iot_ops_ns_asset_custom_mgmt-action_remove
+- az_iot_ops_ns_asset_custom_mgmt-group
+- az_iot_ops_ns_asset_custom_mgmt-group_add
+- az_iot_ops_ns_asset_custom_mgmt-group_list
+- az_iot_ops_ns_asset_custom_mgmt-group_remove
+- az_iot_ops_ns_asset_custom_mgmt-group_show
+- az_iot_ops_ns_asset_custom_mgmt-group_update
 - az_iot_ops_ns_asset_custom_stream
 - az_iot_ops_ns_asset_custom_stream_add
 - az_iot_ops_ns_asset_custom_stream_list
@@ -1231,47 +1323,47 @@ commands:
 - az_iot_ops_ns_asset_media_update
 - az_iot_ops_ns_asset_onvif
 - az_iot_ops_ns_asset_onvif_create
-- az_iot_ops_ns_asset_onvif_event
-- az_iot_ops_ns_asset_onvif_event_add
-- az_iot_ops_ns_asset_onvif_event_list
-- az_iot_ops_ns_asset_onvif_event_remove
-- az_iot_ops_ns_asset_onvif_event_show
-- az_iot_ops_ns_asset_onvif_event_update
-- az_iot_ops_ns_asset_onvif_mgmt
-- az_iot_ops_ns_asset_onvif_mgmt_add
-- az_iot_ops_ns_asset_onvif_mgmt_list
-- az_iot_ops_ns_asset_onvif_mgmt_remove
-- az_iot_ops_ns_asset_onvif_mgmt_show
-- az_iot_ops_ns_asset_onvif_mgmt_update
+- az_iot_ops_ns_asset_onvif_event-group
+- az_iot_ops_ns_asset_onvif_event-group_add
+- az_iot_ops_ns_asset_onvif_event-group_list
+- az_iot_ops_ns_asset_onvif_event-group_remove
+- az_iot_ops_ns_asset_onvif_event-group_show
+- az_iot_ops_ns_asset_onvif_event-group_update
+- az_iot_ops_ns_asset_onvif_mgmt-group
+- az_iot_ops_ns_asset_onvif_mgmt-group_add
+- az_iot_ops_ns_asset_onvif_mgmt-group_list
+- az_iot_ops_ns_asset_onvif_mgmt-group_remove
+- az_iot_ops_ns_asset_onvif_mgmt-group_show
+- az_iot_ops_ns_asset_onvif_mgmt-group_update
 - az_iot_ops_ns_asset_onvif_update
 - az_iot_ops_ns_asset_opcua
 - az_iot_ops_ns_asset_opcua_create
+- az_iot_ops_ns_asset_opcua_datapoint
+- az_iot_ops_ns_asset_opcua_datapoint_add
+- az_iot_ops_ns_asset_opcua_datapoint_list
+- az_iot_ops_ns_asset_opcua_datapoint_remove
 - az_iot_ops_ns_asset_opcua_dataset
 - az_iot_ops_ns_asset_opcua_dataset_add
 - az_iot_ops_ns_asset_opcua_dataset_list
-- az_iot_ops_ns_asset_opcua_dataset_point
-- az_iot_ops_ns_asset_opcua_dataset_point_add
-- az_iot_ops_ns_asset_opcua_dataset_point_list
-- az_iot_ops_ns_asset_opcua_dataset_point_remove
 - az_iot_ops_ns_asset_opcua_dataset_remove
 - az_iot_ops_ns_asset_opcua_dataset_show
 - az_iot_ops_ns_asset_opcua_dataset_update
-- az_iot_ops_ns_asset_opcua_event
-- az_iot_ops_ns_asset_opcua_event_add
-- az_iot_ops_ns_asset_opcua_event_list
-- az_iot_ops_ns_asset_opcua_event_remove
-- az_iot_ops_ns_asset_opcua_event_show
-- az_iot_ops_ns_asset_opcua_event_update
-- az_iot_ops_ns_asset_opcua_mgmt
-- az_iot_ops_ns_asset_opcua_mgmt_action
-- az_iot_ops_ns_asset_opcua_mgmt_action_add
-- az_iot_ops_ns_asset_opcua_mgmt_action_list
-- az_iot_ops_ns_asset_opcua_mgmt_action_remove
-- az_iot_ops_ns_asset_opcua_mgmt_add
-- az_iot_ops_ns_asset_opcua_mgmt_list
-- az_iot_ops_ns_asset_opcua_mgmt_remove
-- az_iot_ops_ns_asset_opcua_mgmt_show
-- az_iot_ops_ns_asset_opcua_mgmt_update
+- az_iot_ops_ns_asset_opcua_event-group
+- az_iot_ops_ns_asset_opcua_event-group_add
+- az_iot_ops_ns_asset_opcua_event-group_list
+- az_iot_ops_ns_asset_opcua_event-group_remove
+- az_iot_ops_ns_asset_opcua_event-group_show
+- az_iot_ops_ns_asset_opcua_event-group_update
+- az_iot_ops_ns_asset_opcua_mgmt-action
+- az_iot_ops_ns_asset_opcua_mgmt-action_add
+- az_iot_ops_ns_asset_opcua_mgmt-action_list
+- az_iot_ops_ns_asset_opcua_mgmt-action_remove
+- az_iot_ops_ns_asset_opcua_mgmt-group
+- az_iot_ops_ns_asset_opcua_mgmt-group_add
+- az_iot_ops_ns_asset_opcua_mgmt-group_list
+- az_iot_ops_ns_asset_opcua_mgmt-group_remove
+- az_iot_ops_ns_asset_opcua_mgmt-group_show
+- az_iot_ops_ns_asset_opcua_mgmt-group_update
 - az_iot_ops_ns_asset_opcua_update
 - az_iot_ops_ns_asset_query
 - az_iot_ops_ns_asset_rest
@@ -1307,15 +1399,11 @@ commands:
 - az_iot_ops_ns_show
 - az_iot_ops_ns_update
 - az_iot_ops_registry
-- az_iot_ops_registry_add
+- az_iot_ops_registry_create
+- az_iot_ops_registry_delete
 - az_iot_ops_registry_list
-- az_iot_ops_registry_remove
 - az_iot_ops_registry_show
 - az_iot_ops_registry_update
-- az_iot_ops_rsync
-- az_iot_ops_rsync_disable
-- az_iot_ops_rsync_enable
-- az_iot_ops_rsync_list
 - az_iot_ops_schema
 - az_iot_ops_schema_create
 - az_iot_ops_schema_delete

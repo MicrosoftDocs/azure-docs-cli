@@ -1,52 +1,44 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_custom_dataset
-name: az iot ops ns asset custom dataset
+uid: az_iot_ops_ns_asset_custom_event-group
+name: az iot ops ns asset custom event-group
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset custom dataset** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset custom event-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage datasets for custom namespaced assets in an IoT Operations instance.
-description: |-
-  Currently, only one dataset with the name "default" is supported for assets.
+  Manage event groups for custom namespaced assets in an IoT Operations instance.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_custom_dataset_add
-  name: az iot ops ns asset custom dataset add
+- uid: az_iot_ops_ns_asset_custom_event-group_add
+  name: az iot ops ns asset custom event-group add
   summary: |-
-    Add a dataset to a custom namespaced asset in an IoT Operations instance.
+    Add an event group to a custom namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom dataset add --asset
-                                           --data-source --ds
-                                           --instance
-                                           --name
-                                           --resource-group
-                                           [--config]
-                                           [--dest --destination]
-                                           [--replace {false, true}]
-                                           [--tr --type-ref]
+    az iot ops ns asset custom event-group add --asset
+                                               --data-source --ds
+                                               --instance
+                                               --name
+                                               --resource-group
+                                               [--config]
+                                               [--dest --destination]
+                                               [--replace {false, true}]
+                                               [--tr --type-ref]
   examples:
   - summary: |-
-      Add a basic custom dataset
-    syntax: az iot ops ns asset custom dataset add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset --data-source "customDataSource"
+      Add a basic custom event group
+    syntax: az iot ops ns asset custom event-group add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --data-source "alarm.critical"
   - summary: |-
-      Add a custom dataset with configuration
-    syntax: 'az iot ops ns asset custom dataset add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset --data-source "sensor/pressure" --config "{\"publishingInterval\": 1000, \"queueSize\": 5}"'
+      Add a custom event group with MQTT destination
+    syntax: az iot ops ns asset custom event-group add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name statusEvent --data-source "status.change" --destination topic="factory/custom/events" retain=Never qos=Qos1 ttl=1800
   - summary: |-
-      Add a custom dataset with MQTT destination
-    syntax: az iot ops ns asset custom dataset add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset --data-source "sensor/temp" --destination topic="factory/temperature" retain=Keep qos=Qos1 ttl=3600
-  - summary: |-
-      Add a custom dataset with BrokerStateStore destination
-    syntax: az iot ops ns asset custom dataset add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset --data-source "device/state" --destination key="deviceState"
-  - summary: |-
-      Add a custom dataset with Storage destination
-    syntax: az iot ops ns asset custom dataset add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset --data-source "device/logs" --destination path="data/logs/device001"
+      Replace a custom event group with same name
+    syntax: az iot ops ns asset custom event-group add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --data-source "alarm.updated" --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -55,7 +47,7 @@ directCommands:
   - isRequired: true
     name: --data-source --ds
     summary: |-
-      Data source for the dataset.
+      Data source for the event group.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -63,7 +55,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Dataset name.
+      Event group name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -71,15 +63,15 @@ directCommands:
   optionalParameters:
   - name: --config
     summary: |-
-      Custom dataset configuration as a JSON string or file path.
+      Custom event group configuration as a JSON string or file path.
   - name: --dest --destination
     summary: |-
-      Key=value pairs representing the destination for dataset. Allowed arguments include: `key` for BrokerStateStore; `path` for Storage; or `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Never` and `Keep` and allowed values for `qos` are `Qos0` and `Qos1`.
+      Key=value pairs representing the destination for event groups. Allowed arguments include: `key` for BrokerStateStore; `path` for Storage; or `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Never` and `Keep` and allowed values for `qos` are `Qos0` and `Qos1`.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the dataset if another dataset with the same name is already present.
+      Replace the event group if another event group with the same name is already present.
   - name: --tr --type-ref
     summary: |-
       Type definition ID or URI.
@@ -110,22 +102,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_dataset_list
-  name: az iot ops ns asset custom dataset list
+- uid: az_iot_ops_ns_asset_custom_event-group_list
+  name: az iot ops ns asset custom event-group list
   summary: |-
-    List datasets for a custom namespaced asset in an IoT Operations instance.
+    List event groups for a custom namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom dataset list --asset
-                                            --instance
-                                            --resource-group
+    az iot ops ns asset custom event-group list --asset
+                                                --instance
+                                                --resource-group
   examples:
   - summary: |-
-      List all datasets for a custom asset
-    syntax: az iot ops ns asset custom dataset list --asset mycustomasset --instance myInstance -g myInstanceResourceGroup
+      List all event groups for a custom asset
+    syntax: az iot ops ns asset custom event-group list --asset mycustomasset --instance myInstance -g myInstanceResourceGroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -166,23 +158,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_dataset_remove
-  name: az iot ops ns asset custom dataset remove
+- uid: az_iot_ops_ns_asset_custom_event-group_remove
+  name: az iot ops ns asset custom event-group remove
   summary: |-
-    Remove a dataset from a custom namespaced asset in an IoT Operations instance.
+    Remove an event group from a custom namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom dataset remove --asset
-                                              --instance
-                                              --name
-                                              --resource-group
+    az iot ops ns asset custom event-group remove --asset
+                                                  --instance
+                                                  --name
+                                                  --resource-group
   examples:
   - summary: |-
-      Remove a dataset from a custom asset
-    syntax: az iot ops ns asset custom dataset remove --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset
+      Remove an event group from a custom asset
+    syntax: az iot ops ns asset custom event-group remove --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -195,7 +187,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Dataset name.
+      Event group name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -227,23 +219,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_dataset_show
-  name: az iot ops ns asset custom dataset show
+- uid: az_iot_ops_ns_asset_custom_event-group_show
+  name: az iot ops ns asset custom event-group show
   summary: |-
-    Show details of a dataset for a custom namespaced asset in an IoT Operations instance.
+    Show details of an event group for a custom namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom dataset show --asset
-                                            --instance
-                                            --name
-                                            --resource-group
+    az iot ops ns asset custom event-group show --asset
+                                                --instance
+                                                --name
+                                                --resource-group
   examples:
   - summary: |-
-      Show dataset details
-    syntax: az iot ops ns asset custom dataset show --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset
+      Show event group details
+    syntax: az iot ops ns asset custom event-group show --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -256,7 +248,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Dataset name.
+      Event group name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -288,30 +280,30 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_dataset_update
-  name: az iot ops ns asset custom dataset update
+- uid: az_iot_ops_ns_asset_custom_event-group_update
+  name: az iot ops ns asset custom event-group update
   summary: |-
-    Update a dataset for a custom namespaced asset in an IoT Operations instance.
+    Update an event group for a custom namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom dataset update --asset
-                                              --instance
-                                              --name
-                                              --resource-group
-                                              [--config]
-                                              [--data-source --ds]
-                                              [--dest --destination]
-                                              [--tr --type-ref]
+    az iot ops ns asset custom event-group update --asset
+                                                  --instance
+                                                  --name
+                                                  --resource-group
+                                                  [--config]
+                                                  [--data-source --ds]
+                                                  [--dest --destination]
+                                                  [--tr --type-ref]
   examples:
   - summary: |-
-      Update dataset configuration
-    syntax: 'az iot ops ns asset custom dataset update --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset --data-source "updated/source" --config "{\"publishingInterval\": 2000}"'
+      Update the data source for an event group
+    syntax: az iot ops ns asset custom event-group update --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --data-source "alarm.updated"
   - summary: |-
-      Update dataset destination to MQTT
-    syntax: az iot ops ns asset custom dataset update --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name myDataset --destination topic="factory/updated/temperature" retain=Never qos=Qos0 ttl=7200
+      Update event group destination
+    syntax: az iot ops ns asset custom event-group update --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --name temperatureAlert --destination topic="factory/custom/alerts/updated" retain=Keep qos=Qos0 ttl=3600
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -324,7 +316,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Dataset name.
+      Event group name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -332,13 +324,13 @@ directCommands:
   optionalParameters:
   - name: --config
     summary: |-
-      Custom dataset configuration as a JSON string or file path.
+      Custom event group configuration as a JSON string or file path.
   - name: --data-source --ds
     summary: |-
-      Data source for the dataset.
+      Data source for the event group.
   - name: --dest --destination
     summary: |-
-      Key=value pairs representing the destination for dataset. Allowed arguments include: `key` for BrokerStateStore; `path` for Storage; or `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Never` and `Keep` and allowed values for `qos` are `Qos0` and `Qos1`.
+      Key=value pairs representing the destination for event groups. Allowed arguments include: `key` for BrokerStateStore; `path` for Storage; or `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Never` and `Keep` and allowed values for `qos` are `Qos0` and `Qos1`.
   - name: --tr --type-ref
     summary: |-
       Type definition ID or URI.
@@ -370,10 +362,10 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_custom_dataset_add
-- az_iot_ops_ns_asset_custom_dataset_list
-- az_iot_ops_ns_asset_custom_dataset_remove
-- az_iot_ops_ns_asset_custom_dataset_show
-- az_iot_ops_ns_asset_custom_dataset_update
+- az_iot_ops_ns_asset_custom_event-group_add
+- az_iot_ops_ns_asset_custom_event-group_list
+- az_iot_ops_ns_asset_custom_event-group_remove
+- az_iot_ops_ns_asset_custom_event-group_show
+- az_iot_ops_ns_asset_custom_event-group_update
 metadata:
-  description: Currently, only one dataset with the name "default" is supported for assets.
+  description: Manage event groups for custom namespaced assets in an IoT Operations instance.

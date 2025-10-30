@@ -1,74 +1,101 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_custom_event_point
-name: az iot ops ns asset custom event point
+uid: az_iot_ops_ns_asset_custom_mgmt-action
+name: az iot ops ns asset custom mgmt-action
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset custom event point** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset custom mgmt-action** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage event points for custom asset events in Device Registry namespaces.
+  Manage actions within custom asset management groups.
+description: |-
+  Actions within management groups define specific operations that can be performed on custom assets.
+  Each action has a target URI and can include custom configuration.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_custom_event_point_add
-  name: az iot ops ns asset custom event point add
+- uid: az_iot_ops_ns_asset_custom_mgmt-action_add
+  name: az iot ops ns asset custom mgmt-action add
   summary: |-
-    Add an event data point to a custom asset event in a Device Registry namespace.
+    Add an action to a custom asset management group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom event point add --asset
-                                               --data-source --ds
-                                               --event
+    az iot ops ns asset custom mgmt-action add --asset
+                                               --group
                                                --instance
                                                --name
                                                --resource-group
+                                               --target-uri --uri
+                                               [--action-type --at {Call, Read, Write}]
                                                [--config]
                                                [--replace {false, true}]
+                                               [--timeout --to]
+                                               [--topic]
+                                               [--tr --type-ref]
   examples:
   - summary: |-
-      Add a basic custom event point
-    syntax: az iot ops ns asset custom event point add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event alarmEvent --name severity --data-source "alarm.severity"
+      Add a basic action to a management group.
+    syntax: az iot ops ns asset custom mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile1
   - summary: |-
-      Replace a custom event point with same name
-    syntax: az iot ops ns asset custom event point add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event alarmEvent --name severity --data-source "alarm.severity.updated" --replace
+      Add an action with custom configuration and timeout.
+    syntax: "az iot ops ns asset custom mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile1 --config '{\"method\": \"start\", \"parameters\": {\"speed\": 100}}' --timeout 45"
+  - summary: |-
+      Add an action with specific action type and topic.
+    syntax: az iot ops ns asset custom mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile1 --action-type Control --topic factory/control/actions --timeout 30
+  - summary: |-
+      Replace an existing action with the same name.
+    syntax: "az iot ops ns asset custom mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction --target-uri /custom/device_service?Profile=Profile2 --config '{\"method\": \"restart\", \"priority\": \"high\"}' --replace"
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --data-source --ds
+    name: --group
     summary: |-
-      Data source for the event data point.
-  - isRequired: true
-    name: --event -e
-    summary: |-
-      Event name.
+      Management group name.
   - isRequired: true
     name: --instance -i
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: |-
-      Data point name.
+      Action name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       The resource group of the Azure IoT Operations instance.
+  - isRequired: true
+    name: --target-uri --uri
+    summary: |-
+      Target URI for the management action.
   optionalParameters:
+  - name: --action-type --at
+    defaultValue: Call
+    acceptedValues: Call, Read, Write
+    summary: |-
+      Type of management action.
   - name: --config
     summary: |-
-      Custom event data point configuration as a JSON string or file path.
+      Custom action configuration as a JSON string or file path.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the data point if another point with the same name is already present.
+      Replace the action if another action with the same name is already present.
+  - name: --timeout --to
+    summary: |-
+      Timeout in seconds for this specific action. Minimum: 0.
+  - name: --topic -t
+    summary: |-
+      Topic override for this specific action.
+  - name: --tr --type-ref
+    summary: |-
+      Type definition ID or URI.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -96,32 +123,32 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_event_point_list
-  name: az iot ops ns asset custom event point list
+- uid: az_iot_ops_ns_asset_custom_mgmt-action_list
+  name: az iot ops ns asset custom mgmt-action list
   summary: |-
-    List event points for a custom asset event in a Device Registry namespace.
+    List actions in a custom asset management group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom event point list --asset
-                                                --event
+    az iot ops ns asset custom mgmt-action list --asset
+                                                --group
                                                 --instance
                                                 --resource-group
   examples:
   - summary: |-
-      List all event points for an event
-    syntax: az iot ops ns asset custom event point list --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event alarmEvent
+      List all actions in a management group.
+    syntax: az iot ops ns asset custom mgmt-action list --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --event -e
+    name: --group
     summary: |-
-      Event name.
+      Management group name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -157,41 +184,41 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_event_point_remove
-  name: az iot ops ns asset custom event point remove
+- uid: az_iot_ops_ns_asset_custom_mgmt-action_remove
+  name: az iot ops ns asset custom mgmt-action remove
   summary: |-
-    Remove an event point from a custom asset event in a Device Registry namespace.
+    Remove an action from a custom asset management group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom event point remove --asset
-                                                  --event
+    az iot ops ns asset custom mgmt-action remove --asset
+                                                  --group
                                                   --instance
                                                   --name
                                                   --resource-group
   examples:
   - summary: |-
-      Remove an event point from an event
-    syntax: az iot ops ns asset custom event point remove --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event alarmEvent --name severity
+      Remove an action from a management group.
+    syntax: az iot ops ns asset custom mgmt-action remove --asset myasset --instance myInstance -g myInstanceResourceGroup --group myManagementGroup --name myAction
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --event -e
+    name: --group
     summary: |-
-      Event name.
+      Management group name.
   - isRequired: true
     name: --instance -i
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: |-
-      Data point name.
+      Action name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -224,8 +251,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_custom_event_point_add
-- az_iot_ops_ns_asset_custom_event_point_list
-- az_iot_ops_ns_asset_custom_event_point_remove
+- az_iot_ops_ns_asset_custom_mgmt-action_add
+- az_iot_ops_ns_asset_custom_mgmt-action_list
+- az_iot_ops_ns_asset_custom_mgmt-action_remove
 metadata:
-  description: Manage event points for custom asset events in Device Registry namespaces.
+  description: >-
+    Actions within management groups define specific operations that can be performed on custom assets.
+
+    Each action has a target URI and can include custom configuration.
