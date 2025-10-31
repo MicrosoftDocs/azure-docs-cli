@@ -1,13 +1,78 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 10/14/2025
+ms.date: 11/04/2025
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## November 04, 2025
+
+Version 2.79.0
+
+### ACR
+
+* `az acr create/update`: Remove preview flag for `--role-assignment-mode`
+* `az acr check-health`: Remove preview flag for `--repository`
+* `az acr task create/update`: Remove preview flag for `--source-acr-auth-id`
+* `az acr build/run`: Remove preview flag for `--source-acr-auth-id`
+* `az acr config content-trust`: Add deprecation notice
+* `az acr config content-trust show/update`: Add deprecation notice
+
+### AKS
+
+* `az aks update`: Add support to remove existing certificates by setting the value of `--custom-ca-trust-certificates` to an empty file
+* `az aks create/update`: Add `--acns-advanced-networkpolicies` parameter to support enabling advanced networking policies (`None`, `L7` or `FQDN`)
+
+### ARM
+
+* `az resource list`: Include `provisioningState` property in table output
+
+### Backup
+
+* `az backup vault deleted-vault`: Implementing List and Undelete for Deleted Backup Vaults
+
+### Compute
+
+* `az vm availability-set update`: Add new parameter `--enable-all-instance-down` to support setting scheduled events profile
+* `az vm availability-set update`: Add new parameter `--scheduled-events-api-version` to support setting scheduled events profile
+
+### Container app
+
+* `az containerapp`: Update Api-version to 2025-07-01
+* `az containerapp env http-route-config`: Add command group to manage environment level http routing
+* `az containerapp env premium-ingress`: Add command group to configure premium ingress settings for the environment
+* Fix #32107: `az containerapp registry show`: Fix NoneType error when container app doesn't have any registry server
+
+### Core
+
+* Resolve CVE-2025-9230
+* Resolve CVE-2025-9232
+
+### HDInsight
+
+* `az hdinsight create`: Support creating Entra-enabled clusters and creating clusters with WASB + MSI
+* `az hdinsight credentials update`: Update cluster credentials
+* `az hdinsight credentials show`: Show current cluster credentials
+
+### Network
+
+* `az network application-gateway create/update`: Add parameter `--enable-fips`
+
+### SQL
+
+* `az sql db update`: Prevent overwrite of SLO when updating from serverless to provisioned
+* `az db ltr-backup/ltr-policy`: Remove preview tag for time-based immutability
+
+### Storage
+
+* `az storage account network-security-perimeter-configuration list/show/reconcile`: Add support for network-security-perimeter
+* `az storage file list`: Fix file list for nfs shares, as `--include` is not supported
+* `az storage account create/update`: Add `--enable-blob-geo-priority-replication` to support Geo SLA
+* `az storage account or-policy create/update`: Add `--priority-replication` to support OR SLA
 
 ## October 14, 2025
 
