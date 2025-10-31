@@ -73,9 +73,11 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm availability-set convert [--availability-set-name --name]
+    az vm availability-set convert [--all-instance-down --enable-all-instance-down {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--availability-set-name --name]
                                    [--ids]
                                    [--resource-group]
+                                   [--scheduled-events-api-version --se-api-version]
                                    [--subscription]
   examples:
   - summary: |-
@@ -85,6 +87,11 @@ directCommands:
       Convert an availability set to use managed disks by ID.
     syntax: az vm availability-set convert --ids $(az vm availability-set list -g MyResourceGroup --query "[].id" -o tsv)
   optionalParameters:
+  - name: --all-instance-down --enable-all-instance-down
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Specify if Scheduled Events should be auto-approved when all instances are down. Its default value is true.
+    groupName: AllInstancesDown Arguments
   - name: --availability-set-name --name -n
     summary: |-
       The name of the availability set.
@@ -97,6 +104,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --scheduled-events-api-version --se-api-version
+    summary: |-
+      Specify the api-version to determine which Scheduled Events configuration schema version will be delivered.
+    groupName: EventGridAndResourceGraph Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -593,6 +604,7 @@ directCommands:
   syntax: >-
     az vm availability-set update [--add]
                                   [--additional-events --additional-scheduled-events {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--all-instance-down --enable-all-instance-down {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--availability-set-name --name]
                                   [--enable-reboot --enable-user-reboot-scheduled-events {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--enable-redeploy --enable-user-redeploy-scheduled-events {0, 1, f, false, n, no, t, true, y, yes}]
@@ -601,6 +613,7 @@ directCommands:
                                   [--ppg]
                                   [--remove]
                                   [--resource-group]
+                                  [--scheduled-events-api-version --se-api-version]
                                   [--set]
                                   [--subscription]
   examples:
@@ -622,6 +635,11 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       The configuration parameter used while creating event grid and resource graph scheduled event setting.
+  - name: --all-instance-down --enable-all-instance-down
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Specify if Scheduled Events should be auto-approved when all instances are down. Its default value is true.
+    groupName: AllInstancesDown Arguments
   - name: --availability-set-name --name -n
     summary: |-
       The name of the availability set.
@@ -654,6 +672,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --scheduled-events-api-version --se-api-version
+    summary: |-
+      Specify the api-version to determine which Scheduled Events configuration schema version will be delivered.
+    groupName: EventGridAndResourceGraph Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
@@ -761,5 +783,5 @@ commands:
 - az_vm_availability-set_update
 - az_vm_availability-set_validate-migration-to-vmss
 metadata:
-  ms.date: 09/29/2025
+  ms.date: 10/27/2025
   description: To provide redundancy to an application, it is recommended to group two or more virtual machines in an availability set. This configuration ensures that during either a planned or unplanned maintenance event, at least one virtual machine will be available.
