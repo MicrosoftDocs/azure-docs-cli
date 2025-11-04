@@ -1,0 +1,437 @@
+### YamlMime:AzureCLIGroup
+uid: az_ml_deployment-template
+name: az ml deployment-template
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **ml** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az ml deployment-template** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Azure ML deployment templates.
+description: |-
+  Deployment templates are reusable templates that define deployment configurations for Azure ML.
+  They support registry-based operations only (not workspace-based) and provide a way to
+  standardize and share deployment configurations across teams and projects.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_ml_deployment-template_archive
+  name: az ml deployment-template archive
+  summary: |-
+    Archive a deployment template.
+  description: |-
+    Archive a deployment template to mark it as inactive. Archived templates are not
+    returned in list operations by default. You can archive a specific version or all
+    versions of a template.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az ml deployment-template archive --name
+                                      --registry-name
+                                      --version
+                                      [--no-wait]
+  examples:
+  - summary: |-
+      Archive a specific version
+    syntax: az ml deployment-template archive --name my-template --version 1 --registry-name myregistry
+  - summary: |-
+      Archive without waiting for completion
+    syntax: az ml deployment-template archive --name my-template --version 1 --registry-name myregistry --no-wait
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the deployment template.
+  - isRequired: true
+    name: --registry-name -r
+    summary: |-
+      Name of the registry. This is required since deployment templates only support registry-name and not workspace.
+  - isRequired: true
+    name: --version -v
+    summary: |-
+      Version of the deployment template.
+  optionalParameters:
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running-operation to finish. Default is False.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_ml_deployment-template_create
+  name: az ml deployment-template create
+  summary: |-
+    Create a new deployment template from a YAML file.
+  description: |-
+    Create a new deployment template using a YAML configuration file. The YAML file should
+    contain the complete deployment template definition including endpoints, parameters, and metadata.
+    You can override specific values using command-line parameters.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az ml deployment-template create --registry-name
+                                     [--file]
+                                     [--name]
+                                     [--no-wait]
+                                     [--set]
+                                     [--version]
+  examples:
+  - summary: |-
+      Create a deployment template from a YAML file
+    syntax: az ml deployment-template create --file template.yml --registry-name myregistry
+  - summary: |-
+      Create with name and version overrides
+    syntax: az ml deployment-template create --file template.yml --name custom-template --version 2 --registry-name myregistry
+  - summary: |-
+      Create without waiting for completion
+    syntax: az ml deployment-template create --file template.yml --registry-name myregistry --no-wait
+  requiredParameters:
+  - isRequired: true
+    name: --registry-name -r
+    summary: |-
+      Name of the registry. This is required since deployment templates only support registry-name and not workspace.
+  optionalParameters:
+  - name: --file -f
+    summary: |-
+      Local path to the YAML file containing the Azure ML deployment-template specification. The YAML reference docs for deployment-template can be found at: https://aka.ms/ml-cli-v2-deployment-template-yaml.
+  - name: --name -n
+    summary: |-
+      Name of the deployment template.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running-operation to finish. Default is False.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set. Example: --set property1.property2=value.
+  - name: --version -v
+    summary: |-
+      Version of the deployment template.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_ml_deployment-template_get
+  name: az ml deployment-template get
+  summary: |-
+    Get a specific deployment template by name and version.
+  description: |-
+    Retrieve detailed information about a specific deployment template. If version is not
+    specified, the latest version will be returned.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az ml deployment-template get --name
+                                  --registry-name
+                                  --version
+  examples:
+  - summary: |-
+      Get a specific version of a deployment template
+    syntax: az ml deployment-template get --name my-template --version 1 --registry-name myregistry
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the deployment template.
+  - isRequired: true
+    name: --registry-name -r
+    summary: |-
+      Name of the registry. This is required since deployment templates only support registry-name and not workspace.
+  - isRequired: true
+    name: --version -v
+    summary: |-
+      Version of the deployment template.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_ml_deployment-template_list
+  name: az ml deployment-template list
+  summary: |-
+    List deployment templates in a registry.
+  description: |-
+    List all deployment templates available in the specified registry. This command
+    returns all templates along with their metadata including name, version, description, and tags.
+  status: GA
+  sourceType: Extension
+  syntax: az ml deployment-template list --registry-name
+  examples:
+  - summary: |-
+      List all deployment templates in a registry
+    syntax: az ml deployment-template list --registry-name myregistry
+  - summary: |-
+      List deployment templates with specific output format
+    syntax: az ml deployment-template list --registry-name myregistry --output table
+  requiredParameters:
+  - isRequired: true
+    name: --registry-name -r
+    summary: |-
+      Name of the registry. This is required since deployment templates only support registry-name and not workspace.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_ml_deployment-template_restore
+  name: az ml deployment-template restore
+  summary: |-
+    Restore an archived deployment template.
+  description: |-
+    Restore a previously archived deployment template to make it active again. Restored
+    templates will appear in list operations. You can restore a specific version or all
+    versions of a template.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az ml deployment-template restore --name
+                                      --registry-name
+                                      --version
+                                      [--no-wait]
+  examples:
+  - summary: |-
+      Restore a specific version
+    syntax: az ml deployment-template restore --name my-template --version 1 --registry-name myregistry
+  - summary: |-
+      Restore without waiting for completion
+    syntax: az ml deployment-template restore --name my-template --version 1 --registry-name myregistry --no-wait
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the deployment template.
+  - isRequired: true
+    name: --registry-name -r
+    summary: |-
+      Name of the registry. This is required since deployment templates only support registry-name and not workspace.
+  - isRequired: true
+    name: --version -v
+    summary: |-
+      Version of the deployment template.
+  optionalParameters:
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running-operation to finish. Default is False.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_ml_deployment-template_update
+  name: az ml deployment-template update
+  summary: |-
+    Update specific fields of an existing deployment template.
+  description: |-
+    Update metadata fields (description and tags) of an existing deployment template without
+    requiring a YAML file. This command follows Azure CLI conventions and only accepts specific
+    field updates. Tags are merged with existing tags rather than replaced.
+
+    For structural changes to the deployment template (endpoints, deployment configuration, etc.),
+    use the 'create' command with a YAML file.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az ml deployment-template update --name
+                                     --registry-name
+                                     --version
+                                     [--add]
+                                     [--force-string]
+                                     [--remove]
+                                     [--set]
+  examples:
+  - summary: |-
+      Update deployment template description
+    syntax: az ml deployment-template update --name my-template --version 1 --registry-name myregistry --set "description=Updated description"
+  - summary: |-
+      Update deployment template tags
+    syntax: az ml deployment-template update --name my-template --version 1 --registry-name myregistry --set "tags=environment=production owner=ml-team"
+  - summary: |-
+      Update both description and tags
+    syntax: az ml deployment-template update --name my-template --version 1 --registry-name myregistry --set "description=Production template" --set "tags=status=active"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the deployment template.
+  - isRequired: true
+    name: --registry-name -r
+    summary: |-
+      Name of the registry. This is required since deployment templates only support registry-name and not workspace.
+  - isRequired: true
+    name: --version -v
+    summary: |-
+      Version of the deployment template.
+  optionalParameters:
+  - name: --add
+    defaultValue: '[]'
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --force-string
+    defaultValue: "False"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --remove
+    defaultValue: '[]'
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --set
+    defaultValue: '[]'
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_ml_deployment-template_archive
+- az_ml_deployment-template_create
+- az_ml_deployment-template_get
+- az_ml_deployment-template_list
+- az_ml_deployment-template_restore
+- az_ml_deployment-template_update
+metadata:
+  description: >-
+    Deployment templates are reusable templates that define deployment configurations for Azure ML.
+
+    They support registry-based operations only (not workspace-based) and provide a way to
+
+    standardize and share deployment configurations across teams and projects.
