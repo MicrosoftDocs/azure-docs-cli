@@ -3,7 +3,7 @@ uid: az_dataprotection_backup-instance_restore
 name: az dataprotection backup-instance restore
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-instance restore** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-instance restore** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Restore backed up instances from recovery points in a backup vault.
 status: GA
@@ -16,7 +16,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type {AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type {AzureBlob, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
                                                                            --restore-location
                                                                            --source-datastore {ArchiveStore, OperationalStore, VaultStore}
                                                                            [--backup-instance-id]
@@ -37,7 +37,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
     summary: |-
       Specify the datasource type.
   - isRequired: true
@@ -121,7 +121,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-data-recovery-as-files --datasource-type {AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance restore initialize-for-data-recovery-as-files --datasource-type {AzureBlob, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
                                                                                     --restore-location
                                                                                     --source-datastore {ArchiveStore, OperationalStore, VaultStore}
                                                                                     --target-blob-container-url
@@ -140,7 +140,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
     summary: |-
       Specify the datasource type.
   - isRequired: true
@@ -219,7 +219,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type {AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type {AzureBlob, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
                                                                            --restore-location
                                                                            --source-datastore {ArchiveStore, OperationalStore, VaultStore}
                                                                            [--backup-instance-id]
@@ -235,12 +235,22 @@ directCommands:
                                                                            [--vaulted-blob-prefix --vaulted-blob-prefix-pattern]
   examples:
   - summary: |-
-      initialize restore request for azure blob backup instance
+      Initialize restore request for azure blob backup instance
     syntax: az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type AzureBlob --restore-location centraluseuap --source-datastore OperationalStore --backup-instance-id {backup_instance_id}  --point-in-time 2021-05-26T15:00:00 --container-list container1 container2
+  - summary: |-
+      Initialize item-level restore request for azure data lake storage with prefix patterns and rename
+    syntax: >-
+      az dataprotection backup-instance restore initialize-for-item-recovery \
+        --datasource-type AzureDataLakeStorage \
+        --restore-location centraluseuap \
+        --source-datastore VaultStore \
+        --recovery-point-id {recovery_point_id} \
+        --target-resource-id {storage_account_id} \
+        --vaulted-blob-prefix-pattern '{"containers":[{"name":"container1","prefixmatch":["a","b"],"renameto":"container1renamed"},{"name":"container2","renameto":"container2renamed"}]}'
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
     summary: |-
       Specify the datasource type.
   - isRequired: true
