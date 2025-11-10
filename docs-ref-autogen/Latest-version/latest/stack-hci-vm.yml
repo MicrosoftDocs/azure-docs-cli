@@ -44,7 +44,9 @@ directCommands:
                            [--ssh-dest-key-path]
                            [--ssh-key-values]
                            [--storage-path-id]
+                           [--strict-placement {false, true}]
                            [--tags]
+                           [--zone]
   examples:
   - summary: |-
       Create a Stack HCI VM
@@ -157,9 +159,17 @@ directCommands:
   - name: --storage-path-id
     summary: |-
       Azure ID of the Storage Path pointing to the location where the VM config files are stored.
+  - name: --strict-placement
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Specifies whether VM can only failover strictly within the zone it was placed in.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --zone
+    summary: |-
+      The zone in which the VM should be placed. i.e --zone "zone1".
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -771,69 +781,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_stack-hci-vm_vmconnect
-  name: az stack-hci-vm vmconnect
-  summary: |-
-    Get RDP file to connect to the VM.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az stack-hci-vm vmconnect [--ids]
-                              [--name]
-                              [--path]
-                              [--resource-group]
-                              [--subscription]
-  examples:
-  - summary: |-
-      Get and save RDP file to current directory.
-    syntax: az stack-hci-vm vmconnect --resource-group "test-rg" --name "test-vm"
-  - summary: |-
-      Get and save RDP file to a specified path.
-    syntax: az stack-hci-vm vmconnect --resource-group "test-rg" --name "test-vm" --path "C:\\Downloads\\test-vm.rdp"
-  optionalParameters:
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --name
-    summary: |-
-      Name of the virtual machine.
-    groupName: Resource Id Arguments
-  - name: --path
-    summary: |-
-      Path to save the RDP file.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    groupName: Resource Id Arguments
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    groupName: Resource Id Arguments
-  globalParameters:
-  - name: --debug
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity to show all debug logs.
-  - name: --help -h
-    summary: |-
-      Show this help message and exit.
-  - name: --only-show-errors
-    defaultValue: "False"
-    summary: |-
-      Only show errors, suppressing warnings.
-  - name: --output -o
-    defaultValue: json
-    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
-    summary: |-
-      Output format.
-  - name: --query
-    summary: |-
-      JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --verbose
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_stack-hci-vm_create
 - az_stack-hci-vm_delete
@@ -898,5 +845,7 @@ commands:
 - az_stack-hci-vm_storagepath_update
 - az_stack-hci-vm_update
 - az_stack-hci-vm_vmconnect
+- az_stack-hci-vm_vmconnect_disable
+- az_stack-hci-vm_vmconnect_enable
 metadata:
   description: Manage virtualmachine with stack-hci-vm.
