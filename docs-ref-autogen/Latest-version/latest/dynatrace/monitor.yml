@@ -3,7 +3,7 @@ uid: az_dynatrace_monitor
 name: az dynatrace monitor
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **dynatrace** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az dynatrace monitor** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dynatrace** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az dynatrace monitor** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Dynatrace resource on Azure. This command lists properties including Dynatrace environment properties, SSO properties, and plan information.
 status: GA
@@ -17,16 +17,17 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az dynatrace monitor create --monitor-name --name
-                                --plan-data
                                 --resource-group
-                                --user-info
                                 [--environment]
                                 [--identity]
                                 [--location]
                                 [--monitoring-status {Disabled, Enabled}]
+                                [--mp-saas-auto-renew {Off, On}]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                [--subscription-status {Active, Suspended}]
+                                [--plan-data]
+                                [--subscription-status {Active, Suspended, Unsubscribed}]
                                 [--tags]
+                                [--user-info]
   examples:
   - summary: |-
       Create a monitor
@@ -37,19 +38,9 @@ directCommands:
     summary: |-
       Monitor resource name.
   - isRequired: true
-    name: --plan-data
-    summary: |-
-      Billing plan information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
-  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --user-info
-    summary: |-
-      User info.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   optionalParameters:
   - name: --environment
     summary: |-
@@ -68,12 +59,21 @@ directCommands:
     summary: |-
       Status of the monitor.
     groupName: Properties Arguments
+  - name: --mp-saas-auto-renew
+    acceptedValues: Off, On
+    summary: |-
+      Marketplace resource autorenew flag.
+    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --plan-data
+    summary: |-
+      Billing plan information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --subscription-status
-    acceptedValues: Active, Suspended
+    acceptedValues: Active, Suspended, Unsubscribed
     summary: |-
       Marketplace subscription status.
     groupName: Properties Arguments
@@ -81,6 +81,10 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Resource Arguments
+  - name: --user-info
+    summary: |-
+      User info.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -183,6 +187,7 @@ directCommands:
   syntax: >-
     az dynatrace monitor get-metric-status [--ids]
                                            [--monitor-name]
+                                           [--monitored-resource-ids]
                                            [--resource-group]
                                            [--subscription]
   examples:
@@ -198,6 +203,10 @@ directCommands:
     summary: |-
       Name of the Monitor resource.
     groupName: Resource Id Arguments
+  - name: --monitored-resource-ids
+    summary: |-
+      List of azure resource Id of monitored resources for which we get the metric status  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Request Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -237,23 +246,32 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dynatrace monitor get-sso-detail --monitor-name
-                                        --resource-group
+    az dynatrace monitor get-sso-detail [--ids]
+                                        [--monitor-name]
+                                        [--resource-group]
+                                        [--subscription]
                                         [--user-principal]
   examples:
   - summary: |-
       Get-sso-detail
     syntax: az dynatrace monitor get-sso-detail -g rg --monitor-name monitor  --user-principal Alice@microsoft.com
-  requiredParameters:
-  - isRequired: true
-    name: --monitor-name
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
     summary: |-
       Monitor resource name.
-  - isRequired: true
-    name: --resource-group -g
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --user-principal
     summary: |-
       User principal id of the user.
@@ -278,9 +296,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -292,21 +307,31 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dynatrace monitor get-vm-host-payload --monitor-name
-                                             --resource-group
+    az dynatrace monitor get-vm-host-payload [--ids]
+                                             [--monitor-name]
+                                             [--resource-group]
+                                             [--subscription]
   examples:
   - summary: |-
       Get-vm-host-payload
     syntax: az dynatrace monitor get-vm-host-payload -g rg --monitor-name monitor
-  requiredParameters:
-  - isRequired: true
-    name: --monitor-name
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
     summary: |-
       Monitor resource name.
-  - isRequired: true
-    name: --resource-group -g
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -327,9 +352,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -517,12 +539,12 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az dynatrace monitor list-linkable-environment --monitor-name
+                                                   --region
                                                    --resource-group
+                                                   --tenant-id
+                                                   --user-principal
                                                    [--max-items]
                                                    [--next-token]
-                                                   [--region]
-                                                   [--tenant-id]
-                                                   [--user-principal]
   examples:
   - summary: |-
       List-linkable-environment
@@ -533,9 +555,24 @@ directCommands:
     summary: |-
       Monitor resource name.
   - isRequired: true
+    name: --region
+    summary: |-
+      Azure region in which we want to link the environment.
+    groupName: Request Arguments
+  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --tenant-id
+    summary: |-
+      Tenant Id of the user in which they want to link the environment.
+    groupName: Request Arguments
+  - isRequired: true
+    name: --user-principal
+    summary: |-
+      User principal id of the user.
+    groupName: Request Arguments
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -545,18 +582,6 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
-  - name: --region
-    summary: |-
-      Azure region in which we want to link the environment.
-    groupName: Request Arguments
-  - name: --tenant-id
-    summary: |-
-      Tenant Id of the user in which they want to link the environment.
-    groupName: Request Arguments
-  - name: --user-principal
-    summary: |-
-      User principal id of the user.
-    groupName: Request Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -594,6 +619,7 @@ directCommands:
     az dynatrace monitor list-monitored-resource --monitor-name
                                                  --resource-group
                                                  [--max-items]
+                                                 [--monitored-resource-ids]
                                                  [--next-token]
   examples:
   - summary: |-
@@ -613,6 +639,10 @@ directCommands:
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
     groupName: Pagination Arguments
+  - name: --monitored-resource-ids
+    summary: |-
+      List of azure resource Id of monitored resources for which we get the log status  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Request Arguments
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
@@ -703,28 +733,43 @@ directCommands:
 - uid: az_dynatrace_monitor_update
   name: az dynatrace monitor update
   summary: |-
-    Update a Dynatrace resource on Azure for monitoring and observability needs.
+    Update a MonitorResource.
   status: GA
   sourceType: Extension
   syntax: >-
     az dynatrace monitor update [--ids]
+                                [--mi-system-assigned --system-assigned]
+                                [--mi-user-assigned --user-assigned]
                                 [--monitor-name --name]
+                                [--plan-data]
                                 [--resource-group]
                                 [--subscription]
                                 [--tags]
   examples:
   - summary: |-
-      Update monitor
-    syntax: az dynatrace monitor update -g {rg} -n {monitor} --tags {{env:dev}}
+      Monitors_Update_MaximumSet_Gen
+    syntax: az dynatrace monitor update --resource-group myResourceGroup --monitor-name myMonitor --tags "{Environment:Dev}" --plan-data "{usage-type:Committed,billing-cycle:Monthly,plan-details:dynatraceapitestplan,effective-date:'2019-08-30'}"
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
   - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
     groupName: Resource Id Arguments
+  - name: --plan-data
+    summary: |-
+      The new Billing plan information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -865,11 +910,19 @@ commands:
 - az_dynatrace_monitor_list-host
 - az_dynatrace_monitor_list-linkable-environment
 - az_dynatrace_monitor_list-monitored-resource
+- az_dynatrace_monitor_monitored-subscription
+- az_dynatrace_monitor_monitored-subscription_create
+- az_dynatrace_monitor_monitored-subscription_delete
+- az_dynatrace_monitor_monitored-subscription_list
+- az_dynatrace_monitor_monitored-subscription_show
+- az_dynatrace_monitor_monitored-subscription_update
+- az_dynatrace_monitor_monitored-subscription_wait
 - az_dynatrace_monitor_show
 - az_dynatrace_monitor_sso-config
 - az_dynatrace_monitor_sso-config_create
 - az_dynatrace_monitor_sso-config_list
 - az_dynatrace_monitor_sso-config_show
+- az_dynatrace_monitor_sso-config_update
 - az_dynatrace_monitor_sso-config_wait
 - az_dynatrace_monitor_tag-rule
 - az_dynatrace_monitor_tag-rule_create
