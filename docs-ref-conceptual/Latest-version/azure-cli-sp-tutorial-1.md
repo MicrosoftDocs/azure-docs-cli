@@ -40,6 +40,11 @@ Use the [az ad sp create-for-rbac][10] Azure CLI reference command to create a s
 This example doesn't specify a `--name` parameter, so a name containing a time stamp is
 automatically created.
 
+> [!WARNING]
+> The `az ad sp create-for-rbac` command can modify an existing application or service principal if
+> another object shares the same **display name**. Display names aren't unique and can change, which
+> could result in credential loss or incorrect RBAC assignments. Use a **unique object ID or app ID** instead.
+
 ```azurecli-interactive
 az ad sp create-for-rbac
 ```
