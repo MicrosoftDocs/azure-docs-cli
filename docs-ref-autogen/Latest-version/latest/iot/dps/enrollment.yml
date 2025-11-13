@@ -3,7 +3,7 @@ uid: az_iot_dps_enrollment
 name: az iot dps enrollment
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.59.0 or higher). The extension will automatically install the first time you run an **az iot dps enrollment** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot dps enrollment** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage individual device enrollments in an Azure IoT Hub Device Provisioning Service.
 status: GA
@@ -26,6 +26,7 @@ directCommands:
                                  [--api-version --av]
                                  [--auth-type {key, login}]
                                  [--certificate-path --cp]
+                                 [--cpn --credential-policy-name]
                                  [--device-id]
                                  [--device-information --info]
                                  [--dps-name]
@@ -64,6 +65,9 @@ directCommands:
   - summary: |-
       Create an enrollment 'MyEnrollment' with custom allocation policy,
     syntax: az iot dps enrollment create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --attestation-type symmetrickey --allocation-policy custom --webhook-url {webhook_url} --api-version {api_version}
+  - summary: |-
+      Create an enrollment with a custom ADR Namespace Credential Policy specified.
+    syntax: az iot dps enrollment create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --attestation-type symmetrickey --credential-policy-name {policy_name}
   requiredParameters:
   - isRequired: true
     name: --at --attestation-type
@@ -95,6 +99,10 @@ directCommands:
     summary: |-
       The path to the file containing the primary certificate. Required when choosing x509 as attestation type and the secondary certificate path is not provided.
     groupName: Authentication Arguments
+  - name: --cpn --credential-policy-name
+    summary: |-
+      ADR Namespace Credential Policy Name.
+    groupName: ADR Credential Policy Arguments
   - name: --device-id -d
     summary: |-
       Device ID registered in the IoT Hub.
@@ -398,6 +406,7 @@ directCommands:
                                  [--api-version --av]
                                  [--auth-type {key, login}]
                                  [--certificate-path --cp]
+                                 [--cpn --credential-policy-name]
                                  [--device-id]
                                  [--device-information --info]
                                  [--dps-name]
@@ -436,6 +445,9 @@ directCommands:
   - summary: |-
       Update enrollment '{enrollment_id}' in the Azure IoT Device Provisioning Service '{dps_name}' in the resource group '{resource_group_name}' with initial twin properties '{"location":{"region":"USA"}}', initial twin tags '{"version":"2"}', and device information '{"color":"red"}'.
     syntax: az iot dps enrollment update -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --initial-twin-properties "{'location':{'region':'USA'}}" --initial-twin-tags "{'version1':'2'}" --device-information "{'color':'red'}"
+  - summary: |-
+      Update enrollment '{enrollment_id}' in the Azure IoT Device Provisioning Service '{dps_name}' to use a custom ADR Namespace Credential Policy.
+    syntax: az iot dps enrollment update -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --credential-policy-name {my_policy}
   requiredParameters:
   - isRequired: true
     name: --eid --enrollment-id
@@ -461,6 +473,10 @@ directCommands:
     summary: |-
       The path to the file containing the primary certificate.
     groupName: Authentication Arguments
+  - name: --cpn --credential-policy-name
+    summary: |-
+      ADR Namespace Credential Policy Name.
+    groupName: ADR Credential Policy Arguments
   - name: --device-id -d
     summary: |-
       Device ID registered in the IoT Hub.
