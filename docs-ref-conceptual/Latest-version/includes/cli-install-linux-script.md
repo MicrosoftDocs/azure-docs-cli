@@ -89,11 +89,6 @@ covered here, [file an issue on GitHub][03].
   - Make sure `~/bin` is on your `PATH` (`echo $PATH`), the symlink exists (`ls -l ~/bin/az`), then
     `hash -r` and reopen your shell.
 
-- **SSL/crypto errors**
-
-  - Ensure OpenSSL and libffi are installed for your distro and that your Python build links against
-    them.
-
 - **Proxy issues**
 
   - For proxy endpoint configuration, see [Azure CLI endpoints for proxy bypass][07].
