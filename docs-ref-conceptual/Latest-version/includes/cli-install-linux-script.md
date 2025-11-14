@@ -11,13 +11,9 @@ and see if there's a package for your distribution before installing manually.
 
 ## Requirements
 
-- [Python 3.8 or higher][06] - For more information, see
+- [Python 3.10 or higher][06] - For more information, see
   [Support lifecycle - Python dependency][01].
-- [libffi][04]
-- [OpenSSL 1.0.2][05]
-- `python3-venv` and `pip` packages for your distro
-
-Azure CLI has dropped support for Python 2.7 since version [2.1.0][02].
+- `python3-venv` package for your distro
 
 ## Install or update Azure CLI
 
@@ -100,19 +96,13 @@ covered here, [file an issue on GitHub][03].
 
 - **Proxy issues**
 
-  - Configure pip or environment variables (for example, `HTTPS_PROXY`) and allow access to:
-
-    - `https://pypi.org/`
-    - `https://files.pythonhosted.org/`
-    - Any endpoints used by your distro's package manager (for Python/venv prerequisites)
+  - For proxy endpoint configuration, see [Azure CLI endpoints for proxy bypass][07].
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
 <!-- link references -->
 
 [01]: ../azure-cli-support-lifecycle.md#python-dependency
-[02]: /cli/azure/release-notes-azure-cli#february-18-2020
 [03]: https://github.com/Azure/azure-cli/issues
-[04]: https://sourceware.org/libffi/
-[05]: https://www.openssl.org/source/
 [06]: https://www.python.org/downloads/
+[07]: ../azure-cli-endpoints.md
