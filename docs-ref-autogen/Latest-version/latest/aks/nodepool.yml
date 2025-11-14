@@ -45,6 +45,7 @@ directCommands:
                         [--kubernetes-version]
                         [--labels]
                         [--linux-os-config]
+                        [--localdns-config]
                         [--max-count]
                         [--max-pods]
                         [--max-surge]
@@ -75,6 +76,7 @@ directCommands:
                         [--vm-set-type]
                         [--vm-sizes]
                         [--vnet-subnet-id]
+                        [--workload-runtime {KataVmIsolation}]
                         [--zones]
   examples:
   - summary: |-
@@ -107,6 +109,9 @@ directCommands:
   - summary: |-
       create a nodepool of type VirtualMachines
     syntax: az aks nodepool add -g MyResourceGroup -n MyNodePool --cluster-name MyMC --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
+  - summary: |-
+      Create a nodepool with KataVmIsolation enabled.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --os-sku AzureLinux --vm-size Standard_D4s_v3 --workload-runtime KataVmIsolation --node-count 1
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -206,6 +211,9 @@ directCommands:
   - name: --linux-os-config
     summary: |-
       Path to JSON file containing OS configurations for Linux agent nodes. https://aka.ms/aks/custom-node-config.
+  - name: --localdns-config
+    summary: |-
+      Set the localDNS Profile for a nodepool with a JSON config file.
   - name: --max-count
     summary: |-
       Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
@@ -314,6 +322,13 @@ directCommands:
   - name: --vnet-subnet-id
     summary: |-
       The Resource Id of a subnet in an existing VNet into which to deploy the cluster.
+  - name: --workload-runtime
+    acceptedValues: KataVmIsolation
+    summary: |-
+      Set the workload runtime.
+    description: |-
+      Azure provides a different workload-runtime to enable Kata supported workloads in your nodepools. The following values can be specified:
+        - "KataVmIsolation" for Kata.
   - name: --zones -z
     summary: |-
       Availability zones where agent nodes will be placed. Also, to install agent nodes to more than one zone you need to pass zone numbers separated by blanks.  For example -  To have all 3 zones, you are expected to enter `--zones 1 2 3`.
@@ -1864,6 +1879,7 @@ directCommands:
                            [--if-match]
                            [--if-none-match]
                            [--labels]
+                           [--localdns-config]
                            [--max-count]
                            [--max-surge]
                            [--max-unavailable]
@@ -1957,6 +1973,9 @@ directCommands:
   - name: --labels
     summary: |-
       The node labels for the node pool. See https://aka.ms/node-labels for syntax of labels.
+  - name: --localdns-config
+    summary: |-
+      Set the localDNS Profile for a nodepool with a JSON config file.
   - name: --max-count
     summary: |-
       Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.

@@ -255,6 +255,8 @@ directCommands:
   description: |-
     This allows for updating the tags, the application parameters, the application UpgradePolicy, and/or upgrading the application type version, which will trigger an application upgrade.
   status: GA
+  isBreakingChange: true
+  breakingChangeInfo: Options list has changed, run help command to see allowed options
   sourceType: Core
   syntax: >-
     az sf managed-application update --application-name --name
@@ -262,13 +264,13 @@ directCommands:
                                      --resource-group
                                      [--application-parameters --parameters]
                                      [--application-type-version --version]
-                                     [--close-duration --instance-close-delay-duration]
                                      [--failure-action {Manual, Rollback}]
                                      [--force-restart {false, true}]
                                      [--hc-retry-timeout --health-check-retry-timeout]
                                      [--hc-stable-duration --health-check-stable-duration]
                                      [--hc-wait-duration --health-check-wait-duration]
-                                     [--max-percent-unhealthy-apps --max-unhealthy-apps]
+                                     [--instance-close-delay-duration]
+                                     [--max-unhealthy-apps]
                                      [--max-unhealthy-parts]
                                      [--max-unhealthy-reps]
                                      [--max-unhealthy-servs]
@@ -286,7 +288,7 @@ directCommands:
     syntax: >-
       az sf managed-application update -g testRG -c testCluster --application-name testApp --application-type-version v2 \
         --application-parameters key0=value0 --health-check-stable-duration 0 --health-check-wait-duration 0 --health-check-retry-timeout 0 \
-          --upgrade-domain-timeout 5000 --upgrade-timeout 7000 --failure-action Rollback --upgrade-replica-set-check-timeout 300 --force-restart
+          --upgrade-domain-timeout 5000 --upgrade-timeout 7000 --failure-action Rollback --replica-check-timeout 300 --force-restart
   - summary: |-
       Update managed application service type health policy map.
     syntax: az sf managed-application update -g testRG -c testCluster --application-name testApp --service-type-health-policy-map  "ServiceTypeName01"="5,10,5" "ServiceTypeName02"="5,5,5"
@@ -310,10 +312,6 @@ directCommands:
   - name: --application-type-version --version
     summary: |-
       Specify the application type version.
-  - name: --close-duration --instance-close-delay-duration
-    summary: |-
-      Specify the duration in seconds, to wait before a stateless instance is closed, to allow the active requests to drain gracefully. This would be effective when the instance is closing during the application/cluster upgrade, only for those instances which have a non-zero delay duration configured in the service description.
-    groupName: Upgrade description Arguments
   - name: --failure-action
     acceptedValues: Manual, Rollback
     summary: |-
@@ -337,21 +335,25 @@ directCommands:
     summary: |-
       Specify the duration, in seconds, that Service Fabric waits before it performs the initial health check after it finishes the upgrade on the upgrade domain.
     groupName: Upgrade description Arguments
-  - name: --max-percent-unhealthy-apps --max-unhealthy-apps
+  - name: --instance-close-delay-duration
     summary: |-
-      Specify the maximum percentage of the application instances deployed on the nodes in the cluster that have a health state of error before the application health state for the cluster is error. Allowed values are form 0 to 100.
+      Specify the duration in seconds, to wait before a stateless instance is closed, to allow the active requests to drain gracefully. This would be effective when the instance is closing during the application/cluster upgrade, only for those instances which have a non-zero delay duration configured in the service description.
+    groupName: Upgrade description Arguments
+  - name: --max-unhealthy-apps
+    summary: |-
+      Specify the maximum percentage of the application instances deployed on the nodes in the cluster that have a health state of error before the application health state for the cluster is error. Allowed values are from 0 to 100.
     groupName: Upgrade description Arguments
   - name: --max-unhealthy-parts
     summary: |-
-      Specify the maximum percent of unhelthy partitions per service allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are from 0 to 100.
+      Specify the maximum percent of unhealthy partitions per service allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are from 0 to 100.
     groupName: Upgrade description Arguments
   - name: --max-unhealthy-reps
     summary: |-
-      Specify the maximum percent of unhelthy replicas per service allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are from 0 to 100.
+      Specify the maximum percent of unhealthy replicas per service allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are from 0 to 100.
     groupName: Upgrade description Arguments
   - name: --max-unhealthy-servs
     summary: |-
-      Specify the maximum percent of unhelthy services allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are from 0 to 100.
+      Specify the maximum percent of unhealthy services allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are from 0 to 100.
     groupName: Upgrade description Arguments
   - name: --recreate-application
     defaultValue: "False"
