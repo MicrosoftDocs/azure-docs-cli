@@ -567,7 +567,7 @@ directCommands:
           --image my-app:v1.0 --environment MyContainerappEnv \
           --enable-java-agent
   - summary: |-
-      Create an Azure Functions on Azure Container Apps (kind=functionapp)
+      Create an Azure Functions on Container Apps (kind=functionapp)
     syntax: >-
       az containerapp create -n my-containerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappEnv \
@@ -707,7 +707,7 @@ directCommands:
   - name: --kind
     acceptedValues: functionapp
     summary: |-
-      Set to 'functionapp' to enable built-in support and autoscaling for Azure Functions on Azure Container Apps.
+      Set to 'functionapp' to enable built-in support and autoscaling for Azure Functions on Container Apps.
     isPreview: true
   - name: --max-inactive-revisions
     summary: |-
@@ -886,7 +886,7 @@ directCommands:
 - uid: az_containerapp_debug
   name: az containerapp debug
   summary: |-
-    Open an SSH-like interactive shell within a container app debug console.
+    Open an SSH-like interactive shell within a container app debug console or execute a command inside the container and exit.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -894,6 +894,7 @@ directCommands:
   syntax: >-
     az containerapp debug --name
                           --resource-group
+                          [--command]
                           [--container]
                           [--replica]
                           [--revision]
@@ -901,6 +902,9 @@ directCommands:
   - summary: |-
       Debug by connecting to a container app's debug console by replica, revision and container
     syntax: az containerapp debug -n MyContainerapp -g MyResourceGroup --revision MyRevision --replica MyReplica --container MyContainer
+  - summary: |-
+      Debug by executing a command inside a container app and exit
+    syntax: az containerapp debug -n MyContainerapp -g MyResourceGroup --revision MyRevision --replica MyReplica --container MyContainer --command "echo Hello World"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -911,6 +915,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --command
+    summary: |-
+      The command to run inside the debug container and exit. If specified, the command is run and the session ends. If not specified, an interactive bash shell is started.
   - name: --container
     summary: |-
       The container name that the debug console will connect to. Default to the first container of first replica.
@@ -1705,7 +1712,7 @@ directCommands:
       Create a container app and deploy a model from Azure AI Foundry
     syntax: az containerapp up -n my-containerapp -l westus3 --model-registry azureml --model-name Phi-4 --model-version 7
   - summary: |-
-      Create an Azure Functions on Azure Container Apps (kind=functionapp)
+      Create an Azure Functions on Container Apps (kind=functionapp)
     syntax: az containerapp up -n my-containerapp --image my-app:v1.0 --kind functionapp
   requiredParameters:
   - isRequired: true
@@ -1759,7 +1766,7 @@ directCommands:
   - name: --kind
     acceptedValues: functionapp
     summary: |-
-      Set to 'functionapp' to enable built-in support and autoscaling for Azure Functions on Azure Container Apps.
+      Set to 'functionapp' to enable built-in support and autoscaling for Azure Functions on Container Apps.
     isPreview: true
   - name: --location -l
     summary: |-
@@ -2642,6 +2649,16 @@ commands:
 - az_containerapp_env_workload-profile_show
 - az_containerapp_env_workload-profile_update
 - az_containerapp_exec
+- az_containerapp_function
+- az_containerapp_function_invocations
+- az_containerapp_function_invocations_summary
+- az_containerapp_function_invocations_traces
+- az_containerapp_function_keys
+- az_containerapp_function_keys_list
+- az_containerapp_function_keys_set
+- az_containerapp_function_keys_show
+- az_containerapp_function_list
+- az_containerapp_function_show
 - az_containerapp_github-action
 - az_containerapp_github-action_add
 - az_containerapp_github-action_add(containerapp)
