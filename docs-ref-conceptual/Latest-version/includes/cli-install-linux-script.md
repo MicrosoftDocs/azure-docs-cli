@@ -5,53 +5,77 @@ ms.custom: devx-track-azurecli, linux-related-content
 
 ## Before you begin
 
-It's strongly recommend to install the CLI with a package manager. A package manager makes sure you
-always get the latest updates, and guarantees the stability of CLI components. Check and see if
-there's a package for your distribution before installing manually.
+It's strongly recommended to install the Azure CLI with a package manager. A package manager makes
+sure you always get the latest updates, and guarantees the stability of Azure CLI components. Check
+and see if there's a package for your distribution before installing manually.
 
-The install script for the Azure CLI requires the following software:
+> [!CAUTION]
+> This manual installation doesn't include a hash-based integrity check. When you run `pip install`,
+> the package is downloaded over HTTPS, but `pip` doesn't validate the file against a
+> Microsoft-provided hash. For stronger tamper protection, install Azure CLI through a package
+> manager that supports signature or hash verification.
 
-- [Python 3.8.x, 3.9.x, 3.10.x][06] - For more information, see
-  [Support lifecycle - Python dependency][01].
-- [libffi][04]
-- [OpenSSL 1.0.2][05]
+## Requirements
+
+- [Python 3.10 or higher][04] - For more information, see
+  [Support lifecycle - Python dependency][02].
+- `python3-venv` package for your distro
 
 ## Install or update Azure CLI
 
 > [!IMPORTANT]
-> The install script only works on Python 3.8.x, 3.9.x, or 3.10.x. This install script does not work
-> on Python 3.11.x or later versions.
-
-Both installing and updating the Azure CLI requires rerunning the install script:
+> These steps install Azure CLI into a **virtual environment** under your home directory and add a
+> symlink to `~/bin/az`. This keeps Azure CLI isolated from system Python and makes updates
+> straightforward.
 
 ```bash
-curl -L https://aka.ms/InstallAzureCli | bash
+# Create and activate a virtual environment
+python3 -m venv ~/lib/azure-cli
+source ~/lib/azure-cli/bin/activate
+
+# Upgrade pip and install (or update) Azure CLI
+python -m pip install --upgrade pip
+pip install --upgrade azure-cli
+
+# Expose 'az' on your PATH via a user bin folder
+mkdir -p ~/bin
+ln -sf ~/lib/azure-cli/bin/az ~/bin/az
+
+# Ensure ~/bin is on PATH for future shells
+grep -q 'export PATH="$HOME/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
+
+# Refresh shell command cache (bash/zsh)
+hash -r
 ```
 
-The script can also be downloaded and run locally. You may have to restart your shell for the
-changes to take effect.
+> [!NOTE]
+> If you're using zsh, replace `.bashrc` with `.zshrc` in the PATH update command so the change
+applies to future zsh sessions.
+
+- To update later:
+
+  ```bash
+  source ~/lib/azure-cli/bin/activate
+  pip install --upgrade azure-cli
+  hash -r
+  ```
 
 ## Uninstall Azure CLI
 
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-Uninstall the CLI by directly deleting the files from the location chosen at the time of
-installation. The default install location is the user's home directory ($HOME).
-
-1. Remove the installed CLI files.
+1. Remove the virtual environment and symlink.
 
    ```bash
-   rm -r <install location>/lib/azure-cli
-   rm <install location>/bin/az
+   rm -rf ~/lib/azure-cli
+   rm -f ~/bin/az
    ```
 
-1. Modify your `$HOME/.bash_profile` file to remove the following line:
+1. (Optional) Remove the PATH line from your shell profile if you added it:
 
    ```text
-   <install location>/lib/azure-cli/az.completion
+   export PATH="$HOME/bin:$PATH"
    ```
 
-1. If using `bash` or `zsh`, reload your shell's command cache.
+1. Refresh the shell command cache:
 
    ```bash
    hash -r
@@ -66,56 +90,20 @@ installation. The default install location is the user's home directory ($HOME).
 Here are some common problems seen during a manual installation. If you experience a problem not
 covered here, [file an issue on GitHub][03].
 
-### Install without Python 3
+- **`az: command not found`**
 
-The Azure CLI has dropped support for Python 2.7 since version [2.1.0][02]. On your system, there
-may be a Python version that predates the requirement of Python 3.6.x. Find a replacement `python3`
-package.
+  - Make sure `~/bin` is on your `PATH` (`echo $PATH`), the symlink exists (`ls -l ~/bin/az`), then
+    `hash -r` and reopen your shell.
 
-### curl "Object Moved" error
+- **Proxy issues**
 
-If you get an error from `curl` related to the `-L` parameter, or an error message including the
-text "Object Moved", try using the full URL instead of the `aka.ms` redirect:
-
-```bash
-curl https://azurecliprod.blob.core.windows.net/install | bash
-```
-
-### `az` command not found
-
-If you can't run the command after installation using `bash` or `zsh`, try clearing your shell's
-command hash cache and check if the problem is resolved.
-
-```bash
-hash -r
-```
-
-The issue can also occur if you didn't restart your shell after installation. Make sure that the
-location of the `az` command is in your `$PATH`. The location of the `az` command is ...
-
-```
- <install path>/bin
-```
-
-### Proxy blocks connection
-
-[!INCLUDE[configure-proxy](configure-proxy.md)]
-
-In order to get the installation scripts, your proxy needs to allow HTTPS connections to the
-following addresses:
-
-- `https://aka.ms/`
-- `https://azurecliprod.blob.core.windows.net/`
-- `https://pypi.python.org`
-- Endpoints used by your distribution's package manager (if any) for core packages
+  - For proxy endpoint configuration, see [Azure CLI endpoints for proxy bypass][01].
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
 <!-- link references -->
 
-[01]: ../azure-cli-support-lifecycle.md#python-dependency
-[02]: /cli/azure/release-notes-azure-cli#february-18-2020
+[01]: ../azure-cli-endpoints.md
+[02]: ../azure-cli-support-lifecycle.md#python-dependency
 [03]: https://github.com/Azure/azure-cli/issues
-[04]: https://sourceware.org/libffi/
-[05]: https://www.openssl.org/source/
-[06]: https://www.python.org/downloads/
+[04]: https://www.python.org/downloads/
