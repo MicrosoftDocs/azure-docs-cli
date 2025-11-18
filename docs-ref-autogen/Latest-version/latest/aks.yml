@@ -535,8 +535,6 @@ directCommands:
   summary: |-
     Create a new managed Kubernetes cluster.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: Default SSH key behavior will change. When no SSH key parameters are provided, the command will behave as if '--no-ssh-key' was passed instead of failing in next breaking change release(2.80.0) scheduled for Nov 2025.
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
   syntax: >-
@@ -710,6 +708,7 @@ directCommands:
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
+                  [--workload-runtime {KataVmIsolation}]
                   [--workspace-resource-id]
                   [--yes]
                   [--zones]
@@ -837,6 +836,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with auto node provisioning and no default pools.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-provisioning-mode Auto --node-provisioning-default-pools None
+  - summary: |-
+      Create a Kubernetes cluster with KataVmIsolation enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku AzureLinux --vm-size Standard_D4s_v3 --workload-runtime KataVmIsolation --node-count 1
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1350,7 +1352,7 @@ directCommands:
     summary: |-
       Do not use or create a local SSH key.
     description: |-
-      To access nodes after creating a cluster with this option, use the Azure Portal.
+      If omitted and no local public key exists, the CLI will default to this behavior. To access nodes after creating a cluster with this option, use the Azure Portal.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1497,6 +1499,10 @@ directCommands:
     defaultValue: ~\.ssh\id_rsa.pub
     summary: |-
       Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
+    description: |-
+      If omitted:
+          - The CLI will use '~/.ssh/id_rsa.pub' when present
+          - If that file is not present the CLI will default to server-side generated keys (equivalent to using --no-ssh-key).
   - name: --storage-pool-name
     summary: |-
       Set storage pool name for azure container storage.
@@ -1551,6 +1557,13 @@ directCommands:
           - Minimum-length: 1 character
           - Max-length: 20 characters
       Reference: https://learn.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet.
+  - name: --workload-runtime
+    acceptedValues: KataVmIsolation
+    summary: |-
+      Set the workload runtime.
+    description: |-
+      Azure provides a different workload-runtime to enable Kata supported workloads in your nodepools. The following values can be specified:
+        - "KataVmIsolation" for Kata.
   - name: --workspace-resource-id
     summary: |-
       The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
@@ -1594,8 +1607,6 @@ directCommands:
   summary: |-
     Create a new managed Kubernetes cluster.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: Default SSH key behavior will change. When no SSH key parameters are provided, the command will behave as if '--no-ssh-key' was passed instead of failing in next breaking change release(2.80.0) scheduled for Nov 2025.
   sourceType: Extension
   syntax: >-
     az aks create --name
@@ -7612,12 +7623,14 @@ commands:
 - az_aks_mesh_disable
 - az_aks_mesh_disable(aks-preview)
 - az_aks_mesh_disable-egress-gateway
+- az_aks_mesh_disable-egress-gateway(aks-preview)
 - az_aks_mesh_disable-ingress-gateway
 - az_aks_mesh_disable-ingress-gateway(aks-preview)
 - az_aks_mesh_disable-istio-cni
 - az_aks_mesh_enable
 - az_aks_mesh_enable(aks-preview)
 - az_aks_mesh_enable-egress-gateway
+- az_aks_mesh_enable-egress-gateway(aks-preview)
 - az_aks_mesh_enable-ingress-gateway
 - az_aks_mesh_enable-ingress-gateway(aks-preview)
 - az_aks_mesh_enable-istio-cni
@@ -7634,11 +7647,17 @@ commands:
 - az_aks_mesh_upgrade_start(aks-preview)
 - az_aks_namespace
 - az_aks_namespace_add
+- az_aks_namespace_add(aks-preview)
 - az_aks_namespace_delete
+- az_aks_namespace_delete(aks-preview)
 - az_aks_namespace_get-credentials
+- az_aks_namespace_get-credentials(aks-preview)
 - az_aks_namespace_list
+- az_aks_namespace_list(aks-preview)
 - az_aks_namespace_show
+- az_aks_namespace_show(aks-preview)
 - az_aks_namespace_update
+- az_aks_namespace_update(aks-preview)
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_add(aks-preview)

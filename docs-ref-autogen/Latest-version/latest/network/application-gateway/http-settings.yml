@@ -22,6 +22,7 @@ directCommands:
                                                         [--auth-certs]
                                                         [--connection-draining-timeout]
                                                         [--cookie-based-affinity {Disabled, Enabled}]
+                                                        [--dedicated-backend-connection --dedicated-connection {0, 1, f, false, n, no, t, true, y, yes}]
                                                         [--enable-probe {0, 1, f, false, n, no, t, true, y, yes}]
                                                         [--host-name]
                                                         [--host-name-from-backend-pool {0, 1, f, false, n, no, t, true, y, yes}]
@@ -30,7 +31,10 @@ directCommands:
                                                         [--probe]
                                                         [--protocol {Http, Https, Tcp, Tls}]
                                                         [--root-certs]
+                                                        [--sni-name]
                                                         [--timeout]
+                                                        [--validate-cert-ce --validate-cert-chain-and-expiry {0, 1, f, false, n, no, t, true, y, yes}]
+                                                        [--validate-sni {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
       Create HTTP settings.
@@ -68,6 +72,11 @@ directCommands:
     acceptedValues: Disabled, Enabled
     summary: |-
       Enable or disable cookie-based affinity.
+  - name: --dedicated-backend-connection --dedicated-connection
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Enable or disable dedicated connection per backend server. Default is set to false.
+    groupName: Properties Arguments
   - name: --enable-probe
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -97,9 +106,25 @@ directCommands:
   - name: --root-certs
     summary: |-
       Space-separated list of trusted root certificates (Names and IDs) to associate with the HTTP settings. `--host-name` or `--host-name-from-backend-pool` is required when this field is set.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --sni-name
+    summary: |-
+      Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null.
+    groupName: Properties Arguments
   - name: --timeout
     summary: |-
       Request timeout in seconds.
+  - name: --validate-cert-ce --validate-cert-chain-and-expiry
+    defaultValue: "True"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true.
+    groupName: Properties Arguments
+  - name: --validate-sni
+    defaultValue: "True"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -309,6 +334,7 @@ directCommands:
                                                         [--auth-certs]
                                                         [--connection-draining-timeout]
                                                         [--cookie-based-affinity {Disabled, Enabled}]
+                                                        [--dedicated-backend-connection --dedicated-connection {0, 1, f, false, n, no, t, true, y, yes}]
                                                         [--enable-probe {0, 1, f, false, n, no, t, true, y, yes}]
                                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                         [--host-name]
@@ -321,7 +347,10 @@ directCommands:
                                                         [--remove]
                                                         [--root-certs]
                                                         [--set]
+                                                        [--sni-name]
                                                         [--timeout]
+                                                        [--validate-cert-ce --validate-cert-chain-and-expiry {0, 1, f, false, n, no, t, true, y, yes}]
+                                                        [--validate-sni {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
       Update HTTP settings to use a new probe.
@@ -357,6 +386,11 @@ directCommands:
     acceptedValues: Disabled, Enabled
     summary: |-
       Enable or disable cookie-based affinity.
+  - name: --dedicated-backend-connection --dedicated-connection
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Enable or disable dedicated connection per backend server. Default is set to false.
+    groupName: Properties Arguments
   - name: --enable-probe
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -401,9 +435,23 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
+  - name: --sni-name
+    summary: |-
+      Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null.
+    groupName: Properties Arguments
   - name: --timeout
     summary: |-
       Request timeout in seconds.
+  - name: --validate-cert-ce --validate-cert-chain-and-expiry
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true.
+    groupName: Properties Arguments
+  - name: --validate-sni
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -533,5 +581,5 @@ commands:
 - az_network_application-gateway_http-settings_update
 - az_network_application-gateway_http-settings_wait
 metadata:
-  ms.date: 06/10/2025
+  ms.date: 11/05/2025
   description: Manage HTTP settings of an application gateway.
