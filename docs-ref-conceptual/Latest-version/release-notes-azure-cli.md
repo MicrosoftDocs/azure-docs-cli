@@ -1,13 +1,86 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 11/04/2025
+ms.date: 11/18/2025
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## November 18, 2025
+
+Version 2.80.0
+
+### AKS
+
+* [BREAKING CHANGE] `az aks create`: Make `--no-ssh-key` default behaviour
+* `az aks namespace add/update/show/list/delete/get-credentials`: Add namespace command to support managed namespace feature
+* `az aks create`: Add `KataVmIsolation` option for `--workload-runtime` parameter
+* `az aks nodepool add`: Add `KataVmIsolation` option for `--workload-runtime` parameter
+* `az aks mesh enable-egress-gateway/disable-egress-gateway`: Add commands to manage Azure Service Mesh egress gateway
+* `az aks nodepool add/update`: Add parameter `--localdns-config` to config local dns profile for the nodepool
+* `az aks upgrade`: Update user confirmation prompt of `--control-plane-only` parameter
+
+### App Service
+
+* `az appservice plan`: Add features for managed instance app service plans
+* `az functionapp plan create`: Add elastic premium as supported SKU for zone redundency
+
+### Batch
+
+* [BREAKING CHANGE] `az batch pool create`: Remove deprecated argument `--target-communication` and `--resource-tags`
+* [BREAKING CHANGE] `az batch pool reset/set`: Remove deprecated argument `--target-communication`
+
+### Cognitive Services
+
+* `az cognitiveservices account connection`: Add AI Foundry account connection management
+* `az cognitiveservices account project`: Add AI Foundry account project management
+* `az cognitiveservices account project connection`: Add AI Foundry account project connection management
+* `az cognitiveservice agent`: Add command group
+
+### Compute
+
+* `az vm/vmss create/update`: Support `--add-proxy-agent-extension` parameter to specify whether to implicitly install the ProxyAgent Extension
+
+### Container app
+
+* `az containerapp env`: Remove `--min-replicas/max-replicas` from premium ingress
+
+### DMS
+
+* `az dms project create`: Change location parameter to be optional
+
+### NetAppFiles
+
+* [BREAKING CHANGE] `az netappfiles volume create/update`: Remove deprecated argument `--endpoint-type`, this property is readOnly
+
+### Network
+
+* `az network application-gateway http-settings`: Support dedicated backend connection and certificate validation
+* `az network application-gateway waf-policy managed-rule`: Support `Microsoft_HTTPDDoSRuleSet` rule set
+* `az network application-gateway waf-policy`: Remove option `None` for WAF rule sensitivity
+* `az network private-endpoint-connection`: Add provider `Microsoft.Security/privateLinks`
+
+### Packaging
+
+* Drop Python 3.9 support
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres server/db/server-logs`: Remove single server commands
+* [BREAKING CHANGE] `az postgres flexible-server create`: Remove default value to `--version` and remove arguments `--create-default-database` and `--database-name`
+
+### Service Fabric
+
+* [BREAKING CHANGE] `az sf managed-application update`: Remove argument options `--service-type-policy`, `--upgrade-replica-set-check-timeout`, `--max-porcent-unhealthy-partitions`, `--max-porcent-unhealthy-replicas`, `--max-porcent-unhealthy-services`, `--max-porcent-unhealthy-apps` to fix `--help` formatting
+* [BREAKING CHANGE] `az sf application update`: Remove argument options `--service-type-policy`, `--upgrade-replica-set-check-timeout`, `--instance-close-duration`, `--consider-warning-as-error`, `--max-percent-unhealthy-partitions`. `--max-percent-unhealthy-replicas`, `--max-percent-unhealthy-replicas`, `--max-percent-unhealthy-deployed-applications` to fix `--help` formatting
+
+### Storage
+
+* `az storage account failover`: Add `Unplanned` to `--failover-type` for Planned failover GA
+* Fix #32399: `az storage file list`: Fix not showing additional info when listing files without set protocol
 
 ## November 04, 2025
 

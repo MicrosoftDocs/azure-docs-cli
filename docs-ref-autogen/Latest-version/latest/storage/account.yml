@@ -872,13 +872,11 @@ directCommands:
     The failover occurs from the storage account's primary cluster to secondary cluster for (RA-)GRS/GZRS accounts. The secondary
     cluster will become primary after failover. For more information, please refer to
     https://learn.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
   syntax: >-
-    az storage account failover [--failover-type --type]
+    az storage account failover [--failover-type --type {Planned, Unplanned}]
                                 [--ids]
                                 [--name]
                                 [--no-wait]
@@ -887,8 +885,11 @@ directCommands:
                                 [--yes]
   examples:
   - summary: |-
-      Failover a storage account.
+      Unplanned Failover a storage account.
     syntax: az storage account failover -n mystorageaccount -g MyResourceGroup
+  - summary: |-
+      Planned Failover a storage account.
+    syntax: az storage account failover -n mystorageaccount -g MyResourceGroup --failover-type Planned
   - summary: |-
       Failover a storage account without waiting for complete.
     syntax: >-
@@ -897,9 +898,9 @@ directCommands:
       az storage account show -n mystorageaccount --expand geoReplicationStats
   optionalParameters:
   - name: --failover-type --type
+    acceptedValues: Planned, Unplanned
     summary: |-
-      The parameter is set to 'Planned' to indicate whether a Planned failover is requested.
-    isPreview: true
+      Specify the failover type. Possible values are: Unplanned, Planned. If not specified, the default failover type is Unplanned.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
