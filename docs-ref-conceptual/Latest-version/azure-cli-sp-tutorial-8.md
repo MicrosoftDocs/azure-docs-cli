@@ -70,6 +70,13 @@ If you try to create a service principal using a device that's not compliant wit
 organization's access policies, you receive the message "...Conditional Access policy requires a
 compliant device...". Switch to a computer that meets your organization's access policies.
 
+### Potential identity-modification risk
+
+The `az ad sp create-for-rbac` and `az ad sp create` commands can modify an existing application or
+service principal if another object shares the same **display name**. Display names aren't unique
+and can change, which could result in credential loss or incorrect RBAC assignments. Use a **unique
+object ID or app ID** instead.
+
 ## See also
 
 - [Application and service principal objects in Microsoft Entra ID][03]
