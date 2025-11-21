@@ -72,7 +72,7 @@ compliant device...". Switch to a computer that meets your organization's access
 
 ### Potential identity-modification risk
 
-The `az ad sp create-for-rbac` and `az ad sp create` commands can modify an existing application or
+The `az ad sp create-for-rbac` and `az ad app create` commands can modify an existing application or
 service principal if another object shares the same **display name**. Display names aren't unique
 and can change, which could result in credential loss or incorrect RBAC assignments. Use a **unique
 object ID or app ID** instead.
