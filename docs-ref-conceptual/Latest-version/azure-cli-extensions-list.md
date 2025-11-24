@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/20/2025
+ms.date: 11/23/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -70,7 +70,7 @@ You will be prompted to install an extension on first use.
 |[command-change](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change) | 2.19.0 | Microsoft Azure Command-Line Tools CommandChange Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change/HISTORY.rst) |
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.67.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.14.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[computeschedule](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule) | 2.67.0 | Microsoft Azure Command-Line Tools Computeschedule Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule/HISTORY.rst) |
-|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.4.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
+|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.67.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.70.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.70.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.11.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
@@ -100,6 +100,7 @@ You will be prompted to install an extension on first use.
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.75.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
 |[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.75.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.75.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
+|[edge-action](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action) | 2.75.0 | Microsoft Azure Command-Line Tools Extension for Azure Front Door Edge Actions | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
 |[edgezones](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones) | 2.57.0 | Microsoft Azure Command-Line Tools Edgezones Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones/HISTORY.rst) |
 |[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.75.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
@@ -196,7 +197,7 @@ You will be prompted to install an extension on first use.
 |[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.56.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.28.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [2.0.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.54.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
-|[stack-hci-vm](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) | 2.15.0 | Microsoft Azure Command-Line Tools Stack-HCi-VM Extension | GA | [1.11.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) |
+|[stack-hci-vm](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) | 2.15.0 | Microsoft Azure Command-Line Tools Stack-HCi-VM Extension | GA | [1.11.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci-vm) |
 |[standbypool](https://github.com/Azure/azure-cli-extensions/tree/main/src/standbypool) | 2.70.0 | Microsoft Azure Command-Line Tools Standbypool Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/standbypool/HISTORY.rst) |
 |[staticwebapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp) | 2.39.0 | Microsoft Azure Command-Line Tools Staticwebapp Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp/HISTORY.rst) |
 |[storage-actions](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions) | 2.70.0 | Microsoft Azure Command-Line Tools StorageActions Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions/HISTORY.rst) |
