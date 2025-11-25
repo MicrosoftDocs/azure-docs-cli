@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/24/2025
+ms.date: 11/25/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -70,14 +70,14 @@ You will be prompted to install an extension on first use.
 |[command-change](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change) | 2.19.0 | Microsoft Azure Command-Line Tools CommandChange Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change/HISTORY.rst) |
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.67.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.14.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[computeschedule](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule) | 2.67.0 | Microsoft Azure Command-Line Tools Computeschedule Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule/HISTORY.rst) |
-|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
+|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.4.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.67.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.70.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.70.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.11.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.75.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.79.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [1.3.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
-|[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | GA | [1.6.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
+|[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | GA | [1.6.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.55.0 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[custom-providers](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers) | 2.3.1 | Microsoft Azure Command-Line Tools Custom Providers Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers/HISTORY.rst) |
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.4](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
@@ -221,6 +221,6 @@ You will be prompted to install an extension on first use.
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.70.0 | Azure VMware Solution commands. | GA | [8.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.56.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.7.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
-|[workload-orchestration](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration) | 2.67.0 | Microsoft Azure Command-Line Tools WorkloadOperations Extension. | GA | [4.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration/HISTORY.rst) |
+|[workload-orchestration](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration) | 2.67.0 | Microsoft Azure Command-Line Tools WorkloadOperations Extension. | GA | [4.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration/HISTORY.rst) |
 |[workloads](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads) | 2.61.0 | Microsoft Azure Command-Line Tools Workloads Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads/HISTORY.rst) |
 |[zones](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones) | 2.72.0 | Microsoft Azure Command-Line Tools Zones Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones/HISTORY.rst) |
