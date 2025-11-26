@@ -1,13 +1,35 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 11/18/2025
+ms.date: 12/02/2025
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## December 02, 2025
+
+Version 2.81.0
+
+### AKS
+
+* `az aks safeguards`: Add `--pss-level` parameter to support Pod Security Standards
+* `az aks safeguards create`: Add validation to prevent duplicate resource creation
+
+### ARM
+
+* Fix #32098: `az bicep install`: Fix a bug where the installation was skipped when `--version` was specified unless `bicep.use_binary_from_path` was explicitly set to `false`
+
+### Compute
+
+* `az vm/vmss application set`: Add new parameter `--enable-automatic-upgrade` to support enabling application automatic upgrade
+
+### NetAppFiles
+
+* `az netappfiles volume-group create`: Add `--network-features` parameter for volume groups
+* `az netappfiles volume replication list`: Add `--exclude` parameter to exclude deleted replications
 
 ## November 18, 2025
 
