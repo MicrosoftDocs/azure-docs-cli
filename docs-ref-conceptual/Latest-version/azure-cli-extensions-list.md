@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/25/2025
+ms.date: 11/26/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -100,7 +100,7 @@ You will be prompted to install an extension on first use.
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.75.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
 |[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.75.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.75.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
-|[edge-action](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action) | 2.75.0 | Microsoft Azure Command-Line Tools Extension for Azure Front Door Edge Actions | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action/HISTORY.rst) |
+|[edge-action](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action) | 2.75.0 | Microsoft Azure Command-Line Tools Extension for Azure Front Door Edge Actions | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
 |[edgezones](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones) | 2.57.0 | Microsoft Azure Command-Line Tools Edgezones Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones/HISTORY.rst) |
 |[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.75.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
