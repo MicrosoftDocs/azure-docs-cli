@@ -23,6 +23,7 @@ directCommands:
                              [--level {Enforce, Warn}]
                              [--name]
                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--pss-level {Baseline, Privileged, Restricted}]
                              [--resource-group]
   examples:
   - summary: |-
@@ -34,6 +35,12 @@ directCommands:
   - summary: |-
       Create a DeploymentSafeguards resource at Warn level with ignored namespaces
     syntax: az aks safeguards create -g rg1 -n mc1 --excluded-ns ns1 ns2 --level Warn
+  - summary: |-
+      Create a DeploymentSafeguards resource at Warn level with Pod Security Standards level set to Baseline
+    syntax: az aks safeguards create --managed-cluster /subscriptions/subid1/resourceGroups/rg1/providers/Microsoft.ContainerService/managedClusters/cluster1 --level Warn --pss-level Baseline
+  - summary: |-
+      Create a DeploymentSafeguards resource with PSS level set to Restricted using -g/-n pattern
+    syntax: az aks safeguards create -g rg1 -n cluster1 --level Enforce --pss-level Restricted
   optionalParameters:
   - name: --cluster --managed-cluster -c
     summary: |-
@@ -54,6 +61,11 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --pss-level
+    acceptedValues: Baseline, Privileged, Restricted
+    summary: |-
+      The pod security standards level.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
       The name of the resource group. You can configure the default group using az configure --defaults group=`<name>`. You may provide either 'managed_cluster' or both 'resource_group' and 'name', but not both.
@@ -441,10 +453,10 @@ directCommands:
                            [--resource-group]
   examples:
   - summary: |-
-      Gets a DeploymentSafeguard resource by managed cluster id
+      Get a DeploymentSafeguard resource by managed cluster id
     syntax: az aks safeguards show --managed-cluster subscriptions/subid1/resourceGroups/rg1/providers/Microsoft.ContainerService/managedClusters/cluster1
   - summary: |-
-      Gets a DeploymentSafeguard resource with resourceGroup and clusterName arguments
+      Get a DeploymentSafeguard resource with resourceGroup and clusterName arguments
     syntax: az aks safeguards show -g rg1 -n cluster1
   optionalParameters:
   - name: --cluster --managed-cluster -c
@@ -553,6 +565,7 @@ directCommands:
                              [--level {Enforce, Warn}]
                              [--name]
                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--pss-level {Baseline, Privileged, Restricted}]
                              [--remove]
                              [--resource-group]
                              [--set]
@@ -566,6 +579,15 @@ directCommands:
   - summary: |-
       Update a DeploymentSafeguards resource by adding 2 new namespaces to ignore
     syntax: az aks safeguards update -g rg1 -n mc1 --excluded-ns ns1 ns2
+  - summary: |-
+      Update Pod Security Standards level to Restricted
+    syntax: az aks safeguards update --managed-cluster /subscriptions/subid1/resourceGroups/rg1/providers/Microsoft.ContainerService/managedClusters/cluster1 --pss-level Restricted
+  - summary: |-
+      Update PSS level to Baseline using -g/-n pattern
+    syntax: az aks safeguards update -g rg1 -n cluster1 --pss-level Baseline
+  - summary: |-
+      Update both safeguards level and PSS level
+    syntax: az aks safeguards update -g rg1 -n cluster1 --level Enforce --pss-level Restricted
   optionalParameters:
   - name: --add
     summary: |-
@@ -595,6 +617,11 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --pss-level
+    acceptedValues: Baseline, Privileged, Restricted
+    summary: |-
+      The pod security standards level. Possible values: Privileged (off), Baseline, Restricted.
+    groupName: Properties Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -743,7 +770,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
   syntax: >-
-    az aks safeguards wait --cluster --managed-cluster
+    az aks safeguards wait [--cluster --managed-cluster]
                            [--created]
                            [--custom]
                            [--deleted]
@@ -753,12 +780,10 @@ directCommands:
                            [--resource-group]
                            [--timeout]
                            [--updated]
-  requiredParameters:
-  - isRequired: true
-    name: --cluster --managed-cluster -c
+  optionalParameters:
+  - name: --cluster --managed-cluster -c
     summary: |-
       The fully qualified Azure Resource manager identifier of the Managed Cluster.
-  optionalParameters:
   - name: --created
     defaultValue: "False"
     summary: |-
