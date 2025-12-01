@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 10/28/2025
+ms.date: 12/01/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -31,104 +31,21 @@ The breaking changes listed in this section are planned for the next major relea
 - Learn how to find all Helm charts stored in a Helm repository here: `az acr helm list`. If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 - For more information on managing and deploying applications for Kubernetes, see https://aka.ms/acr/helm.
 
-## acs
-
-### `aks create`
-
-[Link to aks reference group](/cli/azure/aks)
-
-- Default SSH key behavior will change. When no SSH key parameters are provided, the command will behave as if '--no-ssh-key' was passed instead of failing in next breaking change release(2.80.0) scheduled for Nov 2025.
-
-## batch
-
-### `batch pool create`
-
-[Link to batch pool reference group](/cli/azure/batch/pool)
-
-- '--target-communication' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--resource-tags' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-
-### `batch pool list`
-
-[Link to batch pool reference group](/cli/azure/batch/pool)
-
-- The output will be changed in next breaking change release(2.80.0) scheduled for Nov 2025. Remove output fields `targetNodeCommunicationMode`, `currentNodeCommunicationMode`, and `resourceTags`.
-
-### `batch pool show`
-
-[Link to batch pool reference group](/cli/azure/batch/pool)
-
-- The output will be changed in next breaking change release(2.80.0) scheduled for Nov 2025. Remove output fields `targetNodeCommunicationMode`, `currentNodeCommunicationMode`, and `resourceTags`.
-
-### `batch pool set`
-
-[Link to batch pool reference group](/cli/azure/batch/pool)
-
-- '--target-communication' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-
-### `batch pool reset`
-
-[Link to batch pool reference group](/cli/azure/batch/pool)
-
-- '--target-communication' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-
 ## compute_recommender
 
 ### `compute-recommender spot-placement-recommender`
 
 [Link to compute-recommender reference group](/cli/azure/compute-recommender)
 
-- 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025. Use 'az compute-recommender spot-placement-score' instead.
-
-## dms
-
-### `dms project create`
-
-[Link to dms project reference group](/cli/azure/dms/project)
-
-- 'location' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
+- 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'az compute-recommender spot-placement-score' instead.
 
 ## netappfiles
-
-### `netappfiles volume create`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
 
 ### `netappfiles volume update`
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-
-## rdbms
-
-### `postgres flexible-server create`
-
-[Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
-
-- Update default value of "--version" in next breaking change release(2.80.0) scheduled for Nov 2025. The default value will be changed from "17" to a supported version based on regional capabilities.
-- Please use command group "postgres flexible-server db" for database creation.
-- Please use command group "postgres flexible-server db" for database creation.
-
-### `postgres server`
-
-[Link to postgres server reference group](/cli/azure/postgres/server)
-
-- Azure Database for PostgreSQL Single Server is deprecated. Please migrate to Flexible Server for new deployments.
-
-### `postgres server-logs`
-
-[Link to postgres server-logs reference group](/cli/azure/postgres/server-logs)
-
-- Azure Database for PostgreSQL Single Server is deprecated. Please migrate to Flexible Server for new deployments.
-
-### `postgres db`
-
-[Link to postgres db reference group](/cli/azure/postgres/db)
-
-- Azure Database for PostgreSQL Single Server is deprecated. Please migrate to Flexible Server for new deployments.
+- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
 ## resource
 
@@ -183,35 +100,11 @@ The breaking changes listed in this section are planned for the next major relea
 
 ## servicefabric
 
-### `sf application update`
-
-[Link to sf application reference group](/cli/azure/sf/application)
-
-- '--service-type-policy' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--upgrade-replica-set-check-timeout' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-porcent-unhealthy-partitions' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-porcent-unhealthy-replicas' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-porcent-unhealthy-services' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-porcent-unhealthy-apps' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-
-### `sf managed-application-type version update`
-
-[Link to sf managed-application-type version reference group](/cli/azure/sf/managed-application-type/version)
-
-- The argument '--package-url' will become required in next breaking change release(2.80.0) scheduled for Nov 2025.
-
 ### `sf managed-application update`
 
 [Link to sf managed-application reference group](/cli/azure/sf/managed-application)
 
-- '--service-type-policy' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--upgrade-replica-set-check-timeout' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--instance-close-duration' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--consider-warning-as-error' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-percent-unhealthy-partitions' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-percent-unhealthy-replicas' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-percent-unhealthy-services' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--max-percent-unhealthy-deployed-applications' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
+- Options list has changed, run help command to see allowed options
 
 ## vm
 
@@ -227,43 +120,18 @@ The breaking changes listed in this section are planned for the next major relea
 
 - The default value of '--vm-sku' will be changed to 'Standard_D2s_v5' from 'Standard_DS1_v2' in a future release.
 
-## azext_aks_preview
-
-### `aks create`
-
-[Link to aks reference group](/cli/azure/aks)
-
-- Default SSH key behavior will change. When no SSH key parameters are provided, the command will behave as if '--no-ssh-key' was passed instead of failing in next breaking change release(2.80.0) scheduled for Nov 2025.
-
 ## azext_blueprint
 
 ### `blueprint`
 
 [Link to blueprint reference group](/cli/azure/blueprint)
 
-- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
+- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - Blueprints and associated commands will be deprecated
 - as early as July 2026. Customers are encouraged to transition to
 - Template Specs and Deployments Stacks to support their scenarios beyond that date.
 - Migration documentation is available at
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/migrate-blueprint.
-
-## azext_connectedk8s
-
-### `connectedk8s enable-features`
-
-[Link to connectedk8s reference group](/cli/azure/connectedk8s)
-
-- '--app-id' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-- '--app-secret' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
-
-## azext_dms
-
-### `dms project create`
-
-[Link to dms project reference group](/cli/azure/dms/project)
-
-- 'location' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
 
 ## azext_managednetworkfabric
 
@@ -285,19 +153,24 @@ The breaking changes listed in this section are planned for the next major relea
 
 - '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
 
+## azext_neon
+
+### `neon`
+
+[Link to neon reference group](/cli/azure/neon)
+
+- 'az neon' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- Deprecation Notice: The Neon Azure Native Integration is being deprecated and will
+- reach end of life on January 31, 2026. Transfer your projects to a Neon managed organization
+- today. Migration documentation is available at https://neon.com/docs/import/migrate-from-azure-native
+
 ## azext_netappfiles_preview
-
-### `netappfiles volume create`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
 
 ### `netappfiles volume update`
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--endpoint-type' has been deprecated and will be removed in next breaking change release(2.80.0) scheduled for Nov 2025.
+- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
 ## azext_redisenterprise
 
@@ -305,8 +178,8 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to redisenterprise reference group](/cli/azure/redisenterprise)
 
-- The argument '--public-network-access' will become required in next breaking change release(2.80.0) scheduled for Nov 2025.
-- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.80.0) scheduled for Nov 2025.
+- The argument '--public-network-access' will become required in next breaking change release(2.86.0) scheduled for May 2026.
+- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.86.0) scheduled for May 2026.
 
 ## azext_spring
 
