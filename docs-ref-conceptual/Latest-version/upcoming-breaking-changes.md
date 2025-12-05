@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 12/01/2025
+ms.date: 12/05/2025
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -46,6 +46,20 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
 - '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
+## rdbms
+
+### `postgres flexible-server create`
+
+[Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
+
+- '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
+
+### `postgres flexible-server update`
+
+[Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
+
+- '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
 
 ## resource
 
