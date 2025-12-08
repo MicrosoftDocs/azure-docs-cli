@@ -1,47 +1,42 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_opcua_event-group
-name: az iot ops ns asset opcua event-group
+uid: az_iot_ops_ns_asset_sse_event-group
+name: az iot ops ns asset sse event-group
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua event-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset sse event-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage event groups for OPC UA namespaced assets in an IoT Operations instance.
+  Manage event groups for SSE namespaced assets.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_opcua_event-group_add
-  name: az iot ops ns asset opcua event-group add
+- uid: az_iot_ops_ns_asset_sse_event-group_add
+  name: az iot ops ns asset sse event-group add
   summary: |-
-    Add an event group to an OPC UA namespaced asset in an IoT Operations instance.
+    Add an event group to an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group add --asset
-                                              --data-source --ds
-                                              --instance
-                                              --name
-                                              --resource-group
-                                              [--dest --destination]
-                                              [--pi --publish-int]
-                                              [--qs --queue-size]
-                                              [--replace {false, true}]
+    az iot ops ns asset sse event-group add --asset
+                                            --data-source --ds
+                                            --instance
+                                            --name
+                                            --resource-group
+                                            [--dest --destination]
+                                            [--replace {false, true}]
   examples:
   - summary: |-
-      Add a basic OPC UA event group
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --data-source "ns=2;i=1000"
+      Add a basic event group to an SSE asset
+    syntax: az iot ops ns asset sse event-group add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name alertEvents --data-source "alert"
   - summary: |-
-      Add an OPC UA event group with publishing interval and queue size
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name systemEvent --data-source "ns=2;i=200" --publish-int 1500 --queue-size 8
+      Add an event group with MQTT destination
+    syntax: az iot ops ns asset sse event-group add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name systemEvents --data-source "system" --dest topic="factory/sse/system/alerts" retain=Keep qos=Qos1 ttl=7200
   - summary: |-
-      Add an OPC UA event group with MQTT destination
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name criticalAlarm --data-source "ns=2;i=4000" --dest topic="factory/opcua/alarms" retain=Keep qos=Qos0 ttl=7200
-  - summary: |-
-      Replace an OPC UA event group with same name
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --data-source "ns=3;i=1000" --replace
+      Replace an existing event group
+    syntax: az iot ops ns asset sse event-group add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name alertEvents --data-source "critical-alert" --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -67,12 +62,6 @@ directCommands:
   - name: --dest --destination
     summary: |-
       Key=value pairs representing the destination for events. Allowed and required arguments are `topic`, `retain`, `qos`, and `ttl` for MQTT destinations.  Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
-  - name: --pi --publish-int
-    summary: |-
-      Publishing interval for events in milliseconds. Minimum: -1.
-  - name: --qs --queue-size
-    summary: |-
-      Queue size for events. Minimum: 0.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
@@ -105,22 +94,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_list
-  name: az iot ops ns asset opcua event-group list
+- uid: az_iot_ops_ns_asset_sse_event-group_list
+  name: az iot ops ns asset sse event-group list
   summary: |-
-    List event groups for an OPC UA namespaced asset in an IoT Operations instance.
+    List event groups for an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group list --asset
-                                               --instance
-                                               --resource-group
+    az iot ops ns asset sse event-group list --asset
+                                             --instance
+                                             --resource-group
   examples:
   - summary: |-
-      List all event groups for an OPC UA asset
-    syntax: az iot ops ns asset opcua event-group list --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup
+      List all event groups for an SSE asset
+    syntax: az iot ops ns asset sse event-group list --asset mysseAsset --instance myInstance -g myInstanceResourceGroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -161,84 +150,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_remove
-  name: az iot ops ns asset opcua event-group remove
+- uid: az_iot_ops_ns_asset_sse_event-group_remove
+  name: az iot ops ns asset sse event-group remove
   summary: |-
-    Remove an event group from an OPC UA namespaced asset in an IoT Operations instance.
+    Remove an event group from an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group remove --asset
-                                                 --instance
-                                                 --name
-                                                 --resource-group
-  examples:
-  - summary: |-
-      Remove an event group from an OPC UA asset
-    syntax: az iot ops ns asset opcua event-group remove --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent
-  requiredParameters:
-  - isRequired: true
-    name: --asset -a
-    summary: |-
-      Asset name.
-  - isRequired: true
-    name: --instance -i
-    summary: |-
-      The name of the Azure IoT Operations instance.
-  - isRequired: true
-    name: --name
-    summary: |-
-      Event group name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      The resource group of the Azure IoT Operations instance.
-  globalParameters:
-  - name: --debug
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity to show all debug logs.
-  - name: --help -h
-    summary: |-
-      Show this help message and exit.
-  - name: --only-show-errors
-    defaultValue: "False"
-    summary: |-
-      Only show errors, suppressing warnings.
-  - name: --output -o
-    defaultValue: json
-    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
-    summary: |-
-      Output format.
-  - name: --query
-    summary: |-
-      JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --verbose
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_show
-  name: az iot ops ns asset opcua event-group show
-  summary: |-
-    Show details of an event group for an OPC UA namespaced asset in an IoT Operations instance.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az iot ops ns asset opcua event-group show --asset
+    az iot ops ns asset sse event-group remove --asset
                                                --instance
                                                --name
                                                --resource-group
   examples:
   - summary: |-
-      Show event group details
-    syntax: az iot ops ns asset opcua event-group show --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent
+      Remove an event group from an SSE asset
+    syntax: az iot ops ns asset sse event-group remove --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name alertEvents
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -283,30 +211,89 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_update
-  name: az iot ops ns asset opcua event-group update
+- uid: az_iot_ops_ns_asset_sse_event-group_show
+  name: az iot ops ns asset sse event-group show
   summary: |-
-    Update an event group for an OPC UA namespaced asset in an IoT Operations instance.
+    Show details of an event group for an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group update --asset
-                                                 --instance
-                                                 --name
-                                                 --resource-group
-                                                 [--data-source --ds]
-                                                 [--dest --destination]
-                                                 [--pi --publish-int]
-                                                 [--qs --queue-size]
+    az iot ops ns asset sse event-group show --asset
+                                             --instance
+                                             --name
+                                             --resource-group
   examples:
   - summary: |-
-      Update event group publishing interval and queue size
-    syntax: az iot ops ns asset opcua event-group update --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --publish-int 2000 --queue-size 10
+      Show event group details
+    syntax: az iot ops ns asset sse event-group show --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name alertEvents
+  requiredParameters:
+  - isRequired: true
+    name: --asset -a
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      The name of the Azure IoT Operations instance.
+  - isRequired: true
+    name: --name
+    summary: |-
+      Event group name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The resource group of the Azure IoT Operations instance.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_ns_asset_sse_event-group_update
+  name: az iot ops ns asset sse event-group update
+  summary: |-
+    Update an event group for an SSE namespaced asset in an IoT Operations instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops ns asset sse event-group update --asset
+                                               --instance
+                                               --name
+                                               --resource-group
+                                               [--data-source --ds]
+                                               [--dest --destination]
+  examples:
+  - summary: |-
+      Update event group data source
+    syntax: az iot ops ns asset sse event-group update --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name alertEvents --data-source "emergency-alert"
   - summary: |-
       Update event group destination
-    syntax: az iot ops ns asset opcua event-group update --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name systemEvent --dest topic="factory/opcua/system/updated" retain=Never qos=Qos1 ttl=3600
+    syntax: az iot ops ns asset sse event-group update --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name systemEvents --dest topic="factory/sse/updated/system" retain=Never qos=Qos0 ttl=3600
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -331,12 +318,6 @@ directCommands:
   - name: --dest --destination
     summary: |-
       Key=value pairs representing the destination for events. Allowed and required arguments are `topic`, `retain`, `qos`, and `ttl` for MQTT destinations.  Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
-  - name: --pi --publish-int
-    summary: |-
-      Publishing interval for events in milliseconds. Minimum: -1.
-  - name: --qs --queue-size
-    summary: |-
-      Queue size for events. Minimum: 0.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -365,10 +346,10 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_opcua_event-group_add
-- az_iot_ops_ns_asset_opcua_event-group_list
-- az_iot_ops_ns_asset_opcua_event-group_remove
-- az_iot_ops_ns_asset_opcua_event-group_show
-- az_iot_ops_ns_asset_opcua_event-group_update
+- az_iot_ops_ns_asset_sse_event-group_add
+- az_iot_ops_ns_asset_sse_event-group_list
+- az_iot_ops_ns_asset_sse_event-group_remove
+- az_iot_ops_ns_asset_sse_event-group_show
+- az_iot_ops_ns_asset_sse_event-group_update
 metadata:
-  description: Manage event groups for OPC UA namespaced assets in an IoT Operations instance.
+  description: Manage event groups for SSE namespaced assets.

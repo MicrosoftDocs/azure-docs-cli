@@ -28,6 +28,7 @@ directCommands:
     az iot ops connector opcua trust add --certificate-file --cf
                                          --instance
                                          --resource-group
+                                         [--ed --expiration-date]
                                          [--overwrite-secret {false, true}]
                                          [--secret-name]
   examples:
@@ -40,6 +41,9 @@ directCommands:
   - summary: |-
       Add a trusted certificate to the trusted certificate list and skip the overwrite confirmation prompt when the secret already exists.
     syntax: az iot ops connector opcua trust add --instance instance --resource-group instanceresourcegroup --certificate-file "certificate.der" --overwrite-secret
+  - summary: |-
+      Add a trusted certificate with a custom expiration date for the Key Vault secret.
+    syntax: az iot ops connector opcua trust add --instance instance --resource-group instanceresourcegroup --certificate-file "certificate.der" --expiration-date "2026-12-31T23:59:59Z"
   requiredParameters:
   - isRequired: true
     name: --certificate-file --cf
@@ -54,6 +58,9 @@ directCommands:
     summary: |-
       Instance resource group.
   optionalParameters:
+  - name: --ed --expiration-date
+    summary: |-
+      Expiration date for the Key Vault secret in ISO 8601 format (e.g., 2025-12-31T23:59:59Z). If not provided, the certificate's expiration date will be used. If the certificate expiration cannot be determined, defaults to 180 days from the current date.
   - name: --overwrite-secret
     defaultValue: "False"
     acceptedValues: false, true

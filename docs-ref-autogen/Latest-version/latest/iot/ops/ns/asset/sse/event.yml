@@ -1,42 +1,44 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_custom_event
-name: az iot ops ns asset custom event
+uid: az_iot_ops_ns_asset_sse_event
+name: az iot ops ns asset sse event
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset custom event** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset sse event** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage events for custom asset event groups in Device Registry namespaces.
+  Manage individual events for SSE event groups in Device Registry namespaces.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_custom_event_add
-  name: az iot ops ns asset custom event add
+- uid: az_iot_ops_ns_asset_sse_event_add
+  name: az iot ops ns asset sse event add
   summary: |-
-    Add an event to a custom asset event group in a Device Registry namespace.
+    Add an event to an SSE asset event group in a Device Registry namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom event add --asset
-                                         --data-source --ds
-                                         --eg --event-group
-                                         --instance
-                                         --name
-                                         --resource-group
-                                         [--config]
-                                         [--dest --destination]
-                                         [--replace {false, true}]
-                                         [--tr --type-ref]
+    az iot ops ns asset sse event add --asset
+                                      --data-source --ds
+                                      --eg --event-group
+                                      --instance
+                                      --name
+                                      --resource-group
+                                      [--dest --destination]
+                                      [--replace {false, true}]
+                                      [--tr --type-ref]
   examples:
   - summary: |-
-      Add a basic custom event
-    syntax: az iot ops ns asset custom event add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity"
+      Add a basic SSE event
+    syntax: az iot ops ns asset sse event add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name temperature --data-source "/events/temperature"
   - summary: |-
-      Replace a custom event with same name
-    syntax: az iot ops ns asset custom event add --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity.updated" --replace
+      Add an SSE event with MQTT destination
+    syntax: az iot ops ns asset sse event add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name pressure --data-source "/events/pressure" --dest topic="factory/sse/pressure" retain=Keep qos=Qos1 ttl=3600
+  - summary: |-
+      Replace an SSE event with same name
+    syntax: az iot ops ns asset sse event add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name temperature --data-source "/events/temperature/updated" --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -63,12 +65,9 @@ directCommands:
     summary: |-
       The resource group of the Azure IoT Operations instance.
   optionalParameters:
-  - name: --config
-    summary: |-
-      Custom event configuration as a JSON string or file path.
   - name: --dest --destination
     summary: |-
-      Key=value pairs representing the destination for event groups. Allowed arguments include: `key` for BrokerStateStore; `path` for Storage; or `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
+      Key=value pairs representing the destination for events. Allowed arguments include: `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
@@ -104,23 +103,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_event_list
-  name: az iot ops ns asset custom event list
+- uid: az_iot_ops_ns_asset_sse_event_list
+  name: az iot ops ns asset sse event list
   summary: |-
-    List events for a custom asset event group in a Device Registry namespace.
+    List events for an SSE asset event group in a Device Registry namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom event list --asset
-                                          --eg --event-group
-                                          --instance
-                                          --resource-group
+    az iot ops ns asset sse event list --asset
+                                       --eg --event-group
+                                       --instance
+                                       --resource-group
   examples:
   - summary: |-
       List all events for an event group
-    syntax: az iot ops ns asset custom event list --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup
+    syntax: az iot ops ns asset sse event list --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -165,24 +164,24 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_custom_event_remove
-  name: az iot ops ns asset custom event remove
+- uid: az_iot_ops_ns_asset_sse_event_remove
+  name: az iot ops ns asset sse event remove
   summary: |-
-    Remove an events from a custom asset event group in a Device Registry namespace.
+    Remove an event from an SSE asset event group in a Device Registry namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset custom event remove --asset
-                                            --eg --event-group
-                                            --instance
-                                            --name
-                                            --resource-group
+    az iot ops ns asset sse event remove --asset
+                                         --eg --event-group
+                                         --instance
+                                         --name
+                                         --resource-group
   examples:
   - summary: |-
       Remove an event from an event group
-    syntax: az iot ops ns asset custom event remove --asset mycustomasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity
+    syntax: az iot ops ns asset sse event remove --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name temperature
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -232,8 +231,8 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_custom_event_add
-- az_iot_ops_ns_asset_custom_event_list
-- az_iot_ops_ns_asset_custom_event_remove
+- az_iot_ops_ns_asset_sse_event_add
+- az_iot_ops_ns_asset_sse_event_list
+- az_iot_ops_ns_asset_sse_event_remove
 metadata:
-  description: Manage events for custom asset event groups in Device Registry namespaces.
+  description: Manage individual events for SSE event groups in Device Registry namespaces.

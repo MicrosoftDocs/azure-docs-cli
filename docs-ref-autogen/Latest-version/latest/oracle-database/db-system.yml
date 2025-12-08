@@ -1,0 +1,559 @@
+### YamlMime:AzureCLIGroup
+uid: az_oracle-database_db-system
+name: az oracle-database db-system
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **oracle-database** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az oracle-database db-system** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Db System.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_oracle-database_db-system_create
+  name: az oracle-database db-system create
+  summary: |-
+    Create a DbSystem.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az oracle-database db-system create --db-system-name --name
+                                        --resource-group
+                                        [--admin-password]
+                                        [--cluster-name]
+                                        [--compute-count]
+                                        [--compute-model {ECPU, OCPU}]
+                                        [--database-edition {EnterpriseEdition, EnterpriseEditionDeveloper, EnterpriseEditionExtreme, EnterpriseEditionHighPerformance, StandardEdition}]
+                                        [--db-system-options]
+                                        [--db-version]
+                                        [--disk-redundancy {High, Normal}]
+                                        [--display-name]
+                                        [--domain]
+                                        [--hostname]
+                                        [--initial-data-storage-size-in-gb]
+                                        [--license-model {BringYourOwnLicense, LicenseIncluded}]
+                                        [--location]
+                                        [--network-anchor-id]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--node-count]
+                                        [--pdb-name]
+                                        [--resource-anchor-id]
+                                        [--shape]
+                                        [--ssh-public-keys]
+                                        [--storage-volume-performance-mode {Balanced, HighPerformance}]
+                                        [--tags]
+                                        [--time-zone]
+                                        [--zones]
+  examples:
+  - summary: |-
+      DbSystems_Create
+    syntax: az oracle-database db-system create --resource-group rgo --db-system-name dbsystem1 --database-edition StandardEdition --admin-password ******** --db-version 19.0.0.0 --resource-anchor-id /subscriptions/00000000-0000-4025-0000-000000000000/resourceGroups/rg001/providers/Oracle.Database/resourceAnchors/resourceanchor1 --network-anchor-id /subscriptions/00000000-0000-4025-0000-000000000000/resourceGroups/rg001/providers/Oracle.Database/networkAnchors/networkanchor1 --cluster-name example --display-name example --initial-data-storage-size-in-gb 19 --db-system-options "{storage-management:LVM}" --disk-redundancy High --hostname krixp --node-count 24 --shape VM.Standard.E5.Flex --ssh-public-keys "[sha-xx]" --storage-volume-performance-mode Balanced --time-zone utc --compute-model ECPU --compute-count 28 --zones "[2]" --tags "{tag:test}" --location eastus
+  requiredParameters:
+  - isRequired: true
+    name: --db-system-name --name -n
+    summary: |-
+      The name of the DbSystem.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --admin-password
+    summary: |-
+      A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.  If value is blank it's asked from the tty.
+    groupName: Properties Arguments
+  - name: --cluster-name
+    summary: |-
+      The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
+    groupName: Properties Arguments
+  - name: --compute-count
+    summary: |-
+      The number of compute servers for the DB system.
+    groupName: Properties Arguments
+  - name: --compute-model
+    acceptedValues: ECPU, OCPU
+    summary: |-
+      The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.
+    groupName: Properties Arguments
+  - name: --database-edition
+    acceptedValues: EnterpriseEdition, EnterpriseEditionDeveloper, EnterpriseEditionExtreme, EnterpriseEditionHighPerformance, StandardEdition
+    summary: |-
+      The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require EnterpriseEditionExtremePerformance.
+    groupName: Properties Arguments
+  - name: --db-system-options
+    summary: |-
+      The DB system options.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --db-version
+    summary: |-
+      A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
+    groupName: Properties Arguments
+  - name: --disk-redundancy
+    acceptedValues: High, Normal
+    summary: |-
+      The type of redundancy configured for the DB system. NORMAL is 2-way redundancy. HIGH is 3-way redundancy.
+    groupName: Properties Arguments
+  - name: --display-name
+    summary: |-
+      The user-friendly name for the DB system. The name does not have to be unique.
+    groupName: Properties Arguments
+  - name: --domain
+    summary: |-
+      The domain name for the DB system.
+    groupName: Properties Arguments
+  - name: --hostname
+    summary: |-
+      The hostname for the DB system.
+    groupName: Properties Arguments
+  - name: --initial-data-storage-size-in-gb
+    defaultValue: "256"
+    summary: |-
+      Size in GB of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.
+    groupName: Properties Arguments
+  - name: --license-model
+    defaultValue: LicenseIncluded
+    acceptedValues: BringYourOwnLicense, LicenseIncluded
+    summary: |-
+      The Oracle license model that applies to all the databases on the DB system. The default is LicenseIncluded.
+    groupName: Properties Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --network-anchor-id
+    summary: |-
+      Azure Network Anchor ID.
+    groupName: Properties Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --node-count
+    defaultValue: "1"
+    summary: |-
+      The number of nodes in the DB system. For RAC DB systems, the value is greater than 1.
+    groupName: Properties Arguments
+  - name: --pdb-name
+    summary: |-
+      The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.
+    groupName: Properties Arguments
+  - name: --resource-anchor-id
+    summary: |-
+      Azure Resource Anchor ID.
+    groupName: Properties Arguments
+  - name: --shape
+    summary: |-
+      The shape of the DB system. The shape determines resources to allocate to the DB system. For virtual machine shapes, the number of CPU cores and memory. For bare metal and Exadata shapes, the number of CPU cores, storage, and memory.
+    groupName: Properties Arguments
+  - name: --ssh-public-keys
+    summary: |-
+      The public key portion of one or more key pairs used for SSH access to the DB system.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --storage-volume-performance-mode
+    acceptedValues: Balanced, HighPerformance
+    summary: |-
+      The block storage volume performance level. Valid values are Balanced and HighPerformance. See [Block Volume Performance](/Content/Block/Concepts/blockvolumeperformance.htm) for more information.
+    groupName: Properties Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --time-zone
+    summary: |-
+      The time zone of the DB system, e.g., UTC, to set the timeZone as UTC.
+    groupName: Properties Arguments
+  - name: --zones
+    summary: |-
+      The availability zones.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_oracle-database_db-system_delete
+  name: az oracle-database db-system delete
+  summary: |-
+    Delete a DbSystem.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az oracle-database db-system delete [--db-system-name --name]
+                                        [--ids]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--resource-group]
+                                        [--subscription]
+                                        [--yes]
+  examples:
+  - summary: |-
+      DbSystems_Delete_MaximumSet
+    syntax: az oracle-database db-system delete --resource-group rg --db-system-name dbsystem1
+  optionalParameters:
+  - name: --db-system-name --name -n
+    summary: |-
+      The name of the DbSystem.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_oracle-database_db-system_list
+  name: az oracle-database db-system list
+  summary: |-
+    List DbSystem resources by subscription ID.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az oracle-database db-system list [--max-items]
+                                      [--next-token]
+                                      [--resource-group]
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_oracle-database_db-system_show
+  name: az oracle-database db-system show
+  summary: |-
+    Get a DbSystem.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az oracle-database db-system show [--db-system-name --name]
+                                      [--ids]
+                                      [--resource-group]
+                                      [--subscription]
+  examples:
+  - summary: |-
+      DbSystems_Get
+    syntax: az oracle-database db-system show --resource-group rg --db-system-name dbsystem1
+  optionalParameters:
+  - name: --db-system-name --name -n
+    summary: |-
+      The name of the DbSystem.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_oracle-database_db-system_update
+  name: az oracle-database db-system update
+  summary: |-
+    Update a DbSystem.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az oracle-database db-system update [--add]
+                                        [--db-system-name --name]
+                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--ids]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--remove]
+                                        [--resource-group]
+                                        [--set]
+                                        [--subscription]
+                                        [--tags]
+                                        [--zones]
+  examples:
+  - summary: |-
+      DbSystems_CreateOrUpdate_MaximumSet
+    syntax: az oracle-database db-system update --resource-group rg --db-system-name dbsystem1 --zones "[2]" --tags "{example:test}"
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --db-system-name --name -n
+    summary: |-
+      The name of the DbSystem.
+    groupName: Resource Id Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --zones
+    summary: |-
+      The availability zones.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_oracle-database_db-system_wait
+  name: az oracle-database db-system wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az oracle-database db-system wait [--created]
+                                      [--custom]
+                                      [--db-system-name --name]
+                                      [--deleted]
+                                      [--exists]
+                                      [--ids]
+                                      [--interval]
+                                      [--resource-group]
+                                      [--subscription]
+                                      [--timeout]
+                                      [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --db-system-name --name -n
+    summary: |-
+      The name of the DbSystem.
+    groupName: Resource Id Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_oracle-database_db-system_create
+- az_oracle-database_db-system_delete
+- az_oracle-database_db-system_list
+- az_oracle-database_db-system_show
+- az_oracle-database_db-system_update
+- az_oracle-database_db-system_wait
+metadata:
+  description: Manage Db System.
