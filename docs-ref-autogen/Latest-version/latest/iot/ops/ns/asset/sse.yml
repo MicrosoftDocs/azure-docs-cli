@@ -1,68 +1,71 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_rest
-name: az iot ops ns asset rest
+uid: az_iot_ops_ns_asset_sse
+name: az iot ops ns asset sse
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset rest** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset sse** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage namespaced assets that point to REST device endpoints.
+  Manage namespaced assets that point to SSE (Server-Sent Events) device endpoints.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_rest_create
-  name: az iot ops ns asset rest create
+- uid: az_iot_ops_ns_asset_sse_create
+  name: az iot ops ns asset sse create
   summary: |-
-    Create a REST namespaced asset in an IoT Operations instance.
+    Create an SSE namespaced asset in an IoT Operations instance.
   description: |-
-    The device endpoint must be of type Microsoft.Http.
+    The device endpoint must be of type Microsoft.SSEHttp.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset rest create --device
-                                    --endpoint --ep
-                                    --instance
-                                    --name
-                                    --resource-group
-                                    [--asset-type-ref --type-ref]
-                                    [--attr --attribute]
-                                    [--dataset-dest --dsd]
-                                    [--description]
-                                    [--disable {false, true}]
-                                    [--display-name --dn]
-                                    [--doc-uri --documentation-uri]
-                                    [--eid --external-asset-id]
-                                    [--hardware-revision --hw-rev]
-                                    [--manufacturer]
-                                    [--manufacturer-uri --mfr-uri]
-                                    [--model]
-                                    [--pc --product-code]
-                                    [--sampling-int --si]
-                                    [--serial-number --sn]
-                                    [--software-revision --sw-rev]
-                                    [--tags]
+    az iot ops ns asset sse create --device
+                                   --endpoint --ep
+                                   --instance
+                                   --name
+                                   --resource-group
+                                   [--asset-type-ref --type-ref]
+                                   [--attr --attribute]
+                                   [--dataset-dest --dsd]
+                                   [--description]
+                                   [--disable {false, true}]
+                                   [--display-name --dn]
+                                   [--doc-uri --documentation-uri]
+                                   [--eid --external-asset-id]
+                                   [--evd --event-dest]
+                                   [--hardware-revision --hw-rev]
+                                   [--manufacturer]
+                                   [--manufacturer-uri --mfr-uri]
+                                   [--model]
+                                   [--pc --product-code]
+                                   [--serial-number --sn]
+                                   [--software-revision --sw-rev]
+                                   [--tags]
   examples:
   - summary: |-
-      Create a basic REST asset
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint
+      Create a basic SSE asset
+    syntax: az iot ops ns asset sse create --name mysseAsset --instance myInstance -g myInstanceResourceGroup --device myssedevice --endpoint mySSEEndpoint
   - summary: |-
-      Create a REST asset with dataset configuration
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --sampling-int 5000
+      Create an SSE asset with dataset destination
+    syntax: az iot ops ns asset sse create --name mysseAsset --instance myInstance -g myInstanceResourceGroup --device myssedevice --endpoint mySSEEndpoint --dataset-dest topic="factory/sse/events" retain=Never qos=Qos1 ttl=3600
   - summary: |-
-      Create a REST asset with dataset destination
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --dataset-dest topic="factory/rest/data" retain=Never qos=Qos1 ttl=3600
+      Create an SSE asset with event destination
+    syntax: az iot ops ns asset sse create --name mysseAsset --instance myInstance -g myInstanceResourceGroup --device myssedevice --endpoint mySSEEndpoint --event-dest topic="factory/sse/alerts" retain=Keep qos=Qos1 ttl=7200
   - summary: |-
-      Create a REST asset with custom configuration and BrokerStateStore destination
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --sampling-int 2000 --dataset-dest key="rest-data-cache"
+      Create an SSE asset with both dataset and event destinations
+    syntax: az iot ops ns asset sse create --name mysseAsset --instance myInstance -g myInstanceResourceGroup --device myssedevice --endpoint mySSEEndpoint --dataset-dest topic="factory/sse/data" retain=Never qos=Qos1 ttl=3600 --event-dest topic="factory/sse/events" retain=Keep qos=Qos1 ttl=7200
   - summary: |-
-      Create a REST asset with additional metadata
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --description "Temperature sensor API" --display-name "Facility Temperature Monitor" --model "TempSensor-3000" --manufacturer "SensorCorp" --serial-number "TS-12345" --documentation-uri "https://example.com/docs/api"
+      Create an SSE asset with BrokerStateStore destinations
+    syntax: az iot ops ns asset sse create --name mysseAsset --instance myInstance -g myInstanceResourceGroup --device myssedevice --endpoint mySSEEndpoint --dataset-dest key="sse-data-cache" --event-dest topic="factory/sse/events" retain=Keep qos=Qos1 ttl=7200
   - summary: |-
-      Create a REST asset with custom attributes
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --attribute location=warehouse --attribute sensor-type=temperature --attribute units=celsius
+      Create an SSE asset with additional metadata
+    syntax: az iot ops ns asset sse create --name mysseAsset --instance myInstance -g myInstanceResourceGroup --device myssedevice --endpoint mySSEEndpoint --description "Real-time event stream from IoT sensors" --display-name "Facility Event Monitor" --model "EventStream-5000" --manufacturer "StreamCorp" --serial-number "ES-67890" --documentation-uri "https://example.com/docs/sse-api"
+  - summary: |-
+      Create an SSE asset with custom attributes
+    syntax: az iot ops ns asset sse create --name mysseAsset --instance myInstance -g myInstanceResourceGroup --device myssedevice --endpoint mySSEEndpoint --attribute location=warehouse --attribute stream-type=events --attribute format=json
   requiredParameters:
   - isRequired: true
     name: --device -d
@@ -117,6 +120,9 @@ directCommands:
     summary: |-
       External asset ID.
     groupName: Additional Info Arguments
+  - name: --evd --event-dest
+    summary: |-
+      Key=value pairs representing the destination for events. Allowed arguments include: `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
   - name: --hardware-revision --hw-rev
     summary: |-
       Hardware revision information.
@@ -137,9 +143,6 @@ directCommands:
     summary: |-
       Product code.
     groupName: Additional Info Arguments
-  - name: --sampling-int --si
-    summary: |-
-      Sampling interval for datasets in milliseconds. Minimum: -1.
   - name: --serial-number --sn
     summary: |-
       Serial number.
@@ -178,56 +181,51 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_rest_update
-  name: az iot ops ns asset rest update
+- uid: az_iot_ops_ns_asset_sse_update
+  name: az iot ops ns asset sse update
   summary: |-
-    Update a REST namespaced asset in an IoT Operations instance.
-  description: |-
-    The device endpoint must be of type Microsoft.Http.
+    Update an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset rest update --instance
-                                    --name
-                                    --resource-group
-                                    [--asset-type-ref --type-ref]
-                                    [--attr --attribute]
-                                    [--dataset-dest --dsd]
-                                    [--description]
-                                    [--disable {false, true}]
-                                    [--display-name --dn]
-                                    [--doc-uri --documentation-uri]
-                                    [--eid --external-asset-id]
-                                    [--hardware-revision --hw-rev]
-                                    [--manufacturer]
-                                    [--manufacturer-uri --mfr-uri]
-                                    [--model]
-                                    [--pc --product-code]
-                                    [--sampling-int --si]
-                                    [--serial-number --sn]
-                                    [--software-revision --sw-rev]
-                                    [--tags]
+    az iot ops ns asset sse update --instance
+                                   --name
+                                   --resource-group
+                                   [--asset-type-ref --type-ref]
+                                   [--attr --attribute]
+                                   [--dataset-dest --dsd]
+                                   [--description]
+                                   [--disable {false, true}]
+                                   [--display-name --dn]
+                                   [--doc-uri --documentation-uri]
+                                   [--eid --external-asset-id]
+                                   [--evd --event-dest]
+                                   [--hardware-revision --hw-rev]
+                                   [--manufacturer]
+                                   [--manufacturer-uri --mfr-uri]
+                                   [--model]
+                                   [--pc --product-code]
+                                   [--serial-number --sn]
+                                   [--software-revision --sw-rev]
+                                   [--tags]
   examples:
   - summary: |-
-      Update a REST asset's basic properties
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --description "Updated temperature sensor API" --display-name "Main Warehouse Temperature"
+      Update SSE asset dataset destination
+    syntax: az iot ops ns asset sse update --name mysseAsset --instance myInstance -g myInstanceResourceGroup --dataset-dest topic="updated/sse/data" retain=Keep qos=Qos1 ttl=7200
   - summary: |-
-      Update a REST asset's dataset destination to MQTT
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --dataset-dest topic="factory/rest/updated/data" retain=Keep qos=Qos1 ttl=7200
+      Update SSE asset event destination
+    syntax: az iot ops ns asset sse update --name mysseAsset --instance myInstance -g myInstanceResourceGroup --event-dest topic="updated/sse/alerts" retain=Never qos=Qos0 ttl=3600
   - summary: |-
-      Update a REST asset's dataset destination to BrokerStateStore
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --dataset-dest key="updated-rest-cache"
+      Update SSE asset metadata
+    syntax: az iot ops ns asset sse update --name mysseAsset --instance myInstance -g myInstanceResourceGroup --description "Updated real-time event stream" --display-name "Updated Event Monitor"
   - summary: |-
-      Update a REST asset's metadata
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --model "TempSensor-4000" --manufacturer "SensorCorp" --serial-number "TS-67890" --documentation-uri "https://example.com/docs/api/v2"
+      Update SSE asset attributes
+    syntax: az iot ops ns asset sse update --name mysseAsset --instance myInstance -g myInstanceResourceGroup --attribute location=factory --attribute priority=high
   - summary: |-
-      Update a REST asset's custom attributes
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --attribute location=main-warehouse sensor-type=temperature units=fahrenheit accuracy=high
-  - summary: |-
-      Disable a REST asset and update its reference information
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --disable --external-asset-id "TEMP-MAIN-01" --hardware-revision "v2.1"
+      Disable SSE asset
+    syntax: az iot ops ns asset sse update --name mysseAsset --instance myInstance -g myInstanceResourceGroup --disable
   requiredParameters:
   - isRequired: true
     name: --instance -i
@@ -274,6 +272,9 @@ directCommands:
     summary: |-
       External asset ID.
     groupName: Additional Info Arguments
+  - name: --evd --event-dest
+    summary: |-
+      Key=value pairs representing the destination for events. Allowed arguments include: `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
   - name: --hardware-revision --hw-rev
     summary: |-
       Hardware revision information.
@@ -294,9 +295,6 @@ directCommands:
     summary: |-
       Product code.
     groupName: Additional Info Arguments
-  - name: --sampling-int --si
-    summary: |-
-      Sampling interval for datasets in milliseconds. Minimum: -1.
   - name: --serial-number --sn
     summary: |-
       Serial number.
@@ -336,13 +334,23 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_rest_create
-- az_iot_ops_ns_asset_rest_dataset
-- az_iot_ops_ns_asset_rest_dataset_add
-- az_iot_ops_ns_asset_rest_dataset_list
-- az_iot_ops_ns_asset_rest_dataset_remove
-- az_iot_ops_ns_asset_rest_dataset_show
-- az_iot_ops_ns_asset_rest_dataset_update
-- az_iot_ops_ns_asset_rest_update
+- az_iot_ops_ns_asset_sse_create
+- az_iot_ops_ns_asset_sse_dataset
+- az_iot_ops_ns_asset_sse_dataset_add
+- az_iot_ops_ns_asset_sse_dataset_list
+- az_iot_ops_ns_asset_sse_dataset_remove
+- az_iot_ops_ns_asset_sse_dataset_show
+- az_iot_ops_ns_asset_sse_dataset_update
+- az_iot_ops_ns_asset_sse_event
+- az_iot_ops_ns_asset_sse_event-group
+- az_iot_ops_ns_asset_sse_event-group_add
+- az_iot_ops_ns_asset_sse_event-group_list
+- az_iot_ops_ns_asset_sse_event-group_remove
+- az_iot_ops_ns_asset_sse_event-group_show
+- az_iot_ops_ns_asset_sse_event-group_update
+- az_iot_ops_ns_asset_sse_event_add
+- az_iot_ops_ns_asset_sse_event_list
+- az_iot_ops_ns_asset_sse_event_remove
+- az_iot_ops_ns_asset_sse_update
 metadata:
-  description: Manage namespaced assets that point to REST device endpoints.
+  description: Manage namespaced assets that point to SSE (Server-Sent Events) device endpoints.

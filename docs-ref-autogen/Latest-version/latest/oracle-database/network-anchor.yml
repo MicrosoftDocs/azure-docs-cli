@@ -1,57 +1,108 @@
 ### YamlMime:AzureCLIGroup
-uid: az_oracle-database_autonomous-database_backup
-name: az oracle-database autonomous-database backup
+uid: az_oracle-database_network-anchor
+name: az oracle-database network-anchor
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **oracle-database** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az oracle-database autonomous-database backup** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **oracle-database** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az oracle-database network-anchor** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Autonomous Databases Backup.
+  Manage Network Anchor.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_oracle-database_autonomous-database_backup_create
-  name: az oracle-database autonomous-database backup create
+- uid: az_oracle-database_network-anchor_create
+  name: az oracle-database network-anchor create
   summary: |-
-    Create a AutonomousDatabaseBackup.
+    Create a NetworkAnchor.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup create --adbbackupid --name
-                                                         --autonomousdatabasename
-                                                         --resource-group
-                                                         [--display-name]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--retention-days --retention-period-in-days]
+    az oracle-database network-anchor create --name --network-anchor-name
+                                             --resource-group
+                                             [--dns-forwarding-rules]
+                                             [--dns-listening-endpoint-allowed-cidrs]
+                                             [--is-oracle-dns-forwarding-endpoint-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--is-oracle-dns-listening-endpoint-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--is-oracle-to-azure-dns-zone-sync-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--location]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--oci-backup-cidr-block]
+                                             [--oci-vcn-dns-label]
+                                             [--resource-anchor-id]
+                                             [--subnet-id]
+                                             [--tags]
+                                             [--zones]
   examples:
   - summary: |-
-      ADBS Backup Create
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --display-name <display name> --retention-period-in-days <days>
+      NetworkAnchors_Create
+    syntax: az oracle-database network-anchor create --resource-group rgopenapi --network-anchor-name networkAnchor1 --resource-anchor-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgopenapi/providers/Oracle.Database/resourceAnchors/TestRA --subnet-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1 --oci-vcn-dns-label test  --is-oracle-to-azure-dns-zone-sync-enabled True --is-oracle-dns-listening-endpoint-enabled True --is-oracle-dns-forwarding-endpoint-enabled True --dns-forwarding-rules "[{domain-names:'domain1, domain2',forwarding-ip-address:qe}]" --zones "[2]" --tags "{key:test}" --location eastus
   requiredParameters:
   - isRequired: true
-    name: --adbbackupid --name -n
+    name: --name --network-anchor-name -n
     summary: |-
-      AutonomousDatabaseBackup id.
-  - isRequired: true
-    name: --autonomousdatabasename
-    summary: |-
-      The database name.
+      The name of the NetworkAnchor.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --display-name
+  - name: --dns-forwarding-rules
     summary: |-
-      The user-friendly name for the backup. The name does not have to be unique.
+      DNS forwarding rules  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
+  - name: --dns-listening-endpoint-allowed-cidrs
+    summary: |-
+      Comma-separated list of CIDRs that are allowed to send requests to the DNS listening endpoint.
+    groupName: Properties Arguments
+  - name: --is-oracle-dns-forwarding-endpoint-enabled
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether the Oracle DNS forwarding endpoint is enabled.
+    groupName: Properties Arguments
+  - name: --is-oracle-dns-listening-endpoint-enabled
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether the Oracle DNS listening endpoint is enabled.
+    groupName: Properties Arguments
+  - name: --is-oracle-to-azure-dns-zone-sync-enabled
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether DNS zone sync from OCI to Azure is enabled.
+    groupName: Properties Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --retention-days --retention-period-in-days
+  - name: --oci-backup-cidr-block
     summary: |-
-      Retention period, in days, for long-term backups.
+      OCI backup subnet cidr block.
     groupName: Properties Arguments
+  - name: --oci-vcn-dns-label
+    summary: |-
+      OCI DNS label. This is optional if DNS config is provided.
+    groupName: Properties Arguments
+  - name: --resource-anchor-id
+    summary: |-
+      Corresponding resource anchor Azure ID.
+    groupName: Properties Arguments
+  - name: --subnet-id
+    summary: |-
+      Client subnet.
+    groupName: Properties Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --zones
+    summary: |-
+      The availability zones.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -79,36 +130,31 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_delete
-  name: az oracle-database autonomous-database backup delete
+- uid: az_oracle-database_network-anchor_delete
+  name: az oracle-database network-anchor delete
   summary: |-
-    Delete a AutonomousDatabaseBackup.
+    Delete a NetworkAnchor.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup delete [--adbbackupid --name]
-                                                         [--autonomousdatabasename]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--resource-group]
-                                                         [--subscription]
-                                                         [--yes]
+    az oracle-database network-anchor delete [--ids]
+                                             [--name --network-anchor-name]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--resource-group]
+                                             [--subscription]
+                                             [--yes]
   examples:
   - summary: |-
-      ADBS Backup Delete
-    syntax: az oracle-database autonomous-database backup delete --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id>
+      NetworkAnchors_Delete
+    syntax: az oracle-database network-anchor delete --resource-group rgopenapi --network-anchor-name networkAnchor1
   optionalParameters:
-  - name: --adbbackupid --name -n
-    summary: |-
-      AutonomousDatabaseBackup id.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --network-anchor-name -n
+    summary: |-
+      The name of the NetworkAnchor.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -150,30 +196,20 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_list
-  name: az oracle-database autonomous-database backup list
+- uid: az_oracle-database_network-anchor_list
+  name: az oracle-database network-anchor list
   summary: |-
-    List AutonomousDatabaseBackup resources by AutonomousDatabase.
+    List NetworkAnchor resources by subscription ID.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup list --autonomousdatabasename
-                                                       --resource-group
-                                                       [--max-items]
-                                                       [--next-token]
+    az oracle-database network-anchor list [--max-items]
+                                           [--next-token]
+                                           [--resource-group]
   examples:
   - summary: |-
-      List ADBS Backups
-    syntax: az az oracle-database autonomous-database backup list --autonomousdatabasename <ADBS name> --resource-group <resource_group>
-  requiredParameters:
-  - isRequired: true
-    name: --autonomousdatabasename
-    summary: |-
-      The database name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      NetworkAnchors_List
+    syntax: az oracle-database network-anchor list
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -183,6 +219,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -210,34 +249,29 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_show
-  name: az oracle-database autonomous-database backup show
+- uid: az_oracle-database_network-anchor_show
+  name: az oracle-database network-anchor show
   summary: |-
-    Get a AutonomousDatabaseBackup.
+    Get a NetworkAnchor.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup show [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--ids]
-                                                       [--resource-group]
-                                                       [--subscription]
+    az oracle-database network-anchor show [--ids]
+                                           [--name --network-anchor-name]
+                                           [--resource-group]
+                                           [--subscription]
   examples:
   - summary: |-
-      Get ADBS Backup
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id>
+      NetworkAnchors_Show
+    syntax: az oracle-database network-anchor show --resource-group rgopenapi --network-anchor-name networkanchor1
   optionalParameters:
-  - name: --adbbackupid --name -n
-    summary: |-
-      AutonomousDatabaseBackup id.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --network-anchor-name -n
+    summary: |-
+      The name of the NetworkAnchor.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -271,41 +305,37 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_update
-  name: az oracle-database autonomous-database backup update
+- uid: az_oracle-database_network-anchor_update
+  name: az oracle-database network-anchor update
   summary: |-
-    Update a AutonomousDatabaseBackup.
+    Update a NetworkAnchor.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup update [--adbbackupid --name]
-                                                         [--add]
-                                                         [--autonomousdatabasename]
-                                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--remove]
-                                                         [--resource-group]
-                                                         [--retention-days --retention-period-in-days]
-                                                         [--set]
-                                                         [--subscription]
+    az oracle-database network-anchor update [--add]
+                                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--ids]
+                                             [--is-oracle-dns-forwarding-endpoint-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--is-oracle-dns-listening-endpoint-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--is-oracle-to-azure-dns-zone-sync-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--name --network-anchor-name]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--oci-backup-cidr-block]
+                                             [--remove]
+                                             [--resource-group]
+                                             [--set]
+                                             [--subscription]
+                                             [--tags]
+                                             [--zones]
   examples:
   - summary: |-
-      ADBS Backup Update
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days>
+      NetworkAnchors_Update
+    syntax: az oracle-database network-anchor update --resource-group rgopenapi --network-anchor-name networkAnchor1 --oci-backup-cidr-block i --is-oracle-to-azure-dns-zone-sync-enabled True --is-oracle-dns-listening-endpoint-enabled True --is-oracle-dns-forwarding-endpoint-enabled True --zones "[2]" --tags "{key4863:New}"
   optionalParameters:
-  - name: --adbbackupid --name -n
-    summary: |-
-      AutonomousDatabaseBackup id.
-    groupName: Resource Id Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -315,10 +345,33 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --is-oracle-dns-forwarding-endpoint-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether the Oracle DNS forwarding endpoint is enabled.
+    groupName: Properties Arguments
+  - name: --is-oracle-dns-listening-endpoint-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether the Oracle DNS listening endpoint is enabled.
+    groupName: Properties Arguments
+  - name: --is-oracle-to-azure-dns-zone-sync-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether DNS zone sync from OCI to Azure is enabled.
+    groupName: Properties Arguments
+  - name: --name --network-anchor-name -n
+    summary: |-
+      The name of the NetworkAnchor.
+    groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --oci-backup-cidr-block
+    summary: |-
+      OCI backup subnet cidr block.
+    groupName: Properties Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -327,10 +380,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --retention-days --retention-period-in-days
-    summary: |-
-      Retention period, in days, for long-term backups.
-    groupName: Properties Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
@@ -339,6 +388,14 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --zones
+    summary: |-
+      The availability zones.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -363,34 +420,25 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_wait
-  name: az oracle-database autonomous-database backup wait
+- uid: az_oracle-database_network-anchor_wait
+  name: az oracle-database network-anchor wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup wait [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--created]
-                                                       [--custom]
-                                                       [--deleted]
-                                                       [--exists]
-                                                       [--ids]
-                                                       [--interval]
-                                                       [--resource-group]
-                                                       [--subscription]
-                                                       [--timeout]
-                                                       [--updated]
+    az oracle-database network-anchor wait [--created]
+                                           [--custom]
+                                           [--deleted]
+                                           [--exists]
+                                           [--ids]
+                                           [--interval]
+                                           [--name --network-anchor-name]
+                                           [--resource-group]
+                                           [--subscription]
+                                           [--timeout]
+                                           [--updated]
   optionalParameters:
-  - name: --adbbackupid --name -n
-    summary: |-
-      AutonomousDatabaseBackup id.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -419,6 +467,10 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
+  - name: --name --network-anchor-name -n
+    summary: |-
+      The name of the NetworkAnchor.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -462,11 +514,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_oracle-database_autonomous-database_backup_create
-- az_oracle-database_autonomous-database_backup_delete
-- az_oracle-database_autonomous-database_backup_list
-- az_oracle-database_autonomous-database_backup_show
-- az_oracle-database_autonomous-database_backup_update
-- az_oracle-database_autonomous-database_backup_wait
+- az_oracle-database_network-anchor_create
+- az_oracle-database_network-anchor_delete
+- az_oracle-database_network-anchor_list
+- az_oracle-database_network-anchor_show
+- az_oracle-database_network-anchor_update
+- az_oracle-database_network-anchor_wait
 metadata:
-  description: Autonomous Databases Backup.
+  description: Manage Network Anchor.

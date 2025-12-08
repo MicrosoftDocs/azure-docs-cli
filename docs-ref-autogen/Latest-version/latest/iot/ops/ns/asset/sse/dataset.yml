@@ -1,47 +1,46 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_opcua_event-group
-name: az iot ops ns asset opcua event-group
+uid: az_iot_ops_ns_asset_sse_dataset
+name: az iot ops ns asset sse dataset
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua event-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset sse dataset** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage event groups for OPC UA namespaced assets in an IoT Operations instance.
+  Manage datasets for SSE namespaced assets.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_opcua_event-group_add
-  name: az iot ops ns asset opcua event-group add
+- uid: az_iot_ops_ns_asset_sse_dataset_add
+  name: az iot ops ns asset sse dataset add
   summary: |-
-    Add an event group to an OPC UA namespaced asset in an IoT Operations instance.
+    Add a dataset to an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group add --asset
-                                              --data-source --ds
-                                              --instance
-                                              --name
-                                              --resource-group
-                                              [--dest --destination]
-                                              [--pi --publish-int]
-                                              [--qs --queue-size]
-                                              [--replace {false, true}]
+    az iot ops ns asset sse dataset add --asset
+                                        --data-source --ds
+                                        --instance
+                                        --name
+                                        --resource-group
+                                        [--dest --destination]
+                                        [--replace {false, true}]
+                                        [--tr --type-ref]
   examples:
   - summary: |-
-      Add a basic OPC UA event group
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --data-source "ns=2;i=1000"
+      Add a basic dataset to an SSE asset
+    syntax: az iot ops ns asset sse dataset add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name sensorData --data-source "temperature"
   - summary: |-
-      Add an OPC UA event group with publishing interval and queue size
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name systemEvent --data-source "ns=2;i=200" --publish-int 1500 --queue-size 8
+      Add a dataset with MQTT destination
+    syntax: az iot ops ns asset sse dataset add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name eventData --data-source "events" --dest topic="factory/sse/events" retain=Never qos=Qos1 ttl=3600
   - summary: |-
-      Add an OPC UA event group with MQTT destination
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name criticalAlarm --data-source "ns=2;i=4000" --dest topic="factory/opcua/alarms" retain=Keep qos=Qos0 ttl=7200
+      Add a dataset with BrokerStateStore destination
+    syntax: az iot ops ns asset sse dataset add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name cacheData --data-source "metrics" --dest key="sse-metrics-cache"
   - summary: |-
-      Replace an OPC UA event group with same name
-    syntax: az iot ops ns asset opcua event-group add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --data-source "ns=3;i=1000" --replace
+      Replace an existing dataset
+    syntax: az iot ops ns asset sse dataset add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name sensorData --data-source "humidity" --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -50,7 +49,7 @@ directCommands:
   - isRequired: true
     name: --data-source --ds
     summary: |-
-      Data source for the event group.
+      Data source for the dataset.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -58,7 +57,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Event group name.
+      Dataset name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -66,18 +65,15 @@ directCommands:
   optionalParameters:
   - name: --dest --destination
     summary: |-
-      Key=value pairs representing the destination for events. Allowed and required arguments are `topic`, `retain`, `qos`, and `ttl` for MQTT destinations.  Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
-  - name: --pi --publish-int
-    summary: |-
-      Publishing interval for events in milliseconds. Minimum: -1.
-  - name: --qs --queue-size
-    summary: |-
-      Queue size for events. Minimum: 0.
+      Key=value pairs representing the destination for datasets. Allowed arguments include: `key` for BrokerStateStore or `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the event group if another event group with the same name is already present.
+      Replace the dataset if another dataset with the same name is already present.
+  - name: --tr --type-ref
+    summary: |-
+      Type definition ID or URI.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -105,22 +101,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_list
-  name: az iot ops ns asset opcua event-group list
+- uid: az_iot_ops_ns_asset_sse_dataset_list
+  name: az iot ops ns asset sse dataset list
   summary: |-
-    List event groups for an OPC UA namespaced asset in an IoT Operations instance.
+    List datasets for an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group list --asset
-                                               --instance
-                                               --resource-group
+    az iot ops ns asset sse dataset list --asset
+                                         --instance
+                                         --resource-group
   examples:
   - summary: |-
-      List all event groups for an OPC UA asset
-    syntax: az iot ops ns asset opcua event-group list --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup
+      List all datasets for an SSE asset
+    syntax: az iot ops ns asset sse dataset list --asset mysseAsset --instance myInstance -g myInstanceResourceGroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -161,23 +157,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_remove
-  name: az iot ops ns asset opcua event-group remove
+- uid: az_iot_ops_ns_asset_sse_dataset_remove
+  name: az iot ops ns asset sse dataset remove
   summary: |-
-    Remove an event group from an OPC UA namespaced asset in an IoT Operations instance.
+    Remove a dataset from an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group remove --asset
-                                                 --instance
-                                                 --name
-                                                 --resource-group
+    az iot ops ns asset sse dataset remove --asset
+                                           --instance
+                                           --name
+                                           --resource-group
   examples:
   - summary: |-
-      Remove an event group from an OPC UA asset
-    syntax: az iot ops ns asset opcua event-group remove --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent
+      Remove a dataset from an SSE asset
+    syntax: az iot ops ns asset sse dataset remove --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name sensorData
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -190,7 +186,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Event group name.
+      Dataset name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -222,23 +218,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_show
-  name: az iot ops ns asset opcua event-group show
+- uid: az_iot_ops_ns_asset_sse_dataset_show
+  name: az iot ops ns asset sse dataset show
   summary: |-
-    Show details of an event group for an OPC UA namespaced asset in an IoT Operations instance.
+    Show details of a dataset for an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group show --asset
-                                               --instance
-                                               --name
-                                               --resource-group
+    az iot ops ns asset sse dataset show --asset
+                                         --instance
+                                         --name
+                                         --resource-group
   examples:
   - summary: |-
-      Show event group details
-    syntax: az iot ops ns asset opcua event-group show --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent
+      Show dataset details
+    syntax: az iot ops ns asset sse dataset show --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name sensorData
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -251,7 +247,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Event group name.
+      Dataset name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -283,30 +279,27 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event-group_update
-  name: az iot ops ns asset opcua event-group update
+- uid: az_iot_ops_ns_asset_sse_dataset_update
+  name: az iot ops ns asset sse dataset update
   summary: |-
-    Update an event group for an OPC UA namespaced asset in an IoT Operations instance.
+    Update a dataset for an SSE namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event-group update --asset
-                                                 --instance
-                                                 --name
-                                                 --resource-group
-                                                 [--data-source --ds]
-                                                 [--dest --destination]
-                                                 [--pi --publish-int]
-                                                 [--qs --queue-size]
+    az iot ops ns asset sse dataset update --asset
+                                           --instance
+                                           --name
+                                           --resource-group
+                                           [--dest --destination]
   examples:
   - summary: |-
-      Update event group publishing interval and queue size
-    syntax: az iot ops ns asset opcua event-group update --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name alarmEvent --publish-int 2000 --queue-size 10
+      Update dataset destination to MQTT
+    syntax: az iot ops ns asset sse dataset update --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name sensorData --dest topic="factory/sse/updated/sensor" retain=Keep qos=Qos1 ttl=3600
   - summary: |-
-      Update event group destination
-    syntax: az iot ops ns asset opcua event-group update --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --name systemEvent --dest topic="factory/opcua/system/updated" retain=Never qos=Qos1 ttl=3600
+      Update dataset destination to BrokerStateStore
+    syntax: az iot ops ns asset sse dataset update --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --name metricsData --dest key="updated-sse-metrics"
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -319,24 +312,15 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Event group name.
+      Dataset name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       The resource group of the Azure IoT Operations instance.
   optionalParameters:
-  - name: --data-source --ds
-    summary: |-
-      Data source for the event group.
   - name: --dest --destination
     summary: |-
-      Key=value pairs representing the destination for events. Allowed and required arguments are `topic`, `retain`, `qos`, and `ttl` for MQTT destinations.  Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
-  - name: --pi --publish-int
-    summary: |-
-      Publishing interval for events in milliseconds. Minimum: -1.
-  - name: --qs --queue-size
-    summary: |-
-      Queue size for events. Minimum: 0.
+      Key=value pairs representing the destination for datasets. Allowed arguments include: `key` for BrokerStateStore or `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -365,10 +349,10 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_opcua_event-group_add
-- az_iot_ops_ns_asset_opcua_event-group_list
-- az_iot_ops_ns_asset_opcua_event-group_remove
-- az_iot_ops_ns_asset_opcua_event-group_show
-- az_iot_ops_ns_asset_opcua_event-group_update
+- az_iot_ops_ns_asset_sse_dataset_add
+- az_iot_ops_ns_asset_sse_dataset_list
+- az_iot_ops_ns_asset_sse_dataset_remove
+- az_iot_ops_ns_asset_sse_dataset_show
+- az_iot_ops_ns_asset_sse_dataset_update
 metadata:
-  description: Manage event groups for OPC UA namespaced assets in an IoT Operations instance.
+  description: Manage datasets for SSE namespaced assets.

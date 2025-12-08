@@ -1,28 +1,26 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_rest
-name: az iot ops ns asset rest
+uid: az_iot_ops_ns_asset_mqtt
+name: az iot ops ns asset mqtt
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset rest** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset mqtt** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage namespaced assets that point to REST device endpoints.
+  Manage namespaced assets that point to MQTT device endpoints.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_rest_create
-  name: az iot ops ns asset rest create
+- uid: az_iot_ops_ns_asset_mqtt_create
+  name: az iot ops ns asset mqtt create
   summary: |-
-    Create a REST namespaced asset in an IoT Operations instance.
-  description: |-
-    The device endpoint must be of type Microsoft.Http.
+    Create an MQTT namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset rest create --device
+    az iot ops ns asset mqtt create --device
                                     --endpoint --ep
                                     --instance
                                     --name
@@ -40,29 +38,22 @@ directCommands:
                                     [--manufacturer-uri --mfr-uri]
                                     [--model]
                                     [--pc --product-code]
-                                    [--sampling-int --si]
                                     [--serial-number --sn]
                                     [--software-revision --sw-rev]
                                     [--tags]
   examples:
   - summary: |-
-      Create a basic REST asset
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint
+      Create a basic MQTT asset
+    syntax: az iot ops ns asset mqtt create --name myMqttAsset --instance myInstance -g myInstanceResourceGroup --device myMqttDevice --endpoint myMqttEndpoint
   - summary: |-
-      Create a REST asset with dataset configuration
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --sampling-int 5000
+      Create an MQTT asset with dataset destination
+    syntax: az iot ops ns asset mqtt create --name myMqttAsset --instance myInstance -g myInstanceResourceGroup --device myMqttDevice --endpoint myMqttEndpoint --dataset-dest topic="factory/mqtt/data" retain=Never qos=Qos1 ttl=3600
   - summary: |-
-      Create a REST asset with dataset destination
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --dataset-dest topic="factory/rest/data" retain=Never qos=Qos1 ttl=3600
+      Create an MQTT asset with BrokerStateStore destination
+    syntax: az iot ops ns asset mqtt create --name myMqttAsset --instance myInstance -g myInstanceResourceGroup --device myMqttDevice --endpoint myMqttEndpoint --dataset-dest key="mqtt-data-cache"
   - summary: |-
-      Create a REST asset with custom configuration and BrokerStateStore destination
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --sampling-int 2000 --dataset-dest key="rest-data-cache"
-  - summary: |-
-      Create a REST asset with additional metadata
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --description "Temperature sensor API" --display-name "Facility Temperature Monitor" --model "TempSensor-3000" --manufacturer "SensorCorp" --serial-number "TS-12345" --documentation-uri "https://example.com/docs/api"
-  - summary: |-
-      Create a REST asset with custom attributes
-    syntax: az iot ops ns asset rest create --name myrestasset --instance myInstance -g myInstanceResourceGroup --device myrestdevice --endpoint myRestEndpoint --attribute location=warehouse --attribute sensor-type=temperature --attribute units=celsius
+      Create an MQTT asset with metadata
+    syntax: az iot ops ns asset mqtt create --name myMqttAsset --instance myInstance -g myInstanceResourceGroup --device myMqttDevice --endpoint myMqttEndpoint --description "In-cluster MQTT topic subscriber" --display-name "Factory MQTT Stream" --model "MQTT-SUB-100" --manufacturer "BrokerCorp"
   requiredParameters:
   - isRequired: true
     name: --device -d
@@ -137,9 +128,6 @@ directCommands:
     summary: |-
       Product code.
     groupName: Additional Info Arguments
-  - name: --sampling-int --si
-    summary: |-
-      Sampling interval for datasets in milliseconds. Minimum: -1.
   - name: --serial-number --sn
     summary: |-
       Serial number.
@@ -178,18 +166,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_rest_update
-  name: az iot ops ns asset rest update
+- uid: az_iot_ops_ns_asset_mqtt_update
+  name: az iot ops ns asset mqtt update
   summary: |-
-    Update a REST namespaced asset in an IoT Operations instance.
-  description: |-
-    The device endpoint must be of type Microsoft.Http.
+    Update an MQTT namespaced asset in an IoT Operations instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset rest update --instance
+    az iot ops ns asset mqtt update --instance
                                     --name
                                     --resource-group
                                     [--asset-type-ref --type-ref]
@@ -205,29 +191,16 @@ directCommands:
                                     [--manufacturer-uri --mfr-uri]
                                     [--model]
                                     [--pc --product-code]
-                                    [--sampling-int --si]
                                     [--serial-number --sn]
                                     [--software-revision --sw-rev]
                                     [--tags]
   examples:
   - summary: |-
-      Update a REST asset's basic properties
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --description "Updated temperature sensor API" --display-name "Main Warehouse Temperature"
+      Update MQTT asset dataset destination
+    syntax: az iot ops ns asset mqtt update --name myMqttAsset --instance myInstance -g myInstanceResourceGroup --dataset-dest topic="updated/mqtt/data" retain=Keep qos=Qos1 ttl=7200
   - summary: |-
-      Update a REST asset's dataset destination to MQTT
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --dataset-dest topic="factory/rest/updated/data" retain=Keep qos=Qos1 ttl=7200
-  - summary: |-
-      Update a REST asset's dataset destination to BrokerStateStore
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --dataset-dest key="updated-rest-cache"
-  - summary: |-
-      Update a REST asset's metadata
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --model "TempSensor-4000" --manufacturer "SensorCorp" --serial-number "TS-67890" --documentation-uri "https://example.com/docs/api/v2"
-  - summary: |-
-      Update a REST asset's custom attributes
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --attribute location=main-warehouse sensor-type=temperature units=fahrenheit accuracy=high
-  - summary: |-
-      Disable a REST asset and update its reference information
-    syntax: az iot ops ns asset rest update --name myrestasset --instance myInstance -g myInstanceResourceGroup --disable --external-asset-id "TEMP-MAIN-01" --hardware-revision "v2.1"
+      Update MQTT asset metadata
+    syntax: az iot ops ns asset mqtt update --name myMqttAsset --instance myInstance -g myInstanceResourceGroup --description "Updated MQTT topic subscriber"
   requiredParameters:
   - isRequired: true
     name: --instance -i
@@ -294,9 +267,6 @@ directCommands:
     summary: |-
       Product code.
     groupName: Additional Info Arguments
-  - name: --sampling-int --si
-    summary: |-
-      Sampling interval for datasets in milliseconds. Minimum: -1.
   - name: --serial-number --sn
     summary: |-
       Serial number.
@@ -336,13 +306,13 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_rest_create
-- az_iot_ops_ns_asset_rest_dataset
-- az_iot_ops_ns_asset_rest_dataset_add
-- az_iot_ops_ns_asset_rest_dataset_list
-- az_iot_ops_ns_asset_rest_dataset_remove
-- az_iot_ops_ns_asset_rest_dataset_show
-- az_iot_ops_ns_asset_rest_dataset_update
-- az_iot_ops_ns_asset_rest_update
+- az_iot_ops_ns_asset_mqtt_create
+- az_iot_ops_ns_asset_mqtt_dataset
+- az_iot_ops_ns_asset_mqtt_dataset_add
+- az_iot_ops_ns_asset_mqtt_dataset_list
+- az_iot_ops_ns_asset_mqtt_dataset_remove
+- az_iot_ops_ns_asset_mqtt_dataset_show
+- az_iot_ops_ns_asset_mqtt_dataset_update
+- az_iot_ops_ns_asset_mqtt_update
 metadata:
-  description: Manage namespaced assets that point to REST device endpoints.
+  description: Manage namespaced assets that point to MQTT device endpoints.
