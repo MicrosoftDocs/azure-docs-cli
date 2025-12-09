@@ -89,6 +89,22 @@ STS releases have the following characteristics:
 
 ## Long Term Support releases (LTS)
 
+> [!IMPORTANT]
+> At this time, Long-Term Support (LTS) releases for Azure CLI are temporarily paused while we
+> evaluate improved ways to support customers who aren't always able to adopt the latest version of
+> the client.
+>
+> During this pause:
+>
+> - Azure CLI continues to follow the Standard Term Support (STS) release cadence.
+> - All supported STS versions continue to receive updates, including bug fixes and security
+>   patches, according to the published support lifecycle.
+> - This pause doesn't change the overall support policy or quality of Azure CLI releases.
+>
+> We're actively exploring alternative approaches that better balance stability, supportability,
+> and customer needs, and we'll provide updates through official documentation as guidance
+> evolves.
+
 The LTS versions of Azure CLI Core give you a "maintenance" period of 12 months following the
 "current" period. During this time, the LTS release doesn't experience breaking changes _unless
 required by a security fix_.
