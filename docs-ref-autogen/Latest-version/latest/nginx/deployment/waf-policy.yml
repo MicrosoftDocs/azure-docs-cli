@@ -1,57 +1,52 @@
 ### YamlMime:AzureCLIGroup
-uid: az_nginx_deployment_certificate
-name: az nginx deployment certificate
+uid: az_nginx_deployment_waf-policy
+name: az nginx deployment waf-policy
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **nginx** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az nginx deployment certificate** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **nginx** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az nginx deployment waf-policy** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage NGINX certificate resources.
+  Manage Waf Policy.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_nginx_deployment_certificate_create
-  name: az nginx deployment certificate create
+- uid: az_nginx_deployment_waf-policy_create
+  name: az nginx deployment waf-policy create
   summary: |-
-    Create a certificate for an NGINX deployment.
+    Create a WAF policy.
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment certificate create --certificate-name --name
-                                           --deployment-name
-                                           --resource-group
-                                           [--certificate-path]
-                                           [--key-path]
-                                           [--key-vault-secret-id]
-                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+    az nginx deployment waf-policy create --deployment-name
+                                          --name --waf-policy-name
+                                          --resource-group
+                                          [--content]
+                                          [--filepath]
+                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
-      Certificate Create
-    syntax: az nginx deployment certificate create --certificate-name myCertificate --deployment-name myDeployment --resource-group myResourceGroup --certificate-path /etc/nginx/test.cert --key-path /etc/nginx/test.key --key-vault-secret-id keyVaultSecretId
+      WafPolicy_Create
+    syntax: az nginx deployment waf-policy create --resource-group myResourceGroup --deployment-name myDeployment --waf-policy-name myWafPolicy
   requiredParameters:
-  - isRequired: true
-    name: --certificate-name --name -n
-    summary: |-
-      The name of certificate.
   - isRequired: true
     name: --deployment-name
     summary: |-
-      The name of targeted Nginx deployment.
+      The name of targeted NGINX deployment.
+  - isRequired: true
+    name: --name --waf-policy-name -n
+    summary: |-
+      The name of the WafPolicy.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --certificate-path
+  - name: --content
     summary: |-
-      Certificate path in Nginx configuration structure.
+      The byte content of the Policy.
     groupName: Properties Arguments
-  - name: --key-path
+  - name: --filepath
     summary: |-
-      Key path in Nginx configuration structure.
-    groupName: Properties Arguments
-  - name: --key-vault-secret-id
-    summary: |-
-      The secret ID for your certificate from Azure Key Vault.
+      The file path where the Policy is to be saved.
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -84,36 +79,36 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_nginx_deployment_certificate_delete
-  name: az nginx deployment certificate delete
+- uid: az_nginx_deployment_waf-policy_delete
+  name: az nginx deployment waf-policy delete
   summary: |-
-    Delete an NGINX deployment certificate.
+    Delete a specific WAF policy.
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment certificate delete [--certificate-name --name]
-                                           [--deployment-name]
-                                           [--ids]
-                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--resource-group]
-                                           [--subscription]
-                                           [--yes]
+    az nginx deployment waf-policy delete [--deployment-name]
+                                          [--ids]
+                                          [--name --waf-policy-name]
+                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--resource-group]
+                                          [--subscription]
+                                          [--yes]
   examples:
   - summary: |-
-      Certificate_Delete
-    syntax: az nginx deployment certificate delete --certificate-name myCertificate --deployment-name myDeployment --resource-group myResourceGroup
+      WafPolicy_Delete
+    syntax: az nginx deployment waf-policy delete --resource-group myResourceGroup --deployment-name myDeployment --waf-policy-name myWafPolicy
   optionalParameters:
-  - name: --certificate-name --name -n
-    summary: |-
-      The name of certificate.
-    groupName: Resource Id Arguments
   - name: --deployment-name
     summary: |-
-      The name of targeted Nginx deployment.
+      The name of targeted NGINX deployment.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --waf-policy-name -n
+    summary: |-
+      The name of the WafPolicy.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -155,26 +150,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_nginx_deployment_certificate_list
-  name: az nginx deployment certificate list
+- uid: az_nginx_deployment_waf-policy_list
+  name: az nginx deployment waf-policy list
   summary: |-
-    List all certificates under the specified deployment and resource group.
+    List all WAF policies in a deployment.
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment certificate list --deployment-name
-                                         --resource-group
-                                         [--max-items]
-                                         [--next-token]
+    az nginx deployment waf-policy list --deployment-name
+                                        --resource-group
+                                        [--max-items]
+                                        [--next-token]
   examples:
   - summary: |-
-      Certificate ListByDeployment
-    syntax: az nginx deployment certificate list --deployment-name myDeployment --resource-group myResourceGroup
+      WafPolicy_List
+    syntax: az nginx deployment waf-policy list --resource-group myResourceGroup --deployment-name myDeployment
   requiredParameters:
   - isRequired: true
     name: --deployment-name
     summary: |-
-      The name of targeted Nginx deployment.
+      The name of targeted NGINX deployment.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -215,34 +210,34 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_nginx_deployment_certificate_show
-  name: az nginx deployment certificate show
+- uid: az_nginx_deployment_waf-policy_show
+  name: az nginx deployment waf-policy show
   summary: |-
-    Get the properties of a specific NGINX certificate.
+    Get a specific WAF policy.
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment certificate show [--certificate-name --name]
-                                         [--deployment-name]
-                                         [--ids]
-                                         [--resource-group]
-                                         [--subscription]
+    az nginx deployment waf-policy show [--deployment-name]
+                                        [--ids]
+                                        [--name --waf-policy-name]
+                                        [--resource-group]
+                                        [--subscription]
   examples:
   - summary: |-
-      Certificate Get
-    syntax: az nginx deployment certificate show --certificate-name myCertificate --deployment-name myDeployment --resource-group myResourceGroup
+      WafPolicy_Get
+    syntax: az nginx deployment waf-policy show --resource-group myResourceGroup --deployment-name myDeployment --waf-policy-name myWafPolicy
   optionalParameters:
-  - name: --certificate-name --name -n
-    summary: |-
-      The name of certificate.
-    groupName: Resource Id Arguments
   - name: --deployment-name
     summary: |-
-      The name of targeted Nginx deployment.
+      The name of targeted NGINX deployment.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --waf-policy-name -n
+    summary: |-
+      The name of the WafPolicy.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -276,47 +271,46 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_nginx_deployment_certificate_update
-  name: az nginx deployment certificate update
+- uid: az_nginx_deployment_waf-policy_update
+  name: az nginx deployment waf-policy update
   summary: |-
-    Update an NGINX deployment certificate.
+    Update a WAF policy.
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment certificate update [--add]
-                                           [--certificate-name --name]
-                                           [--certificate-path]
-                                           [--deployment-name]
-                                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--ids]
-                                           [--key-path]
-                                           [--key-vault-secret-id]
-                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--remove]
-                                           [--resource-group]
-                                           [--set]
-                                           [--subscription]
+    az nginx deployment waf-policy update [--add]
+                                          [--content]
+                                          [--deployment-name]
+                                          [--filepath]
+                                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--ids]
+                                          [--name --waf-policy-name]
+                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--remove]
+                                          [--resource-group]
+                                          [--set]
+                                          [--subscription]
   examples:
   - summary: |-
-      Update the certificate virtual path, key virtual path and certificate
-    syntax: az nginx deployment certificate update --certificate-name myCertificate --deployment-name myDeployment --resource-group myResourceGroup --certificate-path /etc/nginx/testupdated.cert --key-path /etc/nginx/testupdated.key --key-vault-secret-id newKeyVaultSecretId
+      WafPolicy_Update
+    syntax: az nginx deployment waf-policy update --resource-group myResourceGroup --deployment-name myDeployment --waf-policy-name myWafPolicy
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
-  - name: --certificate-name --name -n
+  - name: --content
     summary: |-
-      The name of certificate.
-    groupName: Resource Id Arguments
-  - name: --certificate-path
-    summary: |-
-      Certificate path in Nginx configuration structure.
+      The byte content of the Policy.
     groupName: Properties Arguments
   - name: --deployment-name
     summary: |-
-      The name of targeted Nginx deployment.
+      The name of targeted NGINX deployment.
     groupName: Resource Id Arguments
+  - name: --filepath
+    summary: |-
+      The file path where the Policy is to be saved.
+    groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -326,14 +320,10 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --key-path
+  - name: --name --waf-policy-name -n
     summary: |-
-      Key path in Nginx configuration structure.
-    groupName: Properties Arguments
-  - name: --key-vault-secret-id
-    summary: |-
-      The secret ID for your certificate from Azure Key Vault.
-    groupName: Properties Arguments
+      The name of the WafPolicy.
+    groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -378,30 +368,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_nginx_deployment_certificate_wait
-  name: az nginx deployment certificate wait
+- uid: az_nginx_deployment_waf-policy_wait
+  name: az nginx deployment waf-policy wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment certificate wait [--certificate-name --name]
-                                         [--created]
-                                         [--custom]
-                                         [--deleted]
-                                         [--deployment-name]
-                                         [--exists]
-                                         [--ids]
-                                         [--interval]
-                                         [--resource-group]
-                                         [--subscription]
-                                         [--timeout]
-                                         [--updated]
+    az nginx deployment waf-policy wait [--created]
+                                        [--custom]
+                                        [--deleted]
+                                        [--deployment-name]
+                                        [--exists]
+                                        [--ids]
+                                        [--interval]
+                                        [--name --waf-policy-name]
+                                        [--resource-group]
+                                        [--subscription]
+                                        [--timeout]
+                                        [--updated]
   optionalParameters:
-  - name: --certificate-name --name -n
-    summary: |-
-      The name of certificate.
-    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -418,7 +404,7 @@ directCommands:
     groupName: Wait Condition Arguments
   - name: --deployment-name
     summary: |-
-      The name of targeted Nginx deployment.
+      The name of targeted NGINX deployment.
     groupName: Resource Id Arguments
   - name: --exists
     defaultValue: "False"
@@ -434,6 +420,10 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
+  - name: --name --waf-policy-name -n
+    summary: |-
+      The name of the WafPolicy.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -477,11 +467,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_nginx_deployment_certificate_create
-- az_nginx_deployment_certificate_delete
-- az_nginx_deployment_certificate_list
-- az_nginx_deployment_certificate_show
-- az_nginx_deployment_certificate_update
-- az_nginx_deployment_certificate_wait
+- az_nginx_deployment_waf-policy_create
+- az_nginx_deployment_waf-policy_delete
+- az_nginx_deployment_waf-policy_list
+- az_nginx_deployment_waf-policy_show
+- az_nginx_deployment_waf-policy_update
+- az_nginx_deployment_waf-policy_wait
 metadata:
-  description: Manage NGINX certificate resources.
+  description: Manage Waf Policy.
