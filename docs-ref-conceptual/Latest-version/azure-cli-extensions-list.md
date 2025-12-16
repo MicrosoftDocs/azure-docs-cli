@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 12/14/2025
+ms.date: 12/15/2025
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -110,7 +110,7 @@ You will be prompted to install an extension on first use.
 |[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.75.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
 |[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.8.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
-|[footprint](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint/HISTORY.rst) |
+|[footprint](https://github.com/Azure/azure-cli-extensions/tree/main/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Preview | [1.0.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/footprint/HISTORY.rst) |
 |[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.70.0 | Manage networking Front Doors. | GA | [1.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
 |[functionapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/functionapp) | 2.0.46 | Additional commands for Azure Functions. | Preview | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/functionapp/HISTORY.rst) |
 |[fzf](https://github.com/phealy/azure-cli-fzf) | 2.9.0 | Microsoft Azure Command-Line Tools fzf Extension | Experimental | [1.0.2](https://github.com/phealy/azure-cli-fzf) |
