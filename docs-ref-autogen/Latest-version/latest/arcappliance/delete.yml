@@ -3,7 +3,7 @@ uid: az_arcappliance_delete
 name: az arcappliance delete
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **arcappliance** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az arcappliance delete** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **arcappliance** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az arcappliance delete** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Command group for deletion of an Arc resource bridge on-premises appliance VM and its Azure resource.
 status: GA
@@ -16,32 +16,41 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az arcappliance delete hci --config-file
-                               [--cloudagent]
+    az arcappliance delete hci [--cloudagent]
+                               [--config-file]
+                               [--group]
                                [--location]
                                [--loginconfigfile]
+                               [--moclocation]
                                [--name]
                                [--resource-group]
                                [--yes]
   examples:
   - summary: |-
       Delete Arc resource bridge from Azure Stack HCI
+    syntax: az arcappliance delete hci --resource-group [REQUIRED] --name [REQUIRED] --moclocation [OPTIONAL] --group [OPTIONAL] --cloudagent [OPTIONAL] --loginconfigfile [OPTIONAL]
+  - summary: |-
+      Delete Arc resource bridge from Azure Stack HCI using config file
     syntax: az arcappliance delete hci --config-file [REQUIRED] --cloudagent [OPTIONAL] --loginconfigfile [OPTIONAL]
-  requiredParameters:
-  - isRequired: true
-    name: --config-file
-    summary: |-
-      Path to the Arc resource bridge appliance config file, `<`resourceName`>`-appliance.yaml.
   optionalParameters:
   - name: --cloudagent
     summary: |-
       FQDN or IP address of the Azure Stack HCI MOC cloud agent service used by Arc resource bridge. This can be found in the `<`BridgeName`>`-infra.yaml configuration file stored locally on the HCI cluster.
+  - name: --config-file
+    summary: |-
+      Path to the Arc resource bridge appliance config file, `<`resourceName`>`-appliance.yaml.
+  - name: --group
+    summary: |-
+      The management group in MOC used to organize Azure Stack HCI resources. Example: management.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --loginconfigfile
     summary: |-
       File path for the Azure Stack HCI login configuration file, kvatoken.tok. By default, it is stored locally on the HCI cluster.
+  - name: --moclocation
+    summary: |-
+      The location on MOC where the Azure Stack HCI infrastructure is deployed. Example: MocLocation.
   - name: --name -n
     summary: |-
       Name of the Arc resource bridge.
@@ -86,8 +95,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az arcappliance delete scvmm --config-file
-                                 [--address]
+    az arcappliance delete scvmm [--address]
+                                 [--config-file]
                                  [--location]
                                  [--name]
                                  [--password]
@@ -98,16 +107,17 @@ directCommands:
   examples:
   - summary: |-
       Delete Arc resource bridge from SCVMM
+    syntax: az arcappliance delete scvmm --resource-group [REQUIRED] --name [REQUIRED] --address [OPTIONAL] --port [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
+  - summary: |-
+      Delete Arc resource bridge from SCVMM using config file
     syntax: az arcappliance delete scvmm --config-file [REQUIRED] --address [OPTIONAL] --port [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
-  requiredParameters:
-  - isRequired: true
-    name: --config-file
-    summary: |-
-      Path to the Arc resource bridge appliance config file, `<`resourceName`>`-appliance.yaml.
   optionalParameters:
   - name: --address
     summary: |-
       SCVMM Server FQDN (e.g. vmmuser001.contoso.lab) or IPv4 address. If you have a Highly Available VMM setup, enter the role name.
+  - name: --config-file
+    summary: |-
+      Path to the Arc resource bridge appliance config file, `<`resourceName`>`-appliance.yaml.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -164,8 +174,11 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az arcappliance delete vmware --config-file
-                                  [--address]
+    az arcappliance delete vmware [--address]
+                                  [--config-file]
+                                  [--datacenter]
+                                  [--datastore]
+                                  [--folder]
                                   [--location]
                                   [--name]
                                   [--password]
@@ -174,17 +187,27 @@ directCommands:
                                   [--yes]
   examples:
   - summary: |-
-      Delete Appliance VMware Resource
+      Delete Appliance VMware Resource. The arguments can be fetched from `az arcappliance configuration show` command
+    syntax: az arcappliance delete vmware --resource-group [REQUIRED] --name [REQUIRED] --datacenter [REQUIRED] --datastore [REQUIRED] --folder [REQUIRED] --address [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
+  - summary: |-
+      Delete Appliance VMware Resource using config file
     syntax: az arcappliance delete vmware --config-file [REQUIRED] --address [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
-  requiredParameters:
-  - isRequired: true
-    name: --config-file
-    summary: |-
-      Path to the Arc resource bridge appliance config file, `<`resourceName`>`-appliance.yaml.
   optionalParameters:
   - name: --address
     summary: |-
       FQDN or IP address for vCenter Server instance. Ex: 10.160.0.1.
+  - name: --config-file
+    summary: |-
+      Path to the Arc resource bridge appliance config file, `<`resourceName`>`-appliance.yaml.
+  - name: --datacenter
+    summary: |-
+      Name of the vSphere datacenter where the Arc resource bridge appliance VM was deployed. Required when --config-file is not provided.
+  - name: --datastore
+    summary: |-
+      Name of the vSphere datastore where the Arc resource bridge appliance VM was deployed. Required when --config-file is not provided.
+  - name: --folder
+    summary: |-
+      Name of the vSphere folder where the Arc resource bridge appliance VM was deployed. E.g. /DatacenterA/vm/FolderA. Required when --config-file is not provided.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
