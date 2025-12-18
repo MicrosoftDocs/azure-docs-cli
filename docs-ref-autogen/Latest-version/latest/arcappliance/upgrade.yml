@@ -3,7 +3,7 @@ uid: az_arcappliance_upgrade
 name: az arcappliance upgrade
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **arcappliance** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az arcappliance upgrade** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **arcappliance** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az arcappliance upgrade** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Command group for upgrading an Appliance cluster.
 status: GA
@@ -16,24 +16,37 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az arcappliance upgrade hci --config-file
+    az arcappliance upgrade hci [--cloudagent]
+                                [--config-file]
+                                [--kubeconfig]
                                 [--location]
+                                [--loginconfigfile]
                                 [--name]
                                 [--no-wait]
                                 [--resource-group]
   examples:
   - summary: |-
       Upgrade HCI Appliance
+    syntax: az arcappliance upgrade hci --resource-group [REQUIRED] --name [REQUIRED] --kubeconfig [REQUIRED] --cloudagent [OPTIONAL] --loginconfigfile [OPTIONAL]
+  - summary: |-
+      Upgrade HCI Appliance using config
     syntax: az arcappliance upgrade hci --config-file [REQUIRED]
-  requiredParameters:
-  - isRequired: true
-    name: --config-file
+  optionalParameters:
+  - name: --cloudagent
+    summary: |-
+      FQDN or IP address of the Azure Stack HCI MOC cloud agent service used by Arc resource bridge. This can be found in the `<`BridgeName`>`-infra.yaml configuration file stored locally on the HCI cluster.
+  - name: --config-file
     summary: |-
       Path to Appliance Config File.
-  optionalParameters:
+  - name: --kubeconfig
+    summary: |-
+      Path to kubeconfig.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --loginconfigfile
+    summary: |-
+      File path for the Azure Stack HCI login configuration file, kvatoken.tok. By default, it is stored locally on the HCI cluster.
   - name: --name -n
     summary: |-
       Name of the Arc resource bridge.
@@ -78,21 +91,30 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az arcappliance upgrade scvmm --config-file
+    az arcappliance upgrade scvmm [--address]
+                                  [--config-file]
+                                  [--kubeconfig]
                                   [--location]
                                   [--name]
                                   [--no-wait]
+                                  [--password]
+                                  [--port]
                                   [--resource-group]
+                                  [--username]
   examples:
   - summary: |-
-      Upgrade SCVMM Appliance
+      Upgrade SCVMM Appliance using config file
     syntax: az arcappliance upgrade scvmm --config-file [REQUIRED]
-  requiredParameters:
-  - isRequired: true
-    name: --config-file
+  optionalParameters:
+  - name: --address
+    summary: |-
+      SCVMM Server FQDN (e.g. vmmuser001.contoso.lab) or IPv4 address. If you have a Highly Available VMM setup, enter the role name.
+  - name: --config-file
     summary: |-
       Path to Appliance Config File.
-  optionalParameters:
+  - name: --kubeconfig
+    summary: |-
+      Path to kubeconfig.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -103,9 +125,18 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --password
+    summary: |-
+      SCVMM Administrator Password.
+  - name: --port
+    summary: |-
+      SCVMM server port number (Default: 8100).
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --username
+    summary: |-
+      SCVMM Administrator Username in the format domain\username where 'domain' should be the NetBIOS name of the domain (e.g. contoso\administrator).
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -140,21 +171,32 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az arcappliance upgrade vmware --config-file
+    az arcappliance upgrade vmware [--address]
+                                   [--config-file]
+                                   [--kubeconfig]
                                    [--location]
                                    [--name]
                                    [--no-wait]
+                                   [--password]
                                    [--resource-group]
+                                   [--username]
   examples:
   - summary: |-
       Upgrade VMware Appliance
+    syntax: az arcappliance upgrade vmware --resource-group [REQUIRED] --name [REQUIRED] --kubeconfig [REQUIRED] --address [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
+  - summary: |-
+      Upgrade VMware Appliance using config file
     syntax: az arcappliance upgrade vmware --config-file [REQUIRED]
-  requiredParameters:
-  - isRequired: true
-    name: --config-file
+  optionalParameters:
+  - name: --address
+    summary: |-
+      FQDN or IP address for vCenter Server instance. Ex: 10.160.0.1.
+  - name: --config-file
     summary: |-
       Path to Appliance Config File.
-  optionalParameters:
+  - name: --kubeconfig
+    summary: |-
+      Path to kubeconfig.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -165,9 +207,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --password
+    summary: |-
+      Password for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --username
+    summary: |-
+      Username for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
   globalParameters:
   - name: --debug
     defaultValue: "False"
