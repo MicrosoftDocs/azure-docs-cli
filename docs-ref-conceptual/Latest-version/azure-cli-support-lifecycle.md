@@ -74,7 +74,11 @@ in a test environment before performing an upgrade.
 > The release cadence might be slightly adjusted to be aligned with major announcements relevant to
 > Azure.
 
-## Standard Term Support releases (STS)
+## Support of releases
+
+Azure CLI currently ships only one type of generally available release: Standard Term Support (STS).
+All major versions are considered STS releases and are supported until the next major version is
+released, approximately every six months.
 
 The STS versions of Azure CLI core give you the most recent capabilities. STS releases don't
 experience breaking changes for six months. Breaking changes are released in the second and fourth
@@ -87,93 +91,12 @@ STS releases have the following characteristics:
 - STS releases don't have a specific marker when running the `az version` command. This ensures
   backward compatibility with tools or scripts that might utilize the information.
 
-## Long Term Support releases (LTS)
-
-> [!IMPORTANT]
-> At this time, Long-Term Support (LTS) releases for Azure CLI are temporarily paused while we
-> evaluate improved ways to support customers who aren't always able to adopt the latest version of
-> the client.
->
-> During this pause:
->
-> - Azure CLI continues to follow the Standard Term Support (STS) release cadence.
-> - All supported STS versions continue to receive updates, including bug fixes and security
->   patches, according to the published support lifecycle.
-> - This pause doesn't change the overall support policy or quality of Azure CLI releases.
->
-> We're actively exploring alternative approaches that better balance stability, supportability,
-> and customer needs, and we'll provide updates through official documentation as guidance
-> evolves.
-
-The LTS versions of Azure CLI Core give you a "maintenance" period of 12 months following the
-"current" period. During this time, the LTS release doesn't experience breaking changes _unless
-required by a security fix_.
-
-The LTS versions are based on Azure CLI releases that introduce major changes during the second
-quarter of the calendar year. This usually aligns with Microsoft Build.
-
-LTS releases have the following characteristics:
-
-- During the first six months, the LTS releases are released monthly and receive feature updates,
-  bug fixes and security fixes.
-- During the following 12 months, the LTS releases are released when necessary and only receive bug
-  fixes and security fixes.
-- For a LTS version to be supported, you need to be on the latest version of the LTS release.
-
-Easily find the LTS release date by running the `az version` command. Notice the `azure-cli-support`
-line that indicates the LTS date.
-
-```output
-{  
-  "azure-cli": "2.48.0",  
-  "azure-cli-core": "2.48.0",  
-  "azure-cli-support": "LTS-20240521",  
-  "azure-cli-telemetry": "1.0.8",  
-  "extensions": {  
-  }  
-}  
-```
-
-The following image illustrates the release cadence and support lifecycle of Azure CLI for STS and
-LTS releases.
-
-![Support Lifecycle][02]
-
-The following table provides examples of how the release cadence correlates with the support
-lifecycle:
-
-> [!NOTE]
-> The dates in the following table are for example purposes only. The actual release dates vary.
-
-| Version number | Release schedule | Breaking changes | Release type | Support type | Supported until version | LTS version |
-| -------------- | ---------------- | ---------------- | ------------ | ------------ | ----------------------- | ----------- |
-| 2.61.0         | May 2024         | Yes              | Major        | STS          | 2.62.0                  |             |
-| 2.62.0         | June 2024        |                  | Minor        | STS          | 2.63.0                  |             |
-| 2.63.0         | July 2024        |                  | Minor        | STS          | 2.64.0                  |             |
-| 2.64.0         | August 2024      |                  | Minor        | STS          | 2.65.0                  |             |
-| 2.65.0         | September 2024   |                  | Minor        | STS          | 2.66.0                  |             |
-| 2.66.0         | October 2024     |                  | Minor        | **LTS**      | _**2.79.0**_            | 2.66.0      |
-| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  | 2.66.x      |
-|                | December 2024    |                  |              |              |                         | 2.66.x      |
-| 2.68.0         | January 2025     |                  | Minor        | STS          | 2.69.0                  | 2.66.x      |
-| 2.69.0         | February 2025    |                  | Minor        | STS          | 2.70.0                  | 2.66.x      |
-| 2.70.0         | March 2025       |                  | Minor        | STS          | 2.71.0                  | 2.66.x      |
-| 2.71.0         | April 2025       |                  | Minor        | STS          | 2.72.0                  | 2.66.x      |
-| 2.72.0         | May 2025         | Yes              | Major        | STS          | 2.73.0                  | 2.66.x      |
-| 2.73.0         | June 2025        |                  | Minor        | STS          | 2.74.0                  | 2.66.x      |
-| 2.74.0         | July 2025        |                  | Minor        | STS          | 2.75.0                  | 2.66.x      |
-| 2.75.0         | August 2025      |                  | Minor        | STS          | 2.76.0                  | 2.66.x      |
-| 2.76.0         | September 2025   |                  | Minor        | STS          | 2.77.0                  | 2.66.x      |
-| 2.77.0         | October 2025     |                  | Minor        | **LTS**      | _**2.90.0**_            | 2.77.0      |
-| 2.78.0         | November 2025    | Yes              | Major        | STS          | 2.79.0                  | 2.77.x      |
-| 2.79.0         | December 2025    |                  | Minor        | STS          | 2.80.0                  | 2.77.x      |
-
 **Examples:**
 
 - To qualify for support, you must update to 2.63.0 when released if you have Azure CLI 2.62.0
   installed.
-- If Azure CLI 2.66.0 is the last release of Azure CLI before breaking change in the fourth quarter
-  of the calendar year, it's supported until the release of Azure CLI 2.79.0.
+- If Azure CLI 2.66.0 is the last release before a breaking change in the fourth quarter, it's
+  supported until the release of Azure CLI 2.67.0.
 
 ## Breaking changes
 
@@ -203,17 +126,18 @@ the public announcement of the retirement.
 
 ## Python dependency
 
-Azure CLI depends on Python version 3.8 or above. The following table summarizes the expected end of
-support for each version of Python:
+Azure CLI depends on Python version 3.10 or above. The following table summarizes the expected end
+of support for each version of Python:
 
 | Python version | End of support date |
 |----------------|---------------------|
-| 3.9            | October 2025        |
 | 3.10           | October 2026        |
 | 3.11           | October 2027        |
 | 3.12           | October 2028        |
+| 3.13           | October 2029        |
 
-Azure CLI can only be supported on operating systems where the above versions of Python are supported.
+Azure CLI can only be supported on operating systems where the above versions of Python are
+supported.
 
 - **Windows:** The currently supported versions of Windows client and server meet Python version
   requirements.
@@ -257,7 +181,6 @@ purposes. For questions or concerns, use the official support channels.
 <!-- updated link references -->
 
 [01]: ./install-azure-cli.md
-[02]: ./media/support-lifecycle/support-lifecycle.png
 [03]: ./reference-types-and-status.md
 [04]: ./release-notes-azure-cli.md
 [05]: /cli/azure/azure-cli-extensions-overview
