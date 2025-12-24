@@ -62,7 +62,7 @@ directCommands:
                         [--node-soak-duration]
                         [--node-taints]
                         [--node-vm-size]
-                        [--os-sku {AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Windows2019, Windows2022}]
+                        [--os-sku {AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2019, Windows2022}]
                         [--os-type]
                         [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                         [--pod-subnet-id]
@@ -270,9 +270,9 @@ directCommands:
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
   - name: --os-sku
-    acceptedValues: AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Windows2019, Windows2022
+    acceptedValues: AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2019, Windows2022
     summary: |-
-      The OS SKU of the agent node pool. Ubuntu, Ubuntu2204, AzureLinux or AzureLinux3 for Linux. Windows2019 or Windows2022 for Windows.
+      The OS SKU of the agent node pool. Ubuntu, Ubuntu2204, Ubuntu2404, AzureLinux or AzureLinux3 for Linux. Windows2019 or Windows2022 for Windows.
   - name: --os-type
     summary: |-
       The OS Type. Linux or Windows.
@@ -1876,6 +1876,7 @@ directCommands:
                            [--enable-fips-image]
                            [--enable-secure-boot]
                            [--enable-vtpm]
+                           [--gpu-driver {Install, None}]
                            [--if-match]
                            [--if-none-match]
                            [--labels]
@@ -1888,7 +1889,7 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
-                           [--os-sku {AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204}]
+                           [--os-sku {AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404}]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--tags]
                            [--undrainable-node-behavior]
@@ -1964,6 +1965,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable vTPM on an existing Trusted Launch enabled agent node pool. Must use VMSS or VMs agent pool type.
+  - name: --gpu-driver
+    acceptedValues: Install, None
+    summary: |-
+      Whether to install driver for GPU node pool. Possible values are "Install" or "None".
   - name: --if-match
     summary: |-
       The value provided will be compared to the ETag of the node pool, if it matches the operation will proceed. If it does not match, the request will be rejected to prevent accidental overwrites. This must not be specified when creating a new agentpool.
@@ -2003,7 +2008,7 @@ directCommands:
     summary: |-
       The node taints for the node pool. You can update the existing node taint of a nodepool or create a new node taint for a nodepool. Pass the empty string `""` to remove all taints.
   - name: --os-sku
-    acceptedValues: AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204
+    acceptedValues: AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404
     summary: |-
       The os-sku of the agent node pool.
   - name: --scale-down-mode

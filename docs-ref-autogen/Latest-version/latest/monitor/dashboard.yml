@@ -1,53 +1,50 @@
 ### YamlMime:AzureCLIGroup
-uid: az_maps_creator
-name: az maps creator
+uid: az_monitor_dashboard
+name: az monitor dashboard
 summary: |-
-  Manage creator with maps.
+  Manage Dashboard with Grafana resources.
 status: GA
 sourceType: Core
 directCommands:
-- uid: az_maps_creator_create
-  name: az maps creator create
+- uid: az_monitor_dashboard_create
+  name: az monitor dashboard create
   summary: |-
-    Create a Maps Creator resource. Creator resource will manage Azure resources required to populate a custom set of mapping data. It requires an account to exist before it can be created.
+    Create a Dashboard with Grafana resource. This API is idempotent, so user can either create a new dashboard or update an existing dashboard.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/maps/_help.py
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az maps creator create --account-name --name
-                           --creator-name
-                           --resource-group
-                           --storage-units
-                           [--location]
-                           [--tags]
+    az monitor dashboard create --dashboard-name --name
+                                --resource-group
+                                [--location]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--tags]
   examples:
   - summary: |-
-      Create Creator Resource
-    syntax: az maps creator create --location "eastus2" --storage-units 5 --tags test="true" --account-name "myMapsAccount" --creator-name "myCreator" --resource-group "myResourceGroup"
+      Create a Dashboard with Grafana
+    syntax: az monitor dashboard create --resource-group myResourceGroup --dashboard-name myDashboard --location westus
   requiredParameters:
   - isRequired: true
-    name: --account-name --name -n
+    name: --dashboard-name --name -n
     summary: |-
-      The name of the maps account.
-  - isRequired: true
-    name: --creator-name
-    summary: |-
-      The name of the Maps Creator instance.
+      The name of the Azure Managed Dashboard.
   - isRequired: true
     name: --resource-group -g
     summary: |-
-      Resource group name.
-  - isRequired: true
-    name: --storage-units
-    summary: |-
-      The storage units to be allocated. Integer values from 1 to 100, inclusive.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: RequestBodyParameters Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: RequestBodyParameters Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -75,32 +72,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_maps_creator_delete
-  name: az maps creator delete
+- uid: az_monitor_dashboard_delete
+  name: az monitor dashboard delete
   summary: |-
-    Delete a Maps Creator resource.
+    Delete a Dashboard with Grafana resource.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/maps/_help.py
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az maps creator delete [--account-name --name]
-                           [--creator-name]
-                           [--ids]
-                           [--resource-group]
-                           [--subscription]
-                           [--yes]
-  examples:
-  - summary: |-
-      Delete Creator Resource
-    syntax: az maps creator delete --account-name "myMapsAccount" --creator-name "myCreator" --resource-group "myResourceGroup"
+    az monitor dashboard delete [--dashboard-name --name]
+                                [--ids]
+                                [--resource-group]
+                                [--subscription]
+                                [--yes]
   optionalParameters:
-  - name: --account-name --name -n
+  - name: --dashboard-name --name -n
     summary: |-
-      The name of the maps account.
-    groupName: Resource Id Arguments
-  - name: --creator-name
-    summary: |-
-      The name of the Maps Creator instance.
+      The name of the Azure Managed Dashboard.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -108,7 +96,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
-      Resource group name.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -142,29 +130,31 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_maps_creator_list
-  name: az maps creator list
+- uid: az_monitor_dashboard_list
+  name: az monitor dashboard list
   summary: |-
-    Get all Creator instances for an Azure Maps Account.
+    List all Dashboard with Grafana resources under the specified resource group.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/maps/_help.py
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az maps creator list --account-name --name
-                         --resource-group
-  examples:
-  - summary: |-
-      List Creator Resources By Account
-    syntax: az maps creator list --account-name "myMapsAccount" --resource-group "myResourceGroup"
+    az monitor dashboard list --resource-group
+                              [--max-items]
+                              [--next-token]
   requiredParameters:
-  - isRequired: true
-    name: --account-name --name -n
-    summary: |-
-      The name of the maps account.
   - isRequired: true
     name: --resource-group -g
     summary: |-
-      Resource group name.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -192,31 +182,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_maps_creator_show
-  name: az maps creator show
+- uid: az_monitor_dashboard_show
+  name: az monitor dashboard show
   summary: |-
-    Get a Maps Creator resource.
+    Get the properties of a specific Dashboard with Grafana resource.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/maps/_help.py
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az maps creator show [--account-name --name]
-                         [--creator-name]
-                         [--ids]
-                         [--resource-group]
-                         [--subscription]
-  examples:
-  - summary: |-
-      Get Creator Resource
-    syntax: az maps creator show --account-name "myMapsAccount" --creator-name "myCreator" --resource-group "myResourceGroup"
+    az monitor dashboard show [--dashboard-name --name]
+                              [--ids]
+                              [--resource-group]
+                              [--subscription]
   optionalParameters:
-  - name: --account-name --name -n
+  - name: --dashboard-name --name -n
     summary: |-
-      The name of the maps account.
-    groupName: Resource Id Arguments
-  - name: --creator-name
-    summary: |-
-      The name of the Maps Creator instance.
+      The name of the Azure Managed Dashboard.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -224,7 +205,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
-      Resource group name.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -254,52 +235,76 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_maps_creator_update
-  name: az maps creator update
+- uid: az_monitor_dashboard_wait
+  name: az monitor dashboard wait
   summary: |-
-    Updates the Maps Creator resource. Only a subset of the parameters may be updated after creation, such as Tags.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/maps/_help.py
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az maps creator update [--account-name --name]
-                           [--creator-name]
-                           [--ids]
-                           [--resource-group]
-                           [--storage-units]
-                           [--subscription]
-                           [--tags]
-  examples:
-  - summary: |-
-      Update Creator Resource
-    syntax: az maps creator update --storage-units 10 --tags specialTag="true" --account-name "myMapsAccount" --creator-name "myCreator" --resource-group "myResourceGroup"
+    az monitor dashboard wait [--created]
+                              [--custom]
+                              [--dashboard-name --name]
+                              [--deleted]
+                              [--exists]
+                              [--ids]
+                              [--interval]
+                              [--resource-group]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
   optionalParameters:
-  - name: --account-name --name -n
+  - name: --created
+    defaultValue: "False"
     summary: |-
-      The name of the maps account.
-    groupName: Resource Id Arguments
-  - name: --creator-name
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
     summary: |-
-      The name of the Maps Creator instance.
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --dashboard-name --name -n
+    summary: |-
+      The name of the Azure Managed Dashboard.
     groupName: Resource Id Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
   - name: --resource-group -g
     summary: |-
-      Resource group name.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --storage-units
-    summary: |-
-      The storage units to be allocated. Integer values from 1 to 100, inclusive.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
-  - name: --tags
+  - name: --timeout
+    defaultValue: "3600"
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -325,11 +330,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_maps_creator_create
-- az_maps_creator_delete
-- az_maps_creator_list
-- az_maps_creator_show
-- az_maps_creator_update
+- az_monitor_dashboard_create
+- az_monitor_dashboard_delete
+- az_monitor_dashboard_list
+- az_monitor_dashboard_show
+- az_monitor_dashboard_wait
 metadata:
-  ms.date: 07/13/2021
-  description: Manage creator with maps.
+  ms.date: 01/06/2025
+  description: Manage Dashboard with Grafana resources.
