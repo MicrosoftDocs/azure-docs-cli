@@ -21,6 +21,7 @@ directCommands:
                                         --resource-group
                                         [--address-prefixes]
                                         [--dns-servers]
+                                        [--fabric-netcfg-id --fabric-network-configuration-id]
                                         [--gateway]
                                         [--ip-allocation-method {Dynamic, Static}]
                                         [--ip-pool-end]
@@ -40,7 +41,7 @@ directCommands:
   examples:
   - summary: |-
       PutLogicalNetwork
-    syntax: az stack-hci-vm network lnet create --resource-group "test-rg" --custom-location "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location" --location "West US2" --name "test-lnet" --ip-allocation-method "Static" --address-prefixes "10.0.0.0/28" --ip-pool-start "10.0.0.0" --ip-pool-end "10.0.0.15" --vm-switch-name "test-vm-switch" --dns-servers 10.220.32.16 10.220.32.17
+    syntax: az stack-hci-vm network lnet create --resource-group "test-rg" --name "test-lnet" --location "eastus2euap" --tags env=prod --custom-location "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.ExtendedLocation/customLocations/test-location" --address-prefixes "10.0.0.0/16" --ip-allocation-method Static --ip-pool-type "vm" --ip-pool-start "10.0.0.0" --ip-pool-end "10.0.0.16" --vlan 10 --vm-switch-name "sampleVnet0920" --dns-servers 8.8.8.8 8.8.4.4 --fabric-network-configuration-id "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/example-l2domain" --gateway 10.0.0.1 --network-security-group "myNSG" --polling-interval 30
   requiredParameters:
   - isRequired: true
     name: --custom-location
@@ -65,6 +66,9 @@ directCommands:
       Space-separated list of DNS server IP addresses.
     description: |-
       Usage: --dns-servers 10.220.32.16 10.220.32.17.
+  - name: --fabric-netcfg-id --fabric-network-configuration-id
+    summary: |-
+      The Azure Resource ID for a Managed Network Fabric L2ISD or L3ISD internal network to associate with this logical network.
   - name: --gateway
     summary: |-
       Gateway.
