@@ -1,0 +1,387 @@
+### YamlMime:AzureCLIGroup
+uid: az_stack-hci-vm_network_lb
+name: az stack-hci-vm network lb
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **stack-hci-vm** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az stack-hci-vm network lb** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage load balancers with stack-hci-vm.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_stack-hci-vm_network_lb_create
+  name: az stack-hci-vm network lb create
+  summary: |-
+    Create a load balancer.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az stack-hci-vm network lb create --custom-location
+                                      --fip-cfg-names --frontend-ip-config-names
+                                      --name
+                                      --resource-group
+                                      [--backend-pool-backend-addresses --bp-addrs]
+                                      [--backend-pool-logical-network-ids --bp-lnet-ids]
+                                      [--backend-pool-names]
+                                      [--backend-pool-virtual-network-ids --bp-vnet-ids]
+                                      [--fip-alloc --frontend-ip-allocation-methods {Dynamic, Static}]
+                                      [--fip-pip-ids --frontend-ip-public-ip-ids]
+                                      [--fip-priv-addrs --frontend-ip-private-addresses]
+                                      [--frontend-ip-subnet-ids]
+                                      [--lb-rule-backend-pool-names --lbr-bp-names]
+                                      [--lb-rule-backend-ports]
+                                      [--lb-rule-frontend-ip-config-names --lbr-fip-cfg-names]
+                                      [--lb-rule-frontend-ports]
+                                      [--lb-rule-idle-timeouts]
+                                      [--lb-rule-load-distributions --lbr-load-dist {Default, SourceIP, SourceIPProtocol}]
+                                      [--lb-rule-names]
+                                      [--lb-rule-probe-names]
+                                      [--lb-rule-protocols {All, Tcp, Udp}]
+                                      [--location]
+                                      [--probe-intervals]
+                                      [--probe-names]
+                                      [--probe-num-probes]
+                                      [--probe-ports]
+                                      [--probe-protocols {Http, Tcp}]
+                                      [--probe-request-paths]
+                                      [--tags]
+  examples:
+  - summary: |-
+      CreateLB
+    syntax: az stack-hci-vm network lb create --resource-group "test-rg" --name "test-lb" --location "eastus" --frontend-ip-config-names "fe1" "fe2" --frontend-ip-private-addresses 10.0.0.4 10.0.0.5 --frontend-ip-allocation-methods Static Dynamic --frontend-ip-subnet-ids "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/test-subnet1" "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/test-subnet2" --frontend-ip-public-ip-ids "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip1" "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip2" --backend-pool-names "be1" "be2" --backend-pool-backend-addresses '[{"name":"be1","admin_state":"Up","network_interface_ip_configuration":"/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/networkInterfaces/test-nic1/ipConfigurations/ipconfig1"}]' --backend-pool-virtual-network-ids "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet" --lb-rule-names "rule1" "rule2" --lb-rule-frontend-ip-config-names "fe1" "fe2" --lb-rule-backend-pool-names "be1" "be2" --lb-rule-frontend-ports 80 443 --lb-rule-backend-ports 8080 8443 --lb-rule-protocols Tcp Udp --lb-rule-probe-names "probe1" "probe2" --lb-rule-load-distributions Default SourceIP --lb-rule-idle-timeouts 4 5 --probe-names "probe1" "probe2" --probe-protocols Tcp Tcp --probe-ports 80 443 --probe-request-paths "/" "/health" --probe-intervals 5 5 --probe-num-probes 2 2 --tags env=prod lb=yes --custom-location "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.ExtendedLocation/customLocations/test-location"
+  requiredParameters:
+  - isRequired: true
+    name: --custom-location
+    summary: |-
+      The ID of the extended location.
+  - isRequired: true
+    name: --fip-cfg-names --frontend-ip-config-names
+    summary: |-
+      Names for frontend IP configurations (at least one required).
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the load balancer.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --backend-pool-backend-addresses --bp-addrs
+    summary: |-
+      JSON array(s) of backend addresses per pool. Each element should be a JSON array of address objects. Example: '[{"name":"be1","admin_state":"Up","network_interface_ip_configuration":"/subscriptions/.../nic1/ipConfigurations/ipconfig1"}, {"name":"be2","admin_state":"Down","network_interface_ip_configuration":"/subscriptions/.../nic2/ipConfigurations/ipconfig1"}]'.
+  - name: --backend-pool-logical-network-ids --bp-lnet-ids
+    summary: |-
+      Logical network resource IDs for backend pools.
+  - name: --backend-pool-names
+    summary: |-
+      Names of backend pools to create.
+  - name: --backend-pool-virtual-network-ids --bp-vnet-ids
+    summary: |-
+      Virtual network resource IDs for backend pools.
+  - name: --fip-alloc --frontend-ip-allocation-methods
+    acceptedValues: Dynamic, Static
+    summary: |-
+      IP allocation methods (Static/Dynamic).
+  - name: --fip-pip-ids --frontend-ip-public-ip-ids
+    summary: |-
+      Public IP resource IDs for frontend IP configurations.
+  - name: --fip-priv-addrs --frontend-ip-private-addresses
+    summary: |-
+      Private IP addresses for frontend IP configurations.
+  - name: --frontend-ip-subnet-ids
+    summary: |-
+      Subnet resource IDs for frontend IP configurations.
+  - name: --lb-rule-backend-pool-names --lbr-bp-names
+    summary: |-
+      Backend pool names for rules.
+  - name: --lb-rule-backend-ports
+    summary: |-
+      Backend ports for rules.
+  - name: --lb-rule-frontend-ip-config-names --lbr-fip-cfg-names
+    summary: |-
+      Frontend IP config names for rules.
+  - name: --lb-rule-frontend-ports
+    summary: |-
+      Frontend ports for rules.
+  - name: --lb-rule-idle-timeouts
+    summary: |-
+      Idle timeouts in minutes for rules.
+  - name: --lb-rule-load-distributions --lbr-load-dist
+    acceptedValues: Default, SourceIP, SourceIPProtocol
+    summary: |-
+      Session persistence for rules.
+  - name: --lb-rule-names
+    summary: |-
+      Names for load balancing rules.
+  - name: --lb-rule-probe-names
+    summary: |-
+      Probe names for rules.
+  - name: --lb-rule-protocols
+    acceptedValues: All, Tcp, Udp
+    summary: |-
+      Protocols for rules.
+  - name: --location -l
+    summary: |-
+      If location is not specified, the location of the resource group is used.
+  - name: --probe-intervals
+    summary: |-
+      Probe intervals in seconds.
+  - name: --probe-names
+    summary: |-
+      Names for health probes.
+  - name: --probe-num-probes
+    summary: |-
+      Number of consecutive probe failures before marking unhealthy.
+  - name: --probe-ports
+    summary: |-
+      Ports for probes.
+  - name: --probe-protocols
+    acceptedValues: Http, Tcp
+    summary: |-
+      Protocols for probes.
+  - name: --probe-request-paths
+    summary: |-
+      Request paths for HTTP probes.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_stack-hci-vm_network_lb_delete
+  name: az stack-hci-vm network lb delete
+  summary: |-
+    Delete a load balancer.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az stack-hci-vm network lb delete --name
+                                      --resource-group
+                                      [--polling-interval]
+                                      [--yes]
+  examples:
+  - summary: |-
+      DeleteLB
+    syntax: az stack-hci-vm network lb delete --name "test-lb" --resource-group "test-rg" --yes
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the load balancer.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --polling-interval
+    summary: |-
+      ARM polling interval for long running operations.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_stack-hci-vm_network_lb_list
+  name: az stack-hci-vm network lb list
+  summary: |-
+    List all load balancers.
+  status: GA
+  sourceType: Extension
+  syntax: az stack-hci-vm network lb list [--resource-group]
+  examples:
+  - summary: |-
+      ListLBs
+    syntax: az stack-hci-vm network lb list --resource-group "test-rg"
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_stack-hci-vm_network_lb_show
+  name: az stack-hci-vm network lb show
+  summary: |-
+    Get the details of a load balancer.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az stack-hci-vm network lb show --name
+                                    --resource-group
+  examples:
+  - summary: |-
+      ShowLB
+    syntax: az stack-hci-vm network lb show --name "test-lb" --resource-group "test-rg"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the load balancer.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_stack-hci-vm_network_lb_update
+  name: az stack-hci-vm network lb update
+  summary: |-
+    Update a load balancer.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az stack-hci-vm network lb update --name
+                                      --resource-group
+                                      [--tags]
+  examples:
+  - summary: |-
+      UpdateLB
+    syntax: az stack-hci-vm network lb update --resource-group "test-rg" --name "test-lb" --tags env=prod updated=yes
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the load balancer.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_stack-hci-vm_network_lb_create
+- az_stack-hci-vm_network_lb_delete
+- az_stack-hci-vm_network_lb_list
+- az_stack-hci-vm_network_lb_show
+- az_stack-hci-vm_network_lb_update
+metadata:
+  description: Manage load balancers with stack-hci-vm.
