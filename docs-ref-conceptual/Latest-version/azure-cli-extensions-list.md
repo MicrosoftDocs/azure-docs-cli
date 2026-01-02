@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 12/30/2025
+ms.date: 01/01/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -147,7 +147,7 @@ You will be prompted to install an extension on first use.
 |[mdp](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp) | 2.57.0 | Microsoft Azure Command-Line Tools Mdp Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp/HISTORY.rst) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh) | 2.67.0 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh/HISTORY.rst) |
 |[microsoft-fabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric) | 2.61.0 | Microsoft Azure Command-Line Tools Microsoft Fabric Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric/HISTORY.rst) |
-|[migrate](https://github.com/Azure/azure-cli-extensions/tree/main/src/migrate) | 2.75.0 | Support for Azure Migrate preview | Preview | [3.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/migrate/HISTORY.rst) |
+|[migrate](https://github.com/Azure/azure-cli-extensions/tree/main/src/migrate) | 2.75.0 | Support for Azure Migrate preview | Preview | [3.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/migrate/HISTORY.rst) |
 |[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality) | 2.49.0 | Mixed Reality Azure CLI Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality/HISTORY.rst) |
 |[ml](https://docs.microsoft.com/azure/machine-learning/azure-machine-learning-release-notes-cli-v2?view=azureml-api-2) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension | GA | [2.40.1](https://docs.microsoft.com/azure/machine-learning/azure-machine-learning-release-notes-cli-v2?view=azureml-api-2/HISTORY.rst) |
 |[mongo-db](https://github.com/Azure/azure-cli-extensions/tree/main/src/mongo-db) | 2.70.0 | Microsoft Azure Command-Line Tools MongoDb Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/mongo-db/HISTORY.rst) |
