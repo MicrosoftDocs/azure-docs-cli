@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 12/18/2025
+ms.date: 01/05/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -39,6 +39,32 @@ The breaking changes listed in this section are planned for the next major relea
 
 - 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'az compute-recommender spot-placement-score' instead.
 
+## mysql
+
+### `mysql flexible-server create`
+
+[Link to mysql flexible-server reference group](/cli/azure/mysql/flexible-server)
+
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
+### `mysql flexible-server restore`
+
+[Link to mysql flexible-server reference group](/cli/azure/mysql/flexible-server)
+
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
+### `mysql flexible-server geo-restore`
+
+[Link to mysql flexible-server reference group](/cli/azure/mysql/flexible-server)
+
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
+### `mysql flexible-server replica create`
+
+[Link to mysql flexible-server replica reference group](/cli/azure/mysql/flexible-server/replica)
+
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
 ## netappfiles
 
 ### `netappfiles volume update`
@@ -60,6 +86,47 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
 - '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
+
+### `postgres flexible-server replica create`
+
+[Link to postgres flexible-server replica reference group](/cli/azure/postgres/flexible-server/replica)
+
+- '--replica-name' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--name' instead.
+
+### `postgres flexible-server firewall-rule`
+
+[Link to postgres flexible-server firewall-rule reference group](/cli/azure/postgres/flexible-server/firewall-rule)
+
+- The --name/-n argument will be repurposed to specify the firewall rule name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
+- The --rule-name/-r argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
+### `postgres flexible-server migration`
+
+[Link to postgres flexible-server migration reference group](/cli/azure/postgres/flexible-server/migration)
+
+- The --migration-name argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- The --name/-n argument will be repurposed to specify the migration name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
+
+### `postgres flexible-server db`
+
+[Link to postgres flexible-server db reference group](/cli/azure/postgres/flexible-server/db)
+
+- The --database-name/-d argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- The --name/-n argument will be repurposed to specify the database name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
+
+### `postgres flexible-server backup`
+
+[Link to postgres flexible-server backup reference group](/cli/azure/postgres/flexible-server/backup)
+
+- The --backup-name/-b argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- The --name/-n argument will be repurposed to specify the backup name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
+
+### `postgres flexible-server long-term-retention`
+
+[Link to postgres flexible-server long-term-retention reference group](/cli/azure/postgres/flexible-server/long-term-retention)
+
+- The --backup-name/-b argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- The --name/-n argument will be repurposed to specify the backup name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
 
 ### `postgres flexible-server index-tuning`
 

@@ -20,6 +20,7 @@ directCommands:
                                    --resource-group
                                    [--access-connector]
                                    [--compliance-standards]
+                                   [--compute-mode {Hybrid, Serverless}]
                                    [--default-catalog]
                                    [--default-storage-firewall {Disabled, Enabled}]
                                    [--disk-key-auto-rotation {0, 1, f, false, n, no, t, true, y, yes}]
@@ -49,16 +50,22 @@ directCommands:
   examples:
   - summary: |-
       Create a workspace
-    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location westus --sku standard
+    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location westus --sku standard --compute-mode Hybrid
+  - summary: |-
+      Create a Serverless workspace
+    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location westus --sku premium --compute-mode Serverless
   - summary: |-
       Create a workspace with managed identity for storage account
-    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --prepare-encryption
+    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --compute-mode Hybrid --prepare-encryption
   - summary: |-
       Create a workspace with automatic cluster update feature enabled
-    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --enable-automatic-cluster-update
+    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --compute-mode Hybrid --enable-automatic-cluster-update
   - summary: |-
       Create a workspace with all enhanced security & compliance features enabled with specific compliance standards
-    syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --enable-compliance-security-profile --compliance-standards='["HIPAA","PCI_DSS"]' --enable-automatic-cluster-update --enable-enhanced-security-monitoring
+    syntax: >-
+      az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --compute-mode Hybrid --enable-compliance-security-profile --compliance-standards='["HIPAA","PCI_DSS"]' --enable-automatic-cluster-update --enable-enhanced-security-monitoring
+
+      Note: Serverless compute mode does not support custom VNet configuration, custom encryption, access connectors, default catalog properties, workspace custom parameters, or managed resource groups. These features are only available with Hybrid compute mode.
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -75,8 +82,13 @@ directCommands:
     groupName: Properties Arguments
   - name: --compliance-standards
     summary: |-
-      Compliance Standards associated with the workspace, allowed values: NONE, HIPAA, PCI_DSS.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Compliance Standards associated with the workspace, allowed values referenced here: https://learn.microsoft.com/en-us/azure/databricks/security/privacy/security-profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Enhanced Security Compliance Arguments
+  - name: --compute-mode
+    defaultValue: Hybrid
+    acceptedValues: Hybrid, Serverless
+    summary: |-
+      The compute mode for the workspace. Allowed values: 'Hybrid', 'Serverless'.
   - name: --default-catalog
     summary: |-
       Properties for Default Catalog configuration during workspace creation.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -403,6 +415,7 @@ directCommands:
     az databricks workspace update [--access-connector]
                                    [--add]
                                    [--compliance-standards]
+                                   [--compute-mode {Hybrid, Serverless}]
                                    [--default-catalog]
                                    [--default-storage-firewall {Disabled, Enabled}]
                                    [--disk-key-auto-rotation {0, 1, f, false, n, no, t, true, y, yes}]
@@ -468,8 +481,12 @@ directCommands:
     groupName: Generic Update Arguments
   - name: --compliance-standards
     summary: |-
-      Compliance Standards associated with the workspace, allowed values: NONE, HIPAA, PCI_DSS.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Compliance Standards associated with the workspace, allowed values listed here: https://learn.microsoft.com/en-us/azure/databricks/security/privacy/security-profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Enhanced Security Compliance Arguments
+  - name: --compute-mode
+    acceptedValues: Hybrid, Serverless
+    summary: |-
+      The compute mode for the workspace. Allowed values: 'Hybrid', 'Serverless'.
   - name: --default-catalog
     summary: |-
       Properties for Default Catalog configuration during workspace creation.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
