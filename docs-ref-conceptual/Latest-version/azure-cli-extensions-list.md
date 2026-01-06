@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/04/2026
+ms.date: 01/05/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -83,7 +83,7 @@ You will be prompted to install an extension on first use.
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.4](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
 |[data-transfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer) | 2.0.24 | Microsoft Azure Command-Line Tools DataTransfer Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer/HISTORY.rst) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.70.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
-|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
+|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.75.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.75.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
@@ -162,7 +162,7 @@ You will be prompted to install an extension on first use.
 |[next](https://github.com/Azure/azure-cli-extensions/tree/main/src/next) | 2.20.0 | Microsoft Azure Command-Line Tools Next Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/next/HISTORY.rst) |
 |[nexusidentity](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity) | 2.61.0 | Microsoft Azure Command-Line Tools Nexusidentity Extension | Preview | [1.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity/HISTORY.rst) |
 |[nginx](https://github.com/Azure/azure-cli-extensions) | 2.75.0 | Microsoft Azure Command-Line Tools Nginx Extension | Preview | [2.0.0b9](https://github.com/Azure/azure-cli-extensions) |
-|[notification-hub](https://github.com/Azure/azure-cli-extensions/tree/main/src/notification-hub) | 2.67.0 | Microsoft Azure Command-Line Tools Notification Hub Extension | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/notification-hub/HISTORY.rst) |
+|[notification-hub](https://github.com/Azure/azure-cli-extensions/tree/main/src/notification-hub) | 2.67.0 | Microsoft Azure Command-Line Tools Notification Hub Extension | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/notification-hub/HISTORY.rst) |
 |[nsp](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp) | 2.75.0 | Microsoft Azure Command-Line Tools Nsp Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp/HISTORY.rst) |
 |[offazure](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMigrateV2 Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure/HISTORY.rst) |
 |[oracle-database](https://github.com/Azure/azure-cli-extensions/tree/main/src/oracle-database) | 2.75.0 | Microsoft Azure Command-Line Tools OracleDatabase Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/oracle-database/HISTORY.rst) |

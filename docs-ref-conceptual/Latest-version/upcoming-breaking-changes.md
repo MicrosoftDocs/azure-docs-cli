@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 01/05/2026
+ms.date: 01/06/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -206,6 +206,20 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to vmss reference group](/cli/azure/vmss)
 
 - The default value of '--vm-sku' will be changed to 'Standard_D2s_v5' from 'Standard_DS1_v2' in a future release.
+
+### `sig image-version create`
+
+[Link to sig image-version reference group](/cli/azure/sig/image-version)
+
+- The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
+- The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
+
+### `sig image-version update`
+
+[Link to sig image-version reference group](/cli/azure/sig/image-version)
+
+- The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
+- The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
 
 ## azext_blueprint
 
