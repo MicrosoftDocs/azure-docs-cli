@@ -6,81 +6,77 @@ extensionInformation: |-
   > This reference is part of the **pscloud** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az pscloud pool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Storage Pool.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: "Command group 'az pscloud' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+status: GA
 sourceType: Extension
 directCommands:
 - uid: az_pscloud_pool_create
   name: az pscloud pool create
   summary: |-
     Create a storage pool.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az pscloud pool create --name --storage-pool-name
+                           --provisioned-bandwidth
+                           --reservation-id
                            --resource-group
-                           [--availability-zone]
+                           --subnet-name
+                           --vnet-name
+                           --zone
                            [--location]
-                           [--mi-system-assigned --system-assigned]
-                           [--mi-user-assigned --user-assigned]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                           [--provisioned-bandwidth]
-                           [--reservation-id]
                            [--tags]
-                           [--vnet-injection]
   examples:
   - summary: |-
       StoragePools_Create
-    syntax: az pscloud pool create --resource-group rgpurestorage --storage-pool-name storagePoolname --availability-zone vknyl --vnet-injection "{subnet-id:tnlctolrxdvnkjiphlrdxq,vnet-id:zbumtytyqwewjcyckwqchiypshv}" --provisioned-bandwidth 17 --reservation-id xiowoxnbtcotutcmmrofvgdi --type None --user-assigned-identities "{key4211:{}}" --tags "{key7593:vsyiygyurvwlfaezpuqu}" --location lonlc
+    syntax: az pscloud pool create --resource-group rgpurestorage --storage-pool-name storagePoolname --zone 1 --subnet-name /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName} --vnet-name /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName} --provisioned-bandwidth 100 --reservation-id /subscriptions/{subscriptionId}/providers/PureStorage.Block/reservations/{reservationName} --location eastus
   requiredParameters:
   - isRequired: true
     name: --name --storage-pool-name -n
     summary: |-
       Name of the storage pool.
   - isRequired: true
+    name: --provisioned-bandwidth
+    summary: |-
+      Total bandwidth provisioned for the pool, in MB/s.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --reservation-id
+    summary: |-
+      Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to.
+    groupName: Properties Arguments
+  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --availability-zone
+  - isRequired: true
+    name: --subnet-name
+    summary: |-
+      Azure resource ID of the Virtual Network subnet where the storage pool will be connected.
+    groupName: VnetInjection Arguments
+  - isRequired: true
+    name: --vnet-name
+    summary: |-
+      Azure resource ID of the Virtual Network in which the subnet is located.
+    groupName: VnetInjection Arguments
+  - isRequired: true
+    name: --zone -z
     summary: |-
       Azure Availability Zone the Pool is located in.
     groupName: Properties Arguments
+  optionalParameters:
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     groupName: Resource Arguments
-  - name: --mi-system-assigned --system-assigned
-    summary: |-
-      Set the system managed identity.
-    groupName: Identity Arguments
-  - name: --mi-user-assigned --user-assigned
-    summary: |-
-      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Identity Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --provisioned-bandwidth
-    summary: |-
-      Total bandwidth provisioned for the pool, in MB/s.
-    groupName: Properties Arguments
-  - name: --reservation-id
-    summary: |-
-      Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to.
-    groupName: Properties Arguments
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Resource Arguments
-  - name: --vnet-injection
-    summary: |-
-      Network properties of the storage pool  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -112,9 +108,7 @@ directCommands:
   name: az pscloud pool delete
   summary: |-
     Delete a storage pool.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az pscloud pool delete [--ids]
@@ -180,14 +174,12 @@ directCommands:
   name: az pscloud pool get-avs-status
   summary: |-
     Returns the status of the storage pool connection to AVS.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az pscloud pool get-avs-status [--ids]
+                                   [--name]
                                    [--resource-group]
-                                   [--storage-pool-name]
                                    [--subscription]
   examples:
   - summary: |-
@@ -198,13 +190,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the storage pool.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    groupName: Resource Id Arguments
-  - name: --storage-pool-name
-    summary: |-
-      Name of the storage pool.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -238,14 +230,12 @@ directCommands:
   name: az pscloud pool get-health-status
   summary: |-
     Retrieve health metrics of a storage pool.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az pscloud pool get-health-status [--ids]
+                                      [--name]
                                       [--resource-group]
-                                      [--storage-pool-name]
                                       [--subscription]
   examples:
   - summary: |-
@@ -256,13 +246,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the storage pool.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    groupName: Resource Id Arguments
-  - name: --storage-pool-name
-    summary: |-
-      Name of the storage pool.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -296,9 +286,7 @@ directCommands:
   name: az pscloud pool list
   summary: |-
     List storage pools by Azure subscription ID.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az pscloud pool list [--max-items]
@@ -351,9 +339,7 @@ directCommands:
   name: az pscloud pool show
   summary: |-
     Get a storage pool.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az pscloud pool show [--ids]
@@ -409,14 +395,10 @@ directCommands:
   name: az pscloud pool update
   summary: |-
     Update a storage pool.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az pscloud pool update [--ids]
-                           [--mi-system-assigned --system-assigned]
-                           [--mi-user-assigned --user-assigned]
                            [--name --storage-pool-name]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                            [--provisioned-bandwidth]
@@ -432,14 +414,6 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --mi-system-assigned --system-assigned
-    summary: |-
-      Set the system managed identity.
-    groupName: Identity Arguments
-  - name: --mi-user-assigned --user-assigned
-    summary: |-
-      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Identity Arguments
   - name: --name --storage-pool-name -n
     summary: |-
       Name of the storage pool.
@@ -488,101 +462,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_pscloud_pool_wait
-  name: az pscloud pool wait
-  summary: |-
-    Place the CLI in a waiting state until a condition is met.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az pscloud pool' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az pscloud pool wait [--created]
-                         [--custom]
-                         [--deleted]
-                         [--exists]
-                         [--ids]
-                         [--interval]
-                         [--name --storage-pool-name]
-                         [--resource-group]
-                         [--subscription]
-                         [--timeout]
-                         [--updated]
-  optionalParameters:
-  - name: --created
-    defaultValue: "False"
-    summary: |-
-      Wait until created with 'provisioningState' at 'Succeeded'.
-    groupName: Wait Condition Arguments
-  - name: --custom
-    summary: |-
-      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
-    groupName: Wait Condition Arguments
-  - name: --deleted
-    defaultValue: "False"
-    summary: |-
-      Wait until deleted.
-    groupName: Wait Condition Arguments
-  - name: --exists
-    defaultValue: "False"
-    summary: |-
-      Wait until the resource exists.
-    groupName: Wait Condition Arguments
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --interval
-    defaultValue: "30"
-    summary: |-
-      Polling interval in seconds.
-    groupName: Wait Condition Arguments
-  - name: --name --storage-pool-name -n
-    summary: |-
-      Name of the storage pool.
-    groupName: Resource Id Arguments
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    groupName: Resource Id Arguments
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    groupName: Resource Id Arguments
-  - name: --timeout
-    defaultValue: "3600"
-    summary: |-
-      Maximum wait in seconds.
-    groupName: Wait Condition Arguments
-  - name: --updated
-    defaultValue: "False"
-    summary: |-
-      Wait until updated with provisioningState at 'Succeeded'.
-    groupName: Wait Condition Arguments
-  globalParameters:
-  - name: --debug
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity to show all debug logs.
-  - name: --help -h
-    summary: |-
-      Show this help message and exit.
-  - name: --only-show-errors
-    defaultValue: "False"
-    summary: |-
-      Only show errors, suppressing warnings.
-  - name: --output -o
-    defaultValue: json
-    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
-    summary: |-
-      Output format.
-  - name: --query
-    summary: |-
-      JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --verbose
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_pscloud_pool_create
 - az_pscloud_pool_delete
@@ -591,6 +470,5 @@ commands:
 - az_pscloud_pool_list
 - az_pscloud_pool_show
 - az_pscloud_pool_update
-- az_pscloud_pool_wait
 metadata:
   description: Manage Storage Pool.
