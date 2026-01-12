@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/11/2026
+ms.date: 01/12/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -122,7 +122,7 @@ You will be prompted to install an extension on first use.
 |[healthbot](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot/HISTORY.rst) |
 |[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.66.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 2.3.0 | Microsoft Azure Command-Line Tools StorageCache Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache/HISTORY.rst) |
-|[image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy) | 2.68.0 | Support for copying managed vm images between regions | GA | [1.0.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy/HISTORY.rst) |
+|[image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy) | 2.68.0 | Support for copying managed vm images between regions | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy/HISTORY.rst) |
 |[image-gallery](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery) | 2.3.0 | Support for Azure Image Gallery | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery/HISTORY.rst) |
 |[import-export](https://github.com/Azure/azure-cli-extensions/tree/main/src/import-export) | 2.3.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/import-export/HISTORY.rst) |
 |[informatica](https://github.com/Azure/azure-cli-extensions/tree/main/src/informatica) | 2.70.0 | Microsoft Azure Command-Line Tools Informatica Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/informatica/HISTORY.rst) |
@@ -173,7 +173,7 @@ You will be prompted to install an extension on first use.
 |[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.67.0 | Microsoft Azure Command-Line Tools Portal Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated) | 2.56.0 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated/HISTORY.rst) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub) | 2.57.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub/HISTORY.rst) |
-|[pscloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud) | 2.75.0 | Microsoft Azure Command-Line Tools Pscloud Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud/HISTORY.rst) |
+|[pscloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud) | 2.75.0 | Microsoft Azure Command-Line Tools Pscloud Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
 |[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.73.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b10](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
 |[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.70.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
