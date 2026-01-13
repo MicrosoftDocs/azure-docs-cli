@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 01/06/2026
+ms.date: 01/13/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -13,6 +13,18 @@ ms.custom: devx-track-azurecli
 The breaking changes listed in this section are planned for the next major release of the Azure CLI unless otherwise noted. Per our [Support lifecycle](./azure-cli-support-lifecycle.md), breaking changes in Azure Core CLI reference groups occur twice a year.
 
 ## acr
+
+### `acr config content-trust update`
+
+[Link to acr config content-trust reference group](/cli/azure/acr/config/content-trust)
+
+- Remove content-trust enabled configuration in next breaking change release(2.86.0) scheduled for May 2026. The `--status enabled` parameter will no longer be accepted and will result in an error due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
+
+### `acr check-health`
+
+[Link to acr reference group](/cli/azure/acr)
+
+- Remove Notary client version validation in next breaking change release(2.86.0) scheduled for May 2026. The Notary client version check will no longer be performed as part of the check-health command due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
 
 ### `acr config content-trust`
 
