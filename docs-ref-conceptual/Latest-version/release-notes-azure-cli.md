@@ -1,13 +1,112 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 12/02/2025
+ms.date: 01/13/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## January 13, 2026
+
+Version 2.82.0
+
+### ACR
+
+* `az acr login`: Enforce using acr audience in aad token acquisition
+
+### AKS
+
+* Fix #15932: `az aks install-cli`: Add `--gh-token` parameter to allow authentication when downloading kubelogin
+* `az aks nodepool update`: Add GPU driver install options `install` and `none` for `--gpu-driver` parameter
+* `az aks nodepool add/update`: Add option `Ubuntu2404` to `--os-sku` parameter
+
+### App Service
+
+* `az appservice list-locations`: Add `--managed-instance-enabled` parameter for managed instances
+
+### Cognitive Services
+
+* `az cognitiveservices agent create`: Add ability to create and deploy hosted agent in AI Foundry
+
+### Compute
+
+* `az vmss list-instances`: Add new argument `--resiliency-view` to show resiliency status of each instance
+* `az vmss get-resiliency-view`: Add new command to show resiliency status of each instance
+* `az sig image-version create/update`: Add warning message for Azure Compute Gallery resources from api-version `2026-03-03`
+
+### Container app
+
+* `az containerapp env create`: Add parameter `--infrastructure-resource-group` to support specifying name for resource group that will contain infrastructure resources
+* Fix #32594: `az containerapp compose create`: Fix `TypeError` when docker-compose file include `env_file` without `environment`
+
+### Core
+
+* Resolve CVE-2025-66418
+* Resolve CVE-2025-66471
+
+### Cosmos DB
+
+* `az cosmosdb fleet`: Add new fleet feature
+* `az cosmosdb create/update`: Add support for `--disable-local-auth`
+* `az cosmosdb restore`: Fix for cross region restore for cosmosdb
+
+### Identity
+
+* `az identity create`: Add new `--isolation-scope` parameter to support identity isolation scope
+* `az identity update`: Add new command to support updating an identity
+
+### Key Vault
+
+* `az keyvault key create/import`: Add `--default-data-disk-policy` to support new default SKR policy
+
+### Monitor
+
+* `az monitor dashboard`: Support dashboard with Grafana
+
+### MySQL
+
+* `az mysql flexible-server backup delete`: Support deletion of on-demand backup
+
+### Network
+
+* `az network application-gateway settings`: Support `enableL4ClientIpPreservation` property via `--enable-l4-client-ip`
+* `az network application-gateway probe`: Support `enableProbeProxyProtocolHeader` property via `--enable-proxy-header`
+* `az network application-gateway waf-policy managed-rule rule-set`: Support disabled rules by default
+* `az network virtual-appliance`: Add `--nva-interface-configurations` parameter
+* `az network watcher flow-log`: Add `--record-types` parameter
+* `az network private-endpoint-connection`: Add provider `Microsoft.Maps/accounts`
+
+### Packaging
+
+* Pin pywin32 to version 310 to resolve the MSI upgrade issue
+
+### RDBMS
+
+* `az postgres flexible-server update/fabric-mirroring`: Allow high availability enabled servers to start fabric mirroring if PG version 17+
+* `az postgres flexible-server create/update`: Show high availability feature with zonal resiliency argument
+* `az postgres flexible-server create/update`: Enable support for High Availability on servers with PremiumV2_LRS storage type
+* `az postgres flexible-server index-tuning`: Deprecate and redirect to `az postgres flexible-server autonomous-tuning` command group
+* `az postgres flexible-server autonomous-tuning list-index-recommendations/list-table-recommendations`: Support listing index recommendations and table recommendations
+* `az postgres flexible-server update`: Fix bug for using argument `--standby-zone` when enabling high availability
+* `az postgres flexible-server upgrade`: Allow major version upgrade to PostgreSQL Version 18
+* `az postgres flexible-server create`: Add database name field for create with cluster
+* `az postgres flexible-server backup/db/firewall-rule/identity/long-term-retention/microsoft-entra-admin/migration/parameter/replica list`: Allow `--ids` use for list commands
+* `az postgres flexible-server create`: Change database name field to default to None
+* `az postgres flexible-server replica create`: Add `--name` argument to specify read replica name
+
+### SQL
+
+* `az sql mi create/update`: Add memory size in gb parameter
+
+### Storage
+
+* `az storage blob/container/fs generate-sas`: Add `--user-delegation-oid`
+* `az storage fs file generate-sas`: Add command and support `--user-delegation-oid`
+* `az storage fs directory generate-sas`: Add `--user-delegation-oid`
+* `az storage share/file/queue generate-sas`: Add `--as-user` and `--user-delegation-oid`
 
 ## December 02, 2025
 
