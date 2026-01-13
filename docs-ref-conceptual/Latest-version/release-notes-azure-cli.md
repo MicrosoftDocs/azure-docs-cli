@@ -42,6 +42,11 @@ Version 2.82.0
 * `az containerapp env create`: Add parameter `--infrastructure-resource-group` to support specifying name for resource group that will contain infrastructure resources
 * Fix #32594: `az containerapp compose create`: Fix `TypeError` when docker-compose file include `env_file` without `environment`
 
+### Core
+
+* Resolve CVE-2025-66418
+* Resolve CVE-2025-66471
+
 ### Cosmos DB
 
 * `az cosmosdb fleet`: Add new fleet feature
