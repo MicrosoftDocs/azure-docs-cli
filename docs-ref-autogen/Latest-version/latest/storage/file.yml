@@ -1099,6 +1099,9 @@ directCommands:
                                  --share-name
                                  [--account-key]
                                  [--account-name]
+                                 [--as-user]
+                                 [--auth-mode {key, login}]
+                                 [--backup-intent --enable-file-backup-request-intent]
                                  [--cache-control]
                                  [--connection-string]
                                  [--content-disposition]
@@ -1113,6 +1116,7 @@ directCommands:
                                  [--permissions]
                                  [--policy-name]
                                  [--start]
+                                 [--user-delegation-oid]
   examples:
   - summary: |-
       Generate a sas token for a file.
@@ -1144,6 +1148,18 @@ directCommands:
     summary: |-
       Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.
     groupName: Storage Account Arguments
+  - name: --as-user
+    defaultValue: "False"
+    summary: |-
+      Indicates that this command return the SAS signed with the user delegation key. The expiry parameter and '--auth-mode login' are required if this argument is specified.
+  - name: --auth-mode
+    acceptedValues: key, login
+    summary: |-
+      The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.
+  - name: --backup-intent --enable-file-backup-request-intent
+    defaultValue: "False"
+    summary: |-
+      Required parameter to use with OAuth (Azure AD) Authentication for Files. This will bypass any file/directory level permission checks and allow access, based on the allowed data actions, even if there are ACLs in place for those files/directories.
   - name: --cache-control
     summary: |-
       Response header value for Cache-Control when resource is accessed using this shared access signature.
@@ -1190,6 +1206,9 @@ directCommands:
   - name: --start
     summary: |-
       Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --policy-name that specifies this value. Defaults to the time of the request.
+  - name: --user-delegation-oid
+    summary: |-
+      Specifies the Entra ID of the user that is authorized to use the resulting SAS URL. The resulting SAS URL must be used in conjunction with an Entra ID token that has been issued to the user specified in this value.
   globalParameters:
   - name: --debug
     defaultValue: "False"

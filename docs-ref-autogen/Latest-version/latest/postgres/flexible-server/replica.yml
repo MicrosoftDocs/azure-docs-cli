@@ -13,16 +13,17 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server replica create --replica-name
-                                               --resource-group
+    az postgres flexible-server replica create --resource-group
                                                --source-server
                                                [--address-prefixes]
                                                [--identity]
                                                [--key]
                                                [--location]
+                                               [--name]
                                                [--no-wait]
                                                [--performance-tier]
                                                [--private-dns-zone]
+                                               [--replica-name]
                                                [--sku-name]
                                                [--storage-size]
                                                [--subnet]
@@ -35,11 +36,11 @@ directCommands:
   examples:
   - summary: |-
       Create a read replica 'testreplicaserver' for 'testserver' with public or private access in the specified zone and location if available.
-    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup --source-server testserver --zone 3 --location testLocation
+    syntax: az postgres flexible-server replica create --name testreplicaserver -g testGroup --source-server testserver --zone 3 --location testLocation
   - summary: |-
       Create a read replica 'testreplicaserver' with new subnet for 'testserver' with private access.
     syntax: >-
-      az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup \
+      az postgres flexible-server replica create --name testreplicaserver -g testGroup \
         --source-server testserver --zone 3 --location testLocation \
         --vnet newVnet --subnet newSubnet \
         --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
@@ -47,18 +48,14 @@ directCommands:
         --tags "key=value"
   - summary: |-
       Create a read replica 'testreplicaserver' for 'testserver' with public or private access       in the specified location if available. Since zone is not passed, it will automatically pick up zone in the       replica location which is different from source server, if available, else will pick up zone same as source server       in the replica location if available, else will set the zone as None, i.e. No preference
-    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup --source-server testserver --location testLocation
+    syntax: az postgres flexible-server replica create --name testreplicaserver -g testGroup --source-server testserver --location testLocation
   - summary: |-
       Create a read replica 'testreplicaserver' for 'testserver' with custom --storage-size and --sku.
-    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g testGroup --source-server testserver --sku-name Standard_D4ds_v5 --storage-size 256
+    syntax: az postgres flexible-server replica create --name testreplicaserver -g testGroup --source-server testserver --sku-name Standard_D4ds_v5 --storage-size 256
   - summary: |-
       Create a read replica 'testreplicaserver' for 'testserver', where 'testreplicaserver' is in a different resource group 'newTestGroup'.       Here --resource-group is for the read replica's resource group, and --source-server must be passed as resource ID.
-    syntax: az postgres flexible-server replica create --replica-name testreplicaserver -g newTestGroup         --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName} --location testLocation
+    syntax: az postgres flexible-server replica create --name testreplicaserver -g newTestGroup         --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName} --location testLocation
   requiredParameters:
-  - isRequired: true
-    name: --replica-name
-    summary: |-
-      The name of the server to restore to.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -80,6 +77,9 @@ directCommands:
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --name -n
+    summary: |-
+      The name of the read replica.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -90,6 +90,11 @@ directCommands:
   - name: --private-dns-zone
     summary: |-
       This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+  - name: --replica-name
+    summary: |-
+      The name of the server to restore to.
+    isDeprecated: true
+    deprecateInfo: Argument '--replica-name' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--name' instead.
   - name: --sku-name
     summary: |-
       The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.
@@ -152,21 +157,31 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server replica list --name
-                                             --resource-group
+    az postgres flexible-server replica list [--ids]
+                                             [--name]
+                                             [--resource-group]
+                                             [--subscription]
   examples:
   - summary: |-
       List all read replicas for master server 'testserver'.
     syntax: az postgres flexible-server replica list -g testGroup -n testserver
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
     summary: |-
-      Name of the source server.
-  - isRequired: true
-    name: --resource-group -g
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -187,9 +202,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -225,7 +237,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --name -n
     summary: |-
-      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+      Name of the read replica.
     groupName: Resource Id Arguments
   - name: --promote-mode
     defaultValue: standalone
