@@ -95,10 +95,12 @@ directCommands:
                                        [--admin-password]
                                        [--admin-type {Group, ServicePrincipal, Unknown, User}]
                                        [--admin-user]
+                                       [--allow-same-zone]
                                        [--backup-identity]
                                        [--backup-key]
                                        [--backup-retention]
                                        [--cluster-option {ElasticCluster, Server}]
+                                       [--database-name]
                                        [--geo-redundant-backup {Disabled, Enabled}]
                                        [--high-availability {Disabled, SameZone, ZoneRedundant}]
                                        [--identity]
@@ -126,6 +128,7 @@ directCommands:
                                        [--version]
                                        [--vnet]
                                        [--yes]
+                                       [--zonal-resiliency {Disabled, Enabled}]
                                        [--zone]
   examples:
   - summary: |-
@@ -134,8 +137,11 @@ directCommands:
       az postgres flexible-server create --location northeurope --resource-group testGroup \
         --name testserver --admin-user username --admin-password password \
         --sku-name Standard_D2s_v3 --tier GeneralPurpose --public-access 153.24.26.117 --storage-size 128 \
-        --tags "key=value" --version 17 --high-availability ZoneRedundant --zone 1 \
+        --tags "key=value" --version 18 --zonal-resiliency Enabled --zone 1 \
         --standby-zone 3
+  - summary: |-
+      Create server with high availability feature enabled that allows primary and standby in the same zone when multi-zone capacity is unavailable.
+    syntax: az postgres flexible-server create -g testGroup -n testCluster --location testLocation --zonal-resiliency Enabled --allow-same-zone
   - summary: |-
       Create a PostgreSQL flexible server using Premium SSD v2 Disks.
     syntax: >-
@@ -326,10 +332,14 @@ directCommands:
     summary: |-
       Type of the Microsoft Entra administrator.
   - name: --admin-user -u
-    defaultValue: maletermite8
+    defaultValue: drearywildcat5
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
+  - name: --allow-same-zone
+    defaultValue: "False"
+    summary: |-
+      Allow primary and standby in the same zone when multi-zone capacity is unavailable.
   - name: --backup-identity
     summary: |-
       The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
@@ -345,6 +355,9 @@ directCommands:
     acceptedValues: ElasticCluster, Server
     summary: |-
       Cluster option for the server. Servers are for workloads that can fit on one node. Elastic clusters provides schema- and row-based sharding on a database. Default value is Server.
+  - name: --database-name -d
+    summary: |-
+      The default database name for an elastic cluster. Only applicable when --cluster-option is set to ElasticCluster.
   - name: --geo-redundant-backup
     defaultValue: Disabled
     acceptedValues: Disabled, Enabled
@@ -355,6 +368,8 @@ directCommands:
     acceptedValues: Disabled, SameZone, ZoneRedundant
     summary: |-
       Enable (ZoneRedundant or SameZone) or disable high availability feature.
+    isDeprecated: true
+    deprecateInfo: Argument '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
   - name: --identity
     summary: |-
       The name or resource ID of the user assigned identity for data encryption.
@@ -440,6 +455,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  - name: --zonal-resiliency
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable high availability feature.
   - name: --zone -z
     summary: |-
       Availability zone into which to provision the resource.
@@ -692,7 +712,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-01-12T11:18:38+00:00
+    defaultValue: 2026-01-13T03:53:18+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --subnet
@@ -990,7 +1010,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-01-12T11:18:38+00:00
+    defaultValue: 2026-01-13T03:53:18+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --storage-type
@@ -1273,7 +1293,7 @@ directCommands:
   - name: --server-name -s
     defaultValue: '{server}'
     summary: |-
-      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+      Name of the server.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -1434,6 +1454,7 @@ directCommands:
   syntax: >-
     az postgres flexible-server update [--add]
                                        [--admin-password]
+                                       [--allow-same-zone]
                                        [--backup-identity]
                                        [--backup-key]
                                        [--backup-retention]
@@ -1463,6 +1484,7 @@ directCommands:
                                        [--throughput]
                                        [--tier]
                                        [--yes]
+                                       [--zonal-resiliency {Disabled, Enabled}]
   examples:
   - summary: |-
       Update a flexible server's sku, using local context for server and resource group.
@@ -1520,6 +1542,10 @@ directCommands:
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
     groupName: Authentication Arguments
+  - name: --allow-same-zone
+    defaultValue: "False"
+    summary: |-
+      Allow primary and standby in the same zone when multi-zone capacity is unavailable.
   - name: --backup-identity
     summary: |-
       The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
@@ -1538,6 +1564,8 @@ directCommands:
     acceptedValues: Disabled, SameZone, ZoneRedundant
     summary: |-
       Enable (ZoneRedundant or SameZone) or disable high availability feature.
+    isDeprecated: true
+    deprecateInfo: Argument '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
   - name: --identity
     summary: |-
       The name or resource ID of the user assigned identity for data encryption.
@@ -1623,6 +1651,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+  - name: --zonal-resiliency
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable high availability feature.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -1654,7 +1686,7 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server upgrade --version {13, 14, 15, 16, 17}
+    az postgres flexible-server upgrade --version {13, 14, 15, 16, 17, 18}
                                         [--ids]
                                         [--name]
                                         [--resource-group]
@@ -1662,12 +1694,12 @@ directCommands:
                                         [--yes]
   examples:
   - summary: |-
-      Upgrade server 'testsvr' to PostgreSQL major version 17.
-    syntax: az postgres flexible-server upgrade -g testgroup -n testsvr -v 17
+      Upgrade server 'testsvr' to PostgreSQL major version 18.
+    syntax: az postgres flexible-server upgrade -g testgroup -n testsvr -v 18
   requiredParameters:
   - isRequired: true
     name: --version -v
-    acceptedValues: 13, 14, 15, 16, 17
+    acceptedValues: 13, 14, 15, 16, 17, 18
     summary: |-
       Server major version.
   optionalParameters:
@@ -1811,6 +1843,14 @@ commands:
 - az_postgres_flexible-server_advanced-threat-protection-setting
 - az_postgres_flexible-server_advanced-threat-protection-setting_show
 - az_postgres_flexible-server_advanced-threat-protection-setting_update
+- az_postgres_flexible-server_autonomous-tuning
+- az_postgres_flexible-server_autonomous-tuning_list-index-recommendations
+- az_postgres_flexible-server_autonomous-tuning_list-settings
+- az_postgres_flexible-server_autonomous-tuning_list-table-recommendations
+- az_postgres_flexible-server_autonomous-tuning_set-settings
+- az_postgres_flexible-server_autonomous-tuning_show
+- az_postgres_flexible-server_autonomous-tuning_show-settings
+- az_postgres_flexible-server_autonomous-tuning_update
 - az_postgres_flexible-server_backup
 - az_postgres_flexible-server_backup_create
 - az_postgres_flexible-server_backup_delete

@@ -40,6 +40,7 @@ directCommands:
                      [--license-type {BasePrice, LicenseIncluded}]
                      [--location]
                      [--maint-config-id]
+                     [--memory]
                      [--minimal-tls-version {1.0, 1.1, 1.2, None}]
                      [--no-wait]
                      [--pid --primary-user-assigned-identity-id]
@@ -103,6 +104,9 @@ directCommands:
   - summary: |-
       Create GPv2 managed instance with specified IOPS limit
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} -e GeneralPurpose --gpv2 true -f Gen8IH -c 4 --storage 256GB --iops 3000
+  - summary: |-
+      Create managed instance with specified memory size in GB
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} -e GeneralPurpose --gpv2 true -f Gen8IM -c 4 --storage 256GB --iops 3000 --memory 40
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -196,6 +200,9 @@ directCommands:
   - name: --maint-config-id -m
     summary: |-
       Assign maintenance configuration to this managed instance.
+  - name: --memory
+    summary: |-
+      The memory size of the managed instance. Memory size must be specified in GB.
   - name: --minimal-tls-version
     acceptedValues: 1.0, 1.1, 1.2, None
     summary: |-
@@ -742,6 +749,7 @@ directCommands:
                      [--key-id]
                      [--license-type {BasePrice, LicenseIncluded}]
                      [--maint-config-id]
+                     [--memory]
                      [--minimal-tls-version {1.0, 1.1, 1.2, None}]
                      [--name]
                      [--no-wait]
@@ -819,6 +827,9 @@ directCommands:
   - summary: |-
       Update managed instance to GPv2 with specified IOPS limit
     syntax: az sql mi update -g mygroup -n myinstance -e GeneralPurpose --gpv2 true --iops 3000
+  - summary: |-
+      Update managed instance to use a specified memory size in GB
+    syntax: az sql mi update -g mygroup -n myinstance -e GeneralPurpose --memory 40
   optionalParameters:
   - name: --add
     defaultValue: '[]'
@@ -888,6 +899,9 @@ directCommands:
   - name: --maint-config-id -m
     summary: |-
       Change maintenance configuration for this managed instance.
+  - name: --memory
+    summary: |-
+      The memory size of the managed instance. Memory size must be specified in GB.
   - name: --minimal-tls-version
     acceptedValues: 1.0, 1.1, 1.2, None
     summary: |-
@@ -1050,5 +1064,5 @@ commands:
 - az_sql_mi_tde-key_show
 - az_sql_mi_update
 metadata:
-  ms.date: 09/24/2025
+  ms.date: 12/05/2025
   description: Manage SQL managed instances.

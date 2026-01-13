@@ -307,6 +307,7 @@ directCommands:
                                [--permissions]
                                [--policy-name]
                                [--start]
+                               [--user-delegation-oid]
   examples:
   - summary: |-
       Generate a sas token for file system and use it to upload files.
@@ -384,6 +385,10 @@ directCommands:
   - name: --start
     summary: |-
       Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --policy-name that specifies this value. Defaults to the time of the request.
+  - name: --user-delegation-oid
+    summary: |-
+      Specifies the Entra ID of the user that is authorized to use the resulting SAS URL. The resulting SAS URL must be used in conjunction with an Entra ID token that has been issued to the user specified in this value.
+    isPreview: true
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -453,6 +458,7 @@ directCommands:
       Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.
     groupName: Storage Account Arguments
   - name: --include-metadata
+    defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       Specify that file system metadata be returned in the response. The default value is "False".
@@ -697,7 +703,7 @@ directCommands:
   - isRequired: true
     name: --deletion-id
     summary: |-
-      Specifies the version of the deleted path to restore. :keyword int timeout: The timeout parameter is expressed in seconds.
+      Specifies the version of the deleted path to restore. :keyword int timeout: Sets the server-side timeout for the operation in seconds. For more details see https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations. This value is not tracked or validated on the client. To configure client-side network timesouts see `here <https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/storage/azure-storage-file-datalake #other-client--per-operation-configuration>`_.
   - isRequired: true
     name: --file-system -f
     summary: |-
@@ -786,6 +792,7 @@ commands:
 - az_storage_fs_file_delete
 - az_storage_fs_file_download
 - az_storage_fs_file_exists
+- az_storage_fs_file_generate-sas
 - az_storage_fs_file_list
 - az_storage_fs_file_metadata
 - az_storage_fs_file_metadata_show
@@ -806,5 +813,5 @@ commands:
 - az_storage_fs_show
 - az_storage_fs_undelete-path
 metadata:
-  ms.date: 11/06/2025
+  ms.date: 01/04/2026
   description: Manage file systems in Azure Data Lake Storage Gen2 account.

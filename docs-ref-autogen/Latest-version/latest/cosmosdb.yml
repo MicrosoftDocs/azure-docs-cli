@@ -83,13 +83,16 @@ directCommands:
                        [--databases-to-restore]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
                        [--default-identity]
+                       [--default-priority-level {High, Low}]
                        [--disable-key-based-metadata-write-access {false, true}]
+                       [--disable-local-auth {false, true}]
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
                        [--enable-burst-capacity {false, true}]
                        [--enable-free-tier {false, true}]
                        [--enable-multiple-write-locations {false, true}]
                        [--enable-partition-merge {false, true}]
+                       [--enable-pbe {false, true}]
                        [--enable-prpp-autoscale {false, true}]
                        [--enable-virtual-network {false, true}]
                        [--gremlin-databases-to-restore]
@@ -177,10 +180,18 @@ directCommands:
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more. User-assigned identities are specified in format `UserAssignedIdentity=<resource ID of the user-assigned identity>`.
+  - name: --default-priority-level
+    acceptedValues: High, Low
+    summary: |-
+      Default Priority Level of Request if not specified.
   - name: --disable-key-based-metadata-write-access
     acceptedValues: false, true
     summary: |-
       Disable write operations on metadata resources (databases, containers, throughput) via account keys.
+  - name: --disable-local-auth
+    acceptedValues: false, true
+    summary: |-
+      Disable key-based authentication on the Cosmos DB account.
   - name: --enable-analytical-storage
     acceptedValues: false, true
     summary: |-
@@ -210,6 +221,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Flag to enable partition merge on the account.
+  - name: --enable-pbe
+    acceptedValues: false, true
+    summary: |-
+      Flag to enable priority based execution on the account.
   - name: --enable-prpp-autoscale
     acceptedValues: false, true
     summary: |-
@@ -916,6 +931,7 @@ directCommands:
                         [--disable-ttl {false, true}]
                         [--gremlin-databases-to-restore]
                         [--public-network-access {DISABLED, ENABLED}]
+                        [--source-backup-location]
                         [--tables-to-restore]
   examples:
   - summary: |-
@@ -941,7 +957,7 @@ directCommands:
   - isRequired: true
     name: --location -l
     summary: |-
-      The location of the source account from which restore is triggered. This will also be the write region of the restored account.
+      This is the write region of the restored account. This is also the location of the source account where its backups are located if source_backup_location is not provided.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -980,6 +996,9 @@ directCommands:
     acceptedValues: DISABLED, ENABLED
     summary: |-
       Sets public network access in server to either Enabled or Disabled.
+  - name: --source-backup-location
+    summary: |-
+      This is the location of the source account where backups are located. Provide this value if the source and target are in different locations.
   - name: --tables-to-restore
     summary: |-
       Add table names to restore.
@@ -1265,12 +1284,15 @@ directCommands:
                        [--continuous-tier {Continuous30Days, Continuous7Days}]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
                        [--default-identity]
+                       [--default-priority-level {High, Low}]
                        [--disable-key-based-metadata-write-access {false, true}]
+                       [--disable-local-auth {false, true}]
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
                        [--enable-burst-capacity {false, true}]
                        [--enable-multiple-write-locations {false, true}]
                        [--enable-partition-merge {false, true}]
+                       [--enable-pbe {false, true}]
                        [--enable-prpp-autoscale {false, true}]
                        [--enable-virtual-network {false, true}]
                        [--ids]
@@ -1335,10 +1357,18 @@ directCommands:
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more. User-assigned identities are specified in format `UserAssignedIdentity=<resource ID of the user-assigned identity>`.
+  - name: --default-priority-level
+    acceptedValues: High, Low
+    summary: |-
+      Default Priority Level of Request if not specified.
   - name: --disable-key-based-metadata-write-access
     acceptedValues: false, true
     summary: |-
       Disable write operations on metadata resources (databases, containers, throughput) via account keys.
+  - name: --disable-local-auth
+    acceptedValues: false, true
+    summary: |-
+      Disable key-based authentication on the Cosmos DB account.
   - name: --enable-analytical-storage
     acceptedValues: false, true
     summary: |-
@@ -1363,6 +1393,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Flag to enable partition merge on the account.
+  - name: --enable-pbe
+    acceptedValues: false, true
+    summary: |-
+      Flag to enable priority based execution on the account.
   - name: --enable-prpp-autoscale
     acceptedValues: false, true
     summary: |-
@@ -1749,20 +1783,33 @@ commands:
 - az_cosmosdb_fleet_analytics_list
 - az_cosmosdb_fleet_analytics_show
 - az_cosmosdb_fleet_create
+- az_cosmosdb_fleet_create(cosmosdb-preview)
 - az_cosmosdb_fleet_delete
+- az_cosmosdb_fleet_delete(cosmosdb-preview)
 - az_cosmosdb_fleet_list
+- az_cosmosdb_fleet_list(cosmosdb-preview)
 - az_cosmosdb_fleet_show
+- az_cosmosdb_fleet_show(cosmosdb-preview)
 - az_cosmosdb_fleetspace
 - az_cosmosdb_fleetspace_account
 - az_cosmosdb_fleetspace_account_create
+- az_cosmosdb_fleetspace_account_create(cosmosdb-preview)
 - az_cosmosdb_fleetspace_account_delete
+- az_cosmosdb_fleetspace_account_delete(cosmosdb-preview)
 - az_cosmosdb_fleetspace_account_list
+- az_cosmosdb_fleetspace_account_list(cosmosdb-preview)
 - az_cosmosdb_fleetspace_account_show
+- az_cosmosdb_fleetspace_account_show(cosmosdb-preview)
 - az_cosmosdb_fleetspace_create
+- az_cosmosdb_fleetspace_create(cosmosdb-preview)
 - az_cosmosdb_fleetspace_delete
+- az_cosmosdb_fleetspace_delete(cosmosdb-preview)
 - az_cosmosdb_fleetspace_list
+- az_cosmosdb_fleetspace_list(cosmosdb-preview)
 - az_cosmosdb_fleetspace_show
+- az_cosmosdb_fleetspace_show(cosmosdb-preview)
 - az_cosmosdb_fleetspace_update
+- az_cosmosdb_fleetspace_update(cosmosdb-preview)
 - az_cosmosdb_gremlin
 - az_cosmosdb_gremlin_database
 - az_cosmosdb_gremlin_database_create
