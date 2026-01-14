@@ -4,6 +4,12 @@ name: az migrate
 extensionInformation: |-
   > [!NOTE]
   > This reference is part of the **migrate** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az migrate** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Azure Migrate resources and operations.
+description: |-
+  Commands to manage Azure Migrate projects,
+  discover servers, and perform migrations
+  to Azure and Azure Local/Stack HCI environments.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -11,6 +17,14 @@ sourceType: Extension
 directCommands:
 - uid: az_migrate_get-discovered-server
   name: az migrate get-discovered-server
+  summary: |-
+    Retrieve discovered servers from an Azure Migrate project.
+  description: |-
+    Get information about servers discovered by Azure Migrate appliances.
+    You can list all discovered servers in a project,
+    filter by display name or machine type,
+    or get a specific server by name.
+    This command supports both VMware and Hyper-V environments.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'migrate' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -25,6 +39,44 @@ directCommands:
                                      [--source-machine-type {HyperV, VMware}]
                                      [--subscription]
                                      [--subscription-id]
+  examples:
+  - summary: |-
+      List all discovered servers in a project
+    syntax: >-
+      az migrate get-discovered-server \
+          --project-name myMigrateProject \
+          --resource-group myRG
+  - summary: |-
+      Get a specific discovered server by name
+    syntax: >-
+      az migrate get-discovered-server \
+          --project-name myMigrateProject \
+          --resource-group myRG \
+          --name machine-12345
+  - summary: |-
+      Filter discovered servers by display name
+    syntax: >-
+      az migrate get-discovered-server \
+          --project-name myMigrateProject \
+          --resource-group myRG \
+          --display-name "web-server"
+  - summary: |-
+      List VMware servers discovered by a specific appliance
+    syntax: >-
+      az migrate get-discovered-server \
+          --project-name myMigrateProject \
+          --resource-group myRG \
+          --appliance-name myVMwareAppliance \
+          --source-machine-type VMware
+  - summary: |-
+      Get a specific server from a specific appliance
+    syntax: >-
+      az migrate get-discovered-server \
+          --project-name myMigrateProject \
+          --resource-group myRG \
+          --appliance-name myAppliance \
+          --name machine-12345 \
+          --source-machine-type HyperV
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -34,31 +86,43 @@ directCommands:
   - name: --appliance-name
     summary: |-
       Name of the appliance (site) containing the machines.
+    description: |-
+      Filter servers discovered by a specific Azure Migrate appliance.
   - name: --display-name
     summary: |-
       Display name of the source machine to filter by.
+    description: |-
+      Filter discovered servers by their display name (partial match supported).
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
   - name: --name
     summary: |-
-      Internal name of the specific source machine to retrieve.
+      Internal name of the specific source machine.
+    description: |-
+      The internal machine name assigned by Azure Migrate (different from display name).
   - name: --project-name
     summary: |-
       Name of the Azure Migrate project.
+    description: |-
+      The Azure Migrate project that contains the discovered servers.
     groupName: Resource Id Arguments
   - name: --source-machine-type
     acceptedValues: HyperV, VMware
     summary: |-
       Type of the source machine.
+    description: |-
+      Filter by source machine type. Valid values are 'VMware' or 'HyperV'.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --subscription-id
     summary: |-
-      Azure subscription ID. Uses the default subscription if not specified.
+      Azure subscription ID.
+    description: |-
+      The subscription containing the Azure Migrate project. Uses the default subscription if not specified.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -94,3 +158,10 @@ commands:
 - az_migrate_local_replication_new
 - az_migrate_local_replication_remove
 - az_migrate_local_start-migration
+metadata:
+  description: >-
+    Commands to manage Azure Migrate projects,
+
+    discover servers, and perform migrations
+
+    to Azure and Azure Local/Stack HCI environments.

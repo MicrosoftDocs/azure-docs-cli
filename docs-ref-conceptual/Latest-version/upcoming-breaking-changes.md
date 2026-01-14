@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 01/13/2026
+ms.date: 01/14/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -85,7 +85,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 - '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
-## rdbms
+## postgresql
 
 ### `postgres flexible-server create`
 
