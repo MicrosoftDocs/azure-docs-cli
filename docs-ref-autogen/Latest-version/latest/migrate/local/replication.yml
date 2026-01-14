@@ -4,6 +4,12 @@ name: az migrate local replication
 extensionInformation: |-
   > [!NOTE]
   > This reference is part of the **migrate** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az migrate local replication** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage replication for Azure Local/Stack HCI migrations.
+description: |-
+  Commands to initialize replication infrastructure
+  and create new server replications
+  for migrations to Azure Local and Azure Stack HCI environments.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'migrate local' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -11,6 +17,28 @@ sourceType: Extension
 directCommands:
 - uid: az_migrate_local_replication_get
   name: az migrate local replication get
+  summary: |-
+    Get detailed information about a specific replicating server.
+  description: |-
+    Retrieves comprehensive details about a specific protected item (replicating server)
+    including its protection state, replication health, configuration settings,
+    and historical information about failover operations.
+
+    You can retrieve the protected item either by:
+    - Full ARM resource ID (--protected-item-id or --id)
+    - Name with project context (--protected-item-name with --resource-group and --project-name)
+
+    The command returns detailed information including:
+    - Basic information (name, resource ID, correlation ID)
+    - Protection status (state, health, resync requirements)
+    - Configuration (policy, replication extension)
+    - Failover history (test, planned, unplanned)
+    - Allowed operations
+    - Machine details (source and target information)
+    - Health errors with recommended actions (if any)
+
+    Note: This command uses a preview API version
+    and may experience breaking changes in future releases.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'migrate local replication' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -23,6 +51,32 @@ directCommands:
                                      [--resource-group]
                                      [--subscription]
                                      [--subscription-id]
+  examples:
+  - summary: |-
+      Get a protected item by its full ARM resource ID
+    syntax: >-
+      az migrate local replication get \
+          --protected-item-id "/subscriptions/xxxx/resourceGroups/myRG/providers/Microsoft.DataReplication/replicationVaults/myVault/protectedItems/myItem"
+  - summary: |-
+      Get a protected item by name using project context
+    syntax: >-
+      az migrate local replication get \
+          --protected-item-name myProtectedItem \
+          --resource-group myRG \
+          --project-name myMigrateProject
+  - summary: |-
+      Get a protected item with specific subscription
+    syntax: >-
+      az migrate local replication get \
+          --name myProtectedItem \
+          --resource-group myRG \
+          --project-name myMigrateProject \
+          --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Get a protected item using short parameter names
+    syntax: >-
+      az migrate local replication get \
+          --id "/subscriptions/xxxx/resourceGroups/myRG/providers/Microsoft.DataReplication/replicationVaults/myVault/protectedItems/myItem"
   optionalParameters:
   - name: --id --protected-item-id
     summary: |-
@@ -36,18 +90,24 @@ directCommands:
       The name of the protected item (replicating server).
   - name: --project-name
     summary: |-
-      The name of the migrate project. Required when using --protected-item-name.
+      Name of the Azure Migrate project.
+    description: |-
+      The Azure Migrate project that contains the replicating server. Required when using --protected-item-name.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
-      The name of the resource group where the migrate project is present. Required when using --protected-item-name.
+      Resource group containing the Azure Migrate project.
+    description: |-
+      The name of the resource group where the Azure Migrate project is located. Required when using --protected-item-name.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --subscription-id
     summary: |-
-      Azure subscription ID. Uses the default subscription if not specified.
+      Azure subscription ID.
+    description: |-
+      The subscription containing the Azure Migrate project. Uses the default subscription if not specified.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -74,6 +134,15 @@ directCommands:
       Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_migrate_local_replication_get-job
   name: az migrate local replication get-job
+  summary: |-
+    Retrieve the status of an Azure Migrate job.
+  description: |-
+    Get the status and details of an Azure Migrate replication job.
+    You can retrieve a specific job by its ARM ID or name,
+    or list all jobs in a migrate project.
+
+    Note: This command uses a preview API version
+    and may experience breaking changes in future releases.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'migrate local replication' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -86,6 +155,38 @@ directCommands:
                                          [--resource-group]
                                          [--subscription]
                                          [--subscription-id]
+  examples:
+  - summary: |-
+      Get a specific job by ARM ID
+    syntax: >-
+      az migrate local replication get-job \
+          --job-id "/subscriptions/{sub-id}/resourceGroups/{rg}/providers/Microsoft.DataReplication/replicationVaults/{vault}/jobs/{job-name}"
+  - summary: |-
+      Get a specific job by name
+    syntax: >-
+      az migrate local replication get-job \
+          --resource-group myRG \
+          --project-name myMigrateProject \
+          --job-name myJobName
+  - summary: |-
+      List all jobs in a project
+    syntax: >-
+      az migrate local replication get-job \
+          --resource-group myRG \
+          --project-name myMigrateProject
+  - summary: |-
+      Get job using short parameter names
+    syntax: >-
+      az migrate local replication get-job \
+          --id "/subscriptions/{sub-id}/resourceGroups/{rg}/providers/Microsoft.DataReplication/replicationVaults/{vault}/jobs/{job-name}"
+  - summary: |-
+      Get job with specific subscription
+    syntax: >-
+      az migrate local replication get-job \
+          -g myRG \
+          --project-name myMigrateProject \
+          --name myJobName \
+          --subscription-id "12345678-1234-1234-1234-123456789012"
   optionalParameters:
   - name: --id --job-id
     summary: |-
@@ -99,18 +200,24 @@ directCommands:
       Job identifier.
   - name: --project-name
     summary: |-
-      The name of the migrate project.
+      Name of the migrate project.
+    description: |-
+      The name of the Azure Migrate project. Required when using --resource-group.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
-      The name of the resource group where the recovery services vault is present.
+      Resource group name where the vault is present.
+    description: |-
+      The name of the resource group containing the recovery services vault. Required when using --project-name.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --subscription-id
     summary: |-
-      Azure subscription ID. Uses the default subscription if not specified.
+      Azure subscription ID.
+    description: |-
+      The subscription containing the migrate project. Uses the current subscription if not specified.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -137,6 +244,17 @@ directCommands:
       Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_migrate_local_replication_init
   name: az migrate local replication init
+  summary: |-
+    Initialize Azure Migrate local replication infrastructure.
+  description: |-
+    Initialize the replication infrastructure required for
+    migrating servers to Azure Local or Azure Stack HCI.
+    This command sets up the necessary fabrics, policies, and mappings
+    between source and target appliances.
+    This is a prerequisite before creating any server replications.
+
+    Note: This command uses a preview API version and
+    may experience breaking changes in future releases.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'migrate local replication' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -151,6 +269,24 @@ directCommands:
                                       [--project-name]
                                       [--subscription]
                                       [--subscription-id]
+  examples:
+  - summary: |-
+      Initialize replication infrastructure
+    syntax: >-
+      az migrate local replication init \
+          --resource-group myRG \
+          --project-name myMigrateProject \
+          --source-appliance-name myVMwareAppliance \
+          --target-appliance-name myAzStackHCIAppliance
+  - summary: |-
+      Initialize and return success status
+    syntax: >-
+      az migrate local replication init \
+          --resource-group myRG \
+          --project-name myMigrateProject \
+          --source-appliance-name mySourceAppliance \
+          --target-appliance-name myTargetAppliance \
+          --pass-thru
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -159,11 +295,15 @@ directCommands:
   - isRequired: true
     name: --source-appliance-name
     summary: |-
-      Specifies the source appliance name for the AzLocal scenario.
+      Source appliance name.
+    description: |-
+      Name of the Azure Migrate appliance that discovered the source servers.
   - isRequired: true
     name: --target-appliance-name
     summary: |-
-      Specifies the target appliance name for the AzLocal scenario.
+      Target appliance name.
+    description: |-
+      Name of the Azure Local appliance that will host the migrated servers.
   optionalParameters:
   - name: --cache-storage-account-id --cache-storage-id
     summary: |-
@@ -176,10 +316,14 @@ directCommands:
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Returns true when the command succeeds.
+      Return true when the command succeeds.
+    description: |-
+      When enabled, returns a boolean value indicating successful completion.
   - name: --project-name
     summary: |-
-      Specifies the name of the Azure Migrate project to be used for server migration.
+      Name of the Azure Migrate project.
+    description: |-
+      The Azure Migrate project to be used for server migration.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -187,7 +331,9 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --subscription-id
     summary: |-
-      Azure subscription ID. Uses the default subscription if not specified.
+      Azure subscription ID.
+    description: |-
+      The subscription containing the Azure Migrate project. Uses the current subscription if not specified.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -214,37 +360,65 @@ directCommands:
       Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_migrate_local_replication_list
   name: az migrate local replication list
+  summary: |-
+    List all protected items (replicating servers) in a project.
+  description: |-
+    Lists all servers that have replication enabled
+    in an Azure Migrate project.
+    This command shows the replication status, health,
+    and configuration details for each protected server.
+
+    The command returns information including:
+    - Protection state (e.g., Protected, ProtectedReplicating, EnablingFailed)
+    - Replication health (Normal, Warning, Critical)
+    - Source machine name and target VM name
+    - Replication policy name
+    - Resource IDs (used for remove command)
+    - Health errors if any
+
+    Note: This command uses a preview API version
+    and may experience breaking changes in future releases.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'migrate local replication' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az migrate local replication list --resource-group
-                                      [--ids]
-                                      [--project-name]
-                                      [--subscription]
+    az migrate local replication list --project-name
+                                      --resource-group
                                       [--subscription-id]
+  examples:
+  - summary: |-
+      List all replicating servers in a project
+    syntax: >-
+      az migrate local replication list \
+          --resource-group myRG \
+          --project-name myMigrateProject
+  - summary: |-
+      List replicating servers with a specific subscription
+    syntax: >-
+      az migrate local replication list \
+          --resource-group myRG \
+          --project-name myMigrateProject \
+          --subscription-id 00000000-0000-0000-0000-000000000000
   requiredParameters:
+  - isRequired: true
+    name: --project-name
+    summary: |-
+      Name of the Azure Migrate project.
+    description: |-
+      The Azure Migrate project that contains the replicating servers.
   - isRequired: true
     name: --resource-group -g
     summary: |-
-      The name of the resource group where the migrate project is present.
+      Resource group containing the Azure Migrate project.
+    description: |-
+      The name of the resource group where the Azure Migrate project is located.
   optionalParameters:
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --project-name
-    summary: |-
-      The name of the migrate project.
-    groupName: Resource Id Arguments
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    groupName: Resource Id Arguments
   - name: --subscription-id
     summary: |-
-      Azure subscription ID. Uses the default subscription if not specified.
+      Azure subscription ID.
+    description: |-
+      The subscription containing the Azure Migrate project. Uses the default subscription if not specified.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -265,12 +439,30 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_migrate_local_replication_new
   name: az migrate local replication new
+  summary: |-
+    Create a new replication for an Azure Local server.
+  description: |-
+    Create a new replication to migrate a discovered server to Azure Local.
+    You can specify the source machine either
+    by its ARM resource ID or by selecting it from
+    a numbered list of discovered servers.
+
+    The command supports two modes:
+    - Default User Mode: Specify os-disk-id and target-virtual-switch-id
+    - Power User Mode: Specify disk-to-include and nic-to-include
+
+    Note: This command uses a preview API version
+    and may experience breaking changes in
+    future releases.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'migrate local replication' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -296,15 +488,74 @@ directCommands:
                                      [--target-test-virtual-switch-id --test-network-id]
                                      [--target-vm-cpu-core]
                                      [--target-vm-ram]
+  examples:
+  - summary: |-
+      Create replication using machine ARM ID (default user mode)
+    syntax: >-
+      az migrate local replication new \
+          --machine-id "XXXX" \
+          --target-storage-path-id "YYYY" \
+          --target-resource-group-id "ZZZZ" \
+          --target-vm-name migratedVM01 \
+          --source-appliance-name myVMwareAppliance \
+          --target-appliance-name myAzStackHCIAppliance \
+          --target-virtual-switch-id "XYXY" \
+          --os-disk-id "disk-0"
+  - summary: |-
+      Create replication using machine index (power user mode)
+    syntax: >-
+      az migrate local replication new \
+          --machine-index 1 \
+          --project-name myMigrateProject \
+          --resource-group myRG \
+          --target-storage-path-id "XZXZ" \
+          --target-resource-group-id "YZYZ" \
+          --target-vm-name migratedVM01 \
+          --source-appliance-name mySourceAppliance \
+          --target-appliance-name myTargetAppliance \
+          --disk-to-include "disk-0" "disk-1" \
+          --nic-to-include "nic-0"
+  - summary: |-
+      Create replication with custom CPU and RAM settings
+    syntax: >-
+      az migrate local replication new \
+          --machine-id "XXXX" \
+          --target-storage-path-id "YYYY" \
+          --target-resource-group-id "ZZZZ" \
+          --target-vm-name migratedVM01 \
+          --source-appliance-name mySourceAppliance \
+          --target-appliance-name myTargetAppliance \
+          --target-virtual-switch-id "XYXY" \
+          --os-disk-id "disk-0" \
+          --target-vm-cpu-core 4 \
+          --target-vm-ram 8192 \
+          --is-dynamic-memory-enabled false
+  - summary: |-
+      Create replication with test virtual switch
+    syntax: >-
+      az migrate local replication new \
+          --machine-id "XXXX" \
+          --target-storage-path-id "YYYY" \
+          --target-resource-group-id "ZZZZ" \
+          --target-vm-name migratedVM01 \
+          --source-appliance-name mySourceAppliance \
+          --target-appliance-name myTargetAppliance \
+          --target-virtual-switch-id "XYXY" \
+          --target-test-virtual-switch-id "XYXY" \
+          --os-disk-id "disk-0"
   requiredParameters:
   - isRequired: true
     name: --source-appliance-name
     summary: |-
-      Specifies the source appliance name for the AzLocal scenario.
+      Source appliance name.
+    description: |-
+      Name of the Azure Migrate appliance that discovered the source server.
   - isRequired: true
     name: --target-appliance-name
     summary: |-
-      Specifies the target appliance name for the AzLocal scenario.
+      Target appliance name.
+    description: |-
+      Name of the Azure Local appliance that will host the migrated server.
   - isRequired: true
     name: --target-resource-group-id --target-rg-id
     summary: |-
@@ -312,15 +563,21 @@ directCommands:
   - isRequired: true
     name: --target-storage-path-id
     summary: |-
-      Specifies the storage path ARM ID where the VMs will be stored.
+      Storage path ARM ID where VMs will be stored.
+    description: |-
+      Full ARM resource ID of the storage path on the target Azure Local cluster.
   - isRequired: true
     name: --target-vm-name
     summary: |-
-      Specifies the name of the VM to be created.
+      Name of the VM to be created.
+    description: |-
+      The name for the virtual machine that will be created on the target environment.
   optionalParameters:
   - name: --disk-to-include
     summary: |-
-      Specifies the disks on the source server to be included for replication. Space-separated list of disk IDs.
+      Disks to include for replication (power user mode).
+    description: |-
+      Space-separated list of disk IDs to replicate from the source server. Use this for power user mode.
   - name: --dynamic-memory --is-dynamic-memory-enabled
     acceptedValues: false, true
     summary: |-
@@ -331,22 +588,32 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --machine-id
     summary: |-
-      Specifies the machine ARM ID of the discovered server to be migrated. Required if --machine-index is not provided.
+      ARM resource ID of the discovered server to migrate.
+    description: |-
+      Full ARM resource ID of the discovered machine. Required if --machine-index is not provided.
   - name: --machine-index
     summary: |-
-      Specifies the index (1-based) of the discovered server from the list. Required if --machine-id is not provided.
+      Index of the discovered server from the list.
+    description: |-
+      Select a server by its position in the discovered servers list. Required if --machine-id is not provided.
   - name: --network-id --target-virtual-switch-id
     summary: |-
       Specifies the logical network ARM ID that the VMs will use.
   - name: --nic-to-include
     summary: |-
-      Specifies the NICs on the source server to be included for replication. Space-separated list of NIC IDs.
+      NICs to include for replication (power user mode).
+    description: |-
+      Space-separated list of NIC IDs to replicate from the source server. Use this for power user mode.
   - name: --os-disk-id
     summary: |-
-      Specifies the operating system disk for the source server to be migrated.
+      Operating system disk ID.
+    description: |-
+      ID of the operating system disk for the source server. Required for default user mode.
   - name: --project-name
     summary: |-
-      Name of the Azure Migrate project. Required when using --machine-index.
+      Name of the Azure Migrate project.
+    description: |-
+      Required when using --machine-index to identify which project to query.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -357,16 +624,22 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --subscription-id
     summary: |-
-      Azure subscription ID. Uses the default subscription if not specified.
+      Azure subscription ID.
+    description: |-
+      The subscription to use. Uses the current subscription if not specified.
   - name: --target-test-virtual-switch-id --test-network-id
     summary: |-
       Specifies the test logical network ARM ID that the VMs will use.
   - name: --target-vm-cpu-core
     summary: |-
-      Specifies the number of CPU cores.
+      Number of CPU cores for the target VM.
+    description: |-
+      Specify the number of CPU cores to allocate to the migrated VM.
   - name: --target-vm-ram
     summary: |-
-      Specifies the target RAM size in MB.
+      Target RAM size in MB.
+    description: |-
+      Specify the amount of RAM to allocate to the target VM in megabytes.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -393,6 +666,15 @@ directCommands:
       Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_migrate_local_replication_remove
   name: az migrate local replication remove
+  summary: |-
+    Stop replication for a migrated server.
+  description: |-
+    Stops the replication for a migrated server and removes
+    the replication configuration.
+    This command disables protection for the specified server.
+
+    Note: This command uses a preview API version
+    and may experience breaking changes in future releases.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'migrate local replication' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -401,6 +683,24 @@ directCommands:
     az migrate local replication remove --id --target-object-id
                                         [--force --force-remove {false, true}]
                                         [--subscription-id]
+  examples:
+  - summary: |-
+      Stop replication for a migrated server
+    syntax: >-
+      az migrate local replication remove \
+          --target-object-id "XXXX"
+  - summary: |-
+      Force remove replication for a server
+    syntax: >-
+      az migrate local replication remove \
+          --target-object-id "XXXX" \
+          --force-remove true
+  - summary: |-
+      Stop replication using short parameter names
+    syntax: >-
+      az migrate local replication remove \
+          --id "XXXX" \
+          --force
   requiredParameters:
   - isRequired: true
     name: --id --target-object-id
@@ -414,7 +714,9 @@ directCommands:
       Specifies whether the replication needs to be force removed. Default is false.
   - name: --subscription-id
     summary: |-
-      Azure subscription ID. Uses the default subscription if not specified.
+      Azure subscription ID.
+    description: |-
+      The subscription containing the replication resources. Uses the current subscription if not specified.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -449,3 +751,10 @@ commands:
 - az_migrate_local_replication_list
 - az_migrate_local_replication_new
 - az_migrate_local_replication_remove
+metadata:
+  description: >-
+    Commands to initialize replication infrastructure
+
+    and create new server replications
+
+    for migrations to Azure Local and Azure Stack HCI environments.
