@@ -1603,6 +1603,7 @@ directCommands:
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
+                  [--enable-application-load-balancer]
                   [--enable-asm --enable-azure-service-mesh]
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
@@ -1880,8 +1881,8 @@ directCommands:
       Create a kubernetes cluster with a fully managed system node pool
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-managed-system-pool
   - summary: |-
-      Create a kubernetes cluster with the Azure Service Mesh addon enabled with a managed installation of Gateway API CRDs from the standard release channel.
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh --enable-gateway-api
+      Create a kubernetes cluster with a managed installation of Gateway API CRDs from the standard release channel.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-gateway-api
   - summary: |-
       Create an automatic cluster with hosted system components enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --sku automatic --enable-hosted-system
@@ -2117,7 +2118,8 @@ directCommands:
       - monitoring                      :  turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect
       - virtual-node                    : enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use. aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
       - azure-policy                    : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling deployment safeguards. Learn more at aka.ms/aks/policy.
-      - ingress-appgw                   : enable Application Gateway Ingress Controller addon (PREVIEW).
+      - application-load-balancer       : enable the Application Load Balancer (Application Gateway for Containers) addon (PREVIEW).
+      - ingress-appgw                   : enable Application Gateway Ingress Controller addon.
       - confcom                         : enable confcom addon, this will enable SGX device plugin by default(PREVIEW).
       - open-service-mesh               : enable Open Service Mesh addon (PREVIEW).
       - gitops                          : enable GitOps (PREVIEW).
@@ -2141,6 +2143,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Application Routing addon.
+    isPreview: true
+  - name: --enable-application-load-balancer
+    defaultValue: "False"
+    summary: |-
+      Enable Application Load Balancer (Application Gateway for Containers) addon.
     isPreview: true
   - name: --enable-asm --enable-azure-service-mesh
     summary: |-
@@ -2202,7 +2209,7 @@ directCommands:
   - name: --enable-gateway-api
     defaultValue: "False"
     summary: |-
-      Enable managed installation of Gateway API CRDs from the standard release channel. Requires at least one managed Gateway API ingress provider to be enabled.
+      Enable managed installation of Gateway API CRDs from the standard release channel.
   - name: --enable-high-log-scale-mode
     defaultValue: "False"
     acceptedValues: false, true
@@ -3223,7 +3230,8 @@ directCommands:
         virtual-node                    - enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
         azure-policy                    - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
                                           Learn more at aka.ms/aks/policy.
-        ingress-appgw                   - enable Application Gateway Ingress Controller addon (PREVIEW).
+        application-load-balancer       - enable the Application Load Balancer (Application Gateway for Containers) addon (PREVIEW).
+        ingress-appgw                   - enable Application Gateway Ingress Controller addon.
         open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
         gitops                          - enable GitOps (PREVIEW).
         azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon.
@@ -5652,6 +5660,7 @@ directCommands:
                   [--disable-acns-security]
                   [--disable-ahub]
                   [--disable-ai-toolchain-operator]
+                  [--disable-application-load-balancer]
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-app-monitoring]
@@ -5692,6 +5701,7 @@ directCommands:
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-application-load-balancer]
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-app-monitoring]
@@ -6062,6 +6072,11 @@ directCommands:
     summary: |-
       Disable AI toolchain operator.
     isPreview: true
+  - name: --disable-application-load-balancer
+    defaultValue: "False"
+    summary: |-
+      Disable Application Load Balancer (Application Gateway for Containers) addon.
+    isPreview: true
   - name: --disable-azure-container-storage
     summary: |-
       Disable azure container storage or any one of the storage pool types. Can be used as a flag (defaults to True) or with a storagepool type value: azureDisk, ephemeralDisk, elasticSan, all (to disable all storage pools).
@@ -6234,6 +6249,11 @@ directCommands:
     summary: |-
       Enable integration of user vnet with control plane apiserver pods.
     isPreview: true
+  - name: --enable-application-load-balancer
+    defaultValue: "False"
+    summary: |-
+      Enable Application Load Balancer (Application Gateway for Containers) addon.
+    isPreview: true
   - name: --enable-azure-container-storage
     summary: |-
       Enable azure container storage. Can be used as a flag (defaults to True) or with a storage pool type value: (azureDisk, ephemeralDisk, elasticSan).
@@ -6293,7 +6313,7 @@ directCommands:
   - name: --enable-gateway-api
     defaultValue: "False"
     summary: |-
-      Enable managed installation of Gateway API CRDs from the standard release channel. Requires at least one managed Gateway API ingress provider to be enabled.
+      Enable managed installation of Gateway API CRDs from the standard release channel.
   - name: --enable-high-log-scale-mode
     defaultValue: "False"
     acceptedValues: false, true
@@ -7390,6 +7410,10 @@ commands:
 - az_aks_agent-init
 - az_aks_app
 - az_aks_app_up
+- az_aks_applicationloadbalancer
+- az_aks_applicationloadbalancer_disable
+- az_aks_applicationloadbalancer_enable
+- az_aks_applicationloadbalancer_update
 - az_aks_approuting
 - az_aks_approuting_disable
 - az_aks_approuting_disable(aks-preview)
