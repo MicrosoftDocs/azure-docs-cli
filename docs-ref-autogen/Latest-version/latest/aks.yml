@@ -198,12 +198,16 @@ directCommands:
                    --resource-group
                    [--admin]
                    [--bastion]
+                   [--kubeconfig-path]
                    [--port]
                    [--yes]
   examples:
   - summary: |-
       Connect to a managed Kubernetes cluster using Azure Bastion with custom port and admin credentials.
     syntax: az aks bastion -g MyResourceGroup --name MyManagedCluster --bastion MyBastionResource --port 50001 --admin
+  - summary: |-
+      Connect using an existing kubeconfig file.
+    syntax: az aks bastion -g MyResourceGroup --name MyManagedCluster --kubeconfig-path ~/.kube/config
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -223,6 +227,11 @@ directCommands:
       The name or resource ID of a pre-deployed Bastion resource configured to connect to the current AKS cluster.
     description: |-
       If not specified, the command will try to identify an existing Bastion resource within the cluster's node resource group.
+  - name: --kubeconfig-path
+    summary: |-
+      Path to an existing kubeconfig file to use.
+    description: |-
+      If specified, uses this kubeconfig file at its original location instead of fetching credentials from Azure.
   - name: --port
     summary: |-
       The local port number used for the bastion connection.
