@@ -20,7 +20,9 @@ directCommands:
     az aks agent --name
                  --resource-group
                  [--max-steps]
+                 [--mode {client, cluster}]
                  [--model]
+                 [--namespace]
                  [--no-echo-request]
                  [--no-interactive]
                  [--refresh-toolsets]
@@ -41,9 +43,17 @@ directCommands:
     defaultValue: "40"
     summary: |-
       Maximum number of steps the LLM can take to investigate the issue.
+  - name: --mode
+    defaultValue: cluster
+    acceptedValues: client, cluster
+    summary: |-
+      The mode decides how the agent is deployed.
   - name: --model
     summary: |-
       Specify the LLM provider and model or deployment to use for the AI assistant.
+  - name: --namespace
+    summary: |-
+      The Kubernetes namespace where the AKS Agent is deployed. Required for cluster mode.
   - name: --no-echo-request
     defaultValue: "False"
     summary: |-
@@ -104,6 +114,8 @@ directCommands:
   syntax: >-
     az aks agent-cleanup --name
                          --resource-group
+                         [--mode {client, cluster}]
+                         [--namespace]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -113,6 +125,15 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group.
+  optionalParameters:
+  - name: --mode
+    defaultValue: cluster
+    acceptedValues: client, cluster
+    summary: |-
+      The mode decides how the agent is deployed.
+  - name: --namespace
+    summary: |-
+      The Kubernetes namespace where the AKS Agent is deployed. Required for cluster mode.
   globalParameters:
   - name: --debug
     defaultValue: "False"
