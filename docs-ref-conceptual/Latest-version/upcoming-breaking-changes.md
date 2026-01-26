@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 01/23/2026
+ms.date: 01/26/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -77,6 +77,14 @@ The breaking changes listed in this section are planned for the next major relea
 
 - '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
+## netappfiles
+
+### `netappfiles volume update`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
 ## postgresql
 
 ### `postgres flexible-server create`
@@ -137,14 +145,6 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to postgres flexible-server index-tuning reference group](/cli/azure/postgres/flexible-server/index-tuning)
 
 - Index tuning feature has now expanded its capabilities to support other automatically generated recommendations which are covered by the new command.
-
-## netappfiles
-
-### `netappfiles volume update`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
 ## resource
 
@@ -246,6 +246,109 @@ The breaking changes listed in this section are planned for the next major relea
 
 - The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
 - The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
+
+## azext_blueprint
+
+### `blueprint`
+
+[Link to blueprint reference group](/cli/azure/blueprint)
+
+- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- Blueprints and associated commands will be deprecated
+- as early as July 2026. Customers are encouraged to transition to
+- Template Specs and Deployments Stacks to support their scenarios beyond that date.
+- Migration documentation is available at
+- https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/migrate-blueprint.
+
+## azext_managednetworkfabric
+
+### `networkfabric device upgrade`
+
+[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
+
+- The argument '--version' will become required in 9.0.x.
+
+### `networkfabric l3domain create`
+
+[Link to networkfabric l3domain reference group](/cli/azure/networkfabric/l3domain)
+
+- '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
+
+### `networkfabric l3domain update`
+
+[Link to networkfabric l3domain reference group](/cli/azure/networkfabric/l3domain)
+
+- '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
+
+## azext_neon
+
+### `neon`
+
+[Link to neon reference group](/cli/azure/neon)
+
+- 'az neon' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- Deprecation Notice: The Neon Azure Native Integration is being deprecated and will
+- reach end of life on January 31, 2026. Transfer your projects to a Neon managed organization
+- today. Migration documentation is available at https://neon.com/docs/import/migrate-from-azure-native
+
+## azext_netappfiles_preview
+
+### `netappfiles volume update`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+
+## azext_redisenterprise
+
+### `redisenterprise create`
+
+[Link to redisenterprise reference group](/cli/azure/redisenterprise)
+
+- The argument '--public-network-access' will become required in next breaking change release(2.86.0) scheduled for May 2026.
+- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.86.0) scheduled for May 2026.
+
+## azext_spring
+
+### `spring`
+
+[Link to spring reference group](/cli/azure/spring)
+
+- 'spring' has been deprecated and will be removed in Mar 2028.
+
+## azext_ssh
+
+### `ssh vm`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh commands connecting to ARC machines on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
+
+### `ssh config`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh commands connecting to ARC machines on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
+
+### `ssh arc`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh arc commands on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
+
+## azext_storage_preview
+
+### `storage account create`
+
+[Link to storage account reference group](/cli/azure/storage/account)
+
+- The --min-tls-version argument values TLS1_0 and TLS1_1 have been retired on 2026/02/03 and will be removed on 2026/03/03.
+
+### `storage account update`
+
+[Link to storage account reference group](/cli/azure/storage/account)
+
+- The --min-tls-version argument values TLS1_0 and TLS1_1 have been retired on 2026/02/03 and will be removed on 2026/03/03.
 
 > [!NOTE]
 > This article provides information on upcoming breaking changes. For previously published breaking changes, see [Azure CLI release notes](./release-notes-azure-cli.md).
