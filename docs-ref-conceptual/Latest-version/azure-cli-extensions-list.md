@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/22/2026
+ms.date: 01/25/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -46,6 +46,7 @@ You will be prompted to install an extension on first use.
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.27](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[arcgateway](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway) | 2.57.0 | Microsoft Azure Command-Line Tools Arcgateway Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway/HISTORY.rst) |
 |[arize-ai](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai) | 2.75.0 | Microsoft Azure Command-Line Tools ArizeAi Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai/HISTORY.rst) |
+|[artifact-signing](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing) | 2.75.0 | Microsoft Azure Command-Line Tools Artifact Signing Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing/HISTORY.rst) |
 |[astronomer](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer) | 2.70.0 | Microsoft Azure Command-Line Tools Astronomer Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer/HISTORY.rst) |
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.55.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
