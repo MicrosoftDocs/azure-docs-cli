@@ -2,13 +2,15 @@
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
+
 This section contains examples of JMESPath queries for different Azure resources.
 
 ### Query examples for Azure accounts
 
 This section shows example queries for storage accounts.
 
-- This example returns the tenant ID and subscription ID of the Azure account and subscription you're using.
+- This example returns the tenant ID and subscription ID of the Azure account and subscription
+  you're using.
 
 ### [Bash](#tab/bash)
 
@@ -36,7 +38,8 @@ az account show --query "{tenantId:tenantId,subscriptionid:id}"
 
 This section shows example queries for Microsoft Entra service principals.
 
-- The following query returns the first Microsoft Graph application service principal who has read permissions.
+- The following query returns the first Microsoft Graph application service principal who has read
+  permissions.
 
 ### [Bash](#tab/bash)
 
@@ -102,7 +105,12 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the 50 in the command previous. The extra escape characters are present because Azure CLI commands are considered Command Prompt scripts.  Take into consideration the built-in parsing of both PowerShell and of a Command Prompt. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues in PowerShell, see [Considerations for running the Azure CLI in a PowerShell scripting language](../use-azure-cli-successfully-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the 50 in the command previous. The extra
+escape characters are present because Azure CLI commands are considered Command Prompt scripts. Take
+into consideration the built-in parsing of both PowerShell and of a Command Prompt. Azure CLI will
+only receive a symbol if it still exists after 2 rounds of parsing. For more information about other
+possible quoting issues in PowerShell, see [Considerations for running the Azure CLI in a PowerShell
+scripting language](../use-azure-cli-successfully-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
@@ -135,6 +143,7 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storagePro
 ---
 
 ### Query examples for cognitive services
+
 This section shows example queries for cognitive services.
 
 -  The following query demonstrates how to list endpoints of a cognitive service.

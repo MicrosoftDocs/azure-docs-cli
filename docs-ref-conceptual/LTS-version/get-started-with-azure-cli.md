@@ -44,10 +44,6 @@ currently active. To change to a different subscription, run:
 az account set --subscription "<subscription-id>"
 ```
 
-For more information about subscription selection, see
-[Manage Azure subscriptions][manage-azure-subscriptions]. For advanced sign-in options, see
-[Sign in with Azure CLI][sign-into-azcli].
-
 ## Find commands
 
 Azure CLI commands are organized as command groups. Each group represents an area of an Azure
@@ -112,26 +108,6 @@ service. There are two options to find command groups:
 
 - Use the [reference index][reference-index] that lists all command groups alphabetically.
 
-## Explore samples and articles
-
-For usage examples, see:
-
-- The [Samples index][samples-index] for Azure CLI examples by [subject][samples-by-subject],
-  [reference group][samples-by-reference], or [GitHub repo][samples-by-github].
-- The [Article index][article-index] to find in-depth guides. Use your keyboard `find` shortcut
-  keys, like `Ctrl + F`, to quickly find the reference command group in which you're interested. For
-  example, the article index for `az vm` looks like the following table:
-
-  |               Reference subgroup               |                                    Azure CLI article showing reference use                                     |
-  | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-  | [az vm](/cli/azure/vm)                         | [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli)                                    |
-  |                                                | [How to use variables in Azure CLI commands](/cli/azure/azure-cli-variables)                                   |
-  |                                                | [Get VM information with queries](/cli/azure/azure-cli-vm-tutorial-4)                                          |
-  |                                                | {More articles listed here.}                                                                                   |
-  | [az vm aem](/cli/azure/vm/aem)                 | [New Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-new)           |
-  |                                                | [Standard Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-standard) |
-  | [az vm application](/cli/azure/vm/application) | {...}                                                                                                          |
-
 ## Use tab completion
 
 Azure CLI supports tab completion in Bash. To enable it in PowerShell, see
@@ -151,8 +127,6 @@ Common arguments available to most commands include:
 | `--subscription`     | Specify subscription name or ID                               |
 | `--only-show-errors` | Suppress noncritical output                                   |
 
-For more information, see [Output formats][outputs-format] and [Query results][query-results].
-
 ## Use interactive mode
 
 Run interactive mode with:
@@ -167,22 +141,6 @@ For more, see [Interactive Mode][interactive-mode].
 An optional [VS Code extension][vs-code-extension] provides similar features with autocomplete and
 hover tips.
 
-## Learn through tutorials and quickstarts
-
-Get hands-on with Azure CLI basics using the [onboarding tutorial][onboarding-tutorial]. You learn
-how to:
-
-- [Manage your default subscription][manage-default-sub]
-- [Create resources with randomized names][resource-random-name]
-- [Use environment variables][environment-variables]
-- [Debug commands and parse JSON files][debug]
-- [Delete resources efficiently][delete-resources]
-
-> [!NOTE]
-> Azure CLI examples on Microsoft Learn are written for Bash. One-liners usually work across shells,
-> but multiline scripts may require adjustments. For more information, see
-> [Learn syntax differences between Bash, PowerShell, and Cmd][syntax-diffs]
-
 ## Provide feedback
 
 We welcome your feedback. Submit issues on [GitHub][feedback] or run:
@@ -191,41 +149,15 @@ We welcome your feedback. Submit issues on [GitHub][feedback] or run:
 az feedback
 ```
 
-## See also
-
-- [Onboarding cheat sheet][cheatsheet]
-- [Azure CLI tutorial][onboarding-tutorial]
-- [Use Azure CLI in Bash][bash]
-- [PowerShell considerations][powershell]
-
 <!-- link references -->
 
 [cloudshell]: /azure/cloud-shell/overview
 [get-started-cloudshell]: /azure/cloud-shell/get-started/classic
 [install-azcli]: /cli/azure/install-azure-cli
-[manage-azure-subscriptions]: manage-azure-subscriptions-azure-cli.md
-[sign-into-azcli]: authenticate-azure-cli.md#sign-into-azure-with-azure-cli
 [az-find]: /cli/azure/reference-index#az-find
 [reference-index]: /cli/azure/reference-index
-[samples-index]: ./samples-index.md
-[samples-by-subject]: ./samples-index.md?tabs=service
-[samples-by-reference]: ./samples-index.md?tabs=command
-[samples-by-github]: ./samples-index.md?tabs=github
-[article-index]: ./reference-docs-index.md
 [tabbed-completion-pwsh]: ./install-azure-cli-windows.md#enable-tab-completion-in-powershell
 [jmespath]: https://jmespath.org
-[outputs-format]: format-output-azure-cli.md
-[query-results]: use-azure-cli-successfully-query.md
 [interactive-mode]: /cli/azure/reference-index#az-interactive
 [vs-code-extension]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli
-[onboarding-tutorial]: ./get-started-tutorial-0-before-you-begin.md
-[manage-default-sub]: ./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription
-[resource-random-name]: ./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id
-[environment-variables]: ./get-started-tutorial-1-prepare-environment.md#set-environment-variables
-[debug]: ./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter
-[delete-resources]: ./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script
-[syntax-diffs]: ./get-started-tutorial-2-environment-syntax.md
 [feedback]: https://github.com/azure/azure-cli/issues
-[cheatsheet]: ./cheat-sheet-onboarding.md
-[bash]: ./use-azure-cli-successfully-bash.md
-[powershell]: ./use-azure-cli-successfully-powershell.md
