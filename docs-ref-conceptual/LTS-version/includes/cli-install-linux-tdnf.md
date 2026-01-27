@@ -5,7 +5,9 @@ ms.custom: devx-track-azurecli, linux-related-content
 
 ## Install Azure CLI
 
-RPMs are released for Azure Linux through [CBL-Mariner](https://github.com/microsoft/CBL-Mariner).  The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](/cli/azure/release-notes-azure-cli#march-07-2023).
+RPMs are released for Azure Linux through [CBL-Mariner](https://github.com/microsoft/CBL-Mariner).
+The `azure-cli` package supports ARM64 architecture from CLI version
+[2.46.0](/cli/azure/release-notes-azure-cli#march-07-2023).
 
 To install the Azure CLI, follow these steps:
 
@@ -15,15 +17,13 @@ To install the Azure CLI, follow these steps:
     sudo tdnf install ca-certificates
     ```
 
-2. Install Azure CLI:
+1. Install Azure CLI:
 
     ```bash
     sudo tdnf install azure-cli
     ```
 
 ## Install specific version
-
-Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
 To view available versions with command:
 
