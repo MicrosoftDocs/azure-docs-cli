@@ -3,7 +3,7 @@ uid: az_network_front-door_waf-policy_managed-rules_override
 name: az network front-door waf-policy managed-rules override
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **front-door** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az network front-door waf-policy managed-rules override** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **front-door** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az network front-door waf-policy managed-rules override** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   View and alter overrides on managed rules within a managed rule set.
 description: |-
@@ -14,55 +14,91 @@ directCommands:
 - uid: az_network_front-door_waf-policy_managed-rules_override_add
   name: az network front-door waf-policy managed-rules override add
   summary: |-
-    Add an override on a managed rule within a managed rule set.
-  description: |-
-    Use 'az network front-door waf-policy managed-rule-definition list' to see the available rules.
+    Update policy with specified rule set name within a resource group.
   status: GA
   sourceType: Extension
   syntax: >-
     az network front-door waf-policy managed-rules override add --rule-group-id
                                                                 --rule-id
                                                                 --type
-                                                                [--action {Allow, AnomalyScoring, Block, JSChallenge, Log, Redirect}]
-                                                                [--disabled {false, true}]
+                                                                [--action {Allow, AnomalyScoring, Block, Log, Redirect}]
+                                                                [--add]
+                                                                [--disabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                                 [--ids]
-                                                                [--policy-name]
+                                                                [--name --policy-name]
+                                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                [--remove]
                                                                 [--resource-group]
+                                                                [--set]
                                                                 [--subscription]
+  examples:
+  - summary: |-
+      update log scrubbing
+    syntax: >-
+      az network front-door waf-policy update -g rg -n n1 --log-scrubbing "{scrubbing-rules:[{match-variable:QueryStringArgNames,selector-match-operator:EqualsAny}],state:Enabled}"
+
+      az network front-door waf-policy update -g rg -n n1 --log-scrubbing scrubbing-rules[1]="{match-variable:RequestUri,selector-match-operator:Equals}"
+
+      az network front-door waf-policy update -g rg -n n1 --log-scrubbing "{scrubbing-rules:[{match-variable:RequestBodyJsonArgNames,selector-match-operator:EqualsAny}],state:Enabled}" scrubbing-rules[1]="{match-variable:RequestUri,selector-match-operator:EqualsAny}"
+  - summary: |-
+      Update specific policy
+    syntax: az network front-door waf-policy update --resource-group rg1 --policy-name Policy1 --location WestUs --enabled-state Enabled --mode Prevention --redirect-url http://www.bing.com --custom-block-response-status-code 429 --custom-block-response-body PGh0bWw+CjxoZWFkZXI+PHRpdGxlPkhlbGxvPC90aXRsZT48L2hlYWRlcj4KPGJvZHk+CkhlbGxvIHdvcmxkCjwvYm9keT4KPC9odG1sPg== --request-body-check Disabled --javascript-challenge-expiration-in-minutes 30 --captcha-expiration-in-minutes 30 --log-scrubbing "{state:Enabled,scrubbing-rules:[{match-variable:RequestIPAddress,selector-match-operator:EqualsAny,selector:null,state:Enabled}]}" --custom-rules "{rules:[{name:Rule1,priority:1,rule-type:RateLimitRule,rate-limit-threshold:1000,match-conditions:[{match-variable:RemoteAddr,operator:IPMatch,match-value:[192.168.1.0/24,10.0.0.0/24]}],action:Block},{name:Rule2,priority:2,rule-type:MatchRule,match-conditions:[{match-variable:RemoteAddr,operator:GeoMatch,match-value:[CH]},{match-variable:RequestHeader,operator:Contains,selector:UserAgent,match-value:[windows],transforms:[Lowercase]}],action:Block},{name:Rule3,priority:1,rule-type:RateLimitRule,rate-limit-threshold:1000,match-conditions:[{match-variable:RemoteAddr,operator:ServiceTagMatch,match-value:[AzureBackup,AzureBotService]}],action:CAPTCHA}]}" --managed-rules "{managed-rule-sets:[{rule-set-type:DefaultRuleSet,rule-set-version:1.0,rule-set-action:Block,exclusions:[{matchVariable:RequestHeaderNames,selectorMatchOperator:Equals,selector:User-Agent}],rule-group-overrides:[{rule-group-name:SQLI,exclusions:[{matchVariable:RequestCookieNames,selectorMatchOperator:StartsWith,selector:token}],rules:[{rule-id:942100,enabled-state:Enabled,action:Redirect,exclusions:[{matchVariable:QueryStringArgNames,selectorMatchOperator:Equals,selector:query}]},{rule-id:942110,enabled-state:Disabled}]}]},{rule-set-type:Microsoft_HTTPDDoSRuleSet,rule-set-version:1.0,rule-group-overrides:[{rule-group-name:ExcessiveRequests,rules:[{rule-id:500100,enabled-state:Enabled,action:Block,sensitivity:High}]}]}]}" --sku Premium_AzureFrontDoor
   requiredParameters:
   - isRequired: true
     name: --rule-group-id
     summary: |-
-      ID of the rule group containing the rule to override.
+      The managed rule group ID.
   - isRequired: true
     name: --rule-id
     summary: |-
-      ID of the rule to override.
+      The managed rule ID.
   - isRequired: true
     name: --type
     summary: |-
-      ID of the ruleset to override.
+      The type of the managed rule set.
   optionalParameters:
   - name: --action
-    acceptedValues: Allow, AnomalyScoring, Block, JSChallenge, Log, Redirect
+    acceptedValues: Allow, AnomalyScoring, Block, Log, Redirect
     summary: |-
-      Action for applied rulesets.
+      Action for overriding the rule.
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --disabled
-    acceptedValues: false, true
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Whether to disable the rule.
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --policy-name
+  - name: --name --policy-name -n
     summary: |-
-      Name of the WAF policy. Name must begin with a letter and contain only letters and numbers.
+      The name of the Web Application Firewall Policy.
     groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -94,26 +130,35 @@ directCommands:
 - uid: az_network_front-door_waf-policy_managed-rules_override_list
   name: az network front-door waf-policy managed-rules override list
   summary: |-
-    List the overrides on managed rules within a managed rule set.
+    Get protection policy with specified name within a resource group.
   status: GA
   sourceType: Extension
   syntax: >-
-    az network front-door waf-policy managed-rules override list --policy-name
-                                                                 --resource-group
-                                                                 --type
-  requiredParameters:
-  - isRequired: true
-    name: --policy-name
+    az network front-door waf-policy managed-rules override list [--ids]
+                                                                 [--name --policy-name]
+                                                                 [--resource-group]
+                                                                 [--subscription]
+  examples:
+  - summary: |-
+      Get Policy
+    syntax: az network front-door waf-policy show --resource-group rg1 --policy-name Policy1
+  optionalParameters:
+  - name: --ids
     summary: |-
-      Name of the WAF policy. Name must begin with a letter and contain only letters and numbers.
-  - isRequired: true
-    name: --resource-group -g
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --policy-name -n
+    summary: |-
+      The name of the Web Application Firewall Policy.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --type
+    groupName: Resource Id Arguments
+  - name: --subscription
     summary: |-
-      ID of the ruleset with the overrides to list.
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -134,9 +179,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -144,45 +186,81 @@ directCommands:
 - uid: az_network_front-door_waf-policy_managed-rules_override_remove
   name: az network front-door waf-policy managed-rules override remove
   summary: |-
-    Remove an override on a managed rule within a managed rule set.
-  description: |-
-    After this command, the standard behavior for the rule within the managed rule set will apply. Use 'az network front-door waf-policy managed-rule-definition list' to see the available rules.
+    Update policy with specified rule set name within a resource group.
   status: GA
   sourceType: Extension
   syntax: >-
     az network front-door waf-policy managed-rules override remove --rule-group-id
                                                                    --rule-id
                                                                    --type
+                                                                   [--add]
+                                                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                                    [--ids]
-                                                                   [--policy-name]
+                                                                   [--name --policy-name]
+                                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                   [--remove]
                                                                    [--resource-group]
+                                                                   [--set]
                                                                    [--subscription]
+  examples:
+  - summary: |-
+      update log scrubbing
+    syntax: >-
+      az network front-door waf-policy update -g rg -n n1 --log-scrubbing "{scrubbing-rules:[{match-variable:QueryStringArgNames,selector-match-operator:EqualsAny}],state:Enabled}"
+
+      az network front-door waf-policy update -g rg -n n1 --log-scrubbing scrubbing-rules[1]="{match-variable:RequestUri,selector-match-operator:Equals}"
+
+      az network front-door waf-policy update -g rg -n n1 --log-scrubbing "{scrubbing-rules:[{match-variable:RequestBodyJsonArgNames,selector-match-operator:EqualsAny}],state:Enabled}" scrubbing-rules[1]="{match-variable:RequestUri,selector-match-operator:EqualsAny}"
+  - summary: |-
+      Update specific policy
+    syntax: az network front-door waf-policy update --resource-group rg1 --policy-name Policy1 --location WestUs --enabled-state Enabled --mode Prevention --redirect-url http://www.bing.com --custom-block-response-status-code 429 --custom-block-response-body PGh0bWw+CjxoZWFkZXI+PHRpdGxlPkhlbGxvPC90aXRsZT48L2hlYWRlcj4KPGJvZHk+CkhlbGxvIHdvcmxkCjwvYm9keT4KPC9odG1sPg== --request-body-check Disabled --javascript-challenge-expiration-in-minutes 30 --captcha-expiration-in-minutes 30 --log-scrubbing "{state:Enabled,scrubbing-rules:[{match-variable:RequestIPAddress,selector-match-operator:EqualsAny,selector:null,state:Enabled}]}" --custom-rules "{rules:[{name:Rule1,priority:1,rule-type:RateLimitRule,rate-limit-threshold:1000,match-conditions:[{match-variable:RemoteAddr,operator:IPMatch,match-value:[192.168.1.0/24,10.0.0.0/24]}],action:Block},{name:Rule2,priority:2,rule-type:MatchRule,match-conditions:[{match-variable:RemoteAddr,operator:GeoMatch,match-value:[CH]},{match-variable:RequestHeader,operator:Contains,selector:UserAgent,match-value:[windows],transforms:[Lowercase]}],action:Block},{name:Rule3,priority:1,rule-type:RateLimitRule,rate-limit-threshold:1000,match-conditions:[{match-variable:RemoteAddr,operator:ServiceTagMatch,match-value:[AzureBackup,AzureBotService]}],action:CAPTCHA}]}" --managed-rules "{managed-rule-sets:[{rule-set-type:DefaultRuleSet,rule-set-version:1.0,rule-set-action:Block,exclusions:[{matchVariable:RequestHeaderNames,selectorMatchOperator:Equals,selector:User-Agent}],rule-group-overrides:[{rule-group-name:SQLI,exclusions:[{matchVariable:RequestCookieNames,selectorMatchOperator:StartsWith,selector:token}],rules:[{rule-id:942100,enabled-state:Enabled,action:Redirect,exclusions:[{matchVariable:QueryStringArgNames,selectorMatchOperator:Equals,selector:query}]},{rule-id:942110,enabled-state:Disabled}]}]},{rule-set-type:Microsoft_HTTPDDoSRuleSet,rule-set-version:1.0,rule-group-overrides:[{rule-group-name:ExcessiveRequests,rules:[{rule-id:500100,enabled-state:Enabled,action:Block,sensitivity:High}]}]}]}" --sku Premium_AzureFrontDoor
   requiredParameters:
   - isRequired: true
     name: --rule-group-id
     summary: |-
-      ID of the rule group containing the override to remove.
+      The managed rule group ID.
   - isRequired: true
     name: --rule-id
     summary: |-
-      ID of the rule override to remove.
+      The managed rule ID.
   - isRequired: true
     name: --type
     summary: |-
-      ID of the ruleset with the override to remove.
+      The type of the managed rule set.
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --policy-name
+  - name: --name --policy-name -n
     summary: |-
-      Name of the WAF policy. Name must begin with a letter and contain only letters and numbers.
+      The name of the Web Application Firewall Policy.
     groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
