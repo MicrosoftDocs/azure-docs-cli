@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/27/2026
+ms.date: 01/28/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -30,7 +30,7 @@ You will be prompted to install an extension on first use.
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem/HISTORY.rst) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b15](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
+|[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b16](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
 |[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.73.0 | Provides a preview for upcoming AKS features | Preview | [19.0.0b20](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.74](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
@@ -51,7 +51,7 @@ You will be prompted to install an extension on first use.
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.55.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
 |[automanage](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage) | 2.44.1 | Microsoft Azure Command-Line Tools Automanage Extension. | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage/HISTORY.rst) |
-|[automation](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation) | 2.55.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Experimental | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation/HISTORY.rst) |
+|[automation](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation) | 2.75.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation/HISTORY.rst) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.2](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.75.0 | Manage Azure Firewall resources. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
