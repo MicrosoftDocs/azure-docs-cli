@@ -74,6 +74,11 @@ To install the Azure CLI, follow these steps:
    sudo dnf install azure-cli
    ```
 
+   > [!IMPORTANT]
+   > **RHEL 9.0 Compatibility**: Because Python 3.9 is end-of-life, Azure CLI 2.72 is the last
+   > version compatible with RHEL 9.0 systems using Python 3.9. Install Azure CLI 2.72 using: `sudo
+   > dnf install azure-cli-2.72.0`.
+
 ## Install specific version
 
 You must first configure `azure-cli` repository information as shown previously. Available versions
