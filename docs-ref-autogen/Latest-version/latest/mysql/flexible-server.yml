@@ -286,7 +286,7 @@ directCommands:
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
     groupName: Authentication Arguments
   - name: --admin-user -u
-    defaultValue: emptycoconut7
+    defaultValue: serenebongo4
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
@@ -673,6 +673,11 @@ directCommands:
   - summary: |-
       Geo-restore private access server 'testserver' as a new server 'testserverNew' with public access.
     syntax: az mysql flexible-server geo-restore --resource-group testGroup --name testserverNew  --source-server testserver --public-access Enabled --location newLocation
+  - summary: |-
+      Geo-restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different subscription / resource group. Here --resource-group is for the target server's resource group, and --source-server must be passed as resource ID. This resource ID can be in a subscription different than the subscription used for az account set.
+    syntax: >-
+      az mysql flexible-server geo-restore --resource-group testGroup --name testserverNew --location newLocation \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforMySQL/flexibleServers/{sourceServerName}
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -996,6 +1001,16 @@ directCommands:
     syntax: >-
       az mysql flexible-server restore --resource-group testGroup --name testserverNew \
         --source-server testserver --public-access Enabled
+  - summary: |-
+      Restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different resource group. Here --resource-group is for the target server's resource group, and --source-server must be passed as resource ID.
+    syntax: >-
+      az mysql flexible-server restore --resource-group testGroup --name testserverNew \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforMySQL/flexibleServers/{sourceServerName}
+  - summary: |-
+      Restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different subscription. Here --resource-group is for the target server's resource group, and --source-server must be passed as resource ID. This resource ID can be in a subscription different than the subscription used for az account set.
+    syntax: >-
+      az mysql flexible-server restore --resource-group testGroup --name testserverNew \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforMySQL/flexibleServers/{sourceServerName}
   requiredParameters:
   - isRequired: true
     name: --source-server
@@ -1047,7 +1062,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-02-02T11:12:09+00:00
+    defaultValue: 2026-02-03T03:57:31+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --sku-name
