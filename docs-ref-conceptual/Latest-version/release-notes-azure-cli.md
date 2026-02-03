@@ -43,6 +43,14 @@ Version 2.83.0
 
 * `az containerapp env create`: Update the error display for ConsumptionOnly environment creation
 
+### Core
+
+* Resolve CVE-2025-69277
+* Resolve CVE-2026-21441
+* Resolve CVE-2025-12084
+* Resolve CVE-2026-21226
+* Replace GitHub URLs with AME Storage for network isolated requirements
+
 ### MySQL
 
 * `az mysql flexible-server restore`: Support restore server to different subscription
