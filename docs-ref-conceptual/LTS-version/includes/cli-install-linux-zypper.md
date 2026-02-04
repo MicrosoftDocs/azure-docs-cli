@@ -9,9 +9,7 @@ ms.custom: devx-track-azurecli, linux-related-content
   the latest version supported on SUSE Linux Enterprise Server (SLES) and OpenSUSE (Leap). Microsoft
   is no longer providing updates or bug fixes for these distributions.
 
-- Microsoft continues to develop and support the Azure CLI and the Linux [Install
-  script](/cli/azure/install-azure-cli-linux?pivots=script). SUSE maintains and supports packages
-  provided by SUSE/OpenSUSE repositories.
+- SUSE maintains and supports packages provided by SUSE/OpenSUSE repositories.
 
 - In Azure, SUSE and OpenSUSE virtual machines (VMs) based on Azure Marketplace images already have
   the Azure CLI installed.
@@ -23,9 +21,6 @@ To install Azure CLI on SUSE/OpenSUSE, choose one of the following methods:
 1. [Use the Enterprise package provided by SUSE](#install-from-suse-or-opensuse-repositories) in the
    SUSE/OpenSUSE repositories.
 
-1. [Use the installation method described in the “Install script (any)”
-   tab](#install-from-microsoft-repositories).
-
 1. [Install from Microsoft repositories](#install-from-microsoft-repositories)
 
 ### Install from SUSE or OpenSUSE repositories
@@ -35,14 +30,6 @@ The RPM package of the Azure CLI depends on the `python3` package.
    ```bash
    sudo zypper install -y azure-cli
    ```
-
-### Install with the install script
-
-You can manually install the Azure CLI on any version of Linux by using the [Install
-script](/cli/azure/install-azure-cli-linux?pivots=script) option.
-
-If you're _updating_ to the most recent version using this method, be sure to uninstall the previous
-version first, and any repositories you may have added for that version.
 
 ### Install from Microsoft repositories
 
