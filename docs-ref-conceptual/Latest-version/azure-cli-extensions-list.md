@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/03/2026
+ms.date: 02/04/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -84,7 +84,7 @@ You will be prompted to install an extension on first use.
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.4](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
 |[data-transfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer) | 2.0.24 | Microsoft Azure Command-Line Tools DataTransfer Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer/HISTORY.rst) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.70.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
-|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
+|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.75.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.75.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
@@ -121,7 +121,7 @@ You will be prompted to install an extension on first use.
 |[guestconfig](https://github.com/Azure/azure-cli-extensions/tree/master/src/guestconfig) | 2.3.1 | Microsoft Azure Command-Line Tools GuestConfigurationClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/guestconfig/HISTORY.rst) |
 |[hack](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack) | 2.0.67 | Microsoft Azure Command-Line Tools Hack Extension | Preview | [0.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack/HISTORY.rst) |
 |[hardware-security-modules](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules) | 2.15.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules/HISTORY.rst) |
-|[healthbot](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot/HISTORY.rst) |
+|[healthbot](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthbot/HISTORY.rst) |
 |[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.66.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 2.3.0 | Microsoft Azure Command-Line Tools StorageCache Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache/HISTORY.rst) |
 |[image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy) | 2.68.0 | Support for copying managed vm images between regions | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy/HISTORY.rst) |
