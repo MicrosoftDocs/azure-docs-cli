@@ -27,7 +27,6 @@ in a Docker container and Azure Cloud Shell.
   - [Install on SLES/OpenSUSE with zypper][08]
   - [Install on Ubuntu/Debian with apt][04]
   - [Install on Azure Linux with tdnf][07]
-  - [Install from script][06]
 
 - [Install on macOS][18]
 
@@ -81,7 +80,6 @@ information on managing extensions, see [Use and manage extensions with the Azur
 [03]: ./cheat-sheet-onboarding.md
 [04]: ./install-azure-cli-linux.md?pivots=apt
 [05]: ./install-azure-cli-linux.md?pivots=dnf
-[06]: ./install-azure-cli-linux.md?pivots=script
 [07]: ./install-azure-cli-linux.md?pivots=tdnf
 [08]: ./install-azure-cli-linux.md?pivots=zypper
 [09]: ./install-azure-cli-windows.md?pivots=msi

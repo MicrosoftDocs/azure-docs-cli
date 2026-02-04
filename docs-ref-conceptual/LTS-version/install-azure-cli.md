@@ -27,7 +27,6 @@ in a Docker container and Azure Cloud Shell.
   - [Install on SLES/OpenSUSE with zypper](./install-azure-cli-linux.md?pivots=zypper)
   - [Install on Ubuntu/Debian with apt](./install-azure-cli-linux.md?pivots=apt)
   - [Install on Azure Linux with tdnf](./install-azure-cli-linux.md?pivots=tdnf)
-  - [Install from script](./install-azure-cli-linux.md?pivots=script)
 
 - [Install on macOS](install-azure-cli-macos.md)
 

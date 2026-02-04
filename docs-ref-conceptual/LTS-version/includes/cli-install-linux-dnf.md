@@ -9,9 +9,6 @@ ms.custom: devx-track-azurecli, linux-related-content
   the last version supported on RHEL 7 and Centos 7. Microsoft is no longer providing updates or bug
   fixes for these distributions.
 
-- Microsoft continues to develop and support Azure CLI and the Linux [Install
-  script](/cli/azure/install-azure-cli-linux?pivots=script).
-
 - Use the `yum` package manager if you're using a Linux system that doesn't support the `dnf`
   package manager.
 
@@ -122,14 +119,8 @@ covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issue
 If you're able, upgrade your system to a version with official support for `python 3.6+` package.
 Otherwise, you need to first install a `python3` package, then install Azure CLI without dependency.
 
-You can use the following command to download and install the Azure CLI install script with `python
-3.6` built from source:
-
-```bash
-curl -sL https://azurecliprod.blob.core.windows.net/rhel7_6_install.sh | sudo bash
-```
-
-You can also do it step by step:
+You can use the following command to download and install Azure CLI step by step with `python
+3.6` built from source.
 
 First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building
 `python3`:
