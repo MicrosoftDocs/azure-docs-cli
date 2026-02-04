@@ -8,8 +8,6 @@ ms.custom: devx-track-azurecli, linux-related-content
 - Azure CLI [2.38.2][04] (released on June 21, 2024) is the last version supported on RHEL 7 and
   Centos 7. Microsoft is no longer providing updates or bug fixes for these distributions.
 
-- Microsoft continues to develop and support Azure CLI and the Linux [Install script][03].
-
 - Use the `yum` package manager if you're using a Linux system that doesn't support the `dnf`
   package manager.
 
@@ -225,7 +223,6 @@ allow HTTPS connections to the following address:
 
 [01]: ../azure-cli-support-lifecycle.md#supported-environments
 [02]: ../release-notes-azure-cli.md
-[03]: /cli/azure/install-azure-cli-linux?pivots=script
 [04]: /cli/azure/release-notes-azure-cli#june-21-2024
 [05]: #install-azure-cli
 [06]: https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/
