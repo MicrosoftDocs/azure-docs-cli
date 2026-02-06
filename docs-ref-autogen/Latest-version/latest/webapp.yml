@@ -102,7 +102,10 @@ directCommands:
                      [--docker-registry-server-password]
                      [--docker-registry-server-user]
                      [--domain-name-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse}]
+                     [--end-to-end-encryption-enabled {false, true}]
                      [--https-only {false, true}]
+                     [--min-tls-cipher-suite]
+                     [--min-tls-version]
                      [--multicontainer-config-file]
                      [--multicontainer-config-type {COMPOSE, KUBE}]
                      [--public-network-access {Disabled, Enabled}]
@@ -145,6 +148,9 @@ directCommands:
   - summary: |-
       Create a container webapp with an image pulled from a private Azure Container Registry using a User Assigned Managed Identity
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --container-image-name myregistry.azurecr.io/docker-image:tag --assign-identity MyAssignIdentities --acr-use-identity --acr-identity MyUserAssignedIdentityResourceId
+  - summary: |-
+      Create a web app with end-to-end encryption enabled and minimum TLS version 1.2
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --end-to-end-encryption-enabled true --min-tls-version 1.2
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -214,11 +220,21 @@ directCommands:
     acceptedValues: NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse
     summary: |-
       Specify the scope of uniqueness for the default hostname during resource creation.
+  - name: --end-to-end-encryption-enabled -e
+    acceptedValues: false, true
+    summary: |-
+      Enable or disable end-to-end encryption between the Front End and the Workers.
   - name: --https-only
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       Redirect all traffic made to an app using HTTP to HTTPS.
+  - name: --min-tls-cipher-suite
+    summary: |-
+      The minimum TLS Cipher Suite required for requests, e.g., 'TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384'.
+  - name: --min-tls-version
+    summary: |-
+      The minimum version of TLS required for SSL requests, e.g., '1.0', '1.1', '1.2'.
   - name: --multicontainer-config-file
     summary: |-
       Linux only. Config file for multicontainer apps. (local or remote).
@@ -1562,6 +1578,7 @@ directCommands:
     az webapp update [--add]
                      [--basic-auth {Disabled, Enabled}]
                      [--client-affinity-enabled {false, true}]
+                     [--end-to-end-encryption-enabled {false, true}]
                      [--force-dns-registration {false, true}]
                      [--force-string]
                      [--https-only {false, true}]
@@ -1598,6 +1615,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enables sending session affinity cookies.
+  - name: --end-to-end-encryption-enabled -e
+    acceptedValues: false, true
+    summary: |-
+      Enable or disable end-to-end encryption between the Front End and the Workers.
   - name: --force-dns-registration
     acceptedValues: false, true
     summary: |-
