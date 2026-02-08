@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/05/2026
+ms.date: 02/08/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -84,7 +84,7 @@ You will be prompted to install an extension on first use.
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.70.0 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.4](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
 |[data-transfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer) | 2.0.24 | Microsoft Azure Command-Line Tools DataTransfer Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/data-transfer/HISTORY.rst) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.70.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
-|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
+|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.57.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.75.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.75.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
