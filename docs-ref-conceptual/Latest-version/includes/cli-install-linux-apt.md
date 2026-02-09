@@ -29,7 +29,7 @@ If you wish to inspect the contents of the script yourself before executing, dow
 first using `curl` and inspect it in your favorite text editor.
 
 ```bash
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+curl -fsSL 'https://azurecliprod.blob.core.windows.net/$root/deb_install.sh' | sudo bash
 ```
 
 ### Option 2: Step-by-step installation instructions
