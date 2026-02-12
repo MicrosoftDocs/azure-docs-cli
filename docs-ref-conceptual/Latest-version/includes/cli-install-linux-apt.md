@@ -19,18 +19,36 @@ There are two options to install the Azure CLI on your system. You can download 
 that runs the install commands for you, or you can execute the install commands yourself in a
 step-by-step process. Both methods are provided here:
 
-### Option 1: Install with one command
+### Option 1: Install with a script
 
-The easiest way to install the Azure CLI is through a script maintained by the Azure CLI team. This
-script runs all installation commands in one step. This script is downloaded via `curl` and piped
-directly to `bash` to install the CLI.
+The Azure CLI team maintains an installation script that performs all required setup steps in a
+single process.
 
-If you wish to inspect the contents of the script yourself before executing, download the script
-first using `curl` and inspect it in your favorite text editor.
+Instead of piping the script directly to an elevated shell, download it first, review its contents,
+and then execute it. This approach lets you verify exactly what runs on your system.
 
-```bash
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-```
+1. Download the script
+
+   ```bash
+   curl -fsSL 'https://azurecliprod.blob.core.windows.net/$root/deb_install.sh' -o InstallAzureCLIDeb.sh
+   ```
+
+1. Review the script
+
+   Open the file in your preferred text editor:
+
+   ```bash
+   less InstallAzureCLIDeb.sh
+   ```
+
+1. Run the script
+
+   After reviewing the contents, make it executable and run it with elevated privileges:
+
+   ```bash
+   chmod +x InstallAzureCLIDeb.sh
+   sudo ./InstallAzureCLIDeb.sh
+   ```
 
 ### Option 2: Step-by-step installation instructions
 
