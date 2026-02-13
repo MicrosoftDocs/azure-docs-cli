@@ -91,6 +91,9 @@ STS releases have the following characteristics:
 - STS releases don't have a specific marker when running the `az version` command. This ensures
   backward compatibility with tools or scripts that might utilize the information.
 
+> [!IMPORTANT]
+> Azure CLI version **2.66.2** is supported **only for use with Azure Stack Hub**.
+
 **Examples:**
 
 - To qualify for support, you must update to 2.63.0 when released if you have Azure CLI 2.62.0

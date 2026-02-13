@@ -1,0 +1,453 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_connector_template
+name: az iot ops connector template
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops connector template** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Connector template management.
+description: |-
+  Connector templates provide a standardized, metadata-driven approach to connector deployment.
+  Templates are created from connector metadata references (MCR for 1st-party connectors,
+  ACR for 3rd-party connectors), automatically populating connector-specific configuration
+  while allowing user customization of deployment parameters.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_connector_template_create
+  name: az iot ops connector template create
+  summary: |-
+    Create a new connector template.
+  description: |-
+    Creates a connector template from metadata stored in a container registry. The metadata
+    automatically populates connector-specific settings, while deployment parameters like
+    replicas, log levels, and secrets can be customized.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops connector template create --connector-metadata-ref --ref
+                                         --instance
+                                         --name
+                                         --resource-group
+                                         [--allocation-policy --ap]
+                                         [--bs --bucket-size]
+                                         [--cc --connector-config]
+                                         [--image-pull-policy --ipp]
+                                         [--image-pull-secrets --ips]
+                                         [--ll --log-level]
+                                         [--replicas]
+                                         [--secrets]
+                                         [--storage-volumes --sv]
+                                         [--trust-settings-secret-ref --tssr]
+  examples:
+  - summary: |-
+      Create a template for REST connector with default settings.
+    syntax: az iot ops connector template create --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance --connector-metadata-ref mcr.microsoft.com/azureiotoperations/akri-connectors/rest-metadata:1.0.6
+  - summary: |-
+      Create a template with custom configuration.
+    syntax: az iot ops connector template create --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance --connector-metadata-ref mcr.microsoft.com/azureiotoperations/akri-connectors/rest-metadata:1.0.6 --replicas 3 --log-level debug --image-pull-secrets acr-credentials
+  - summary: |-
+      Create a template for 3rd-party connector from private ACR.
+    syntax: az iot ops connector template create --name custom-plc-template --resource-group myResourceGroup --instance myAIOInstance --connector-metadata-ref contoso.azurecr.io/connectors/plc-metadata:1.0.0 --image-pull-secrets acr-pull-secret
+  requiredParameters:
+  - isRequired: true
+    name: --connector-metadata-ref --ref
+    summary: |-
+      URL to connector metadata artifact from container registry.
+
+                      1st-party connectors (MCR):
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/rest-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/media-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/mqtt-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/sse-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/onvif-metadata:VERSION`
+
+                      3rd-party connectors:
+                      - `REGISTRY.azurecr.io/PATH-metadata:VERSION`
+
+                      To list available versions for 1st-party connectors:
+                      `curl https://mcr.microsoft.com/v2/azureiotoperations/akri-connectors/TYPE-metadata/tags/list`.
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Template name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Instance resource group.
+  optionalParameters:
+  - name: --allocation-policy --ap
+    summary: |-
+      Policy for allocating device endpoints across connector instances (case-insensitive). Options: Bucketized. If not provided, no allocation policy will be set.
+  - name: --bs --bucket-size
+    summary: |-
+      Number of endpoints per connector instance bucket. Required when allocation policy is 'Bucketized'.
+  - name: --cc --connector-config
+    summary: |-
+      Space-separated connector-specific key-value configurations. Format: key=value. Can provide multiple values in one call or use multiple times. Examples: --cc brokerAddress=mqtt://broker:1883 qos=1 keepAlive=60 OR --cc brokerAddress=mqtt://broker:1883 --cc qos=1 --cc keepAlive=60. Use '' to clear existing configurations.
+  - name: --image-pull-policy --ipp
+    summary: |-
+      Kubernetes image pull policy. Options: Always, IfNotPresent, Never.
+  - name: --image-pull-secrets --ips
+    summary: |-
+      Space-separated Kubernetes secret names for pulling container images from private registries. For 3rd-party connectors using a private container registry, provide the secret(s) containing registry credentials to enable the connector pod to pull the image. Use '' to clear existing image pull secrets.
+  - name: --ll --log-level
+    summary: |-
+      Log level for connector pods. Options: trace, debug, info, warn, error. Default: info.
+  - name: --replicas -r
+    summary: |-
+      Number of connector pod replicas to deploy. Default is taken from recommendedReplicas in metadata, or 1 if not specified.
+  - name: --secrets
+    summary: |-
+      Space-separated connector application secrets to mount in key=value format. Each secret requires three fields: secretRef (name of the secret to mount), secretKey (the key in the secret to be mounted), and secretAlias (application alias). Example: secretRef=mySecret secretKey=password secretAlias=dbPassword. Can be used multiple times to define multiple secrets. The secretRef must reference a secret synced via the secret provider class. Use '' to clear existing secrets.
+  - name: --storage-volumes --sv
+    summary: |-
+      Space-separated persistent volume claim reference in key=value format. Required keys: claimName (name of existing PVC), mountPath (mount path in container). Example: claimName=myPVC mountPath=/data. Use '' to clear existing storage volumes.
+  - name: --trust-settings-secret-ref --tssr
+    summary: |-
+      Secret reference for certificates to trust. This specifies the name of the Kubernetes secret containing trusted CA certificates. Use '' to clear existing trust settings.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_connector_template_delete
+  name: az iot ops connector template delete
+  summary: |-
+    Delete a connector template.
+  description: |-
+    Deletes a connector template. Validates if template is currently in use by deployed
+    connectors and prompts for confirmation unless --yes is provided.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops connector template delete --instance
+                                         --name
+                                         --resource-group
+                                         [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete template with confirmation prompt.
+    syntax: az iot ops connector template delete --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance
+  - summary: |-
+      Delete template without confirmation.
+    syntax: az iot ops connector template delete --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance --yes
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Template name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Instance resource group.
+  optionalParameters:
+  - name: --yes -y
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_connector_template_list
+  name: az iot ops connector template list
+  summary: |-
+    List all connector templates.
+  description: |-
+    Lists all connector templates for a specific Azure IoT Operations instance with
+    summary information including template name, connector type, version, replicas,
+    and creation/modification dates.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops connector template list --instance
+                                       --resource-group
+  examples:
+  - summary: |-
+      List all templates for an instance.
+    syntax: az iot ops connector template list --resource-group myResourceGroup --instance myAIOInstance
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Instance resource group.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_connector_template_show
+  name: az iot ops connector template show
+  summary: |-
+    Display a connector template.
+  description: |-
+    Shows the complete template configuration including metadata, connector information,
+    image configuration, deployment settings, storage configuration, and security settings.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops connector template show --instance
+                                       --name
+                                       --resource-group
+  examples:
+  - summary: |-
+      Show template details in JSON format.
+    syntax: az iot ops connector template show --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance
+  - summary: |-
+      Show template in table format.
+    syntax: az iot ops connector template show --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance --output table
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Template name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Instance resource group.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_connector_template_update
+  name: az iot ops connector template update
+  summary: |-
+    Update an existing connector template.
+  description: |-
+    Updates a connector template. Deployment parameters such as replicas, log levels, secrets,
+    image pull settings, and trust settings can be modified. Connector metadata can be updated
+    to patch or minor version upgrades only. Major version updates require creating a new template.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops connector template update --instance
+                                         --name
+                                         --resource-group
+                                         [--allocation-policy --ap]
+                                         [--bs --bucket-size]
+                                         [--cc --connector-config]
+                                         [--connector-metadata-ref --ref]
+                                         [--image-pull-policy --ipp]
+                                         [--image-pull-secrets --ips]
+                                         [--ll --log-level]
+                                         [--replicas]
+                                         [--secrets]
+                                         [--storage-volumes --sv]
+                                         [--trust-settings-secret-ref --tssr]
+  examples:
+  - summary: |-
+      Update replica count and log level.
+    syntax: az iot ops connector template update --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance --replicas 5 --log-level debug
+  - summary: |-
+      Update to a newer patch version of the connector.
+    syntax: az iot ops connector template update --name my-rest-template --resource-group myResourceGroup --instance myAIOInstance --connector-metadata-ref mcr.microsoft.com/azureiotoperations/akri-connectors/rest-metadata:1.0.7
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Template name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Instance resource group.
+  optionalParameters:
+  - name: --allocation-policy --ap
+    summary: |-
+      Policy for allocating device endpoints across connector instances (case-insensitive). Options: Bucketized. If not provided, no allocation policy will be set.
+  - name: --bs --bucket-size
+    summary: |-
+      Number of endpoints per connector instance bucket. Required when allocation policy is 'Bucketized'.
+  - name: --cc --connector-config
+    summary: |-
+      Space-separated connector-specific key-value configurations. Format: key=value. Can provide multiple values in one call or use multiple times. Examples: --cc brokerAddress=mqtt://broker:1883 qos=1 keepAlive=60 OR --cc brokerAddress=mqtt://broker:1883 --cc qos=1 --cc keepAlive=60. Use '' to clear existing configurations.
+  - name: --connector-metadata-ref --ref
+    summary: |-
+      URL to connector metadata artifact from container registry.
+
+                      1st-party connectors (MCR):
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/rest-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/media-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/mqtt-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/sse-metadata:VERSION`
+                      - `mcr.microsoft.com/azureiotoperations/akri-connectors/onvif-metadata:VERSION`
+
+                      3rd-party connectors:
+                      - `REGISTRY.azurecr.io/PATH-metadata:VERSION`
+
+                      To list available versions for 1st-party connectors:
+                      `curl https://mcr.microsoft.com/v2/azureiotoperations/akri-connectors/TYPE-metadata/tags/list`.
+  - name: --image-pull-policy --ipp
+    summary: |-
+      Kubernetes image pull policy. Options: Always, IfNotPresent, Never.
+  - name: --image-pull-secrets --ips
+    summary: |-
+      Space-separated Kubernetes secret names for pulling container images from private registries. For 3rd-party connectors using a private container registry, provide the secret(s) containing registry credentials to enable the connector pod to pull the image. Use '' to clear existing image pull secrets.
+  - name: --ll --log-level
+    summary: |-
+      Log level for connector pods. Options: trace, debug, info, warn, error. Default: info.
+  - name: --replicas -r
+    summary: |-
+      Number of connector pod replicas to deploy. Default is taken from recommendedReplicas in metadata, or 1 if not specified.
+  - name: --secrets
+    summary: |-
+      Space-separated connector application secrets to mount in key=value format. Each secret requires three fields: secretRef (name of the secret to mount), secretKey (the key in the secret to be mounted), and secretAlias (application alias). Example: secretRef=mySecret secretKey=password secretAlias=dbPassword. Can be used multiple times to define multiple secrets. The secretRef must reference a secret synced via the secret provider class. Use '' to clear existing secrets.
+  - name: --storage-volumes --sv
+    summary: |-
+      Space-separated persistent volume claim reference in key=value format. Required keys: claimName (name of existing PVC), mountPath (mount path in container). Example: claimName=myPVC mountPath=/data. Use '' to clear existing storage volumes.
+  - name: --trust-settings-secret-ref --tssr
+    summary: |-
+      Secret reference for certificates to trust. This specifies the name of the Kubernetes secret containing trusted CA certificates. Use '' to clear existing trust settings.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_ops_connector_template_create
+- az_iot_ops_connector_template_delete
+- az_iot_ops_connector_template_list
+- az_iot_ops_connector_template_show
+- az_iot_ops_connector_template_update
+metadata:
+  description: >-
+    Connector templates provide a standardized, metadata-driven approach to connector deployment.
+
+    Templates are created from connector metadata references (MCR for 1st-party connectors,
+
+    ACR for 3rd-party connectors), automatically populating connector-specific configuration
+
+    while allowing user customization of deployment parameters.
