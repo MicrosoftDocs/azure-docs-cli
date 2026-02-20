@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 02/13/2026
+ms.date: 02/20/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -148,19 +148,6 @@ The breaking changes listed in this section are planned for the next major relea
 
 ## resource
 
-### `policy assignment non-compliance-message create`
-
-[Link to policy assignment non-compliance-message reference group](/cli/azure/policy/assignment/non-compliance-message)
-
-- The return value will change in a future release of the resource commands. It will be the single created message object rather than the full array of message objects.
-- The return value will change in a future release of the resource commands. It will be the single created message object rather than the full array of message objects.
-
-### `policy assignment non-compliance-message delete`
-
-[Link to policy assignment non-compliance-message reference group](/cli/azure/policy/assignment/non-compliance-message)
-
-- The return value will change in a future release of the resource commands. It will be empty rather than the full array of remaining message objects.
-
 ### `policy assignment identity assign`
 
 [Link to policy assignment identity reference group](/cli/azure/policy/assignment/identity)
@@ -173,11 +160,18 @@ The breaking changes listed in this section are planned for the next major relea
 
 - Removing a user assigned identity will change in a future release of the resource commands. It will require providing the --mi-user-assigned switch.
 
-### `policy definition delete`
+### `policy assignment non-compliance-message create`
 
-[Link to policy definition reference group](/cli/azure/policy/definition)
+[Link to policy assignment non-compliance-message reference group](/cli/azure/policy/assignment/non-compliance-message)
 
-- Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
+- The return value will change in a future release of the resource commands. It will be the single created message object rather than the full array of message objects.
+- The return value will change in a future release of the resource commands. It will be the single created message object rather than the full array of message objects.
+
+### `policy assignment non-compliance-message delete`
+
+[Link to policy assignment non-compliance-message reference group](/cli/azure/policy/assignment/non-compliance-message)
+
+- The return value will change in a future release of the resource commands. It will be empty rather than the full array of remaining message objects.
 
 ### `policy set-definition delete`
 
@@ -196,6 +190,12 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to policy exemption reference group](/cli/azure/policy/exemption)
 
 - Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
+
+### `policy definition delete`
+
+[Link to policy definition reference group](/cli/azure/policy/definition)
+
+- Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
 
 ## servicefabric
 
@@ -262,6 +262,12 @@ The breaking changes listed in this section are planned for the next major relea
 
 ## azext_managednetworkfabric
 
+### `networkfabric device upgrade`
+
+[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
+
+- The argument '--version' will become required in 9.0.x.
+
 ### `networkfabric l3domain create`
 
 [Link to networkfabric l3domain reference group](/cli/azure/networkfabric/l3domain)
@@ -273,12 +279,6 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to networkfabric l3domain reference group](/cli/azure/networkfabric/l3domain)
 
 - '--route-prefix-limit' has been deprecated and will be removed in 9.0.x.
-
-### `networkfabric device upgrade`
-
-[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
-
-- The argument '--version' will become required in 9.0.x.
 
 ## azext_neon
 
