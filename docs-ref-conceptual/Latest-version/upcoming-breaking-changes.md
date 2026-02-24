@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 02/20/2026
+ms.date: 02/24/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -90,6 +90,18 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
 - '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
+
+### `postgres flexible-server upgrade`
+
+[Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
+
+- The allowed values will be changed from set list to supported versions for upgrade based on capabilities.
+
+### `postgres flexible-server backup create`
+
+[Link to postgres flexible-server backup reference group](/cli/azure/postgres/flexible-server/backup)
+
+- The argument for backup name will no longer be required in next breaking change release(2.86.0) scheduled for May 2026.
 
 ### `postgres flexible-server replica create`
 
