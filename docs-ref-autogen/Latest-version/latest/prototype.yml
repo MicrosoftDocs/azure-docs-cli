@@ -1,0 +1,592 @@
+### YamlMime:AzureCLIGroup
+uid: az_prototype
+name: az prototype
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **prototype** extension for the Azure CLI (version 2.50.0 or higher). The extension will automatically install the first time you run an **az prototype** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Rapidly create Azure prototypes using AI-driven agent teams.
+description: |-
+  The az prototype extension empowers you to build functional Azure prototypes
+  using intelligent agent teams powered by GitHub Copilot or Azure OpenAI.
+
+  Workflow: init → design → build → deploy
+
+  Each stage can be run independently (with prerequisite guards) and most
+  stages are re-entrant — you can return to refine your design or rebuild
+  specific components.
+
+  Analysis commands let you diagnose errors and estimate costs at any point.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+sourceType: Extension
+directCommands:
+- uid: az_prototype_build
+  name: az prototype build
+  summary: |-
+    Generate infrastructure and application code in staged output.
+  description: |-
+    Uses the architecture design to generate Terraform/Bicep modules,
+    application code, database scripts, and documentation.
+
+    Interactive by default — the build session uses Claude Code-inspired
+    bordered prompts, progress indicators, policy enforcement, and a
+    conversational review loop.
+
+    All output is organized into fine-grained, dependency-ordered
+    deployment stages. Each infrastructure component, database system,
+    and application gets its own stage. Workload templates are used
+    as optional starting points when they match the design.
+
+    After generation, a build report shows what was built and you can
+    provide feedback to regenerate specific stages. Type 'done' to
+    accept the build.
+
+    Slash commands during build:
+      /status  - Show stage completion summary
+      /stages  - Show full deployment plan
+      /files   - List all generated files
+      /policy  - Show policy check summary
+      /help    - Show available commands
+
+    Use --dry-run for a non-interactive preview.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype build [--auto-accept]
+                       [--dry-run]
+                       [--reset]
+                       [--scope {all, apps, db, docs, infra}]
+                       [--status]
+  examples:
+  - summary: |-
+      Interactive build session (default)
+    syntax: az prototype build
+  - summary: |-
+      Show current build progress
+    syntax: az prototype build --status
+  - summary: |-
+      Clear build state and start fresh
+    syntax: az prototype build --reset
+  - summary: |-
+      Build only infrastructure code
+    syntax: az prototype build --scope infra
+  - summary: |-
+      Preview what would be generated
+    syntax: az prototype build --scope all --dry-run
+  optionalParameters:
+  - name: --auto-accept
+    defaultValue: "False"
+    summary: |-
+      Automatically accept the default recommendation for policy violations and standards conflicts.
+  - name: --dry-run
+    defaultValue: "False"
+    summary: |-
+      Preview what would be generated without writing files.
+  - name: --reset
+    defaultValue: "False"
+    summary: |-
+      Clear existing build state and start fresh.
+  - name: --scope
+    defaultValue: all
+    acceptedValues: all, apps, db, docs, infra
+    summary: |-
+      What to build.
+  - name: --status -s
+    defaultValue: "False"
+    summary: |-
+      Show current build progress without starting a session.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_deploy
+  name: az prototype deploy
+  summary: |-
+    Deploy prototype to Azure with interactive staged deployments.
+  description: |-
+    Interactive by default — runs preflight checks (subscription, IaC tool,
+    resource group, resource providers), then deploys stages sequentially
+    with progress tracking and QA-first error routing.
+
+    After deployment, enters a conversational loop where you can check
+    status, rollback, redeploy, or preview changes using slash commands.
+
+    Slash commands during deploy:
+      /status    - Show stage completion summary
+      /stages    - Show full stage breakdown (alias for /status)
+      /deploy N  - Deploy a specific stage (or 'all' for pending)
+      /rollback N - Roll back a specific stage (or 'all' in reverse order)
+      /redeploy N - Roll back and redeploy a stage
+      /plan N    - What-if / terraform plan for a stage
+      /outputs   - Show captured deployment outputs
+      /preflight - Re-run preflight checks
+      /help      - Show available commands
+
+    Use --dry-run for non-interactive what-if / terraform plan preview.
+    Use --stage N for non-interactive single-stage deploy.
+    Use --stage N --dry-run for what-if preview of a single stage.
+    Use --outputs to show captured deployment outputs.
+    Use --rollback-info to show rollback instructions.
+    Use --generate-scripts to generate deploy.sh for application directories.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype deploy [--client-id]
+                        [--client-secret]
+                        [--dry-run]
+                        [--force]
+                        [--generate-scripts]
+                        [--outputs]
+                        [--reset]
+                        [--rollback-info]
+                        [--script-registry]
+                        [--script-resource-group]
+                        [--script-type {container_app, function, webapp}]
+                        [--service-principal]
+                        [--stage]
+                        [--status]
+                        [--tenant]
+                        [--tenant-id]
+  examples:
+  - summary: |-
+      Interactive deploy session (default)
+    syntax: az prototype deploy
+  - summary: |-
+      Show current deploy progress
+    syntax: az prototype deploy --status
+  - summary: |-
+      Preview all stages (what-if / terraform plan)
+    syntax: az prototype deploy --dry-run
+  - summary: |-
+      Deploy only stage 2
+    syntax: az prototype deploy --stage 2
+  - summary: |-
+      Force full redeployment
+    syntax: az prototype deploy --force
+  - summary: |-
+      Show captured deployment outputs
+    syntax: az prototype deploy --outputs
+  - summary: |-
+      Show rollback instructions
+    syntax: az prototype deploy --rollback-info
+  - summary: |-
+      Generate App Service deployment scripts
+    syntax: az prototype deploy --generate-scripts --script-type webapp
+  optionalParameters:
+  - name: --client-id
+    summary: |-
+      Service principal application/client ID (or set via config).
+  - name: --client-secret
+    summary: |-
+      Service principal client secret (or set via config).
+  - name: --dry-run
+    defaultValue: "False"
+    summary: |-
+      Preview what would be deployed (what-if for Bicep, plan for Terraform).
+  - name: --force
+    defaultValue: "False"
+    summary: |-
+      Force full deployment, ignoring change tracking.
+  - name: --generate-scripts
+    defaultValue: "False"
+    summary: |-
+      Generate deploy.sh scripts for application directories.
+  - name: --outputs
+    defaultValue: "False"
+    summary: |-
+      Show captured deployment outputs from Terraform / Bicep.
+  - name: --reset
+    defaultValue: "False"
+    summary: |-
+      Clear deploy state and start fresh.
+  - name: --rollback-info
+    defaultValue: "False"
+    summary: |-
+      Show rollback instructions based on deployment history.
+  - name: --script-registry
+    summary: |-
+      Container registry URL for --generate-scripts (container_app type).
+  - name: --script-resource-group
+    summary: |-
+      Default resource group name for --generate-scripts.
+  - name: --script-type
+    defaultValue: webapp
+    acceptedValues: container_app, function, webapp
+    summary: |-
+      Azure deployment target type for --generate-scripts.
+  - name: --service-principal
+    defaultValue: "False"
+    summary: |-
+      Authenticate using a service principal before deploying.
+  - name: --stage
+    summary: |-
+      Deploy only a specific stage number (use --status to see stages).
+  - name: --status -s
+    defaultValue: "False"
+    summary: |-
+      Show current deploy progress without starting a session.
+  - name: --tenant
+    summary: |-
+      Azure AD tenant ID for cross-tenant deployment.
+  - name: --tenant-id
+    summary: |-
+      Tenant ID for service principal authentication (or set via config).
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_design
+  name: az prototype design
+  summary: |-
+    Analyze requirements and generate architecture design.
+  description: |-
+    Reads artifacts (documents, diagrams, specs), engages the biz-analyst
+    agent to identify gaps, and generates architecture documentation.
+
+    When run without parameters, starts an interactive dialogue to
+    capture requirements through guided questions.
+
+    With --interactive, enters a refinement loop after architecture
+    generation so you can review the design and request changes.
+
+    The biz-analyst agent is always engaged — even when --context is
+    provided — to check for missing requirements and unstated assumptions.
+
+    This stage is re-entrant — run it again to refine the design.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype design [--artifacts]
+                        [--context]
+                        [--interactive]
+                        [--reset]
+                        [--skip-discovery]
+                        [--status]
+  examples:
+  - summary: |-
+      Interactive design session (guided dialogue)
+    syntax: az prototype design
+  - summary: |-
+      Interactive design with architecture refinement loop
+    syntax: az prototype design --interactive
+  - summary: |-
+      Design from artifact directory
+    syntax: az prototype design --artifacts ./requirements/
+  - summary: |-
+      Add context to existing design
+    syntax: az prototype design --context "Add Redis caching layer"
+  - summary: |-
+      Reset and start design fresh
+    syntax: az prototype design --reset
+  optionalParameters:
+  - name: --artifacts
+    summary: |-
+      Path to directory containing requirement documents, diagrams, or other artifacts.
+  - name: --context
+    summary: |-
+      Additional context or requirements as free text.
+  - name: --interactive -i
+    defaultValue: "False"
+    summary: |-
+      Enter an interactive refinement loop after architecture generation.
+  - name: --reset
+    defaultValue: "False"
+    summary: |-
+      Reset design state and start fresh.
+  - name: --skip-discovery
+    defaultValue: "False"
+    summary: |-
+      Skip the discovery conversation and generate architecture directly from existing discovery state.
+  - name: --status -s
+    defaultValue: "False"
+    summary: |-
+      Show current discovery status (open items, confirmed items) without starting a session.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_init
+  name: az prototype init
+  summary: |-
+    Initialize a new prototype project.
+  description: |-
+    Sets up project scaffolding, creates the project configuration file, and
+    optionally authenticates with GitHub (validates Copilot license).
+
+    GitHub authentication is only required for the copilot and github-models
+    AI providers. When using azure-openai, GitHub auth is skipped entirely.
+
+    If the target directory already contains a prototype.yaml, the command
+    will prompt before overwriting.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype init [--ai-provider {azure-openai, copilot, github-models}]
+                      [--environment {dev, prod, staging}]
+                      [--iac-tool {bicep, terraform}]
+                      [--location]
+                      [--model]
+                      [--name]
+                      [--output-dir]
+                      [--template]
+  examples:
+  - summary: |-
+      Create a new prototype project
+    syntax: az prototype init --name my-prototype --location eastus
+  - summary: |-
+      Initialize with Bicep preference
+    syntax: az prototype init --name my-app --location westus2 --iac-tool bicep
+  - summary: |-
+      Use Azure OpenAI (skips GitHub auth)
+    syntax: az prototype init --name my-app --location eastus --ai-provider azure-openai
+  - summary: |-
+      Specify environment and model
+    syntax: az prototype init --name my-app --location eastus --environment staging --model gpt-4o
+  optionalParameters:
+  - name: --ai-provider
+    defaultValue: copilot
+    acceptedValues: azure-openai, copilot, github-models
+    summary: |-
+      AI provider for agent interactions.
+  - name: --environment
+    defaultValue: dev
+    acceptedValues: dev, prod, staging
+    summary: |-
+      Target environment for the prototype.
+  - name: --iac-tool
+    defaultValue: terraform
+    acceptedValues: bicep, terraform
+    summary: |-
+      Infrastructure-as-code tool preference.
+  - name: --location -l
+    summary: |-
+      Azure region for resource deployment (e.g., eastus).
+  - name: --model
+    summary: |-
+      AI model to use (default: claude-sonnet-4.5 for copilot, gpt-4o for others).
+  - name: --name
+    summary: |-
+      Name of the prototype project.
+  - name: --output-dir
+    defaultValue: .
+    summary: |-
+      Output directory for project files.
+  - name: --template
+    summary: |-
+      Project template to use (e.g., web-app, data-pipeline, ai-app).
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_status
+  name: az prototype status
+  summary: |-
+    Show current project status across all stages.
+  description: |-
+    Displays a summary of the prototype project including configuration,
+    stage progress (design, build, deploy), and pending changes.
+
+    By default shows a human-readable summary. Use --json for machine-readable
+    output suitable for scripting. Use --detailed for expanded per-stage details.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype status [--detailed]
+                        [--json]
+  examples:
+  - summary: |-
+      Show project status
+    syntax: az prototype status
+  - summary: |-
+      Show detailed status with per-stage breakdown
+    syntax: az prototype status --detailed
+  - summary: |-
+      Get machine-readable JSON output
+    syntax: az prototype status --json
+  optionalParameters:
+  - name: --detailed -d
+    defaultValue: "False"
+    summary: |-
+      Show expanded per-stage details.
+  - name: --json -j
+    defaultValue: "False"
+    summary: |-
+      Output machine-readable JSON instead of formatted display.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_prototype_agent
+- az_prototype_agent_add
+- az_prototype_agent_export
+- az_prototype_agent_list
+- az_prototype_agent_override
+- az_prototype_agent_remove
+- az_prototype_agent_show
+- az_prototype_agent_test
+- az_prototype_agent_update
+- az_prototype_analyze
+- az_prototype_analyze_costs
+- az_prototype_analyze_error
+- az_prototype_build
+- az_prototype_config
+- az_prototype_config_get
+- az_prototype_config_init
+- az_prototype_config_set
+- az_prototype_config_show
+- az_prototype_deploy
+- az_prototype_design
+- az_prototype_generate
+- az_prototype_generate_backlog
+- az_prototype_generate_docs
+- az_prototype_generate_speckit
+- az_prototype_init
+- az_prototype_knowledge
+- az_prototype_knowledge_contribute
+- az_prototype_status
+metadata:
+  description: >-
+    The az prototype extension empowers you to build functional Azure prototypes
+
+    using intelligent agent teams powered by GitHub Copilot or Azure OpenAI.
+
+
+    Workflow: init → design → build → deploy
+
+
+    Each stage can be run independently (with prerequisite guards) and most
+
+    stages are re-entrant — you can return to refine your design or rebuild
+
+    specific components.
+
+
+    Analysis commands let you diagnose errors and estimate costs at any point.

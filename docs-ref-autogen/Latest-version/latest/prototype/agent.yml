@@ -1,0 +1,575 @@
+### YamlMime:AzureCLIGroup
+uid: az_prototype_agent
+name: az prototype agent
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **prototype** extension for the Azure CLI (version 2.50.0 or higher). The extension will automatically install the first time you run an **az prototype agent** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage AI agents for prototype generation.
+description: |-
+  Agents are specialized AI personas that handle different aspects of
+  prototype generation. Built-in agents ship with the extension; you can
+  add custom agents or override built-in ones.
+
+  Built-in agents: cloud-architect, terraform, bicep, app-developer,
+  documentation, qa-engineer, biz-analyst, cost-analyst, project-manager,
+  security-reviewer, monitoring-agent
+
+  Agent resolution order: custom > override > built-in.
+
+  Use 'agent list' to see all available agents, 'agent add' to create
+  custom agents, 'agent test' to validate an agent, and 'agent export'
+  to share agent definitions.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'prototype' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_prototype_agent_add
+  name: az prototype agent add
+  summary: |-
+    Add a custom agent to the project.
+  description: |-
+    Creates a new custom agent definition in .prototype/agents/ and registers it
+    in the project configuration manifest.
+
+    Interactive by default — when neither --file nor --definition is provided,
+    walks you through description, capabilities, constraints, system prompt,
+    and optional few-shot examples.
+
+    Non-interactive modes:
+    - --definition copies a built-in agent's YAML as a starting point
+    - --file uses your own YAML or Python definition
+
+    After creation, test the agent with 'az prototype agent test --name <name>'.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype agent add [--definition]
+                           [--file]
+                           [--name]
+  examples:
+  - summary: |-
+      Interactive agent creation (default)
+    syntax: az prototype agent add --name my-data-agent
+  - summary: |-
+      Start from the cloud_architect built-in definition
+    syntax: az prototype agent add --name my-architect --definition cloud_architect
+  - summary: |-
+      Add agent from a user-supplied file
+    syntax: az prototype agent add --name security --file ./security-checker.yaml
+  optionalParameters:
+  - name: --definition
+    summary: |-
+      Name of a built-in definition to copy as a starting point (e.g., cloud_architect, bicep_agent, terraform_agent). Mutually exclusive with --file.
+  - name: --file
+    summary: |-
+      Path to a YAML or Python agent definition file. Mutually exclusive with --definition.
+  - name: --name
+    summary: |-
+      Unique name for the custom agent (used as filename and registry key).
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_agent_export
+  name: az prototype agent export
+  summary: |-
+    Export any agent (including built-in) as a YAML file.
+  description: |-
+    Exports the agent's metadata, system prompt, capabilities, constraints,
+    and examples as a portable YAML file. The exported file can be shared
+    with other projects or used as a starting point for customization.
+
+    Built-in agents can be exported to inspect or customize their definitions.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype agent export [--name]
+                              [--output-file]
+  examples:
+  - summary: |-
+      Export a built-in agent
+    syntax: az prototype agent export --name cloud-architect
+  - summary: |-
+      Export to a specific path
+    syntax: az prototype agent export --name qa-engineer --output-file ./agents/qa.yaml
+  optionalParameters:
+  - name: --name
+    summary: |-
+      Name of the agent to export.
+  - name: --output-file -f
+    summary: |-
+      Output file path for the exported YAML.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_agent_list
+  name: az prototype agent list
+  summary: |-
+    List all available agents (built-in and custom).
+  description: |-
+    Displays agents grouped by source (built-in, custom, override) with
+    name, description, and capabilities.
+
+    By default shows a formatted console display. Use --json for
+    machine-readable output. Use --detailed for expanded capability details.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype agent list [--detailed]
+                            [--json]
+                            [--show-builtin]
+  examples:
+  - summary: |-
+      List all agents with formatted output
+    syntax: az prototype agent list
+  - summary: |-
+      Get machine-readable JSON output
+    syntax: az prototype agent list --json
+  - summary: |-
+      Show expanded details
+    syntax: az prototype agent list --detailed
+  - summary: |-
+      List only custom agents
+    syntax: az prototype agent list --show-builtin false
+  optionalParameters:
+  - name: --detailed -d
+    defaultValue: "False"
+    summary: |-
+      Show expanded capability details for each agent.
+  - name: --json -j
+    defaultValue: "False"
+    summary: |-
+      Output machine-readable JSON instead of formatted display.
+  - name: --show-builtin
+    defaultValue: "True"
+    summary: |-
+      Include built-in agents in the listing.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_agent_override
+  name: az prototype agent override
+  summary: |-
+    Override a built-in agent with a custom definition.
+  description: |-
+    Replaces the behavior of a built-in agent with a custom implementation.
+    The override is recorded in prototype.yaml and takes effect on the next
+    command run.
+
+    The override file is validated: must exist on disk, parse as valid YAML,
+    and contain a 'name' field. A warning is shown if the target name does
+    not match a known built-in agent.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype agent override [--file]
+                                [--name]
+  examples:
+  - summary: |-
+      Override cloud-architect with custom definition
+    syntax: az prototype agent override --name cloud-architect --file ./my-architect.yaml
+  - summary: |-
+      Override the terraform agent
+    syntax: az prototype agent override --name terraform --file ./custom-terraform.yaml
+  optionalParameters:
+  - name: --file
+    summary: |-
+      Path to YAML or Python agent definition file.
+  - name: --name
+    summary: |-
+      Name of the built-in agent to override.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_agent_remove
+  name: az prototype agent remove
+  summary: |-
+    Remove a custom agent or override.
+  description: |-
+    Removes a custom agent definition from .prototype/agents/ and cleans up
+    the project configuration manifest entry. Can also remove overrides,
+    restoring the built-in agent behavior.
+
+    Built-in agents cannot be removed.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: az prototype agent remove [--name]
+  examples:
+  - summary: |-
+      Remove a custom agent
+    syntax: az prototype agent remove --name my-data-agent
+  - summary: |-
+      Remove an override (restores built-in)
+    syntax: az prototype agent remove --name cloud-architect
+  optionalParameters:
+  - name: --name
+    summary: |-
+      Name of the custom agent to remove.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_agent_show
+  name: az prototype agent show
+  summary: |-
+    Show details of a specific agent.
+  description: |-
+    Displays agent metadata including description, source, capabilities,
+    constraints, and a preview of the system prompt.
+
+    Use --detailed to show the full system prompt instead of a 200-character
+    preview. Use --json for machine-readable output.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype agent show [--detailed]
+                            [--json]
+                            [--name]
+  examples:
+  - summary: |-
+      Show agent details
+    syntax: az prototype agent show --name cloud-architect
+  - summary: |-
+      Show full system prompt
+    syntax: az prototype agent show --name cloud-architect --detailed
+  - summary: |-
+      Get JSON output
+    syntax: az prototype agent show --name cloud-architect --json
+  optionalParameters:
+  - name: --detailed -d
+    defaultValue: "False"
+    summary: |-
+      Show full system prompt instead of 200-char preview.
+  - name: --json -j
+    defaultValue: "False"
+    summary: |-
+      Output machine-readable JSON instead of formatted display.
+  - name: --name
+    summary: |-
+      Name of the agent to show details for.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_agent_test
+  name: az prototype agent test
+  summary: |-
+    Send a test prompt to any agent and display the response.
+  description: |-
+    Sends a prompt to the specified agent using the configured AI provider
+    and displays the response. Useful for validating agent behavior after
+    creation or update.
+
+    Reports the model used and token count after the response.
+    Requires a configured AI provider (run 'az prototype init' first).
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype agent test [--name]
+                            [--prompt]
+  examples:
+  - summary: |-
+      Test with default prompt
+    syntax: az prototype agent test --name cloud-architect
+  - summary: |-
+      Test with custom prompt
+    syntax: az prototype agent test --name my-agent --prompt "Design a web app with Redis caching"
+  optionalParameters:
+  - name: --name
+    summary: |-
+      Name of the agent to test.
+  - name: --prompt
+    summary: |-
+      Test prompt to send to the agent.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_agent_update
+  name: az prototype agent update
+  summary: |-
+    Update an existing custom agent's properties.
+  description: |-
+    Interactive by default — walks through the same prompts as 'agent add'
+    with current values as defaults. Press Enter to keep existing values.
+
+    Providing any field flag (--description, --capabilities,
+    --system-prompt-file) switches to non-interactive mode and only
+    changes the specified fields.
+
+    Only custom YAML agents can be updated.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype agent' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype agent update [--capabilities]
+                              [--description]
+                              [--name]
+                              [--system-prompt-file]
+  examples:
+  - summary: |-
+      Interactive update with current values as defaults
+    syntax: az prototype agent update --name my-agent
+  - summary: |-
+      Update only the description
+    syntax: az prototype agent update --name my-agent --description "New description"
+  - summary: |-
+      Update capabilities
+    syntax: az prototype agent update --name my-agent --capabilities "architect,deploy"
+  - summary: |-
+      Update system prompt from file
+    syntax: az prototype agent update --name my-agent --system-prompt-file ./new-prompt.txt
+  optionalParameters:
+  - name: --capabilities
+    summary: |-
+      Comma-separated list of capabilities (e.g., architect,deploy).
+  - name: --description
+    summary: |-
+      New description for the agent.
+  - name: --name
+    summary: |-
+      Name of the custom agent to update.
+  - name: --system-prompt-file
+    summary: |-
+      Path to a text file containing the new system prompt.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_prototype_agent_add
+- az_prototype_agent_export
+- az_prototype_agent_list
+- az_prototype_agent_override
+- az_prototype_agent_remove
+- az_prototype_agent_show
+- az_prototype_agent_test
+- az_prototype_agent_update
+metadata:
+  description: >-
+    Agents are specialized AI personas that handle different aspects of
+
+    prototype generation. Built-in agents ship with the extension; you can
+
+    add custom agents or override built-in ones.
+
+
+    Built-in agents: cloud-architect, terraform, bicep, app-developer,
+
+    documentation, qa-engineer, biz-analyst, cost-analyst, project-manager,
+
+    security-reviewer, monitoring-agent
+
+
+    Agent resolution order: custom > override > built-in.
+
+
+    Use 'agent list' to see all available agents, 'agent add' to create
+
+    custom agents, 'agent test' to validate an agent, and 'agent export'
+
+    to share agent definitions.
