@@ -1,0 +1,295 @@
+### YamlMime:AzureCLIGroup
+uid: az_prototype_generate
+name: az prototype generate
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **prototype** extension for the Azure CLI (version 2.50.0 or higher). The extension will automatically install the first time you run an **az prototype generate** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Generate documentation and spec-kit artifacts.
+description: |-
+  Commands for generating project documentation and specification-kit
+  bundles from built-in templates.
+
+  Templates are populated with project configuration values and written
+  to the output directory. Remaining [PLACEHOLDER] values are left for
+  AI agents to fill during the build stage.
+
+  Document types generated:
+    - ARCHITECTURE.md:    High-level and detailed architecture diagrams
+    - DEPLOYMENT.md:      Step-by-step deployment guide
+    - DEVELOPMENT.md:     Developer setup and local dev guide
+    - CONFIGURATION.md:   Azure service configuration reference
+    - AS_BUILT.md:        As-built record of delivered solution
+    - COST_ESTIMATE.md:   Azure cost estimates at t-shirt sizes.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'prototype' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_prototype_generate_backlog
+  name: az prototype generate backlog
+  summary: |-
+    Generate a backlog and push work items to GitHub or Azure DevOps.
+  description: |-
+    Interactive by default — generates a structured backlog from the architecture
+    design and enters a conversational session where you can review, refine, add,
+    update, and remove items before pushing them to your provider.
+
+    GitHub mode creates issues with checkbox task lists in the description.
+    Azure DevOps mode creates Features with User Stories and Tasks.
+
+    Scope-aware: in-scope items become stories, out-of-scope items are excluded,
+    and deferred items get a separate "Deferred / Future Work" epic.
+
+    Slash commands during session:
+      /list       - Show all items grouped by epic
+      /show N     - Show item N with full details
+      /add        - Add a new item (AI-assisted)
+      /remove N   - Remove item N
+      /preview    - Show what will be pushed
+      /save       - Save to concept/docs/BACKLOG.md
+      /push       - Push all pending items to provider
+      /push N     - Push specific item
+      /status     - Show push status per item
+      /help       - Show available commands
+      /quit       - Exit session
+
+    Use --quick for a lighter generate -> confirm -> push flow.
+    Use --status to view current backlog state without starting a session.
+    Use --refresh to force fresh AI generation.
+
+    Backlog provider, org, and project can be set in prototype.yaml
+    under the 'backlog' section so you don't have to pass them every time.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype generate' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az prototype generate backlog [--org]
+                                  [--output-format {json, markdown, table}]
+                                  [--project]
+                                  [--provider {devops, github}]
+                                  [--push]
+                                  [--quick]
+                                  [--refresh]
+                                  [--status]
+  examples:
+  - summary: |-
+      Interactive backlog session (default)
+    syntax: az prototype generate backlog --provider github
+  - summary: |-
+      Quick mode (generate and push)
+    syntax: az prototype generate backlog --provider github --quick
+  - summary: |-
+      Show current backlog status
+    syntax: az prototype generate backlog --status
+  - summary: |-
+      Force fresh generation
+    syntax: az prototype generate backlog --refresh
+  - summary: |-
+      Generate Azure DevOps work items
+    syntax: az prototype generate backlog --provider devops --org myorg --project myproject
+  - summary: |-
+      Use defaults from prototype.yaml
+    syntax: az prototype generate backlog
+  optionalParameters:
+  - name: --org
+    summary: |-
+      Organization or owner name (GitHub org/user or Azure DevOps org).
+  - name: --output-format
+    defaultValue: markdown
+    acceptedValues: json, markdown, table
+    summary: |-
+      Output format for the backlog.
+  - name: --project
+    summary: |-
+      Project name (Azure DevOps project or GitHub repo).
+  - name: --provider
+    acceptedValues: devops, github
+    summary: |-
+      Backlog provider: 'github' for GitHub Issues, 'devops' for Azure DevOps work items.
+  - name: --push
+    defaultValue: "False"
+    summary: |-
+      In quick mode, auto-push after generation.
+  - name: --quick
+    defaultValue: "False"
+    summary: |-
+      Skip interactive session — generate, confirm, and push.
+  - name: --refresh
+    defaultValue: "False"
+    summary: |-
+      Force fresh AI generation, bypassing cached items.
+  - name: --status -s
+    defaultValue: "False"
+    summary: |-
+      Show current backlog state without starting a session.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_generate_docs
+  name: az prototype generate docs
+  summary: |-
+    Generate documentation from templates with AI population.
+  description: |-
+    Reads each documentation template, applies project configuration values
+    (project name, location, date), and writes the resulting markdown files
+    to the output directory.
+
+    When a design context is available (from 'az prototype design'), the
+    doc-agent fills remaining [PLACEHOLDER] values with real content from
+    the architecture. Falls back to static templates if no design context
+    or AI is unavailable.
+
+    Default output directory: ./docs/.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype generate' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: az prototype generate docs [--path]
+  examples:
+  - summary: |-
+      Generate documentation to default directory
+    syntax: az prototype generate docs
+  - summary: |-
+      Generate documentation to a custom path
+    syntax: az prototype generate docs --path ./deliverables/docs
+  optionalParameters:
+  - name: --path
+    summary: |-
+      Output directory for generated documents.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_prototype_generate_speckit
+  name: az prototype generate speckit
+  summary: |-
+    Generate the spec-kit documentation bundle with AI population.
+  description: |-
+    Creates a self-contained package of documentation templates that define
+    the project's deliverables. The spec-kit is typically stored under
+    the concept directory and serves as the starting point for all project
+    documentation.
+
+    When a design context is available (from 'az prototype design'), the
+    doc-agent fills remaining [PLACEHOLDER] values with real content from
+    the architecture. Falls back to static templates if no design context
+    or AI is unavailable. Includes a manifest.json with metadata.
+
+    Default output directory: ./concept/.specify/.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'prototype generate' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: az prototype generate speckit [--path]
+  examples:
+  - summary: |-
+      Generate spec-kit to default directory
+    syntax: az prototype generate speckit
+  - summary: |-
+      Generate spec-kit to a custom path
+    syntax: az prototype generate speckit --path ./my-speckit
+  optionalParameters:
+  - name: --path
+    summary: |-
+      Output directory for the spec-kit bundle.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_prototype_generate_backlog
+- az_prototype_generate_docs
+- az_prototype_generate_speckit
+metadata:
+  description: >-
+    Commands for generating project documentation and specification-kit
+
+    bundles from built-in templates.
+
+
+    Templates are populated with project configuration values and written
+
+    to the output directory. Remaining [PLACEHOLDER] values are left for
+
+    AI agents to fill during the build stage.
+
+
+    Document types generated:
+      - ARCHITECTURE.md:    High-level and detailed architecture diagrams
+      - DEPLOYMENT.md:      Step-by-step deployment guide
+      - DEVELOPMENT.md:     Developer setup and local dev guide
+      - CONFIGURATION.md:   Azure service configuration reference
+      - AS_BUILT.md:        As-built record of delivered solution
+      - COST_ESTIMATE.md:   Azure cost estimates at t-shirt sizes.
