@@ -1,13 +1,82 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 02/03/2026
+ms.date: 03/03/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## March 03, 2026
+
+Version 2.84.0
+
+### AKS
+
+* `az aks create`: Add `--enable-container-network-logs` parameter to enable container network logs
+* `az aks update`: Add `--enable-container-network-logs` and `--disable-container-network-logs` parameters to enable and disable container network logs
+* `az aks enable-addons`: Add support for default workspace creation in Bleu and Delos clouds
+
+### App Service
+
+* `az webapp create/config set`: Fix vnet routing to use site-level outbound vnet routing property for API version `2024-11-01`
+* `az webapp vnet-integration add`: Fix vnet routing to use site-level outbound vnet routing property for API version `2024-11-01`
+* `az functionapp create/vnet-integration add`: Fix vnet routing to use site-level outbound vnet routing property for API version `2024-11-01`
+* `az webapp config access-restriction show`: Update to always return values in camel case
+* `az webapp list runtimes`: Update logic to include missing Java versions and remove hardcoded lists
+* `az webapp create/update`: Add `--end-to-end-encryption-enabled` parameter to support enabling or disabling end-to-end encryption between the front end and the workers
+* `az webapp create`: Add `--min-tls-version` parameter to specify the minimum version of TLS
+* `az webapp create`: Add `--min-tls-cipher-suite` parameter to specify the minimum TLS Cipher Suite
+
+### ARM
+
+* `az bicep decompile-params`: Add new parameter `--force` to overwrite existing files
+* `az deployment`: Fix the issue where the Bicep installation message is printed in the command output
+* `az stack group/sub/mg create/validate`: Add `--resources-without-delete-support` parameter to support defining what happens to resources that do not support deletion when they are no longer managed by the stack
+* `az stack group/sub/mg create/validate`: Add `--validation-level` parameter to support specifying validation level for the deployment stack
+* `az stack group/sub/mg delete`: Add `--resources-without-delete-support` parameter to support defining what happens to resources that do not support deletion when they are no longer managed by the stack
+
+### Compute
+
+* `az vm create`: Add parameters `--data-disk-mbps` and `--data-disk-iops` to support IOPS and MBPS
+
+### Container app
+
+* `az containerapp job create`: Set default values to `--parallelism` and `--replica-completion-count` parameters
+
+### Cosmos DB
+
+* `az cosmosdb update`: Add support for Microsoft Fabric workspace resource IDs in `--network-acl-bypass-resource-ids`
+* Fix #32608: `az cosmosdb restore`: Fix "Database Account does not exist" error during polling
+
+### Maps
+
+* `az maps account create`: Add default value for `--sku`
+
+### MySQL
+
+* Fix #32217: `az mysql flexible-server restore`: Fix `--no-wait` flag
+
+### Network
+
+* `az network application-gateway ssl-cert`: Support dedicated backend connection
+
+### PostgreSQL
+
+* `az postgres flexible-server migrate-network`: Add new command to support migrating the network mode of a flexible server
+
+### SQL
+
+* `az sql server/db`: Add support for versionless TDE keys
+* `az sql server create/update`: Add `--soft-delete-retention-days`
+* `az sql server deleted-server show/list`: Add new command
+* `az sql server restore`: Add new command
+
+### Storage
+
+* `az storage share close-handle`: Fix failing to close file handle when in delete pending state
 
 ## February 03, 2026
 
