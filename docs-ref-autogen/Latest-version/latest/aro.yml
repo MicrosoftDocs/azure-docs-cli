@@ -19,11 +19,14 @@ directCommands:
                   --resource-group
                   --worker-subnet
                   [--apiserver-visibility {Private, Public}]
+                  [--assign-cluster-identity --mi-user-assigned]
+                  [--assign-platform-wi --assign-platform-workload-identity]
                   [--client-id]
                   [--client-secret]
                   [--cluster-resource-group]
                   [--disk-encryption-set]
                   [--domain]
+                  [--enable-managed-identity --enable-mi {false, true}]
                   [--enable-preconfigured-nsg {false, true}]
                   [--fips --fips-validated-modules {false, true}]
                   [--ingress-visibility {Private, Public}]
@@ -76,10 +79,19 @@ directCommands:
       Name or ID of worker vnet subnet.  If name is supplied, `--vnet` must be supplied.
   optionalParameters:
   - name: --apiserver-visibility
-    defaultValue: Public
     acceptedValues: Private, Public
     summary: |-
-      API server visibility.
+      API server visibility. [Default: Public].
+  - name: --assign-cluster-identity --mi-user-assigned
+    summary: |-
+      Set the user managed identity on the cluster. Value must be an identity name or resource ID.
+    isPreview: true
+    groupName: Identity Arguments
+  - name: --assign-platform-wi --assign-platform-workload-identity
+    summary: |-
+      Assign a platform workload identity used within the cluster. Requires two values:                            an operator name and either the name or resource ID of the Azure identity to use for it.
+    isPreview: true
+    groupName: Identity Arguments
   - name: --client-id
     summary: |-
       Client ID of cluster service principal.
@@ -95,21 +107,25 @@ directCommands:
   - name: --domain
     summary: |-
       Domain of cluster.
+  - name: --enable-managed-identity --enable-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Enable managed identity for this cluster.
+    isPreview: true
+    groupName: Identity Arguments
   - name: --enable-preconfigured-nsg
-    defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Use Preconfigured NSGs.
+      Use Preconfigured NSGs. Allowed values: false, true. [Default: false].
   - name: --fips --fips-validated-modules
-    defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Use FIPS validated cryptography modules.
+      Use FIPS validated cryptography modules. [Default: false].
   - name: --ingress-visibility
-    defaultValue: Public
     acceptedValues: Private, Public
     summary: |-
-      Ingress visibility.
+      Ingress visibility. [Default: Public].
   - name: --lb-ip-count --load-balancer-managed-outbound-ip-count
     summary: |-
       The desired number of IPv4 outbound IPs created and managed by Azure for the cluster public load balancer.
@@ -120,30 +136,26 @@ directCommands:
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Encryption at host flag for master VMs.
+      Encryption at host flag for master VMs. [Default: false].
   - name: --master-vm-size
-    defaultValue: Standard_D8s_v5
     summary: |-
-      Size of master VMs.
+      Size of master VMs. [Default: Standard_D8s_v5].
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --outbound-type
-    defaultValue: Loadbalancer
     summary: |-
-      Outbound type of cluster. Must be "Loadbalancer" or "UserDefinedRouting".
+      Outbound type of cluster. Must be "Loadbalancer" or "UserDefinedRouting".                    [Default: Loadbalancer].
   - name: --pod-cidr
-    defaultValue: 10.128.0.0/14
     summary: |-
-      CIDR of pod network. Must be a minimum of /18 or larger.
+      CIDR of pod network. Must be a minimum of /18 or larger. [Default: 10.128.0.0/14].
   - name: --pull-secret
     summary: |-
       Pull secret of cluster.
   - name: --service-cidr
-    defaultValue: 172.30.0.0/16
     summary: |-
-      CIDR of service network. Must be a minimum of /18 or larger.
+      CIDR of service network. Must be a minimum of /18 or larger. [Default: 172.30.0.0/16].
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -157,22 +169,19 @@ directCommands:
     summary: |-
       Name of vnet resource group.
   - name: --worker-count
-    defaultValue: "3"
     summary: |-
-      Count of worker VMs.
+      Count of worker VMs. [Default: 3].
   - name: --worker-enc-host --worker-encryption-at-host
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Encryption at host flag for worker VMs.
+      Encryption at host flag for worker VMs. [Default: false].
   - name: --worker-vm-disk-size-gb
-    defaultValue: "128"
     summary: |-
-      Disk size in GB of worker VMs.
+      Disk size in GB of worker VMs. [Default: 128].
   - name: --worker-vm-size
-    defaultValue: Standard_D4s_v5
     summary: |-
-      Size of worker VMs.
+      Size of worker VMs. [Default: Standard_D4s_v5].
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -210,6 +219,7 @@ directCommands:
   syntax: >-
     az aro delete --name
                   --resource-group
+                  [--delete-identities {false, true}]
                   [--no-wait]
                   [--yes]
   examples:
@@ -226,6 +236,12 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --delete-identities
+    acceptedValues: false, true
+    summary: |-
+      Delete the cluster's associated managed identities together with the cluster.
+    isPreview: true
+    groupName: Identity Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -520,11 +536,14 @@ directCommands:
   syntax: >-
     az aro update --name
                   --resource-group
+                  [--assign-cluster-identity --mi-user-assigned]
+                  [--assign-platform-wi --assign-platform-workload-identity]
                   [--client-id]
                   [--client-secret]
                   [--lb-ip-count --load-balancer-managed-outbound-ip-count]
                   [--no-wait]
                   [--refresh-credentials {false, true}]
+                  [--upgradeable-to]
   examples:
   - summary: |-
       Update a cluster.
@@ -539,6 +558,16 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --assign-cluster-identity --mi-user-assigned
+    summary: |-
+      Set the user managed identity on the cluster. Value must be an identity name or resource ID.
+    isPreview: true
+    groupName: Identity Arguments
+  - name: --assign-platform-wi --assign-platform-workload-identity
+    summary: |-
+      Assign a platform workload identity used within the cluster. Requires two values:                            an operator name and either the name or resource ID of the Azure identity to use for it.
+    isPreview: true
+    groupName: Identity Arguments
   - name: --client-id
     summary: |-
       Client ID of cluster service principal.
@@ -557,6 +586,11 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Refresh cluster application credentials.
+  - name: --upgradeable-to
+    summary: |-
+      OpenShift version to upgrade to.
+    isPreview: true
+    groupName: Identity Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -596,10 +630,13 @@ directCommands:
                     --name
                     --resource-group
                     --worker-subnet
+                    [--assign-cluster-identity --mi-user-assigned]
+                    [--assign-platform-wi --assign-platform-workload-identity]
                     [--client-id]
                     [--client-secret]
                     [--cluster-resource-group]
                     [--disk-encryption-set]
+                    [--enable-managed-identity --enable-mi {false, true}]
                     [--location]
                     [--pod-cidr]
                     [--service-cidr]
@@ -631,6 +668,16 @@ directCommands:
     summary: |-
       Name or ID of worker vnet subnet.  If name is supplied, `--vnet` must be supplied.
   optionalParameters:
+  - name: --assign-cluster-identity --mi-user-assigned
+    summary: |-
+      Set the user managed identity on the cluster. Value must be an identity name or resource ID.
+    isPreview: true
+    groupName: Identity Arguments
+  - name: --assign-platform-wi --assign-platform-workload-identity
+    summary: |-
+      Assign a platform workload identity used within the cluster. Requires two values:                            an operator name and either the name or resource ID of the Azure identity to use for it.
+    isPreview: true
+    groupName: Identity Arguments
   - name: --client-id
     summary: |-
       Client ID of cluster service principal.
@@ -643,15 +690,22 @@ directCommands:
   - name: --disk-encryption-set
     summary: |-
       ResourceID of the DiskEncryptionSet to be used for master and worker VMs.
+  - name: --enable-managed-identity --enable-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Enable managed identity for this cluster.
+    isPreview: true
+    groupName: Identity Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --pod-cidr
     summary: |-
-      CIDR of pod network. Must be a minimum of /18 or larger.
+      CIDR of pod network. Must be a minimum of /18 or larger. [Default: 10.128.0.0/14].
   - name: --service-cidr
     summary: |-
-      CIDR of service network. Must be a minimum of /18 or larger.
+      CIDR of service network. Must be a minimum of /18 or larger. [Default: 172.30.0.0/16].
   - name: --version
     summary: |-
       OpenShift version to use for cluster creation.
