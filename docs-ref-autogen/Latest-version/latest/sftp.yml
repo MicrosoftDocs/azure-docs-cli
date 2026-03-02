@@ -118,6 +118,11 @@ directCommands:
       * Azure Public: {storage-account}.blob.core.windows.net
       * Azure China: {storage-account}.blob.core.chinacloudapi.cn
       * Azure Government: {storage-account}.blob.core.usgovcloudapi.net
+    - Use --endpoint-suffix to override the endpoint suffix for custom environments.
+
+    TRANSFER OPTIONS:
+    - Buffer size: Controls the SFTP transfer buffer size via -B flag (default: 256 KB).
+      Use --buffer-size to tune transfer performance.
 
     SECURITY:
     - Generated credentials are automatically cleaned up after connection
@@ -127,7 +132,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az sftp connect --storage-account
+                    [--buffer-size]
                     [--certificate-file]
+                    [--endpoint-suffix]
                     [--port]
                     [--private-key-file]
                     [--public-key-file]
@@ -147,6 +154,12 @@ directCommands:
       Connect with custom port
     syntax: az sftp connect --storage-account mystorageaccount --port 2222
   - summary: |-
+      Connect with custom buffer size for large file transfers
+    syntax: az sftp connect --storage-account mystorageaccount --buffer-size 1048576
+  - summary: |-
+      Connect with a custom endpoint suffix
+    syntax: az sftp connect --storage-account mystorageaccount --endpoint-suffix blob.core.usgovcloudapi.net
+  - summary: |-
       Connect with additional SFTP arguments for debugging
     syntax: az sftp connect --storage-account mystorageaccount --sftp-args="-v"
   - summary: |-
@@ -161,9 +174,15 @@ directCommands:
     summary: |-
       Azure Storage Account name for SFTP connection. Must have SFTP enabled.
   optionalParameters:
+  - name: --buffer-size
+    summary: |-
+      Buffer size in bytes for SFTP file transfers. Default: 262144 (256 KB).
   - name: --certificate-file -c
     summary: |-
       Path to SSH certificate file for authentication. Must be generated with "az sftp cert" or compatible Azure AD certificate. If not provided, certificate will be generated automatically.
+  - name: --endpoint-suffix
+    summary: |-
+      Custom storage account endpoint suffix. Default: Uses endpoint based on Azure environment (e.g., blob.core.windows.net).
   - name: --port
     summary: |-
       SFTP port. If not specified, uses SSH default port (typically 22).
