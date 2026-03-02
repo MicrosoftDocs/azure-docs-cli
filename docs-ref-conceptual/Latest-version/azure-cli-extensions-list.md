@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/26/2026
+ms.date: 03/01/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -24,7 +24,7 @@ You will be prompted to install an extension on first use.
 |----|-----------------|-------------|---------|---------------|
 |[acat](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat) | 2.61.0 | Microsoft Azure Command-Line Tools Acat Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat/HISTORY.rst) |
 |[account](https://github.com/Azure/azure-cli-extensions/tree/main/src/account) | 2.38.0 | Microsoft Azure Command-Line Tools SubscriptionClient Extension | GA | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/account/HISTORY.rst) |
-|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.73.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
+|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.73.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
 |[acrquery](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery) | 2.48.0 | Microsoft Azure Command-Line Tools AcrQuery Extension | Preview | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery/HISTORY.rst) |
 |[acrtransfer](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrtransfer) | 2.0.67 | Microsoft Azure Command-Line Tools Acrtransfer Extension | Preview | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrtransfer/HISTORY.rst) |
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
@@ -106,11 +106,11 @@ You will be prompted to install an extension on first use.
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
 |[edgezones](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones) | 2.57.0 | Microsoft Azure Command-Line Tools Edgezones Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgezones/HISTORY.rst) |
 |[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.75.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
-|[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.70.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | Preview | [1.3.1b1](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
+|[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.75.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | GA | [1.3.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection) | 2.61.0 | Microsoft Azure Command-Line Tools ExpressRouteCrossConnection Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection/HISTORY.rst) |
 |[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.75.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
-|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.8.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
+|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.9.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
 |[footprint](https://github.com/Azure/azure-cli-extensions/tree/main/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Preview | [1.0.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/footprint/HISTORY.rst) |
 |[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.75.0 | Manage networking Front Doors. | GA | [2.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
