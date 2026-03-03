@@ -22,6 +22,7 @@ directCommands:
                         --resource-group
                         [--associate-public-ip]
                         [--copy-disk-name]
+                        [--copy-tags]
                         [--disable-trusted-launch]
                         [--distro]
                         [--enable-nested]
@@ -31,6 +32,8 @@ directCommands:
                         [--repair-password]
                         [--repair-username]
                         [--repair-vm-name]
+                        [--size]
+                        [--tags]
                         [--unlock-encrypted-vm]
                         [--yes]
   examples:
@@ -38,26 +41,32 @@ directCommands:
       Create a repair VM
     syntax: az vm repair create -g MyResourceGroup -n myVM --verbose
   - summary: |-
+      Create a repair VM with tags
+    syntax: az vm repair create -g MyResourceGroup -n myVM --tags "env=dev owner=alice" --verbose
+  - summary: |-
+      Create a repair VM with identical tags to the source VM
+    syntax: az vm repair create -g MyResourceGroup -n myVM --copy-tags --verbose
+  - summary: |-
       Create a repair VM and set the VM authentication
     syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username username --repair-password password!234 --verbose
   - summary: |-
       Create a repair VM of a specific distro or a specific URN could also be provided
     syntax: az vm repair create -g MyResourceGroup -n myVM --distro 'rhel7|sles12|ubuntu20|centos6|oracle8|sles15'
   - summary: |-
-      Create a repair VM with a Private IP address without any pop up asking for confirmation.
-    syntax: az vm repair create -g MyResourceGroup -n myVM --yes --repair-username <username> --repair-password <password>
+      Create a repair VM with a Private IP address
+    syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username <username> --repair-password <password>
   - summary: |-
-      Create a repair VM with a Public IP address without any user input.
-    syntax: az vm repair create -g MyResourceGroup -n myVM --associate-public-ip --yes --repair-username <username> --repair-password <password>
+      Create a repair VM with a Public IP address.
+    syntax: az vm repair create -g MyResourceGroup -n myVM --associate-public-ip --repair-username <username> --repair-password <password>
   - summary: |-
       Create a repair VM with Standard Security type.
-    syntax: az vm repair create -g MyResourceGroup -n myVM --yes --repair-username <username> --repair-password <password> --disable-trusted-launch
+    syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username <username> --repair-password <password> --disable-trusted-launch
   - summary: |-
       Create a repair VM from a source VM with an encrypted disk. The repair VM is created with the data disk unencrypted and accessible.
-    syntax: az vm repair create -g MyResourceGroup -n myVM --yes --repair-username <username> --repair-password <password> --unlock-encrypted-vm --encrypt-recovery-key <key>
+    syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username <username> --repair-password <password> --unlock-encrypted-vm --encrypt-recovery-key <key>
   - summary: |-
       Create a repair VM with an OS Disk storage type of StandardSSD_LRS.
-    syntax: az vm repair create -g MyResourceGroup -n myVM --yes --repair-username <username> --repair-password <password> --os-disk-type StandardSSD_LRS
+    syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username <username> --repair-password <password> --os-disk-type StandardSSD_LRS
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -71,10 +80,14 @@ directCommands:
   - name: --associate-public-ip
     defaultValue: "False"
     summary: |-
-      Option to create a repair vm with a public ip. If this parameter is not used, a private ip will be made.
+      Option to create a repair vm with a public ip. If this parameter is not used, only a private ip will be made.
   - name: --copy-disk-name
     summary: |-
       Name of OS disk copy.
+  - name: --copy-tags
+    defaultValue: "False"
+    summary: |-
+      Copy tags from the source VM to the repair VM and its resources.  Can be combined with --tags.
   - name: --disable-trusted-launch
     defaultValue: "False"
     summary: |-
@@ -105,6 +118,12 @@ directCommands:
   - name: --repair-vm-name
     summary: |-
       Name of repair VM.
+  - name: --size
+    summary: |-
+      The size of the repair VM to create. If not specified, a size matching the source VM will be used.
+  - name: --tags
+    summary: |-
+      Quoted string with space-separated key-value pairs in "key=value" format. Will be appended to the tags required for repair resources.
   - name: --unlock-encrypted-vm
     defaultValue: "False"
     summary: |-
@@ -112,7 +131,7 @@ directCommands:
   - name: --yes
     defaultValue: "False"
     summary: |-
-      Option to skip prompt for associating public ip in no Tty mode.
+      Deprecated - Creates the repair VM without confirmation.  No current behavior change, this parameter will be removed in a future release.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -163,7 +182,7 @@ directCommands:
   optionalParameters:
   - name: --preview
     summary: |-
-      URL of forked repair script library's map.json https://github.com/{user}/repair-script-library/blob/master/map.json.
+      URL of forked repair script library map.json https://github.com/{user}/repair-script-library/blob/master/map.json.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -201,6 +220,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az vm repair repair-and-restore [--copy-disk-name]
+                                    [--copy-tags]
                                     [--ids]
                                     [--name]
                                     [--repair-group-name]
@@ -208,8 +228,13 @@ directCommands:
                                     [--repair-username]
                                     [--repair-vm-name]
                                     [--resource-group]
+                                    [--size]
                                     [--subscription]
+                                    [--tags]
   examples:
+  - summary: |-
+      Repair and restore a VM with tags.
+    syntax: az vm repair repair-and-restore --name vmrepairtest --resource-group MyResourceGroup --tags env=prod owner=bob --verbose
   - summary: |-
       Repair and restore a VM.
     syntax: az vm repair repair-and-restore --name vmrepairtest --resource-group MyResourceGroup --verbose
@@ -217,6 +242,10 @@ directCommands:
   - name: --copy-disk-name
     summary: |-
       Name of OS disk copy.
+  - name: --copy-tags
+    defaultValue: "False"
+    summary: |-
+      Copy tags from the source VM to the repair VM and its resources. Can be combined with --tags.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -241,10 +270,16 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --size
+    summary: |-
+      The size of the repair VM to create. If not specified, a size matching the source VM will be used.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Space-separated tags in 'key[=value]' format. Use '' to clear existing tags.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -280,6 +315,7 @@ directCommands:
   syntax: >-
     az vm repair repair-button --button-command
                                [--copy-disk-name]
+                               [--copy-tags]
                                [--ids]
                                [--name]
                                [--repair-group-name]
@@ -287,8 +323,14 @@ directCommands:
                                [--repair-username]
                                [--repair-vm-name]
                                [--resource-group]
+                               [--size]
                                [--subscription]
+                               [--tags]
+                               [--yes]
   examples:
+  - summary: |-
+      repair-button with tags.
+    syntax: az vm repair repair-button --name vmrepairtest --resource-group MyResourceGroup --button-command fstab --tags env=test --verbose
   - summary: |-
       repair-button.
     syntax: az vm repair repair-button --name vmrepairtest --resource-group MyResourceGroup --button-command fstab --verbose
@@ -301,6 +343,10 @@ directCommands:
   - name: --copy-disk-name
     summary: |-
       Name of OS disk copy.
+  - name: --copy-tags
+    defaultValue: "False"
+    summary: |-
+      Copy tags from the source VM to the repair VM and its resources. Can be combined with --tags.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -325,10 +371,20 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --size
+    summary: |-
+      The size of the repair VM to create. If not specified, a size matching the source VM will be used.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Space-separated tags in 'key[=value]' format. Use '' to clear existing tags.
+  - name: --yes
+    defaultValue: "False"
+    summary: |-
+      Deprecated - Creates the repair VM without confirmation.  No current behavior change, this parameter will be removed in a future release.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -547,7 +603,7 @@ directCommands:
       Space-separated parameters in the format of '[name=]value'. Positional for bash scripts. To avoid splitting on =, use the prefix '++' to send the entire string.
   - name: --preview
     summary: |-
-      URL of forked repair script library's map.json https://github.com/{user}/repair-script-library/blob/master/map.json.
+      URL of forked repair script library map.json https://github.com/{user}/repair-script-library/blob/master/map.json.
   - name: --repair-vm-id
     summary: |-
       Repair VM resource id.

@@ -32,6 +32,7 @@ directCommands:
                          [--no-wait]
                          [--pid --primary-user-assigned-identity-id]
                          [--restrict-outbound-network-access {false, true}]
+                         [--sdrd --soft-delete-retention-days]
                          [--tags]
                          [--user-assigned-identity-id]
   examples:
@@ -44,6 +45,12 @@ directCommands:
   - summary: |-
       Create a server with disabled public network access to server.
     syntax: az sql server create -l westus -g mygroup -n myserver -u myadminuser -p myadminpassword -e false
+  - summary: |-
+      Create a server with soft delete enabled with 7 days retention.
+    syntax: az sql server create -l westus -g mygroup -n myserver -u myadminuser -p myadminpassword --soft-delete-retention-days 7
+  - summary: |-
+      Create a server with soft delete protection (using short alias).
+    syntax: az sql server create -l westus -g mygroup -n myserver -u myadminuser -p myadminpassword --sdrd 5
   - summary: |-
       Create a server without SQL Admin, with AD admin and AD Only enabled.
     syntax: az sql server create --enable-ad-only-auth --external-admin-principal-type User --external-admin-name myUserName --external-admin-sid c5e964e2-6bb2-1111-1111-3b16ec0e1234 -g myResourceGroup -n myServer
@@ -119,6 +126,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Set whether outbound network access to server is restricted or not. When true,the outbound connections from the server will be restricted.
+    isPreview: true
+  - name: --sdrd --soft-delete-retention-days
+    summary: |-
+      Specify the number of days to retain soft deleted server (0-7). Set to 0 to disable soft delete. Set to 1-7 days to enable soft delete with the specified retention period. During the retention period, the server can be restored using az sql server restore.
     isPreview: true
   - name: --tags
     summary: |-
@@ -373,6 +384,78 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_sql_server_restore
+  name: az sql server restore
+  summary: |-
+    Restore a deleted SQL server.
+  description: |-
+    Restores a soft-deleted SQL server to the resource group where it was originally located. The server must have been deleted with soft delete enabled and within the retention period.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql server restore --location
+                          [--ids]
+                          [--name]
+                          [--no-wait]
+                          [--resource-group]
+                          [--subscription]
+  examples:
+  - summary: |-
+      Restore a deleted server to its original resource group.
+    syntax: az sql server restore -g myresourcegroup -n myserver -l westus2
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      Location where the deleted server was originally located.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the deleted server to restore.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of the resource group where the server was originally located.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_sql_server_show
   name: az sql server show
   summary: |-
@@ -455,6 +538,7 @@ directCommands:
                          [--remove]
                          [--resource-group]
                          [--restrict-outbound-network-access {false, true}]
+                         [--sdrd --soft-delete-retention-days]
                          [--set]
                          [--subscription]
                          [--user-assigned-identity-id]
@@ -462,6 +546,15 @@ directCommands:
   - summary: |-
       Update a server. (autogenerated)
     syntax: az sql server update --admin-password myadminpassword --name MyAzureSQLServer --resource-group MyResourceGroup
+  - summary: |-
+      Enable soft delete protection with 7-day retention.
+    syntax: az sql server update --name MyAzureSQLServer --resource-group MyResourceGroup --soft-delete-retention-days 7
+  - summary: |-
+      Modify soft delete retention period (using short alias).
+    syntax: az sql server update -n MyAzureSQLServer -g MyResourceGroup --sdrd 3
+  - summary: |-
+      Disable soft delete protection.
+    syntax: az sql server update --name MyAzureSQLServer --resource-group MyResourceGroup --soft-delete-retention-days 0
   - summary: |-
       Update a server with User Managed Identies and Identity Type is SystemAssigned,UserAssigned.
     syntax: az sql server update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type SystemAssigned,UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
@@ -533,6 +626,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Set whether outbound network access to server is restricted or not. When true,the outbound connections from the server will be restricted.
+    isPreview: true
+  - name: --sdrd --soft-delete-retention-days
+    summary: |-
+      Specify the number of days to retain soft deleted server (0-7). Set to 0 to disable soft delete. Set to 1-7 days to enable soft delete with the specified retention period.
     isPreview: true
   - name: --set
     defaultValue: '[]'
@@ -690,6 +787,9 @@ commands:
 - az_sql_server_conn-policy_update
 - az_sql_server_create
 - az_sql_server_delete
+- az_sql_server_deleted-server
+- az_sql_server_deleted-server_list
+- az_sql_server_deleted-server_show
 - az_sql_server_dns-alias
 - az_sql_server_dns-alias_create
 - az_sql_server_dns-alias_delete
@@ -726,6 +826,7 @@ commands:
 - az_sql_server_outbound-firewall-rule_list
 - az_sql_server_outbound-firewall-rule_show
 - az_sql_server_refresh-external-governance-status
+- az_sql_server_restore
 - az_sql_server_show
 - az_sql_server_tde-key
 - az_sql_server_tde-key_revalidate
@@ -740,5 +841,5 @@ commands:
 - az_sql_server_vnet-rule_update
 - az_sql_server_wait
 metadata:
-  ms.date: 12/05/2025
+  ms.date: 02/24/2026
   description: Manage SQL servers.
