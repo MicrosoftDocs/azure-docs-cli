@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 02/26/2026
+ms.date: 03/05/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -42,6 +42,16 @@ The breaking changes listed in this section are planned for the next major relea
 - All Helm charts not stored as an OCI artifact was deleted from Azure Container Registry on March 30th, 2025.
 - Learn how to find all Helm charts stored in a Helm repository here: `az acr helm list`. If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 - For more information on managing and deploying applications for Kubernetes, see https://aka.ms/acr/helm.
+
+## appservice
+
+### `webapp list-runtimes`
+
+[Link to webapp reference group](/cli/azure/webapp)
+
+- The output will be changed in next breaking change release(2.86.0) scheduled for May 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.
+- '--linux' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--os-type' instead.
+- '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
 ## compute_recommender
 
@@ -258,6 +268,16 @@ The breaking changes listed in this section are planned for the next major relea
 
 - The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
 - The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
+
+## azext_appservice_kube
+
+### `webapp list-runtimes`
+
+[Link to webapp reference group](/cli/azure/webapp)
+
+- The output will be changed in next breaking change release(2.86.0) scheduled for May 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.
+- '--linux' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--os-type' instead.
+- '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
 ## azext_blueprint
 
