@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/09/2026
+ms.date: 03/10/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -31,7 +31,7 @@ You will be prompted to install an extension on first use.
 |[aem](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem/HISTORY.rst) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples/HISTORY.rst) |
 |[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b19](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.73.0 | Provides a preview for upcoming AKS features | Preview | [19.0.0b22](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.73.0 | Provides a preview for upcoming AKS features | Preview | [19.0.0b24](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.74](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
@@ -101,7 +101,7 @@ You will be prompted to install an extension on first use.
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.51.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.75.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
-|[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.75.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
+|[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.75.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.75.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edge-action](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action) | 2.75.0 | Microsoft Azure Command-Line Tools Extension for Azure Front Door Edge Actions | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
@@ -162,7 +162,7 @@ You will be prompted to install an extension on first use.
 |[neon](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon) | 2.75.0 | Microsoft Azure Command-Line Tools Neon Extension. | Preview | [1.0.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview) | 2.61.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview/HISTORY.rst) |
 |[network-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics) | 2.51.0 | Microsoft Azure Command-Line Tools NetworkAnalytics Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics/HISTORY.rst) |
-|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.75.0 | Support for Azure Operator Nexus network cloud commands based on 2025-09-01 API version. | GA | [4.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
+|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.75.0 | Support for Azure Operator Nexus network cloud commands based on 2026-01-01-preview API version. | GA | [5.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
 |[new-relic](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic) | 2.61.0 | Microsoft Azure Command-Line Tools NewRelic Extension. | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic/HISTORY.rst) |
 |[next](https://github.com/Azure/azure-cli-extensions/tree/main/src/next) | 2.20.0 | Microsoft Azure Command-Line Tools Next Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/next/HISTORY.rst) |
 |[nexusidentity](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity) | 2.61.0 | Microsoft Azure Command-Line Tools Nexusidentity Extension | Preview | [1.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity/HISTORY.rst) |
