@@ -103,6 +103,7 @@ directCommands:
                                    [--compute-rack-def --compute-rack-definitions]
                                    [--if-match]
                                    [--if-none-match]
+                                   [--kind {AzureLocal, Nexus}]
                                    [--location]
                                    [--managed-resource-group-configuration --mrg]
                                    [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
@@ -189,6 +190,11 @@ directCommands:
   - name: --if-none-match
     summary: |-
       Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported.
+  - name: --kind
+    acceptedValues: AzureLocal, Nexus
+    summary: |-
+      The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager.
+    groupName: ClusterParameters Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
@@ -376,6 +382,77 @@ directCommands:
     summary: |-
       The names of bare metal machines in the cluster that should be skipped during environment validation.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: ClusterDeployParameters Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_networkcloud_cluster_inspect
+  name: az networkcloud cluster inspect
+  summary: |-
+    Trigger an inspection of the cluster to perform validation and optional corrective actions based on the supplied additional actions and filters.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az networkcloud cluster inspect [--additional-actions]
+                                    [--cluster-name --name]
+                                    [--filter-devices]
+                                    [--ids]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--resource-group]
+                                    [--subscription]
+  examples:
+  - summary: |-
+      Inspect cluster
+    syntax: az networkcloud cluster inspect --resource-group resourceGroupName --cluster-name clusterName --additional-actions "[ResetHardware]" --filter-devices "{rack-names:[rack1],bare-metal-machine-names:[machine1,machine2]}"
+  optionalParameters:
+  - name: --additional-actions
+    summary: |-
+      Additional actions supplement the default non-disruptive cluster inspection. Additional actions may be disallowed if the cluster is in a deployed and running state.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: ClusterInspectParameters Arguments
+  - name: --cluster-name --name -n
+    summary: |-
+      The name of the cluster.
+    groupName: Resource Id Arguments
+  - name: --filter-devices
+    summary: |-
+      Indicates which devices are included in the inspection. By default, all devices that can be targeted will be included in the inspection.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: ClusterInspectParameters Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -955,6 +1032,7 @@ commands:
 - az_networkcloud_cluster_create
 - az_networkcloud_cluster_delete
 - az_networkcloud_cluster_deploy
+- az_networkcloud_cluster_inspect
 - az_networkcloud_cluster_list
 - az_networkcloud_cluster_metricsconfiguration
 - az_networkcloud_cluster_metricsconfiguration_create

@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 03/05/2026
+ms.date: 03/09/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -151,6 +151,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to postgres flexible-server long-term-retention reference group](/cli/azure/postgres/flexible-server/long-term-retention)
 
+- Long term retention command group will be removed. For more information, open a support incident.
 - The --backup-name/-b argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - The --name/-n argument will be repurposed to specify the backup name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
 
