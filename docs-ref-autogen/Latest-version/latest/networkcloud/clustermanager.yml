@@ -25,6 +25,7 @@ directCommands:
                                           [--availability-zones]
                                           [--if-match]
                                           [--if-none-match]
+                                          [--kind {AzureLocal, Nexus}]
                                           [--location]
                                           [--managed-resource-group-configuration --mrg]
                                           [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
@@ -74,6 +75,11 @@ directCommands:
   - name: --if-none-match
     summary: |-
       Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported.
+  - name: --kind
+    acceptedValues: AzureLocal, Nexus
+    summary: |-
+      The kind of the cluster manager.
+    groupName: ClusterManagerParameters Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
@@ -418,6 +424,83 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_networkcloud_clustermanager_update-relay-private-endpoint-connection
+  name: az networkcloud clustermanager update-relay-private-endpoint-connection
+  summary: |-
+    Update the private endpoint connection for the Azure Relay namespace managed by the specified cluster manager. Use this operation to approve or reject a pending private endpoint connection request for the relay namespace managed by the cluster manager.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az networkcloud clustermanager update-relay-private-endpoint-connection [--cluster-manager-name --name]
+                                                                            [--connection-state {Approved, Rejected}]
+                                                                            [--description]
+                                                                            [--ids]
+                                                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                            [--pec-id --private-endpoint-id --private-endpoint-resource-id]
+                                                                            [--resource-group]
+                                                                            [--subscription]
+  examples:
+  - summary: |-
+      Approve private endpoint connection
+    syntax: az networkcloud clustermanager update-relay-private-endpoint-connection --resource-group resourceGroupName --cluster-manager-name clusterManagerName --private-endpoint-resource-id /subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.Network/privateEndpoints/privateEndpointName --connection-state Approved --description Approving private endpoint connection
+  optionalParameters:
+  - name: --cluster-manager-name --name -n
+    summary: |-
+      The name of the cluster manager.
+    groupName: Resource Id Arguments
+  - name: --connection-state
+    acceptedValues: Approved, Rejected
+    summary: |-
+      The state to set for the private endpoint connection.
+    groupName: ClusterManagerUpdateRelayPrivateEndpointConnectionParameters Arguments
+  - name: --description
+    summary: |-
+      The description to associate with the private endpoint connection.
+    groupName: ClusterManagerUpdateRelayPrivateEndpointConnectionParameters Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pec-id --private-endpoint-id --private-endpoint-resource-id
+    summary: |-
+      The resource ID of private endpoint to be permitted or denied connection to the relay namespace.
+    groupName: ClusterManagerUpdateRelayPrivateEndpointConnectionParameters Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_networkcloud_clustermanager_wait
   name: az networkcloud clustermanager wait
   summary: |-
@@ -522,6 +605,7 @@ commands:
 - az_networkcloud_clustermanager_list
 - az_networkcloud_clustermanager_show
 - az_networkcloud_clustermanager_update
+- az_networkcloud_clustermanager_update-relay-private-endpoint-connection
 - az_networkcloud_clustermanager_wait
 metadata:
   description: Manage cluster manager.
