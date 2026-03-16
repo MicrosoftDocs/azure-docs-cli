@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 03/13/2026
+ms.date: 03/16/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -330,18 +330,19 @@ The breaking changes listed in this section are planned for the next major relea
 
 - The argument '--version' will become required in 9.0.x.
 
-## azext_neon
-
-### `neon`
-
-[Link to neon reference group](/cli/azure/neon)
-
-- 'az neon' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- Deprecation Notice: The Neon Azure Native Integration is being deprecated and will
-- reach end of life on January 31, 2026. Transfer your projects to a Neon managed organization
-- today. Migration documentation is available at https://neon.com/docs/import/migrate-from-azure-native
-
 ## azext_netappfiles_preview
+
+### `netappfiles volume create`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.86.0) scheduled for May 2026.
+- The basic option will not be accepted, use Standard instead
 
 ### `netappfiles volume create`
 
