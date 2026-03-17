@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 03/16/2026
+ms.date: 03/17/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -287,6 +287,20 @@ The breaking changes listed in this section are planned for the next major relea
 - The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
 - The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
 
+## azext_acrtransfer
+
+### `acr import-pipeline create`
+
+[Link to acr import-pipeline reference group](/cli/azure/acr/import-pipeline)
+
+- Add required parameter --storage-access-mode in next breaking change release(2.86.0) scheduled for May 2026. A new required parameter `--storage-access-mode` will be added. Allowed values: `entra-mi-auth`, `storage-sas-token`. To know more about the Breaking Change, please visit https://aka.ms/acr/transfer.
+
+### `acr export-pipeline create`
+
+[Link to acr export-pipeline reference group](/cli/azure/acr/export-pipeline)
+
+- Add required parameter --storage-access-mode in next breaking change release(2.86.0) scheduled for May 2026. A new required parameter `--storage-access-mode` will be added. Allowed values: `entra-mi-auth`, `storage-sas-token`. To know more about the Breaking Change, please visit https://aka.ms/acr/transfer.
+
 ## azext_appservice_kube
 
 ### `webapp list-runtimes`
@@ -331,18 +345,6 @@ The breaking changes listed in this section are planned for the next major relea
 - The argument '--version' will become required in 9.0.x.
 
 ## azext_netappfiles_preview
-
-### `netappfiles volume create`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.86.0) scheduled for May 2026.
-- The basic option will not be accepted, use Standard instead
 
 ### `netappfiles volume create`
 
