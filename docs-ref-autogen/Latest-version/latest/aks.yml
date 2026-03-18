@@ -1581,7 +1581,7 @@ directCommands:
                   [--aci-subnet-name]
                   [--acns-advanced-networkpolicies {FQDN, L7, None}]
                   [--acns-datapath-acceleration-mode {BpfVeth, None}]
-                  [--acns-transit-encryption-type {None, WireGuard}]
+                  [--acns-transit-encryption-type {None, WireGuard, mTLS}]
                   [--admin-username]
                   [--aks-custom-headers]
                   [--ampls-resource-id]
@@ -1635,6 +1635,7 @@ directCommands:
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
+                  [--enable-app-routing-istio --enable-ari]
                   [--enable-application-load-balancer]
                   [--enable-asm --enable-azure-service-mesh]
                   [--enable-azure-container-storage]
@@ -1950,9 +1951,9 @@ directCommands:
       Used to set the acceleration mode (None or BpfVeth) on a cluster when enabling advanced networking features with "--enable-acns".
     isPreview: true
   - name: --acns-transit-encryption-type
-    acceptedValues: None, WireGuard
+    acceptedValues: None, WireGuard, mTLS
     summary: |-
-      Specify the transit encryption type for ACNS. Available values are 'None' and 'WireGuard'.
+      Specify the transit encryption type for ACNS. Available values are 'None', 'WireGuard', and 'mTLS'.
     isPreview: true
   - name: --admin-username -u
     defaultValue: azureuser
@@ -2177,6 +2178,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Application Routing addon.
+    isPreview: true
+  - name: --enable-app-routing-istio --enable-ari
+    defaultValue: "False"
+    summary: |-
+      Enable Gateway API based ingress on App Routing via Istio without service mesh functionality.
+    description: |-
+      This enables an ingress-only version of Istio that reconciles Gateway API resources for App Routing.
+      It does not provide service mesh functionality (e.g. mTLS, traffic management between services).
+      Cannot be used simultaneously with the Istio service mesh add-on (--enable-azure-service-mesh).
     isPreview: true
   - name: --enable-application-load-balancer
     defaultValue: "False"
@@ -5677,7 +5687,7 @@ directCommands:
                   [--aad-tenant-id]
                   [--acns-advanced-networkpolicies {FQDN, L7, None}]
                   [--acns-datapath-acceleration-mode {BpfVeth, None}]
-                  [--acns-transit-encryption-type {None, WireGuard}]
+                  [--acns-transit-encryption-type {None, WireGuard, mTLS}]
                   [--aks-custom-headers]
                   [--ampls-resource-id]
                   [--api-server-authorized-ip-ranges]
@@ -5706,6 +5716,7 @@ directCommands:
                   [--disable-acns-security]
                   [--disable-ahub]
                   [--disable-ai-toolchain-operator]
+                  [--disable-app-routing-istio --disable-ari]
                   [--disable-application-load-balancer]
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
@@ -5748,6 +5759,7 @@ directCommands:
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-app-routing-istio --enable-ari]
                   [--enable-application-load-balancer]
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
@@ -6008,9 +6020,9 @@ directCommands:
       Used to set the acceleration mode (None or BpfVeth) on a cluster when enabling advanced networking features with "--enable-acns".
     isPreview: true
   - name: --acns-transit-encryption-type
-    acceptedValues: None, WireGuard
+    acceptedValues: None, WireGuard, mTLS
     summary: |-
-      Specify the transit encryption type for ACNS. Available values are 'None' and 'WireGuard'.
+      Specify the transit encryption type for ACNS. Available values are 'None', 'WireGuard', and 'mTLS'.
     isPreview: true
   - name: --aks-custom-headers
     summary: |-
@@ -6119,6 +6131,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable AI toolchain operator.
+    isPreview: true
+  - name: --disable-app-routing-istio --disable-ari
+    defaultValue: "False"
+    summary: |-
+      Disable Gateway API based ingress on App Routing via Istio.
     isPreview: true
   - name: --disable-application-load-balancer
     defaultValue: "False"
@@ -6301,6 +6318,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable integration of user vnet with control plane apiserver pods.
+    isPreview: true
+  - name: --enable-app-routing-istio --enable-ari
+    defaultValue: "False"
+    summary: |-
+      Enable Gateway API based ingress on App Routing via Istio without service mesh functionality.
+    description: |-
+      This enables an ingress-only version of Istio that reconciles Gateway API resources for App Routing.
+      It does not provide service mesh functionality (e.g. mTLS, traffic management between services).
+      Cannot be used simultaneously with the Istio service mesh add-on (--enable-azure-service-mesh).
     isPreview: true
   - name: --enable-application-load-balancer
     defaultValue: "False"
@@ -7477,6 +7503,10 @@ commands:
 - az_aks_approuting_disable(aks-preview)
 - az_aks_approuting_enable
 - az_aks_approuting_enable(aks-preview)
+- az_aks_approuting_gateway
+- az_aks_approuting_gateway_istio
+- az_aks_approuting_gateway_istio_disable
+- az_aks_approuting_gateway_istio_enable
 - az_aks_approuting_update
 - az_aks_approuting_update(aks-preview)
 - az_aks_approuting_zone
