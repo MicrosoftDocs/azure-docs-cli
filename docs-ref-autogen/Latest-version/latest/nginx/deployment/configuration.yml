@@ -16,7 +16,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment configuration analyze [--configuration-name --name]
+    az nginx deployment configuration analyze [--acquire-policy-token]
+                                              [--change-reference]
+                                              [--configuration-name --name]
                                               [--deployment-name]
                                               [--files]
                                               [--ids]
@@ -30,6 +32,14 @@ directCommands:
       Config package dry run
     syntax: az nginx deployment configuration analyze --deployment-name myDeployment --resource-group myResourceGroup --configuration-name default --root-file <nginx.conf> --package '{data:H4sIAAAAAAAAA+3VbWvbMBAHcL/Op7hCoTCIbckPCU0olG3QvVoog21QMCK+1qGyJGRlpBv57pPXbsla1wkdZS3c70UMdxfxP2wn6mqhVuFcq8vg2cTeKMt+Xb37V56zLGBpwvOYpVkyCmLGspwHED9fpI1l44QFCKzWrm9uV/+Vqpwz8GMA3tI0zqKoQRgzZHfF1net8K6Yp9eTP3WJonGFf3bUptag/YYWWBzGIQvT47G/wb1d1tvlt931w4C8KyB/UsCkt5v2drNHAyZdAZMnBcx7u6Pe7vh3wMHWwCaZXDQOFYwf3KRCiRrhTYgrURuJ/iei3sqt58IttIJo66hWiZdiKV3hbgyCw5WLKlfLyV8zFt3SKuBxDEfTg3cf3376OnsP7dzJtOInZyilhs/ayvJgGvnChTraHLDuyHD/eW0Zq1c3RYOuqFCUfuUz3Tg4rPznpH/wy/AchRx+mMGhxVo7LERZ2p1fmrWl4akxt29K17wRTQPtC3ccRR1D/ijpqmJe4fx698L8ZS3M91mY/8vCyctaONln4WT/hdeD9eB//xkQQgghhBBCCCGEEEIIIYQQQggh5FX6CfCArk8AKAAA}'
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --configuration-name --name -n
     summary: |-
       The name of configuration, only 'default' is supported value due to the singleton of NGINX conf.
@@ -100,6 +110,8 @@ directCommands:
     az nginx deployment configuration create --configuration-name --name
                                              --deployment-name
                                              --resource-group
+                                             [--acquire-policy-token]
+                                             [--change-reference]
                                              [--files]
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--package]
@@ -132,6 +144,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --files
     summary: |-
       Config files. Cannot be used with --package, only --protected-files  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -186,7 +206,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment configuration delete [--configuration-name --name]
+    az nginx deployment configuration delete [--acquire-policy-token]
+                                             [--change-reference]
+                                             [--configuration-name --name]
                                              [--deployment-name]
                                              [--ids]
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -198,6 +220,14 @@ directCommands:
       Configuration Delete
     syntax: az nginx deployment configuration delete --name default --deployment-name myDeployment --resource-group myResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --configuration-name --name -n
     summary: |-
       The name of configuration, only 'default' is supported value due to the singleton of Nginx conf.
@@ -378,7 +408,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment configuration update [--add]
+    az nginx deployment configuration update [--acquire-policy-token]
+                                             [--add]
+                                             [--change-reference]
                                              [--configuration-name --name]
                                              [--deployment-name]
                                              [--files]
@@ -397,10 +429,18 @@ directCommands:
       Update content of the first file in a configuration
     syntax: az nginx deployment configuration update --name default --deployment-name myDeployment --resource-group myResourceGroup --files [0].content="aHR0cCB7CiAgICB1cHN0cmVhbSBhcHAgewogICAgICAgIHpvbmUgYXBwIDY0azsKICAgICAgICBsZWFzdF9jb25uOwogICAgICAgIHNlcnZlciAxMC4wLjEuNDo4MDAwOwogICAgfQoKICAgIHNlcnZlciB7CiAgICAgICAgbGlzdGVuIDgwOwogICAgICAgIHNlcnZlcl9uYW1lICouZXhhbXBsZS5jb207CgogICAgICAgIGxvY2F0aW9uIC8gewogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIEhvc3QgJGhvc3Q7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgWC1SZWFsLUlQICRyZW1vdGVfYWRkcjsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBYLVByb3h5LUFwcCBhcHA7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgR2l0aHViLVJ1bi1JZCAwMDAwMDA7CiAgICAgICAgICAgIHByb3h5X2J1ZmZlcmluZyBvbjsKICAgICAgICAgICAgcHJveHlfYnVmZmVyX3NpemUgNGs7CiAgICAgICAgICAgIHByb3h5X2J1ZmZlcnMgOCA4azsKICAgICAgICAgICAgcHJveHlfcmVhZF90aW1lb3V0IDYwczsKICAgICAgICAgICAgcHJveHlfcGFzcyBodHRwOi8vYXBwOwogICAgICAgICAgICBoZWFsdGhfY2hlY2s7CiAgICAgICAgfQogICAgICAgIAogICAgfQp9"
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --configuration-name --name -n
     summary: |-
       The name of configuration, only 'default' is supported value due to the singleton of Nginx conf.
@@ -485,7 +525,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az nginx deployment configuration wait [--configuration-name --name]
+    az nginx deployment configuration wait [--acquire-policy-token]
+                                           [--change-reference]
+                                           [--configuration-name --name]
                                            [--created]
                                            [--custom]
                                            [--deleted]
@@ -498,6 +540,14 @@ directCommands:
                                            [--timeout]
                                            [--updated]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --configuration-name --name -n
     summary: |-
       The name of configuration, only 'default' is supported value due to the singleton of Nginx conf.

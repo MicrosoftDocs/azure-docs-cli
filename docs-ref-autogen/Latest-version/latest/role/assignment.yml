@@ -16,9 +16,11 @@ directCommands:
   syntax: >-
     az role assignment create --role
                               --scope
+                              [--acquire-policy-token]
                               [--assignee]
                               [--assignee-object-id]
                               [--assignee-principal-type {ForeignGroup, Group, ServicePrincipal, User}]
+                              [--change-reference]
                               [--condition]
                               [--condition-version]
                               [--description]
@@ -43,6 +45,10 @@ directCommands:
     summary: |-
       Scope at which the role assignment or definition applies to, e.g., /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333, /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup, or /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup/providers/Microsoft.Compute/virtualMachines/myVM.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --assignee
     summary: |-
       Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.
@@ -53,6 +59,10 @@ directCommands:
     acceptedValues: ForeignGroup, Group, ServicePrincipal, User
     summary: |-
       Use with --assignee-object-id to avoid errors caused by propagation latency in Microsoft Graph.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --condition
     summary: |-
       Condition under which the user can be granted permission.
@@ -105,8 +115,10 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
   syntax: >-
-    az role assignment delete [--assignee]
+    az role assignment delete [--acquire-policy-token]
+                              [--assignee]
                               [--assignee-object-id]
+                              [--change-reference]
                               [--ids]
                               [--include-inherited]
                               [--resource-group]
@@ -124,12 +136,20 @@ directCommands:
       Delete all role assignments of an assignee (with its object ID) at the subscription scope.
     syntax: az role assignment delete --assignee-object-id 00000000-0000-0000-0000-000000000000 --scope /subscriptions/00000000-0000-0000-0000-000000000000
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --assignee
     summary: |-
       Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.
   - name: --assignee-object-id
     summary: |-
       The assignee's object ID (also known as principal ID). Use this argument instead of '--assignee' to bypass Microsoft Graph query in case the logged-in account has no permission or the machine has no network access to query Microsoft Graph.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       Space-separated role assignment ids.
@@ -285,9 +305,19 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
   syntax: >-
-    az role assignment list-changelogs [--end-time]
+    az role assignment list-changelogs [--acquire-policy-token]
+                                       [--change-reference]
+                                       [--end-time]
                                        [--start-time]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --end-time
     summary: |-
       The end time of the query in the format of %Y-%m-%dT%H:%M:%SZ, e.g. 2000-12-31T12:59:59Z. Defaults to the current time.
@@ -328,7 +358,10 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
-  syntax: az role assignment update --role-assignment
+  syntax: >-
+    az role assignment update --role-assignment
+                              [--acquire-policy-token]
+                              [--change-reference]
   examples:
   - summary: |-
       Update a role assignment from a JSON file.
@@ -355,6 +388,15 @@ directCommands:
     name: --role-assignment
     summary: |-
       Description of an existing role assignment as JSON, or a path to a file containing a JSON description.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"

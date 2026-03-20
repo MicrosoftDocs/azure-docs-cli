@@ -19,7 +19,9 @@ directCommands:
   syntax: >-
     az postgres flexible-server connect --admin-user
                                         --name
+                                        [--acquire-policy-token]
                                         [--admin-password]
+                                        [--change-reference]
                                         [--database-name]
                                         [--interactive]
                                         [--querytext]
@@ -34,10 +36,18 @@ directCommands:
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --admin-password -p
     summary: |-
       The login password of the administrator.
     groupName: Authentication Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --database-name -d
     summary: |-
       The name of a database.
@@ -89,7 +99,8 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server create [--address-prefixes]
+    az postgres flexible-server create [--acquire-policy-token]
+                                       [--address-prefixes]
                                        [--admin-display-name]
                                        [--admin-object-id]
                                        [--admin-password]
@@ -99,6 +110,7 @@ directCommands:
                                        [--backup-identity]
                                        [--backup-key]
                                        [--backup-retention]
+                                       [--change-reference]
                                        [--cluster-option {ElasticCluster, Server}]
                                        [--database-name]
                                        [--geo-redundant-backup {Disabled, Enabled}]
@@ -314,6 +326,10 @@ directCommands:
       Create elastic cluster with node count of 5. Default node count is 2 when --cluster-option is "ElasticCluster".
     syntax: az postgres flexible-server create -g testGroup -n testCluster --location testLocation --cluster-option ElasticCluster --node-count 5
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --address-prefixes
     summary: |-
       The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
@@ -332,7 +348,7 @@ directCommands:
     summary: |-
       Type of the Microsoft Entra administrator.
   - name: --admin-user -u
-    defaultValue: direfulbustard1
+    defaultValue: somberrobin1
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
@@ -350,6 +366,10 @@ directCommands:
     defaultValue: "7"
     summary: |-
       The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --cluster-option
     defaultValue: Server
     acceptedValues: ElasticCluster, Server
@@ -497,7 +517,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server delete [--ids]
+    az postgres flexible-server delete [--acquire-policy-token]
+                                       [--change-reference]
+                                       [--ids]
                                        [--name]
                                        [--resource-group]
                                        [--subscription]
@@ -510,6 +532,14 @@ directCommands:
       Delete a flexible server without prompt or confirmation.
     syntax: az postgres flexible-server delete --resource-group testGroup --name testserver --yes
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -564,6 +594,8 @@ directCommands:
     az postgres flexible-server execute --admin-password
                                         --admin-user
                                         --name
+                                        [--acquire-policy-token]
+                                        [--change-reference]
                                         [--database-name]
                                         [--file-path]
                                         [--querytext]
@@ -583,6 +615,14 @@ directCommands:
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --database-name -d
     summary: |-
       The name of a database.
@@ -628,9 +668,11 @@ directCommands:
   syntax: >-
     az postgres flexible-server geo-restore --location
                                             --source-server
+                                            [--acquire-policy-token]
                                             [--address-prefixes]
                                             [--backup-identity]
                                             [--backup-key]
+                                            [--change-reference]
                                             [--geo-redundant-backup {Disabled, Enabled}]
                                             [--identity]
                                             [--ids]
@@ -672,6 +714,10 @@ directCommands:
     summary: |-
       The name or resource ID of the source server to restore from.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --address-prefixes
     summary: |-
       The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
@@ -681,6 +727,10 @@ directCommands:
   - name: --backup-key
     summary: |-
       The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --geo-redundant-backup
     defaultValue: Disabled
     acceptedValues: Disabled, Enabled
@@ -712,7 +762,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-03-19T11:13:52+00:00
+    defaultValue: 2026-03-19T23:13:12+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --subnet
@@ -818,12 +868,24 @@ directCommands:
     Lists available sku's in the given region.
   status: GA
   sourceType: Core
-  syntax: az postgres flexible-server list-skus --location
+  syntax: >-
+    az postgres flexible-server list-skus --location
+                                          [--acquire-policy-token]
+                                          [--change-reference]
   requiredParameters:
   - isRequired: true
     name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -858,7 +920,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server migrate-network [--ids]
+    az postgres flexible-server migrate-network [--acquire-policy-token]
+                                                [--change-reference]
+                                                [--ids]
                                                 [--name]
                                                 [--no-wait]
                                                 [--resource-group]
@@ -868,6 +932,14 @@ directCommands:
       Migrate the network mode of a flexible server.
     syntax: az postgres flexible-server migrate-network --resource-group testGroup --name testserver
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -919,7 +991,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server restart [--failover]
+    az postgres flexible-server restart [--acquire-policy-token]
+                                        [--change-reference]
+                                        [--failover]
                                         [--ids]
                                         [--name]
                                         [--resource-group]
@@ -935,6 +1009,14 @@ directCommands:
       Restart a server with forced failover
     syntax: az postgres flexible-server restart --resource-group testGroup --name testserver --failover Forced
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --failover
     summary: |-
       Forced or planned failover for server restart operation. Allowed values: Forced, Planned.
@@ -986,9 +1068,11 @@ directCommands:
   sourceType: Core
   syntax: >-
     az postgres flexible-server restore --source-server
+                                        [--acquire-policy-token]
                                         [--address-prefixes]
                                         [--backup-identity]
                                         [--backup-key]
+                                        [--change-reference]
                                         [--geo-redundant-backup {Disabled, Enabled}]
                                         [--identity]
                                         [--ids]
@@ -1031,6 +1115,10 @@ directCommands:
     summary: |-
       The name or resource ID of the source server to restore from.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --address-prefixes
     summary: |-
       The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
@@ -1040,6 +1128,10 @@ directCommands:
   - name: --backup-key
     summary: |-
       The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --geo-redundant-backup
     defaultValue: Disabled
     acceptedValues: Disabled, Enabled
@@ -1071,7 +1163,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-03-19T11:13:52+00:00
+    defaultValue: 2026-03-19T23:13:12+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --storage-type
@@ -1131,9 +1223,11 @@ directCommands:
   syntax: >-
     az postgres flexible-server revive-dropped --location
                                                --source-server
+                                               [--acquire-policy-token]
                                                [--address-prefixes]
                                                [--backup-identity]
                                                [--backup-key]
+                                               [--change-reference]
                                                [--geo-redundant-backup {Disabled, Enabled}]
                                                [--identity]
                                                [--ids]
@@ -1167,6 +1261,10 @@ directCommands:
     summary: |-
       The name or resource ID of the source server to restore from.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --address-prefixes
     summary: |-
       The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
@@ -1176,6 +1274,10 @@ directCommands:
   - name: --backup-key
     summary: |-
       The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --geo-redundant-backup
     defaultValue: Disabled
     acceptedValues: Disabled, Enabled
@@ -1313,8 +1415,10 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server show-connection-string [--admin-password]
+    az postgres flexible-server show-connection-string [--acquire-policy-token]
+                                                       [--admin-password]
                                                        [--admin-user]
+                                                       [--change-reference]
                                                        [--database-name]
                                                        [--ids]
                                                        [--pg-bouncer]
@@ -1328,6 +1432,10 @@ directCommands:
       Show connection strings for cmd and programming languages with PgBouncer enabled.
     syntax: az postgres flexible-server show-connection-string -s testserver -u username -p password -d databasename --pg-bouncer
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --admin-password -p
     defaultValue: '{password}'
     summary: |-
@@ -1338,6 +1446,10 @@ directCommands:
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --database-name -d
     defaultValue: '{database}'
     summary: |-
@@ -1391,7 +1503,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server start [--ids]
+    az postgres flexible-server start [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--ids]
                                       [--name]
                                       [--no-wait]
                                       [--resource-group]
@@ -1401,6 +1515,14 @@ directCommands:
       Start a flexible server.
     syntax: az postgres flexible-server start --resource-group testGroup --name testserver
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1452,7 +1574,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server stop [--ids]
+    az postgres flexible-server stop [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--ids]
                                      [--name]
                                      [--no-wait]
                                      [--resource-group]
@@ -1462,6 +1586,14 @@ directCommands:
       Stop a flexible server.
     syntax: az postgres flexible-server stop --resource-group testGroup --name testserver
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1513,12 +1645,14 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server update [--add]
+    az postgres flexible-server update [--acquire-policy-token]
+                                       [--add]
                                        [--admin-password]
                                        [--allow-same-zone]
                                        [--backup-identity]
                                        [--backup-key]
                                        [--backup-retention]
+                                       [--change-reference]
                                        [--force-string]
                                        [--high-availability {Disabled, SameZone, ZoneRedundant}]
                                        [--identity]
@@ -1594,6 +1728,10 @@ directCommands:
       Update a flexible server's cluster size by scaling up node count. Must be an Elastic Cluster.
     syntax: az postgres flexible-server update --resource-group testGroup --name testcluster --node-count 6
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     defaultValue: '[]'
     summary: |-
@@ -1616,6 +1754,10 @@ directCommands:
   - name: --backup-retention
     summary: |-
       The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --force-string
     defaultValue: "False"
     summary: |-
@@ -1748,6 +1890,8 @@ directCommands:
   sourceType: Core
   syntax: >-
     az postgres flexible-server upgrade --version {13, 14, 15, 16, 17, 18}
+                                        [--acquire-policy-token]
+                                        [--change-reference]
                                         [--ids]
                                         [--name]
                                         [--resource-group]
@@ -1765,6 +1909,14 @@ directCommands:
       Server major version.
     isBreakingChange: true
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1815,7 +1967,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server wait [--created]
+    az postgres flexible-server wait [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--created]
                                      [--custom]
                                      [--deleted]
                                      [--exists]
@@ -1827,6 +1981,14 @@ directCommands:
                                      [--timeout]
                                      [--updated]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
