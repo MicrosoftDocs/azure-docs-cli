@@ -1,0 +1,125 @@
+### YamlMime:AzureCLIGroup
+uid: az_workload-orchestration_support
+name: az workload-orchestration support
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **workload-orchestration** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az workload-orchestration support** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Commands for troubleshooting and diagnostics of workload orchestration deployments.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+sourceType: Extension
+directCommands:
+- uid: az_workload-orchestration_support_create-bundle
+  name: az workload-orchestration support create-bundle
+  summary: |-
+    Create a support bundle for troubleshooting workload orchestration issues.
+  description: |-
+    Collects cluster information, resource descriptions, container logs, and runs
+    prerequisite validation checks. The output is a zip file that can be shared with
+    Microsoft support for troubleshooting Day 0 (installation) and Day N (runtime) issues.
+
+    Collected data includes:
+    - Cluster info (version, nodes, namespaces)
+    - Pod/Deployment/Service/DaemonSet/Event descriptions per namespace
+    - Container logs (tailed by default)
+    - Network configuration (kube-proxy, external services, pod CIDRs)
+    - StorageClass, PV, webhook, CRD inventory
+    - WO component health (Symphony, cert-manager)
+    - Prerequisite checks (K8s version, node capacity, DNS, storage, RBAC).
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'workload-orchestration support' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration support create-bundle [--bundle-name]
+                                                    [--full-logs]
+                                                    [--kube-config]
+                                                    [--kube-context]
+                                                    [--namespaces]
+                                                    [--output-dir]
+                                                    [--skip-checks]
+                                                    [--skip-logs]
+                                                    [--tail-lines]
+  examples:
+  - summary: |-
+      Create a support bundle with defaults
+    syntax: az workload-orchestration support create-bundle
+  - summary: |-
+      Create a named bundle
+    syntax: az workload-orchestration support create-bundle --bundle-name my-cluster-debug
+  - summary: |-
+      Create a bundle in a specific directory
+    syntax: az workload-orchestration support create-bundle --output-dir /tmp/bundles
+  - summary: |-
+      Collect full logs (no tail) for WO namespace only
+    syntax: az workload-orchestration support create-bundle --full-logs --namespaces workloadorchestration
+  - summary: |-
+      Run checks only, skip log collection
+    syntax: az workload-orchestration support create-bundle --skip-logs
+  - summary: |-
+      Use a specific kubeconfig and context
+    syntax: az workload-orchestration support create-bundle --kube-config ~/.kube/prod-config --kube-context my-cluster
+  optionalParameters:
+  - name: --bundle-name -n
+    summary: |-
+      Optional name for the support bundle. Defaults to wo-support-bundle-YYYYMMDD-HHMMSS.
+  - name: --full-logs
+    defaultValue: "False"
+    summary: |-
+      Collect full container logs instead of tailing. Warning: may produce very large bundles.
+  - name: --kube-config
+    summary: |-
+      Path to kubeconfig file. Defaults to ~/.kube/config.
+  - name: --kube-context
+    summary: |-
+      Kubernetes context to use. Defaults to current context.
+  - name: --namespaces
+    summary: |-
+      Kubernetes namespaces to collect logs and resources from. Defaults to kube-system, workloadorchestration, cert-manager.
+  - name: --output-dir -d
+    summary: |-
+      Directory where the support bundle zip will be saved. Defaults to current directory.
+  - name: --skip-checks
+    defaultValue: "False"
+    summary: |-
+      Skip prerequisite validation checks and only collect logs/resources.
+  - name: --skip-logs
+    defaultValue: "False"
+    summary: |-
+      Skip container log collection and only run checks/collect resources.
+  - name: --tail-lines
+    summary: |-
+      Number of log lines to collect per container (default: 1000). Use --full-logs to collect all lines.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_workload-orchestration_support_create-bundle
+metadata:
+  description: Commands for troubleshooting and diagnostics of workload orchestration deployments.

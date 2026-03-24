@@ -3,7 +3,7 @@ uid: az_iot_ops
 name: az iot ops
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure IoT Operations.
 description: |-
@@ -28,7 +28,7 @@ directCommands:
 
     {Supported service APIs}
     - deviceregistry.microsoft.com/[v1,v1beta1]
-    - namespaces.deviceregistry.microsoft.com/[v1beta1]
+    - namespaces.deviceregistry.microsoft.com/[v1]
     - mqttbroker.iotoperations.azure.com/[v1,v1beta1]
     - connectivity.iotoperations.azure.com/[v1,v1beta1]
 
@@ -138,7 +138,7 @@ directCommands:
     The clone definition being a generic ARM template, can be deployed via existing tools.
     See https://aka.ms/aio-clone for details.
 
-    Clone is compatible with the following instance version range: `1.0.34>=,<1.3.0`.
+    Clone is compatible with the following instance version range: `1.0.34>=,<1.4.0`.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -293,6 +293,8 @@ directCommands:
                       [--description]
                       [--df-profile-instances]
                       [--feature]
+                      [--health-checks-int]
+                      [--health-checks-max]
                       [--location]
                       [--no-preflight {false, true}]
                       [--no-progress {false, true}]
@@ -402,6 +404,16 @@ directCommands:
   - name: --feature
     summary: |-
       Instance feature config. The settings of a component and/or it's mode can be configured. Component mode syntax is `{component}.mode={mode}` where known mode values are: `Stable`, `Preview` and `Disabled`. Component setting syntax is `{component}.settings.{setting}={value}` where known setting values are `Enabled` or `Disabled`. This option can be used one or more times.
+  - name: --health-checks-int
+    defaultValue: "30"
+    summary: |-
+      Seconds to wait between consecutive cluster health checks when the cluster is reported as unavailable.
+    groupName: Cluster Health Arguments
+  - name: --health-checks-max
+    defaultValue: "4"
+    summary: |-
+      Maximum number of cluster health checks to perform before blocking deployment. If the cluster is reported as unavailable, it will be rechecked up to this many times with a wait between each check. Set to 0 to skip the health check entirely.
+    groupName: Cluster Health Arguments
   - name: --location
     summary: |-
       The region that will be used for provisioned resource collateral. If not provided the connected cluster location will be used.
@@ -472,11 +484,18 @@ directCommands:
   summary: |-
     Delete IoT Operations from the cluster.
   description: |-
-    The name of either the instance or cluster must be provided.
+    Either --name (instance) or --cluster must be provided.
 
-    The operation uses Azure Resource Graph to determine correlated resources.
-    Resource Graph being eventually consistent does not guarantee a synchronized state at the
-    time of execution.
+    By default the command deletes the IoT Operations instance
+    (cascading to all child resources), the custom location,
+    resource sync rules, and the IoT Operations arc extension.
+
+    Use --include-deps to also remove dependency extensions
+    such as cert manager, secret store, and container
+    storage (when deployed by init).
+
+    Use --cluster when the instance has already been deleted
+    and residual resources need cleanup.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -489,20 +508,23 @@ directCommands:
                       [--yes {false, true}]
   examples:
   - summary: |-
-      Minimum input for complete deletion.
+      Delete an IoT Operations instance by name.
     syntax: az iot ops delete -n myinstance -g myresourcegroup
   - summary: |-
-      Skip confirmation prompt and continue to deletion process. Useful for CI scenarios.
+      Skip the confirmation prompt. Useful for CI.
     syntax: az iot ops delete -n myinstance -g myresourcegroup -y
   - summary: |-
-      Force deletion regardless of warnings. May lead to errors.
+      Force deletion when the cluster is disconnected.
     syntax: az iot ops delete -n myinstance -g myresourcegroup --force
   - summary: |-
-      Use cluster name instead of instance for lookup.
+      Discover resources via cluster name instead of instance name.
     syntax: az iot ops delete --cluster mycluster -g myresourcegroup
   - summary: |-
-      Reverse application of init.
+      Delete instance and dependency extensions.
     syntax: az iot ops delete -n myinstance -g myresourcegroup --include-deps
+  - summary: |-
+      Full cleanup via cluster name with dependency removal. Recommended for CI teardown.
+    syntax: az iot ops delete --cluster mycluster -g myresourcegroup --include-deps --force -y
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -511,15 +533,15 @@ directCommands:
   optionalParameters:
   - name: --cluster
     summary: |-
-      Target cluster name for IoT Operations deletion.
+      Target cluster name for IoT Operations deletion. Use as an alternative to --name when the instance has already been deleted or is unknown.
   - name: --force
     acceptedValues: false, true
     summary: |-
-      Force the operation to execute.
+      Force deletion even when the cluster is disconnected.
   - name: --include-deps
     acceptedValues: false, true
     summary: |-
-      Indicates the command should remove IoT Operations dependencies. This option is intended to reverse the application of init.
+      Include dependency extensions in deletion (cert manager, secret store, and container storage when deployed by init).
   - name: --name -n
     summary: |-
       IoT Operations instance name.
@@ -701,6 +723,8 @@ directCommands:
                     [--cm-config]
                     [--context]
                     [--ensure-latest {false, true}]
+                    [--health-checks-int]
+                    [--health-checks-max]
                     [--no-preflight {false, true}]
                     [--no-progress {false, true}]
                     [--ssc-config]
@@ -745,6 +769,16 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Ensure the latest IoT Ops CLI is being used, raising an error if an upgrade is available.
+  - name: --health-checks-int
+    defaultValue: "30"
+    summary: |-
+      Seconds to wait between consecutive cluster health checks when the cluster is reported as unavailable.
+    groupName: Cluster Health Arguments
+  - name: --health-checks-max
+    defaultValue: "4"
+    summary: |-
+      Maximum number of cluster health checks to perform before blocking deployment. If the cluster is reported as unavailable, it will be rechecked up to this many times with a wait between each check. Set to 0 to skip the health check entirely.
+    groupName: Cluster Health Arguments
   - name: --no-preflight
     acceptedValues: false, true
     summary: |-
@@ -1289,6 +1323,11 @@ commands:
 - az_iot_ops_identity_show
 - az_iot_ops_init
 - az_iot_ops_list
+- az_iot_ops_mgmt-actions
+- az_iot_ops_mgmt-actions_disable
+- az_iot_ops_mgmt-actions_enable
+- az_iot_ops_mgmt-actions_execute
+- az_iot_ops_mgmt-actions_show
 - az_iot_ops_migrate-assets
 - az_iot_ops_ns
 - az_iot_ops_ns_asset
@@ -1296,10 +1335,14 @@ commands:
 - az_iot_ops_ns_asset_custom_create
 - az_iot_ops_ns_asset_custom_datapoint
 - az_iot_ops_ns_asset_custom_datapoint_add
+- az_iot_ops_ns_asset_custom_datapoint_export
+- az_iot_ops_ns_asset_custom_datapoint_import
 - az_iot_ops_ns_asset_custom_datapoint_list
 - az_iot_ops_ns_asset_custom_datapoint_remove
 - az_iot_ops_ns_asset_custom_dataset
 - az_iot_ops_ns_asset_custom_dataset_add
+- az_iot_ops_ns_asset_custom_dataset_export
+- az_iot_ops_ns_asset_custom_dataset_import
 - az_iot_ops_ns_asset_custom_dataset_list
 - az_iot_ops_ns_asset_custom_dataset_remove
 - az_iot_ops_ns_asset_custom_dataset_show
@@ -1307,25 +1350,35 @@ commands:
 - az_iot_ops_ns_asset_custom_event
 - az_iot_ops_ns_asset_custom_event-group
 - az_iot_ops_ns_asset_custom_event-group_add
+- az_iot_ops_ns_asset_custom_event-group_export
+- az_iot_ops_ns_asset_custom_event-group_import
 - az_iot_ops_ns_asset_custom_event-group_list
 - az_iot_ops_ns_asset_custom_event-group_remove
 - az_iot_ops_ns_asset_custom_event-group_show
 - az_iot_ops_ns_asset_custom_event-group_update
 - az_iot_ops_ns_asset_custom_event_add
+- az_iot_ops_ns_asset_custom_event_export
+- az_iot_ops_ns_asset_custom_event_import
 - az_iot_ops_ns_asset_custom_event_list
 - az_iot_ops_ns_asset_custom_event_remove
 - az_iot_ops_ns_asset_custom_mgmt-action
 - az_iot_ops_ns_asset_custom_mgmt-action_add
+- az_iot_ops_ns_asset_custom_mgmt-action_export
+- az_iot_ops_ns_asset_custom_mgmt-action_import
 - az_iot_ops_ns_asset_custom_mgmt-action_list
 - az_iot_ops_ns_asset_custom_mgmt-action_remove
 - az_iot_ops_ns_asset_custom_mgmt-group
 - az_iot_ops_ns_asset_custom_mgmt-group_add
+- az_iot_ops_ns_asset_custom_mgmt-group_export
+- az_iot_ops_ns_asset_custom_mgmt-group_import
 - az_iot_ops_ns_asset_custom_mgmt-group_list
 - az_iot_ops_ns_asset_custom_mgmt-group_remove
 - az_iot_ops_ns_asset_custom_mgmt-group_show
 - az_iot_ops_ns_asset_custom_mgmt-group_update
 - az_iot_ops_ns_asset_custom_stream
 - az_iot_ops_ns_asset_custom_stream_add
+- az_iot_ops_ns_asset_custom_stream_export
+- az_iot_ops_ns_asset_custom_stream_import
 - az_iot_ops_ns_asset_custom_stream_list
 - az_iot_ops_ns_asset_custom_stream_remove
 - az_iot_ops_ns_asset_custom_stream_show
@@ -1336,6 +1389,8 @@ commands:
 - az_iot_ops_ns_asset_media_create
 - az_iot_ops_ns_asset_media_stream
 - az_iot_ops_ns_asset_media_stream_add
+- az_iot_ops_ns_asset_media_stream_export
+- az_iot_ops_ns_asset_media_stream_import
 - az_iot_ops_ns_asset_media_stream_list
 - az_iot_ops_ns_asset_media_stream_remove
 - az_iot_ops_ns_asset_media_stream_show
@@ -1345,6 +1400,8 @@ commands:
 - az_iot_ops_ns_asset_mqtt_create
 - az_iot_ops_ns_asset_mqtt_dataset
 - az_iot_ops_ns_asset_mqtt_dataset_add
+- az_iot_ops_ns_asset_mqtt_dataset_export
+- az_iot_ops_ns_asset_mqtt_dataset_import
 - az_iot_ops_ns_asset_mqtt_dataset_list
 - az_iot_ops_ns_asset_mqtt_dataset_remove
 - az_iot_ops_ns_asset_mqtt_dataset_show
@@ -1352,14 +1409,24 @@ commands:
 - az_iot_ops_ns_asset_mqtt_update
 - az_iot_ops_ns_asset_onvif
 - az_iot_ops_ns_asset_onvif_create
+- az_iot_ops_ns_asset_onvif_event
 - az_iot_ops_ns_asset_onvif_event-group
 - az_iot_ops_ns_asset_onvif_event-group_add
+- az_iot_ops_ns_asset_onvif_event-group_export
+- az_iot_ops_ns_asset_onvif_event-group_import
 - az_iot_ops_ns_asset_onvif_event-group_list
 - az_iot_ops_ns_asset_onvif_event-group_remove
 - az_iot_ops_ns_asset_onvif_event-group_show
 - az_iot_ops_ns_asset_onvif_event-group_update
+- az_iot_ops_ns_asset_onvif_event_add
+- az_iot_ops_ns_asset_onvif_event_export
+- az_iot_ops_ns_asset_onvif_event_import
+- az_iot_ops_ns_asset_onvif_event_list
+- az_iot_ops_ns_asset_onvif_event_remove
 - az_iot_ops_ns_asset_onvif_mgmt-group
 - az_iot_ops_ns_asset_onvif_mgmt-group_add
+- az_iot_ops_ns_asset_onvif_mgmt-group_export
+- az_iot_ops_ns_asset_onvif_mgmt-group_import
 - az_iot_ops_ns_asset_onvif_mgmt-group_list
 - az_iot_ops_ns_asset_onvif_mgmt-group_remove
 - az_iot_ops_ns_asset_onvif_mgmt-group_show
@@ -1369,26 +1436,42 @@ commands:
 - az_iot_ops_ns_asset_opcua_create
 - az_iot_ops_ns_asset_opcua_datapoint
 - az_iot_ops_ns_asset_opcua_datapoint_add
+- az_iot_ops_ns_asset_opcua_datapoint_export
+- az_iot_ops_ns_asset_opcua_datapoint_import
 - az_iot_ops_ns_asset_opcua_datapoint_list
 - az_iot_ops_ns_asset_opcua_datapoint_remove
 - az_iot_ops_ns_asset_opcua_dataset
 - az_iot_ops_ns_asset_opcua_dataset_add
+- az_iot_ops_ns_asset_opcua_dataset_export
+- az_iot_ops_ns_asset_opcua_dataset_import
 - az_iot_ops_ns_asset_opcua_dataset_list
 - az_iot_ops_ns_asset_opcua_dataset_remove
 - az_iot_ops_ns_asset_opcua_dataset_show
 - az_iot_ops_ns_asset_opcua_dataset_update
+- az_iot_ops_ns_asset_opcua_event
 - az_iot_ops_ns_asset_opcua_event-group
 - az_iot_ops_ns_asset_opcua_event-group_add
+- az_iot_ops_ns_asset_opcua_event-group_export
+- az_iot_ops_ns_asset_opcua_event-group_import
 - az_iot_ops_ns_asset_opcua_event-group_list
 - az_iot_ops_ns_asset_opcua_event-group_remove
 - az_iot_ops_ns_asset_opcua_event-group_show
 - az_iot_ops_ns_asset_opcua_event-group_update
+- az_iot_ops_ns_asset_opcua_event_add
+- az_iot_ops_ns_asset_opcua_event_export
+- az_iot_ops_ns_asset_opcua_event_import
+- az_iot_ops_ns_asset_opcua_event_list
+- az_iot_ops_ns_asset_opcua_event_remove
 - az_iot_ops_ns_asset_opcua_mgmt-action
 - az_iot_ops_ns_asset_opcua_mgmt-action_add
+- az_iot_ops_ns_asset_opcua_mgmt-action_export
+- az_iot_ops_ns_asset_opcua_mgmt-action_import
 - az_iot_ops_ns_asset_opcua_mgmt-action_list
 - az_iot_ops_ns_asset_opcua_mgmt-action_remove
 - az_iot_ops_ns_asset_opcua_mgmt-group
 - az_iot_ops_ns_asset_opcua_mgmt-group_add
+- az_iot_ops_ns_asset_opcua_mgmt-group_export
+- az_iot_ops_ns_asset_opcua_mgmt-group_import
 - az_iot_ops_ns_asset_opcua_mgmt-group_list
 - az_iot_ops_ns_asset_opcua_mgmt-group_remove
 - az_iot_ops_ns_asset_opcua_mgmt-group_show
@@ -1399,6 +1482,8 @@ commands:
 - az_iot_ops_ns_asset_rest_create
 - az_iot_ops_ns_asset_rest_dataset
 - az_iot_ops_ns_asset_rest_dataset_add
+- az_iot_ops_ns_asset_rest_dataset_export
+- az_iot_ops_ns_asset_rest_dataset_import
 - az_iot_ops_ns_asset_rest_dataset_list
 - az_iot_ops_ns_asset_rest_dataset_remove
 - az_iot_ops_ns_asset_rest_dataset_show
@@ -1409,6 +1494,8 @@ commands:
 - az_iot_ops_ns_asset_sse_create
 - az_iot_ops_ns_asset_sse_dataset
 - az_iot_ops_ns_asset_sse_dataset_add
+- az_iot_ops_ns_asset_sse_dataset_export
+- az_iot_ops_ns_asset_sse_dataset_import
 - az_iot_ops_ns_asset_sse_dataset_list
 - az_iot_ops_ns_asset_sse_dataset_remove
 - az_iot_ops_ns_asset_sse_dataset_show
@@ -1416,11 +1503,15 @@ commands:
 - az_iot_ops_ns_asset_sse_event
 - az_iot_ops_ns_asset_sse_event-group
 - az_iot_ops_ns_asset_sse_event-group_add
+- az_iot_ops_ns_asset_sse_event-group_export
+- az_iot_ops_ns_asset_sse_event-group_import
 - az_iot_ops_ns_asset_sse_event-group_list
 - az_iot_ops_ns_asset_sse_event-group_remove
 - az_iot_ops_ns_asset_sse_event-group_show
 - az_iot_ops_ns_asset_sse_event-group_update
 - az_iot_ops_ns_asset_sse_event_add
+- az_iot_ops_ns_asset_sse_event_export
+- az_iot_ops_ns_asset_sse_event_import
 - az_iot_ops_ns_asset_sse_event_list
 - az_iot_ops_ns_asset_sse_event_remove
 - az_iot_ops_ns_asset_sse_update
@@ -1446,6 +1537,8 @@ commands:
 - az_iot_ops_ns_device_show
 - az_iot_ops_ns_device_update
 - az_iot_ops_ns_list
+- az_iot_ops_ns_mgmt-endpoint
+- az_iot_ops_ns_mgmt-endpoint_remove
 - az_iot_ops_ns_show
 - az_iot_ops_ns_update
 - az_iot_ops_registry

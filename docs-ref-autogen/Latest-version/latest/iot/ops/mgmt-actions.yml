@@ -1,0 +1,371 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_mgmt-actions
+name: az iot ops mgmt-actions
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops mgmt-actions** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Instance management actions configuration.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_mgmt-actions_disable
+  name: az iot ops mgmt-actions disable
+  summary: |-
+    Disable management actions for an IoT Operations instance.
+  description: |-
+    Removes management actions resources associated with the instance including
+    the dataflow graph, response dataflow, EG dataflow endpoint, EG topic space,
+    permission bindings, and the ADR namespace management endpoint entry.
+
+    Role assignments are not removed as they may be shared with other resources.
+
+    The Event Grid namespace is discovered from the ADR namespace management
+    endpoint config. If the management endpoint entry has already been removed,
+    Event Grid cleanup is skipped gracefully.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops mgmt-actions disable --instance
+                                    --resource-group
+                                    [--no-progress {false, true}]
+                                    [--yes {false, true}]
+  examples:
+  - summary: |-
+      Disable management actions for an instance.
+    syntax: az iot ops mgmt-actions disable --instance myinstance -g myresourcegroup
+  - summary: |-
+      Disable management actions without confirmation prompt.
+    syntax: az iot ops mgmt-actions disable --instance myinstance -g myresourcegroup --yes
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --no-progress
+    acceptedValues: false, true
+    summary: |-
+      Disable visual representation of work.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_mgmt-actions_enable
+  name: az iot ops mgmt-actions enable
+  summary: |-
+    Enable management actions for an IoT Operations instance.
+  description: |-
+    Bootstraps the infrastructure enabling cloud-based invocation of management
+    actions on assets through Event Grid MQTT broker integration.
+
+    The operation configures resources across three domains:
+    - Event Grid Namespace: topic space, topic templates, and permission bindings.
+    - Device Registry Namespace: managed identity enablement and management endpoint config.
+    - IoT Operations Instance: EG dataflow endpoint, dataflow graph, and response dataflow.
+
+    The command is idempotent. If a resource already exists, it is skipped. On partial failure,
+    re-run the command to reach the desired state.
+
+    By default, role assignments (Event Grid TopicSpaces Publisher and Subscriber) are created
+    for both the ADR namespace MI and the AIO extension MI against the EG namespace.
+    Use --skip-ra to skip role assignment creation, or --adr-role-ids / --ops-role-ids to
+    provide custom role Ids.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops mgmt-actions enable --eg-resource-id
+                                   --instance
+                                   --resource-group
+                                   [--adr-role-ids]
+                                   [--dataflow-profile]
+                                   [--eg-client-group]
+                                   [--mi-user-assigned]
+                                   [--no-progress {false, true}]
+                                   [--ops-role-ids]
+                                   [--registry-endpoint]
+                                   [--skip-ra {false, true}]
+  examples:
+  - summary: |-
+      Enable management actions for an instance using system managed identity.
+    syntax: az iot ops mgmt-actions enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID
+  - summary: |-
+      Enable management actions using a user-assigned managed identity for the EG dataflow endpoint.
+    syntax: az iot ops mgmt-actions enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID --mi-user-assigned $UA_MI_RESOURCE_ID
+  - summary: |-
+      Enable management actions and skip role assignments.
+    syntax: az iot ops mgmt-actions enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID --skip-ra
+  requiredParameters:
+  - isRequired: true
+    name: --eg-resource-id
+    summary: |-
+      Event Grid Namespace ARM resource Id.
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --adr-role-ids
+    summary: |-
+      Custom role Ids for ADR namespace managed identity role assignments against the EG namespace. Default: 'Event Grid TopicSpaces Publisher' and 'Event Grid TopicSpaces Subscriber'.
+    groupName: Role Assignment Arguments
+  - name: --dataflow-profile
+    summary: |-
+      Dataflow profile name for graph and dataflow resources. Default: 'default'.
+  - name: --eg-client-group
+    summary: |-
+      Client group for EG permission bindings. Default: $all.
+  - name: --mi-user-assigned
+    summary: |-
+      User-assigned managed identity resource Id for EG dataflow endpoint authentication. Default: system managed identity.
+  - name: --no-progress
+    acceptedValues: false, true
+    summary: |-
+      Disable visual representation of work.
+  - name: --ops-role-ids
+    summary: |-
+      Custom role Ids for AIO extension managed identity role assignments against the EG namespace. Default: 'Event Grid TopicSpaces Publisher' and 'Event Grid TopicSpaces Subscriber'.
+    groupName: Role Assignment Arguments
+  - name: --registry-endpoint
+    summary: |-
+      Registry endpoint name for the dataflow graph. Default: 'default'.
+  - name: --skip-ra
+    acceptedValues: false, true
+    summary: |-
+      When used the role assignment step of the operation will be skipped.
+    groupName: Role Assignment Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_mgmt-actions_execute
+  name: az iot ops mgmt-actions execute
+  summary: |-
+    Execute a management action on a namespace asset.
+  description: |-
+    Invokes a management action defined on a namespace asset via the Device Registry
+    executeAction operation. The management actions infrastructure must be enabled
+    (`az iot ops mgmt-actions enable`) before actions can be executed.
+
+    The command resolves the ADR namespace from the IoT Operations instance and
+    submits the action as a long-running operation. The result includes the action
+    status, any response from the asset, and error details if the action failed.
+
+    When a payload is provided, the CLI validates it against the action's request
+    schema (if available) before sending the request. Use --no-validate to skip
+    this check. Use --show-schema to view the action's request schema without
+    executing.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops mgmt-actions execute --action
+                                    --asset
+                                    --group
+                                    --instance
+                                    --resource-group
+                                    [--no-validate]
+                                    [--payload]
+                                    [--show-schema]
+  examples:
+  - summary: |-
+      Execute a management action with no payload.
+    syntax: az iot ops mgmt-actions execute --instance myinstance -g myresourcegroup --asset myasset --group mygroup --action reboot
+  - summary: |-
+      Execute a management action with inline JSON payload.
+    syntax: "az iot ops mgmt-actions execute --instance myinstance -g myresourcegroup --asset myasset --group mygroup --action configure -p '{\"temperature\": {\"setpoint\": 72}}'"
+  - summary: |-
+      Execute a management action with payload from file.
+    syntax: az iot ops mgmt-actions execute --instance myinstance -g myresourcegroup --asset myasset --group mygroup --action configure -p payload.json
+  - summary: |-
+      Show the request schema for a management action.
+    syntax: az iot ops mgmt-actions execute --instance myinstance -g myresourcegroup --asset myasset --group mygroup --action configure --show-schema
+  - summary: |-
+      Execute with payload, skipping schema validation.
+    syntax: "az iot ops mgmt-actions execute --instance myinstance -g myresourcegroup --asset myasset --group mygroup --action configure -p '{\"temperature\": {\"setpoint\": 72}}' --no-validate"
+  requiredParameters:
+  - isRequired: true
+    name: --action
+    summary: |-
+      Management action name to execute.
+  - isRequired: true
+    name: --asset
+    summary: |-
+      Name of the namespace asset to execute the management action on.
+  - isRequired: true
+    name: --group
+    summary: |-
+      Management group name under which the action is defined.
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --no-validate
+    defaultValue: "False"
+    summary: |-
+      Skip client-side payload validation against the action's request schema.
+  - name: --payload -p
+    summary: |-
+      JSON payload for the management action. Inline JSON string or file path (e.g., payload.json).
+  - name: --show-schema
+    defaultValue: "False"
+    summary: |-
+      Resolve and display the action's request schema. No action is executed.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_mgmt-actions_show
+  name: az iot ops mgmt-actions show
+  summary: |-
+    Show management actions configuration for an IoT Operations instance.
+  description: |-
+    Checks the status of management actions resources across three areas:
+    Device Registry (ADR) namespace, Event Grid resources, and AIO dataflow resources.
+
+    Returns a structured summary with an overall enabled flag and per-domain detail
+    sections. A domain that cannot be probed (e.g. missing ADR namespace ref) returns
+    null for that section without blocking other domains from being checked.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops mgmt-actions show --instance
+                                 --resource-group
+                                 [--no-progress {false, true}]
+  examples:
+  - summary: |-
+      Show management actions configuration for an instance.
+    syntax: az iot ops mgmt-actions show --instance myinstance -g myresourcegroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --no-progress
+    acceptedValues: false, true
+    summary: |-
+      Disable visual representation of work.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_ops_mgmt-actions_disable
+- az_iot_ops_mgmt-actions_enable
+- az_iot_ops_mgmt-actions_execute
+- az_iot_ops_mgmt-actions_show
+metadata:
+  description: Instance management actions configuration.

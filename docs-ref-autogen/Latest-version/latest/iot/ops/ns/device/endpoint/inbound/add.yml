@@ -3,7 +3,7 @@ uid: az_iot_ops_ns_device_endpoint_inbound_add
 name: az iot ops ns device endpoint inbound add
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns device endpoint inbound add** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops ns device endpoint inbound add** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Add inbound endpoints to devices in Device Registry namespaces.
 status: GA
@@ -244,7 +244,10 @@ directCommands:
                                                    --instance
                                                    --name
                                                    --resource-group
+                                                   [--al --asset-level]
                                                    [--replace {false, true}]
+                                                   [--tf --topic-filter]
+                                                   [--tmp --topic-mapping-prefix]
                                                    [--version]
   examples:
   - summary: |-
@@ -272,11 +275,24 @@ directCommands:
     summary: |-
       The resource group of the Azure IoT Operations instance.
   optionalParameters:
+  - name: --al --asset-level
+    defaultValue: "1"
+    summary: |-
+      Asset level for topic-based asset identification.
+    groupName: MQTT Configuration Arguments
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       Replace the endpoint if another endpoint with the same name is present already.
+  - name: --tf --topic-filter
+    summary: |-
+      Topic filter for the MQTT endpoint.
+    groupName: MQTT Configuration Arguments
+  - name: --tmp --topic-mapping-prefix
+    summary: |-
+      Topic mapping prefix for the MQTT endpoint.
+    groupName: MQTT Configuration Arguments
   - name: --version
     summary: |-
       Endpoint version. If not provided, the version is automatically retrieved from the connector template matching this endpoint type (if one exists). The endpoint version is required for connector pods to be created - without it, devices will not have associated connector pods even if a connector template is deployed.
@@ -323,6 +339,7 @@ directCommands:
                                                     --resource-group
                                                     [--accept-invalid-certificates --aic {false, true}]
                                                     [--accept-invalid-hostnames --aih {false, true}]
+                                                    [--fallback-username-token --fut {false, true}]
                                                     [--pass-ref --password-ref]
                                                     [--replace {false, true}]
                                                     [--user-ref --username-ref]
@@ -370,6 +387,12 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Accept invalid hostnames in certificates.
+    groupName: ONVIF Configuration Arguments
+  - name: --fallback-username-token --fut
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Fallback to username token authentication if more secure methods are unavailable.
     groupName: ONVIF Configuration Arguments
   - name: --pass-ref --password-ref
     summary: |-
@@ -447,6 +470,7 @@ directCommands:
                                                     [--session-tracing --str {false, true}]
                                                     [--slt --subscription-lifetime]
                                                     [--smi --subscription-max-items]
+                                                    [--spidss --sync-props-into-dss {false, true}]
                                                     [--user-ref --username-ref]
                                                     [--version]
   examples:
@@ -465,6 +489,9 @@ directCommands:
   - summary: |-
       Add an OPC UA endpoint with security settings and asset discovery enabled
     syntax: az iot ops ns device endpoint inbound add opcua --device mydevice --instance myInstance -g myInstanceResourceGroup --name myOPCUAEndpoint --endpoint-address "opc.tcp://192.168.1.100:4840" --security-policy "Basic256Sha256" --security-mode "SignAndEncrypt" --run-asset-discovery
+  - summary: |-
+      Add an OPC UA endpoint with asset discovery and property sync to state store enabled
+    syntax: az iot ops ns device endpoint inbound add opcua --device mydevice --instance myInstance -g myInstanceResourceGroup --name myOPCUAEndpoint --endpoint-address "opc.tcp://192.168.1.100:4840" --run-asset-discovery --sync-props-into-dss
   requiredParameters:
   - isRequired: true
     name: --address --endpoint-address
@@ -584,6 +611,12 @@ directCommands:
     summary: |-
       Maximum number of items in subscription.
     groupName: Subscription Arguments
+  - name: --spidss --sync-props-into-dss
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Sync OPC UA properties into the state store.
+    groupName: Configuration Arguments
   - name: --user-ref --username-ref
     summary: |-
       Reference for the username used in authentication.
