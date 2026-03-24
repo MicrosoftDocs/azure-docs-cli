@@ -3,7 +3,7 @@ uid: az_iot_ops_ns_asset_opcua
 name: az iot ops ns asset opcua
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage namespaced assets that point to OPC UA device endpoints.
 description: |-
@@ -32,14 +32,18 @@ directCommands:
                                      [--dataset-publish-int --dspi]
                                      [--dataset-queue-size --dsqs]
                                      [--dataset-sampling-int --dssi]
+                                     [--dataset-start-inst --dss]
                                      [--description]
                                      [--disable {false, true}]
                                      [--display-name --dn]
                                      [--doc-uri --documentation-uri]
                                      [--eid --external-asset-id]
                                      [--evd --event-dest]
+                                     [--event-filter-clause --evf]
+                                     [--event-filter-type --evft]
                                      [--event-publish-int --evpi]
                                      [--event-queue-size --evqs]
+                                     [--event-start-inst --evs]
                                      [--hardware-revision --hw-rev]
                                      [--manufacturer]
                                      [--manufacturer-uri --mfr-uri]
@@ -61,6 +65,12 @@ directCommands:
   - summary: |-
       Create an OPC UA asset with MQTT destinations for datasets and events
     syntax: az iot ops ns asset opcua create --name myopcuaasset --instance myInstance -g myInstanceResourceGroup --device myOpcuaDevice --endpoint myOpcuaEndpoint --dataset-dest topic="factory/opcua/data" retain=Keep qos=Qos1 ttl=3600 --event-dest topic="factory/opcua/events" retain=Never qos=Qos1 ttl=3600
+  - summary: |-
+      Create an OPC UA asset with start instances for datasets and events
+    syntax: az iot ops ns asset opcua create --name myopcuaasset --instance myInstance -g myInstanceResourceGroup --device myOpcuaDevice --endpoint myOpcuaEndpoint --dataset-start-inst "ns=2;i=1001" --event-start-inst "ns=3;i=3001"
+  - summary: |-
+      Create an OPC UA asset with event filter configuration
+    syntax: az iot ops ns asset opcua create --name myopcuaasset --instance myInstance -g myInstanceResourceGroup --device myOpcuaDevice --endpoint myOpcuaEndpoint --event-filter-type "ns=2;i=5001" --event-filter-clause path="/EventType" type="ns=2;i=5001"
   requiredParameters:
   - isRequired: true
     name: --device -d
@@ -111,6 +121,10 @@ directCommands:
     summary: |-
       Sampling interval for datasets in milliseconds. Minimum: -1.
     groupName: Default Dataset Arguments
+  - name: --dataset-start-inst --dss
+    summary: |-
+      Start instance for datasets.
+    groupName: Default Dataset Arguments
   - name: --description
     summary: |-
       Description of the asset.
@@ -136,6 +150,14 @@ directCommands:
     summary: |-
       Key=value pairs representing the destination for events. Allowed arguments include: `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
     groupName: Default Event Arguments
+  - name: --event-filter-clause --evf
+    summary: |-
+      Space-separated key=value pairs for event filter clauses. Allowed keys are `path` (required), `type`, and `field`. This parameter can be specified multiple times to add multiple clauses.
+    groupName: Default Event Arguments
+  - name: --event-filter-type --evft
+    summary: |-
+      Filter type definition ID for the default event configuration.
+    groupName: Default Event Arguments
   - name: --event-publish-int --evpi
     summary: |-
       Publishing interval for events in milliseconds. Minimum: -1.
@@ -143,6 +165,10 @@ directCommands:
   - name: --event-queue-size --evqs
     summary: |-
       Queue size for events. Minimum: 0.
+    groupName: Default Event Arguments
+  - name: --event-start-inst --evs
+    summary: |-
+      Start instance for events.
     groupName: Default Event Arguments
   - name: --hardware-revision --hw-rev
     summary: |-
@@ -221,14 +247,18 @@ directCommands:
                                      [--dataset-publish-int --dspi]
                                      [--dataset-queue-size --dsqs]
                                      [--dataset-sampling-int --dssi]
+                                     [--dataset-start-inst --dss]
                                      [--description]
                                      [--disable {false, true}]
                                      [--display-name --dn]
                                      [--doc-uri --documentation-uri]
                                      [--eid --external-asset-id]
                                      [--evd --event-dest]
+                                     [--event-filter-clause --evf]
+                                     [--event-filter-type --evft]
                                      [--event-publish-int --evpi]
                                      [--event-queue-size --evqs]
+                                     [--event-start-inst --evs]
                                      [--hardware-revision --hw-rev]
                                      [--manufacturer]
                                      [--manufacturer-uri --mfr-uri]
@@ -253,6 +283,9 @@ directCommands:
   - summary: |-
       Update an OPC UA asset's metadata and attributes
     syntax: az iot ops ns asset opcua update --name myopcuaasset --instance myInstance -g myInstanceResourceGroup --manufacturer "Automation Corp" --model "PLC-2000" --serial-number "PLC87654" --attribute location=factory-floor zone="production line"
+  - summary: |-
+      Update an OPC UA asset's start instances for datasets and events
+    syntax: az iot ops ns asset opcua update --name myopcuaasset --instance myInstance -g myInstanceResourceGroup --dataset-start-inst "ns=2;i=1001" --event-start-inst "ns=3;i=3001"
   requiredParameters:
   - isRequired: true
     name: --instance -i
@@ -295,6 +328,10 @@ directCommands:
     summary: |-
       Sampling interval for datasets in milliseconds. Minimum: -1.
     groupName: Default Dataset Arguments
+  - name: --dataset-start-inst --dss
+    summary: |-
+      Start instance for datasets.
+    groupName: Default Dataset Arguments
   - name: --description
     summary: |-
       Description of the asset.
@@ -320,6 +357,14 @@ directCommands:
     summary: |-
       Key=value pairs representing the destination for events. Allowed arguments include: `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
     groupName: Default Event Arguments
+  - name: --event-filter-clause --evf
+    summary: |-
+      Space-separated key=value pairs for event filter clauses. Allowed keys are `path` (required), `type`, and `field`. This parameter can be specified multiple times to add multiple clauses.
+    groupName: Default Event Arguments
+  - name: --event-filter-type --evft
+    summary: |-
+      Filter type definition ID for the default event configuration.
+    groupName: Default Event Arguments
   - name: --event-publish-int --evpi
     summary: |-
       Publishing interval for events in milliseconds. Minimum: -1.
@@ -327,6 +372,10 @@ directCommands:
   - name: --event-queue-size --evqs
     summary: |-
       Queue size for events. Minimum: 0.
+    groupName: Default Event Arguments
+  - name: --event-start-inst --evs
+    summary: |-
+      Start instance for events.
     groupName: Default Event Arguments
   - name: --hardware-revision --hw-rev
     summary: |-
@@ -390,26 +439,42 @@ commands:
 - az_iot_ops_ns_asset_opcua_create
 - az_iot_ops_ns_asset_opcua_datapoint
 - az_iot_ops_ns_asset_opcua_datapoint_add
+- az_iot_ops_ns_asset_opcua_datapoint_export
+- az_iot_ops_ns_asset_opcua_datapoint_import
 - az_iot_ops_ns_asset_opcua_datapoint_list
 - az_iot_ops_ns_asset_opcua_datapoint_remove
 - az_iot_ops_ns_asset_opcua_dataset
 - az_iot_ops_ns_asset_opcua_dataset_add
+- az_iot_ops_ns_asset_opcua_dataset_export
+- az_iot_ops_ns_asset_opcua_dataset_import
 - az_iot_ops_ns_asset_opcua_dataset_list
 - az_iot_ops_ns_asset_opcua_dataset_remove
 - az_iot_ops_ns_asset_opcua_dataset_show
 - az_iot_ops_ns_asset_opcua_dataset_update
+- az_iot_ops_ns_asset_opcua_event
 - az_iot_ops_ns_asset_opcua_event-group
 - az_iot_ops_ns_asset_opcua_event-group_add
+- az_iot_ops_ns_asset_opcua_event-group_export
+- az_iot_ops_ns_asset_opcua_event-group_import
 - az_iot_ops_ns_asset_opcua_event-group_list
 - az_iot_ops_ns_asset_opcua_event-group_remove
 - az_iot_ops_ns_asset_opcua_event-group_show
 - az_iot_ops_ns_asset_opcua_event-group_update
+- az_iot_ops_ns_asset_opcua_event_add
+- az_iot_ops_ns_asset_opcua_event_export
+- az_iot_ops_ns_asset_opcua_event_import
+- az_iot_ops_ns_asset_opcua_event_list
+- az_iot_ops_ns_asset_opcua_event_remove
 - az_iot_ops_ns_asset_opcua_mgmt-action
 - az_iot_ops_ns_asset_opcua_mgmt-action_add
+- az_iot_ops_ns_asset_opcua_mgmt-action_export
+- az_iot_ops_ns_asset_opcua_mgmt-action_import
 - az_iot_ops_ns_asset_opcua_mgmt-action_list
 - az_iot_ops_ns_asset_opcua_mgmt-action_remove
 - az_iot_ops_ns_asset_opcua_mgmt-group
 - az_iot_ops_ns_asset_opcua_mgmt-group_add
+- az_iot_ops_ns_asset_opcua_mgmt-group_export
+- az_iot_ops_ns_asset_opcua_mgmt-group_import
 - az_iot_ops_ns_asset_opcua_mgmt-group_list
 - az_iot_ops_ns_asset_opcua_mgmt-group_remove
 - az_iot_ops_ns_asset_opcua_mgmt-group_show

@@ -1,0 +1,386 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_ns_asset_opcua_event
+name: az iot ops ns asset opcua event
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua event** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage individual events for OPC UA asset event groups in Device Registry namespaces.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_ns_asset_opcua_event_add
+  name: az iot ops ns asset opcua event add
+  summary: |-
+    Add an event to an OPC UA asset event group in a Device Registry namespace.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops ns asset opcua event add --asset
+                                        --eg --event-group
+                                        --instance
+                                        --name
+                                        --resource-group
+                                        [--data-source --ds]
+                                        [--fc --filter-clause]
+                                        [--filter-type --ft]
+                                        [--qs --queue-size]
+                                        [--replace {false, true}]
+                                        [--sampling-interval --si]
+  examples:
+  - summary: |-
+      Add a basic OPC UA event
+    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity"
+  - summary: |-
+      Add an OPC UA event with sampling interval and queue size
+    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name pressure --data-source "alarm.pressure" --sampling-int 500 --queue-size 5
+  - summary: |-
+      Replace an OPC UA event with same name
+    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity.updated" --replace
+  - summary: |-
+      Add an OPC UA event with filter type and filter clauses
+    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name criticalAlarm --data-source "alarm.critical" --filter-type "ns=2;i=5001" --filter-clause path="/EventType" type="ns=2;i=5001"
+  requiredParameters:
+  - isRequired: true
+    name: --asset -a
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --eg --event-group
+    summary: |-
+      Event name.
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      The name of the Azure IoT Operations instance.
+  - isRequired: true
+    name: --name
+    summary: |-
+      Event name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The resource group of the Azure IoT Operations instance.
+  optionalParameters:
+  - name: --data-source --ds
+    summary: |-
+      Data source for the event.
+  - name: --fc --filter-clause
+    summary: |-
+      Space-separated key=value pairs for event filter clauses. Allowed keys are `path` (required), `type`, and `field`. This parameter can be specified multiple times to add multiple clauses.
+  - name: --filter-type --ft
+    summary: |-
+      Filter type definition ID for the event.
+  - name: --qs --queue-size
+    summary: |-
+      Queue size.
+  - name: --replace
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Replace the event if another event with the same name is already present.
+  - name: --sampling-interval --si
+    summary: |-
+      Sampling interval in milliseconds.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_ns_asset_opcua_event_export
+  name: az iot ops ns asset opcua event export
+  summary: |-
+    Export events to file.
+  description: |-
+    Export events from an event-group to JSON, YAML, or CSV format.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops ns asset opcua event export --asset
+                                           --eg --event-group
+                                           --instance
+                                           --resource-group
+                                           [--format {csv, json, yaml}]
+                                           [--od --output-dir]
+                                           [--replace {false, true}]
+  requiredParameters:
+  - isRequired: true
+    name: --asset -a
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --eg --event-group
+    summary: |-
+      Event-group name.
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      The name of the Azure IoT Operations instance.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The resource group of the Azure IoT Operations instance.
+  optionalParameters:
+  - name: --format -f
+    defaultValue: json
+    acceptedValues: csv, json, yaml
+    summary: |-
+      Export file format.
+  - name: --od --output-dir
+    defaultValue: .
+    summary: |-
+      Output directory for export.
+  - name: --replace
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Replace the event if another event with the same name is already present.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_ns_asset_opcua_event_import
+  name: az iot ops ns asset opcua event import
+  summary: |-
+    Import events from file.
+  description: |-
+    Import events from JSON, YAML, or CSV file. Use --replace to merge with overwrite.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops ns asset opcua event import --asset
+                                           --eg --event-group
+                                           --if --input-file
+                                           --instance
+                                           --resource-group
+                                           [--replace {false, true}]
+  requiredParameters:
+  - isRequired: true
+    name: --asset -a
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --eg --event-group
+    summary: |-
+      Event-group name.
+  - isRequired: true
+    name: --if --input-file
+    summary: |-
+      Path to import file (JSON, YAML, or CSV).
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      The name of the Azure IoT Operations instance.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The resource group of the Azure IoT Operations instance.
+  optionalParameters:
+  - name: --replace
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Replace the event if another event with the same name is already present.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_ns_asset_opcua_event_list
+  name: az iot ops ns asset opcua event list
+  summary: |-
+    List events for an OPC UA asset event group in a Device Registry namespace.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops ns asset opcua event list --asset
+                                         --eg --event-group
+                                         --instance
+                                         --resource-group
+  examples:
+  - summary: |-
+      List all events for an event group
+    syntax: az iot ops ns asset opcua event list --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup
+  requiredParameters:
+  - isRequired: true
+    name: --asset -a
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --eg --event-group
+    summary: |-
+      Event name.
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      The name of the Azure IoT Operations instance.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The resource group of the Azure IoT Operations instance.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_ns_asset_opcua_event_remove
+  name: az iot ops ns asset opcua event remove
+  summary: |-
+    Remove an event from an OPC UA asset event group in a Device Registry namespace.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot ops ns asset opcua event remove --asset
+                                           --eg --event-group
+                                           --instance
+                                           --name
+                                           --resource-group
+  examples:
+  - summary: |-
+      Remove an event from an event group
+    syntax: az iot ops ns asset opcua event remove --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity
+  requiredParameters:
+  - isRequired: true
+    name: --asset -a
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --eg --event-group
+    summary: |-
+      Event name.
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      The name of the Azure IoT Operations instance.
+  - isRequired: true
+    name: --name
+    summary: |-
+      Event name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The resource group of the Azure IoT Operations instance.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_ops_ns_asset_opcua_event_add
+- az_iot_ops_ns_asset_opcua_event_export
+- az_iot_ops_ns_asset_opcua_event_import
+- az_iot_ops_ns_asset_opcua_event_list
+- az_iot_ops_ns_asset_opcua_event_remove
+metadata:
+  description: Manage individual events for OPC UA asset event groups in Device Registry namespaces.
