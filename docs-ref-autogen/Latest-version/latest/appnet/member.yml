@@ -22,12 +22,14 @@ directCommands:
   syntax: >-
     az appnet member join [--appnet-name]
                           [--cluster-type {AKS}]
+                          [--east-west-gateway {External, Internal}]
                           [--ids]
                           [--member-location]
                           [--member-name]
                           [--member-resource-id]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                          [--release-channel]
+                          [--private-connect-subnet]
+                          [--release-channel {Rapid, Stable}]
                           [--resource-group]
                           [--subscription]
                           [--tags]
@@ -51,6 +53,12 @@ directCommands:
     summary: |-
       Cluster type.
     groupName: Properties Arguments
+  - name: --east-west-gateway
+    defaultValue: Internal
+    acceptedValues: External, Internal
+    summary: |-
+      East-West gateway visibility.
+    groupName: Connectivity Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -71,10 +79,15 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --release-channel
+  - name: --private-connect-subnet
     summary: |-
-      Release channel  Allowed values: Rapid, Stable.
-    groupName: FullyManagedUpgradeProfile Arguments
+      Delegated Subnet to AppLink.
+    groupName: Connectivity Arguments
+  - name: --release-channel
+    acceptedValues: Rapid, Stable
+    summary: |-
+      Release channel.
+    groupName: Upgrade Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -92,11 +105,11 @@ directCommands:
     acceptedValues: FullyManaged, SelfManaged
     summary: |-
       Upgrade mode.
-    groupName: Properties Arguments
+    groupName: Upgrade Arguments
   - name: --version
     summary: |-
-      Application Network version.
-    groupName: SelfManagedUpgradeProfile Arguments
+      Istio version.
+    groupName: Upgrade Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -329,6 +342,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az appnet member update [--appnet-name]
+                            [--east-west-gateway {External, Internal}]
                             [--ids]
                             [--member-name]
                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -349,6 +363,11 @@ directCommands:
     summary: |-
       The name of the Application Network.
     groupName: Resource Id Arguments
+  - name: --east-west-gateway
+    acceptedValues: External, Internal
+    summary: |-
+      East-West gateway visibility.
+    groupName: Connectivity Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -365,7 +384,7 @@ directCommands:
     acceptedValues: Rapid, Stable
     summary: |-
       Release channel.
-    groupName: FullyManagedUpgradeProfile Arguments
+    groupName: Upgrade Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -380,8 +399,8 @@ directCommands:
     groupName: Properties Arguments
   - name: --version
     summary: |-
-      Application Network version.
-    groupName: SelfManagedUpgradeProfile Arguments
+      Istio version.
+    groupName: Upgrade Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
