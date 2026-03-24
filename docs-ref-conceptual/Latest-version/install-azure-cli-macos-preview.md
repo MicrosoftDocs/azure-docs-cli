@@ -10,8 +10,7 @@ keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos
 
 # Install Azure CLI on macOS using Homebrew Cask or Tarball preview
 
-Azure CLI is a cross-platform command-line tool used to manage Azure resources from the command line
-or through scripts.
+Azure CLI is a cross-platform command-line tool for managing Azure resources interactively or through scripts.
 
 On macOS, Azure CLI is transitioning to a new installation model that provides greater flexibility
 across environments. This model includes:
@@ -122,7 +121,7 @@ This method is commonly used in enterprise, regulated, or air-gapped environment
 - macOS (Apple Silicon or Intel)
 - Python 3.13 installed using your preferred method (for example, `python.org` or `pyenv`)
 
-## Determine your architecture
+### Determine your architecture
 
 Before downloading the Tarball, determine your system architecture:
 
@@ -174,10 +173,8 @@ export AZ_PYTHON="/path_to_python"
 export PATH="/target_directory_path/bin:$PATH"
 ```
 
-Reload your shell configuration:
+Reload the shell configuration file you updated:
 
-```bash
-source ~/.zshrc
 ```
 
 ### Verify installation
@@ -195,7 +192,7 @@ existing installation:
 sudo tar -xzf azure-cli-<version>-macos-<arch>.tar.gz -C /target_directory_path
 ```
 
-### Uninstall Azure CLI
+## Uninstall Azure CLI
 
 Remove the installation directory:
 
@@ -209,8 +206,9 @@ Then remove the `AZ_PYTHON` and `PATH` entries from your shell profile.
 
 ## Troubleshooting
 
-If you encounter a problem when installing the Azure CLI through Homebrew, here are some common
-errors. If you experience a problem not covered here, [file an issue on GitHub][04].
+If you encounter a problem when installing or using the Azure CLI with either Homebrew Cask or the
+Tarball method, here are some common errors (many of which are specific to Homebrew). If you
+experience a problem not covered here, [file an issue on GitHub][04].
 
 ### Azure CLI not found
 
@@ -222,9 +220,9 @@ echo $PATH
 
 ### Completion isn't working
 
-The Homebrew formula of Azure CLI installs a completion file named `az` in the Homebrew-managed
-completions directory (default location is `/usr/local/etc/bash_completion.d/`). To enable
-completion, follow [Homebrew's instructions][05].
+The Azure CLI Homebrew installation (whether via formula or cask) provides a completion file named
+`az` in Homebrew's managed completions directory. To enable completion, follow
+[Homebrew's instructions][05].
 
 For Zsh, add the following two lines to the bottom of your `.zshrc` file, then save and reload your
 Zsh profile.
