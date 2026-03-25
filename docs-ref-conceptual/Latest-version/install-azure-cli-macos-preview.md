@@ -25,6 +25,12 @@ future release.
 > [!NOTE]
 > For the current stable installation guidance, see [Install Azure CLI on macOS][01].
 
+Why use Homebrew Cask?
+
+- Simplest install and upgrade experience
+- Automatically manages dependencies
+- Aligns with the future supported installation model
+
 ## What is changing
 
 Azure CLI installation on macOS is moving away from the Homebrew formula to a more maintainable and
@@ -63,8 +69,8 @@ It handles installation, upgrades, and removal using standard package management
 - macOS (Apple Silicon or Intel)
 - [Homebrew][02] installed
 
-If Azure CLI is already installed using the Homebrew formula, uninstall it before proceeding to
-avoid conflicts:
+If Azure CLI is already installed using the Homebrew `brew install azure-cli` formula, uninstall it
+before proceeding to avoid conflicts:
 
 ```bash
 brew uninstall azure-cli
@@ -122,45 +128,46 @@ This method is commonly used in enterprise, regulated, or air-gapped environment
 - macOS (Apple Silicon or Intel)
 - Python 3.13 installed using your preferred method (for example, `python.org` or `pyenv`)
 
-## Determine your architecture
+### Download the tarball
 
-Before downloading the Tarball, determine your system architecture:
+On a machine with internet access, you can automatically download the latest Azure CLI tarball for
+your architecture:
 
 ```bash
-uname -m
+ARCH=$(uname -m)
+VER=$(curl -s https://api.github.com/repos/Azure/azure-cli/releases/latest | grep tag_name | cut -d '"' -f4 | sed 's/azure-cli-//')
+curl -L -o az.tar.gz "https://github.com/Azure/azure-cli/releases/download/azure-cli-$VER/azure-cli-$VER-macos-$ARCH.tar.gz"
 ```
 
-- `arm64` - Apple Silicon
-- `x86_64` - Intel
+This script detects your architecture and downloads the latest Azure CLI tarball from the Azure CLI
+releases page.
+
+- `arm64` indicates Apple Silicon
+- `x86_64` indicates Intel
 
 Selecting the correct architecture ensures compatibility and optimal performance.
 
-### Download the Tarball
-
-On a machine with internet access, download the desired Azure CLI release from:
-
-[https://github.com/Azure/azure-cli/releases][03]
-
-Example:
-
-```bash
-# Replace <version> and <arch>
-curl -L -o azure-cli-<version>-macos-<arch>.tar.gz \
-  https://github.com/Azure/azure-cli/releases/download/azure-cli-<version>/azure-cli-<version>-macos-<arch>.tar.gz
-```
-
 > [!TIP]
-> For offline environments, transfer the Tarball to the target system using a secure method such as
-> removable media or secure file transfer.
+> For offline environments, run this command on a machine with internet access, then transfer the
+> downloaded tarball to the target system.
 
 ### Extract to installation directory
 
 Choose a directory where Azure CLI should be installed:
 
-```bash
-sudo mkdir -p /target_directory_path
-sudo tar -xzf azure-cli-<version>-macos-<arch>.tar.gz -C /target_directory_path
-```
+- User-level install (recommended):
+
+  ```bash
+  mkdir -p $HOME/lib/azure-cli
+  tar -xzf az.tar.gz -C $HOME/lib/azure-cli
+  ```
+
+- System-level install:
+
+  ```bash
+  sudo mkdir -p /opt/azure-cli
+  sudo tar -xzf az.tar.gz -C /opt/azure-cli
+  ```
 
 ### Configure environment variables
 
@@ -192,7 +199,7 @@ To upgrade Azure CLI in an offline environment, download a newer Tarball and ext
 existing installation:
 
 ```bash
-sudo tar -xzf azure-cli-<version>-macos-<arch>.tar.gz -C /target_directory_path
+sudo tar -xzf az.tar.gz -C /target_directory_path
 ```
 
 ### Uninstall Azure CLI
