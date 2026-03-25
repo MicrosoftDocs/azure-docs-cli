@@ -10,8 +10,7 @@ keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos
 
 # Install Azure CLI on macOS using Homebrew Cask or Tarball preview
 
-Azure CLI is a cross-platform command-line tool used to manage Azure resources from the command line
-or through scripts.
+Azure CLI is a cross-platform command-line tool for managing Azure resources interactively or through scripts.
 
 On macOS, Azure CLI is transitioning to a new installation model that provides greater flexibility
 across environments. This model includes:
@@ -181,10 +180,8 @@ export AZ_PYTHON="/path_to_python"
 export PATH="/target_directory_path/bin:$PATH"
 ```
 
-Reload your shell configuration:
+Reload the shell configuration file you updated:
 
-```bash
-source ~/.zshrc
 ```
 
 ### Verify installation
@@ -202,7 +199,7 @@ existing installation:
 sudo tar -xzf az.tar.gz -C /target_directory_path
 ```
 
-### Uninstall Azure CLI
+## Uninstall Azure CLI
 
 Remove the installation directory:
 
@@ -216,8 +213,9 @@ Then remove the `AZ_PYTHON` and `PATH` entries from your shell profile.
 
 ## Troubleshooting
 
-If you encounter a problem when installing the Azure CLI through Homebrew, here are some common
-errors. If you experience a problem not covered here, [file an issue on GitHub][04].
+If you encounter a problem when installing or using the Azure CLI with either Homebrew Cask or the
+Tarball method, here are some common errors (many of which are specific to Homebrew). If you
+experience a problem not covered here, [file an issue on GitHub][03].
 
 ### Azure CLI not found
 
@@ -229,9 +227,9 @@ echo $PATH
 
 ### Completion isn't working
 
-The Homebrew formula of Azure CLI installs a completion file named `az` in the Homebrew-managed
-completions directory (default location is `/usr/local/etc/bash_completion.d/`). To enable
-completion, follow [Homebrew's instructions][05].
+The Azure CLI Homebrew installation (whether via formula or cask) provides a completion file named
+`az` in Homebrew's managed completions directory. To enable completion, follow
+[Homebrew's instructions][04].
 
 For Zsh, add the following two lines to the bottom of your `.zshrc` file, then save and reload your
 Zsh profile.
@@ -255,7 +253,7 @@ brew link --overwrite python@3.13
 ### Proxy blocks connection
 
 You might be unable to get resources from Homebrew unless you configure it to use your proxy. Follow
-the [Homebrew proxy configuration instructions][06].
+the [Homebrew proxy configuration instructions][05].
 
 > [!IMPORTANT]
 > If you are behind a proxy, `HTTP_PROXY` and `HTTPS_PROXY` must be set to connect to Azure services
@@ -275,14 +273,13 @@ Now that you installed the Azure CLI on macOS, take a short tour of its features
 commands.
 
 > [!div class="nextstepaction"]
-> [Get started with the Azure CLI][07]
+> [Get started with the Azure CLI][06]
 
 <!-- link references -->
 
 [01]: install-azure-cli-macos.md
 [02]: https://brew.sh/
-[03]: https://github.com/Azure/azure-cli/releases
-[04]: https://github.com/Azure/azure-cli/issues
-[05]: https://docs.brew.sh/Shell-Completion
-[06]: https://docs.brew.sh/Manpage#using-homebrew-behind-a-proxy
-[07]: get-started-with-azure-cli.md
+[03]: https://github.com/Azure/azure-cli/issues
+[04]: https://docs.brew.sh/Shell-Completion
+[05]: https://docs.brew.sh/Manpage#using-homebrew-behind-a-proxy
+[06]: get-started-with-azure-cli.md
