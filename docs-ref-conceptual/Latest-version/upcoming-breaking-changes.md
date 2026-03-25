@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 03/17/2026
+ms.date: 03/25/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -13,6 +13,18 @@ ms.custom: devx-track-azurecli
 The breaking changes listed in this section are planned for the next major release of the Azure CLI unless otherwise noted. Per our [Support lifecycle](./azure-cli-support-lifecycle.md), breaking changes in Azure Core CLI reference groups occur twice a year.
 
 ## acr
+
+### `acr replication create`
+
+[Link to acr replication reference group](/cli/azure/acr/replication)
+
+- '--region-endpoint-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--global-endpoint-routing' instead.
+
+### `acr replication update`
+
+[Link to acr replication reference group](/cli/azure/acr/replication)
+
+- '--region-endpoint-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--global-endpoint-routing' instead.
 
 ### `acr config content-trust update`
 
