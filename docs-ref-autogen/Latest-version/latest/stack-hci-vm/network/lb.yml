@@ -17,47 +17,29 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az stack-hci-vm network lb create --custom-location
-                                      --fip-cfg-names --frontend-ip-config-names
                                       --name
                                       --resource-group
-                                      [--backend-pool-backend-addresses --bp-addrs]
-                                      [--backend-pool-logical-network-ids --bp-lnet-ids]
-                                      [--backend-pool-names]
-                                      [--backend-pool-virtual-network-ids --bp-vnet-ids]
-                                      [--fip-alloc --frontend-ip-allocation-methods {Dynamic, Static}]
-                                      [--fip-pip-ids --frontend-ip-public-ip-ids]
-                                      [--fip-priv-addrs --frontend-ip-private-addresses]
-                                      [--frontend-ip-subnet-ids]
-                                      [--lb-rule-backend-pool-names --lbr-bp-names]
-                                      [--lb-rule-backend-ports]
-                                      [--lb-rule-frontend-ip-config-names --lbr-fip-cfg-names]
-                                      [--lb-rule-frontend-ports]
-                                      [--lb-rule-idle-timeouts]
-                                      [--lb-rule-load-distributions --lbr-load-dist {Default, SourceIP, SourceIPProtocol}]
-                                      [--lb-rule-names]
-                                      [--lb-rule-probe-names]
-                                      [--lb-rule-protocols {All, Tcp, Udp}]
+                                      [--backend-pool]
+                                      [--frontend-ip]
+                                      [--lb-rule]
                                       [--location]
-                                      [--probe-intervals]
-                                      [--probe-names]
-                                      [--probe-num-probes]
-                                      [--probe-ports]
-                                      [--probe-protocols {Http, Tcp}]
-                                      [--probe-request-paths]
+                                      [--probe]
                                       [--tags]
   examples:
   - summary: |-
-      CreateLB
-    syntax: az stack-hci-vm network lb create --resource-group "test-rg" --name "test-lb" --location "eastus" --frontend-ip-config-names "fe1" "fe2" --frontend-ip-private-addresses 10.0.0.4 10.0.0.5 --frontend-ip-allocation-methods Static Dynamic --frontend-ip-subnet-ids "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/test-subnet1" "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/test-subnet2" --frontend-ip-public-ip-ids "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip1" "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip2" --backend-pool-names "be1" "be2" --backend-pool-backend-addresses '[{"name":"be1","admin_state":"Up","network_interface_ip_configuration":"/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/networkInterfaces/test-nic1/ipConfigurations/ipconfig1"}]' --backend-pool-virtual-network-ids "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet" --lb-rule-names "rule1" "rule2" --lb-rule-frontend-ip-config-names "fe1" "fe2" --lb-rule-backend-pool-names "be1" "be2" --lb-rule-frontend-ports 80 443 --lb-rule-backend-ports 8080 8443 --lb-rule-protocols Tcp Udp --lb-rule-probe-names "probe1" "probe2" --lb-rule-load-distributions Default SourceIP --lb-rule-idle-timeouts 4 5 --probe-names "probe1" "probe2" --probe-protocols Tcp Tcp --probe-ports 80 443 --probe-request-paths "/" "/health" --probe-intervals 5 5 --probe-num-probes 2 2 --tags env=prod lb=yes --custom-location "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.ExtendedLocation/customLocations/test-location"
+      Create load balancer with dynamic frontend IP
+    syntax: az stack-hci-vm network lb create --resource-group "test-rg" --name "web-lb" --location "eastus" --custom-location "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.ExtendedLocation/customLocations/test-location" --frontend-ip name=web-fe allocation-method=Dynamic subnet-id="/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1"
+  - summary: |-
+      Create load balancer with static frontend IP, backend pool, rule, and probe
+    syntax: az stack-hci-vm network lb create --resource-group "test-rg" --name "complex-lb" --location "eastus" --custom-location "/subscriptions/xxxx/customLocations/test-location" --frontend-ip name=static-fe allocation-method=Static private-ip=10.0.0.5 subnet-id="/subscriptions/xxxx/vnet/subnet1" --backend-pool name=web-pool vnet-id="/subscriptions/xxxx/vnet1" addresses="/subscriptions/xxxx/nic1/ipconfigurations/ipconfig1","/subscriptions/xxxx/nic2/ipconfigurations/ipconfig1" --lb-rule name=http-rule frontend-ip-name=static-fe backend-pool-name=web-pool protocol=Tcp frontend-port=80 backend-port=8080 --probe name=health-probe protocol=Tcp port=80
+  - summary: |-
+      Create load balancer with multiple frontend IPs
+    syntax: az stack-hci-vm network lb create --resource-group "test-rg" --name "multi-fe-lb" --location "eastus" --custom-location "/subscriptions/xxxx/customLocations/test-location" --frontend-ip name=dynamic-fe allocation-method=Dynamic subnet-id="/sub/sn1" --frontend-ip name=static-fe1 allocation-method=Static private-ip=10.0.0.5 subnet-id="/sub/sn2" --frontend-ip name=static-fe2 allocation-method=Static private-ip=10.0.0.6 subnet-id="/sub/sn2"
   requiredParameters:
   - isRequired: true
     name: --custom-location
     summary: |-
       The ID of the custom location.
-  - isRequired: true
-    name: --fip-cfg-names --frontend-ip-config-names
-    summary: |-
-      Names for frontend IP configurations (at least one required).
   - isRequired: true
     name: --name -n
     summary: |-
@@ -67,82 +49,21 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --backend-pool-backend-addresses --bp-addrs
+  - name: --backend-pool
     summary: |-
-      JSON array(s) of backend addresses per pool. Each element should be a JSON array of address objects. Example: '[{"name":"be1","admin_state":"Up","network_interface_ip_configuration":"/subscriptions/.../nic1/ipConfigurations/ipconfig1"}, {"name":"be2","admin_state":"Down","network_interface_ip_configuration":"/subscriptions/.../nic2/ipConfigurations/ipconfig1"}]'.
-  - name: --backend-pool-logical-network-ids --bp-lnet-ids
+      Backend address pool (repeatable). Required: name and addresses=`<nic-ip-config-id>`[,`<nic-ip-config-id>`...]. Optional: vnet-id=`<id>` or lnet-id=`<id>` (exactly one when provided). Example: --backend-pool name=pool1 vnet-id=/sub/vnet1 addresses=/sub/.../nic1/ipConfigurations/ipconfig1,/sub/.../nic2/ipConfigurations/ipconfig2.
+  - name: --frontend-ip
     summary: |-
-      Logical network resource IDs for backend pools.
-  - name: --backend-pool-names
+      Frontend IP configuration (repeatable). Required: name and at least one of subnet-id or public-ip-id. Optional: allocation-method=`<Static|Dynamic>` (defaults to Dynamic) and private-ip=`<ip>` (Static only). Example: --frontend-ip name=fe1 subnet-id=/sub/vnet/sn1.
+  - name: --lb-rule
     summary: |-
-      Names of backend pools to create.
-  - name: --backend-pool-virtual-network-ids --bp-vnet-ids
-    summary: |-
-      Virtual network resource IDs for backend pools.
-  - name: --fip-alloc --frontend-ip-allocation-methods
-    acceptedValues: Dynamic, Static
-    summary: |-
-      IP allocation methods (Static/Dynamic).
-  - name: --fip-pip-ids --frontend-ip-public-ip-ids
-    summary: |-
-      Public IP resource IDs for frontend IP configurations.
-  - name: --fip-priv-addrs --frontend-ip-private-addresses
-    summary: |-
-      Private IP addresses for frontend IP configurations.
-  - name: --frontend-ip-subnet-ids
-    summary: |-
-      Subnet resource IDs for frontend IP configurations.
-  - name: --lb-rule-backend-pool-names --lbr-bp-names
-    summary: |-
-      Backend pool names for rules.
-  - name: --lb-rule-backend-ports
-    summary: |-
-      Backend ports for rules.
-  - name: --lb-rule-frontend-ip-config-names --lbr-fip-cfg-names
-    summary: |-
-      Frontend IP config names for rules.
-  - name: --lb-rule-frontend-ports
-    summary: |-
-      Frontend ports for rules.
-  - name: --lb-rule-idle-timeouts
-    summary: |-
-      Idle timeouts in minutes for rules.
-  - name: --lb-rule-load-distributions --lbr-load-dist
-    acceptedValues: Default, SourceIP, SourceIPProtocol
-    summary: |-
-      Session persistence for rules.
-  - name: --lb-rule-names
-    summary: |-
-      Names for load balancing rules.
-  - name: --lb-rule-probe-names
-    summary: |-
-      Probe names for rules.
-  - name: --lb-rule-protocols
-    acceptedValues: All, Tcp, Udp
-    summary: |-
-      Protocols for rules.
+      Load balancing rule (repeatable). Format: name=`<name>` frontend-ip=`<fe-name>` backend-pool=`<pool-name>` protocol=`<Tcp|Udp>` frontend-port=`<port>` backend-port=`<port>` [probe=`<probe-name>`] [load-distribution=`<policy>`]. Example: --lb-rule name=http frontend-ip=fe1 backend-pool=pool1 protocol=Tcp frontend-port=80 backend-port=8080.
   - name: --location -l
     summary: |-
       If location is not specified, the location of the resource group is used.
-  - name: --probe-intervals
+  - name: --probe
     summary: |-
-      Probe intervals in seconds.
-  - name: --probe-names
-    summary: |-
-      Names for health probes.
-  - name: --probe-num-probes
-    summary: |-
-      Number of consecutive probe failures before marking unhealthy.
-  - name: --probe-ports
-    summary: |-
-      Ports for probes.
-  - name: --probe-protocols
-    acceptedValues: Http, Tcp
-    summary: |-
-      Protocols for probes.
-  - name: --probe-request-paths
-    summary: |-
-      Request paths for HTTP probes.
+      Health probe. Can be specified multiple times. Format: name=`<name>` protocol=`<Tcp|Http>` port=`<port>` [path=`<path>`] [interval=`<secs>`] [threshold=`<count>`]. Note: HTTP probes require path parameter. Example: --probe name=health protocol=Tcp port=80.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -378,9 +299,32 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
+- az_stack-hci-vm_network_lb_backend-pool
+- az_stack-hci-vm_network_lb_backend-pool_add
+- az_stack-hci-vm_network_lb_backend-pool_delete
+- az_stack-hci-vm_network_lb_backend-pool_list
+- az_stack-hci-vm_network_lb_backend-pool_show
+- az_stack-hci-vm_network_lb_backend-pool_update
 - az_stack-hci-vm_network_lb_create
 - az_stack-hci-vm_network_lb_delete
+- az_stack-hci-vm_network_lb_frontend-ip
+- az_stack-hci-vm_network_lb_frontend-ip_add
+- az_stack-hci-vm_network_lb_frontend-ip_delete
+- az_stack-hci-vm_network_lb_frontend-ip_list
+- az_stack-hci-vm_network_lb_frontend-ip_show
+- az_stack-hci-vm_network_lb_lb-rule
+- az_stack-hci-vm_network_lb_lb-rule_add
+- az_stack-hci-vm_network_lb_lb-rule_delete
+- az_stack-hci-vm_network_lb_lb-rule_list
+- az_stack-hci-vm_network_lb_lb-rule_show
+- az_stack-hci-vm_network_lb_lb-rule_update
 - az_stack-hci-vm_network_lb_list
+- az_stack-hci-vm_network_lb_probe
+- az_stack-hci-vm_network_lb_probe_add
+- az_stack-hci-vm_network_lb_probe_delete
+- az_stack-hci-vm_network_lb_probe_list
+- az_stack-hci-vm_network_lb_probe_show
+- az_stack-hci-vm_network_lb_probe_update
 - az_stack-hci-vm_network_lb_show
 - az_stack-hci-vm_network_lb_update
 metadata:
