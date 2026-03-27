@@ -13,18 +13,54 @@ directCommands:
   name: az managedcleanroom frontend analytics auditevent list
   summary: |-
     List audit events for a collaboration.
+  description: |-
+    Retrieves audit events for a collaboration with optional filtering.
+
+    Filter options:
+    - scope: Filter by audit event scope (e.g., 'dataset', 'query', 'collaboration')
+    - from_seqno: Starting sequence number for event range
+    - to_seqno: Ending sequence number for event range.
   status: GA
   sourceType: Extension
-  syntax: az managedcleanroom frontend analytics auditevent list --collaboration-id
+  syntax: >-
+    az managedcleanroom frontend analytics auditevent list --collaboration-id
+                                                           [--api-version {2026-03-01-preview}]
+                                                           [--from-seqno]
+                                                           [--scope]
+                                                           [--to-seqno]
   examples:
   - summary: |-
-      List audit events
+      List all audit events
     syntax: az managedcleanroom frontend analytics auditevent list -c <collaboration-id>
+  - summary: |-
+      List audit events for dataset scope
+    syntax: az managedcleanroom frontend analytics auditevent list               --collaboration-id <cid>               --scope dataset
+  - summary: |-
+      List audit events in sequence number range
+    syntax: az managedcleanroom frontend analytics auditevent list               --collaboration-id <cid>               --from-seqno 100               --to-seqno 200
+  - summary: |-
+      List dataset audit events in specific range
+    syntax: az managedcleanroom frontend analytics auditevent list               -c <cid>               --scope dataset               --from-seqno 50               --to-seqno 150
   requiredParameters:
   - isRequired: true
     name: --collaboration-id -c
     summary: |-
       Collaboration identifier.
+  optionalParameters:
+  - name: --api-version
+    defaultValue: 2026-03-01-preview
+    acceptedValues: 2026-03-01-preview
+    summary: |-
+      API version to use for this request. Default: 2026-03-01-preview.
+  - name: --from-seqno
+    summary: |-
+      Optional starting sequence number.
+  - name: --scope
+    summary: |-
+      Optional scope filter.
+  - name: --to-seqno
+    summary: |-
+      Optional ending sequence number.
   globalParameters:
   - name: --debug
     defaultValue: "False"
