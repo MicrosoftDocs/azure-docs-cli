@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/26/2026
+ms.date: 03/29/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -145,7 +145,7 @@ You will be prompted to install an extension on first use.
 |[logic](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic) | 2.55.0 | Microsoft Azure Command-Line Tools Logic Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic/HISTORY.rst) |
 |[maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) | 2.67.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Preview | [1.7.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance/HISTORY.rst) |
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
-|[managedcleanroom](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom) | 2.75.0 | Microsoft Azure Command-Line Tools Managedcleanroom Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom/HISTORY.rst) |
+|[managedcleanroom](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom) | 2.75.0 | Microsoft Azure Command-Line Tools Managedcleanroom Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom/HISTORY.rst) |
 |[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2025-07-15 API version. | GA | [9.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner) | 2.61.0 | Support for Management Partner preview | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner/HISTORY.rst) |
 |[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.70.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
@@ -210,7 +210,7 @@ You will be prompted to install an extension on first use.
 |[storage-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover) | 2.75.0 | Microsoft Azure Command-Line Tools StorageMover Extension. | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover/HISTORY.rst) |
 |[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.70.0 | Provides a preview for upcoming storage features. | Preview | [1.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/main/src/storagesync) | 2.55.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storagesync/HISTORY.rst) |
-|[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.75.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
+|[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.75.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
 |[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.61.0 | Microsoft Azure Command-Line Tools Subscription  Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
 |[support](https://github.com/azure/azure-cli-extensions/tree/main/src/support) | 2.57.0 | Microsoft Azure Command-Line Tools Support Extension | GA | [2.0.1](https://github.com/azure/azure-cli-extensions/tree/main/src/support) |
 |[terraform](https://github.com/Azure/azure-cli-extensions/tree/main/src/terraform) | 2.61.0 | Microsoft Azure Command-Line Tools Terraform Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/terraform/HISTORY.rst) |
