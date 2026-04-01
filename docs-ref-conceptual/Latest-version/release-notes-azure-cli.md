@@ -1,13 +1,104 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 03/03/2026
+ms.date: 04/07/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## April 07, 2026
+
+Version 2.85.0
+
+### ACR
+
+* `az acr network-rule add`: Add example of adding a rule to allow access for a specific virtual network
+* `az acr replication create/update`: Add `--global-endpoint-routing` parameter and redirect `--region-endpoint-enabled` to it to avoid confusion with registry-level `--regional-endpoints`
+* `az acr cache create/update`: Add `--identity` parameter to support using user-assigned managed identity for cache rules
+
+### AKS
+
+* Fix #32957: `az aks get-credentials`: Surface user-friendly error instead of unexpected traceback
+* `az aks create/update`: Add `--acns-transit-encryption-type` parameter to support configuring pod-to-pod transit encryption (`WireGuard` or `None`)
+* `az aks create/update` Add support for ACNS performance
+* `az aks namespace update`: Fix the location logic for managed namespace update operation
+* `az aks update`: Add `--enable-high-log-scale-mode` parameter to enable/disable High Log Scale Mode for Container Logs
+* `az aks enable-addons`: Fix monitoring addon key lookup to handle both `omsagent` and `omsAgent` API response variants
+* `az aks disable-addons`: Add retry with exponential backoff for Log Analytics workspace creation conflicts
+* `az aks update`: Add `--disable-http-proxy` and `--enable-http-proxy` parameters
+
+### API Management
+
+* `az apim backend`: Add new command group to support backend services
+
+### App Config
+
+* `az appconfig create/update`: Enable linking app insights resource to an app configuration store
+* `az appconfig feature set`: Enable telemetry for a feature flag
+
+### App Service
+
+* `az webapp list-runtimes`: Pre-announce breaking changes
+* `az logicapp create`: Add parameter `--domain-name-scope` to support specifying the scope of uniqueness for the default hostname during resource creation
+* `az webapp update`: Add parameter `--platform-release-channel` to support setting the platform release channel for the web app
+* `az appservice plan update`: Remove preview flag for `--elastic-scale` and `--max-elastic-worker-count` parameters
+* `az webapp update`: Remove preview flag for `--minimum-elastic-instance-count` and `--prewarmed-instance-count` parameters
+* `az webapp up`: Add parameter `--domain-name-scope` to support specifying the scope of uniqueness for the default hostname during resource creation
+
+### Cloud
+
+* Add Bleu to the Known Clouds list
+
+### Compute
+
+* `az vmss create`: Add `--zone-placement-policy` parameter to enable automatic zone selection
+* `az vmss create`: Add `--include-zones` parameter to support specifying availability zones that must be considered for placement when `--zone-placement-policy` is set to `Auto`
+* `az vmss create`: Add `--exclude-zones` parameter to support specifying availability zones that must be excluded from placement when `--zone-placement-policy` is set to `Auto`
+* `az vmss create`: Add `--max-zone-count` parameter to support specifying the maximum number of availability zones to use when `--zone-placement-policy` is set to `Auto`
+* `az vmss update`: Add `--max-zone-count` parameter to support specifying the maximum number of availability zones to use for this scale set
+* `az vmss create/update`: Add `--value-max-instance-percent-per-zone` parameter to support specifying the maximum percentage of virtual machine instances that can be allocated to a single availability zone in the virtual machine scale set
+* `az vmss create/update`: Add `--instance-percent-policy` parameter to support specifying whether maximum percentage of virtual machine instances per zone policy should be enabled on the virtual machine scale set
+* `az vm run-command invoke`: Fix `--no-wait` not working
+* `az restore-point collection create/update`: Add parameter `--instant-access`
+* `az restore-point create`: Add parameter `--instant-access-duration`
+
+### Container app
+
+* `az containerapp env workload-profile add`: Simplify workload-profile creation with default profile name
+
+### Event Hubs
+
+* Fix #31108, #32073: `az eventhubs`: Regex updated for commands with `--namespace-name` arguments
+
+### NetAppFiles
+
+* `az netapfiles volume create/update`: Add paramter `--desired-ransomware-protection-state` to support advanced ransomware reports
+* `az netapfiles volume ransomware-report`: Add command group to support advanced ransomware reports
+* `az netapfiles volume list-quota-report`: Add command to list quota reports for volumes
+
+### Network
+
+* `az network private-endpoint-connection`: Add provider `Microsoft.DurableTask/schedulers`
+* `az network private-endpoint create/update`: Add parameter `--ip-version-type` to support IPv6
+
+### Packaging
+
+* Add new ways (preview) to install azure-cli on macOS
+
+### PostgreSQL
+
+* `az postgres flexible-server long-term-retention`: Add breaking change announcement for command group removal
+
+### Storage
+
+* Fix #32852: `az storage copy`: Fix Azcopy download link to be using github release links
+
+### Synapse
+
+* Upgrade azure-synapse-artifacts to 0.22.0
 
 ## March 03, 2026
 
