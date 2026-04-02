@@ -384,7 +384,7 @@ directCommands:
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
                         [--enable-fips-image]
-                        [--enable-managed-gpu]
+                        [--enable-managed-gpu {false, true}]
                         [--enable-node-public-ip]
                         [--enable-secure-boot]
                         [--enable-ultra-ssd]
@@ -394,6 +394,7 @@ directCommands:
                         [--gateway-prefix-size]
                         [--gpu-driver {Install, None}]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
+                        [--gpu-mig-strategy {Mixed, Single}]
                         [--host-group-id]
                         [--if-match]
                         [--if-none-match]
@@ -544,6 +545,7 @@ directCommands:
       Use FIPS-enabled OS on agent nodes.
   - name: --enable-managed-gpu
     defaultValue: "False"
+    acceptedValues: false, true
     summary: |-
       Enable the Managed GPU experience, which installs additional components like DCGM metrics for monitoring on top of the GPU driver. For more details, visit aka.ms/aks/managed-gpu.
     isPreview: true
@@ -585,6 +587,11 @@ directCommands:
     acceptedValues: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
     summary: |-
       GPU instance profile to partition multi-gpu Nvidia GPUs.
+  - name: --gpu-mig-strategy
+    acceptedValues: Mixed, Single
+    summary: |-
+      Specify the MIG (Multi-Instance GPU) strategy for managed MIG support. Valid values are "Single" and "Mixed". When not specified, managed MIG is disabled.
+    isPreview: true
   - name: --host-group-id
     summary: |-
       (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool. Must use VMSS agent pool type.
@@ -2207,6 +2214,7 @@ directCommands:
                            [--allowed-host-ports]
                            [--asg-ids]
                            [--batch-soak-duration]
+                           [--disable-artifact-streaming]
                            [--disable-cluster-autoscaler]
                            [--disable-fips-image]
                            [--disable-secure-boot]
@@ -2217,11 +2225,12 @@ directCommands:
                            [--enable-artifact-streaming]
                            [--enable-cluster-autoscaler]
                            [--enable-fips-image]
-                           [--enable-managed-gpu]
+                           [--enable-managed-gpu {false, true}]
                            [--enable-secure-boot]
                            [--enable-vtpm]
                            [--final-soak-duration]
                            [--gpu-driver {Install, None}]
+                           [--gpu-mig-strategy {Mixed, Single}]
                            [--if-match]
                            [--if-none-match]
                            [--labels]
@@ -2294,6 +2303,11 @@ directCommands:
   - name: --batch-soak-duration
     summary: |-
       Wait time (in minutes) after draining a batch of nodes before proceeding to the next batch. Default is 15 minutes. Only for blue-green upgrades.
+  - name: --disable-artifact-streaming
+    defaultValue: "False"
+    summary: |-
+      Disable artifact streaming for VirtualMachineScaleSets managed by a node pool.
+    isPreview: true
   - name: --disable-cluster-autoscaler -d
     defaultValue: "False"
     summary: |-
@@ -2340,6 +2354,7 @@ directCommands:
       Switch to use FIPS-enabled OS on agent nodes.
   - name: --enable-managed-gpu
     defaultValue: "False"
+    acceptedValues: false, true
     summary: |-
       Enable the Managed GPU experience, which installs additional components like DCGM metrics for monitoring on top of the GPU driver. For more details, visit aka.ms/aks/managed-gpu.
     isPreview: true
@@ -2360,6 +2375,11 @@ directCommands:
     acceptedValues: Install, None
     summary: |-
       Whether to install driver for GPU node pool. Possible values are "Install" or "None".
+  - name: --gpu-mig-strategy
+    acceptedValues: Mixed, Single
+    summary: |-
+      Specify the GPU Multi-Instance GPU (MIG) strategy. Allowed values: Single, Mixed.
+    isPreview: true
   - name: --if-match
     summary: |-
       The value provided will be compared to the ETag of the node pool, if it matches the operation will proceed. If it does not match, the request will be rejected to prevent accidental overwrites. This must not be specified when creating a new agentpool.
