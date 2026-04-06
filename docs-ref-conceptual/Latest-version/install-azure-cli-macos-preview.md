@@ -10,7 +10,8 @@ keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos
 
 # Install Azure CLI on macOS using Homebrew Cask or Tarball preview
 
-Azure CLI is a cross-platform command-line tool for managing Azure resources interactively or through scripts.
+Azure CLI is a cross-platform command-line tool for managing Azure resources interactively or
+through scripts.
 
 On macOS, Azure CLI is transitioning to a new installation model that provides greater flexibility
 across environments. This model includes:
@@ -42,6 +43,12 @@ flexible model.
 
 During the transition period, both installation methods are supported. The Homebrew formula will be
 deprecated in a future release.
+
+On macOS, Azure CLI is evolving to support more secure authentication experiences, including
+broker-based authentication. These capabilities require a cask-based installation model. As a
+result, we're transitioning from Homebrew Core to Homebrew Cask. This change doesn't remove or limit
+any existing Azure CLI functionality. Homebrew Cask remains fully compatible with all current Azure
+CLI features and versions.
 
 This change improves consistency across environments and provides better support for scenarios such
 as offline installation and controlled deployment environments.
@@ -154,18 +161,9 @@ Selecting the correct architecture ensures compatibility and optimal performance
 
 Choose a directory where Azure CLI should be installed:
 
-- User-level install (recommended):
-
   ```bash
   mkdir -p $HOME/lib/azure-cli
   tar -xzf az.tar.gz -C $HOME/lib/azure-cli
-  ```
-
-- System-level install:
-
-  ```bash
-  sudo mkdir -p /opt/azure-cli
-  sudo tar -xzf az.tar.gz -C /opt/azure-cli
   ```
 
 ### Configure environment variables
