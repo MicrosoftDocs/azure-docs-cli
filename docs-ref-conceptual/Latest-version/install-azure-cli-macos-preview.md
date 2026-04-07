@@ -42,7 +42,7 @@ flexible model.
   - Tarball-based installation
 
 During the transition period, both installation methods are supported. The Homebrew formula will be
-deprecated in a future release.
+deprecated in our June release.
 
 On macOS, Azure CLI is evolving to support more secure authentication experiences, including
 broker-based authentication. These capabilities require a cask-based installation model. As a
