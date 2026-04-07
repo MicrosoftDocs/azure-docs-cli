@@ -21,6 +21,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume break-file-locks [--account-name]
+                                           [--acquire-policy-token]
+                                           [--change-reference]
                                            [--client-ip]
                                            [--confirm --confirm-running-disruptive-operation {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--ids]
@@ -39,6 +41,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --client-ip
     summary: |-
       To clear file locks on a volume for a particular client.
@@ -116,7 +126,10 @@ directCommands:
                                  --name --volume-name
                                  --pool-name
                                  --resource-group
+                                 []
+                                 []
                                  [--accept-grow-capacity-pool-for-short-term-clone-split --grow-pool-clone-split {Accepted, Declined}]
+                                 [--acquire-policy-token]
                                  [--allowed-clients]
                                  [--avs-data-store {Disabled, Enabled}]
                                  [--backup-id]
@@ -125,14 +138,16 @@ directCommands:
                                  [--ca-retrieval-policy --cool-access-retrieval-policy {Default, Never, OnRead}]
                                  [--ca-tiering-policy --cool-access-tiering-policy {Auto, SnapshotOnly}]
                                  [--capacity-pool-resource-id --pool-resource-id]
+                                 [--change-reference]
                                  [--chown-mode {Restricted, Unrestricted}]
                                  [--cifs {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--default-group-quota --default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--default-user-quota --default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--desired-arp-state --desired-ransomware-protection-state {Disabled, Enabled}]
                                  [--enable-subvolumes {Disabled, Enabled}]
                                  [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
                                  [--export-policy-rules --rules]
@@ -140,6 +155,7 @@ directCommands:
                                  [--external-server-name]
                                  [--external-volume-name]
                                  [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos5-r {0, 1, f, false, n, no, t, true, y, yes}]
@@ -215,11 +231,23 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - defaultValue: "0"
+    summary: |-
+      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    groupName: Properties Arguments
+  - defaultValue: "0"
+    summary: |-
+      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    groupName: Properties Arguments
   - name: --accept-grow-capacity-pool-for-short-term-clone-split --grow-pool-clone-split
     acceptedValues: Accepted, Declined
     summary: |-
       While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted.
     groupName: Properties Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --allowed-clients
     summary: |-
       Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
@@ -256,6 +284,10 @@ directCommands:
     summary: |-
       Pool Resource Id used in case of creating a volume through volume group.
     groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --chown-mode
     acceptedValues: Restricted, Unrestricted
     summary: |-
@@ -280,8 +312,10 @@ directCommands:
     defaultValue: "0"
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    isDeprecated: true
+    deprecateInfo: Option '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled
     defaultValue: "False"
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -291,12 +325,19 @@ directCommands:
     defaultValue: "0"
     summary: |-
       Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    isDeprecated: true
+    deprecateInfo: Option '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false.
     groupName: Properties Arguments
+  - name: --desired-arp-state --desired-ransomware-protection-state
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      The desired value of the Advanced Ransomware Protection feature state available to the volume.
+    groupName: RansomwareProtection Arguments
   - name: --enable-subvolumes
     defaultValue: Disabled
     acceptedValues: Disabled, Enabled
@@ -330,6 +371,14 @@ directCommands:
     summary: |-
       Has root access to volume. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
     groupName: ExportPolicy backwards compatibility Arguments
+  - name: --is-default-quota-enabled
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Specifies if default quota is enabled for the volume.
+    isDeprecated: true
+    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+    groupName: Properties Arguments
   - name: --is-large-volume
     defaultValue: "False"
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -391,6 +440,7 @@ directCommands:
     acceptedValues: Basic, Standard
     summary: |-
       Basic network, or Standard features available to the volume.
+    isBreakingChange: true
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -576,7 +626,10 @@ directCommands:
                                  --pool-name
                                  --resource-group
                                  --vnet
+                                 []
+                                 []
                                  [--accept-grow-capacity-pool-for-short-term-clone-split --grow-pool-clone-split {Accepted, Declined}]
+                                 [--acquire-policy-token]
                                  [--allowed-clients]
                                  [--avs-data-store {Disabled, Enabled}]
                                  [--backup-id]
@@ -584,12 +637,13 @@ directCommands:
                                  [--backup-vault-id]
                                  [--ca-retrieval-policy --cool-access-retrieval-policy {Default, Never, OnRead}]
                                  [--capacity-pool-resource-id --pool-resource-id]
+                                 [--change-reference]
                                  [--chown-mode {Restricted, Unrestricted}]
                                  [--cifs {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--default-group-quota --default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--default-user-quota --default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
@@ -597,6 +651,7 @@ directCommands:
                                  [--endpoint-type {dst, src}]
                                  [--export-policy-rules --rules]
                                  [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos-enabled {0, 1, f, false, n, no, t, true, y, yes}]
@@ -679,11 +734,23 @@ directCommands:
       Name or Resource ID of the vnet. If you want to use a vnet in other resource group or subscription, please provide the Resource ID instead of the name of the vnet.
     groupName: Properties Arguments
   optionalParameters:
+  - defaultValue: "0"
+    summary: |-
+      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    groupName: Properties Arguments
+  - defaultValue: "0"
+    summary: |-
+      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    groupName: Properties Arguments
   - name: --accept-grow-capacity-pool-for-short-term-clone-split --grow-pool-clone-split
     acceptedValues: Accepted, Declined
     summary: |-
       While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted.
     groupName: Properties Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --allowed-clients
     summary: |-
       Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
@@ -715,6 +782,10 @@ directCommands:
     summary: |-
       Pool Resource Id used in case of creating a volume through volume group.
     groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --chown-mode
     acceptedValues: Restricted, Unrestricted
     summary: |-
@@ -739,8 +810,10 @@ directCommands:
     defaultValue: "0"
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    isDeprecated: true
+    deprecateInfo: Option '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled
     defaultValue: "False"
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -750,6 +823,8 @@ directCommands:
     defaultValue: "0"
     summary: |-
       Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    isDeprecated: true
+    deprecateInfo: Option '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -782,6 +857,14 @@ directCommands:
     summary: |-
       Has root access to volume. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
     groupName: ExportPolicy backwards compatibility Arguments
+  - name: --is-default-quota-enabled
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Specifies if default quota is enabled for the volume.
+    isDeprecated: true
+    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+    groupName: Properties Arguments
   - name: --is-large-volume
     defaultValue: "False"
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -853,6 +936,7 @@ directCommands:
     acceptedValues: Basic, Standard
     summary: |-
       Basic network, or Standard features available to the volume.
+    isBreakingChange: true
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -1029,6 +1113,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume delete [--account-name]
+                                 [--acquire-policy-token]
+                                 [--change-reference]
                                  [--force --force-delete {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
                                  [--name --volume-name]
@@ -1046,6 +1132,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --force --force-delete
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -1113,6 +1207,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az netappfiles volume delete [--account-name]
+                                 [--acquire-policy-token]
+                                 [--change-reference]
                                  [--force --force-delete {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
                                  [--name --volume-name]
@@ -1130,6 +1226,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --force --force-delete
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -1195,6 +1299,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume finalize-relocation [--account-name]
+                                              [--acquire-policy-token]
+                                              [--change-reference]
                                               [--ids]
                                               [--name --volume-name]
                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1210,6 +1316,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1268,6 +1382,8 @@ directCommands:
   syntax: >-
     az netappfiles volume get-groupid-list-for-ldapuser --username
                                                         [--account-name]
+                                                        [--acquire-policy-token]
+                                                        [--change-reference]
                                                         [--ids]
                                                         [--name --volume-name]
                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1289,6 +1405,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1475,12 +1599,113 @@ directCommands:
   name: az netappfiles volume list-quota-report
   summary: |-
     Returns report of quotas for the volume.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume list-quota-report [--account-name]
+                                            [--acquire-policy-token]
+                                            [--change-reference]
+                                            [--ids]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--pool-name]
+                                            [--quota-target]
+                                            [--quota-type {DefaultGroupQuota, DefaultUserQuota, IndividualGroupQuota, IndividualUserQuota}]
+                                            [--resource-group]
+                                            [--subscription]
+                                            [--usage-threshold-pct --usage-threshold-percentage]
+                                            [--volume-name]
+  examples:
+  - summary: |-
+      ListQuotaReport
+    syntax: az netappfiles volume list-quota-report --resource-group myRG --account-name account1 --pool-name pool1 --volume-name volume1
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --quota-target
+    summary: |-
+      UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running 'id' or 'getent' command for the user or group and SID can be found by running `<wmic useraccount where name='user-name' get sid>`. If provided, quotaType must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota target, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided.
+    groupName: Body Arguments
+  - name: --quota-type
+    acceptedValues: DefaultGroupQuota, DefaultUserQuota, IndividualGroupQuota, IndividualUserQuota
+    summary: |-
+      Type of quota. If provided, quotaTarget must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota type, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided.
+    groupName: Body Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --usage-threshold-pct --usage-threshold-percentage
+    summary: |-
+      The usageThresholdPercentage filter takes the usage threshold percentage and returns records where the usage is greater than or equal to the input value. This is an optional property.
+    groupName: Body Arguments
+  - name: --volume-name -v
+    summary: |-
+      The name of the volume.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_volume_list-quota-report(netappfiles-preview)
+  name: az netappfiles volume list-quota-report
+  extensionSuffix: netappfiles-preview
+  summary: |-
+    Returns report of quotas for the volume.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az netappfiles volume list-quota-report [--account-name]
+                                            [--acquire-policy-token]
+                                            [--change-reference]
                                             [--ids]
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--pool-name]
@@ -1496,6 +1721,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1554,6 +1787,8 @@ directCommands:
   syntax: >-
     az netappfiles volume migrate-backup --backup-vault-id
                                          [--account-name]
+                                         [--acquire-policy-token]
+                                         [--change-reference]
                                          [--ids]
                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--pool-name]
@@ -1571,6 +1806,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1631,6 +1874,8 @@ directCommands:
   syntax: >-
     az netappfiles volume migrate-backup --backup-vault-id
                                          [--account-name]
+                                         [--acquire-policy-token]
+                                         [--change-reference]
                                          [--ids]
                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--pool-name]
@@ -1648,6 +1893,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1706,6 +1959,8 @@ directCommands:
   syntax: >-
     az netappfiles volume pool-change --new-pool-resource-id
                                       [--account-name]
+                                      [--acquire-policy-token]
+                                      [--change-reference]
                                       [--ids]
                                       [--name --volume-name]
                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1727,6 +1982,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1784,6 +2047,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume populate-availability-zone [--account-name]
+                                                     [--acquire-policy-token]
+                                                     [--change-reference]
                                                      [--ids]
                                                      [--name --volume-name]
                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1799,6 +2064,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1856,6 +2129,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume relocate [--account-name]
+                                   [--acquire-policy-token]
+                                   [--change-reference]
                                    [--creation-token]
                                    [--ids]
                                    [--name --volume-name]
@@ -1872,6 +2147,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --creation-token
     summary: |-
       New creation token for the volume that controls the mount point name.
@@ -1933,6 +2216,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume reset-cifs-pw [--account-name]
+                                        [--acquire-policy-token]
+                                        [--change-reference]
                                         [--ids]
                                         [--name --volume-name]
                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1948,6 +2233,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2005,6 +2298,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume revert [--account-name]
+                                 [--acquire-policy-token]
+                                 [--change-reference]
                                  [--ids]
                                  [--name --volume-name]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -2021,6 +2316,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2082,6 +2385,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume revert-relocation [--account-name]
+                                            [--acquire-policy-token]
+                                            [--change-reference]
                                             [--ids]
                                             [--name --volume-name]
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -2098,6 +2403,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2295,6 +2608,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume splitclonefromparent [--account-name]
+                                               [--acquire-policy-token]
+                                               [--change-reference]
                                                [--ids]
                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                [--pool-name]
@@ -2310,6 +2625,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2369,6 +2692,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az netappfiles volume splitclonefromparent [--account-name]
+                                               [--acquire-policy-token]
+                                               [--change-reference]
                                                [--ids]
                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                [--pool-name]
@@ -2380,6 +2705,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2436,17 +2769,21 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
-    az netappfiles volume update [--account-name]
+    az netappfiles volume update []
+                                 []
+                                 [--account-name]
+                                 [--acquire-policy-token]
                                  [--add]
                                  [--backup-policy-id]
                                  [--backup-vault-id]
                                  [--ca-retrieval-policy --cool-access-retrieval-policy {Default, Never, OnRead}]
                                  [--ca-tiering-policy --cool-access-tiering-policy {Auto, SnapshotOnly}]
                                  [--capacity-pool-resource-id --pool-resource-id]
+                                 [--change-reference]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--default-group-quota --default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--default-user-quota --default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
@@ -2454,6 +2791,7 @@ directCommands:
                                  [--export-policy-rules --rules]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
+                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id --kv-private-endpoint-id]
                                  [--name --volume-name]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -2462,6 +2800,7 @@ directCommands:
                                  [--pool-name]
                                  [--ppg --proximity-placement-group]
                                  [--protocol-types]
+                                 [--ransomware-protection]
                                  [--relocation-requested {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--remote-volume-id]
                                  [--remote-volume-region]
@@ -2490,10 +2829,20 @@ directCommands:
       Update an ANF volume
     syntax: az netappfiles volume update -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --service-level ultra --usage-threshold 100 --tags mytag=specialvol
   optionalParameters:
+  - summary: |-
+      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    groupName: Properties Arguments
+  - summary: |-
+      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    groupName: Properties Arguments
   - name: --account-name -a
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
@@ -2520,6 +2869,10 @@ directCommands:
     summary: |-
       Pool Resource Id used in case of creating a volume through volume group.
     groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --cool-access
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -2532,8 +2885,10 @@ directCommands:
   - name: --default-group-quota --default-group-quota-in-ki-bs
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    isDeprecated: true
+    deprecateInfo: Option '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Specifies if default quota is enabled for the volume.
@@ -2541,6 +2896,8 @@ directCommands:
   - name: --default-user-quota --default-user-quota-in-ki-bs
     summary: |-
       Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    isDeprecated: true
+    deprecateInfo: Option '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -2570,6 +2927,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --is-default-quota-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Specifies if default quota is enabled for the volume.
+    isDeprecated: true
+    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+    groupName: Properties Arguments
   - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
     summary: |-
       The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
@@ -2603,6 +2967,10 @@ directCommands:
     summary: |-
       Set of protocol types, default NFSv3, CIFS for SMB protocol  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
+  - name: --ransomware-protection
+    summary: |-
+      Advanced Ransomware Protection settings  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: DataProtection Arguments
   - name: --relocation-requested
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -2739,18 +3107,22 @@ directCommands:
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az netappfiles volume update [--account-name]
+    az netappfiles volume update []
+                                 []
+                                 [--account-name]
+                                 [--acquire-policy-token]
                                  [--add]
                                  [--avs-data-store {Disabled, Enabled}]
                                  [--backup-policy-id]
                                  [--backup-vault-id]
                                  [--ca-retrieval-policy --cool-access-retrieval-policy {Default, Never, OnRead}]
                                  [--capacity-pool-resource-id --pool-resource-id]
+                                 [--change-reference]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--creation-token]
                                  [--default-group-quota --default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--default-user-quota --default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
@@ -2759,6 +3131,7 @@ directCommands:
                                  [--export-policy-rules --rules]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
+                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id --kv-private-endpoint-id]
@@ -2800,10 +3173,20 @@ directCommands:
       Update an ANF volume
     syntax: az netappfiles volume update -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --service-level ultra --usage-threshold 100 --tags mytag=specialvol
   optionalParameters:
+  - summary: |-
+      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    groupName: Properties Arguments
+  - summary: |-
+      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    groupName: Properties Arguments
   - name: --account-name -a
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
@@ -2830,6 +3213,10 @@ directCommands:
     summary: |-
       Pool Resource Id used in case of creating a volume through volume group.
     groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --cool-access
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -2846,8 +3233,10 @@ directCommands:
   - name: --default-group-quota --default-group-quota-in-ki-bs
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    isDeprecated: true
+    deprecateInfo: Option '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Specifies if default quota is enabled for the volume.
@@ -2855,6 +3244,8 @@ directCommands:
   - name: --default-user-quota --default-user-quota-in-ki-bs
     summary: |-
       Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+    isDeprecated: true
+    deprecateInfo: Option '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -2889,6 +3280,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --is-default-quota-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Specifies if default quota is enabled for the volume.
+    isDeprecated: true
+    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+    groupName: Properties Arguments
   - name: --is-large-volume
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -3081,6 +3479,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume wait [--account-name]
+                               [--acquire-policy-token]
+                               [--change-reference]
                                [--created]
                                [--custom]
                                [--deleted]
@@ -3098,6 +3498,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -3185,6 +3593,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az netappfiles volume wait [--account-name]
+                               [--acquire-policy-token]
+                               [--change-reference]
                                [--created]
                                [--custom]
                                [--deleted]
@@ -3202,6 +3612,14 @@ directCommands:
     summary: |-
       The name of the NetApp account.
     groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -3305,6 +3723,7 @@ commands:
 - az_netappfiles_volume_list
 - az_netappfiles_volume_list(netappfiles-preview)
 - az_netappfiles_volume_list-quota-report
+- az_netappfiles_volume_list-quota-report(netappfiles-preview)
 - az_netappfiles_volume_migrate-backup
 - az_netappfiles_volume_migrate-backup(netappfiles-preview)
 - az_netappfiles_volume_pool-change
@@ -3316,6 +3735,10 @@ commands:
 - az_netappfiles_volume_quota-rule_show
 - az_netappfiles_volume_quota-rule_update
 - az_netappfiles_volume_quota-rule_wait
+- az_netappfiles_volume_ransomware-report
+- az_netappfiles_volume_ransomware-report_clear-suspect
+- az_netappfiles_volume_ransomware-report_list
+- az_netappfiles_volume_ransomware-report_show
 - az_netappfiles_volume_relocate
 - az_netappfiles_volume_replication
 - az_netappfiles_volume_replication_approve

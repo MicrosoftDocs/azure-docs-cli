@@ -18,9 +18,11 @@ directCommands:
                   --name
                   --resource-group
                   --worker-subnet
+                  [--acquire-policy-token]
                   [--apiserver-visibility {Private, Public}]
                   [--assign-cluster-identity --mi-user-assigned]
                   [--assign-platform-wi --assign-platform-workload-identity]
+                  [--change-reference]
                   [--client-id]
                   [--client-secret]
                   [--cluster-resource-group]
@@ -78,6 +80,10 @@ directCommands:
     summary: |-
       Name or ID of worker vnet subnet.  If name is supplied, `--vnet` must be supplied.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --apiserver-visibility
     acceptedValues: Private, Public
     summary: |-
@@ -85,13 +91,15 @@ directCommands:
   - name: --assign-cluster-identity --mi-user-assigned
     summary: |-
       Set the user managed identity on the cluster. Value must be an identity name or resource ID.
-    isPreview: true
     groupName: Identity Arguments
   - name: --assign-platform-wi --assign-platform-workload-identity
     summary: |-
       Assign a platform workload identity used within the cluster. Requires two values:                            an operator name and either the name or resource ID of the Azure identity to use for it.
-    isPreview: true
     groupName: Identity Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --client-id
     summary: |-
       Client ID of cluster service principal.
@@ -112,7 +120,6 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enable managed identity for this cluster.
-    isPreview: true
     groupName: Identity Arguments
   - name: --enable-preconfigured-nsg
     acceptedValues: false, true
@@ -219,6 +226,8 @@ directCommands:
   syntax: >-
     az aro delete --name
                   --resource-group
+                  [--acquire-policy-token]
+                  [--change-reference]
                   [--delete-identities {false, true}]
                   [--no-wait]
                   [--yes]
@@ -236,11 +245,18 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --delete-identities
     acceptedValues: false, true
     summary: |-
       Delete the cluster's associated managed identities together with the cluster.
-    isPreview: true
     groupName: Identity Arguments
   - name: --no-wait
     defaultValue: "False"
@@ -287,6 +303,8 @@ directCommands:
   syntax: >-
     az aro get-admin-kubeconfig --name
                                 --resource-group
+                                [--acquire-policy-token]
+                                [--change-reference]
                                 [--file]
   examples:
   - summary: |-
@@ -302,6 +320,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --file -f
     defaultValue: kubeconfig
     summary: |-
@@ -340,7 +366,10 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
-  syntax: az aro get-versions --location
+  syntax: >-
+    az aro get-versions --location
+                        [--acquire-policy-token]
+                        [--change-reference]
   examples:
   - summary: |-
       List install versions available for the East US region.
@@ -353,6 +382,15 @@ directCommands:
     name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -436,6 +474,8 @@ directCommands:
   syntax: >-
     az aro list-credentials --name
                             --resource-group
+                            [--acquire-policy-token]
+                            [--change-reference]
   examples:
   - summary: |-
       List credentials of a cluster.
@@ -449,6 +489,15 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -536,8 +585,10 @@ directCommands:
   syntax: >-
     az aro update --name
                   --resource-group
+                  [--acquire-policy-token]
                   [--assign-cluster-identity --mi-user-assigned]
                   [--assign-platform-wi --assign-platform-workload-identity]
+                  [--change-reference]
                   [--client-id]
                   [--client-secret]
                   [--lb-ip-count --load-balancer-managed-outbound-ip-count]
@@ -558,16 +609,22 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --assign-cluster-identity --mi-user-assigned
     summary: |-
       Set the user managed identity on the cluster. Value must be an identity name or resource ID.
-    isPreview: true
     groupName: Identity Arguments
   - name: --assign-platform-wi --assign-platform-workload-identity
     summary: |-
       Assign a platform workload identity used within the cluster. Requires two values:                            an operator name and either the name or resource ID of the Azure identity to use for it.
-    isPreview: true
     groupName: Identity Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --client-id
     summary: |-
       Client ID of cluster service principal.
@@ -589,7 +646,6 @@ directCommands:
   - name: --upgradeable-to
     summary: |-
       OpenShift version to upgrade to.
-    isPreview: true
     groupName: Identity Arguments
   globalParameters:
   - name: --debug
@@ -630,8 +686,10 @@ directCommands:
                     --name
                     --resource-group
                     --worker-subnet
+                    [--acquire-policy-token]
                     [--assign-cluster-identity --mi-user-assigned]
                     [--assign-platform-wi --assign-platform-workload-identity]
+                    [--change-reference]
                     [--client-id]
                     [--client-secret]
                     [--cluster-resource-group]
@@ -668,16 +726,22 @@ directCommands:
     summary: |-
       Name or ID of worker vnet subnet.  If name is supplied, `--vnet` must be supplied.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --assign-cluster-identity --mi-user-assigned
     summary: |-
       Set the user managed identity on the cluster. Value must be an identity name or resource ID.
-    isPreview: true
     groupName: Identity Arguments
   - name: --assign-platform-wi --assign-platform-workload-identity
     summary: |-
       Assign a platform workload identity used within the cluster. Requires two values:                            an operator name and either the name or resource ID of the Azure identity to use for it.
-    isPreview: true
     groupName: Identity Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --client-id
     summary: |-
       Client ID of cluster service principal.
@@ -695,7 +759,6 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enable managed identity for this cluster.
-    isPreview: true
     groupName: Identity Arguments
   - name: --location -l
     summary: |-
@@ -754,6 +817,8 @@ directCommands:
   syntax: >-
     az aro wait --name
                 --resource-group
+                [--acquire-policy-token]
+                [--change-reference]
                 [--created]
                 [--custom]
                 [--deleted]
@@ -771,6 +836,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --created
     defaultValue: "False"
     summary: |-

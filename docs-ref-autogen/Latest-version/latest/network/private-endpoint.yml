@@ -19,15 +19,23 @@ directCommands:
                                        --private-connection-resource-id
                                        --resource-group
                                        --subnet
+                                       [--acquire-policy-token]
+                                       [--app-gateway-ip-configs --application-gateway-ip-configurations]
                                        [--asg --asgs]
+                                       [--change-reference]
+                                       [--default-outbound-access --outbound-access {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--edge-zone]
                                        [--group-id --group-ids]
                                        [--ip-config --ip-configs]
+                                       [--ip-version-type {DualStack, IPv4, IPv6}]
+                                       [--ipam-pool-prefix-allocations --ipam-prefix-allocs]
                                        [--location]
                                        [--manual-request {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--nic-name]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--request-message]
+                                       [--service-gateway]
+                                       [--sharing-scope {DelegatedServices, Tenant}]
                                        [--tags]
                                        [--vnet-name]
   examples:
@@ -62,10 +70,27 @@ directCommands:
     summary: |-
       Name or ID of an existing subnet. If name specified, also specify --vnet-name. If you want to use an existing subnet in other resource group or subscription, please provide the ID instead of the name of the subnet and do not specify the--vnet-name.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --app-gateway-ip-configs --application-gateway-ip-configurations
+    summary: |-
+      Application gateway IP configurations of virtual network resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --asg --asgs
     summary: |-
       The private endpoint application security groups.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--asg`.
     groupName: Application Security Group Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --default-outbound-access --outbound-access
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Set this property to false to disable default outbound connectivity for all VMs in the subnet.
+    groupName: Properties Arguments
   - name: --edge-zone
     summary: |-
       The name of edge zone.
@@ -76,6 +101,16 @@ directCommands:
     summary: |-
       The private endpoint ip configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--ip-config`.
     groupName: Static IP Configuration Arguments
+  - name: --ip-version-type
+    defaultValue: IPv4
+    acceptedValues: DualStack, IPv4, IPv6
+    summary: |-
+      Specifies the IP version type for the private IPs of the private endpoint. If not defined, this defaults to IPv4.
+    groupName: Properties Arguments
+  - name: --ipam-pool-prefix-allocations --ipam-prefix-allocs
+    summary: |-
+      A list of IPAM Pools for allocating IP address prefixes.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -93,6 +128,15 @@ directCommands:
   - name: --request-message
     summary: |-
       A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars.
+  - name: --service-gateway
+    summary: |-
+      Reference to an existing service gateway.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --sharing-scope
+    acceptedValues: DelegatedServices, Tenant
+    summary: |-
+      Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty.
+    groupName: Properties Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value]...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -134,7 +178,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
-    az network private-endpoint delete [--ids]
+    az network private-endpoint delete [--acquire-policy-token]
+                                       [--change-reference]
+                                       [--ids]
                                        [--name]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--resource-group]
@@ -144,6 +190,14 @@ directCommands:
       Delete a private endpoint.
     syntax: az network private-endpoint delete --name MyPrivateEndpoint --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -195,12 +249,23 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
-  syntax: az network private-endpoint list [--resource-group]
+  syntax: >-
+    az network private-endpoint list [--max-items]
+                                     [--next-token]
+                                     [--resource-group]
   examples:
   - summary: |-
       List private endpoints.
     syntax: az network private-endpoint list -g MyResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -239,16 +304,36 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
-    az network private-endpoint list-types [--location]
+    az network private-endpoint list-types [--acquire-policy-token]
+                                           [--change-reference]
+                                           [--location]
+                                           [--max-items]
+                                           [--next-token]
                                            [--resource-group]
   examples:
   - summary: |-
       List all of the resource types
     syntax: az network private-endpoint list-types -l centralus
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.  When not specified, the location of the resource group will be used.
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -348,9 +433,12 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
-    az network private-endpoint update [--add]
+    az network private-endpoint update [--acquire-policy-token]
+                                       [--add]
+                                       [--change-reference]
                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--ids]
+                                       [--ip-version-type {DualStack, IPv4, IPv6}]
                                        [--name]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--remove]
@@ -367,10 +455,18 @@ directCommands:
       Update a private endpoint.
     syntax: az network private-endpoint update --name MyPE --resource-group MyResourceGroup --set useRemoteGateways=true
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -380,6 +476,11 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --ip-version-type
+    acceptedValues: DualStack, IPv4, IPv6
+    summary: |-
+      Specifies the IP version type for the private IPs of the private endpoint. If not defined, this defaults to IPv4.
+    groupName: Properties Arguments
   - name: --name -n
     summary: |-
       Name of the private endpoint.
@@ -442,7 +543,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
-    az network private-endpoint wait [--created]
+    az network private-endpoint wait [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--created]
                                      [--custom]
                                      [--deleted]
                                      [--exists]
@@ -455,6 +558,14 @@ directCommands:
                                      [--timeout]
                                      [--updated]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --created
     defaultValue: "False"
     summary: |-

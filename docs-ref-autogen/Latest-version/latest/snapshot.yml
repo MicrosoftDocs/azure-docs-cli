@@ -16,8 +16,10 @@ directCommands:
     az snapshot create --name
                        --resource-group
                        [--accelerated-network {false, true}]
+                       [--acquire-policy-token]
                        [--architecture {Arm64, x64}]
                        [--bandwidth-copy-speed {Enhanced, None}]
+                       [--change-reference]
                        [--copy-start {false, true}]
                        [--disk-access]
                        [--disk-encryption-set]
@@ -26,7 +28,7 @@ directCommands:
                        [--encryption-type {EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}]
                        [--for-upload {false, true}]
                        [--hyper-v-generation {V1, V2}]
-                       [--ia-duration --instant-access-duration-minutes]
+                       [--ia-duration --instant-access-duration --instant-access-duration-minutes]
                        [--incremental {false, true}]
                        [--location]
                        [--network-access-policy {AllowAll, AllowPrivate, DenyAll}]
@@ -68,6 +70,10 @@ directCommands:
     summary: |-
       Customers can set on Managed Disks or Snapshots to enable the accelerated networking if the OS disk image support.
     isPreview: true
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --architecture
     acceptedValues: Arm64, x64
     summary: |-
@@ -76,6 +82,10 @@ directCommands:
     acceptedValues: Enhanced, None
     summary: |-
       If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --copy-start
     acceptedValues: false, true
     summary: |-
@@ -104,7 +114,7 @@ directCommands:
     acceptedValues: V1, V2
     summary: |-
       The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
-  - name: --ia-duration --instant-access-duration-minutes
+  - name: --ia-duration --instant-access-duration --instant-access-duration-minutes
     summary: |-
       For snapshots created from Premium SSD v2 or Ultra disk, this property determines the time in minutes the snapshot is retained for instant access to enable faster restore. The disk sku should be UltraSSD_LRS or PremiumV2_LRS.
   - name: --incremental
@@ -176,12 +186,22 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az snapshot delete [--ids]
+    az snapshot delete [--acquire-policy-token]
+                       [--change-reference]
+                       [--ids]
                        [--name --snapshot-name]
                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                        [--resource-group]
                        [--subscription]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -235,6 +255,8 @@ directCommands:
   syntax: >-
     az snapshot grant-access --duration-in-seconds
                              [--access --access-level {Read, Write}]
+                             [--acquire-policy-token]
+                             [--change-reference]
                              [--file-format {VHD, VHDX}]
                              [--ids]
                              [--name --snapshot-name]
@@ -261,6 +283,14 @@ directCommands:
     summary: |-
       Access level.
     groupName: GrantAccessData Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --file-format
     acceptedValues: VHD, VHDX
     summary: |-
@@ -366,7 +396,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az snapshot revoke-access [--ids]
+    az snapshot revoke-access [--acquire-policy-token]
+                              [--change-reference]
+                              [--ids]
                               [--name --snapshot-name]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--resource-group]
@@ -376,6 +408,14 @@ directCommands:
       Revoke read access to a snapshot.
     syntax: az snapshot revoke-access --name MySnapshot --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -480,8 +520,10 @@ directCommands:
   sourceType: Core
   syntax: >-
     az snapshot update [--accelerated-network {0, 1, f, false, n, no, t, true, y, yes}]
+                       [--acquire-policy-token]
                        [--add]
                        [--architecture {Arm64, x64}]
+                       [--change-reference]
                        [--disk-access]
                        [--disk-encryption-set]
                        [--encryption-type {EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}]
@@ -510,6 +552,10 @@ directCommands:
       Customers can set on Managed Disks or Snapshots to enable the accelerated networking if the OS disk image support.
     isPreview: true
     groupName: SupportedCapabilities Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
@@ -519,6 +565,10 @@ directCommands:
     summary: |-
       CPU architecture.
     groupName: SupportedCapabilities Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --disk-access
     summary: |-
       Name or ID of the disk access resource for using private endpoints on disks.
@@ -609,7 +659,9 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az snapshot wait [--created]
+    az snapshot wait [--acquire-policy-token]
+                     [--change-reference]
+                     [--created]
                      [--custom]
                      [--deleted]
                      [--exists]
@@ -621,6 +673,14 @@ directCommands:
                      [--timeout]
                      [--updated]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --created
     defaultValue: "False"
     summary: |-

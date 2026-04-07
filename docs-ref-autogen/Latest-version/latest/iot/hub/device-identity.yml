@@ -3,7 +3,7 @@ uid: az_iot_hub_device-identity
 name: az iot hub device-identity
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot hub device-identity** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot hub device-identity** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage IoT devices.
 status: GA
@@ -23,8 +23,10 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot hub device-identity create --device-id
+                                      [--acquire-policy-token]
                                       [--am --auth-method {shared_private_key, x509_ca, x509_thumbprint}]
                                       [--auth-type {key, login}]
+                                      [--change-reference]
                                       [--device-scope]
                                       [--edge-enabled --ee {false, true}]
                                       [--hub-name]
@@ -63,6 +65,10 @@ directCommands:
     summary: |-
       Target Device Id.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --am --auth-method
     defaultValue: shared_private_key
     acceptedValues: shared_private_key, x509_ca, x509_thumbprint
@@ -74,6 +80,10 @@ directCommands:
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
     groupName: Access Control Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --device-scope
     summary: |-
       The scope of the device. For edge devices, this is auto-generated and immutable. For leaf devices, set this to create child/parent relationship.
@@ -161,7 +171,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot hub device-identity delete --device-id
+                                      [--acquire-policy-token]
                                       [--auth-type {key, login}]
+                                      [--change-reference]
                                       [--etag]
                                       [--hub-name]
                                       [--login]
@@ -172,12 +184,20 @@ directCommands:
     summary: |-
       Target Device Id.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --auth-type
     defaultValue: key
     acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
     groupName: Access Control Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
@@ -236,9 +256,11 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot hub device-identity export [--auth-type {key, login}]
+    az iot hub device-identity export [--acquire-policy-token]
+                                      [--auth-type {key, login}]
                                       [--bc --blob-container]
                                       [--bcu --blob-container-uri]
+                                      [--change-reference]
                                       [--hub-name]
                                       [--identity]
                                       [--ik --include-keys {false, true}]
@@ -268,6 +290,10 @@ directCommands:
       Export all device identities to a configured blob container and include device keys. Uses user assigned managed identity that has Storage Blob Data Contributor role for the storage account. The blob container uri does not need the blob SAS token.
     syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices' --identity {managed_identity_resource_id}
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --auth-type
     defaultValue: key
     acceptedValues: key, login
@@ -280,6 +306,10 @@ directCommands:
   - name: --bcu --blob-container-uri
     summary: |-
       Blob Shared Access Signature URI with write, read, and delete access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required - but no SAS token is necessary. Input for this argument can be inline or from a file path.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
@@ -347,7 +377,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot hub device-identity import [--auth-type {key, login}]
+    az iot hub device-identity import [--acquire-policy-token]
+                                      [--auth-type {key, login}]
+                                      [--change-reference]
                                       [--hub-name]
                                       [--ibc --input-blob-container]
                                       [--ibcu --input-blob-container-uri]
@@ -381,12 +413,20 @@ directCommands:
       Import all device identities from a blob using user assigned managed identity that has Storage Blob Data Contributor roles for both storage accounts. The blob container uri does not need the blob SAS token.
     syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri} --identity {managed_identity_resource_id}
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --auth-type
     defaultValue: key
     acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
     groupName: Access Control Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
@@ -530,7 +570,9 @@ directCommands:
     az iot hub device-identity renew-key --device-id
                                          --hub-name
                                          --key-type --kt {both, primary, secondary, swap}
+                                         [--acquire-policy-token]
                                          [--auth-type {key, login}]
+                                         [--change-reference]
                                          [--etag]
                                          [--im --include-modules {false, true}]
                                          [--login]
@@ -565,12 +607,20 @@ directCommands:
     summary: |-
       Target key type to regenerate.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --auth-type
     defaultValue: key
     acceptedValues: key, login
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
     groupName: Access Control Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used. This arguement only applies to `swap`.
@@ -690,9 +740,11 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot hub device-identity update --device-id
+                                      [--acquire-policy-token]
                                       [--add]
                                       [--am --auth-method {shared_private_key, x509_ca, x509_thumbprint}]
                                       [--auth-type {key, login}]
+                                      [--change-reference]
                                       [--edge-enabled --ee {false, true}]
                                       [--etag]
                                       [--force-string]
@@ -729,6 +781,10 @@ directCommands:
     summary: |-
       Target Device Id.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     defaultValue: '[]'
     summary: |-
@@ -744,6 +800,10 @@ directCommands:
     summary: |-
       Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
     groupName: Access Control Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --edge-enabled --ee
     acceptedValues: false, true
     summary: |-
