@@ -38,7 +38,7 @@ flexible model.
 
 - Current method: `brew install azure-cli`
 - New methods:
-  - `brew install --cask azure-cli`
+  - `brew install --cask azure-cli-preview`
   - Tarball-based installation
 
 During the transition period, both installation methods are supported. The Homebrew formula will be
@@ -85,7 +85,7 @@ brew uninstall azure-cli
 ### Install Azure CLI
 
 ```bash
-brew update && brew install --cask azure-cli
+brew update && brew install --cask azure-cli-preview
 ```
 
 This installs Azure CLI using the Homebrew Cask, which is the preferred installation method going
@@ -104,7 +104,7 @@ az --version
 To upgrade to the latest version:
 
 ```bash
-brew upgrade --cask azure-cli
+brew upgrade --cask azure-cli-preview
 ```
 
 ## Uninstall Azure CLI
@@ -112,7 +112,7 @@ brew upgrade --cask azure-cli
 To remove Azure CLI:
 
 ```bash
-brew uninstall --cask azure-cli
+brew uninstall --cask azure-cli-preview
 ```
 
 ::: zone-end
