@@ -69,6 +69,16 @@ Version 2.85.0
 
 * `az containerapp env workload-profile add`: Simplify workload-profile creation with default profile name
 
+### Core
+
+* Resolve CVE-2026-26007
+* `az *`: Make `--acquire-policy-token` and `--change-reference` global arguments available by default, removing the need for `core.enable_policy_token` configuration
+* Resolve CVE-2026-27448
+* Resolve CVE-2026-27459
+* Resolve CVE-2026-32597
+* Resolve CVE-2026-25645
+* Resolve CVE-2026-34073
+
 ### Event Hubs
 
 * Fix #31108, #32073: `az eventhubs`: Regex updated for commands with `--namespace-name` arguments
