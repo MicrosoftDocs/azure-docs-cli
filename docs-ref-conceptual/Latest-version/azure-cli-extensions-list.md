@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 04/05/2026
+ms.date: 04/07/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -24,7 +24,7 @@ You will be prompted to install an extension on first use.
 |----|-----------------|-------------|---------|---------------|
 |[acat](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat) | 2.61.0 | Microsoft Azure Command-Line Tools Acat Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat/HISTORY.rst) |
 |[account](https://github.com/Azure/azure-cli-extensions/tree/main/src/account) | 2.38.0 | Microsoft Azure Command-Line Tools SubscriptionClient Extension | GA | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/account/HISTORY.rst) |
-|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.73.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
+|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.73.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
 |[acrquery](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery) | 2.48.0 | Microsoft Azure Command-Line Tools AcrQuery Extension | Preview | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery/HISTORY.rst) |
 |[acrtransfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrtransfer) | 2.0.67 | Microsoft Azure Command-Line Tools Acrtransfer Extension | Preview | [1.1.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrtransfer/HISTORY.rst) |
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
@@ -56,7 +56,7 @@ You will be prompted to install an extension on first use.
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.2](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.75.0 | Manage Azure Firewall resources. | GA | [2.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
-|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.67.0 | The Azure IoT extension for Azure CLI. | Preview | [0.30.0b1](https://github.com/azure/azure-iot-cli-extension) |
+|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.70.0 | The Azure IoT extension for Azure CLI. | Preview | [0.30.0b2](https://github.com/azure/azure-iot-cli-extension) |
 |[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.70.0 | The Azure IoT Operations extension for Azure CLI. | GA | [2.4.0](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.75.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.4](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.57.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
@@ -89,7 +89,7 @@ You will be prompted to install an extension on first use.
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.75.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.75.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
-|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.75.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.8.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
+|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.75.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.9.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[dell](https://github.com/Azure/azure-cli-extensions/tree/main/src/dell) | 2.75.0 | Support for managing Dell.Storage filesystem resources. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dell/HISTORY.rst) |
 |[dependency-map](https://github.com/Azure/azure-cli-extensions/tree/main/src/dependency-map) | 2.70.0 | Microsoft Azure Command-Line Tools DependencyMap Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dependency-map/HISTORY.rst) |
@@ -146,7 +146,7 @@ You will be prompted to install an extension on first use.
 |[maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) | 2.67.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Preview | [1.7.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance/HISTORY.rst) |
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
 |[managedcleanroom](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom) | 2.75.0 | Microsoft Azure Command-Line Tools Managedcleanroom Extension. | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom/HISTORY.rst) |
-|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2025-07-15 API version. | GA | [9.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
+|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2025-07-15 API version. | GA | [9.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner) | 2.61.0 | Support for Management Partner preview | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner/HISTORY.rst) |
 |[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.70.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
 |[mdp](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp) | 2.57.0 | Microsoft Azure Command-Line Tools Mdp Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp/HISTORY.rst) |
@@ -176,7 +176,7 @@ You will be prompted to install an extension on first use.
 |[peering](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering) | 2.3.1 | Microsoft Azure Command-Line Tools PeeringManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering/HISTORY.rst) |
 |[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.67.0 | Microsoft Azure Command-Line Tools Portal Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated) | 2.56.0 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated/HISTORY.rst) |
-|[prototype](https://github.com/Azure/az-prototype) | 2.50.0 | Azure CLI extension for rapid prototype generation using AI agents and GitHub Copilot | Preview | [0.2.1b5](https://github.com/Azure/az-prototype) |
+|[prototype](https://github.com/Azure/az-prototype) | 2.50.0 | Azure CLI extension for rapid prototype generation using AI agents and GitHub Copilot | Preview | [0.2.1b6](https://github.com/Azure/az-prototype) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub) | 2.57.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub/HISTORY.rst) |
 |[pscloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud) | 2.75.0 | Microsoft Azure Command-Line Tools Pscloud Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
