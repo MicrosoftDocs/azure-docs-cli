@@ -20,6 +20,7 @@ directCommands:
                    --resource-group
                    [--accelerated-networking {false, true}]
                    [--accept-term]
+                   [--acquire-policy-token]
                    [--add-proxy-agent-ext --add-proxy-agent-extension {false, true}]
                    [--additional-events --additional-scheduled-events {false, true}]
                    [--admin-password]
@@ -38,6 +39,7 @@ directCommands:
                    [--backend-pool-name]
                    [--backend-port]
                    [--capacity-reservation-group --crg]
+                   [--change-reference]
                    [--computer-name-prefix]
                    [--custom-data]
                    [--data-disk-caching]
@@ -74,13 +76,16 @@ directCommands:
                    [--ephemeral-os-disk-placement --ephemeral-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
                    [--exclude-extensions --security-posture-reference-exclude-extensions]
+                   [--exclude-zones]
                    [--generate-ssh-keys]
                    [--health-probe]
                    [--host-group]
                    [--image]
                    [--imds-access-control-profile-reference-id --imds-profile-id]
                    [--imds-mode {Audit, Enforce}]
+                   [--include-zones]
                    [--instance-count]
+                   [--instance-percent-policy --ipp {false, true}]
                    [--is-overridable --security-posture-reference-is-overridable {false, true}]
                    [--lb --load-balancer]
                    [--lb-nat-rule-name --nat-rule-name]
@@ -88,10 +93,12 @@ directCommands:
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
                    [--location]
                    [--max-batch-instance-percent]
+                   [--max-instance-percent --value-max-instance-percent-per-zone]
                    [--max-price]
                    [--max-surge {false, true}]
                    [--max-unhealthy-instance-percent]
                    [--max-unhealthy-upgraded-instance-percent]
+                   [--max-zone-count]
                    [--network-api-version]
                    [--no-wait]
                    [--nsg]
@@ -156,6 +163,7 @@ directCommands:
                    [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                    [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
+                   [--zone-placement-policy {Auto}]
                    [--zones]
   examples:
   - summary: |-
@@ -251,6 +259,10 @@ directCommands:
   - name: --accept-term
     summary: |-
       Accept the license agreement and privacy statement.
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add-proxy-agent-ext --add-proxy-agent-extension
     acceptedValues: false, true
     summary: |-
@@ -324,6 +336,10 @@ directCommands:
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --computer-name-prefix
     summary: |-
       Computer name prefix for all of the virtual machines in the scale set. Computer name prefixes must be 1 to 15 characters long.
@@ -468,6 +484,9 @@ directCommands:
   - name: --exclude-extensions --security-posture-reference-exclude-extensions
     summary: |-
       List of virtual machine extensions to exclude when applying the Security Posture. Either a Json string or a file path is acceptable. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachinescalesets/get#virtualmachineextension for the data format.
+  - name: --exclude-zones
+    summary: |-
+      Specify a list of availability zones that must be excluded from placement when --zone-placement-policy is set to Auto. If not specified, no availability zones are excluded.
   - name: --generate-ssh-keys
     defaultValue: "False"
     summary: |-
@@ -490,10 +509,17 @@ directCommands:
     acceptedValues: Audit, Enforce
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
+  - name: --include-zones
+    summary: |-
+      Specify a list of availability zones that must be considered for placement when --zone-placement-policy is set to Auto. If not specified, all availability zones in the region are considered.
   - name: --instance-count
     defaultValue: "2"
     summary: |-
       Number of VMs in the scale set.
+  - name: --instance-percent-policy --ipp
+    acceptedValues: false, true
+    summary: |-
+      Specify whether maximum percentage of virtual machine instances per zone policy should be enabled on the virtual machine scale set.
   - name: --is-overridable --security-posture-reference-is-overridable
     acceptedValues: false, true
     summary: |-
@@ -522,6 +548,9 @@ directCommands:
   - name: --max-batch-instance-percent
     summary: |-
       The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. Default: 20%.
+  - name: --max-instance-percent --value-max-instance-percent-per-zone
+    summary: |-
+      Specify the maximum percentage of virtual machine instances that can be allocated to a single availability zone in the virtual machine scale set. Valid values are integers between 1 and 100.
   - name: --max-price
     summary: |-
       The maximum price (in US Dollars) you are willing to pay for a Spot VM/VMSS. -1 indicates that the Spot VM/VMSS should not be evicted for price reasons.
@@ -537,6 +566,9 @@ directCommands:
   - name: --max-unhealthy-upgraded-instance-percent
     summary: |-
       The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. Default: 20%.
+  - name: --max-zone-count
+    summary: |-
+      Specify the maximum number of availability zones to use when --zone-placement-policy is set to Auto. If not specified, all available zones in the region may be used.
   - name: --network-api-version
     summary: |-
       Specify the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. Default value is 2020-11-01.
@@ -791,6 +823,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage.
+  - name: --zone-placement-policy
+    acceptedValues: Auto
+    summary: |-
+      Specify the policy for availability zone placement of the virtual machine scale set. When set to Auto, the platform automatically selects the availability zones.
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
@@ -831,6 +867,8 @@ directCommands:
   syntax: >-
     az vmss deallocate --name
                        --resource-group
+                       [--acquire-policy-token]
+                       [--change-reference]
                        [--hibernate {false, true}]
                        [--instance-ids]
                        [--no-wait]
@@ -848,6 +886,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --hibernate
     acceptedValues: false, true
     summary: |-
@@ -894,13 +940,23 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
+    az vmss delete [--acquire-policy-token]
+                   [--change-reference]
+                   [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
                    [--ids]
                    [--name --vm-scale-set-name]
                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                    [--resource-group]
                    [--subscription]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --force-deletion
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -958,6 +1014,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
     az vmss delete-instances --instance-ids
+                             [--acquire-policy-token]
+                             [--change-reference]
                              [--ids]
                              [--name]
                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -973,6 +1031,14 @@ directCommands:
     summary: |-
       Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1025,7 +1091,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss get-instance-view [--ids]
+    az vmss get-instance-view [--acquire-policy-token]
+                              [--change-reference]
+                              [--ids]
                               [--instance-id]
                               [--name]
                               [--resource-group]
@@ -1035,6 +1103,14 @@ directCommands:
       View an instance of a VMSS. (autogenerated)
     syntax: az vmss get-instance-view --name MyScaleSet --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1089,6 +1165,8 @@ directCommands:
   syntax: >-
     az vmss get-os-upgrade-history --name --vm-scale-set-name
                                    --resource-group
+                                   [--acquire-policy-token]
+                                   [--change-reference]
                                    [--max-items]
                                    [--next-token]
   requiredParameters:
@@ -1101,6 +1179,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
@@ -1144,7 +1230,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss get-resiliency-view [--ids]
+    az vmss get-resiliency-view [--acquire-policy-token]
+                                [--change-reference]
+                                [--ids]
                                 [--instance]
                                 [--name]
                                 [--resource-group]
@@ -1154,6 +1242,14 @@ directCommands:
       View the resiliency status of a VMSS instance.
     syntax: az vmss get-resiliency-view --name MyScaleSet --resource-group MyResourceGroup --instance MyInstanceId
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1260,7 +1356,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss list-instance-connection-info [--ids]
+    az vmss list-instance-connection-info [--acquire-policy-token]
+                                          [--change-reference]
+                                          [--ids]
                                           [--name]
                                           [--resource-group]
                                           [--subscription]
@@ -1269,6 +1367,14 @@ directCommands:
       Get the IP address and port number used to connect to individual VM instances within a set. (autogenerated)
     syntax: az vmss list-instance-connection-info --name MyScaleSet --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1317,7 +1423,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss list-instance-public-ips [--ids]
+    az vmss list-instance-public-ips [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--ids]
                                      [--name]
                                      [--resource-group]
                                      [--subscription]
@@ -1326,6 +1434,14 @@ directCommands:
       List public IP addresses of VM instances within a set. (autogenerated)
     syntax: az vmss list-instance-public-ips --name MyScaleSet --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1378,6 +1494,8 @@ directCommands:
   syntax: >-
     az vmss list-instances --name --virtual-machine-scale-set-name
                            --resource-group
+                           [--acquire-policy-token]
+                           [--change-reference]
                            [--expand]
                            [--filter]
                            [--max-items]
@@ -1394,6 +1512,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --expand
     summary: |-
       The expand expression to apply to the operation. Allowed values are 'instanceView'.
@@ -1452,6 +1578,8 @@ directCommands:
   syntax: >-
     az vmss list-skus --name --vm-scale-set-name
                       --resource-group
+                      [--acquire-policy-token]
+                      [--change-reference]
                       [--max-items]
                       [--next-token]
   requiredParameters:
@@ -1464,6 +1592,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
@@ -1507,13 +1643,23 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss perform-maintenance [--ids]
+    az vmss perform-maintenance [--acquire-policy-token]
+                                [--change-reference]
+                                [--ids]
                                 [--instance-ids]
                                 [--name --vm-scale-set-name]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--resource-group]
                                 [--subscription]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1570,7 +1716,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss reimage [--force-update-os-disk-for-ephemeral --update-os-disk {false, true}]
+    az vmss reimage [--acquire-policy-token]
+                    [--change-reference]
+                    [--force-update-os-disk-for-ephemeral --update-os-disk {false, true}]
                     [--ids]
                     [--instance-ids]
                     [--name]
@@ -1588,6 +1736,14 @@ directCommands:
       Reimage all the VM instances within a VMSS.
     syntax: az vmss reimage --name MyScaleSet --resource-group MyResourceGroup --subscription MySubscription
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --force-update-os-disk-for-ephemeral --update-os-disk
     acceptedValues: false, true
     summary: |-
@@ -1649,6 +1805,8 @@ directCommands:
   syntax: >-
     az vmss restart --name
                     --resource-group
+                    [--acquire-policy-token]
+                    [--change-reference]
                     [--instance-ids]
                     [--no-wait]
   examples:
@@ -1665,6 +1823,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --instance-ids
     summary: |-
       Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.
@@ -1708,6 +1874,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
     az vmss scale --new-capacity
+                  [--acquire-policy-token]
+                  [--change-reference]
                   [--ids]
                   [--name]
                   [--no-wait]
@@ -1723,6 +1891,14 @@ directCommands:
     summary: |-
       Number of VMs in the VMSS.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1776,7 +1952,9 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
     az vmss set-orchestration-service-state --action {Resume, Suspend}
-                                            --service-name {AutomaticRepairs, DummyOrchestrationServiceName}
+                                            --service-name {AutomaticRepairs}
+                                            [--acquire-policy-token]
+                                            [--change-reference]
                                             [--ids]
                                             [--name]
                                             [--no-wait]
@@ -1794,10 +1972,18 @@ directCommands:
       The action to be performed.
   - isRequired: true
     name: --service-name
-    acceptedValues: AutomaticRepairs, DummyOrchestrationServiceName
+    acceptedValues: AutomaticRepairs
     summary: |-
       The name of the orchestration service.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1910,7 +2096,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss simulate-eviction [--ids]
+    az vmss simulate-eviction [--acquire-policy-token]
+                              [--change-reference]
+                              [--ids]
                               [--instance-id]
                               [--name --vm-scale-set-name]
                               [--resource-group]
@@ -1920,6 +2108,14 @@ directCommands:
       Simulate the eviction of a Spot virtual machine in a VM scale set.
     syntax: az vmss simulate-eviction --resource-group MyResourceGroup --name MyScaleSet --instance-id 0
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1972,7 +2168,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss start [--ids]
+    az vmss start [--acquire-policy-token]
+                  [--change-reference]
+                  [--ids]
                   [--instance-ids]
                   [--name]
                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1983,6 +2181,14 @@ directCommands:
       Start VMs within a VMSS.
     syntax: az vmss start --instance-ids 1 --name MyScaleSet --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2043,6 +2249,8 @@ directCommands:
   syntax: >-
     az vmss stop --name
                  --resource-group
+                 [--acquire-policy-token]
+                 [--change-reference]
                  [--instance-ids]
                  [--no-wait]
                  [--skip-shutdown]
@@ -2063,6 +2271,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --instance-ids
     summary: |-
       Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.
@@ -2109,7 +2325,8 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss update [--add]
+    az vmss update [--acquire-policy-token]
+                   [--add]
                    [--add-proxy-agent-ext --add-proxy-agent-extension {false, true}]
                    [--additional-events --additional-scheduled-events {false, true}]
                    [--automatic-repairs-action {Reimage, Replace, Restart}]
@@ -2117,6 +2334,7 @@ directCommands:
                    [--automatic-zone-balancing-behavior --balancing-behavior {CreateBeforeDelete}]
                    [--automatic-zone-balancing-strategy --balancing-strategy {Recreate}]
                    [--capacity-reservation-group --crg]
+                   [--change-reference]
                    [--custom-data]
                    [--disk-controller-type {NVMe, SCSI}]
                    [--enable-auto-os-upgrade {false, true}]
@@ -2144,13 +2362,16 @@ directCommands:
                    [--imds-access-control-profile-reference-id --imds-profile-id]
                    [--imds-mode {Audit, Enforce}]
                    [--instance-id]
+                   [--instance-percent-policy --ipp {false, true}]
                    [--is-overridable --security-posture-reference-is-overridable {false, true}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server}]
                    [--max-batch-instance-percent]
+                   [--max-instance-percent --value-max-instance-percent-per-zone]
                    [--max-price]
                    [--max-surge {false, true}]
                    [--max-unhealthy-instance-percent]
                    [--max-unhealthy-upgraded-instance-percent]
+                   [--max-zone-count]
                    [--name]
                    [--no-wait]
                    [--pause-time-between-batches]
@@ -2212,6 +2433,10 @@ directCommands:
       az vmss update -n MyVmss -g MyResourceGroup --security-posture-reference-id /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{version} \
           --security-posture-reference-exclude-extensions "c:\tmp\exclude_extensions.json"
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
     defaultValue: '[]'
     summary: |-
@@ -2245,6 +2470,10 @@ directCommands:
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --custom-data
     summary: |-
       Custom init script file or text (cloud-init, cloud-config, etc..).
@@ -2354,6 +2583,10 @@ directCommands:
     summary: |-
       Update the VM instance with this ID. If missing, update the VMSS.
     groupName: Resource Id Arguments
+  - name: --instance-percent-policy --ipp
+    acceptedValues: false, true
+    summary: |-
+      Specify whether maximum percentage of virtual machine instances per zone policy should be enabled on the virtual machine scale set.
   - name: --is-overridable --security-posture-reference-is-overridable
     acceptedValues: false, true
     summary: |-
@@ -2365,6 +2598,9 @@ directCommands:
   - name: --max-batch-instance-percent
     summary: |-
       The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. Default: 20%.
+  - name: --max-instance-percent --value-max-instance-percent-per-zone
+    summary: |-
+      Specify the maximum percentage of virtual machine instances that can be allocated to a single availability zone in the virtual machine scale set. Valid values are integers between 1 and 100.
   - name: --max-price
     summary: |-
       The maximum price (in US Dollars) you are willing to pay for a Spot VM/VMSS. -1 indicates that the Spot VM/VMSS should not be evicted for price reasons.
@@ -2380,6 +2616,9 @@ directCommands:
   - name: --max-unhealthy-upgraded-instance-percent
     summary: |-
       The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. Default: 20%.
+  - name: --max-zone-count
+    summary: |-
+      Specify the maximum number of availability zones to use for this scale set. This setting is only honored for scale sets that use automatic zone placement. If not specified, all available zones in the region may be used.
   - name: --name -n
     summary: |-
       Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
@@ -2539,6 +2778,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
     az vmss update-domain-walk --platform-update-domain
+                               [--acquire-policy-token]
+                               [--change-reference]
                                [--ids]
                                [--placement-group-id]
                                [--resource-group]
@@ -2555,6 +2796,14 @@ directCommands:
     summary: |-
       The platform update domain for which a manual recovery walk is requested.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2612,6 +2861,8 @@ directCommands:
     az vmss update-instances --instance-ids
                              --name
                              --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
                              [--no-wait]
   examples:
   - summary: |-
@@ -2631,6 +2882,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -2670,7 +2929,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vmss wait [--created]
+    az vmss wait [--acquire-policy-token]
+                 [--change-reference]
+                 [--created]
                  [--custom]
                  [--deleted]
                  [--exists]
@@ -2693,6 +2954,14 @@ directCommands:
       Place the CLI in a waiting state until a condition of a scale set is met. (autogenerated)
     syntax: az vmss wait --created --name MyScaleSet --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -2842,5 +3111,5 @@ commands:
 - az_vmss_update-instances
 - az_vmss_wait
 metadata:
-  ms.date: 12/18/2025
+  ms.date: 03/19/2026
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

@@ -3,7 +3,7 @@ uid: az_iot_adr_ns
 name: az iot adr ns
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot adr ns** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot adr ns** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Device Registry namespaces.
 status: GA
@@ -15,17 +15,19 @@ directCommands:
     Create a Device Registry namespace.
   description: |-
     By default, a namespace is created with a system-assigned managed identity.
-    To create a credential and credential policy, use `--enable-credential-policy` or provide any policy parameters.
+    To create a credential and credential policy, use `--enable-certificate-management` or provide any policy parameters.
     The policy resource name can be customized with the --policy-name argument, but the 'default' credential name cannot be changed.
   status: GA
   sourceType: Extension
   syntax: >-
     az iot adr ns create --name --namespace
                          --resource-group
+                         [--acquire-policy-token]
                          [--cert-key-type {ECC, RSA}]
                          [--cert-subject]
                          [--cert-validity-days]
-                         [--ecp --enable-credential-policy {false, true}]
+                         [--change-reference]
+                         [--ecm --enable-certificate-management {false, true}]
                          [--location]
                          [--pn --policy-name]
                          [--tags]
@@ -35,7 +37,7 @@ directCommands:
     syntax: az iot adr ns create -n myNamespace -g myResourceGroup
   - summary: |-
       Create a Device Registry namespace with credential and default policy
-    syntax: az iot adr ns create -n myNamespace -g myResourceGroup --enable-credential-policy
+    syntax: az iot adr ns create -n myNamespace -g myResourceGroup --enable-certificate-management
   - summary: |-
       Create a Device Registry namespace with custom credential policy
     syntax: az iot adr ns create -n myNamespace -g myResourceGroup --policy-name myPolicy --cert-validity-days 30
@@ -49,6 +51,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --cert-key-type
     acceptedValues: ECC, RSA
     summary: |-
@@ -62,7 +68,11 @@ directCommands:
     summary: |-
       Policy certificate validity period in days.
     groupName: Policy Certificate Arguments
-  - name: --ecp --enable-credential-policy
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ecm --enable-certificate-management
     acceptedValues: false, true
     summary: |-
       Create a credential and credential policy for this Device Registry namespace. This is also enabled when any custom policy parameters are provided.
@@ -113,6 +123,8 @@ directCommands:
   syntax: >-
     az iot adr ns delete --name --namespace
                          --resource-group
+                         [--acquire-policy-token]
+                         [--change-reference]
                          [--yes {false, true}]
   examples:
   - summary: |-
@@ -131,6 +143,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --yes -y
     acceptedValues: false, true
     summary: |-
@@ -265,6 +285,8 @@ directCommands:
   syntax: >-
     az iot adr ns update --name --namespace
                          --resource-group
+                         [--acquire-policy-token]
+                         [--change-reference]
                          [--tags]
   examples:
   - summary: |-
@@ -280,6 +302,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -318,11 +348,18 @@ commands:
 - az_iot_adr_ns_credential_show
 - az_iot_adr_ns_credential_sync
 - az_iot_adr_ns_delete
+- az_iot_adr_ns_device
+- az_iot_adr_ns_device_list
+- az_iot_adr_ns_device_revoke
+- az_iot_adr_ns_device_show
+- az_iot_adr_ns_device_update
 - az_iot_adr_ns_list
 - az_iot_adr_ns_policy
+- az_iot_adr_ns_policy_activate-byor
 - az_iot_adr_ns_policy_create
 - az_iot_adr_ns_policy_delete
 - az_iot_adr_ns_policy_list
+- az_iot_adr_ns_policy_revoke-issuer
 - az_iot_adr_ns_policy_show
 - az_iot_adr_ns_policy_update
 - az_iot_adr_ns_show

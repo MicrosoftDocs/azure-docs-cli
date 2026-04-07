@@ -3,7 +3,7 @@ uid: az_iot_device_c2d-message
 name: az iot device c2d-message
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot device c2d-message** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot device c2d-message** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Cloud-to-device messaging commands.
 status: GA
@@ -17,6 +17,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot device c2d-message abandon --device-id
+                                      [--acquire-policy-token]
+                                      [--change-reference]
                                       [--etag]
                                       [--hub-name]
                                       [--login]
@@ -27,6 +29,14 @@ directCommands:
     summary: |-
       Target Device Id.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
@@ -76,6 +86,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot device c2d-message complete --device-id
+                                       [--acquire-policy-token]
+                                       [--change-reference]
                                        [--etag]
                                        [--hub-name]
                                        [--login]
@@ -86,6 +98,14 @@ directCommands:
     summary: |-
       Target Device Id.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
@@ -135,6 +155,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot device c2d-message purge --device-id
+                                    [--acquire-policy-token]
+                                    [--change-reference]
                                     [--hub-name]
                                     [--login]
                                     [--resource-group]
@@ -144,6 +166,14 @@ directCommands:
     summary: |-
       Target Device Id.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
@@ -199,6 +229,8 @@ directCommands:
   syntax: >-
     az iot device c2d-message receive --device-id
                                       [--abandon {false, true}]
+                                      [--acquire-policy-token]
+                                      [--change-reference]
                                       [--complete {false, true}]
                                       [--hub-name]
                                       [--lock-timeout --lt]
@@ -230,6 +262,14 @@ directCommands:
     summary: |-
       Abandon the cloud-to-device message after receipt.
     groupName: Message Ack Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --complete
     defaultValue: "False"
     acceptedValues: false, true
@@ -292,6 +332,8 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot device c2d-message reject --device-id
+                                     [--acquire-policy-token]
+                                     [--change-reference]
                                      [--etag]
                                      [--hub-name]
                                      [--login]
@@ -302,6 +344,14 @@ directCommands:
     summary: |-
       Target Device Id.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
@@ -348,8 +398,7 @@ directCommands:
   summary: |-
     Send a cloud-to-device message.
   description: |-
-    This command relies on and may install dependent Cython package (uamqp) upon first execution.
-    https://github.com/Azure/azure-uamqp-python
+    Send a cloud-to-device message via AMQP to a target device.
 
     Note: Content-encoding is defaulted to utf-8. The command will send the message body
     with encoding action when the content-encoding property is either utf-8, utf-16 or
@@ -363,8 +412,10 @@ directCommands:
   syntax: >-
     az iot device c2d-message send --device-id
                                    [--ack {full, negative, positive}]
+                                   [--acquire-policy-token]
                                    [--auth-type {key, login}]
                                    [--ce --content-encoding]
+                                   [--change-reference]
                                    [--cid --correlation-id]
                                    [--content-type --ct]
                                    [--da --data]
@@ -374,7 +425,6 @@ directCommands:
                                    [--login]
                                    [--message-id --mid]
                                    [--properties --props]
-                                   [--repair {false, true}]
                                    [--resource-group]
                                    [--uid --user-id]
                                    [--wait {false, true}]
@@ -405,6 +455,10 @@ directCommands:
     acceptedValues: full, negative, positive
     summary: |-
       Request the delivery of per-message feedback regarding the final state of that message. The description of ack values is as follows. Positive: If the c2d message reaches the Completed state, IoT Hub generates a feedback message. Negative: If the c2d message reaches the Dead lettered state, IoT Hub generates a feedback message. Full: IoT Hub generates a feedback message in either case. By default, no ack is requested.
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --auth-type
     defaultValue: key
     acceptedValues: key, login
@@ -415,6 +469,10 @@ directCommands:
     defaultValue: utf-8
     summary: |-
       The encoding for the C2D message body.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --cid --correlation-id
     summary: |-
       The correlation Id associated with the C2D message.
@@ -446,11 +504,6 @@ directCommands:
   - name: --properties --props -p
     summary: |-
       Message property bag in key-value pairs with the following format: a=b;c=d.
-  - name: --repair -r
-    defaultValue: "False"
-    acceptedValues: false, true
-    summary: |-
-      Reinstall uamqp dependency compatible with extension version. Default: false.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.

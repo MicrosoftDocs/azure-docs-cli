@@ -17,7 +17,9 @@ directCommands:
     az vm host group create --name
                             --platform-fault-domain-count
                             --resource-group
+                            [--acquire-policy-token]
                             [--automatic-placement {false, true}]
+                            [--change-reference]
                             [--location]
                             [--tags]
                             [--ultra-ssd-enabled {false, true}]
@@ -40,10 +42,18 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --automatic-placement
     acceptedValues: false, true
     summary: |-
       Specify whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to false when not provided.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`. Otherwise, location will default to the resource group's location.
@@ -92,12 +102,22 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm host group delete [--host-group-name --name]
+    az vm host group delete [--acquire-policy-token]
+                            [--change-reference]
+                            [--host-group-name --name]
                             [--ids]
                             [--resource-group]
                             [--subscription]
                             [--yes]
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --host-group-name --name -n
     summary: |-
       Name of the Dedicated Host Group.
@@ -150,7 +170,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm host group get-instance-view [--ids]
+    az vm host group get-instance-view [--acquire-policy-token]
+                                       [--change-reference]
+                                       [--ids]
                                        [--name]
                                        [--resource-group]
                                        [--subscription]
@@ -159,6 +181,14 @@ directCommands:
       Get instance view of a dedicated host group
     syntax: az vm host group get-instance-view --name MyDedicatedHostGroup --resource-group MyResourceGroup
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -316,22 +346,35 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
   syntax: >-
-    az vm host group update [--add]
-                            [--force-string]
+    az vm host group update [--acquire-policy-token]
+                            [--add]
+                            [--change-reference]
+                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                             [--ids]
                             [--name]
                             [--remove]
                             [--resource-group]
                             [--set]
                             [--subscription]
+  examples:
+  - summary: |-
+      Update a dedicated host group with Ultra SSD support.
+    syntax: az vm host group update --resource-group myResourceGroup --name myDedicatedHostGroup --set tags.foo="bar"
   optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
   - name: --add
-    defaultValue: '[]'
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
   - name: --force-string
-    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     groupName: Generic Update Arguments
@@ -344,7 +387,6 @@ directCommands:
       Name of the Dedicated Host Group.
     groupName: Resource Id Arguments
   - name: --remove
-    defaultValue: '[]'
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
     groupName: Generic Update Arguments
@@ -353,7 +395,6 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --set
-    defaultValue: '[]'
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
@@ -393,5 +434,5 @@ commands:
 - az_vm_host_group_show
 - az_vm_host_group_update
 metadata:
-  ms.date: 12/18/2025
+  ms.date: 03/19/2026
   description: Manage Dedicated Host Groups.
