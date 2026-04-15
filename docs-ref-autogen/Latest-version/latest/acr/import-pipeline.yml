@@ -16,29 +16,31 @@ directCommands:
   summary: |-
     Create an import pipeline.
   status: Preview
-  isBreakingChange: true
   isPreview: true
-  breakingChangeInfo: 'Add required parameter --storage-access-mode in next breaking change release(2.86.0) scheduled for May 2026. A new required parameter `--storage-access-mode` will be added. Allowed values: `entra-mi-auth`, `storage-sas-token`. To know more about the Breaking Change, please visit https://aka.ms/acr/transfer.'
   previewOrExperimentalInfo: "Command group 'acr import-pipeline' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az acr import-pipeline create --name
                                   --registry
                                   --resource-group
-                                  --secret-uri
+                                  --storage-access-mode
                                   --storage-container-uri
                                   [--acquire-policy-token]
                                   [--assign-identity]
                                   [--change-reference]
                                   [--options]
+                                  [--secret-uri]
                                   [--source-trigger-enabled {false, true}]
   examples:
   - summary: |-
-      Create an import pipeline.
-    syntax: az acr import-pipeline create --resource-group $MyRG --registry $MyReg --name $MyPipeline --secret-uri https://$MyKV.vault.azure.net/secrets/$MySecret --storage-container-uri https://$MyStorage.blob.core.windows.net/$MyContainer
+      Create an import pipeline with SAS token authentication.
+    syntax: az acr import-pipeline create --resource-group $MyRG --registry $MyReg --name $MyPipeline --storage-access-mode SasToken --secret-uri https://$MyKV.vault.azure.net/secrets/$MySecret --storage-container-uri https://$MyStorage.blob.core.windows.net/$MyContainer
   - summary: |-
-      Create an import pipeline with a user-assigned identity, all available options, and source trigger disabled.
-    syntax: az acr import-pipeline create --resource-group $MyRG --registry $MyReg --name $MyPipeline --secret-uri https://$MyKV.vault.azure.net/secrets/$MySecret --storage-container-uri https://$MyStorage.blob.core.windows.net/$MyContainer --options DeleteSourceBlobOnSuccess OverwriteTags ContinueOnErrors --assign-identity /subscriptions/$MySubID/resourceGroups/$MyRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$MyIdentity --source-trigger-enabled False
+      Create an import pipeline with system-assigned managed identity (automatic provisioning).
+    syntax: az acr import-pipeline create --resource-group $MyRG --registry $MyReg --name $MyPipeline --storage-access-mode ManagedIdentity --storage-container-uri https://$MyStorage.blob.core.windows.net/$MyContainer
+  - summary: |-
+      Create an import pipeline with user-assigned managed identity and all available options.
+    syntax: az acr import-pipeline create --resource-group $MyRG --registry $MyReg --name $MyPipeline --storage-access-mode ManagedIdentity --storage-container-uri https://$MyStorage.blob.core.windows.net/$MyContainer --options DeleteSourceBlobOnSuccess OverwriteTags ContinueOnErrors --assign-identity /subscriptions/$MySubID/resourceGroups/$MyRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$MyIdentity --source-trigger-enabled False
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -53,9 +55,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --secret-uri -s
+    name: --storage-access-mode -m
     summary: |-
-      Keyvault secret URI containing a valid SAS token to the associated storage account of the form https://$MyKeyvault.vault.azure.net/secrets/$MySecret. Note that the URI may be different outside of AzureCloud.
+      Storage account access mode. Allowed values: ManagedIdentity, SasToken.
   - isRequired: true
     name: --storage-container-uri -c
     summary: |-
@@ -67,7 +69,7 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --assign-identity -i
     summary: |-
-      User assigned identity resource ID of the form /subscriptions/$MySubID/resourceGroups/$MyRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$MyIdentity.
+      Managed identity for the pipeline. Provide a user-assigned identity resource ID of the form /subscriptions/$MySubID/resourceGroups/$MyRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$MyIdentity. If not specified, a system-assigned managed identity will be automatically provisioned.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -75,6 +77,9 @@ directCommands:
   - name: --options -z
     summary: |-
       Space-separated list of options. May only contain the following options: DeleteSourceBlobOnSuccess,OverwriteTags,ContinueOnErrors,DisableSourceTrigger.
+  - name: --secret-uri -s
+    summary: |-
+      Keyvault secret URI containing a valid SAS token to the associated storage account of the form https://$MyKeyvault.vault.azure.net/secrets/$MySecret. Note that the URI may be different outside of AzureCloud. Required when --storage-access-mode is SasToken.
   - name: --source-trigger-enabled -e
     defaultValue: "True"
     acceptedValues: false, true
