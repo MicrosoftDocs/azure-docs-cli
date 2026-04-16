@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 04/08/2026
+ms.date: 04/16/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -324,20 +324,6 @@ The breaking changes listed in this section are planned for the next major relea
 
 - The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
 - The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
-
-## azext_acrtransfer
-
-### `acr import-pipeline create`
-
-[Link to acr import-pipeline reference group](/cli/azure/acr/import-pipeline)
-
-- Add required parameter --storage-access-mode in next breaking change release(2.86.0) scheduled for May 2026. A new required parameter `--storage-access-mode` will be added. Allowed values: `entra-mi-auth`, `storage-sas-token`. To know more about the Breaking Change, please visit https://aka.ms/acr/transfer.
-
-### `acr export-pipeline create`
-
-[Link to acr export-pipeline reference group](/cli/azure/acr/export-pipeline)
-
-- Add required parameter --storage-access-mode in next breaking change release(2.86.0) scheduled for May 2026. A new required parameter `--storage-access-mode` will be added. Allowed values: `entra-mi-auth`, `storage-sas-token`. To know more about the Breaking Change, please visit https://aka.ms/acr/transfer.
 
 ## azext_appservice_kube
 
