@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 04/07/2026
+ms.date: 04/08/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -209,11 +209,9 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
 - The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.86.0) scheduled for May 2026.
 - The basic option will not be accepted, use Standard instead
 
@@ -222,13 +220,29 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
 - '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
 
 ## resource
+
+### `policy definition delete`
+
+[Link to policy definition reference group](/cli/azure/policy/definition)
+
+- Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
+
+### `policy exemption create`
+
+[Link to policy exemption reference group](/cli/azure/policy/exemption)
+
+- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
+
+### `policy exemption update`
+
+[Link to policy exemption reference group](/cli/azure/policy/exemption)
+
+- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
 
 ### `policy assignment identity assign`
 
@@ -255,27 +269,9 @@ The breaking changes listed in this section are planned for the next major relea
 
 - The return value will change in a future release of the resource commands. It will be empty rather than the full array of remaining message objects.
 
-### `policy exemption create`
-
-[Link to policy exemption reference group](/cli/azure/policy/exemption)
-
-- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
-
-### `policy exemption update`
-
-[Link to policy exemption reference group](/cli/azure/policy/exemption)
-
-- Date format will change slightly in a future release of the resource commands. New format is ISO-8601, e.g. 2025-08-05T00:45:13Z instead of 2025-08-05T00:45:13+00:00.
-
 ### `policy set-definition delete`
 
 [Link to policy set-definition reference group](/cli/azure/policy/set-definition)
-
-- Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
-
-### `policy definition delete`
-
-[Link to policy definition reference group](/cli/azure/policy/definition)
 
 - Behavior will change in a future release of the resource commands. Bypassing the confirmation prompt will require providing the -y switch.
 
@@ -392,11 +388,9 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
 - The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.86.0) scheduled for May 2026.
 - The basic option will not be accepted, use Standard instead
 
@@ -405,11 +399,9 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
 - '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--default-group-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'command group az netappfiles volume quota-rule' instead.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
 
 ## azext_redisenterprise
 
