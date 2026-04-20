@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 04/12/2026
+ms.date: 04/13/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -44,7 +44,7 @@ You will be prompted to install an extension on first use.
 |[appnet-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/appnet-preview) | 2.75.0 | Azure CLI commands for working with Azure Kubernetes Application Network resources. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/appnet-preview/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.60.0 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.11](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.73.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.7.1](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
-|[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.29](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
+|[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.30](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[arcgateway](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway) | 2.57.0 | Microsoft Azure Command-Line Tools Arcgateway Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway/HISTORY.rst) |
 |[arize-ai](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai) | 2.75.0 | Microsoft Azure Command-Line Tools ArizeAi Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai/HISTORY.rst) |
 |[artifact-signing](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing) | 2.75.0 | Microsoft Azure Command-Line Tools Artifact Signing Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing/HISTORY.rst) |
@@ -177,7 +177,7 @@ You will be prompted to install an extension on first use.
 |[peering](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering) | 2.3.1 | Microsoft Azure Command-Line Tools PeeringManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/peering/HISTORY.rst) |
 |[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.67.0 | Microsoft Azure Command-Line Tools Portal Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated) | 2.56.0 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated/HISTORY.rst) |
-|[prototype](https://github.com/Azure/az-prototype) | 2.50.0 | Azure CLI extension for rapid prototype generation using AI agents and GitHub Copilot | Preview | [0.2.1b6](https://github.com/Azure/az-prototype) |
+|[prototype](https://github.com/Azure/az-prototype) | 2.50.0 | Azure CLI extension for rapid prototype generation using AI agents and GitHub Copilot | Preview | [0.2.1b7](https://github.com/Azure/az-prototype) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub) | 2.57.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub/HISTORY.rst) |
 |[pscloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud) | 2.75.0 | Microsoft Azure Command-Line Tools Pscloud Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
