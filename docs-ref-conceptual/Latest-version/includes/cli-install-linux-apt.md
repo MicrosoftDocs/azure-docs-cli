@@ -262,4 +262,4 @@ to allow HTTPS connections to the following address: `https://packages.microsoft
 [04]: #set-release
 [05]: https://github.com/Azure/azure-cli/issues
 [06]: https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy
-[07]: https://manpages.ubuntu.com/manpages/lunar/en/man5/apt.conf.5.html
+[07]: https://manpages.ubuntu.com/manpages/resolute/man5/apt.conf.5.html
