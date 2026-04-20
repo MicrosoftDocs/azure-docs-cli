@@ -203,6 +203,7 @@ directCommands:
                             [--outraw]
                             [--outraw-pretty-print]
                             [--parameters]
+                            [--platform {linux/amd64, windows/amd64}]
                             [--print-existing-policy]
                             [--print-policy]
                             [--save-to-file]
@@ -227,6 +228,9 @@ directCommands:
   - summary: |-
       Input an ARM Template file and use a fragments JSON file to generate a policy
     syntax: az confcom acipolicygen --template-file "./template.json" --fragments-json "./fragments.json" --include-fragments
+  - summary: |-
+      Generate a Windows container policy (requires Docker Desktop in Windows containers mode)
+    syntax: az confcom acipolicygen --template-file "./template.json" --platform windows/amd64 --outraw-pretty-print
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -293,6 +297,11 @@ directCommands:
   - name: --parameters -p
     summary: |-
       Input parameters file to optionally accompany an ARM Template.
+  - name: --platform
+    defaultValue: linux/amd64
+    acceptedValues: linux/amd64, windows/amd64
+    summary: |-
+      Target platform for policy generation (linux/amd64 or windows/amd64). Defaults to linux/amd64. Docker Desktop must be running in the matching container mode to produce correct layer hashes.
   - name: --print-existing-policy
     defaultValue: "False"
     summary: |-
