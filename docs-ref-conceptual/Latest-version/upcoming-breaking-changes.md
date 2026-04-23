@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 04/21/2026
+ms.date: 04/23/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -105,16 +105,17 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
-- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module. This change will take effect in next breaking change release scheduled for May 2026.
+- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
 - '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
+- Currently, to create an elastic cluster you must specify --cluster-option ElasticCluster together with --node-count. In the future, providing --node-count alone will imply an elastic cluster.
 
 ### `postgres flexible-server restore`
 
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
-- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module. This change will take effect in next breaking change release scheduled for May 2026.
+- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
 - '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
@@ -122,7 +123,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
-- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module. This change will take effect in next breaking change release scheduled for May 2026.
+- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
 - '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
@@ -130,7 +131,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
-- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module. This change will take effect in next breaking change release scheduled for May 2026.
+- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
 - '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 
@@ -156,7 +157,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to postgres flexible-server replica reference group](/cli/azure/postgres/flexible-server/replica)
 
-- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module. This change will take effect in next breaking change release scheduled for May 2026.
+- This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
 - '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
 - '--replica-name' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--name' instead.
