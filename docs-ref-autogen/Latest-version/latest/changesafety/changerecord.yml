@@ -1,0 +1,515 @@
+### YamlMime:AzureCLIGroup
+uid: az_changesafety_changerecord
+name: az changesafety changerecord
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-changesafety** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az changesafety changerecord** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage ChangeRecord resources that describe planned changes across targets.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_changesafety_changerecord_create
+  name: az changesafety changerecord create
+  summary: |-
+    Create a ChangeRecord resource.
+  description: |-
+    Provide at least one target definition to describe which resources or operations the ChangeRecord will affect. Targets are expressed as comma or semicolon separated key=value pairs such as resourceId=RESOURCE_ID,operation=DELETE. The command is also available through the alias `az changesafety changerecord`. If you omit scheduling flags, the anticipated start time defaults to now and the anticipated end time defaults to eight hours later (UTC).
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az changesafety changerecord create --change-record-name --name
+                                        [--acquire-policy-token]
+                                        [--additional-data]
+                                        [--anticipated-end-time]
+                                        [--anticipated-start-time]
+                                        [--change-definition]
+                                        [--change-reference]
+                                        [--change-type {AppDeployment, Config, ManualTouch, PolicyDeployment}]
+                                        [--comments]
+                                        [--description]
+                                        [--links]
+                                        [--orchestration-tool]
+                                        [--parameters]
+                                        [--release-label]
+                                        [--resource-group]
+                                        [--rollout-type {Emergency, Hotfix, Normal}]
+                                        [--stage-map]
+                                        [--stage-map-name --stagemap-name]
+                                        [--targets]
+  examples:
+  - summary: |-
+      Create a ChangeRecord for deleting a Traffic Manager profile
+    syntax: az changesafety changerecord create -g MyResourceGroup -n delete-trafficmanager --change-type ManualTouch --rollout-type Hotfix --targets "resourceId=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Network/trafficManagerProfiles/myProfile,operation=DELETE" --description "Delete Traffic Manager profile"
+  - summary: |-
+      Reference a StageMap by name
+    syntax: az changesafety changerecord create -g MyResourceGroup -n changerecord003 --change-type ManualTouch --rollout-type Normal --stagemap-name rolloutStageMap --targets "resourceId=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/myVm,operation=DELETE"
+  - summary: |-
+      Create with StageMap reference and status link
+    syntax: >-
+      az changesafety changerecord create -g MyResourceGroup -n changerecord002 --change-type ManualTouch --rollout-type Normal --stage-map "{resource-id:/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.ChangeSafety/stageMaps/rolloutStageMap}" --targets "resourceId=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/myVm,operation=PATCH" --links "[{name:status,uri:'https://contoso.com/change/rollout-002'}]"
+
+      az changesafety changerecord delete -g MyResourceGroup -n changerecord002 --yes
+  - summary: |-
+      Create at subscription scope (no resource group)
+    syntax: az changesafety changerecord create -n changerecord-sub-scope --change-type AppDeployment --rollout-type Normal --stagemap-name rolloutStageMap --targets "subscriptionId=00000000-0000-0000-0000-000000000000"
+  requiredParameters:
+  - isRequired: true
+    name: --change-record-name --name -n
+    summary: |-
+      The name of the ChangeRecord resource.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --additional-data
+    summary: |-
+      Additional metadata for the change required for various orchestration tools.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --anticipated-end-time
+    summary: |-
+      Expected completion time in ISO 8601 format. Defaults to eight hours after the anticipated start time when omitted.
+    groupName: Properties Arguments
+  - name: --anticipated-start-time
+    summary: |-
+      Expected start time in ISO 8601 format. Defaults to current UTC time when omitted.
+    groupName: Properties Arguments
+  - name: --change-definition
+    summary: |-
+      Change request body and/or resource selection criteria used to identify the targeted resources.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-type
+    acceptedValues: AppDeployment, Config, ManualTouch, PolicyDeployment
+    summary: |-
+      Classify the change such as AppDeployment, Config, ManualTouch, or PolicyDeployment.
+    groupName: Properties Arguments
+  - name: --comments
+    summary: |-
+      Comments about the last update to the ChangeRecord resource.
+    groupName: Properties Arguments
+  - name: --description
+    summary: |-
+      A description of the change being performed.
+    groupName: Properties Arguments
+  - name: --links
+    summary: |-
+      Add supporting links by repeating --links name=NAME uri=URL [description=TEXT].
+    groupName: Properties Arguments
+  - name: --orchestration-tool
+    summary: |-
+      Tool used for deployment orchestration of this change.
+    groupName: Properties Arguments
+  - name: --parameters
+    summary: |-
+      Schema of parameters that will be provided for each stageProgression.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --release-label
+    summary: |-
+      Label for the release associated with this change.
+    groupName: Properties Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --rollout-type
+    acceptedValues: Emergency, Hotfix, Normal
+    summary: |-
+      Specify the rollout type (Normal, Hotfix, or Emergency).
+    groupName: Properties Arguments
+  - name: --stage-map
+    summary: |-
+      Reference an existing StageMap resource using resource-id=RESOURCE_ID and optional parameters key=value pairs.
+    groupName: Properties Arguments
+  - name: --stage-map-name --stagemap-name
+    summary: |-
+      StageMap name in the current subscription scope; the resource ID is built for you.
+    groupName: Properties Arguments
+  - name: --targets
+    summary: |-
+      One or more target definitions expressed as key=value pairs (for example resourceId=RESOURCE_ID,operation=DELETE,resourceType=Microsoft.Compute/virtualMachines).
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_changesafety_changerecord_delete
+  name: az changesafety changerecord delete
+  summary: |-
+    Delete a ChangeRecord resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az changesafety changerecord delete [--acquire-policy-token]
+                                        [--change-record-name --name]
+                                        [--change-reference]
+                                        [--ids]
+                                        [--resource-group]
+                                        [--subscription]
+                                        [--yes]
+  examples:
+  - summary: |-
+      Delete a ChangeRecord without confirmation
+    syntax: az changesafety changerecord delete -g MyResourceGroup -n changerecord001 --yes
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-record-name --name -n
+    summary: |-
+      The name of the ChangeRecord resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_changesafety_changerecord_list
+  name: az changesafety changerecord list
+  summary: |-
+    List ChangeRecord resources.
+  description: |-
+    List all ChangeRecord resources in a subscription or resource group.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az changesafety changerecord list [--max-items]
+                                      [--next-token]
+                                      [--resource-group]
+  examples:
+  - summary: |-
+      List all ChangeRecords in the current subscription
+    syntax: az changesafety changerecord list
+  - summary: |-
+      List ChangeRecords in a specific resource group
+    syntax: az changesafety changerecord list -g MyResourceGroup
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_changesafety_changerecord_show
+  name: az changesafety changerecord show
+  summary: |-
+    Show details for a ChangeRecord resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az changesafety changerecord show [--change-record-name --name]
+                                      [--ids]
+                                      [--resource-group]
+                                      [--subscription]
+  examples:
+  - summary: |-
+      Show a ChangeRecord
+    syntax: az changesafety changerecord show -g MyResourceGroup -n changerecord001
+  optionalParameters:
+  - name: --change-record-name --name -n
+    summary: |-
+      The name of the ChangeRecord resource.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_changesafety_changerecord_update
+  name: az changesafety changerecord update
+  summary: |-
+    Update an existing ChangeRecord resource.
+  description: |-
+    Use this command to modify descriptive metadata, rollout settings, or scheduling for an existing ChangeRecord. Note: The changeDefinition (targets) cannot be modified after creation.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az changesafety changerecord update [--acquire-policy-token]
+                                        [--add]
+                                        [--additional-data]
+                                        [--anticipated-end-time]
+                                        [--anticipated-start-time]
+                                        [--change-record-name --name]
+                                        [--change-reference]
+                                        [--change-type {AppDeployment, Config, ManualTouch, PolicyDeployment}]
+                                        [--comments]
+                                        [--description]
+                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--ids]
+                                        [--links]
+                                        [--orchestration-tool]
+                                        [--parameters]
+                                        [--release-label]
+                                        [--remove]
+                                        [--resource-group]
+                                        [--rollout-type {Emergency, Hotfix, Normal}]
+                                        [--set]
+                                        [--stage-map]
+                                        [--stage-map-name --stagemap-name]
+                                        [--subscription]
+  examples:
+  - summary: |-
+      Adjust rollout type and add a comment
+    syntax: az changesafety changerecord update -g MyResourceGroup -n changerecord001 --rollout-type Emergency --comments "Escalated to emergency rollout"
+  - summary: |-
+      Update scheduling window
+    syntax: az changesafety changerecord update -g MyResourceGroup -n changerecord001 --anticipated-start-time "2026-09-01T08:00:00Z" --anticipated-end-time "2026-09-01T12:00:00Z"
+  - summary: |-
+      Update description
+    syntax: az changesafety changerecord update -g MyResourceGroup -n changerecord001 --description "Updated rollout for production deployment"
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --additional-data
+    summary: |-
+      Additional metadata for the change required for various orchestration tools.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --anticipated-end-time
+    summary: |-
+      Update the expected completion time in ISO 8601 format. If omitted, the current value is preserved.
+    groupName: Properties Arguments
+  - name: --anticipated-start-time
+    summary: |-
+      Update the expected start time in ISO 8601 format. If omitted, the current value is preserved.
+    groupName: Properties Arguments
+  - name: --change-record-name --name -n
+    summary: |-
+      The name of the ChangeRecord resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-type
+    acceptedValues: AppDeployment, Config, ManualTouch, PolicyDeployment
+    summary: |-
+      Describes the nature of the change.
+    groupName: Properties Arguments
+  - name: --comments
+    summary: |-
+      Provide notes about the latest update to the ChangeRecord.
+    groupName: Properties Arguments
+  - name: --description
+    summary: |-
+      Update the description of the change.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --links
+    summary: |-
+      Collection of related links for the change.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --orchestration-tool
+    summary: |-
+      Tool used for deployment orchestration of this change.
+    groupName: Properties Arguments
+  - name: --parameters
+    summary: |-
+      Schema of parameters that will be provided for each stageProgression.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --release-label
+    summary: |-
+      Label for the release associated with this change.
+    groupName: Properties Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --rollout-type
+    acceptedValues: Emergency, Hotfix, Normal
+    summary: |-
+      Describes the type of the rollout used for the change.
+    groupName: Properties Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --stage-map
+    summary: |-
+      Reference an existing StageMap resource using resource-id=RESOURCE_ID and optional parameters key=value pairs.
+    groupName: Properties Arguments
+  - name: --stage-map-name --stagemap-name
+    summary: |-
+      StageMap name in the current subscription scope; the resource ID is built for you.
+    groupName: Properties Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_changesafety_changerecord_create
+- az_changesafety_changerecord_delete
+- az_changesafety_changerecord_list
+- az_changesafety_changerecord_show
+- az_changesafety_changerecord_update
+metadata:
+  description: Manage ChangeRecord resources that describe planned changes across targets.
