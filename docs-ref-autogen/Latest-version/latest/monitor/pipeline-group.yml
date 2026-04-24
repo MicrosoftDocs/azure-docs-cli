@@ -3,9 +3,9 @@ uid: az_monitor_pipeline-group
 name: az monitor pipeline-group
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **monitor-pipeline-group** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az monitor pipeline-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **monitor-pipeline-group** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az monitor pipeline-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Pipeline Groups.
+  Manage Azure Monitor Pipelines.
 status: GA
 sourceType: Extension
 directCommands:
@@ -20,20 +20,17 @@ directCommands:
                                      --resource-group
                                      [--acquire-policy-token]
                                      [--change-reference]
+                                     [--execution-placement]
                                      [--exporters]
                                      [--extended-location]
                                      [--location]
-                                     [--network-config]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--processors]
                                      [--receivers]
                                      [--replicas]
                                      [--service]
                                      [--tags]
-  examples:
-  - summary: |-
-      Create a PipelineGroup instance using UDP receiver
-    syntax: az monitor pipeline-group create --resource-group myResourceGroup --pipeline-group-name plGroup1 --location eastus2 --extended-location "{name:/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation,type:CustomLocation}" --tags "{tag1:A,tag2:B}" --receivers "[{type:UDP,name:udp-receiver1,udp:{endpoint:'0.0.0.0:518',encoding:utf-8}}]" --processors "[]" --exporters "[{type:AzureMonitorWorkspaceLogs,name:my-workspace-logs-exporter1,azure-monitor-workspace-logs:{api:{data-collection-endpoint-url:'https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com',stream:Custom-MyTableRawData_CL,data-collection-rule:dcr-00000000000000000000000000000000,schema:{record-map:[{from:body,to:Body},{from:severity_text,to:SeverityText},{from:time_unix_nano,to:TimeGenerated}]}},concurrency:{worker-count:4,batch-queue-size:100}}}]" --service "{pipelines:[{name:MyPipelineForLogs1,type:logs,receivers:[udp-receiver1],processors:[],exporters:[my-workspace-logs-exporter1]}]}"
+                                     [--tls-configurations]
   requiredParameters:
   - isRequired: true
     name: --name --pipeline-group-name -n
@@ -52,22 +49,22 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --execution-placement
+    summary: |-
+      Constraints for guiding the execution environment of the pipeline group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --exporters
     summary: |-
       The exporters specified for a pipeline group instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --extended-location
     summary: |-
-      The extended location for given pipeline group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Resource Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     groupName: Resource Arguments
-  - name: --network-config
-    summary: |-
-      Networking configurations for the pipeline group instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -92,6 +89,10 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Resource Arguments
+  - name: --tls-configurations
+    summary: |-
+      TLS configurations for the pipeline group instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -302,11 +303,11 @@ directCommands:
     az monitor pipeline-group update [--acquire-policy-token]
                                      [--add]
                                      [--change-reference]
+                                     [--execution-placement]
                                      [--exporters]
                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--ids]
                                      [--name --pipeline-group-name]
-                                     [--network-config]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--processors]
                                      [--receivers]
@@ -317,10 +318,7 @@ directCommands:
                                      [--set]
                                      [--subscription]
                                      [--tags]
-  examples:
-  - summary: |-
-      Update a pipeline-group instance
-    syntax: az monitor pipeline-group update --resource-group myResourceGroup --pipeline-group-name plGroup1 --receivers "[{type:UDP,name:udp-receiver1,udp:{endpoint:'0.0.0.0:518',encoding:utf-8}}]" --processors "[]" --exporters "[{type:AzureMonitorWorkspaceLogs,name:my-workspace-logs-exporter1,azure-monitor-workspace-logs:{api:{data-collection-endpoint-url:'https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com',stream:Custom-MyTableRawData_CL,data-collection-rule:dcr-00000000000000000000000000000000,schema:{record-map:[{from:body,to:Body},{from:severity_text,to:SeverityText},{from:time_unix_nano,to:TimeGenerated}]}},concurrency:{worker-count:4,batch-queue-size:100}}}]" --service "{pipelines:[{name:MyPipelineForLogs1,type:logs,receivers:[udp-receiver1],processors:[],exporters:[my-workspace-logs-exporter1]}]}"
+                                     [--tls-configurations]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -334,6 +332,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --execution-placement
+    summary: |-
+      Constraints for guiding the execution environment of the pipeline group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --exporters
     summary: |-
       The exporters specified for a pipeline group instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -351,10 +353,6 @@ directCommands:
     summary: |-
       The name of pipeline group. The name is case insensitive.
     groupName: Resource Id Arguments
-  - name: --network-config
-    summary: |-
-      Networking configurations for the pipeline group instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -395,6 +393,10 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Resource Arguments
+  - name: --tls-configurations
+    summary: |-
+      TLS configurations for the pipeline group instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -530,4 +532,4 @@ commands:
 - az_monitor_pipeline-group_update
 - az_monitor_pipeline-group_wait
 metadata:
-  description: Manage Pipeline Groups.
+  description: Manage Azure Monitor Pipelines.
