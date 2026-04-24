@@ -313,6 +313,8 @@ directCommands:
              [--resource-id]
              [--scope]
              [--service-principal]
+             [--skip-sub --skip-subscription-discovery]
+             [--subscription]
              [--tenant]
              [--use-cert-sn-issuer]
              [--use-device-code]
@@ -339,6 +341,15 @@ directCommands:
   - summary: |-
       Log in with a user-assigned managed identity's resource ID.
     syntax: az login --identity --resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity
+  - summary: |-
+      Log in and skip subscription discovery, fetching only a single subscription (fastest for tenants with many subscriptions).
+    syntax: az login --tenant TENANT_ID --skip-subscription-discovery --subscription SUBSCRIPTION_ID
+  - summary: |-
+      Log in and skip subscription discovery entirely for tenant-level operations only (e.g., 'az ad').
+    syntax: az login --tenant TENANT_ID --skip-subscription-discovery
+  - summary: |-
+      Log in with full discovery but set a specific subscription as the default.
+    syntax: az login --subscription SUBSCRIPTION_ID
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -387,6 +398,13 @@ directCommands:
   - name: --service-principal
     summary: |-
       Log in with a service principal.
+  - name: --skip-sub --skip-subscription-discovery
+    defaultValue: "False"
+    summary: |-
+      Skip the subscription discovery process during login. Requires --tenant. Use with --subscription to fetch a single subscription without listing all.
+  - name: --subscription -s
+    summary: |-
+      Subscription ID or name to set as the default. When combined with --skip-subscription-discovery, only this subscription is retrieved via a direct API call (must be a subscription ID, not a name).
   - name: --tenant -t
     summary: |-
       The Microsoft Entra tenant, must be provided when using a service principal.
