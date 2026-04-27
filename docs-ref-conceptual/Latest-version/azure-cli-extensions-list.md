@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 04/23/2026
+ms.date: 04/27/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -31,7 +31,7 @@ You will be prompted to install an extension on first use.
 |[aem](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem/HISTORY.rst) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples/HISTORY.rst) |
 |[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b22](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.73.0 | Provides a preview for upcoming AKS features | Preview | [20.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.73.0 | Provides a preview for upcoming AKS features | Preview | [20.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.77.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.102](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
@@ -53,6 +53,7 @@ You will be prompted to install an extension on first use.
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
 |[automanage](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage) | 2.44.1 | Microsoft Azure Command-Line Tools Automanage Extension. | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage/HISTORY.rst) |
 |[automation](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation) | 2.75.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation/HISTORY.rst) |
+|[azure-changesafety](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety) | 2.75.0 | Microsoft Azure Command-Line Tools ChangeSafety Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety/HISTORY.rst) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.3](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.75.0 | Manage Azure Firewall resources. | GA | [2.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
@@ -159,7 +160,7 @@ You will be prompted to install an extension on first use.
 |[ml](https://docs.microsoft.com/azure/machine-learning/azure-machine-learning-release-notes-cli-v2?view=azureml-api-2) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension | GA | [2.42.0](https://docs.microsoft.com/azure/machine-learning/azure-machine-learning-release-notes-cli-v2?view=azureml-api-2/HISTORY.rst) |
 |[mongo-db](https://github.com/Azure/azure-cli-extensions/tree/main/src/mongo-db) | 2.70.0 | Microsoft Azure Command-Line Tools MongoDb Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/mongo-db/HISTORY.rst) |
 |[monitor-control-service](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service) | 2.61.0 | Microsoft Azure Command-Line Tools MonitorClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service/HISTORY.rst) |
-|[monitor-pipeline-group](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-pipeline-group) | 2.61.0 | Microsoft Azure Command-Line Tools MonitorPipelineGroup Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-pipeline-group/HISTORY.rst) |
+|[monitor-pipeline-group](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-pipeline-group) | 2.75.0 | Microsoft Azure Command-Line Tools MonitorPipelineGroup Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-pipeline-group/HISTORY.rst) |
 |[multicloud-connector](https://github.com/Azure/azure-cli-extensions/tree/main/src/multicloud-connector) | 2.61.0 | Microsoft Azure Command-Line Tools MulticloudConnector Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/multicloud-connector/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview) | 2.61.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview/HISTORY.rst) |
 |[network-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics) | 2.51.0 | Microsoft Azure Command-Line Tools NetworkAnalytics Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics/HISTORY.rst) |
