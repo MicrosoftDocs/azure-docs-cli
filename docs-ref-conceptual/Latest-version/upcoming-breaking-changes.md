@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 04/23/2026
+ms.date: 04/24/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -284,20 +284,6 @@ The breaking changes listed in this section are planned for the next major relea
 
 - Options list has changed, run help command to see allowed options
 
-## storage
-
-### `storage account create`
-
-[Link to storage account reference group](/cli/azure/storage/account)
-
-- The --min-tls-version argument values TLS1_0 and TLS1_1 have been retired on 2026/02/03 and will be removed on 2026/03/03.
-
-### `storage account update`
-
-[Link to storage account reference group](/cli/azure/storage/account)
-
-- The --min-tls-version argument values TLS1_0 and TLS1_1 have been retired on 2026/02/03 and will be removed on 2026/03/03.
-
 ## vm
 
 ### `vm create`
@@ -426,20 +412,6 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to ssh reference group](/cli/azure/ssh)
 
 - On May 21st 2025, any ssh arc commands on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
-
-## azext_storage_preview
-
-### `storage account create`
-
-[Link to storage account reference group](/cli/azure/storage/account)
-
-- The --min-tls-version argument values TLS1_0 and TLS1_1 have been retired on 2026/02/03 and will be removed on 2026/03/03.
-
-### `storage account update`
-
-[Link to storage account reference group](/cli/azure/storage/account)
-
-- The --min-tls-version argument values TLS1_0 and TLS1_1 have been retired on 2026/02/03 and will be removed on 2026/03/03.
 
 > [!NOTE]
 > This article provides information on upcoming breaking changes. For previously published breaking changes, see [Azure CLI release notes](./release-notes-azure-cli.md).
