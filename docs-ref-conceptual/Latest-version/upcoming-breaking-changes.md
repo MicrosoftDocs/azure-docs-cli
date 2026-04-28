@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 04/27/2026
+ms.date: 04/28/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -18,25 +18,25 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to acr replication reference group](/cli/azure/acr/replication)
 
-- '--region-endpoint-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--global-endpoint-routing' instead.
+- '--region-endpoint-enabled' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--global-endpoint-routing' instead.
 
 ### `acr replication update`
 
 [Link to acr replication reference group](/cli/azure/acr/replication)
 
-- '--region-endpoint-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--global-endpoint-routing' instead.
+- '--region-endpoint-enabled' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--global-endpoint-routing' instead.
 
 ### `acr config content-trust update`
 
 [Link to acr config content-trust reference group](/cli/azure/acr/config/content-trust)
 
-- Remove content-trust enabled configuration in next breaking change release(2.86.0) scheduled for May 2026. The `--status enabled` parameter will no longer be accepted and will result in an error due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
+- Remove content-trust enabled configuration in next breaking change release(2.87.0) scheduled for June 2026. The `--status enabled` parameter will no longer be accepted and will result in an error due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
 
 ### `acr check-health`
 
 [Link to acr reference group](/cli/azure/acr)
 
-- Remove Notary client version validation in next breaking change release(2.86.0) scheduled for May 2026. The Notary client version check will no longer be performed as part of the check-health command due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
+- Remove Notary client version validation in next breaking change release(2.87.0) scheduled for June 2026. The Notary client version check will no longer be performed as part of the check-health command due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
 
 ### `acr config content-trust`
 
@@ -61,9 +61,9 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to webapp reference group](/cli/azure/webapp)
 
-- The output will be changed in next breaking change release(2.86.0) scheduled for May 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.
-- '--linux' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--os-type' instead.
-- '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- The output will be changed in next breaking change release(2.87.0) scheduled for June 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.
+- '--linux' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--os-type' instead.
+- '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ## compute_recommender
 
@@ -71,7 +71,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to compute-recommender reference group](/cli/azure/compute-recommender)
 
-- 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'az compute-recommender spot-placement-score' instead.
+- 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'az compute-recommender spot-placement-score' instead.
 
 ## mysql
 
@@ -79,25 +79,25 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to mysql flexible-server reference group](/cli/azure/mysql/flexible-server)
 
-- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ### `mysql flexible-server restore`
 
 [Link to mysql flexible-server reference group](/cli/azure/mysql/flexible-server)
 
-- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ### `mysql flexible-server geo-restore`
 
 [Link to mysql flexible-server reference group](/cli/azure/mysql/flexible-server)
 
-- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ### `mysql flexible-server replica create`
 
 [Link to mysql flexible-server replica reference group](/cli/azure/mysql/flexible-server/replica)
 
-- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- '--storage-redundancy' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ## postgresql
 
@@ -106,9 +106,9 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
 - This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
-- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
+- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--high-availability' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--zonal-resiliency' instead.
 - Currently, to create an elastic cluster you must specify --cluster-option ElasticCluster together with --node-count. In the future, providing --node-count alone will imply an elastic cluster.
 
 ### `postgres flexible-server restore`
@@ -116,30 +116,30 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
 - This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
-- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ### `postgres flexible-server geo-restore`
 
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
 - This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
-- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ### `postgres flexible-server revive-dropped`
 
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
 - This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
-- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ### `postgres flexible-server update`
 
 [Link to postgres flexible-server reference group](/cli/azure/postgres/flexible-server)
 
-- '--high-availability' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--zonal-resiliency' instead.
+- '--high-availability' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--zonal-resiliency' instead.
 
 ### `postgres flexible-server upgrade`
 
@@ -158,9 +158,9 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to postgres flexible-server replica reference group](/cli/azure/postgres/flexible-server/replica)
 
 - This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
-- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--replica-name' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--name' instead.
+- '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--replica-name' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--name' instead.
 
 ### `postgres flexible-server firewall-rule`
 
@@ -210,20 +210,20 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.86.0) scheduled for May 2026.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.87.0) scheduled for June 2026.
 - The basic option will not be accepted, use Standard instead
 
 ### `netappfiles volume update`
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
 
 ## resource
 
@@ -318,9 +318,9 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to webapp reference group](/cli/azure/webapp)
 
-- The output will be changed in next breaking change release(2.86.0) scheduled for May 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.
-- '--linux' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--os-type' instead.
-- '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- The output will be changed in next breaking change release(2.87.0) scheduled for June 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.
+- '--linux' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--os-type' instead.
+- '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 
 ## azext_blueprint
 
@@ -328,7 +328,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to blueprint reference group](/cli/azure/blueprint)
 
-- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
 - Blueprints and associated commands will be deprecated
 - as early as July 2026. Customers are encouraged to transition to
 - Template Specs and Deployments Stacks to support their scenarios beyond that date.
@@ -361,20 +361,20 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.86.0) scheduled for May 2026.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- The default value of '--network-features' will be changed to 'Standard' from 'Basic' in next breaking change release(2.87.0) scheduled for June 2026.
 - The basic option will not be accepted, use Standard instead
 
 ### `netappfiles volume update`
 
 [Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
 
-- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
-- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use 'netappfiles volume quota-rule' instead.
+- '--remote-volume-resource-id' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+- '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
+- '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use 'netappfiles volume quota-rule' instead.
 
 ## azext_redisenterprise
 
@@ -382,8 +382,8 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to redisenterprise reference group](/cli/azure/redisenterprise)
 
-- The argument '--public-network-access' will become required in next breaking change release(2.86.0) scheduled for May 2026.
-- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.86.0) scheduled for May 2026.
+- The argument '--public-network-access' will become required in next breaking change release(2.87.0) scheduled for June 2026.
+- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.87.0) scheduled for June 2026.
 
 ## azext_spring
 
