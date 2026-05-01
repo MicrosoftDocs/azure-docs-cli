@@ -63,6 +63,12 @@ Version 2.86.0
 
 * `az containerapp create`: Support other cloud for acr
 
+### Core
+
+* Resolve CVE-2025-15467
+* Resolve CVE-2025-69419
+* Resolve CVE-2026-39892
+
 ### Network
 
 * `az network express-route gateway`: Support VWAN gateway resiliency APIs
