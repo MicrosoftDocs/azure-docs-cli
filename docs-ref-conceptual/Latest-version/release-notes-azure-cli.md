@@ -32,6 +32,86 @@ Version 2.86.0
 * `az aks mesh enable/proxy-redirection-mechanism`: Add mesh Istio CNI commands
 * `az aks nodepool add`: Add `Windows2025` as a supported value for `--os-sku`
 * `az aks update`: Fix `--enable-azure-monitor-metrics` failing with RoleAssignmentExists when Grafana role assignment already exists
+* `az aks create/update`: Add `--enable-gateway-api` and `--disable-gateway-api` parameters to manage Managed Gateway API installation
+* `az aks create/update`: Add `--enable-app-routing-istio` and `--disable-app-routing-istio` to manage App Routing Istio gateway implementation
+
+### App Service
+
+* `az webapp create`: Add post-creation deployment guidance and startup command examples
+* `az webapp deploy`: Add build automation guidance for Linux zip deployments
+* `az webapp up`: Add logging for OS type, runtime auto-detection, and plan auto-generation
+* Add warning for container image path when `--container-image-name` includes registry host
+* `az webapp delete`: Add warning about App Service Plan deletion
+* Fix #33180: `az functionapp plan create`: Simplify reserved parameter assignment in AppServicePlan
+* `az webapp sitecontainers convert`: Add support for converting Docker Compose multi-container apps to Sitecontainers mode
+* `az webapp up/deploy`: Add `--enriched-errors` parameter to see detailed deployment failure log
+* `az webapp create`: Add error message that clearly lists all valid options and specifies how to discover available runtimes
+* `az appservice plan create`: Make `P0V3` as default SKU when `--sku` is omitted for linux webapp
+* `az appservice plan create`: Add `PREMIUM0V3` tier for elastic scale
+
+### Cloud
+
+* Fix #33183: `az cloud set`: Typo correction on AZURE_BLEU_CLOUD active directory endpoint
+
+### Compute
+
+* `az sig create`: Add new argument group "Managed Service Identity" to configure the service identity of a Shared Image Gallery (SIG)
+* `az sig show`: Update command to display the managed service identity of a Shared Image Gallery (SIG)
+* `az sig identity`: Add new command group to manage the service identity of a Shared Image Gallery (SIG)
+
+### Container app
+
+* `az containerapp create`: Support other cloud for acr
+
+### Network
+
+* `az network express-route gateway`: Support VWAN gateway resiliency APIs
+* `az network route-table create/update`: Add `--disable-peering-route` to support disable peering route
+
+### PostgreSQL
+
+* `az postgres flexible-server create`, `replica create`, `restore`, `geo-restore`, and `revive-dropped`: Add breaking change announcement for command behavioral change related to network resources
+* `az postgres flexible-server create`: Announce breaking change deprecation of `--cluster-option` argument
+* Fix #33090: `az postgres flexible-server server-logs list`: Command crashes with an AttributeError when listing log files
+* `az postgres flexible-server`: Improve validation logic and style of error messages
+* `az postgresql flexible-server replica create`: New argument `--storage-type` to select storage type as PremiumV2_LRS for read replica
+* Fix #33205: `az postgres flexible-server create`: Update help text for `--storage-auto-grow` argument to reflect actual default value
+* `az postgres flexible-server update`: Restart is no longer required for scaling storage size of Premium SSDv2 server
+* `az postgres flexible-server create/upgrade`: Block SSDv2 creation for PG version earlier than 14
+
+### Profile
+
+* `az login`: Add `--subscription` and `--skip-subscription-discovery` to filter subscriptions during login
+
+### Storage
+
+* `az storage account create/update`: Update description for tls 1.3 being not yet available, remove breaking change warning to deprecate tls1.0, tls1.1
+* `az storage blob/container/share/file/queue/fs generate-sas`: Add `--user-delegation-tid` to support cross tenant user delegated sas
+* `az storage advanced-platform-metric create/update/show/list/delete`: Support Advanced Platform Metrics
+
+## May 05, 2026
+
+Version 2.86.0
+
+### ACR
+
+* `az acr login`: Support Podman for `--name` parameter
+* `az acr create`: Add `--regional-endpoints` parameter to enable or disable regional endpoints for a container registry
+* `az acr update`: Add `--regional-endpoints` parameter to enable or disable regional endpoints for an existing container registry
+* `az acr show-endpoints`: Display regional endpoint host names when regional endpoints are enabled
+* `az acr login`: Add `--endpoint` parameter to log in to a specific regional endpoint of a container registry
+* `az acr import`: Support importing images using regional endpoint URIs as the source
+* `az acr network-rule`: Update `--ip-address` help message to include ipv6 address
+
+### AKS
+
+* `az aks create`, `az aks nodepool add/update`: Add option `AzureContainerLinux` to `--os-sku` parameter
+* `az aks check-acr`: Fix command injection via unquoted tempfile path in subprocess call
+* `az aks update`: Add `--enable-azure-monitor-app-monitoring` to support Azure Monitor Application Monitoring auto-instrumentation
+* `az aks create`: Add parameters `--system-node-subnet-id`, `--node-subnet-id` and `--enable-hosted-system` to support BYO VNet for Automatic Managed System Pool clusters
+* `az aks mesh enable/proxy-redirection-mechanism`: Add mesh Istio CNI commands
+* `az aks nodepool add`: Add `Windows2025` as a supported value for `--os-sku`
+* `az aks update`: Fix `--enable-azure-monitor-metrics` failing with RoleAssignmentExists when Grafana role assignment already exists
 
 ### App Service
 
