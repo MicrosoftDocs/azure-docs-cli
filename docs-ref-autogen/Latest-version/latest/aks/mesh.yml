@@ -572,6 +572,7 @@ directCommands:
                        [--change-reference]
                        [--key-vault-id]
                        [--no-wait]
+                       [--proxy-redirection-mechanism {CNIChaining, InitContainers}]
                        [--revision]
                        [--root-cert-object-name]
   examples:
@@ -581,6 +582,9 @@ directCommands:
   - summary: |-
       Enable Azure Service Mesh with plugin CA.
     syntax: az aks mesh enable --resource-group MyResourceGroup --name MyManagedCluster --key-vault-id /subscriptions/00000/resourceGroups/foo/providers/Microsoft.KeyVault/vaults/foo --ca-cert-object-name my-ca-cert --ca-key-object-name my-ca-key --cert-chain-object-name my-cert-chain --root-cert-object-name my-root-cert
+  - summary: |-
+      Enable Azure Service Mesh with CNI chaining.
+    syntax: az aks mesh enable --resource-group MyResourceGroup --name MyManagedCluster --proxy-redirection-mechanism CNIChaining
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -615,6 +619,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --proxy-redirection-mechanism
+    acceptedValues: CNIChaining, InitContainers
+    summary: |-
+      Set the proxy redirection mechanism.
+    description: |-
+      Allowed values are "CNIChaining" which uses CNI plugins for traffic redirection, and "InitContainers" which uses privileged init containers.
   - name: --revision
     summary: |-
       Azure Service Mesh revision to install.
@@ -1382,6 +1392,85 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_mesh_proxy-redirection-mechanism
+  name: az aks mesh proxy-redirection-mechanism
+  summary: |-
+    Set the proxy redirection mechanism for Azure Service Mesh.
+  description: |-
+    This command sets the proxy redirection mechanism for Azure Service Mesh on a cluster that already has the service mesh enabled.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
+  syntax: >-
+    az aks mesh proxy-redirection-mechanism --mechanism {CNIChaining, InitContainers}
+                                            --name
+                                            --resource-group
+                                            [--acquire-policy-token]
+                                            [--change-reference]
+                                            [--no-wait]
+  examples:
+  - summary: |-
+      Set proxy redirection mechanism to CNI chaining.
+    syntax: az aks mesh proxy-redirection-mechanism --resource-group MyResourceGroup --name MyManagedCluster --mechanism CNIChaining
+  - summary: |-
+      Set proxy redirection mechanism to init containers.
+    syntax: az aks mesh proxy-redirection-mechanism --resource-group MyResourceGroup --name MyManagedCluster --mechanism InitContainers
+  requiredParameters:
+  - isRequired: true
+    name: --mechanism
+    acceptedValues: CNIChaining, InitContainers
+    summary: |-
+      The proxy redirection mechanism.
+    description: |-
+      Allowed values are "CNIChaining" which uses CNI plugins for traffic redirection, and "InitContainers" which uses privileged init containers.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the managed cluster.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_aks_mesh_disable
 - az_aks_mesh_disable(aks-preview)
@@ -1401,6 +1490,7 @@ commands:
 - az_aks_mesh_get-revisions(aks-preview)
 - az_aks_mesh_get-upgrades
 - az_aks_mesh_get-upgrades(aks-preview)
+- az_aks_mesh_proxy-redirection-mechanism
 - az_aks_mesh_upgrade
 - az_aks_mesh_upgrade_complete
 - az_aks_mesh_upgrade_complete(aks-preview)

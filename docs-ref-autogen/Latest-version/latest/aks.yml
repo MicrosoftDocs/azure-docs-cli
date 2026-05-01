@@ -637,6 +637,7 @@ directCommands:
                   [--enable-asm --enable-azure-service-mesh]
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-app-monitoring]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -647,6 +648,7 @@ directCommands:
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
                   [--enable-high-log-scale-mode {false, true}]
+                  [--enable-hosted-system]
                   [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-managed-identity]
@@ -716,6 +718,7 @@ directCommands:
                   [--node-public-ip-prefix-id]
                   [--node-public-ip-tags]
                   [--node-resource-group]
+                  [--node-subnet-id]
                   [--node-vm-size]
                   [--nodepool-allowed-host-ports]
                   [--nodepool-asg-ids]
@@ -724,7 +727,7 @@ directCommands:
                   [--nodepool-tags]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
-                  [--os-sku {AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
+                  [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
@@ -745,6 +748,7 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--system-node-subnet-id]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
@@ -1125,6 +1129,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure KeyVault Key Management Service.
+  - name: --enable-azure-monitor-app-monitoring
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -1165,6 +1173,15 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enable High Log Scale Mode for Container Logs. Auto-enabled when --enable-container-network-logs is specified.
+  - name: --enable-hosted-system
+    defaultValue: "False"
+    summary: |-
+      (Automatic SKU) Explicitly opt in to a Managed System Pool for the Automatic cluster.
+    description: |-
+      Only valid with `--sku automatic`. Use this flag when you want to deterministically
+      request a Managed System Pool regardless of region defaults. It is also implied when
+      you supply the bring-your-own VNet subnet trio (`--system-node-subnet-id`,
+      `--node-subnet-id`, `--apiserver-subnet-id`).
   - name: --enable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -1460,6 +1477,14 @@ directCommands:
   - name: --node-resource-group
     summary: |-
       The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
+  - name: --node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by user node pools in an Automatic cluster.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (for the Managed System Pool), `--node-subnet-id` (this flag,
+      for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet and can only be used with `--sku automatic`.
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
@@ -1489,9 +1514,9 @@ directCommands:
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --os-sku
-    acceptedValues: AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404
+    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404
     summary: |-
-      The OS SKU of the agent node pool. Ubuntu or AzureLinux.
+      The OS SKU of the agent node pool. Ubuntu, AzureLinux, AzureLinux3, AzureContainerLinux, Ubuntu2204, or Ubuntu2404.
   - name: --outbound-type
     acceptedValues: loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting
     summary: |-
@@ -1580,6 +1605,14 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --system-node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by the Managed System Pool in an Automatic cluster.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (this flag, for the Managed System Pool), `--node-subnet-id`
+      (for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet and can only be used with `--sku automatic`.
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
@@ -5365,6 +5398,7 @@ directCommands:
                   [--disable-ai-toolchain-operator]
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
+                  [--disable-azure-monitor-app-monitoring]
                   [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
                   [--disable-blob-driver]
@@ -5395,6 +5429,7 @@ directCommands:
                   [--enable-apiserver-vnet-integration]
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-app-monitoring]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -5703,6 +5738,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure KeyVault Key Management Service.
+  - name: --disable-azure-monitor-app-monitoring
+    defaultValue: "False"
+    summary: |-
+      Disable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
   - name: --disable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -5819,6 +5858,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure KeyVault Key Management Service.
+  - name: --enable-azure-monitor-app-monitoring
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -8319,6 +8362,7 @@ commands:
 - az_aks_mesh_get-revisions(aks-preview)
 - az_aks_mesh_get-upgrades
 - az_aks_mesh_get-upgrades(aks-preview)
+- az_aks_mesh_proxy-redirection-mechanism
 - az_aks_mesh_upgrade
 - az_aks_mesh_upgrade_complete
 - az_aks_mesh_upgrade_complete(aks-preview)

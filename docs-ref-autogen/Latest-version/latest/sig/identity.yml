@@ -1,34 +1,43 @@
 ### YamlMime:AzureCLIGroup
-uid: az_cognitiveservices_account_identity
-name: az cognitiveservices account identity
+uid: az_sig_identity
+name: az sig identity
 summary: |-
-  Manage identity of Cognitive Services accounts.
+  Manage Identity.
 status: GA
 sourceType: Core
 directCommands:
-- uid: az_cognitiveservices_account_identity_assign
-  name: az cognitiveservices account identity assign
+- uid: az_sig_identity_assign
+  name: az sig identity assign
   summary: |-
-    Assign an identity of a Cognitive Services account.
-  description: |-
-    Assign an identity object of a Cognitive Services account. An system assigned identity will be generate and assigned to the account.
+    Assign the user or system managed identities.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cognitiveservices/_help.py
   syntax: >-
-    az cognitiveservices account identity assign --name
-                                                 --resource-group
-                                                 [--acquire-policy-token]
-                                                 [--change-reference]
+    az sig identity assign --gallery-name
+                           --resource-group
+                           [--acquire-policy-token]
+                           [--change-reference]
+                           [--mi-system-assigned --system-assigned]
+                           [--mi-user-assigned --user-assigned]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
-      Assign an identity of Cognitive Services accounts.
-    syntax: az cognitiveservices account identity assign --name myresource --resource-group cognitive-services-resource-group
+      Enable the system assigned identity.
+    syntax: az sig identity assign -g MyResourceGroup -r MyGalleryName --system-assigned
+  - summary: |-
+      Add a user assigned identity.
+    syntax: az sig identity assign -g MyResourceGroup -r MyGalleryName --user-assigned id1
+  - summary: |-
+      Add 2 user assigned identities.
+    syntax: az sig identity assign -g MyResourceGroup -r MyGalleryName --user-assigned id1 id2
+  - summary: |-
+      Enable system assigned identity and add a user assigned identity.
+    syntax: az sig identity assign -g MyResourceGroup -r MyGalleryName --system-assigned --user-assigned id1
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --gallery-name -r
     summary: |-
-      Cognitive service account name.
+      The name of the Shared Image Gallery.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -42,6 +51,18 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Gallery.identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Gallery.identity Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -69,29 +90,41 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_cognitiveservices_account_identity_remove
-  name: az cognitiveservices account identity remove
+- uid: az_sig_identity_remove
+  name: az sig identity remove
   summary: |-
-    Remove the identity from a Cognitive Services account.
-  description: |-
-    Remove the identity (if exists) from a Cognitive Services account.
+    Remove the user or system managed identities.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cognitiveservices/_help.py
   syntax: >-
-    az cognitiveservices account identity remove --name
-                                                 --resource-group
-                                                 [--acquire-policy-token]
-                                                 [--change-reference]
+    az sig identity remove --gallery-name
+                           --resource-group
+                           [--acquire-policy-token]
+                           [--change-reference]
+                           [--mi-system-assigned --system-assigned]
+                           [--mi-user-assigned --user-assigned]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
-      Remove the identity from a Cognitive Services account.
-    syntax: az cognitiveservices account identity remove --name myresource --resource-group cognitive-services-resource-group
+      Remove the system assigned identity.
+    syntax: az sig identity remove -g myResourceGroup -r myGalleryName --system-assigned
+  - summary: |-
+      Remove a user assigned identity.
+    syntax: az sig identity remove -g myResourceGroup -r myGalleryName --user-assigned id1
+  - summary: |-
+      Remove 2 user assigned identities.
+    syntax: az sig identity remove -g myResourceGroup -r myGalleryName --user-assigned id1 id2
+  - summary: |-
+      Remove all user assigned identities.
+    syntax: az sig identity remove -g myResourceGroup -r myGalleryName --user-assigned
+  - summary: |-
+      Remove the system assigned ientity and user assigned identity.
+    syntax: az sig identity remove -g myResourceGroup -r myGalleryName --system-assigned --user-assigned
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --gallery-name -r
     summary: |-
-      Cognitive service account name.
+      The name of the Shared Image Gallery.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -105,6 +138,18 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Gallery.identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Gallery.identity Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -132,27 +177,24 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_cognitiveservices_account_identity_show
-  name: az cognitiveservices account identity show
+- uid: az_sig_identity_show
+  name: az sig identity show
   summary: |-
-    Show the identity of a Cognitive Services account.
-  description: |-
-    Show the identity object of a Cognitive Services account, empty object might be returned if the account has no assigned identity.
+    Show the details of managed identities.
   status: GA
   sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cognitiveservices/_help.py
   syntax: >-
-    az cognitiveservices account identity show --name
-                                               --resource-group
+    az sig identity show --gallery-name
+                         --resource-group
   examples:
   - summary: |-
-      Show the identity of Cognitive Services accounts.
-    syntax: az cognitiveservices account identity show --name myresource --resource-group cognitive-services-resource-group
+      Show the managed identity.
+    syntax: az sig identity show -g myResourceGroup -r myGalleryName
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --gallery-name -r
     summary: |-
-      Cognitive service account name.
+      The name of the Shared Image Gallery.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -185,9 +227,8 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_cognitiveservices_account_identity_assign
-- az_cognitiveservices_account_identity_remove
-- az_cognitiveservices_account_identity_show
+- az_sig_identity_assign
+- az_sig_identity_remove
+- az_sig_identity_show
 metadata:
-  ms.date: 04/14/2026
-  description: Manage identity of Cognitive Services accounts.
+  description: Manage Identity.

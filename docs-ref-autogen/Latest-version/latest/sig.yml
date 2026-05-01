@@ -24,6 +24,8 @@ directCommands:
                   [--description]
                   [--eula]
                   [--location]
+                  [--mi-system-assigned --system-assigned]
+                  [--mi-user-assigned --user-assigned]
                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                   [--permissions {Community, Groups, Private}]
                   [--public-name-prefix]
@@ -35,11 +37,20 @@ directCommands:
   - summary: |-
       Create a shared image gallery
     syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery
+  - summary: |-
+      Create a shared image gallery with enabled system assigned identity.
+    syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery123 --system-assigned
+  - summary: |-
+      Create a shared image gallery with a user assigned identity.
+    syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery123 --user-assigned id1
+  - summary: |-
+      Create a shared image gallery with both system and user assigned identity.
+    syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery123 --system-assigned --user-assigned id1
   requiredParameters:
   - isRequired: true
     name: --gallery-name -r
     summary: |-
-      The name of the Shared Image Gallery to be deleted.
+      The name of the Shared Image Gallery.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -65,6 +76,14 @@ directCommands:
     summary: |-
       Resource location  When not specified, the location of the resource group will be used.
     groupName: Gallery Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -493,7 +512,7 @@ directCommands:
   optionalParameters:
   - name: --gallery-name -r
     summary: |-
-      The name of the Shared Image Gallery to be deleted.
+      The name of the Shared Image Gallery.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -741,7 +760,7 @@ directCommands:
 - uid: az_sig_update
   name: az sig update
   summary: |-
-    Update a share image gallery.
+    Update a Shared Image Gallery.
   status: GA
   sourceType: Core
   syntax: >-
@@ -926,7 +945,7 @@ directCommands:
       The expand query option to apply on the operation.
   - name: --gallery-name -r
     summary: |-
-      The name of the Shared Image Gallery to be deleted.
+      The name of the Shared Image Gallery.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -1001,6 +1020,10 @@ commands:
 - az_sig_gallery-application_version_update
 - az_sig_gallery-application_version_wait
 - az_sig_gallery-application_wait
+- az_sig_identity
+- az_sig_identity_assign
+- az_sig_identity_remove
+- az_sig_identity_show
 - az_sig_image-definition
 - az_sig_image-definition_create
 - az_sig_image-definition_delete

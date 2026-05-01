@@ -170,7 +170,7 @@ directCommands:
     Gets health information on the environment and optionally a target registry.
   status: GA
   isBreakingChange: true
-  breakingChangeInfo: Remove Notary client version validation in next breaking change release(2.86.0) scheduled for May 2026. The Notary client version check will no longer be performed as part of the check-health command due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
+  breakingChangeInfo: Remove Notary client version validation in next breaking change release(2.87.0) scheduled for June 2026. The Notary client version check will no longer be performed as part of the check-health command due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
   syntax: >-
@@ -334,6 +334,7 @@ directCommands:
                   [--key-encryption-key]
                   [--location]
                   [--public-network-enabled {false, true}]
+                  [--regional-endpoints {Disabled, Enabled}]
                   [--role-assignment-mode {rbac, rbac-abac}]
                   [--tags]
                   [--workspace]
@@ -345,6 +346,9 @@ directCommands:
   - summary: |-
       Create a registry with ABAC-based Repository Permission enabled.
     syntax: az acr create -n myregistry -g MyResourceGroup --sku Standard --role-assignment-mode rbac-abac
+  - summary: |-
+      Create a managed container registry with the Premium SKU and regional endpoints enabled.
+    syntax: az acr create -n myregistry -g MyResourceGroup --sku Premium --regional-endpoints enabled
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -413,6 +417,12 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Allow public network access for the container registry. The Default is to allow.
+    groupName: Network Rule Arguments
+  - name: --regional-endpoints
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Indicates whether or not regional endpoints should be enabled for the registry.
+    isPreview: true
     groupName: Network Rule Arguments
   - name: --role-assignment-mode
     acceptedValues: rbac, rbac-abac
@@ -561,6 +571,9 @@ directCommands:
   - summary: |-
       Import an image without waiting for successful completion. Failures during import will not be reflected. Run `az acr repository show-tags` to confirm that import succeeded.
     syntax: az acr import -n myregistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag --no-wait
+  - summary: |-
+      Import an image using a regional endpoint URI as the source.
+    syntax: az acr import -n myregistry --source sourceregistry.eastus.geo.azurecr.io/sourcerepository:sourcetag
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -691,6 +704,7 @@ directCommands:
     az acr login --name
                  [--acquire-policy-token]
                  [--change-reference]
+                 [--endpoint]
                  [--expose-token]
                  [--password]
                  [--resource-group]
@@ -703,6 +717,9 @@ directCommands:
   - summary: |-
       Get an Azure Container Registry access token
     syntax: az acr login -n myregistry --expose-token
+  - summary: |-
+      Log in to a specific regional endpoint of an Azure Container Registry. Requires regional endpoints to be enabled on the registry.
+    syntax: az acr login -n myregistry --endpoint eastus
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -717,6 +734,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --endpoint
+    summary: |-
+      Log in to a specific regional endpoint of the container registry. Specify the region name (e.g., eastus, westus2). Only applicable when regional endpoints are enabled.
+    isPreview: true
   - name: --expose-token -t
     defaultValue: "False"
     summary: |-
@@ -1058,7 +1079,7 @@ directCommands:
 - uid: az_acr_show-endpoints
   name: az acr show-endpoints
   summary: |-
-    Display registry endpoints.
+    Display registry endpoints including data endpoints and regional endpoints if configured.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
@@ -1067,6 +1088,10 @@ directCommands:
                           [--acquire-policy-token]
                           [--change-reference]
                           [--resource-group]
+  examples:
+  - summary: |-
+      Show the endpoints for a registry.
+    syntax: az acr show-endpoints -n myregistry
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1198,6 +1223,7 @@ directCommands:
                   [--default-action {Allow, Deny}]
                   [--force-string]
                   [--public-network-enabled {false, true}]
+                  [--regional-endpoints {Disabled, Enabled}]
                   [--remove]
                   [--resource-group]
                   [--role-assignment-mode {rbac, rbac-abac}]
@@ -1214,6 +1240,9 @@ directCommands:
   - summary: |-
       Turn on ABAC-based Repository Permission on an existing registry.
     syntax: az acr update -n myregistry --role-assignment-mode rbac-abac
+  - summary: |-
+      Enable regional endpoints on an existing registry.
+    syntax: az acr update -n myregistry --regional-endpoints enabled
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1275,6 +1304,12 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Allow public network access for the container registry.
+    groupName: Network Rule Arguments
+  - name: --regional-endpoints
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Indicates whether or not regional endpoints should be enabled for the registry.
+    isPreview: true
     groupName: Network Rule Arguments
   - name: --remove
     defaultValue: '[]'
