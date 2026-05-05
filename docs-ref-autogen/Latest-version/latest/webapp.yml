@@ -91,6 +91,16 @@ directCommands:
     Create a web app.
   description: |-
     The web app's name must be able to produce a unique FQDN as AppName.azurewebsites.net.
+
+    This command creates the web app resource but does not deploy code.
+    Use 'az webapp list-runtimes' to see available runtimes.
+
+    Suggested next steps after creation:
+    - Deploy your code:
+        az webapp deploy -g MyResourceGroup -n MyAppName --src-path app.zip
+    - For Linux apps loading large models or dependencies at startup, increase the container
+      start time limit (default 230s, max 1800s):
+        az webapp config appsettings set -g MyResourceGroup -n MyAppName --settings WEBSITES_CONTAINER_START_TIME_LIMIT=1800.
   status: GA
   sourceType: Core
   syntax: >-
@@ -163,6 +173,12 @@ directCommands:
   - summary: |-
       Create a web app with end-to-end encryption enabled and minimum TLS version 1.2
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --end-to-end-encryption-enabled true --min-tls-version 1.2
+  - summary: |-
+      Create a Linux Python web app with a custom startup command.
+    syntax: az webapp create -g MyResourceGroup -p MyLinuxPlan -n MyUniqueAppName --runtime "PYTHON:3.14" --startup-file "gunicorn --bind=0.0.0.0 app:app"
+  - summary: |-
+      Create a Linux Python web app with a startup script.
+    syntax: az webapp create -g MyResourceGroup -p MyLinuxPlan -n MyUniqueAppName --runtime "PYTHON:3.14" --startup-file "startup.sh"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -194,14 +210,14 @@ directCommands:
   - name: --basic-auth
     acceptedValues: Disabled, Enabled
     summary: |-
-      Enable or disable basic auth for both SCM and FTP Basic Auth Publishing Credentials. Defaults to Enabled if not specified. See https://aka.ms/app-service-basic-auth to learn more.
+      Enable or disable basic auth for both SCM and FTP Basic Auth Publishing Credentials. Disabled by default for new apps. See https://aka.ms/app-service-basic-auth to learn more.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
   - name: --container-image-name -c
     summary: |-
-      The container custom image name and optionally the tag name (e.g., `<registry-name>/<image-name>:<tag>`).
+      The container custom image name and optionally the tag name (e.g., `<registry-name>/<image-name>:<tag>`). Note: if --container-registry-url is also provided, use `<image-name>:<tag>` without the registry name.
   - name: --container-registry-password -w
     summary: |-
       The container registry server password. Required for private registries.
@@ -272,7 +288,7 @@ directCommands:
       Role name or id the system assigned identity will have.
   - name: --runtime -r
     summary: |-
-      Canonicalized web runtime in the format of Framework:Version, e.g. "PHP:7.2".Use `az webapp list-runtimes` for available list.
+      Canonicalized web runtime in the format of Framework:Version, e.g. "PYTHON:3.14".Use `az webapp list-runtimes` for available list.
   - name: --scope
     summary: |-
       Scope that the system assigned identity can access.
@@ -282,7 +298,7 @@ directCommands:
       If true, a webapp which supports sitecontainers will be created.
   - name: --startup-file
     summary: |-
-      Linux only. The web's startup file.
+      Linux only. The web's startup command or script file. Required for FastAPI and other ASGI frameworks (auto-detection is not supported). Example command: "gunicorn --bind=0.0.0.0 --timeout 600 app:app". Example for FastAPI: "gunicorn -k uvicorn.workers.UvicornWorker app:app". Example script file: "startup.sh".
   - name: --subnet
     summary: |-
       Name or resource ID of the pre-existing subnet to have the webapp join. The --vnet is argument also needed if specifying subnet by name.
@@ -656,6 +672,17 @@ directCommands:
   name: az webapp deploy
   summary: |-
     Deploys a provided artifact to Azure Web Apps.
+  description: |-
+    Deploys a zip, war, jar, ear, static file, startup script, or library to an existing Azure Web App.
+    The web app must already exist — use 'az webapp create' to create one first.
+
+    IMPORTANT: Zip deployment does NOT automatically run build automation (dependency installation,
+    compilation, etc.). If your package is not pre-built, you must set the
+    app setting SCM_DO_BUILD_DURING_DEPLOYMENT=true before deploying:
+
+        az webapp config appsettings set -g ResourceGroup -n AppName --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+
+    Supported --type values: zip, war, jar, ear, lib, static, startup.
   status: GA
   sourceType: Core
   syntax: >-
@@ -664,6 +691,7 @@ directCommands:
                      [--change-reference]
                      [--clean {false, true}]
                      [--enable-kudu-warmup {false, true}]
+                     [--enriched-errors {false, true}]
                      [--ids]
                      [--ignore-stack {false, true}]
                      [--name]
@@ -679,11 +707,20 @@ directCommands:
                      [--type {ear, jar, lib, startup, static, war, zip}]
   examples:
   - summary: |-
+      Enable remote build and deploy an app from a zip file.
+    syntax: >-
+      az webapp config appsettings set -g ResourceGroup -n AppName --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+
+      az webapp deploy -g ResourceGroup -n AppName --src-path app.zip
+  - summary: |-
       Deploy a war file asynchronously.
     syntax: az webapp deploy --resource-group ResourceGroup --name AppName --src-path SourcePath --type war --async true
   - summary: |-
       Deploy a static text file to wwwroot/staticfiles/test.txt
     syntax: az webapp deploy --resource-group ResourceGroup --name AppName --src-path SourcePath --type static --target-path staticfiles/test.txt
+  - summary: |-
+      Deploy a zip file with enriched error diagnostics on failure.
+    syntax: az webapp deploy -g ResourceGroup -n AppName --src-path app.zip --enriched-errors true
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -706,6 +743,11 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       If true, kudu will be warmed up before performing deployment for a linux webapp.
+  - name: --enriched-errors
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      If true, deployment failures will show context-enriched diagnostics with error codes, suggested fixes, and Copilot prompts.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -898,7 +940,7 @@ directCommands:
     List available built-in stacks which can be used for web apps.
   status: GA
   isBreakingChange: true
-  breakingChangeInfo: 'The output will be changed in next breaking change release(2.86.0) scheduled for May 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.'
+  breakingChangeInfo: 'The output will be changed in next breaking change release(2.87.0) scheduled for June 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.'
   sourceType: Core
   syntax: >-
     az webapp list-runtimes [--acquire-policy-token]
@@ -921,9 +963,9 @@ directCommands:
       List runtime stacks for linux based web apps.
     isDeprecated: true
     deprecateInfo: >-
-      Argument '--linux' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--os-type' instead.
-
       Argument 'linux' has been deprecated and will be removed in a future release. Use '--os-type' instead.
+
+      Argument '--linux' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--os-type' instead.
   - name: --os --os-type
     acceptedValues: linux, windows
     summary: |-
@@ -933,7 +975,7 @@ directCommands:
     summary: |-
       Show detailed versions of runtime stacks.
     isDeprecated: true
-    deprecateInfo: Argument '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
+    deprecateInfo: Argument '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -968,7 +1010,7 @@ directCommands:
     List available built-in stacks which can be used for web apps.
   status: GA
   isBreakingChange: true
-  breakingChangeInfo: 'The output will be changed in next breaking change release(2.86.0) scheduled for May 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.'
+  breakingChangeInfo: 'The output will be changed in next breaking change release(2.87.0) scheduled for June 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.'
   sourceType: Extension
   syntax: >-
     az webapp list-runtimes [--acquire-policy-token]
@@ -996,7 +1038,7 @@ directCommands:
       List runtime stacks for linux based web apps.
     isDeprecated: true
     deprecateInfo: >-
-      Argument '--linux' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--os-type' instead.
+      Argument '--linux' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--os-type' instead.
 
       Argument 'linux' has been deprecated and will be removed in a future release. Use '--os-type' instead.
   - name: --os --os-type
@@ -1597,6 +1639,10 @@ directCommands:
   name: az webapp up
   summary: |-
     Create a webapp and deploy code from a local workspace to the app. The command is required to run from the folder where the code is present. Current support includes Node, Python, .NET Core and ASP.NET. Node, Python apps are created as Linux apps. .Net Core, ASP.NET, and static HTML apps are created as Windows apps. Append the html flag to deploy as a static HTML app. Each time the command is successfully run, default argument values for resource group, sku, location, plan, and name are saved for the current directory. These defaults are then used for any arguments not provided on subsequent runs of the command in the same directory.  Use 'az configure' to manage defaults. Run this command with the --debug parameter to see the API calls and parameters values being used.
+  description: |-
+    Usage notes:
+    - If the app already exists, the existing SKU is kept. The --sku flag is ignored for existing apps.
+    - Use 'az webapp list-runtimes' to see available runtimes.
   status: GA
   sourceType: Core
   syntax: >-
@@ -1607,6 +1653,7 @@ directCommands:
                  [--domain-name-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse}]
                  [--dryrun]
                  [--enable-kudu-warmup {false, true}]
+                 [--enriched-errors {false, true}]
                  [--html]
                  [--ids]
                  [--launch-browser]
@@ -1631,6 +1678,12 @@ directCommands:
       Create a web app with a specified name
     syntax: az webapp up -n MyUniqueAppName
   - summary: |-
+      Deploy a Python app to Linux with explicit runtime and plan name.
+    syntax: az webapp up -n MyApp --runtime "PYTHON:3.14" --plan MyPlan --sku P1v3
+  - summary: |-
+      Deploy a .NET app to Linux (must specify --os-type linux).
+    syntax: az webapp up -n MyDotnetApp --runtime "DOTNETCORE:10.0" --os-type linux --plan MyPlan
+  - summary: |-
       Create a web app with a specified name and a Java 11 runtime
     syntax: az webapp up -n MyUniqueAppName --runtime "java:11:Java SE:11"
   - summary: |-
@@ -1645,6 +1698,9 @@ directCommands:
   - summary: |-
       Create a web app with a specified domain name scope for unique hostname generation
     syntax: az webapp up -n MyUniqueAppName --domain-name-scope TenantReuse
+  - summary: |-
+      Deploy with enriched error diagnostics on failure.
+    syntax: az webapp up --enriched-errors true
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1674,6 +1730,11 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       If true, kudu will be warmed up before performing deployment for a linux webapp.
+  - name: --enriched-errors
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      If true, deployment failures will show context-enriched diagnostics with error codes, suggested fixes, and Copilot prompts.
   - name: --html
     defaultValue: "False"
     summary: |-
@@ -1700,17 +1761,17 @@ directCommands:
   - name: --os-type
     acceptedValues: Linux, Windows
     summary: |-
-      Set the OS type for the app to be created.
+      Set the OS type for the app to be created. Defaults to Linux for Python and Node.js runtimes, and to Windows for .NET and ASP.NET runtimes. Use 'linux' explicitly for .NET Linux deployments. Use 'az webapp list-runtimes' to see available runtimes.
   - name: --plan -p
     summary: |-
-      Name of the app service plan associated with the webapp.
+      Name of the app service plan associated with the webapp. If not specified, a name is auto-generated.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --runtime -r
     summary: |-
-      Canonicalized web runtime in the format of Framework:Version, e.g. "PHP:7.2".Use `az webapp list-runtimes` for available list.
+      Canonicalized web runtime in the format of Framework:Version, e.g. "PYTHON:3.14". Recommended: always specify explicitly for reliable results. Auto-detection from source files may pick the wrong version. Use `az webapp list-runtimes` for available list.
   - name: --sku
     acceptedValues: B1, B2, B3, D1, F1, FREE, I1MV2, I1V2, I2MV2, I2V2, I3MV2, I3V2, I4MV2, I4V2, I5MV2, I5V2, I6V2, P0V3, P0V4, P1MV3, P1MV4, P1V2, P1V3, P1V4, P2MV3, P2MV4, P2V2, P2V3, P2V4, P3MV3, P3MV4, P3V2, P3V3, P3V4, P4MV3, P4MV4, P5MV3, P5MV4, S1, S2, S3, SHARED, WS1, WS2, WS3
     summary: |-

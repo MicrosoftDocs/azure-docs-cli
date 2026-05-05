@@ -11,6 +11,8 @@ directCommands:
   summary: |-
     Create a read replica for a server.
   status: GA
+  isBreakingChange: true
+  breakingChangeInfo: This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
   sourceType: Core
   syntax: >-
     az postgres flexible-server replica create --resource-group
@@ -28,6 +30,7 @@ directCommands:
                                                [--replica-name]
                                                [--sku-name]
                                                [--storage-size]
+                                               [--storage-type {PremiumV2_LRS}]
                                                [--subnet]
                                                [--subnet-prefixes]
                                                [--tags]
@@ -74,6 +77,8 @@ directCommands:
   - name: --address-prefixes
     summary: |-
       The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
+    isDeprecated: true
+    deprecateInfo: Argument '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -104,19 +109,25 @@ directCommands:
     summary: |-
       The name of the read replica.
     isDeprecated: true
-    deprecateInfo: Argument '--replica-name' has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026. Use '--name' instead.
+    deprecateInfo: Argument '--replica-name' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--name' instead.
   - name: --sku-name
     summary: |-
       The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.
   - name: --storage-size
     summary: |-
       The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
+  - name: --storage-type
+    acceptedValues: PremiumV2_LRS
+    summary: |-
+      Storage type for the read replica. Allowed value is PremiumV2_LRS. Default is for the read replica to match storage type of the primary server.
   - name: --subnet
     summary: |-
       Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
   - name: --subnet-prefixes
     summary: |-
       The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
+    isDeprecated: true
+    deprecateInfo: Argument '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.

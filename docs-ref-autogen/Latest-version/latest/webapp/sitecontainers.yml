@@ -9,7 +9,7 @@ directCommands:
 - uid: az_webapp_sitecontainers_convert
   name: az webapp sitecontainers convert
   summary: |-
-    Convert a webapp from sitecontainers to a classic custom container and vice versa.
+    Convert a webapp from sitecontainers to a classic custom container and vice versa. Supports both single-container (DOCKER|) and multi-container (COMPOSE|) apps.
   status: GA
   sourceType: Core
   syntax: >-
@@ -17,17 +17,25 @@ directCommands:
                                      [--acquire-policy-token]
                                      [--change-reference]
                                      [--ids]
+                                     [--main-container-name]
                                      [--name]
                                      [--resource-group]
                                      [--slot]
                                      [--subscription]
+                                     [--yes]
   examples:
   - summary: |-
       Convert a webapp to classic custom container (docker) from sitecontainers
     syntax: az webapp sitecontainers convert --mode docker --name MyWebApp --resource-group MyResourceGroup
   - summary: |-
-      Convert a webapp to sitecontainers from classic custom container (docker)
+      Convert a single-container webapp (DOCKER|) to sitecontainers
     syntax: az webapp sitecontainers convert --mode sitecontainers --name MyWebApp --resource-group MyResourceGroup
+  - summary: |-
+      Convert a multi-container webapp (COMPOSE|) to sitecontainers
+    syntax: az webapp sitecontainers convert --mode sitecontainers --name MyWebApp --resource-group MyResourceGroup
+  - summary: |-
+      Convert a COMPOSE app to sitecontainers specifying which service is the main container
+    syntax: az webapp sitecontainers convert --mode sitecontainers --name MyWebApp --resource-group MyResourceGroup --main-container-name web
   requiredParameters:
   - isRequired: true
     name: --mode
@@ -47,6 +55,9 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --main-container-name
+    summary: |-
+      For COMPOSE to sitecontainers conversion, specifies which compose service should be the main container. If not provided, the service with a port mapping is auto-detected.
   - name: --name -n
     summary: |-
       Name of the linux webapp.
@@ -62,6 +73,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"

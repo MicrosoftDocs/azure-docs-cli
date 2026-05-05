@@ -634,9 +634,11 @@ directCommands:
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
+                  [--enable-app-routing-istio --enable-ari]
                   [--enable-asm --enable-azure-service-mesh]
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-app-monitoring]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -646,7 +648,9 @@ directCommands:
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
+                  [--enable-gateway-api]
                   [--enable-high-log-scale-mode {false, true}]
+                  [--enable-hosted-system]
                   [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-managed-identity]
@@ -716,6 +720,7 @@ directCommands:
                   [--node-public-ip-prefix-id]
                   [--node-public-ip-tags]
                   [--node-resource-group]
+                  [--node-subnet-id]
                   [--node-vm-size]
                   [--nodepool-allowed-host-ports]
                   [--nodepool-asg-ids]
@@ -724,7 +729,7 @@ directCommands:
                   [--nodepool-tags]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
-                  [--os-sku {AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
+                  [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
@@ -745,6 +750,7 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--system-node-subnet-id]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
@@ -883,6 +889,9 @@ directCommands:
   - summary: |-
       Create a Kubernetes cluster with KataVmIsolation enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku AzureLinux --vm-size Standard_D4s_v3 --workload-runtime KataVmIsolation --node-count 1
+  - summary: |-
+      Create a kubernetes cluster with a managed installation of Gateway API CRDs from the standard release channel.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-gateway-api
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1115,6 +1124,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Application Routing addon.
+  - name: --enable-app-routing-istio --enable-ari
+    defaultValue: "False"
+    summary: |-
+      Enable Gateway API based ingress on App Routing via Istio without service mesh functionality.
+    description: |-
+      This enables an ingress-only version of Istio that reconciles Gateway API resources for App Routing.
+      It does not provide service mesh functionality (e.g. mTLS, traffic management between services).
+      Cannot be used simultaneously with the Istio service mesh add-on (--enable-azure-service-mesh).
   - name: --enable-asm --enable-azure-service-mesh
     summary: |-
       Enable Azure Service Mesh addon.
@@ -1125,6 +1142,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure KeyVault Key Management Service.
+  - name: --enable-azure-monitor-app-monitoring
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -1161,10 +1182,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Use FIPS-enabled OS on agent nodes.
+  - name: --enable-gateway-api
+    defaultValue: "False"
+    summary: |-
+      Enable managed installation of Gateway API CRDs from the standard release channel.
   - name: --enable-high-log-scale-mode
     acceptedValues: false, true
     summary: |-
       Enable High Log Scale Mode for Container Logs. Auto-enabled when --enable-container-network-logs is specified.
+  - name: --enable-hosted-system
+    defaultValue: "False"
+    summary: |-
+      (Automatic SKU) Explicitly opt in to a Managed System Pool for the Automatic cluster.
+    description: |-
+      Only valid with `--sku automatic`. Use this flag when you want to deterministically
+      request a Managed System Pool regardless of region defaults. It is also implied when
+      you supply the bring-your-own VNet subnet trio (`--system-node-subnet-id`,
+      `--node-subnet-id`, `--apiserver-subnet-id`).
   - name: --enable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -1460,6 +1494,14 @@ directCommands:
   - name: --node-resource-group
     summary: |-
       The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
+  - name: --node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by user node pools in an Automatic cluster.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (for the Managed System Pool), `--node-subnet-id` (this flag,
+      for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet and can only be used with `--sku automatic`.
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
@@ -1489,9 +1531,9 @@ directCommands:
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --os-sku
-    acceptedValues: AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404
+    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404
     summary: |-
-      The OS SKU of the agent node pool. Ubuntu or AzureLinux.
+      The OS SKU of the agent node pool. Ubuntu, AzureLinux, AzureLinux3, AzureContainerLinux, Ubuntu2204, or Ubuntu2404.
   - name: --outbound-type
     acceptedValues: loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting
     summary: |-
@@ -1580,6 +1622,14 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --system-node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by the Managed System Pool in an Automatic cluster.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (this flag, for the Managed System Pool), `--node-subnet-id`
+      (for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet and can only be used with `--sku automatic`.
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
@@ -5363,8 +5413,10 @@ directCommands:
                   [--disable-acns-security]
                   [--disable-ahub]
                   [--disable-ai-toolchain-operator]
+                  [--disable-app-routing-istio --disable-ari]
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
+                  [--disable-azure-monitor-app-monitoring]
                   [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
                   [--disable-blob-driver]
@@ -5375,6 +5427,7 @@ directCommands:
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-force-upgrade]
+                  [--disable-gateway-api]
                   [--disable-http-proxy]
                   [--disable-image-cleaner]
                   [--disable-keda]
@@ -5393,8 +5446,10 @@ directCommands:
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-app-routing-istio --enable-ari]
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-app-monitoring]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -5405,6 +5460,7 @@ directCommands:
                   [--enable-disk-driver]
                   [--enable-file-driver]
                   [--enable-force-upgrade]
+                  [--enable-gateway-api]
                   [--enable-high-log-scale-mode {false, true}]
                   [--enable-http-proxy]
                   [--enable-image-cleaner]
@@ -5571,6 +5627,12 @@ directCommands:
   - summary: |-
       Upgrade load balancer sku to standard
     syntax: az aks update --load-balancer-sku standard -g MyResourceGroup -n MyManagedCluster
+  - summary: |-
+      Update a kubernetes cluster to enable a managed installation of Gateway API CRDs from the standard release channel.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-gateway-api
+  - summary: |-
+      Update a kubernetes cluster to disable the managed installation of Gateway API CRDs.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-gateway-api
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -5696,6 +5758,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable AI toolchain operator.
+  - name: --disable-app-routing-istio --disable-ari
+    defaultValue: "False"
+    summary: |-
+      Disable Gateway API based ingress on App Routing via Istio.
   - name: --disable-azure-container-storage
     summary: |-
       Disable azure container storage or any one of the storage pool types. Can be used as a flag (defaults to True) or with a storagepool type value: azureDisk, ephemeralDisk, elasticSan, all (to disable all storage pools).
@@ -5703,6 +5769,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure KeyVault Key Management Service.
+  - name: --disable-azure-monitor-app-monitoring
+    defaultValue: "False"
+    summary: |-
+      Disable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
   - name: --disable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -5741,6 +5811,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable forceUpgrade cluster upgrade settings override.
+  - name: --disable-gateway-api
+    defaultValue: "False"
+    summary: |-
+      Disable managed installation of Gateway API CRDs.
   - name: --disable-http-proxy
     defaultValue: "False"
     summary: |-
@@ -5812,6 +5886,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable integration of user vnet with control plane apiserver pods.
+  - name: --enable-app-routing-istio --enable-ari
+    defaultValue: "False"
+    summary: |-
+      Enable Gateway API based ingress on App Routing via Istio without service mesh functionality.
+    description: |-
+      This enables an ingress-only version of Istio that reconciles Gateway API resources for App Routing.
+      It does not provide service mesh functionality (e.g. mTLS, traffic management between services).
+      Cannot be used simultaneously with the Istio service mesh add-on (--enable-azure-service-mesh).
   - name: --enable-azure-container-storage
     summary: |-
       Enable azure container storage. Can be used as a flag (defaults to True) or with a storage pool type value: (azureDisk, ephemeralDisk, elasticSan).
@@ -5819,6 +5901,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure KeyVault Key Management Service.
+  - name: --enable-azure-monitor-app-monitoring
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -5857,6 +5943,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable forceUpgrade cluster upgrade settings override.
+  - name: --enable-gateway-api
+    defaultValue: "False"
+    summary: |-
+      Enable managed installation of Gateway API CRDs from the standard release channel.
   - name: --enable-high-log-scale-mode
     acceptedValues: false, true
     summary: |-
@@ -8136,7 +8226,9 @@ commands:
 - az_aks_approuting_gateway
 - az_aks_approuting_gateway_istio
 - az_aks_approuting_gateway_istio_disable
+- az_aks_approuting_gateway_istio_disable(aks-preview)
 - az_aks_approuting_gateway_istio_enable
+- az_aks_approuting_gateway_istio_enable(aks-preview)
 - az_aks_approuting_update
 - az_aks_approuting_update(aks-preview)
 - az_aks_approuting_zone
@@ -8319,6 +8411,7 @@ commands:
 - az_aks_mesh_get-revisions(aks-preview)
 - az_aks_mesh_get-upgrades
 - az_aks_mesh_get-upgrades(aks-preview)
+- az_aks_mesh_proxy-redirection-mechanism
 - az_aks_mesh_upgrade
 - az_aks_mesh_upgrade_complete
 - az_aks_mesh_upgrade_complete(aks-preview)
