@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/04/2026
+ms.date: 05/05/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -30,7 +30,7 @@ You will be prompted to install an extension on first use.
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem/HISTORY.rst) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples/HISTORY.rst) |
-|[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b22](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
+|[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b23](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
 |[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.73.0 | Provides a preview for upcoming AKS features | Preview | [20.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.77.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.102](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
@@ -146,10 +146,10 @@ You will be prompted to install an extension on first use.
 |[log-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics) | 2.61.0 | Support for Azure Log Analytics query capabilities. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics/HISTORY.rst) |
 |[log-analytics-solution](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics-solution) | 2.50.0 | Support for Azure Log Analytics Solution | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics-solution/HISTORY.rst) |
 |[logic](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic) | 2.55.0 | Microsoft Azure Command-Line Tools Logic Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic/HISTORY.rst) |
-|[maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) | 2.67.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Preview | [1.7.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance/HISTORY.rst) |
+|[maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) | 2.75.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance/HISTORY.rst) |
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
 |[managedcleanroom](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom) | 2.75.0 | Microsoft Azure Command-Line Tools Managedcleanroom Extension. | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom/HISTORY.rst) |
-|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2025-07-15 API version. | GA | [9.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
+|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2026-01-15-preview API version. | Preview | [10.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner) | 2.61.0 | Support for Management Partner preview | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner/HISTORY.rst) |
 |[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.70.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
 |[mdp](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp) | 2.57.0 | Microsoft Azure Command-Line Tools Mdp Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp/HISTORY.rst) |
