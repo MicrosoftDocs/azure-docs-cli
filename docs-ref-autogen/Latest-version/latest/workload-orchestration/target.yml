@@ -29,6 +29,7 @@ directCommands:
                                             [--extended-location]
                                             [--location]
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--service-group]
                                             [--solution-scope]
                                             [--state {active, inactive}]
                                             [--tags]
@@ -95,6 +96,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --service-group
+    summary: |-
+      ServiceGroup name to auto-link this target to after creation.
+    groupName: Common Arguments
   - name: --solution-scope
     summary: |-
       Defines the Kubernetes namespace that the app will be deployed to. If not supplied, it will default to solution template name.
@@ -220,28 +225,39 @@ directCommands:
 - uid: az_workload-orchestration_target_install
   name: az workload-orchestration target install
   summary: |-
-    Post request to install a solution.
+    Install a solution on a target.
+  description: |-
+    When invoked with --solution-template-name + --solution-template-version,
+    runs the full deployment chain: config-set (optional) → review → publish → install.
+    When invoked with --solution-version-id only (old flow), runs direct install.
   status: GA
   sourceType: Extension
   syntax: >-
-    az workload-orchestration target install --solution-version-id
-                                             [--acquire-policy-token]
+    az workload-orchestration target install [--acquire-policy-token]
                                              [--change-reference]
+                                             [--config --configuration]
                                              [--ids]
                                              [--name --target-name]
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--resource-group]
+                                             [--solution-template-name]
+                                             [--solution-template-resource-group --solution-template-rg]
+                                             [--solution-template-version --version]
+                                             [--solution-version-id]
                                              [--subscription]
   examples:
   - summary: |-
-      Install a solution to a target
-    syntax: az workload-orchestration target install -g rg1 -n target1 --solution-version-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Edge/solutionVersions/mySolutionVersion
-  requiredParameters:
-  - isRequired: true
-    name: --solution-version-id
-    summary: |-
-      Solution Version ARM Id.
-    groupName: Body Arguments
+      Full deploy (friendly name)
+    syntax: az workload-orchestration target install -g rg1 -n target1 --solution-template-name tmpl --solution-template-version 1.0.0
+  - summary: |-
+      Full deploy from a different RG
+    syntax: az workload-orchestration target install -g rg1 -n target1 --solution-template-name tmpl --solution-template-version 1.0.0 --solution-template-rg shared-rg
+  - summary: |-
+      Full deploy with config
+    syntax: az workload-orchestration target install -g rg1 -n target1 --solution-template-name tmpl --solution-template-version 1.0.0 --config values.yaml
+  - summary: |-
+      Direct install (old flow)
+    syntax: az workload-orchestration target install -g rg1 -n target1 --solution-version-id /subscriptions/.../solutionVersions/sv1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -251,6 +267,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --config --configuration
+    summary: |-
+      Path to YAML/JSON config file to set before review.
+    groupName: Config Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -267,6 +287,22 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --solution-template-name
+    summary: |-
+      Name of the solution template. Use with --solution-template-version.
+    groupName: Deploy Arguments
+  - name: --solution-template-resource-group --solution-template-rg
+    summary: |-
+      Resource group of the solution template. Defaults to target's -g.
+    groupName: Deploy Arguments
+  - name: --solution-template-version --version -v
+    summary: |-
+      Version of the solution template (e.g., 1.0.0).
+    groupName: Deploy Arguments
+  - name: --solution-version-id
+    summary: |-
+      Solution Version ARM ID (direct install, skips review/publish).
+    groupName: Body Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
