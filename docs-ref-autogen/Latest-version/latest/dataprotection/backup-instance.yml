@@ -115,7 +115,7 @@ directCommands:
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
-      create a backup instance in a backup vault
+      creates a backup instance in a backup vault
     syntax: az dataprotection backup-instance create -g MyResourceGroup --vault-name MyVault --backup-instance backupinstance.json
   requiredParameters:
   - isRequired: true
@@ -365,6 +365,8 @@ directCommands:
   syntax: >-
     az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
                                                               [--acquire-policy-token]
+                                                              [--auto-protection {false, true}]
+                                                              [--auto-protection-exclusion-prefixes --exclusion-prefixes]
                                                               [--backup-hook-references --backup-hook-refs]
                                                               [--change-reference]
                                                               [--container-list --vaulted-backup-containers]
@@ -388,6 +390,12 @@ directCommands:
   - summary: |-
       Initialize backup configuration for AzureDataLakeStorage
     syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type "AzureDataLakeStorage" --container-list container1 container2 --storage-account-rg "sampleRG" --storage-account-name "samplestorage"
+  - summary: |-
+      Initialize backup configuration for AzureBlob with auto-protection
+    syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type AzureBlob --auto-protection true
+  - summary: |-
+      Initialize backup configuration for AzureDataLakeStorage with auto-protection and exclusion prefixes
+    syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type AzureDataLakeStorage --auto-protection true --exclusion-prefixes "logs-" "temp-"
   requiredParameters:
   - isRequired: true
     name: --datasource-type
@@ -399,6 +407,13 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --auto-protection
+    acceptedValues: false, true
+    summary: |-
+      Enable auto-protection for new containers. When enabled, new containers will be automatically protected. Use this parameter for DatasourceType AzureBlob or AzureDataLakeStorage.
+  - name: --auto-protection-exclusion-prefixes --exclusion-prefixes
+    summary: |-
+      List of container name prefixes to exclude from auto-protection. Requires --auto-protection to be enabled.
   - name: --backup-hook-references --backup-hook-refs
     summary: |-
       Property sets the hook reference to be executed during backup.
