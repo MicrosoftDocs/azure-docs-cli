@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/11/2026
+ms.date: 05/12/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -75,7 +75,7 @@ You will be prompted to install an extension on first use.
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.67.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.14.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[computelimit](https://github.com/Azure/azure-cli-extensions/tree/main/src/computelimit) | 2.75.0 | Microsoft Azure Command-Line Tools Computelimit Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/computelimit/HISTORY.rst) |
 |[computeschedule](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule) | 2.67.0 | Microsoft Azure Command-Line Tools Computeschedule Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule/HISTORY.rst) |
-|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
+|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.67.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.75.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.70.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.11.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
@@ -92,7 +92,7 @@ You will be prompted to install an extension on first use.
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.75.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.75.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
-|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.75.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.9.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
+|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.75.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.10.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[dell](https://github.com/Azure/azure-cli-extensions/tree/main/src/dell) | 2.75.0 | Support for managing Dell.Storage filesystem resources. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dell/HISTORY.rst) |
 |[dependency-map](https://github.com/Azure/azure-cli-extensions/tree/main/src/dependency-map) | 2.70.0 | Microsoft Azure Command-Line Tools DependencyMap Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dependency-map/HISTORY.rst) |
