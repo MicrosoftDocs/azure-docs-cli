@@ -516,7 +516,7 @@ fi
 [23]: /cli/azure/storage/container#az-storage-container-delete
 [24]: /cli/azure/storage/container#az-storage-container-list
 [25]: choose-the-right-azure-command-line-tool.md#different-shell-environments
-[26]: https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio
+[26]: https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn
 [27]: https://yaml.org/
 [28]: use-azure-cli-successfully-query.md
 [29]: use-azure-cli-successfully-tips.md

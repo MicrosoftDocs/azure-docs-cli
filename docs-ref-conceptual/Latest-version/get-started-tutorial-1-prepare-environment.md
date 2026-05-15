@@ -283,7 +283,7 @@ scripting differences between Bash, PowerShell, and `Cmd.exe`.
 [13]: authenticate-azure-cli.md
 [14]: azure-cli-configuration.md
 [15]: https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview
-[16]: https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio
+[16]: https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn
 [17]: manage-azure-groups-azure-cli.md
 [18]: manage-azure-subscriptions-azure-cli.md
 [19]: reference-types-and-status.md
