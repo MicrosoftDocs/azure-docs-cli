@@ -7,23 +7,35 @@ extensionInformation: |-
 summary: |-
   Manage enterprise live migrations.
 description: |-
-  This command group is a part of the azure-devops extension. For ELM migrations, --org should be your Azure DevOps organization URL (for example: https://dev.azure.com/myorg).
-status: GA
+  This command group is a part of the azure-devops extension and is in preview. Availability may be limited (for example, to 1P/allowlisted users). For ELM migrations, --org should be your Azure DevOps organization URL (for example: https://dev.azure.com/myorg).
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
 sourceType: Extension
 directCommands:
 - uid: az_devops_migrations_abandon
   name: az devops migrations abandon
   summary: |-
     Abandon and delete a migration.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'devops migrations' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az devops migrations abandon [--acquire-policy-token]
                                  [--change-reference]
                                  [--detect {false, true}]
                                  [--org --organization]
+                                 [--remove-read-only]
                                  [--repository-id]
                                  [--yes]
+  examples:
+  - summary: |-
+      Abandon and keep repository read-only (default).
+    syntax: az devops migrations abandon --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Abandon and set repository back to read-write.
+    syntax: az devops migrations abandon --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --remove-read-only
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -40,6 +52,10 @@ directCommands:
   - name: --org --organization
     summary: |-
       Azure DevOps organization URL. You can configure the default organization using az devops configure -d organization=ORG_URL. Required if not configured as default or picked up via git config. Example: `https://dev.azure.com/MyOrganizationName/`.
+  - name: --remove-read-only
+    defaultValue: "False"
+    summary: |-
+      Also set the Azure Repos repository back to read-write state by sending removeReadOnly=true.
   - name: --repository-id
     summary: |-
       ID of the Azure Repos repository (GUID).
@@ -78,7 +94,11 @@ directCommands:
   name: az devops migrations create
   summary: |-
     Create a migration for a repository.
-  status: GA
+  description: |-
+    If --github-token is not provided, the CLI checks ELM_GITHUB_TOKEN and then runs GitHub device flow to acquire a token.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'devops migrations' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az devops migrations create [--acquire-policy-token]
@@ -86,8 +106,10 @@ directCommands:
                                 [--change-reference]
                                 [--cutover-date]
                                 [--detect {false, true}]
+                                [--github-token]
                                 [--org --organization]
                                 [--repository-id]
+                                [--service-endpoint-id]
                                 [--skip-validation]
                                 [--target-owner-user-id]
                                 [--target-repository]
@@ -95,10 +117,13 @@ directCommands:
   examples:
   - summary: |-
       Create a migration.
-    syntax: az devops migrations create --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --target-repository https://github.com/OrgName/RepoName --target-owner-user-id OwnerUserId --agent-pool MigrationPool
+    syntax: az devops migrations create --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --target-repository https://github.com/OrgName/RepoName --agent-pool <your-agent-pool>
   - summary: |-
       Create a validate-only migration.
-    syntax: az devops migrations create --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --target-repository https://github.com/OrgName/RepoName --target-owner-user-id OwnerUserId --agent-pool MigrationPool --validate-only --skip-validation ActivePullRequestCount,PullRequestDeltaSize
+    syntax: az devops migrations create --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --target-repository https://github.com/OrgName/RepoName --agent-pool <your-agent-pool> --validate-only --skip-validation ActivePullRequestCount,PullRequestDeltaSize
+  - summary: |-
+      Create using a pre-generated GitHub token or PAT.
+    syntax: az devops migrations create --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --target-repository https://github.com/OrgName/RepoName --github-token <token>
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -118,18 +143,24 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Automatically detect organization.
+  - name: --github-token
+    summary: |-
+      GitHub token used for migration authorization. Ignored when --service-endpoint-id is specified. If omitted, the CLI first checks ELM_GITHUB_TOKEN and then runs GitHub device flow.
   - name: --org --organization
     summary: |-
       Azure DevOps organization URL. You can configure the default organization using az devops configure -d organization=ORG_URL. Required if not configured as default or picked up via git config. Example: `https://dev.azure.com/MyOrganizationName/`.
   - name: --repository-id
     summary: |-
       ID of the Azure Repos repository (GUID).
+  - name: --service-endpoint-id
+    summary: |-
+      Service endpoint ID (GUID) for the GitHub Enterprise Server connection. When specified, the server uses the service connection for GitHub authentication and the CLI skips GitHub device flow. Mutually exclusive with --github-token.
   - name: --skip-validation
     summary: |-
       Validation policies to skip. Accepts either a comma-separated list of policy names (for example, AgentPoolExists,MaxRepoSize) or a non-negative integer bitmask.
   - name: --target-owner-user-id
     summary: |-
-      Target repository owner user ID.
+      Target repository owner user ID. Deprecated and ignored when server-side token-based owner resolution is enabled.
   - name: --target-repository
     summary: |-
       Target repository URL (must start with http:// or https://).
@@ -168,7 +199,9 @@ directCommands:
   name: az devops migrations list
   summary: |-
     List migrations in an organization.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'devops migrations' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az devops migrations list [--detect {false, true}]
@@ -228,7 +261,9 @@ directCommands:
   name: az devops migrations pause
   summary: |-
     Pause an active migration.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'devops migrations' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az devops migrations pause [--acquire-policy-token]
@@ -286,7 +321,9 @@ directCommands:
   name: az devops migrations resume
   summary: |-
     Resume a stopped (paused, failed) migration.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'devops migrations' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az devops migrations resume [--acquire-policy-token]
@@ -364,7 +401,9 @@ directCommands:
   name: az devops migrations status
   summary: |-
     Get migration status for a repository.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'devops migrations' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az devops migrations status [--acquire-policy-token]
@@ -426,11 +465,13 @@ commands:
 - az_devops_migrations_abandon
 - az_devops_migrations_create
 - az_devops_migrations_cutover
+- az_devops_migrations_cutover_approve
 - az_devops_migrations_cutover_cancel
+- az_devops_migrations_cutover_review
 - az_devops_migrations_cutover_set
 - az_devops_migrations_list
 - az_devops_migrations_pause
 - az_devops_migrations_resume
 - az_devops_migrations_status
 metadata:
-  description: 'This command group is a part of the azure-devops extension. For ELM migrations, --org should be your Azure DevOps organization URL (for example: https://dev.azure.com/myorg).'
+  description: 'This command group is a part of the azure-devops extension and is in preview. Availability may be limited (for example, to 1P/allowlisted users). For ELM migrations, --org should be your Azure DevOps organization URL (for example: https://dev.azure.com/myorg).'
