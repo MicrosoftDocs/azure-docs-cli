@@ -1,94 +1,102 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_dataflow
-name: az iot ops dataflow
+uid: az_iot_ops_dataflowgraph
+name: az iot ops dataflowgraph
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops dataflow** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops dataflowgraph** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Dataflow management.
+  DataflowGraph management.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_dataflow_apply
-  name: az iot ops dataflow apply
+- uid: az_iot_ops_dataflowgraph_apply
+  name: az iot ops dataflowgraph apply
   summary: |-
-    Create or replace a dataflow associated with a dataflow profile.
+    Create or replace a DataflowGraph associated with a dataflow profile.
   description: |-
     An example of the config file format is as follows:
 
     ```
     {
       "mode": "Enabled",
-      "operations": [
+      "nodes": [
         {
-          "operationType": "Source",
+          "name": "source-mqtt",
+          "nodeType": "Source",
           "sourceSettings": {
-            "endpointRef": "myenpoint1",
-            "assetRef": "",
-            "serializationFormat": "Json",
-            "schemaRef": "myschema1",
-            "dataSources": [
-              "testfrom"
-            ]
+            "endpointRef": "default-broker",
+            "dataSources": ["sensors/temperature/#"]
           }
         },
         {
-          "operationType": "BuiltInTransformation",
-          "builtInTransformationSettings": {
-            "serializationFormat": "Json",
-            "datasets": [],
-            "filter": [
-              {
-                "type": "Filter",
-                "description": "",
-                "inputs": [
-                  "$metadata.user_property.value"
-                ],
-                "expression": "$1 > 100"
-              }
-            ],
-            "map": [
-              {
-                "type": "PassThrough",
-                "inputs": [
-                  "*"
-                ],
-                "output": "*"
-              }
-            ]
-          }
-        },
-        {
-          "operationType": "Destination",
+          "name": "dest-broker",
+          "nodeType": "Destination",
           "destinationSettings": {
-            "endpointRef": "myenpoint2",
-            "dataDestination": "test"
+            "endpointRef": "my-kafka-endpoint",
+            "dataDestination": "telemetry/temperature"
+          }
+        },
+        {
+          "name": "dest-otel",
+          "nodeType": "Destination",
+          "destinationSettings": {
+            "endpointRef": "my-otel-endpoint",
+            "dataDestination": "telemetry/all"
+          }
+        },
+        {
+          "name": "graph-processor",
+          "nodeType": "Graph",
+          "graphSettings": {
+            "registryEndpointRef": "my-registry-endpoint",
+            "artifact": "my-processing-module:1.0.0",
+            "configuration": [
+              { "key": "paramName", "value": "paramValue" },
+              { "key": "anotherParam", "value": "anotherValue" }
+            ]
           }
         }
+      ],
+      "nodeConnections": [
+        { "from": { "name": "source-mqtt" }, "to": { "name": "graph-processor" } },
+        { "from": { "name": "graph-processor" }, "to": { "name": "dest-broker" } },
+        { "from": { "name": "graph-processor" }, "to": { "name": "dest-otel" } }
       ]
     }
     ```
 
-    When used with apply the above content will create or replace a target dataflow resource.
+    The above example defines a graph with an MQTT source flowing through a Graph processing
+    node that fans out to a Kafka destination and an OpenTelemetry destination. Graph nodes
+    reference an artifact (format: `<name>:<version>`) from a registry endpoint. The
+    example above includes graphSettings.configuration only to illustrate the format when
+    an artifact requires configuration parameters; in that case, supply them as a list of
+    {"key", "value"} string pairs. Omit graphSettings.configuration entirely when no
+    configuration is needed.
+    Supported nodeTypes are: Source, Destination, and Graph. Data flow graphs support only
+    MQTT, Kafka, and OpenTelemetry endpoints. The file can also be the full ARM resource
+    wrapper (properties is auto-extracted). extendedLocation is always auto-populated from
+    --instance and -g and must not be included in the file.
+
+    When used with apply the above content will create or replace a target DataflowGraph resource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops dataflow apply --config-file
-                              --instance
-                              --name
-                              --resource-group
-                              [--acquire-policy-token]
-                              [--change-reference]
-                              [--profile]
+    az iot ops dataflowgraph apply --config-file
+                                   --instance
+                                   --name
+                                   --resource-group
+                                   [--acquire-policy-token]
+                                   [--change-reference]
+                                   [--profile]
   examples:
   - summary: |-
-      Create or replace a dataflow 'mydataflow' associated with a profile 'myprofile' using a config file.
-    syntax: az iot ops dataflow apply -n mydataflow -p myprofile --in myinstance -g myresourcegroup --config-file /path/to/dataflow/config.json
+      Create or replace a DataflowGraph 'mygraph' associated with a profile 'myprofile' using a config file.
+    syntax: az iot ops dataflowgraph apply -n mygraph -p myprofile -i myinstance -g myresourcegroup --config-file /path/to/graph/config.json
   requiredParameters:
   - isRequired: true
     name: --config-file
     summary: |-
-      Path to a config file containing resource properties in json format. The config file should contain an object with properties compatible with the ARM representation of the resource. The object correlates directly with 'properties:{}' of the ARM resource.
+      Path to a JSON file containing the dataflowgraph properties.
     groupName: Config Arguments
   - isRequired: true
     name: --instance -i
@@ -97,7 +105,7 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      Dataflow name.
+      DataflowGraph name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -142,24 +150,27 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_dataflow_delete
-  name: az iot ops dataflow delete
+- uid: az_iot_ops_dataflowgraph_delete
+  name: az iot ops dataflowgraph delete
   summary: |-
-    Delete a dataflow associated with a dataflow profile.
+    Delete a DataflowGraph associated with a dataflow profile.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops dataflow delete --instance
-                               --name
-                               --resource-group
-                               [--acquire-policy-token]
-                               [--change-reference]
-                               [--profile]
-                               [--yes {false, true}]
+    az iot ops dataflowgraph delete --instance
+                                    --name
+                                    --resource-group
+                                    [--acquire-policy-token]
+                                    [--change-reference]
+                                    [--profile]
+                                    [--yes {false, true}]
   examples:
   - summary: |-
-      Delete a dataflow 'mydataflow' associated with a profile 'myprofile'.
-    syntax: az iot ops dataflow delete -n mydataflow -p myprofile --in mycluster-ops-instance -g myresourcegroup
+      Delete a DataflowGraph 'mygraph' associated with a profile 'myprofile'.
+    syntax: az iot ops dataflowgraph delete -n mygraph -p myprofile -i mycluster-ops-instance -g myresourcegroup
+  - summary: |-
+      Delete a DataflowGraph 'mygraph' without a confirmation prompt.
+    syntax: az iot ops dataflowgraph delete -n mygraph -p myprofile -i mycluster-ops-instance -g myresourcegroup -y
   requiredParameters:
   - isRequired: true
     name: --instance -i
@@ -168,7 +179,7 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      Dataflow name.
+      DataflowGraph name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -217,20 +228,20 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_dataflow_list
-  name: az iot ops dataflow list
+- uid: az_iot_ops_dataflowgraph_list
+  name: az iot ops dataflowgraph list
   summary: |-
-    List dataflows associated with a dataflow profile.
+    List DataflowGraphs associated with a dataflow profile.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops dataflow list --instance
-                             --resource-group
-                             [--profile]
+    az iot ops dataflowgraph list --instance
+                                  --resource-group
+                                  [--profile]
   examples:
   - summary: |-
-      Enumerate dataflows associated with the profile 'myprofile'.
-    syntax: az iot ops dataflow list -p myprofile --in mycluster-ops-instance -g myresourcegroup
+      Enumerate DataflowGraphs associated with the profile 'myprofile'.
+    syntax: az iot ops dataflowgraph list -p myprofile -i mycluster-ops-instance -g myresourcegroup
   requiredParameters:
   - isRequired: true
     name: --instance -i
@@ -272,21 +283,21 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_dataflow_show
-  name: az iot ops dataflow show
+- uid: az_iot_ops_dataflowgraph_show
+  name: az iot ops dataflowgraph show
   summary: |-
-    Show details of a dataflow associated with a dataflow profile.
+    Show details of a DataflowGraph associated with a dataflow profile.
   status: GA
   sourceType: Extension
   syntax: >-
-    az iot ops dataflow show --instance
-                             --name
-                             --resource-group
-                             [--profile]
+    az iot ops dataflowgraph show --instance
+                                  --name
+                                  --resource-group
+                                  [--profile]
   examples:
   - summary: |-
-      Show details of a dataflow 'mydataflow' associated with a profile 'myprofile'.
-    syntax: az iot ops dataflow show -n mydataflow -p myprofile --in mycluster-ops-instance -g myresourcegroup
+      Show details of a DataflowGraph 'mygraph' associated with a profile 'myprofile'.
+    syntax: az iot ops dataflowgraph show -n mygraph -p myprofile -i mycluster-ops-instance -g myresourcegroup
   requiredParameters:
   - isRequired: true
     name: --instance -i
@@ -295,7 +306,7 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      Dataflow name.
+      DataflowGraph name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -333,44 +344,9 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_dataflow_apply
-- az_iot_ops_dataflow_delete
-- az_iot_ops_dataflow_endpoint
-- az_iot_ops_dataflow_endpoint_apply
-- az_iot_ops_dataflow_endpoint_create
-- az_iot_ops_dataflow_endpoint_create_adls
-- az_iot_ops_dataflow_endpoint_create_adx
-- az_iot_ops_dataflow_endpoint_create_custom-kafka
-- az_iot_ops_dataflow_endpoint_create_custom-mqtt
-- az_iot_ops_dataflow_endpoint_create_eventgrid
-- az_iot_ops_dataflow_endpoint_create_eventhub
-- az_iot_ops_dataflow_endpoint_create_fabric-onelake
-- az_iot_ops_dataflow_endpoint_create_fabric-realtime
-- az_iot_ops_dataflow_endpoint_create_local-mqtt
-- az_iot_ops_dataflow_endpoint_create_local-storage
-- az_iot_ops_dataflow_endpoint_create_otel
-- az_iot_ops_dataflow_endpoint_delete
-- az_iot_ops_dataflow_endpoint_list
-- az_iot_ops_dataflow_endpoint_show
-- az_iot_ops_dataflow_endpoint_update
-- az_iot_ops_dataflow_endpoint_update_adls
-- az_iot_ops_dataflow_endpoint_update_adx
-- az_iot_ops_dataflow_endpoint_update_custom-kafka
-- az_iot_ops_dataflow_endpoint_update_custom-mqtt
-- az_iot_ops_dataflow_endpoint_update_eventgrid
-- az_iot_ops_dataflow_endpoint_update_eventhub
-- az_iot_ops_dataflow_endpoint_update_fabric-onelake
-- az_iot_ops_dataflow_endpoint_update_fabric-realtime
-- az_iot_ops_dataflow_endpoint_update_local-mqtt
-- az_iot_ops_dataflow_endpoint_update_local-storage
-- az_iot_ops_dataflow_endpoint_update_otel
-- az_iot_ops_dataflow_list
-- az_iot_ops_dataflow_profile
-- az_iot_ops_dataflow_profile_create
-- az_iot_ops_dataflow_profile_delete
-- az_iot_ops_dataflow_profile_list
-- az_iot_ops_dataflow_profile_show
-- az_iot_ops_dataflow_profile_update
-- az_iot_ops_dataflow_show
+- az_iot_ops_dataflowgraph_apply
+- az_iot_ops_dataflowgraph_delete
+- az_iot_ops_dataflowgraph_list
+- az_iot_ops_dataflowgraph_show
 metadata:
-  description: Dataflow management.
+  description: DataflowGraph management.
