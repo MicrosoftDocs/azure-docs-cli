@@ -1802,6 +1802,7 @@ directCommands:
                   [--enable-default-domain]
                   [--enable-defender]
                   [--enable-encryption-at-host]
+                  [--enable-fips]
                   [--enable-fips-image]
                   [--enable-gateway-api]
                   [--enable-high-log-scale-mode {false, true}]
@@ -1817,6 +1818,7 @@ directCommands:
                   [--enable-opentelemetry-logs]
                   [--enable-opentelemetry-metrics]
                   [--enable-optimized-addon-scaling]
+                  [--enable-osdisk-fc --enable-osdisk-full-caching]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
                   [--enable-private-cluster]
@@ -1888,6 +1890,7 @@ directCommands:
                   [--node-provisioning-default-pools {Auto, None}]
                   [--node-provisioning-mode {Auto, Manual}]
                   [--node-public-ip-prefix-id]
+                  [--node-public-ip-prefix-ids]
                   [--node-public-ip-tags]
                   [--node-resource-group]
                   [--node-vm-size]
@@ -2427,6 +2430,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable EncryptionAtHost on agent node pool.
+  - name: --enable-fips
+    defaultValue: "False"
+    summary: |-
+      Enable FIPS mode at the cluster level.
+    description: |-
+      Enables FIPS compliance for all AKS-managed components, such as the node
+      operating system, addons, and managed containerized components
+      (https://aka.ms/aks/components/docs). See Enable cluster-wide FIPS
+      (https://aka.ms/aks/fips) for more details.
+      Requires Kubernetes version 1.34 or later and the
+      Microsoft.ContainerService/EnableFIPSPreview feature to be registered
+      on the subscription. All node pools must be FIPS-enabled; this command
+      enables FIPS on the default node pool during cluster creation. Some
+      addons and extensions aren't supported with cluster-wide FIPS. Verify
+      addon and extension compatibility before enabling this preview feature.
+    isPreview: true
   - name: --enable-fips-image
     defaultValue: "False"
     summary: |-
@@ -2494,6 +2513,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable optimized addon scaling feature for cluster.
+    isPreview: true
+  - name: --enable-osdisk-fc --enable-osdisk-full-caching
+    defaultValue: "False"
+    summary: |-
+      Enable the full-cache ephemeral OS disk feature for the default node pool.
+    description: |-
+      When enabled, the entire operating system is cached on the local
+      ephemeral OS disk to mitigate E17 events caused by network failures.
+      Requires Ephemeral OS disk and a VM size with sufficient cache.
+      This property is immutable after the node pool is created.
     isPreview: true
   - name: --enable-pod-identity
     defaultValue: "False"
@@ -2807,6 +2836,11 @@ directCommands:
   - name: --node-public-ip-prefix-id
     summary: |-
       Public IP prefix ID used to assign public IPs to VMSS nodes.
+  - name: --node-public-ip-prefix-ids
+    summary: |-
+      Comma-separated list of public IP prefix resource IDs for dual-stack node public IPs (IPv4 and/or IPv6).
+    description: |-
+      At most one IPv4 and one IPv6 prefix may be specified. Automatically enables --enable-node-public-ip. Cannot be used with --node-public-ip-prefix-id. Requires the NodePublicIPv6PrefixPreview feature flag.
   - name: --node-public-ip-tags
     summary: |-
       The ipTags of the node public IPs.
@@ -6340,6 +6374,7 @@ directCommands:
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
+                  [--disable-fips]
                   [--disable-force-upgrade]
                   [--disable-gateway-api]
                   [--disable-http-proxy]
@@ -6383,6 +6418,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
+                  [--enable-fips]
                   [--enable-force-upgrade]
                   [--enable-gateway-api]
                   [--enable-high-log-scale-mode {false, true}]
@@ -6489,6 +6525,9 @@ directCommands:
   - summary: |-
       Disable cluster-autoscaler for an existing cluster
     syntax: az aks update --disable-cluster-autoscaler -g MyResourceGroup -n MyManagedCluster
+  - summary: |-
+      Disable FIPS mode at the cluster level.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-fips
   - summary: |-
       Update min-count or max-count for cluster autoscaler.
     syntax: az aks update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n MyManagedCluster
@@ -6820,6 +6859,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable AzureFile CSI Driver.
+  - name: --disable-fips
+    defaultValue: "False"
+    summary: |-
+      Disable FIPS mode at the cluster level.
+    description: |-
+      Disables cluster-wide FIPS enforcement for AKS-managed components.
+      This doesn't disable FIPS on existing node pools.
+    isPreview: true
   - name: --disable-force-upgrade
     defaultValue: "False"
     summary: |-
@@ -7012,6 +7059,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable AzureFile CSI Driver.
+  - name: --enable-fips
+    defaultValue: "False"
+    summary: |-
+      Enable FIPS mode at the cluster level.
+    description: |-
+      Enables FIPS compliance for all AKS-managed components, such as the node
+      operating system, addons, and managed containerized components
+      (https://aka.ms/aks/components/docs). See Enable cluster-wide FIPS
+      (https://aka.ms/aks/fips) for more details.
+      Requires Kubernetes version 1.34 or later and the
+      Microsoft.ContainerService/EnableFIPSPreview feature to be registered
+      on the subscription. Existing node pools must already be FIPS-enabled
+      before enabling this cluster-level setting, and future node pools must
+      also be created with FIPS enabled. Some addons and extensions aren't
+      supported with cluster-wide FIPS. Verify addon and extension
+      compatibility before enabling this preview feature.
+    isPreview: true
   - name: --enable-force-upgrade
     defaultValue: "False"
     summary: |-

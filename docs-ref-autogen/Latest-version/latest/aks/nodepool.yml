@@ -398,6 +398,7 @@ directCommands:
                         [--enable-fips-image]
                         [--enable-managed-gpu {false, true}]
                         [--enable-node-public-ip]
+                        [--enable-osdisk-fc --enable-osdisk-full-caching]
                         [--enable-secure-boot]
                         [--enable-ultra-ssd]
                         [--enable-vtpm]
@@ -428,6 +429,7 @@ directCommands:
                         [--node-osdisk-size]
                         [--node-osdisk-type {Ephemeral, Managed}]
                         [--node-public-ip-prefix-id]
+                        [--node-public-ip-prefix-ids]
                         [--node-public-ip-tags]
                         [--node-soak-duration]
                         [--node-taints]
@@ -573,6 +575,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable VMSS node public IP. Must use VMSS agent pool type.
+  - name: --enable-osdisk-fc --enable-osdisk-full-caching
+    defaultValue: "False"
+    summary: |-
+      Enable the full-cache ephemeral OS disk feature for the node pool.
+    description: |-
+      When enabled, the entire operating system is cached on the local
+      ephemeral OS disk to mitigate E17 events caused by network failures.
+      Requires Ephemeral OS disk and a VM size with sufficient cache.
+      This property is immutable after the node pool is created.
+    isPreview: true
   - name: --enable-secure-boot
     defaultValue: "False"
     summary: |-
@@ -685,6 +697,11 @@ directCommands:
   - name: --node-public-ip-prefix-id
     summary: |-
       Public IP prefix ID used to assign public IPs to VMSS nodes. Must use VMSS agent pool type.
+  - name: --node-public-ip-prefix-ids
+    summary: |-
+      Comma-separated list of public IP prefix resource IDs for dual-stack node public IPs (IPv4 and/or IPv6).
+    description: |-
+      At most one IPv4 and one IPv6 prefix may be specified. Automatically enables --enable-node-public-ip. Cannot be used with --node-public-ip-prefix-id. Requires the NodePublicIPv6PrefixPreview feature flag.
   - name: --node-public-ip-tags
     summary: |-
       The ipTags of the node public IPs. Must use VMSS agent pool type.
