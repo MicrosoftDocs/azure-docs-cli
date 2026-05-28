@@ -1,43 +1,44 @@
 ### YamlMime:AzureCLIGroup
-uid: az_grafana_api-key
-name: az grafana api-key
+uid: az_grafana_integration_monitor
+name: az grafana integration monitor
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **amg** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az grafana api-key** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **amg** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az grafana integration monitor** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage API keys.
-description: |-
-  API keys are deprecated by Grafana Labs and will not be supported in Grafana 12 and above. Please use service accounts instead.
-status: Deprecated
-isDeprecated: true
-deprecateInfo: This command group has been deprecated and will be removed in a future release.
+  Commands to manage Azure Monitor workspace integrations of a Grafana instance.
+status: GA
 sourceType: Extension
 directCommands:
-- uid: az_grafana_api-key_create
-  name: az grafana api-key create
+- uid: az_grafana_integration_monitor_add
+  name: az grafana integration monitor add
   summary: |-
-    Create a new API key.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: This command is implicitly deprecated because command group 'grafana api-key' is deprecated and will be removed in a future release.
+    Link an Azure Monitor workspace to a Grafana instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az grafana api-key create --key
-                              --name
-                              [--acquire-policy-token]
-                              [--change-reference]
-                              [--resource-group]
-                              [--role {Admin, Editor, Viewer}]
-                              [--time-to-live]
+    az grafana integration monitor add --monitor-name
+                                       --monitor-rg-name
+                                       --name
+                                       [--acquire-policy-token]
+                                       [--change-reference]
+                                       [--monitor-sub-id --monitor-subscription-id]
+                                       [--resource-group]
+                                       [--skip-role-assignments {false, true}]
   examples:
   - summary: |-
-      Create a new API key.
-    syntax: az grafana api-key create -g myResourceGroup -n myGrafana --key myKey
+      Link an Azure Monitor workspace to a Grafana instance.
+    syntax: az grafana integration monitor add -g MyResourceGroup -n MyGrafana --monitor-rg-name MyMonitorResourceGroup --monitor-name MyMonitor
   requiredParameters:
   - isRequired: true
-    name: --key
+    name: --monitor-name
     summary: |-
-      Api key name.
+      Name of the Azure Monitor workspace.
+  - isRequired: true
+    name: --monitor-rg-name
+    summary: |-
+      Name of the resource group of the Azure Monitor workspace.
   - isRequired: true
     name: --name -n
     summary: |-
@@ -51,18 +52,17 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --monitor-sub-id --monitor-subscription-id
+    summary: |-
+      Subscription id of the Azure Monitor workspace. Uses the current subscription id if not specified.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --role -r
-    defaultValue: Viewer
-    acceptedValues: Admin, Editor, Viewer
+  - name: --skip-role-assignments -s
+    defaultValue: "False"
+    acceptedValues: false, true
     summary: |-
-      Grafana role name.
-  - name: --time-to-live
-    defaultValue: 1d
-    summary: |-
-      The API key life duration. For example, 1d if your key is going to last fr one day. Supported units are: s,m,h,d,w,M,y.
+      Skip assigning the appropriate role on the Azure Monitor workspace to let Grafana read data from it. Default: false.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -90,25 +90,32 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_grafana_api-key_delete
-  name: az grafana api-key delete
+- uid: az_grafana_integration_monitor_delete
+  name: az grafana integration monitor delete
   summary: |-
-    Delete an API key.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: This command is implicitly deprecated because command group 'grafana api-key' is deprecated and will be removed in a future release.
+    Unlink an Azure Monitor workspace from a Grafana instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az grafana api-key delete --key
-                              --name
-                              [--acquire-policy-token]
-                              [--change-reference]
-                              [--resource-group]
+    az grafana integration monitor delete --monitor-name
+                                          --monitor-rg-name
+                                          --name
+                                          [--acquire-policy-token]
+                                          [--change-reference]
+                                          [--monitor-sub-id --monitor-subscription-id]
+                                          [--resource-group]
+                                          [--skip-role-assignments {false, true}]
   requiredParameters:
   - isRequired: true
-    name: --key
+    name: --monitor-name
     summary: |-
-      Id or name that identify an api-key to delete.
+      Name of the Azure Monitor workspace.
+  - isRequired: true
+    name: --monitor-rg-name
+    summary: |-
+      Name of the resource group of the Azure Monitor workspace.
   - isRequired: true
     name: --name -n
     summary: |-
@@ -122,9 +129,17 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --monitor-sub-id --monitor-subscription-id
+    summary: |-
+      Subscription id of the Azure Monitor workspace. Uses the current subscription id if not specified.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --skip-role-assignments -s
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Skip assigning the appropriate role on the Azure Monitor workspace to let Grafana read data from it. Default: false.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -152,17 +167,17 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_grafana_api-key_list
-  name: az grafana api-key list
+- uid: az_grafana_integration_monitor_list
+  name: az grafana integration monitor list
   summary: |-
-    List existing API keys.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: This command is implicitly deprecated because command group 'grafana api-key' is deprecated and will be removed in a future release.
+    List all Azure Monitor workspaces linked to a Grafana instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az grafana api-key list --name
-                            [--resource-group]
+    az grafana integration monitor list --name
+                                        [--resource-group]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -200,8 +215,8 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_grafana_api-key_create
-- az_grafana_api-key_delete
-- az_grafana_api-key_list
+- az_grafana_integration_monitor_add
+- az_grafana_integration_monitor_delete
+- az_grafana_integration_monitor_list
 metadata:
-  description: API keys are deprecated by Grafana Labs and will not be supported in Grafana 12 and above. Please use service accounts instead.
+  description: Commands to manage Azure Monitor workspace integrations of a Grafana instance.
