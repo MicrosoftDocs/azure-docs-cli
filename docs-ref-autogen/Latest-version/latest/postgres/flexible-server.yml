@@ -6,7 +6,7 @@ importantNote: >-
 
   > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Azure Database for PostgreSQL Flexible Servers.
+  Manage Azure Database for PostgreSQL flexible servers.
 status: GA
 sourceType: Core and Extension
 directCommands:
@@ -93,16 +93,13 @@ directCommands:
   description: |-
     Create a PostgreSQL flexible server with custom or default configuration. For more information for network configuration, see
     - Configure public access
-    https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-manage-firewall-cli
+    https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-manage-firewall-cli
     - Configure private access
-    https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-manage-virtual-network-cli.
+    https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-manage-virtual-network-cli.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
   sourceType: Core
   syntax: >-
     az postgres flexible-server create [--acquire-policy-token]
-                                       [--address-prefixes]
                                        [--admin-display-name]
                                        [--admin-object-id]
                                        [--admin-password]
@@ -113,10 +110,8 @@ directCommands:
                                        [--backup-key]
                                        [--backup-retention]
                                        [--change-reference]
-                                       [--cluster-option {ElasticCluster, Server}]
                                        [--database-name]
                                        [--geo-redundant-backup {Disabled, Enabled}]
-                                       [--high-availability {Disabled, SameZone, ZoneRedundant}]
                                        [--identity]
                                        [--iops]
                                        [--key]
@@ -135,7 +130,6 @@ directCommands:
                                        [--storage-size]
                                        [--storage-type {PremiumV2_LRS, Premium_LRS}]
                                        [--subnet]
-                                       [--subnet-prefixes]
                                        [--tags]
                                        [--throughput]
                                        [--tier]
@@ -148,201 +142,195 @@ directCommands:
   - summary: |-
       Create a PostgreSQL flexible server with custom parameters
     syntax: >-
-      az postgres flexible-server create --location northeurope --resource-group testGroup \
-        --name testserver --admin-user username --admin-password password \
+      az postgres flexible-server create --location testlocation --resource-group testgroup \
+        --name testserver --admin-user testusername --admin-password testpassword \
         --sku-name Standard_D2s_v3 --tier GeneralPurpose --public-access 153.24.26.117 --storage-size 128 \
         --tags "key=value" --version 18 --zonal-resiliency Enabled --zone 1 \
         --standby-zone 3
   - summary: |-
       Create server with high availability feature enabled that allows primary and standby in the same zone when multi-zone capacity is unavailable.
-    syntax: az postgres flexible-server create -g testGroup -n testCluster --location testLocation --zonal-resiliency Enabled --allow-same-zone
+    syntax: az postgres flexible-server create -g testgroup -n testserver --location testlocation --zonal-resiliency Enabled --allow-same-zone
   - summary: |-
       Create a PostgreSQL flexible server using Premium SSD v2 Disks.
     syntax: >-
       # set storage type to "PremiumV2_LRS" and provide values for Storage size (in GiB), IOPS (operations/sec), and Throughput (MB/sec).
 
-      az postgres flexible-server create --location northeurope --resource-group testGroup \
-          --name testserver --admin-user username --admin-password password \
+      az postgres flexible-server create --location testlocation --resource-group testgroup \
+          --name testserver --admin-user testusername --admin-password testpassword \
           --sku-name Standard_B1ms --tier GeneralPurpose --storage-type PremiumV2_LRS --storage-size 128 --iops 3000 --throughput 125
   - summary: |-
       Create a PostgreSQL flexible server with default parameters and public access enabled by default.       Resource group, server name, username, password, and default database will be created by CLI
     syntax: az postgres flexible-server create
   - summary: |-
       Create a PostgreSQL flexible server with public access and add the range of IP address to have access to this server. The --public-access parameter can be 'Disabled', 'Enabled', 'All', 'None', <startIpAddress>, or <startIpAddress>-<endIpAddress>
-    syntax: az postgres flexible-server create --resource-group testGroup --name testserver --public-access 125.23.54.31-125.23.54.35
+    syntax: az postgres flexible-server create --resource-group testgroup --name testserver --public-access 125.23.54.31-125.23.54.35
   - summary: |-
-      Create a PostgreSQL flexible server with private access. If provided virtual network and subnet do not exists, virtual network and subnet with the specified address prefixes will be created.
-    syntax: az postgres flexible-server create --resource-group testGroup --name testserver --vnet myVnet --subnet mySubnet --address-prefixes 10.0.0.0/16 --subnet-prefixes 10.0.0.0/24
+      Create a PostgreSQL flexible server with private access using existing virtual network, subnet and private DNS zone names.
+    syntax: az postgres flexible-server create --resource-group testgroup --name testserver --vnet testvnet --subnet testsubnet --private-dns-zone testdns.private.postgres.database.azure.com
   - summary: |-
-      Create a PostgreSQL flexible server using a new subnet resource ID and new private DNS zone resource ID. The subnet and DNS zone can be created in different subscription or resource group.
+      Create a PostgreSQL flexible server using existing subnet and private DNS zone resource identifiers. The subnet and DNS zone can be in different subscriptions or resource groups.
     syntax: >-
       az postgres flexible-server create \
-        --resource-group testGroup --name testserver \
-        --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName} \
-        --private-dns-zone /subscriptions/{SubID}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/privateDnsZones/testPostgreSQLFlexibleDnsZone.private.postgres.database.azure.com \
-        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24
+        --resource-group testgroup --name testserver \
+        --subnet /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNet}/subnets/{Subnet} \
+        --private-dns-zone /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/privateDnsZones/testdns.private.postgres.database.azure.com
   - summary: |-
-      Create a PostgreSQL flexible server using existing network resources in the same resource group. The provided subnet should not have any other resource deployed in it and this subnet will be delegated to Microsoft.DBforPostgreSQL/flexibleServers, if not already delegated. The private DNS zone will be linked to the virtual network if not already linked.
+      Create a PostgreSQL flexible server using existing network resources in the same resource group. The provided subnet and private DNS zone must already exist.
     syntax: >-
       # create vnet
 
-      az network vnet create --resource-group testGroup --name testVnet --location testLocation --address-prefixes 172.0.0.0/16
+      az network vnet create --resource-group testgroup --name testvnet --location testlocation --address-prefixes 172.0.0.0/16
 
 
       # create subnet
 
-      az network vnet subnet create --resource-group testGroup --vnet-name testVnet --address-prefixes 172.0.0.0/24 --name testSubnet
+      az network vnet subnet create --resource-group testgroup --vnet-name testvnet --address-prefixes 172.0.0.0/24 --name testsubnet
 
 
       # create private dns zone
 
-      az network private-dns zone create -g testGroup -n testDNS.private.postgres.database.azure.com
+      az network private-dns zone create -g testgroup -n testdns.private.postgres.database.azure.com
 
 
-      az postgres flexible-server create --resource-group testGroup \
-        --name testserver --location testLocation \
-        --subnet /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
-        --private-dns-zone /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com\
+      az postgres flexible-server create --resource-group testgroup \
+        --name testserver --location testlocation \
+        --subnet /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testsubnet \
+        --private-dns-zone /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/privateDnsZones/testdns.postgres.database.azure.com\
 
 
       az postgres flexible-server create --resource-group testGroup --name testserver \
         --vnet testVnet --subnet testSubnet --location testLocation \
-        --private-dns-zone /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
+        --private-dns-zone /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/privateDnsZones/testdns.postgres.database.azure.com
   - summary: |-
-      Create a PostgreSQL flexible server using existing network resources in the different resource group / subscription.
+      Create a PostgreSQL flexible server using existing network resources in a different resource group / subscription.
     syntax: >-
-      az postgres flexible-server create --resource-group testGroup \
+      az postgres flexible-server create --resource-group testgroup \
          --name testserver --location testLocation \
-        --subnet /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
-        --private-dns-zone /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
+        --subnet /subscriptions/{subscriptionId2}/resourceGroups/{resourceGroup2}/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testsubnet \
+        --private-dns-zone /subscriptions/{subscriptionId2}/resourceGroups/{resourceGroup2}/providers/Microsoft.Network/privateDnsZones/testdns.postgres.database.azure.com
   - summary: |-
       Create a PostgreSQL flexible server with data encryption.
     syntax: >-
       # create keyvault
 
-      az keyvault create -g testGroup -n testVault --location testLocation \
+      az keyvault create -g testgroup -n testvault --location testlocation \
         --enable-purge-protection true
 
 
       # create key in keyvault and save its key identifier
 
-      keyIdentifier=$(az keyvault key create --name testKey -p software \
-        --vault-name testVault --query key.kid -o tsv)
+      keyIdentifier=$(az keyvault key create --name testkey -p software \
+        --vault-name testvault --query key.kid -o tsv)
 
 
       # create identity and save its principalId
 
-      identityPrincipalId=$(az identity create -g testGroup --name testIdentity \
-        --location testLocation --query principalId -o tsv)
+      identityPrincipalId=$(az identity create -g testgroup --name testidentity \
+        --location testlocation --query principalId -o tsv)
 
 
       # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
 
-      az keyvault set-policy -g testGroup -n testVault --object-id $identityPrincipalId \
+      az keyvault set-policy -g testgroup -n testvault --object-id $identityPrincipalId \
         --key-permissions wrapKey unwrapKey get list
 
 
       # create flexible server with data encryption enabled
 
-      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
-        --key $keyIdentifier --identity testIdentity
+      az postgres flexible-server create -g testgroup -n testserver --location testlocation \
+        --key $keyIdentifier --identity testidentity
   - summary: |-
       Create a PostgreSQL flexible server with Microsoft Entra auth as well as password auth.
     syntax: >-
       # create flexible server with aad auth and password auth enabled
 
-      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
+      az postgres flexible-server create -g testgroup -n testserver --location testlocation \
         --microsoft-entra-auth Enabled
   - summary: |-
       Create a PostgreSQL flexible server with Microsoft Entra auth only and primary administrator specified.
     syntax: >-
       # create flexible server with aad only auth and password auth disabled with primary administrator specified
 
-      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
+      az postgres flexible-server create -g testgroup -n testserver --location testlocation \
         --microsoft-entra-auth Enabled --password-auth Disabled \
         --admin-object-id 00000000-0000-0000-0000-000000000000 --admin-display-name john@contoso.com --admin-type User
   - summary: |-
       Create a PostgreSQL flexible server with public access, geo-redundant backup enabled and add the range of IP address to have access to this server. The --public-access parameter can be 'All', 'None', <startIpAddress>, or <startIpAddress>-<endIpAddress>
-    syntax: az postgres flexible-server create --resource-group testGroup --name testserver --geo-redundant-backup Enabled --public-access 125.23.54.31-125.23.54.35
+    syntax: az postgres flexible-server create --resource-group testgroup --name testserver --geo-redundant-backup Enabled --public-access 125.23.54.31-125.23.54.35
   - summary: |-
       Create a PostgreSQL flexible server with data encryption for geo-rundundant backup enabled server.
     syntax: >-
       # create keyvault
 
-      az keyvault create -g testGroup -n testVault --location testLocation \
+      az keyvault create -g testgroup -n testvault --location testlocation \
         --enable-purge-protection true
 
 
       # create key in keyvault and save its key identifier
 
-      keyIdentifier=$(az keyvault key create --name testKey -p software \
-        --vault-name testVault --query key.kid -o tsv)
+      keyIdentifier=$(az keyvault key create --name testkey -p software \
+        --vault-name testvault --query key.kid -o tsv)
 
 
       # create identity and save its principalId
 
-      identityPrincipalId=$(az identity create -g testGroup --name testIdentity \
-        --location testLocation --query principalId -o tsv)
+      identityPrincipalId=$(az identity create -g testgroup --name testidentity \
+        --location testlocation --query principalId -o tsv)
 
 
       # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
 
-      az keyvault set-policy -g testGroup -n testVault --object-id $identityPrincipalId \
+      az keyvault set-policy -g testgroup -n testvault --object-id $identityPrincipalId \
         --key-permissions wrapKey unwrapKey get list
 
       # create keyvault in geo-paired region
 
-      az keyvault create -g testGroup -n geoVault --location geoPairedLocation \
+      az keyvault create -g testgroup -n geovault --location geoPairedLocation \
         --enable-purge-protection true
 
 
       # create key in keyvault and save its key identifier
 
-      geoKeyIdentifier=$(az keyvault key create --name geoKey -p software \
-        --vault-name geoVault --query key.kid -o tsv)
+      geoKeyIdentifier=$(az keyvault key create --name geokey -p software \
+        --vault-name geovault --query key.kid -o tsv)
 
 
       # create identity in geo-raired location and save its principalId
 
-      geoIdentityPrincipalId=$(az identity create -g testGroup --name geoIdentity \
+      geoIdentityPrincipalId=$(az identity create -g testgroup --name geoidentity \
         --location geoPairedLocation --query principalId -o tsv)
 
 
       # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
 
-      az keyvault set-policy -g testGroup -n geoVault --object-id $geoIdentityPrincipalId \
+      az keyvault set-policy -g testgroup -n geovault --object-id $geoIdentityPrincipalId \
         --key-permissions wrapKey unwrapKey get list
 
 
       # create flexible server with data encryption enabled for geo-backup Enabled server
 
-      az postgres flexible-server create -g testGroup -n testServer --location testLocation --geo-redundant-backup Enabled \
-        --key $keyIdentifier --identity testIdentity --backup-key $geoKeyIdentifier --backup-identity geoIdentity
+      az postgres flexible-server create -g testgroup -n testserver --location testlocation --geo-redundant-backup Enabled \
+        --key $keyIdentifier --identity testidentity --backup-key $geoKeyIdentifier --backup-identity geoidentity
   - summary: |-
       Create flexible server with custom storage performance tier. Accepted values "P4", "P6", "P10", "P15", "P20", "P30", \ "P40", "P50", "P60", "P70", "P80". Actual allowed values depend on the --storage-size selection for flexible server creation. \ Default value for storage performance tier depends on the --storage-size selected for flexible server creation.
-    syntax: az postgres flexible-server create -g testGroup -n testServer --location testLocation --performance-tier P15
+    syntax: az postgres flexible-server create -g testgroup -n testserver --location testlocation --performance-tier P15
   - summary: |-
       Create flexible server with storage auto-grow as Enabled. Accepted values Enabled / Disabled. Default value for storage auto-grow is "Disabled".
-    syntax: az postgres flexible-server create -g testGroup -n testServer --location testLocation --storage-auto-grow Enabled
+    syntax: az postgres flexible-server create -g testgroup -n testserver --location testlocation --storage-auto-grow Enabled
   - summary: |-
-      Create elastic cluster with node count of 5. Default node count is 2 when --cluster-option is "ElasticCluster".
-    syntax: az postgres flexible-server create -g testGroup -n testCluster --location testLocation --cluster-option ElasticCluster --node-count 5
+      Create elastic cluster with node count of 5.
+    syntax: az postgres flexible-server create -g testGroup -n testCluster --location testLocation --node-count 5
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --address-prefixes
-    summary: |-
-      The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
-    isDeprecated: true
-    deprecateInfo: Argument '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
   - name: --admin-display-name -m
     summary: |-
       Display name of the Microsoft Entra administrator user or group.
   - name: --admin-object-id -i
     summary: |-
-      The unique ID of the Microsoft Entra administrator.
+      The unique identifier of the Microsoft Entra administrator.
   - name: --admin-password -p
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
@@ -352,7 +340,7 @@ directCommands:
     summary: |-
       Type of the Microsoft Entra administrator.
   - name: --admin-user -u
-    defaultValue: tenuouspoultry3
+    defaultValue: smugvulture1
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
@@ -362,10 +350,10 @@ directCommands:
       Allow primary and standby in the same zone when multi-zone capacity is unavailable.
   - name: --backup-identity
     summary: |-
-      The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
+      The name or resource identifier of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
   - name: --backup-key
     summary: |-
-      The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+      The resource identifier of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --backup-retention
     defaultValue: "7"
     summary: |-
@@ -374,37 +362,23 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --cluster-option
-    defaultValue: Server
-    acceptedValues: ElasticCluster, Server
-    summary: |-
-      Cluster option for the server. Servers are for workloads that can fit on one node. Elastic clusters provides schema- and row-based sharding on a database. Default value is Server.
-    isDeprecated: true
-    deprecateInfo: Currently, to create an elastic cluster you must specify --cluster-option ElasticCluster together with --node-count. In the future, providing --node-count alone will imply an elastic cluster.
   - name: --database-name -d
     summary: |-
-      The default database name for an elastic cluster. Only applicable when --cluster-option is set to ElasticCluster.
+      The default database name for an elastic cluster. Only applicable when --node-count is present.
   - name: --geo-redundant-backup
     defaultValue: Disabled
     acceptedValues: Disabled, Enabled
     summary: |-
       Whether or not geo redundant backup is enabled.
-  - name: --high-availability
-    defaultValue: Disabled
-    acceptedValues: Disabled, SameZone, ZoneRedundant
-    summary: |-
-      Enable (ZoneRedundant or SameZone) or disable high availability feature.
-    isDeprecated: true
-    deprecateInfo: Argument '--high-availability' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--zonal-resiliency' instead.
   - name: --identity
     summary: |-
-      The name or resource ID of the user assigned identity for data encryption.
+      The name or resource identifier of the user assigned identity for data encryption.
   - name: --iops
     summary: |-
       Value of IOPS in (operations/sec) to be allocated for this server. This value can only be updated if flexible server is using Premium SSD v2 Disks.
   - name: --key
     summary: |-
-      The resource ID of the primary keyvault key for data encryption.
+      The resource identifier of the primary keyvault key for data encryption.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -418,7 +392,7 @@ directCommands:
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
   - name: --node-count
     summary: |-
-      The number of nodes for elastic cluster. Default is 2 nodes.
+      The number of nodes for elastic cluster.
   - name: --password-auth
     defaultValue: Enabled
     acceptedValues: Disabled, Enabled
@@ -429,7 +403,7 @@ directCommands:
       Performance tier of the server.
   - name: --private-dns-zone
     summary: |-
-      This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+      This parameter only applies for a server with private access and is required when using --vnet or --subnet. The name or resource identifier of an existing private DNS zone. You can use a private DNS zone from the same resource group, a different resource group, or a different subscription. If you want to use a zone from a different resource group or subscription, please provide its resource identifier.
   - name: --public-access
     summary: |-
       Determines the public access. Enter single or range of IP addresses to be included in the allowed list of IPs. IP address ranges must be dash-separated and not contain any spaces. Specifying 0.0.0.0 allows public access from any resources deployed within Azure to access your server. Setting it to "None" sets the server in public access mode but does not create a firewall rule. Acceptable values are 'Disabled', 'Enabled', 'All', 'None','{startIP}' and '{startIP}-{destinationIP}' where startIP and destinationIP ranges from 0.0.0.0 to 255.255.255.255.
@@ -454,15 +428,10 @@ directCommands:
   - name: --storage-type
     acceptedValues: PremiumV2_LRS, Premium_LRS
     summary: |-
-      Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS. Default value is Premium_LRS.Must set iops and throughput if using PremiumV2_LRS.
+      Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS. Default value is Premium_LRS. Must set --iops and --throughput if using PremiumV2_LRS.
   - name: --subnet
     summary: |-
-      Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
-  - name: --subnet-prefixes
-    summary: |-
-      The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
-    isDeprecated: true
-    deprecateInfo: Argument '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+      Name or identifier of an existing subnet. If you want to use a subnet from a different resource group or subscription, please provide its resource identifier instead of name.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -478,7 +447,7 @@ directCommands:
       Server major version.
   - name: --vnet
     summary: |-
-      Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+      Name or identifier of an existing virtual network. If you want to use a vnet from a different resource group or subscription, please provide a resource identifier. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -535,10 +504,10 @@ directCommands:
   examples:
   - summary: |-
       Delete a flexible server.
-    syntax: az postgres flexible-server delete --resource-group testGroup --name testserver
+    syntax: az postgres flexible-server delete --resource-group testgroup --name testserver
   - summary: |-
       Delete a flexible server without prompt or confirmation.
-    syntax: az postgres flexible-server delete --resource-group testGroup --name testserver --yes
+    syntax: az postgres flexible-server delete --resource-group testgroup --name testserver --yes
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -672,14 +641,11 @@ directCommands:
   summary: |-
     Geo-restore a flexible server from backup.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
   sourceType: Core
   syntax: >-
     az postgres flexible-server geo-restore --location
                                             --source-server
                                             [--acquire-policy-token]
-                                            [--address-prefixes]
                                             [--backup-identity]
                                             [--backup-key]
                                             [--change-reference]
@@ -693,7 +659,6 @@ directCommands:
                                             [--resource-group]
                                             [--restore-time]
                                             [--subnet]
-                                            [--subnet-prefixes]
                                             [--subscription]
                                             [--vnet]
                                             [--yes]
@@ -701,19 +666,18 @@ directCommands:
   examples:
   - summary: |-
       Geo-restore public access server 'testserver' to a new server 'testserverNew' in location 'newLocation' with public access.
-    syntax: az postgres flexible-server geo-restore --resource-group testGroup --name testserverNew --source-server testserver --location newLocation
+    syntax: az postgres flexible-server geo-restore --resource-group testgroup --name testservernew --source-server testserver --location testlocationnew
   - summary: |-
-      Geo-restore private access server 'testserver' as a new server 'testserverNew' with new subnet. New vnet, subnet, and private dns zone for the restored server will be provisioned. Please refer to 'flexible-server create' command for more private access scenarios.
+      Geo-restore private access server 'testserver' as a new server 'testservernew' using existing private networking resources.
     syntax: >-
-      az postgres flexible-server geo-restore --resource-group testGroup --name testserverNew \
-        --source-server testserver --vnet newVnet --subnet newSubnet \
-        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
+      az postgres flexible-server geo-restore --resource-group testgroup --name testservernew \
+        --source-server testserver --vnet testvnetnew --subnet testsubnetnew \
         --private-dns-zone testDNS.postgres.database.azure.com --location newLocation
   - summary: |-
-      Geo-restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different subscription / resource group. \ Here --resource-group is for the target server's resource group, and --source-server must be passed as resource ID. \ This resource ID can be in a subscription different than the subscription used for az account set.
+      Geo-restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different subscription / resource group. \ Here --resource-group is for the target server's resource group, and --source-server must be passed as resource identifier. \ This resource identifier can be in a subscription different than the subscription used for az account set.
     syntax: >-
-      az postgres flexible-server geo-restore --resource-group testGroup --name testserverNew --location newLocation \
-        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName}
+      az postgres flexible-server geo-restore --resource-group testgroup --name testservernew --location testlocationnew \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServer}
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -722,23 +686,18 @@ directCommands:
   - isRequired: true
     name: --source-server
     summary: |-
-      The name or resource ID of the source server to restore from.
+      The name or resource identifier of the source server to restore from.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --address-prefixes
-    summary: |-
-      The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
-    isDeprecated: true
-    deprecateInfo: Argument '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
   - name: --backup-identity
     summary: |-
-      The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
+      The name or resource identifier of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
   - name: --backup-key
     summary: |-
-      The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+      The resource identifier of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -750,14 +709,14 @@ directCommands:
       Whether or not geo redundant backup is enabled.
   - name: --identity
     summary: |-
-      The name or resource ID of the user assigned identity for data encryption.
+      The name or resource identifier of the user assigned identity for data encryption.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
   - name: --key
     summary: |-
-      The resource ID of the primary keyvault key for data encryption.
+      The resource identifier of the primary keyvault key for data encryption.
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
@@ -768,30 +727,25 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --private-dns-zone
     summary: |-
-      This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+      This parameter only applies for a server with private access and is required when using --vnet or --subnet. The name or resource identifier of an existing private DNS zone. You can use a private DNS zone from the same resource group, a different resource group, or a different subscription. If you want to use a zone from a different resource group or subscription, please provide its resource identifier.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-05-28T11:15:44+00:00
+    defaultValue: 2026-05-28T23:13:47+00:00
     summary: |-
-      The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
+      The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
   - name: --subnet
     summary: |-
-      Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
-  - name: --subnet-prefixes
-    summary: |-
-      The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
-    isDeprecated: true
-    deprecateInfo: Argument '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+      Name or identifier of an existing subnet. If you want to use a subnet from a different resource group or subscription, please provide its resource identifier instead of name.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --vnet
     summary: |-
-      Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+      Name or identifier of an existing virtual network. If you want to use a vnet from a different resource group or subscription, please provide a resource identifier. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -838,7 +792,7 @@ directCommands:
     syntax: az postgres flexible-server list
   - summary: |-
       List all PostgreSQL flexible servers in a resource group.
-    syntax: az postgres flexible-server list --resource-group testGroup
+    syntax: az postgres flexible-server list --resource-group testgroup
   - summary: |-
       List all PostgreSQL flexible servers in a resource group in table format.
     syntax: az postgres flexible-server list --resource-group testGroup --output table
@@ -944,7 +898,7 @@ directCommands:
   examples:
   - summary: |-
       Migrate an Azure Database for PostgreSQL server from VNet integration to a Private Link network model.
-    syntax: az postgres flexible-server migrate-network --resource-group testGroup --name testserver
+    syntax: az postgres flexible-server migrate-network --resource-group testgroup --name testserver
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1015,13 +969,13 @@ directCommands:
   examples:
   - summary: |-
       Restart a flexible server.
-    syntax: az postgres flexible-server restart --resource-group testGroup --name testserver
+    syntax: az postgres flexible-server restart --resource-group testgroup --name testserver
   - summary: |-
       Restart a server with planned failover
-    syntax: az postgres flexible-server restart --resource-group testGroup --name testserver --failover Planned
+    syntax: az postgres flexible-server restart --resource-group testgroup --name testserver --failover Planned
   - summary: |-
       Restart a server with forced failover
-    syntax: az postgres flexible-server restart --resource-group testGroup --name testserver --failover Forced
+    syntax: az postgres flexible-server restart --resource-group testgroup --name testserver --failover Forced
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1079,13 +1033,10 @@ directCommands:
   summary: |-
     Restore a flexible server from backup.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
   sourceType: Core
   syntax: >-
     az postgres flexible-server restore --source-server
                                         [--acquire-policy-token]
-                                        [--address-prefixes]
                                         [--backup-identity]
                                         [--backup-key]
                                         [--change-reference]
@@ -1100,7 +1051,6 @@ directCommands:
                                         [--restore-time]
                                         [--storage-type {PremiumV2_LRS}]
                                         [--subnet]
-                                        [--subnet-prefixes]
                                         [--subscription]
                                         [--vnet]
                                         [--yes]
@@ -1108,44 +1058,39 @@ directCommands:
   examples:
   - summary: |-
       Restore 'testserver' to a specific point-in-time as a new server 'testserverNew'.
-    syntax: az postgres flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver --restore-time "2017-06-15T13:10:00Z"
+    syntax: az postgres flexible-server restore --resource-group testgroup --name testserverNew --source-server testserver --restore-time "2026-03-22T18:20:22Z"
   - summary: |-
-      Restore 'testserver' to current point-in-time as a new server 'testserverNew'.
-    syntax: az postgres flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver
+      Restore 'testserver' to current point-in-time as a new server 'testservernew'.
+    syntax: az postgres flexible-server restore --resource-group testgroup --name testservernew --source-server testserver
   - summary: |-
-      Restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different resource group. \ Here --resource-group is for the target server's resource group, and --source-server must be passed as resource ID.
+      Restore 'testserver' to current point-in-time as a new server 'testservernew' in a different resource group. \ Here --resource-group is for the target server's resource group, and --source-server must be passed as resource identifier.
     syntax: >-
-      az postgres flexible-server restore --resource-group testGroup --name testserverNew \
-        --source-server /subscriptions/{testSubscription}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName}
+      az postgres flexible-server restore --resource-group testgroup --name testservernew \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServer}
   - summary: |-
-      Restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different subscription. \ Here --resource-group is for the target server's resource group, and --source-server must be passed as resource ID. \ This resource ID can be in a subscription different than the subscription used for az account set.
+      Restore 'testserver' to current point-in-time as a new server 'testservernew' in a different subscription. \ Here --resource-group is for the target server's resource group, and --source-server must be passed as resource identifier. \ This resource identifier can be in a subscription different than the subscription used for az account set.
     syntax: >-
-      az postgres flexible-server restore --resource-group testGroup --name testserverNew \
-        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName}
+      az postgres flexible-server restore --resource-group testgroup --name testservernew \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServer}
   - summary: |-
-      Restore 'testserver' to current point-in-time as a new server 'testserverNew' using Premium SSD v2 Disks by setting storage type to "PremiumV2_LRS"
-    syntax: az postgres flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver --storage-type PremiumV2_LRS
+      Restore 'testserver' to current point-in-time as a new server 'testservernew' using Premium SSD v2 Disks by setting storage type to "PremiumV2_LRS"
+    syntax: az postgres flexible-server restore --resource-group testgroup --name testservernew --source-server testserver --storage-type PremiumV2_LRS
   requiredParameters:
   - isRequired: true
     name: --source-server
     summary: |-
-      The name or resource ID of the source server to restore from.
+      The name or resource identifier of the source server to restore from.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --address-prefixes
-    summary: |-
-      The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
-    isDeprecated: true
-    deprecateInfo: Argument '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
   - name: --backup-identity
     summary: |-
-      The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
+      The name or resource identifier of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
   - name: --backup-key
     summary: |-
-      The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+      The resource identifier of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -1157,14 +1102,14 @@ directCommands:
       Whether or not geo redundant backup is enabled.
   - name: --identity
     summary: |-
-      The name or resource ID of the user assigned identity for data encryption.
+      The name or resource identifier of the user assigned identity for data encryption.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
   - name: --key
     summary: |-
-      The resource ID of the primary keyvault key for data encryption.
+      The resource identifier of the primary keyvault key for data encryption.
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
@@ -1175,34 +1120,29 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --private-dns-zone
     summary: |-
-      This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+      This parameter only applies for a server with private access and is required when using --vnet or --subnet. The name or resource identifier of an existing private DNS zone. You can use a private DNS zone from the same resource group, a different resource group, or a different subscription. If you want to use a zone from a different resource group or subscription, please provide its resource identifier.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-05-28T11:15:44+00:00
+    defaultValue: 2026-05-28T23:13:47+00:00
     summary: |-
-      The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
+      The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
   - name: --storage-type
     acceptedValues: PremiumV2_LRS
     summary: |-
       Storage type for the new server. Allowed value is PremiumV2_LRS. Default is for the new server to match storage type of the source server.
   - name: --subnet
     summary: |-
-      Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
-  - name: --subnet-prefixes
-    summary: |-
-      The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
-    isDeprecated: true
-    deprecateInfo: Argument '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+      Name or identifier of an existing subnet. If you want to use a subnet from a different resource group or subscription, please provide its resource identifier instead of name.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --vnet
     summary: |-
-      Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+      Name or identifier of an existing virtual network. If you want to use a vnet from a different resource group or subscription, please provide a resource identifier. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -1239,14 +1179,11 @@ directCommands:
   summary: |-
     Revive a dropped flexible server from backup.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: This command will stop creating new network resources or altering existing ones which are required for the server to function, such as virtual networks, subnets, IP ranges, etc. It will instead require users to provide the necessary network resources created beforehand using the corresponding commands from the `az network` module.
   sourceType: Core
   syntax: >-
     az postgres flexible-server revive-dropped --location
                                                --source-server
                                                [--acquire-policy-token]
-                                               [--address-prefixes]
                                                [--backup-identity]
                                                [--backup-key]
                                                [--change-reference]
@@ -1259,20 +1196,19 @@ directCommands:
                                                [--private-dns-zone]
                                                [--resource-group]
                                                [--subnet]
-                                               [--subnet-prefixes]
                                                [--subscription]
                                                [--vnet]
                                                [--yes]
                                                [--zone]
   examples:
   - summary: |-
-      Revive dropped public access server 'testserver' to a new server 'testserverNew' in location 'newLocation' with public access.
-    syntax: az postgres flexible-server revive-dropped --resource-group testGroup --name testserverNew --source-server /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/testserver --location newLocation
+      Revive dropped public access server 'testserver' to a new server 'testservernew' in location 'newlocation' with public access.
+    syntax: az postgres flexible-server revive-dropped --resource-group testgroup --name testservernew --source-server /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/testserver --location testlocationnew
   - summary: |-
-      Revive dropped public access server 'testserver' with data encryption enabled as a new server 'testserverNew' with data encryption.
+      Revive dropped public access server 'testserver' with data encryption enabled as a new server 'testservernew' with data encryption.
     syntax: >-
-      az postgres flexible-server revive-dropped -l testLocation --resource-group testGroup --name testserverNew \
-        --source-server testserver --key newKeyIdentifier --identity newIdentity
+      az postgres flexible-server revive-dropped -l testlocation --resource-group testgroup --name testservernew \
+        --source-server testserver --key newKeyIdentifier --identity testidentitynew
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -1281,23 +1217,18 @@ directCommands:
   - isRequired: true
     name: --source-server
     summary: |-
-      The name or resource ID of the source server to restore from.
+      The name or resource identifier of the source server to restore from.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --address-prefixes
-    summary: |-
-      The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
-    isDeprecated: true
-    deprecateInfo: Argument '--address-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
   - name: --backup-identity
     summary: |-
-      The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
+      The name or resource identifier of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
   - name: --backup-key
     summary: |-
-      The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+      The resource identifier of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -1309,14 +1240,14 @@ directCommands:
       Whether or not geo redundant backup is enabled.
   - name: --identity
     summary: |-
-      The name or resource ID of the user assigned identity for data encryption.
+      The name or resource identifier of the user assigned identity for data encryption.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
   - name: --key
     summary: |-
-      The resource ID of the primary keyvault key for data encryption.
+      The resource identifier of the primary keyvault key for data encryption.
   - name: --name -n
     summary: |-
       Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
@@ -1327,26 +1258,21 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --private-dns-zone
     summary: |-
-      This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+      This parameter only applies for a server with private access and is required when using --vnet or --subnet. The name or resource identifier of an existing private DNS zone. You can use a private DNS zone from the same resource group, a different resource group, or a different subscription. If you want to use a zone from a different resource group or subscription, please provide its resource identifier.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --subnet
     summary: |-
-      Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
-  - name: --subnet-prefixes
-    summary: |-
-      The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
-    isDeprecated: true
-    deprecateInfo: Argument '--subnet-prefixes' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+      Name or identifier of an existing subnet. If you want to use a subnet from a different resource group or subscription, please provide its resource identifier instead of name.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --vnet
     summary: |-
-      Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+      Name or identifier of an existing virtual network. If you want to use a vnet from a different resource group or subscription, please provide a resource identifier. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -1392,7 +1318,7 @@ directCommands:
   examples:
   - summary: |-
       Get the details of a flexible server
-    syntax: az postgres flexible-server show --resource-group testGroup --name testserver
+    syntax: az postgres flexible-server show --resource-group testgroup --name testserver
   optionalParameters:
   - name: --ids
     summary: |-
@@ -1539,7 +1465,7 @@ directCommands:
   examples:
   - summary: |-
       Start a flexible server.
-    syntax: az postgres flexible-server start --resource-group testGroup --name testserver
+    syntax: az postgres flexible-server start --resource-group testgroup --name testserver
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1610,7 +1536,7 @@ directCommands:
   examples:
   - summary: |-
       Stop a flexible server.
-    syntax: az postgres flexible-server stop --resource-group testGroup --name testserver
+    syntax: az postgres flexible-server stop --resource-group testgroup --name testserver
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1680,7 +1606,6 @@ directCommands:
                                        [--backup-retention]
                                        [--change-reference]
                                        [--force-string]
-                                       [--high-availability {Disabled, SameZone, ZoneRedundant}]
                                        [--identity]
                                        [--ids]
                                        [--iops]
@@ -1712,13 +1637,13 @@ directCommands:
     syntax: az postgres flexible-server update --sku-name Standard_D4s_v3
   - summary: |-
       Update a server's tags.
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --tags "k1=v1" "k2=v2"
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --tags "k1=v1" "k2=v2"
   - summary: |-
       Reset password
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver -p password123
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver -p password123
   - summary: |-
       Update a flexible server to enable Microsoft Entra auth for password auth enabled server
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --microsoft-entra-auth Enabled
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --microsoft-entra-auth Enabled
   - summary: |-
       Change key/identity for data encryption. Data encryption cannot be enabled post server creation, this will only update the key/identity.
     syntax: >-
@@ -1730,28 +1655,28 @@ directCommands:
 
       # update server with new key/identity
 
-      az postgres flexible-server update --resource-group testGroup --name testserver \
+      az postgres flexible-server update --resource-group testgroup --name testserver \
         --key $newKeyIdentifier --identity newIdentity
   - summary: |-
       Update a flexible server to update private DNS zone for a VNET enabled server, using private DNS zone in the same resource group and subscription. Private DNS zone will be created Private DNS zone will be linked to the VNET if not already linked.
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --private-dns-zone testDNS2.postgres.database.azure.com
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --private-dns-zone testDNS2.postgres.database.azure.com
   - summary: |-
       Update a flexible server to update private DNS zone for a VNET enabled server, using private DNS zone in the different resource group and subscription. Private DNS zone will be linked to the VNET if not already linked.
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --private-dns-zone /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --private-dns-zone /subscriptions/{subscriptionId2}/resourceGroups/{resourceGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
   - summary: |-
       Update a flexible server's storage to enable / disable storage auto-grow.
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --storage-auto-grow Enabled
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --storage-auto-grow Enabled
   - summary: |-
       Update a flexible server's storage to set custom storage performance tier.
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --performance-tier P15
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --performance-tier P15
   - summary: |-
       Update a flexible server's storage to set IOPS (operations/sec). Server must be using Premium SSD v2 Disks.
-    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --iops 3000
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --iops 3000
   - summary: |-
       Update a flexible server's storage to set Throughput (MB/sec). Server must be using Premium SSD v2 Disks.
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver --throughput 125
   - summary: |-
-      Update a flexible server's cluster size by scaling up node count. Must be an Elastic Cluster.
+      Update a flexible server's cluster size by scaling up node count. Must be an elastic cluster.
     syntax: az postgres flexible-server update --resource-group testGroup --name testcluster --node-count 6
   optionalParameters:
   - name: --acquire-policy-token
@@ -1773,10 +1698,10 @@ directCommands:
       Allow primary and standby in the same zone when multi-zone capacity is unavailable.
   - name: --backup-identity
     summary: |-
-      The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
+      The name or resource identifier of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
   - name: --backup-key
     summary: |-
-      The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+      The resource identifier of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
   - name: --backup-retention
     summary: |-
       The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
@@ -1789,15 +1714,9 @@ directCommands:
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     groupName: Generic Update Arguments
-  - name: --high-availability
-    acceptedValues: Disabled, SameZone, ZoneRedundant
-    summary: |-
-      Enable (ZoneRedundant or SameZone) or disable high availability feature.
-    isDeprecated: true
-    deprecateInfo: Argument '--high-availability' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--zonal-resiliency' instead.
   - name: --identity
     summary: |-
-      The name or resource ID of the user assigned identity for data encryption.
+      The name or resource identifier of the user assigned identity for data encryption.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1807,7 +1726,7 @@ directCommands:
       Value of IOPS in (operations/sec) to be allocated for this server. This value can only be updated if flexible server is using Premium SSD v2 Disks.
   - name: --key
     summary: |-
-      The resource ID of the primary keyvault key for data encryption.
+      The resource identifier of the primary keyvault key for data encryption.
   - name: --maintenance-window
     summary: |-
       Period of time (UTC) designated for maintenance. Examples: "Sun:23:30" to schedule on Sunday, 11:30pm UTC. To set back to default pass in "Disabled".
@@ -1831,7 +1750,7 @@ directCommands:
       Performance tier of the server.
   - name: --private-dns-zone
     summary: |-
-      This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+      This parameter only applies for a server with private access and is required when using --vnet or --subnet. The name or resource identifier of an existing private DNS zone. You can use a private DNS zone from the same resource group, a different resource group, or a different subscription. If you want to use a zone from a different resource group or subscription, please provide its resource identifier.
   - name: --public-access
     acceptedValues: Disabled, Enabled
     summary: |-
@@ -1915,7 +1834,7 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server upgrade --version {13, 14, 15, 16, 17, 18}
+    az postgres flexible-server upgrade --version
                                         [--acquire-policy-token]
                                         [--change-reference]
                                         [--ids]
@@ -1925,15 +1844,13 @@ directCommands:
                                         [--yes]
   examples:
   - summary: |-
-      Upgrade server 'testsvr' to PostgreSQL major version 18.
-    syntax: az postgres flexible-server upgrade -g testgroup -n testsvr -v 18
+      Upgrade server 'testserver' to PostgreSQL major version 18.
+    syntax: az postgres flexible-server upgrade -g testgroup -n testserver -v 18
   requiredParameters:
   - isRequired: true
     name: --version -v
-    acceptedValues: 13, 14, 15, 16, 17, 18
     summary: |-
       Server major version.
-    isBreakingChange: true
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -2135,20 +2052,8 @@ commands:
 - az_postgres_flexible-server_identity_remove
 - az_postgres_flexible-server_identity_show
 - az_postgres_flexible-server_identity_update
-- az_postgres_flexible-server_index-tuning
-- az_postgres_flexible-server_index-tuning_list-recommendations
-- az_postgres_flexible-server_index-tuning_list-settings
-- az_postgres_flexible-server_index-tuning_set-settings
-- az_postgres_flexible-server_index-tuning_show
-- az_postgres_flexible-server_index-tuning_show-settings
-- az_postgres_flexible-server_index-tuning_update
 - az_postgres_flexible-server_list
 - az_postgres_flexible-server_list-skus
-- az_postgres_flexible-server_long-term-retention
-- az_postgres_flexible-server_long-term-retention_list
-- az_postgres_flexible-server_long-term-retention_pre-check
-- az_postgres_flexible-server_long-term-retention_show
-- az_postgres_flexible-server_long-term-retention_start
 - az_postgres_flexible-server_microsoft-entra-admin
 - az_postgres_flexible-server_microsoft-entra-admin_create
 - az_postgres_flexible-server_microsoft-entra-admin_delete
@@ -2199,4 +2104,4 @@ commands:
 - az_postgres_flexible-server_virtual-endpoint_update
 - az_postgres_flexible-server_wait
 metadata:
-  description: Manage Azure Database for PostgreSQL Flexible Servers.
+  description: Manage Azure Database for PostgreSQL flexible servers.

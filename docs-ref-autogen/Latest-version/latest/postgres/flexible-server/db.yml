@@ -4,11 +4,6 @@ name: az postgres flexible-server db
 summary: |-
   Manage PostgreSQL databases on a flexible server.
 status: GA
-isBreakingChange: true
-breakingChangeInfo: >-
-  The --database-name/-d argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-  The --name/-n argument will be repurposed to specify the database name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
 sourceType: Core
 directCommands:
 - uid: az_postgres_flexible-server_db_create
@@ -16,28 +11,27 @@ directCommands:
   summary: |-
     Create a PostgreSQL database on a flexible server.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --database-name/-d argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the database name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
-    az postgres flexible-server db create --resource-group
+    az postgres flexible-server db create --name
+                                          --resource-group
                                           --server-name
                                           [--acquire-policy-token]
                                           [--change-reference]
                                           [--charset]
                                           [--collation]
-                                          [--database-name]
   examples:
   - summary: |-
       Create database 'testDatabase' in the flexible server 'testserver' with the default parameters.
-    syntax: az postgres flexible-server db create --resource-group testGroup --server-name testserver --database-name testDatabase
+    syntax: az postgres flexible-server db create --resource-group testGroup --server-name testserver --name testDatabase
   - summary: |-
       Create database 'testDatabase' in the flexible server 'testserver' with a given character set and collation rules.
-    syntax: az postgres flexible-server db create --resource-group testGroup --server-name testserver --database-name testDatabase \ --charset validCharset --collation validCollation
+    syntax: az postgres flexible-server db create --resource-group testGroup --server-name testserver --name testDatabase \ --charset validCharset --collation validCollation
   requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the database.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -61,9 +55,6 @@ directCommands:
   - name: --collation
     summary: |-
       The collation of the database.
-  - name: --database-name -d
-    summary: |-
-      The name of the database.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -96,17 +87,12 @@ directCommands:
   summary: |-
     Delete a database on a flexible server.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --database-name/-d argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the database name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
     az postgres flexible-server db delete [--acquire-policy-token]
                                           [--change-reference]
-                                          [--database-name]
                                           [--ids]
+                                          [--name]
                                           [--resource-group]
                                           [--server-name]
                                           [--subscription]
@@ -114,7 +100,7 @@ directCommands:
   examples:
   - summary: |-
       Delete database 'testDatabase' in the flexible server 'testserver'.
-    syntax: az postgres flexible-server db delete --resource-group testGroup --server-name testserver --database-name testDatabase
+    syntax: az postgres flexible-server db delete --resource-group testGroup --server-name testserver --name testDatabase
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -124,13 +110,13 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --database-name -d
-    summary: |-
-      The name of the database.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the database.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -176,11 +162,6 @@ directCommands:
   summary: |-
     List the databases for a flexible server.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --database-name/-d argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the database name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
     az postgres flexible-server db list [--ids]
@@ -190,10 +171,10 @@ directCommands:
   examples:
   - summary: |-
       List databases in the flexible server 'testserver'.
-    syntax: az postgres flexible-server db list --resource-group testGroup --server-name testserver
+    syntax: az postgres flexible-server db list --resource-group testgroup --server-name testserver
   - summary: |-
       List databases in the flexible server 'testserver' in table format.
-    syntax: az postgres flexible-server db list --resource-group testGroup --server-name testserver --output table
+    syntax: az postgres flexible-server db list --resource-group testgroup --server-name testserver --output table
   optionalParameters:
   - name: --ids
     summary: |-
@@ -240,30 +221,25 @@ directCommands:
   summary: |-
     Show the details of a database.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --database-name/-d argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the database name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
-    az postgres flexible-server db show [--database-name]
-                                        [--ids]
+    az postgres flexible-server db show [--ids]
+                                        [--name]
                                         [--resource-group]
                                         [--server-name]
                                         [--subscription]
   examples:
   - summary: |-
       Show database 'testDatabase' in the server 'testserver'.
-    syntax: az postgres flexible-server db show --resource-group testGroup --server-name testserver --database-name testDatabase
+    syntax: az postgres flexible-server db show --resource-group testGroup --server-name testserver --name testDatabase
   optionalParameters:
-  - name: --database-name -d
-    summary: |-
-      The name of the database.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the database.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-

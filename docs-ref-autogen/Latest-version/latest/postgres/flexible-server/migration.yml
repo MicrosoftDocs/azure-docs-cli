@@ -4,11 +4,6 @@ name: az postgres flexible-server migration
 summary: |-
   Manage migration workflows for PostgreSQL Flexible Servers.
 status: GA
-isBreakingChange: true
-breakingChangeInfo: >-
-  The --migration-name argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-  The --name/-n argument will be repurposed to specify the migration name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
 sourceType: Core
 directCommands:
 - uid: az_postgres_flexible-server_migration_check-name-availability
@@ -16,27 +11,22 @@ directCommands:
   summary: |-
     Checks if the provided migration-name can be used.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --migration-name argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the migration name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
-    az postgres flexible-server migration check-name-availability --migration-name
+    az postgres flexible-server migration check-name-availability --name
                                                                   [--acquire-policy-token]
                                                                   [--change-reference]
                                                                   [--ids]
-                                                                  [--name]
                                                                   [--resource-group]
+                                                                  [--server-name]
                                                                   [--subscription]
   examples:
   - summary: |-
       Check if the migration-name provided is available for your migration workflow.
-    syntax: az postgres flexible-server migration check-name-availability --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    syntax: az postgres flexible-server migration check-name-availability --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
   requiredParameters:
   - isRequired: true
-    name: --migration-name
+    name: --name -n
     summary: |-
       Name of the migration.
   optionalParameters:
@@ -52,13 +42,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --name -n
-    summary: |-
-      Migration target server name.
-    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --server-name -s
+    summary: |-
+      Migration target server name.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -93,22 +83,17 @@ directCommands:
   summary: |-
     Create a new migration workflow for a flexible server.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --migration-name argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the migration name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
-    az postgres flexible-server migration create --name
-                                                 --properties
+    az postgres flexible-server migration create --properties
                                                  --resource-group
+                                                 --server-name
                                                  [--acquire-policy-token]
                                                  [--change-reference]
                                                  [--location]
                                                  [--migration-mode {offline, online}]
-                                                 [--migration-name]
                                                  [--migration-option {Migrate, Validate, ValidateAndMigrate}]
+                                                 [--name]
                                                  [--tags]
   examples:
   - summary: |-
@@ -136,16 +121,16 @@ directCommands:
           "overwriteDbsInTarget": "true"
         }
       }
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver       --migration-name testmigration --properties "migrationConfig.json"
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup       --server-name testserver --name testmigration --properties "migrationConfig.json"
   - summary: |-
       Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file.       Use --migration-mode offline for Offline migration.
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver       --migration-name testmigration --properties "migrationConfig.json" --migration-mode offline
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup       --server-name testserver --name testmigration --properties "migrationConfig.json" --migration-mode offline
   - summary: |-
       Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file.       Use --migration-mode online for Online(with CDC) migration. Use migration-option Validate for validate only request.
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver       --migration-name testmigration --properties "migrationConfig.json" --migration-mode online --migration-option Validate
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup       --server-name testserver --name testmigration --properties "migrationConfig.json" --migration-mode online --migration-option Validate
   - summary: |-
       Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file.       Use --migration-option Migrate for Migrate Only request.
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver       --migration-name testmigration --properties "migrationConfig.json" --migration-option Migrate
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup       --server-name testserver --name testmigration --properties "migrationConfig.json" --migration-option Migrate
   - summary: |-
       To start a migration for other than PostgreSQLSingleServer, soureType and sslMode must be specified in properties file. These properties are defined as: 
       sourceType: Values can be - OnPremises, AWS_AURORA, AWS_RDS, AzureVM, PostgreSQLSingleServer 
@@ -170,15 +155,15 @@ directCommands:
           "sslMode": "Prefer"
         }
       }
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver         --migration-name testmigration --properties "migrationConfig.json"
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup         --server-name testserver --name testmigration --properties "migrationConfig.json"
   - summary: |-
       Start a private endpoint enabled migration workflow on the target server by specifying migrationRuntimeResourceId in properties file. This property is defined as: 
-      migrationRuntimeResourceId: The resource ID of the migration runtime server that is responsible for migrating data between source and target server. 
+      migrationRuntimeResourceId: The resource identifier of the migration runtime server that is responsible for migrating data between source and target server. 
       Sample migrationConfig.json shown below. 
       {
         "properties": {
           "sourceDBServerResourceId": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-single-rg/providers/Microsoft.DBforPostgreSQL/servers/pg-single-1",
-          "migrationRuntimeResourceId": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/testGroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/testsourcemigration",
+          "migrationRuntimeResourceId": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/testgroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/testsourcemigration",
           "secretParameters": {
             "adminCredentials": {
               "sourceServerPassword": "password",
@@ -193,12 +178,8 @@ directCommands:
           "overwriteDbsInTarget": "true"
         }
       }
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration --properties "migrationConfig.json"
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --name testmigration --properties "migrationConfig.json"
   requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Migration target server name.
   - isRequired: true
     name: --properties -b
     summary: |-
@@ -207,6 +188,10 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --server-name -s
+    summary: |-
+      Migration target server name.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -224,14 +209,14 @@ directCommands:
     acceptedValues: offline, online
     summary: |-
       Either offline or online(with CDC) migration.
-  - name: --migration-name
-    summary: |-
-      Name of the migration.
   - name: --migration-option
     defaultValue: ValidateAndMigrate
     acceptedValues: Migrate, Validate, ValidateAndMigrate
     summary: |-
       Supported Migration Option. Default is ValidateAndMigrate.
+  - name: --name -n
+    summary: |-
+      Name of the migration.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -267,25 +252,20 @@ directCommands:
   summary: |-
     List the migrations of a flexible server.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --migration-name argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the migration name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
     az postgres flexible-server migration list [--filter {Active, All}]
                                                [--ids]
-                                               [--name]
                                                [--resource-group]
+                                               [--server-name]
                                                [--subscription]
   examples:
   - summary: |-
       List the currently active migrations of a target flexible server.
-    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --filter Active
+    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --filter Active
   - summary: |-
       List all (Active/Completed) migrations of a target flexible server.
-    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --filter All
+    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --filter All
   optionalParameters:
   - name: --filter
     defaultValue: Active
@@ -296,13 +276,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --name -n
-    summary: |-
-      Migration target server name.
-    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --server-name -s
+    summary: |-
+      Migration target server name.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -337,25 +317,20 @@ directCommands:
   summary: |-
     Get the details of a specific migration.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --migration-name argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the migration name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
-    az postgres flexible-server migration show --migration-name
+    az postgres flexible-server migration show --name
                                                [--ids]
-                                               [--name]
                                                [--resource-group]
+                                               [--server-name]
                                                [--subscription]
   examples:
   - summary: |-
       Get the details of a specific migration of a target flexible server.
-    syntax: az postgres flexible-server migration show --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration
+    syntax: az postgres flexible-server migration show --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --name testmigration
   requiredParameters:
   - isRequired: true
-    name: --migration-name
+    name: --name -n
     summary: |-
       Name of the migration.
   optionalParameters:
@@ -363,13 +338,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --name -n
-    summary: |-
-      Migration target server name.
-    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --server-name -s
+    summary: |-
+      Migration target server name.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -404,36 +379,31 @@ directCommands:
   summary: |-
     Update a specific migration.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: >-
-    The --migration-name argument has been deprecated and will be removed in next breaking change release(2.86.0) scheduled for May 2026.
-
-    The --name/-n argument will be repurposed to specify the migration name. The --server-name/-s argument will be introduced to specify the server name in next breaking change release(2.86.0) scheduled for May 2026.
   sourceType: Core
   syntax: >-
-    az postgres flexible-server migration update --migration-name
+    az postgres flexible-server migration update --name
                                                  [--acquire-policy-token]
                                                  [--cancel]
                                                  [--change-reference]
                                                  [--cutover]
                                                  [--ids]
-                                                 [--name]
                                                  [--resource-group]
+                                                 [--server-name]
                                                  [--setup-replication]
                                                  [--subscription]
   examples:
   - summary: |-
       Allow the migration workflow to setup logical replication on the source. Note that this command will restart the source server.
-    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration --setup-replication
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --name testmigration --setup-replication
   - summary: |-
       Cut-over the data migration for all the databases involved in the migration. After this is complete, subsequent updates to all databases in the migration will not be migrated to the target. Cutover migration can only be triggered for migration_mode=Online.
-    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration --cutover
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --name testmigration --cutover
   - summary: |-
       Cancels the data migration for all the databases involved in the migration. Only 'InProgress' migration can be cancelled
-    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration --cancel
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --server-name testserver --name testmigration --cancel
   requiredParameters:
   - isRequired: true
-    name: --migration-name
+    name: --name -n
     summary: |-
       Name of the migration.
   optionalParameters:
@@ -455,13 +425,13 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --name -n
-    summary: |-
-      Migration target server name.
-    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --server-name -s
+    summary: |-
+      Migration target server name.
     groupName: Resource Id Arguments
   - name: --setup-replication
     summary: |-

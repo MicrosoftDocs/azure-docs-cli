@@ -169,8 +169,6 @@ directCommands:
   summary: |-
     Gets health information on the environment and optionally a target registry.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: Remove Notary client version validation in next breaking change release(2.87.0) scheduled for June 2026. The Notary client version check will no longer be performed as part of the check-health command due to Docker Content Trust deprecation. To know more about the Breaking Change, please visit https://aka.ms/acr/dctdeprecation.
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
   syntax: >-
@@ -1221,6 +1219,7 @@ directCommands:
                   [--change-reference]
                   [--data-endpoint-enabled {false, true}]
                   [--default-action {Allow, Deny}]
+                  [--endpoint-protocol {IPv4, IPv4AndIPv6}]
                   [--force-string]
                   [--public-network-enabled {false, true}]
                   [--regional-endpoints {Disabled, Enabled}]
@@ -1243,6 +1242,9 @@ directCommands:
   - summary: |-
       Enable regional endpoints on an existing registry.
     syntax: az acr update -n myregistry --regional-endpoints enabled
+  - summary: |-
+      Update the endpoint protocol for an Azure Container Registry.
+    syntax: az acr update -n myregistry --endpoint-protocol IPv4AndIPv6
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1294,6 +1296,12 @@ directCommands:
     acceptedValues: Allow, Deny
     summary: |-
       Default action to apply when no rule matches. Only applicable to Premium SKU.
+    groupName: Network Rule Arguments
+  - name: --endpoint-protocol
+    acceptedValues: IPv4, IPv4AndIPv6
+    summary: |-
+      The endpoint protocol for the registry. Allowed values: IPv4, IPv4AndIPv6.
+    isPreview: true
     groupName: Network Rule Arguments
   - name: --force-string
     defaultValue: "False"
@@ -1409,6 +1417,7 @@ commands:
 - az_acr_connected-registry_permissions
 - az_acr_connected-registry_permissions_show
 - az_acr_connected-registry_permissions_update
+- az_acr_connected-registry_resync
 - az_acr_connected-registry_show
 - az_acr_connected-registry_update
 - az_acr_create

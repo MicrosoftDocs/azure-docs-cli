@@ -1,0 +1,988 @@
+### YamlMime:AzureCLIGroup
+uid: az_netappfiles_cache
+name: az netappfiles cache
+summary: |-
+  Manage Cache resources.
+description: |-
+  Manage Azure NetApp Files (ANF) Cache Resources.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_netappfiles_cache_create
+  name: az netappfiles cache create
+  summary: |-
+    Create the specified Cache within the Capacity Pool.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache create --account-name
+                                --cache-name --name
+                                --cache-subnet-id --cache-subnet-resource-id
+                                --encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}
+                                --file-path
+                                --peer-addresses
+                                --peer-cluster-name
+                                --peer-volume-name
+                                --peer-vserver-name
+                                --peering-subnet-id --peering-subnet-resource-id
+                                --pool-name
+                                --resource-group
+                                --size
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--cifs-change-notifications --cifs-change-notify {Disabled, Enabled}]
+                                [--export-policy-rules --rules]
+                                [--global-file-locking {Disabled, Enabled}]
+                                [--kerberos {Disabled, Enabled}]
+                                [--key-vault-private-endpoint-resource-id --kv-private-endpoint-id]
+                                [--ldap {Disabled, Enabled}]
+                                [--ldap-server-type {ActiveDirectory, OpenLDAP}]
+                                [--location]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--protocol-types]
+                                [--smb-access-based-enumeration --smb-access-enumeration {Disabled, Enabled}]
+                                [--smb-encryption {Disabled, Enabled}]
+                                [--smb-non-browsable {Disabled, Enabled}]
+                                [--tags]
+                                [--throughput-mibps]
+                                [--write-back {Disabled, Enabled}]
+                                [--zones]
+  examples:
+  - summary: |-
+      Caches_CreateOrUpdate
+    syntax: az netappfiles cache create --resource-group myRG --account-name account1 --pool-name pool1 --cache-name cache1 --location eastus --file-path cache-west-us2-01 --size 107374182400 --ldap Enabled --ldap-server-type OpenLDAP --cache-subnet-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/cacheVnet/subnets/cacheSubnet1 --peering-subnet-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/icLifVnet/subnets/peeringSubnet1 --encryption-key-source Microsoft.NetApp --origin-cluster-information "{peer-cluster-name:cluster1,peer-addresses:[192.0.2.10,192.0.2.11],peer-vserver-name:vserver1,peer-volume-name:originvol1}"
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - isRequired: true
+    name: --cache-name --name -n
+    summary: |-
+      The name of the cache resource.
+  - isRequired: true
+    name: --cache-subnet-id --cache-subnet-resource-id
+    summary: |-
+      The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --encryption-key-source
+    acceptedValues: Microsoft.KeyVault, Microsoft.NetApp
+    summary: |-
+      Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --file-path
+    summary: |-
+      The file path of the Cache.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --peer-addresses
+    summary: |-
+      ONTAP Intercluster LIF IP addresses. One IP address per cluster node is required  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: OriginClusterInformation Arguments
+  - isRequired: true
+    name: --peer-cluster-name
+    summary: |-
+      ONTAP cluster name of external cluster hosting the origin volume. Must match the exact cluster name.
+    groupName: OriginClusterInformation Arguments
+  - isRequired: true
+    name: --peer-volume-name
+    summary: |-
+      External origin volume name associated to this cache.
+    groupName: OriginClusterInformation Arguments
+  - isRequired: true
+    name: --peer-vserver-name
+    summary: |-
+      External Vserver (SVM) name  name of the SVM hosting the origin volume.
+    groupName: OriginClusterInformation Arguments
+  - isRequired: true
+    name: --peering-subnet-id --peering-subnet-resource-id
+    summary: |-
+      The Azure Resource URI for a delegated subnet that will be used for ANF Intercluster Interface IP addresses.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --size
+    summary: |-
+      Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB.
+    groupName: Properties Arguments
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cifs-change-notifications --cifs-change-notify
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Flag indicating whether a CIFS change notification is enabled for the cache.
+    groupName: Properties Arguments
+  - name: --export-policy-rules --rules
+    summary: |-
+      Export policy rule  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: ExportPolicy Arguments
+  - name: --global-file-locking
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Flag indicating whether the global file lock is enabled for the cache.
+    groupName: Properties Arguments
+  - name: --kerberos
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Describe if a cache is Kerberos enabled.
+    groupName: Properties Arguments
+  - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
+    summary: |-
+      The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+    groupName: Properties Arguments
+  - name: --ldap
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Specifies whether LDAP is enabled or not for flexcache volume.
+    groupName: Properties Arguments
+  - name: --ldap-server-type
+    acceptedValues: ActiveDirectory, OpenLDAP
+    summary: |-
+      Specifies the type of LDAP server for flexcache volume.
+    groupName: Properties Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Body Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --protocol-types
+    summary: |-
+      Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --smb-access-based-enumeration --smb-access-enumeration
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
+    groupName: SmbSettings Arguments
+  - name: --smb-encryption
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache.
+    groupName: SmbSettings Arguments
+  - name: --smb-non-browsable
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume.
+    groupName: SmbSettings Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Body Arguments
+  - name: --throughput-mibps
+    summary: |-
+      Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache.
+    groupName: Properties Arguments
+  - name: --write-back
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Flag indicating whether writeback is enabled for the cache.
+    groupName: Properties Arguments
+  - name: --zones
+    summary: |-
+      The availability zones.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Body Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_delete
+  name: az netappfiles cache delete
+  summary: |-
+    Delete the specified cache.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache delete [--account-name]
+                                [--acquire-policy-token]
+                                [--cache-name --name]
+                                [--change-reference]
+                                [--ids]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--pool-name]
+                                [--resource-group]
+                                [--subscription]
+                                [--yes]
+  examples:
+  - summary: |-
+      Caches_Delete
+    syntax: az netappfiles cache delete --resource-group myRG --account-name account1 --pool-name pool1 --cache-name cache1
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cache-name --name -n
+    summary: |-
+      The name of the cache resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_list
+  name: az netappfiles cache list
+  summary: |-
+    List all Caches within the Capacity Pool.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache list --account-name
+                              --pool-name
+                              --resource-group
+                              [--max-items]
+                              [--next-token]
+  examples:
+  - summary: |-
+      Caches_List
+    syntax: az netappfiles cache list --resource-group myRG --account-name account1 --pool-name pool1
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - isRequired: true
+    name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_list-peering-passphrase
+  name: az netappfiles cache list-peering-passphrase
+  summary: |-
+    This operation will list the cluster peering command, cluster peering passphrase and the vserver peering command.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache list-peering-passphrase [--account-name]
+                                                 [--acquire-policy-token]
+                                                 [--cache-name]
+                                                 [--change-reference]
+                                                 [--ids]
+                                                 [--pool-name]
+                                                 [--resource-group]
+                                                 [--subscription]
+  examples:
+  - summary: |-
+      Caches_ListPeeringPassphrases
+    syntax: az netappfiles cache list-peering-passphrase --resource-group myRG --account-name account1 --pool-name pool1 --cache-name cache-1
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cache-name -c
+    summary: |-
+      The name of the cache resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_pool-change
+  name: az netappfiles cache pool-change
+  summary: |-
+    Moves Cache  to another Capacity Pool.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache pool-change --new-pool-resource-id
+                                     [--account-name]
+                                     [--acquire-policy-token]
+                                     [--cache-name]
+                                     [--change-reference]
+                                     [--ids]
+                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--pool-name]
+                                     [--resource-group]
+                                     [--subscription]
+  examples:
+  - summary: |-
+      Caches_PoolChange
+    syntax: az netappfiles cache pool-change --resource-group myRG --account-name account1 --pool-name pool1 --cache-name cache1 --new-pool-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool2
+  requiredParameters:
+  - isRequired: true
+    name: --new-pool-resource-id
+    summary: |-
+      Resource id of the pool to move volume to.
+    groupName: Body Arguments
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cache-name -c
+    summary: |-
+      The name of the cache resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_reset-smb-password
+  name: az netappfiles cache reset-smb-password
+  summary: |-
+    Resets the SMB password for the cache.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache reset-smb-password [--account-name]
+                                            [--acquire-policy-token]
+                                            [--cache-name]
+                                            [--change-reference]
+                                            [--ids]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--pool-name]
+                                            [--resource-group]
+                                            [--subscription]
+  examples:
+  - summary: |-
+      Caches_ResetSmbPassword
+    syntax: az netappfiles cache reset-smb-password --resource-group myResourceGroup --account-name account1 --pool-name pool1 --cache-name cache1
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cache-name -c
+    summary: |-
+      The name of the cache resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_show
+  name: az netappfiles cache show
+  summary: |-
+    Get the details of the specified Cache.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache show [--account-name]
+                              [--cache-name --name]
+                              [--ids]
+                              [--pool-name]
+                              [--resource-group]
+                              [--subscription]
+  examples:
+  - summary: |-
+      Caches_Get
+    syntax: az netappfiles cache show --resource-group myRG --account-name account1 --pool-name pool1 --cache-name cache1
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --cache-name --name -n
+    summary: |-
+      The name of the cache resource.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_update
+  name: az netappfiles cache update
+  summary: |-
+    Update the specified Cache within the Capacity Pool.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache update [--account-name]
+                                [--acquire-policy-token]
+                                [--add]
+                                [--cache-name --name]
+                                [--change-reference]
+                                [--cifs-change-notifications --cifs-change-notify {Disabled, Enabled}]
+                                [--export-policy-rules --rules]
+                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--ids]
+                                [--key-vault-private-endpoint-resource-id --kv-private-endpoint-id]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--pool-name]
+                                [--protocol-types]
+                                [--remove]
+                                [--resource-group]
+                                [--set]
+                                [--size]
+                                [--smb-access-based-enumeration --smb-access-enumeration {Disabled, Enabled}]
+                                [--smb-encryption {Disabled, Enabled}]
+                                [--smb-non-browsable {Disabled, Enabled}]
+                                [--subscription]
+                                [--tags]
+                                [--throughput-mibps]
+                                [--write-back {Disabled, Enabled}]
+  examples:
+  - summary: |-
+      Caches_CreateOrUpdate
+    syntax: az netappfiles cache update --resource-group myRG --account-name account1 --pool-name pool1 --cache-name cache1 --size 107374182400
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --cache-name --name -n
+    summary: |-
+      The name of the cache resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cifs-change-notifications --cifs-change-notify
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Flag indicating whether a CIFS change notification is enabled for the cache.
+    groupName: Properties Arguments
+  - name: --export-policy-rules --rules
+    summary: |-
+      Export policy rule  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: ExportPolicy Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
+    summary: |-
+      The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+    groupName: Properties Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --protocol-types
+    summary: |-
+      Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --size
+    summary: |-
+      Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB.
+    groupName: Properties Arguments
+  - name: --smb-access-based-enumeration --smb-access-enumeration
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
+    groupName: SmbSettings Arguments
+  - name: --smb-encryption
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache.
+    groupName: SmbSettings Arguments
+  - name: --smb-non-browsable
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume.
+    groupName: SmbSettings Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Body Arguments
+  - name: --throughput-mibps
+    summary: |-
+      Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache.
+    groupName: Properties Arguments
+  - name: --write-back
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Flag indicating whether writeback is enabled for the cache.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_netappfiles_cache_wait
+  name: az netappfiles cache wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles cache wait [--account-name]
+                              [--acquire-policy-token]
+                              [--cache-name --name]
+                              [--change-reference]
+                              [--created]
+                              [--custom]
+                              [--deleted]
+                              [--exists]
+                              [--ids]
+                              [--interval]
+                              [--pool-name]
+                              [--resource-group]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+    groupName: Resource Id Arguments
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cache-name --name -n
+    summary: |-
+      The name of the cache resource.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_netappfiles_cache_create
+- az_netappfiles_cache_delete
+- az_netappfiles_cache_list
+- az_netappfiles_cache_list-peering-passphrase
+- az_netappfiles_cache_pool-change
+- az_netappfiles_cache_reset-smb-password
+- az_netappfiles_cache_show
+- az_netappfiles_cache_update
+- az_netappfiles_cache_wait
+metadata:
+  ms.date: 03/07/2024
+  description: Manage Azure NetApp Files (ANF) Cache Resources.

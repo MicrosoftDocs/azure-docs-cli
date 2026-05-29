@@ -606,6 +606,7 @@ directCommands:
                          [--label]
                          [--name]
                          [--resolve-keyvault {false, true}]
+                         [--resolve-snapshot-references {false, true}]
                          [--snapshot]
                          [--tags]
                          [--top]
@@ -640,6 +641,9 @@ directCommands:
   - summary: |-
       List all key-values with tag name "tag1" with null value
     syntax: az appconfig kv list -n MyAppConfiguration --tags tag1=\0
+  - summary: |-
+      List all key-values within a snapshot referenced by the key "MySnapshotRef".
+    syntax: az appconfig kv list -n MyAppConfiguration --key MySnapshotRef --resolve-snapshot-references
   optionalParameters:
   - name: --all
     defaultValue: "False"
@@ -677,6 +681,11 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Resolve the content of key vault reference. This argument should NOT be specified along with --fields. Instead use --query for customized query.
+  - name: --resolve-snapshot-references
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Resolve snapshot references and return the referenced snapshots' key-values.
   - name: --snapshot
     summary: |-
       List all keys in a given snapshot of the App Configuration store. If no snapshot is specified, the keys currently in the store are listed.
@@ -942,7 +951,7 @@ directCommands:
     syntax: az appconfig kv set -n MyAppConfiguration --key foo --value null --content-type application/json
   - summary: |-
       Set a key-value using your 'az login' credentials.
-    syntax: az appconfig kv set --endpoint https://myappconfiguration.azconfig.io --key color --value red --auth-mode login
+    syntax: az appconfig kv set --endpoint https://contoso.azconfig.io --key color --value red --auth-mode login
   requiredParameters:
   - isRequired: true
     name: --key
@@ -1049,6 +1058,104 @@ directCommands:
     name: --secret-identifier
     summary: |-
       ID of the Key Vault object. Can be found using 'az keyvault {collection} show' command, where collection is key, secret or certificate. To set reference to the latest version of your secret, remove version information from secret identifier.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --auth-mode
+    defaultValue: key
+    acceptedValues: anonymous, key, login
+    summary: |-
+      This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the `--endpoint` or `--name` and your "az login" credentials will be used for authorization. If the auth mode is "anonymous", provide the --endpoint that will be used for authorization. Anonymous mode is intended for custom endpoints only, such as the App Configuration emulator. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://learn.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --connection-string
+    summary: |-
+      Combination of access key and endpoint of the App Configuration store. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+  - name: --endpoint
+    summary: |-
+      If auth mode is "login" or "anonymous", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+  - name: --label
+    summary: |-
+      If no label specified, set the key with null label by default.
+  - name: --name -n
+    summary: |-
+      Name of the App Configuration store. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_appconfig_kv_set-snapshot-reference
+  name: az appconfig kv set-snapshot-reference
+  summary: |-
+    Set a snapshot reference.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+  syntax: >-
+    az appconfig kv set-snapshot-reference --key
+                                           --snapshot-name
+                                           [--acquire-policy-token]
+                                           [--auth-mode {anonymous, key, login}]
+                                           [--change-reference]
+                                           [--connection-string]
+                                           [--endpoint]
+                                           [--label]
+                                           [--name]
+                                           [--tags]
+                                           [--yes]
+  examples:
+  - summary: |-
+      Set a snapshot reference with label MyLabel.
+    syntax: az appconfig kv set-snapshot-reference -n MyAppConfiguration --key MySnapshotRef --label MyLabel --snapshot-name MySnapshot
+  - summary: |-
+      Set a snapshot reference using login-based authentication.
+    syntax: az appconfig kv set-snapshot-reference --endpoint https://contoso.azconfig.io --key MySnapshotRef --snapshot-name MySnapshot --auth-mode login
+  - summary: |-
+      Set a snapshot reference with tags using connection string.
+    syntax: az appconfig kv set-snapshot-reference --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key MySnapshotRef --snapshot-name MySnapshot --tags tag1=value1 tag2=value2
+  requiredParameters:
+  - isRequired: true
+    name: --key
+    summary: |-
+      Key to be set. Key cannot be a '.' or '..', or contain the '%' character.
+  - isRequired: true
+    name: --snapshot-name
+    summary: |-
+      Name of the snapshot to reference. This is required.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1282,8 +1389,9 @@ commands:
 - az_appconfig_kv_restore
 - az_appconfig_kv_set
 - az_appconfig_kv_set-keyvault
+- az_appconfig_kv_set-snapshot-reference
 - az_appconfig_kv_show
 - az_appconfig_kv_unlock
 metadata:
-  ms.date: 03/05/2026
+  ms.date: 05/20/2026
   description: Manage key-values stored in an App Configuration store.
