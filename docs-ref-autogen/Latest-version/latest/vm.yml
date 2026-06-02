@@ -407,6 +407,7 @@ directCommands:
                  [--enable-vtpm {false, true}]
                  [--encryption-at-host {false, true}]
                  [--encryption-identity]
+                 [--ephemeral-full-caching --ephemeral-os-disk-enable-full-caching {false, true}]
                  [--ephemeral-os-disk {false, true}]
                  [--ephemeral-os-disk-placement --ephemeral-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                  [--eviction-policy {Deallocate, Delete}]
@@ -482,6 +483,7 @@ directCommands:
                  [--wire-server-mode {Audit, Enforce}]
                  [--workspace]
                  [--zone]
+                 [--zone-movement {false, true}]
                  [--zone-placement-policy {Any}]
   examples:
   - summary: |-
@@ -733,6 +735,11 @@ directCommands:
   - name: --encryption-identity
     summary: |-
       Resource Id of the user managed identity which can be used for Azure disk encryption.
+  - name: --ephemeral-full-caching --ephemeral-os-disk-enable-full-caching
+    acceptedValues: false, true
+    summary: |-
+      Specify whether or not to enable full caching for this VM/VMSS which will cache the OS disk locally on the host and make this VM/VMSS more resilient to storage outages.
+    groupName: Storage Arguments
   - name: --ephemeral-os-disk
     acceptedValues: false, true
     summary: |-
@@ -921,10 +928,9 @@ directCommands:
     summary: |-
       Specify the security type of the virtual machine. The value Standard can be used if subscription has feature flag UseStandardSecurityType registered under Microsoft.Compute namespace. Refer to https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features for steps to enable required feature.
   - name: --size
-    defaultValue: Standard_DS1_v2
+    defaultValue: Standard_D2s_v5
     summary: |-
       The VM size to be created. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
-    isBreakingChange: true
     valueFrom: az vm list-sizes
   - name: --source-disk-restore-point --source-disk-rp
     summary: |-
@@ -1038,6 +1044,10 @@ directCommands:
   - name: --zone -z
     summary: |-
       Availability zone into which to provision the resource.
+  - name: --zone-movement
+    acceptedValues: false, true
+    summary: |-
+      Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another.
   - name: --zone-placement-policy
     acceptedValues: Any
     summary: |-
@@ -1119,7 +1129,7 @@ directCommands:
   - name: --hibernate
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Optional parameter to hibernate a virtual machine. (Feature in Preview).
+      Optional parameter to hibernate a virtual machine.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -2936,6 +2946,8 @@ directCommands:
                  [--wire-server-mode {Audit, Enforce}]
                  [--workspace]
                  [--write-accelerator]
+                 [--zone]
+                 [--zone-movement {false, true}]
   examples:
   - summary: |-
       Add or update a tag.
@@ -3149,6 +3161,13 @@ directCommands:
   - name: --write-accelerator
     summary: |-
       Enable/disable disk write accelerator. Use singular value 'true/false' to apply across, or specify individual disks, e.g.'os=true 1=true 2=true' for os disk and data disks with lun of 1 & 2.
+  - name: --zone -z
+    summary: |-
+      Availability zone into which to provision the resource.
+  - name: --zone-movement
+    acceptedValues: false, true
+    summary: |-
+      Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another.
   globalParameters:
   - name: --debug
     defaultValue: "False"
