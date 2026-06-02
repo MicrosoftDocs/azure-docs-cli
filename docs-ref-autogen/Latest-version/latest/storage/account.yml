@@ -74,7 +74,7 @@ directCommands:
   syntax: >-
     az storage account create --name
                               --resource-group
-                              [--access-tier {Cold, Cool, Hot, Premium}]
+                              [--access-tier {Cold, Cool, Hot, Premium, Smart}]
                               [--account-type {Computer, User}]
                               [--acquire-policy-token]
                               [--action]
@@ -82,6 +82,7 @@ directCommands:
                               [--allow-blob-public-access {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
+                              [--allowed-copy-scope {AAD, All, PrivateLink}]
                               [--assign-identity]
                               [--azure-storage-sid]
                               [--blob-geo-sla --enable-blob-geo-priority-replication {false, true}]
@@ -158,7 +159,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --access-tier
-    acceptedValues: Cold, Cool, Hot, Premium
+    acceptedValues: Cold, Cool, Hot, Premium, Smart
     summary: |-
       Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The "Premium" access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type.
   - name: --account-type
@@ -192,6 +193,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
+  - name: --allowed-copy-scope
+    acceptedValues: AAD, All, PrivateLink
+    summary: |-
+      Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet.
   - name: --assign-identity
     defaultValue: "False"
     summary: |-
@@ -1324,7 +1329,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
   syntax: >-
-    az storage account show [--expand]
+    az storage account show [--expand {blobRestoreStatus, geoReplicationStats}]
                             [--ids]
                             [--name]
                             [--resource-group]
@@ -1338,8 +1343,9 @@ directCommands:
     syntax: az storage account show -g MyResourceGroup -n MyStorageAccount
   optionalParameters:
   - name: --expand
+    acceptedValues: blobRestoreStatus, geoReplicationStats
     summary: |-
-      May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. Known values are: "geoReplicationStats" and "blobRestoreStatus". Default value is None.
+      May be used to expand the properties within account's properties. Default value is None.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1546,7 +1552,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
   syntax: >-
-    az storage account update [--access-tier {Cold, Cool, Hot, Premium}]
+    az storage account update [--access-tier {Cold, Cool, Hot, Premium, Smart}]
                               [--account-type {Computer, User}]
                               [--acquire-policy-token]
                               [--add]
@@ -1554,6 +1560,7 @@ directCommands:
                               [--allow-blob-public-access {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
+                              [--allowed-copy-scope {AAD, All, PrivateLink}]
                               [--assign-identity]
                               [--azure-storage-sid]
                               [--blob-geo-sla --enable-blob-geo-priority-replication {false, true}]
@@ -1619,7 +1626,7 @@ directCommands:
     syntax: az storage account update --name <storage-account-name> --resource-group <resource-group-name> --encryption-key-vault <keyvault-uri> --encryption-key-name <key-name-in-keyvault> --encryption-key-source Microsoft.Keyvault --key-vault-user-identity-id <user-assigned-identity-id> --identity-type UserAssigned --user-identity-id <user-assigned-identity-id>`
   optionalParameters:
   - name: --access-tier
-    acceptedValues: Cold, Cool, Hot, Premium
+    acceptedValues: Cold, Cool, Hot, Premium, Smart
     summary: |-
       Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The "Premium" access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type.
   - name: --account-type
@@ -1653,6 +1660,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
+  - name: --allowed-copy-scope
+    acceptedValues: AAD, All, PrivateLink
+    summary: |-
+      Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet.
   - name: --assign-identity
     defaultValue: "False"
     summary: |-

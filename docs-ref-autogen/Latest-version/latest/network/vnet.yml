@@ -106,6 +106,7 @@ directCommands:
                            [--network-security-group --nsg]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                            [--pe-vnet-policies --private-endpoint-vnet-policies {Basic, Disabled}]
+                           [--sgp --summarized-gateway-prefixes]
                            [--subnet-name]
                            [--subnet-prefixes]
                            [--subnets]
@@ -121,6 +122,12 @@ directCommands:
   - summary: |-
       Create virtual network with an IPAM pool allocation.
     syntax: az network vnet create -g MyResourceGroup -n MyVNet --ipam-allocations [0].number-of-ip-addresses=100 [0].id=ipam-pool-resource-id
+  - summary: |-
+      For --summarized-gateway-prefixes with address-prefixes
+    syntax: az network vnet create --resource-group rg1 --name test-vnet --location eastus --address-prefixes 10.0.0.0/16 --summarized-gateway-prefixes address-prefixes="[10.0.0.0/16]"
+  - summary: |-
+      For --summarized-gateway-prefixes with ipam-pool-prefix-allocations
+    syntax: az network vnet create -g {rg} -n {vnet} --address-prefixes 10.0.0.0/16 --summarized-gateway-prefixes ipam-pool-prefix-allocations="[{id:<pool-resource-id>,number-of-ip-addresses:10}]"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -190,6 +197,11 @@ directCommands:
     acceptedValues: Basic, Disabled
     summary: |-
       Private Endpoint VNet Policies.
+  - name: --sgp --summarized-gateway-prefixes
+    summary: |-
+      A configurable list of summarized gateway prefixes advertised for the virtual network.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    isPreview: true
+    groupName: Properties Arguments
   - name: --subnet-name
     summary: |-
       Name of a new subnet to create within the VNet.
@@ -317,9 +329,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
-    az network vnet list [--max-items]
+    az network vnet list --resource-group
+                         [--max-items]
                          [--next-token]
-                         [--resource-group]
   examples:
   - summary: |-
       List all virtual networks in a subscription.
@@ -330,6 +342,11 @@ directCommands:
   - summary: |-
       List virtual networks in a subscription which specify a certain address prefix.
     syntax: az network vnet list --query "[?contains(addressSpace.addressPrefixes, '10.0.0.0/16')]"
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -339,9 +356,6 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -595,6 +609,7 @@ directCommands:
                            [--remove]
                            [--resource-group]
                            [--set]
+                           [--sgp --summarized-gateway-prefixes]
                            [--subscription]
                            [--vm-protection {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
@@ -607,6 +622,12 @@ directCommands:
   - summary: |-
       Update a virtual network to delete DNS server.
     syntax: az network vnet update -g MyResourceGroup -n MyVNet --dns-servers null
+  - summary: |-
+      For --summarized-gateway-prefixes with address-prefixes
+    syntax: az network vnet update --resource-group rg1 --name test-vnet --summarized-gateway-prefixes address-prefixes="[10.0.0.0/16,10.1.0.0/16]"
+  - summary: |-
+      For --summarized-gateway-prefixes with ipam-pool-prefix-allocations
+    syntax: az network vnet update --resource-group rg1 --name test-vnet --summarized-gateway-prefixes ipam-pool-prefix-allocations="[{id:<pool-resource-id>,number-of-ip-addresses:10}]"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -684,6 +705,11 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
+  - name: --sgp --summarized-gateway-prefixes
+    summary: |-
+      A configurable list of summarized gateway prefixes advertised for the virtual network.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    isPreview: true
+    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.

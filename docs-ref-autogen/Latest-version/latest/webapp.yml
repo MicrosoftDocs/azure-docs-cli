@@ -134,6 +134,7 @@ directCommands:
                      [--role]
                      [--runtime]
                      [--scope]
+                     [--site-scoped-certs {false, true}]
                      [--sitecontainers-app {false, true}]
                      [--startup-file]
                      [--subnet]
@@ -292,6 +293,10 @@ directCommands:
   - name: --scope
     summary: |-
       Scope that the system assigned identity can access.
+  - name: --site-scoped-certs
+    acceptedValues: false, true
+    summary: |-
+      Enable or disable site-scoped certificates.
   - name: --sitecontainers-app
     acceptedValues: false, true
     summary: |-
@@ -939,15 +944,13 @@ directCommands:
   summary: |-
     List available built-in stacks which can be used for web apps.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: 'The output will be changed in next breaking change release(2.87.0) scheduled for June 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.'
   sourceType: Core
   syntax: >-
     az webapp list-runtimes [--acquire-policy-token]
                             [--change-reference]
-                            [--linux]
                             [--os --os-type {linux, windows}]
-                            [--show-runtime-details]
+                            [--runtime {dotnet, java, node, php, python}]
+                            [--support {active, all, eol, near, supported}]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -957,25 +960,18 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --linux
-    defaultValue: "False"
-    summary: |-
-      List runtime stacks for linux based web apps.
-    isDeprecated: true
-    deprecateInfo: >-
-      Argument '--linux' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--os-type' instead.
-
-      Argument 'linux' has been deprecated and will be removed in a future release. Use '--os-type' instead.
   - name: --os --os-type
     acceptedValues: linux, windows
     summary: |-
       Limit the output to just windows or linux runtimes.
-  - name: --show-runtime-details
-    defaultValue: "False"
+  - name: --runtime
+    acceptedValues: dotnet, java, node, php, python
     summary: |-
-      Show detailed versions of runtime stacks.
-    isDeprecated: true
-    deprecateInfo: Argument '--show-runtime-details' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026.
+      Limit the output to a specific runtime family.
+  - name: --support
+    acceptedValues: active, all, eol, near, supported
+    summary: |-
+      Filter by support lifecycle status. Default: supported.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -1009,8 +1005,6 @@ directCommands:
   summary: |-
     List available built-in stacks which can be used for web apps.
   status: GA
-  isBreakingChange: true
-  breakingChangeInfo: 'The output will be changed in next breaking change release(2.87.0) scheduled for June 2026. The output will change from a flat list of strings to a structured list of objects with keys: os, runtime, version, config, support, end_of_life.Update scripts that parse the current string-list output. The new output is a list of dicts with keys: os, runtime, version, config, support, end_of_life. New --runtime and --support filter parameters will be added. Use -o table for a human-readable view, or -o json and parse the new structured format.'
   sourceType: Extension
   syntax: >-
     az webapp list-runtimes [--acquire-policy-token]
@@ -1037,10 +1031,7 @@ directCommands:
     summary: |-
       List runtime stacks for linux based web apps.
     isDeprecated: true
-    deprecateInfo: >-
-      Argument 'linux' has been deprecated and will be removed in a future release. Use '--os-type' instead.
-
-      Argument '--linux' has been deprecated and will be removed in next breaking change release(2.87.0) scheduled for June 2026. Use '--os-type' instead.
+    deprecateInfo: Argument 'linux' has been deprecated and will be removed in a future release. Use '--os-type' instead.
   - name: --os --os-type
     acceptedValues: linux, windows
     summary: |-
@@ -1643,7 +1634,9 @@ directCommands:
     Usage notes:
     - If the app already exists, the existing SKU is kept. The --sku flag is ignored for existing apps.
     - Use 'az webapp list-runtimes' to see available runtimes.
-  status: GA
+  status: Deprecated
+  isDeprecated: true
+  deprecateInfo: This command has been deprecated and will be removed in a future release. Use 'webapp create and webapp deploy' instead.
   sourceType: Core
   syntax: >-
     az webapp up [--acquire-policy-token]
@@ -1833,6 +1826,7 @@ directCommands:
                      [--remove]
                      [--resource-group]
                      [--set]
+                     [--site-scoped-certs {false, true}]
                      [--skip-custom-domain-verification {false, true}]
                      [--skip-dns-registration {false, true}]
                      [--slot]
@@ -1921,6 +1915,10 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
+  - name: --site-scoped-certs
+    acceptedValues: false, true
+    summary: |-
+      Enable or disable site-scoped certificates.
   - name: --skip-custom-domain-verification
     acceptedValues: false, true
     summary: |-
@@ -2304,6 +2302,9 @@ commands:
 - az_webapp_log_deployment_show
 - az_webapp_log_download
 - az_webapp_log_show
+- az_webapp_log_startup
+- az_webapp_log_startup_list
+- az_webapp_log_startup_show
 - az_webapp_log_tail
 - az_webapp_restart
 - az_webapp_restart(appservice-kube)
