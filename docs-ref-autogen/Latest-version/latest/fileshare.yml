@@ -3,7 +3,7 @@ uid: az_fileshare
 name: az fileshare
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **fileshares** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az fileshare** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **fileshare** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az fileshare** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure File Shares.
 status: GA
@@ -12,26 +12,20 @@ directCommands:
 - uid: az_fileshare_check-name-availability
   name: az fileshare check-name-availability
   summary: |-
-    Implements local CheckNameAvailability operations.
+    Check if a file share name is available.
   status: GA
   sourceType: Extension
   syntax: >-
-    az fileshare check-name-availability --name
-                                         [--acquire-policy-token]
+    az fileshare check-name-availability [--acquire-policy-token]
                                          [--change-reference]
                                          [--ids]
                                          [--location]
+                                         [--name]
                                          [--subscription]
   examples:
   - summary: |-
       Check name availability for a file share
-    syntax: az fileshare check-name-availability --location westus --name myfileshare
-  requiredParameters:
-  - isRequired: true
-    name: --name
-    summary: |-
-      The name of the resource for which availability needs to be checked.
-    groupName: Body Arguments
+    syntax: az fileshare check-name-availability --location eastus --name MyFileShare
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -49,6 +43,10 @@ directCommands:
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
     groupName: Resource Id Arguments
+  - name: --name
+    summary: |-
+      The name of the resource for which availability needs to be checked.
+    groupName: Body Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -89,14 +87,15 @@ directCommands:
                         [--acquire-policy-token]
                         [--allowed-subnets]
                         [--change-reference]
+                        [--encryption-in-transit --encryption-in-transit-required {Disabled, Enabled}]
                         [--location]
                         [--media-tier {SSD}]
                         [--mount-name]
                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                         [--protocol {NFS}]
                         [--provisioned-io-per-sec --provisioned-iops]
-                        [--provisioned-storage-GiB --provisioned-storage-gi-b --storage-gib]
-                        [--provisioned-throughput-MiB --provisioned-throughput-mi-b-per-sec --throughput-mibps]
+                        [--provisioned-storage-gi-b --provisioned-storage-gib --storage-gib]
+                        [--provisioned-throughput-mi-b-per-sec --provisioned-throughput-mib --throughput-mibps]
                         [--public-network-access {Disabled, Enabled}]
                         [--redundancy {Local, Zone}]
                         [--root-squash {AllSquash, NoRootSquash, RootSquash}]
@@ -104,7 +103,10 @@ directCommands:
   examples:
   - summary: |-
       Create a file share with NFS protocol
-    syntax: az fileshare create --name MyFileShare --resource-group MyRG --location eastus --provisioned-storage-GiB 1024 --provisioned-iops 3000 --provisioned-throughput-MiB 125 --protocol NFS --redundancy Local
+    syntax: az fileshare create --name MyFileShare --resource-group MyRG --location eastus --provisioned-storage-gib 1024 --provisioned-iops 3000 --provisioned-throughput-mib 125 --protocol NFS --redundancy Local
+  - summary: |-
+      Create a file share with root squash and subnet access
+    syntax: az fileshare create --name MyFileShare --resource-group MyRG --location eastus --provisioned-storage-gib 1024 --provisioned-iops 3000  --provisioned-throughput-mib 125 --protocol NFS --redundancy Local --root-squash RootSquash --public-network-access Enabled --allowed-subnets /subscriptions/sub-id/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet1
   requiredParameters:
   - isRequired: true
     name: --name --resource-name -n
@@ -121,12 +123,17 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --allowed-subnets
     summary: |-
-      Space-separated list of subnet resource IDs that are allowed access.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
+      The allowed set of subnets when access is restricted.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: PublicAccessProperties Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --encryption-in-transit --encryption-in-transit-required
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Encryption in transit defines whether data is encrypted for NFS shares.
+    groupName: NfsProtocolProperties Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
@@ -153,11 +160,11 @@ directCommands:
     summary: |-
       The provisioned IO / sec of the share.
     groupName: Properties Arguments
-  - name: --provisioned-storage-GiB --provisioned-storage-gi-b --storage-gib
+  - name: --provisioned-storage-gi-b --provisioned-storage-gib --storage-gib
     summary: |-
       The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage.
     groupName: Properties Arguments
-  - name: --provisioned-throughput-MiB --provisioned-throughput-mi-b-per-sec --throughput-mibps
+  - name: --provisioned-throughput-mi-b-per-sec --provisioned-throughput-mib --throughput-mibps
     summary: |-
       The provisioned throughput / sec of the share.
     groupName: Properties Arguments
@@ -175,7 +182,7 @@ directCommands:
     acceptedValues: AllSquash, NoRootSquash, RootSquash
     summary: |-
       Root squash defines how root users on clients are mapped to the NFS share.
-    groupName: Properties Arguments
+    groupName: NfsProtocolProperties Arguments
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -210,7 +217,7 @@ directCommands:
 - uid: az_fileshare_delete
   name: az fileshare delete
   summary: |-
-    Delete a FileShare.
+    Delete a file share.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -222,6 +229,10 @@ directCommands:
                         [--resource-group]
                         [--subscription]
                         [--yes]
+  examples:
+  - summary: |-
+      Delete a fileshare
+    syntax: az fileshare delete --resource-group MyRG --name MyFileShare
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -282,11 +293,11 @@ directCommands:
 - uid: az_fileshare_get-provisioning-recommendation
   name: az fileshare get-provisioning-recommendation
   summary: |-
-    Get file shares provisioning parameters recommendation.
+    Get provisioning recommendations for a file share.
   status: GA
   sourceType: Extension
   syntax: >-
-    az fileshare get-provisioning-recommendation --provisioned-storage-GiB --provisioned-storage-gi-b --storage-gib
+    az fileshare get-provisioning-recommendation --provisioned-storage-gi-b --provisioned-storage-gib --storage-gib
                                                  [--acquire-policy-token]
                                                  [--change-reference]
                                                  [--ids]
@@ -295,10 +306,10 @@ directCommands:
   examples:
   - summary: |-
       Get provisioning recommendations for a file share
-    syntax: az fileshare get-provisioning-recommendation --location eastus --provisioned-storage-GiB 1024
+    syntax: az fileshare get-provisioning-recommendation --location eastus --provisioned-storage-gib 1024
   requiredParameters:
   - isRequired: true
-    name: --provisioned-storage-GiB --provisioned-storage-gi-b --storage-gib
+    name: --provisioned-storage-gi-b --provisioned-storage-gib --storage-gib
     summary: |-
       The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters.
     groupName: Properties Arguments
@@ -359,6 +370,10 @@ directCommands:
                              [--ids]
                              [--location]
                              [--subscription]
+  examples:
+  - summary: |-
+      Show limits for fileshare in the location
+    syntax: az fileshare limits-show --location westus
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -407,13 +422,17 @@ directCommands:
 - uid: az_fileshare_list
   name: az fileshare list
   summary: |-
-    List FileShare resources by subscription ID.
+    List file shares in a resource group.
   status: GA
   sourceType: Extension
   syntax: >-
     az fileshare list [--max-items]
                       [--next-token]
                       [--resource-group]
+  examples:
+  - summary: |-
+      List file share
+    syntax: az fileshare list
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -456,7 +475,7 @@ directCommands:
 - uid: az_fileshare_show
   name: az fileshare show
   summary: |-
-    Get a FileShare.
+    Get details of a file share.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -464,6 +483,10 @@ directCommands:
                       [--name --resource-name]
                       [--resource-group]
                       [--subscription]
+  examples:
+  - summary: |-
+      Show fileshare properties
+    syntax: az fileshare show --resource-group rgfileshares --resource-name fileshare
   optionalParameters:
   - name: --ids
     summary: |-
@@ -508,19 +531,20 @@ directCommands:
 - uid: az_fileshare_update
   name: az fileshare update
   summary: |-
-    Update a FileShare.
+    Update a file share.
   status: GA
   sourceType: Extension
   syntax: >-
     az fileshare update [--acquire-policy-token]
                         [--allowed-subnets]
                         [--change-reference]
+                        [--encryption-in-transit --encryption-in-transit-required {Disabled, Enabled}]
                         [--ids]
                         [--name --resource-name]
                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                         [--provisioned-io-per-sec --provisioned-iops]
-                        [--provisioned-storage-GiB --provisioned-storage-gi-b --storage-gib]
-                        [--provisioned-throughput-MiB --provisioned-throughput-mi-b-per-sec --throughput-mibps]
+                        [--provisioned-storage-gi-b --provisioned-storage-gib --storage-gib]
+                        [--provisioned-throughput-mi-b-per-sec --provisioned-throughput-mib --throughput-mibps]
                         [--public-network-access {Disabled, Enabled}]
                         [--resource-group]
                         [--root-squash {AllSquash, NoRootSquash, RootSquash}]
@@ -529,7 +553,10 @@ directCommands:
   examples:
   - summary: |-
       Update the provisioned storage of a file share
-    syntax: az fileshare update --name MyFileShare --resource-group MyRG --provisioned-storage-GiB 2048
+    syntax: az fileshare update --name MyFileShare --resource-group MyRG --provisioned-storage-gib 2048
+  - summary: |-
+      Update root squash setting
+    syntax: az fileshare update --name MyFileShare --resource-group MyRG --root-squash AllSquash
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -537,12 +564,17 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --allowed-subnets
     summary: |-
-      Space-separated list of subnet resource IDs that are allowed access.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
+      The allowed set of subnets when access is restricted.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: PublicAccessProperties Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --encryption-in-transit --encryption-in-transit-required
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Encryption in transit defines whether data is encrypted for NFS shares.
+    groupName: NfsProtocolProperties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -559,11 +591,11 @@ directCommands:
     summary: |-
       The provisioned IO / sec of the share.
     groupName: Properties Arguments
-  - name: --provisioned-storage-GiB --provisioned-storage-gi-b --storage-gib
+  - name: --provisioned-storage-gi-b --provisioned-storage-gib --storage-gib
     summary: |-
       The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage.
     groupName: Properties Arguments
-  - name: --provisioned-throughput-MiB --provisioned-throughput-mi-b-per-sec --throughput-mibps
+  - name: --provisioned-throughput-mi-b-per-sec --provisioned-throughput-mib --throughput-mibps
     summary: |-
       The provisioned throughput / sec of the share.
     groupName: Properties Arguments
@@ -580,7 +612,7 @@ directCommands:
     acceptedValues: AllSquash, NoRootSquash, RootSquash
     summary: |-
       Root squash defines how root users on clients are mapped to the NFS share.
-    groupName: Properties Arguments
+    groupName: NfsProtocolProperties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -625,6 +657,10 @@ directCommands:
                             [--ids]
                             [--location]
                             [--subscription]
+  examples:
+  - summary: |-
+      Show usage of fileshare
+    syntax: az fileshare usage-show --location westus
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -782,6 +818,7 @@ commands:
 - az_fileshare_list
 - az_fileshare_private-endpoint-connection
 - az_fileshare_private-endpoint-connection_approve
+- az_fileshare_private-endpoint-connection_create
 - az_fileshare_private-endpoint-connection_delete
 - az_fileshare_private-endpoint-connection_list
 - az_fileshare_private-endpoint-connection_reject
@@ -798,7 +835,6 @@ commands:
 - az_fileshare_snapshot_list
 - az_fileshare_snapshot_show
 - az_fileshare_snapshot_update
-- az_fileshare_snapshot_wait
 - az_fileshare_update
 - az_fileshare_usage-show
 - az_fileshare_wait
