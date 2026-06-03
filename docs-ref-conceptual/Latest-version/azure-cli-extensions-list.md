@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/01/2026
+ms.date: 06/02/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -113,7 +113,7 @@ You will be prompted to install an extension on first use.
 |[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.75.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | GA | [1.3.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection) | 2.61.0 | Microsoft Azure Command-Line Tools ExpressRouteCrossConnection Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection/HISTORY.rst) |
-|[fileshares](https://github.com/Azure/azure-cli-extensions/tree/main/src/fileshares) | 2.75.0 | Commands for managing Azure file shares, snapshots, and private endpoint connections. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/fileshares) |
+|[fileshare](https://github.com/Azure/azure-cli-extensions/tree/main/src/fileshare) | 2.75.0 | Microsoft Azure Command-Line Tools Fileshare Extension. | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/fileshare/HISTORY.rst) |
 |[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.75.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
 |[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.10.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
@@ -186,7 +186,7 @@ You will be prompted to install an extension on first use.
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub) | 2.57.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/providerhub/HISTORY.rst) |
 |[pscloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud) | 2.75.0 | Microsoft Azure Command-Line Tools Pscloud Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
-|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.73.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b15](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
+|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.73.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b16](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
 |[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.70.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.54.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
@@ -204,7 +204,7 @@ You will be prompted to install an extension on first use.
 |[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.60.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | GA | [3.3.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
 |[servicegroup](https://github.com/Azure/azure-cli-extensions/tree/main/src/servicegroup) | 2.67.0 | Microsoft Azure Command-Line Tools ServiceGroup Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/servicegroup/HISTORY.rst) |
 |[sftp](https://github.com/Azure/azure-cli-extensions/tree/master/src/sftp) | 2.75.0 | Secure access to Azure Storage blob data via SFTP with SSH certificates. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/master/src/sftp/HISTORY.rst) |
-|[site](https://github.com/Azure/azure-cli-extensions/tree/main/src/site) | 2.75.0 | Microsoft Azure Command-Line Tools Site Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/site/HISTORY.rst) |
+|[site](https://github.com/Azure/azure-cli-extensions/tree/main/src/site) | 2.75.0 | Microsoft Azure Command-Line Tools Site Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/site/HISTORY.rst) |
 |[site-recovery](https://github.com/Azure/azure-cli-extensions/tree/main/src/site-recovery) | 2.51.0 | Microsoft Azure Command-Line Tools SiteRecovery Extension. | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/site-recovery/HISTORY.rst) |
 |[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.56.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.28.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [2.0.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
