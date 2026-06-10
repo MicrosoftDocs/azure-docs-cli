@@ -1,32 +1,43 @@
 ### YamlMime:AzureCLIGroup
-uid: az_storage-mover_project
-name: az storage-mover project
+uid: az_storage-mover_connection
+name: az storage-mover connection
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **storage-mover** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az storage-mover project** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **storage-mover** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az storage-mover connection** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Project.
+  Manage Connection.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_storage-mover_project_create
-  name: az storage-mover project create
+- uid: az_storage-mover_connection_create
+  name: az storage-mover connection create
   summary: |-
-    Create a Project resource, which is a logical grouping of related jobs.
+    Create a Connection resource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az storage-mover project create --name --project-name
-                                    --resource-group
-                                    --storage-mover-name
-                                    [--acquire-policy-token]
-                                    [--change-reference]
-                                    [--description]
+    az storage-mover connection create --connection-name --name
+                                       --pls-id --private-link-service-id
+                                       --resource-group
+                                       --storage-mover-name
+                                       [--acquire-policy-token]
+                                       [--change-reference]
+                                       [--description]
+                                       [--job-list]
+  examples:
+  - summary: |-
+      connection create
+    syntax: az storage-mover connection create -g {rg} --storage-mover-name {mover_name} -n {connection_name} --private-link-service-id {pls_resource_id} --description ConnectionDesc
   requiredParameters:
   - isRequired: true
-    name: --name --project-name -n
+    name: --connection-name --name -n
     summary: |-
-      The name of the Project resource.
+      The name of the Connection resource.
+  - isRequired: true
+    name: --pls-id --private-link-service-id
+    summary: |-
+      The PrivateLinkServiceId for the connection.
+    groupName: Properties Arguments
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -46,7 +57,11 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --description
     summary: |-
-      A description for the Project.
+      A description for the Connection.
+    groupName: Properties Arguments
+  - name: --job-list
+    summary: |-
+      List of job definitions associated with this connection.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -75,22 +90,24 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_storage-mover_project_delete
-  name: az storage-mover project delete
+- uid: az_storage-mover_connection_delete
+  name: az storage-mover connection delete
   summary: |-
-    Delete a Project resource.
+    Delete a Connection resource.
+  description: |-
+    Returns 409 if there are active jobs using this connection.
   status: GA
   sourceType: Extension
   syntax: >-
-    az storage-mover project delete [--acquire-policy-token]
-                                    [--change-reference]
-                                    [--ids]
-                                    [--name --project-name]
-                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                    [--resource-group]
-                                    [--storage-mover-name]
-                                    [--subscription]
-                                    [--yes]
+    az storage-mover connection delete [--acquire-policy-token]
+                                       [--change-reference]
+                                       [--connection-name --name]
+                                       [--ids]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--resource-group]
+                                       [--storage-mover-name]
+                                       [--subscription]
+                                       [--yes]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -100,13 +117,13 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --connection-name --name -n
+    summary: |-
+      The name of the Connection resource.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --name --project-name -n
-    summary: |-
-      The name of the Project resource.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -152,17 +169,17 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_storage-mover_project_list
-  name: az storage-mover project list
+- uid: az_storage-mover_connection_list
+  name: az storage-mover connection list
   summary: |-
-    List all Projects in a Storage Mover.
+    List all Connections in a Storage Mover.
   status: GA
   sourceType: Extension
   syntax: >-
-    az storage-mover project list --resource-group
-                                  --storage-mover-name
-                                  [--max-items]
-                                  [--next-token]
+    az storage-mover connection list --resource-group
+                                     --storage-mover-name
+                                     [--max-items]
+                                     [--next-token]
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -208,26 +225,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_storage-mover_project_show
-  name: az storage-mover project show
+- uid: az_storage-mover_connection_show
+  name: az storage-mover connection show
   summary: |-
-    Get a Project resource.
+    Get a Connection resource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az storage-mover project show [--ids]
-                                  [--name --project-name]
-                                  [--resource-group]
-                                  [--storage-mover-name]
-                                  [--subscription]
+    az storage-mover connection show [--connection-name --name]
+                                     [--ids]
+                                     [--resource-group]
+                                     [--storage-mover-name]
+                                     [--subscription]
   optionalParameters:
+  - name: --connection-name --name -n
+    summary: |-
+      The name of the Connection resource.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --name --project-name -n
-    summary: |-
-      The name of the Project resource.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -265,25 +282,31 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_storage-mover_project_update
-  name: az storage-mover project update
+- uid: az_storage-mover_connection_update
+  name: az storage-mover connection update
   summary: |-
-    Update a Project resource, which is a logical grouping of related jobs.
+    Update a Connection resource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az storage-mover project update [--acquire-policy-token]
-                                    [--add]
-                                    [--change-reference]
-                                    [--description]
-                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                    [--ids]
-                                    [--name --project-name]
-                                    [--remove]
-                                    [--resource-group]
-                                    [--set]
-                                    [--storage-mover-name]
-                                    [--subscription]
+    az storage-mover connection update [--acquire-policy-token]
+                                       [--add]
+                                       [--change-reference]
+                                       [--connection-name --name]
+                                       [--description]
+                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--ids]
+                                       [--job-list]
+                                       [--pls-id --private-link-service-id]
+                                       [--remove]
+                                       [--resource-group]
+                                       [--set]
+                                       [--storage-mover-name]
+                                       [--subscription]
+  examples:
+  - summary: |-
+      connection update
+    syntax: az storage-mover connection update -g {rg} --storage-mover-name {mover_name} -n {connection_name} --description ConnectionDescUpdate
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -297,9 +320,13 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --connection-name --name -n
+    summary: |-
+      The name of the Connection resource.
+    groupName: Resource Id Arguments
   - name: --description
     summary: |-
-      A description for the Project.
+      A description for the Connection.
     groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -310,10 +337,14 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --name --project-name -n
+  - name: --job-list
     summary: |-
-      The name of the Project resource.
-    groupName: Resource Id Arguments
+      List of job definitions associated with this connection.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --pls-id --private-link-service-id
+    summary: |-
+      The PrivateLinkServiceId for the connection.
+    groupName: Properties Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -358,27 +389,27 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_storage-mover_project_wait
-  name: az storage-mover project wait
+- uid: az_storage-mover_connection_wait
+  name: az storage-mover connection wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az storage-mover project wait [--acquire-policy-token]
-                                  [--change-reference]
-                                  [--created]
-                                  [--custom]
-                                  [--deleted]
-                                  [--exists]
-                                  [--ids]
-                                  [--interval]
-                                  [--name --project-name]
-                                  [--resource-group]
-                                  [--storage-mover-name]
-                                  [--subscription]
-                                  [--timeout]
-                                  [--updated]
+    az storage-mover connection wait [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--connection-name --name]
+                                     [--created]
+                                     [--custom]
+                                     [--deleted]
+                                     [--exists]
+                                     [--ids]
+                                     [--interval]
+                                     [--resource-group]
+                                     [--storage-mover-name]
+                                     [--subscription]
+                                     [--timeout]
+                                     [--updated]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -388,6 +419,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --connection-name --name -n
+    summary: |-
+      The name of the Connection resource.
+    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -416,10 +451,6 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
-  - name: --name --project-name -n
-    summary: |-
-      The name of the Project resource.
-    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -467,11 +498,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_storage-mover_project_create
-- az_storage-mover_project_delete
-- az_storage-mover_project_list
-- az_storage-mover_project_show
-- az_storage-mover_project_update
-- az_storage-mover_project_wait
+- az_storage-mover_connection_create
+- az_storage-mover_connection_delete
+- az_storage-mover_connection_list
+- az_storage-mover_connection_show
+- az_storage-mover_connection_update
+- az_storage-mover_connection_wait
 metadata:
-  description: Manage Project.
+  description: Manage Connection.
