@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/04/2026
+ms.date: 06/10/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -75,10 +75,10 @@ You will be prompted to install an extension on first use.
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.67.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.14.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[computelimit](https://github.com/Azure/azure-cli-extensions/tree/main/src/computelimit) | 2.75.0 | Microsoft Azure Command-Line Tools Computelimit Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/computelimit/HISTORY.rst) |
 |[computeschedule](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule) | 2.67.0 | Microsoft Azure Command-Line Tools Computeschedule Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule/HISTORY.rst) |
-|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
+|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [2.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.67.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.75.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
-|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.70.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.11.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
+|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.70.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.11.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.75.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.79.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [1.3.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
@@ -215,7 +215,7 @@ You will be prompted to install an extension on first use.
 |[storage-actions](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions) | 2.75.0 | Microsoft Azure Command-Line Tools StorageActions Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-actions/HISTORY.rst) |
 |[storage-blob-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview) | 2.75.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview/HISTORY.rst) |
 |[storage-discovery](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-discovery) | 2.75.0 | Microsoft Azure Command-Line Tools StorageDiscovery Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-discovery/HISTORY.rst) |
-|[storage-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover) | 2.75.0 | Microsoft Azure Command-Line Tools StorageMover Extension. | GA | [1.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover/HISTORY.rst) |
+|[storage-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover) | 2.75.0 | Microsoft Azure Command-Line Tools StorageMover Extension. | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover/HISTORY.rst) |
 |[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.75.0 | Provides a preview for upcoming storage features. | Preview | [1.0.0b8](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/main/src/storagesync) | 2.55.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storagesync/HISTORY.rst) |
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.75.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | GA | [1.0.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
