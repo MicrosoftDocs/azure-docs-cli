@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/15/2026
+ms.date: 06/16/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -42,14 +42,14 @@ You will be prompted to install an extension on first use.
 |[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.57.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | Preview | [1.2.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.71.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appnet-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/appnet-preview) | 2.75.0 | Azure CLI commands for working with Azure Kubernetes Application Network resources. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/appnet-preview/HISTORY.rst) |
-|[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.60.0 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
+|[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.60.0 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.73.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.7.2](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.31](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[arcgateway](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway) | 2.57.0 | Microsoft Azure Command-Line Tools Arcgateway Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway/HISTORY.rst) |
 |[arize-ai](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai) | 2.75.0 | Microsoft Azure Command-Line Tools ArizeAi Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai/HISTORY.rst) |
 |[artifact-signing](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing) | 2.75.0 | Microsoft Azure Command-Line Tools Artifact Signing Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing/HISTORY.rst) |
 |[astronomer](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer) | 2.70.0 | Microsoft Azure Command-Line Tools Astronomer Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer/HISTORY.rst) |
-|[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.55.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
+|[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.55.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
 |[automanage](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage) | 2.44.1 | Microsoft Azure Command-Line Tools Automanage Extension. | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage/HISTORY.rst) |
 |[automation](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation) | 2.75.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation/HISTORY.rst) |
@@ -234,6 +234,6 @@ You will be prompted to install an extension on first use.
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.75.0 | Azure VMware Solution commands. | GA | [8.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.56.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.7.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
-|[workload-orchestration](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration) | 2.67.0 | Microsoft Azure Command-Line Tools WorkloadOperations Extension. | GA | [5.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration/HISTORY.rst) |
+|[workload-orchestration](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration) | 2.67.0 | Microsoft Azure Command-Line Tools WorkloadOperations Extension. | GA | [5.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/workload-orchestration/HISTORY.rst) |
 |[workloads](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads) | 2.61.0 | Microsoft Azure Command-Line Tools Workloads Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads/HISTORY.rst) |
 |[zones](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones) | 2.72.0 | Microsoft Azure Command-Line Tools Zones Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/master/src/zones/HISTORY.rst) |
