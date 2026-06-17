@@ -1,16 +1,18 @@
 ### YamlMime:AzureCLIGroup
 uid: az_workload-orchestration_context
 name: az workload-orchestration context
-extensionInformation: |-
+importantNote: >-
   > [!NOTE]
-  > This reference is part of the **workload-orchestration** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az workload-orchestration context** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+
+  > This command group has commands that are defined in two or more extensions. Each extension will automatically install the first time you run an extension command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Workload-orchestration context helps to manage contexts.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_workload-orchestration_context_add-capability
+- uid: az_workload-orchestration_context_add-capability(workload-orchestration)
   name: az workload-orchestration context add-capability
+  extensionSuffix: workload-orchestration
   summary: |-
     Add capabilities to a context (idempotent).
   description: |-
@@ -88,8 +90,89 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_create
+- uid: az_workload-orchestration_context_add-capability(workload-orchestration-preview)
+  name: az workload-orchestration context add-capability
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Add capabilities to a context (idempotent).
+  description: |-
+    Replaces the painful 7-line PowerShell pattern (show → append → dedup →
+    write file → context create) with a single command. Hierarchies and other
+    properties are preserved.
+    If description is omitted for a capability, it defaults to the name.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context add-capability --capabilities
+                                                     --context-name --name
+                                                     --resource-group
+                                                     [--acquire-policy-token]
+                                                     [--change-reference]
+  examples:
+  - summary: |-
+      Add a single capability
+    syntax: az workload-orchestration context add-capability -g Mehoopany -n Mehoopany-Context --capabilities "[{name:soap,description:'Soap line'}]"
+  - summary: |-
+      Add multiple capabilities (shorthand)
+    syntax: az workload-orchestration context add-capability -g Mehoopany -n Mehoopany-Context --capabilities "[{name:soap,description:Soap},{name:shampoo,description:Shampoo}]"
+  - summary: |-
+      Add capability without description (defaults to name)
+    syntax: az workload-orchestration context add-capability -g Mehoopany -n Mehoopany-Context --capabilities "[{name:detergent}]"
+  - summary: |-
+      Add capabilities from a JSON file
+    syntax: az workload-orchestration context add-capability -g Mehoopany -n Mehoopany-Context --capabilities @new-caps.json
+  requiredParameters:
+  - isRequired: true
+    name: --capabilities
+    summary: |-
+      Capabilities to add. JSON array of objects with 'name' and optional 'description' (defaults to name if omitted). Accepts shorthand (e.g. '[{name:soap,description:Soap}]') or @file.json.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - isRequired: true
+    name: --context-name --name -n
+    summary: |-
+      Name of the context.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Resource group of the context.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_create(workload-orchestration)
   name: az workload-orchestration context create
+  extensionSuffix: workload-orchestration
   summary: |-
     Create Context Resource.
   status: GA
@@ -180,8 +263,102 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_current
+- uid: az_workload-orchestration_context_create(workload-orchestration-preview)
+  name: az workload-orchestration context create
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Create Context Resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context create --capabilities
+                                             --context-name --name
+                                             --hierarchies
+                                             --resource-group
+                                             [--acquire-policy-token]
+                                             [--change-reference]
+                                             [--location]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--site-id]
+                                             [--tags]
+  examples:
+  - summary: |-
+      Create Context Resource
+    syntax: az workload-orchestration context create -g MyResourceGroup -n MyContext --location eastus --capabilities '[{"description":"description","name":"name"}]' --hierarchies '[{"description":"description","name":"name"}]'
+  requiredParameters:
+  - isRequired: true
+    name: --capabilities
+    summary: |-
+      List of Capabilities  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --context-name --name -n
+    summary: |-
+      The name of the Context.
+  - isRequired: true
+    name: --hierarchies
+    summary: |-
+      List of Hierarchies  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --site-id
+    summary: |-
+      ARM resource ID of a Site to auto-create a site reference after context creation.
+    groupName: Common Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_current(workload-orchestration)
   name: az workload-orchestration context current
+  extensionSuffix: workload-orchestration
   summary: |-
     Show current context information.
   status: GA
@@ -229,8 +406,59 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_delete
+- uid: az_workload-orchestration_context_current(workload-orchestration-preview)
+  name: az workload-orchestration context current
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Show current context information.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context current [--acquire-policy-token]
+                                              [--change-reference]
+  examples:
+  - summary: |-
+      Show current context
+    syntax: az workload-orchestration context current
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_delete(workload-orchestration)
   name: az workload-orchestration context delete
+  extensionSuffix: workload-orchestration
   summary: |-
     Delete Context Resource.
   status: GA
@@ -305,8 +533,86 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_list
+- uid: az_workload-orchestration_context_delete(workload-orchestration-preview)
+  name: az workload-orchestration context delete
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Delete Context Resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context delete [--acquire-policy-token]
+                                             [--change-reference]
+                                             [--context-name --name]
+                                             [--ids]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--resource-group]
+                                             [--subscription]
+                                             [--yes]
+  examples:
+  - summary: |-
+      Delete a Context
+    syntax: az workload-orchestration context delete -n myContext -g myResourceGroup
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context-name --name -n
+    summary: |-
+      The name of the Context.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_list(workload-orchestration)
   name: az workload-orchestration context list
+  extensionSuffix: workload-orchestration
   summary: |-
     List by specified resource group.
   status: GA
@@ -360,8 +666,65 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_list-subscriptions
+- uid: az_workload-orchestration_context_list(workload-orchestration-preview)
+  name: az workload-orchestration context list
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    List by specified resource group.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context list --resource-group
+                                           [--max-items]
+                                           [--next-token]
+  examples:
+  - summary: |-
+      List Contexts
+    syntax: az workload-orchestration context list -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_list-subscriptions(workload-orchestration)
   name: az workload-orchestration context list-subscriptions
+  extensionSuffix: workload-orchestration
   summary: |-
     List by subscription.
   status: GA
@@ -423,8 +786,73 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_remove-capability
+- uid: az_workload-orchestration_context_list-subscriptions(workload-orchestration-preview)
+  name: az workload-orchestration context list-subscriptions
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    List by subscription.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context list-subscriptions [--acquire-policy-token]
+                                                         [--change-reference]
+                                                         [--max-items]
+                                                         [--next-token]
+                                                         [--resource-group]
+  examples:
+  - summary: |-
+      List Contexts by Subscription
+    syntax: az workload-orchestration context list-subscriptions
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_remove-capability(workload-orchestration)
   name: az workload-orchestration context remove-capability
+  extensionSuffix: workload-orchestration
   summary: |-
     Remove one or more capabilities from a context (idempotent).
   description: |-
@@ -505,8 +933,92 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_set
+- uid: az_workload-orchestration_context_remove-capability(workload-orchestration-preview)
+  name: az workload-orchestration context remove-capability
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Remove one or more capabilities from a context (idempotent).
+  description: |-
+    Removing a capability that doesn't exist is a no-op (zero ARM calls).
+    The context must retain at least one capability after removal.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context remove-capability --capabilities
+                                                        --context-name --name
+                                                        --resource-group
+                                                        [--acquire-policy-token]
+                                                        [--change-reference]
+                                                        [--force {0, 1, f, false, n, no, t, true, y, yes}]
+                                                        [--yes]
+  examples:
+  - summary: |-
+      Remove a single capability
+    syntax: az workload-orchestration context remove-capability -g Mehoopany -n Mehoopany-Context --capabilities "[soap]" --yes
+  - summary: |-
+      Remove multiple capabilities
+    syntax: az workload-orchestration context remove-capability -g Mehoopany -n Mehoopany-Context --capabilities "[soap,shampoo,detergent]" --yes
+  requiredParameters:
+  - isRequired: true
+    name: --capabilities
+    summary: |-
+      Capability names to remove. String array — accepts shorthand (e.g. '[soap,shampoo]') or @file.json.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - isRequired: true
+    name: --context-name --name -n
+    summary: |-
+      Name of the context.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Resource group of the context.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --force
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Skip in-use validation (placeholder for cross-resource checks).
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_set(workload-orchestration)
   name: az workload-orchestration context set
+  extensionSuffix: workload-orchestration
   summary: |-
     Set current context using context ID.
   status: GA
@@ -560,8 +1072,65 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_show
+- uid: az_workload-orchestration_context_set(workload-orchestration-preview)
+  name: az workload-orchestration context set
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Set current context using context ID.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context set --id
+                                          [--acquire-policy-token]
+                                          [--change-reference]
+  examples:
+  - summary: |-
+      Set a Context using ID
+    syntax: az workload-orchestration context set --id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Edge/contexts/myContext
+  requiredParameters:
+  - isRequired: true
+    name: --id
+    summary: |-
+      The full resource ID of the Context.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_show(workload-orchestration)
   name: az workload-orchestration context show
+  extensionSuffix: workload-orchestration
   summary: |-
     Get Context Resource.
   status: GA
@@ -616,8 +1185,66 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_use
+- uid: az_workload-orchestration_context_show(workload-orchestration-preview)
+  name: az workload-orchestration context show
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Get Context Resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context show [--context-name --name]
+                                           [--ids]
+                                           [--resource-group]
+                                           [--subscription]
+  examples:
+  - summary: |-
+      Show a Context
+    syntax: az workload-orchestration context show -n myContext -g myResourceGroup
+  optionalParameters:
+  - name: --context-name --name -n
+    summary: |-
+      The name of the Context.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_use(workload-orchestration)
   name: az workload-orchestration context use
+  extensionSuffix: workload-orchestration
   summary: |-
     Use Context by name.
   status: GA
@@ -682,8 +1309,180 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_workload-orchestration_context_wait
+- uid: az_workload-orchestration_context_use(workload-orchestration-preview)
+  name: az workload-orchestration context use
+  extensionSuffix: workload-orchestration-preview
+  summary: |-
+    Use Context by name.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context use [--acquire-policy-token]
+                                          [--change-reference]
+                                          [--ids]
+                                          [--name]
+                                          [--resource-group]
+                                          [--subscription]
+  examples:
+  - summary: |-
+      Use a Context
+    syntax: az workload-orchestration context use -n myContext -g myResourceGroup
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the Context.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_wait(workload-orchestration)
   name: az workload-orchestration context wait
+  extensionSuffix: workload-orchestration
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration context wait [--acquire-policy-token]
+                                           [--change-reference]
+                                           [--context-name --name]
+                                           [--created]
+                                           [--custom]
+                                           [--deleted]
+                                           [--exists]
+                                           [--ids]
+                                           [--interval]
+                                           [--resource-group]
+                                           [--subscription]
+                                           [--timeout]
+                                           [--updated]
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context-name --name -n
+    summary: |-
+      The name of the Context.
+    groupName: Resource Id Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-orchestration_context_wait(workload-orchestration-preview)
+  name: az workload-orchestration context wait
+  extensionSuffix: workload-orchestration-preview
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
@@ -786,22 +1585,38 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_workload-orchestration_context_add-capability
-- az_workload-orchestration_context_create
-- az_workload-orchestration_context_current
-- az_workload-orchestration_context_delete
-- az_workload-orchestration_context_list
-- az_workload-orchestration_context_list-subscriptions
-- az_workload-orchestration_context_remove-capability
-- az_workload-orchestration_context_set
-- az_workload-orchestration_context_show
+- az_workload-orchestration_context_add-capability(workload-orchestration)
+- az_workload-orchestration_context_add-capability(workload-orchestration-preview)
+- az_workload-orchestration_context_create(workload-orchestration)
+- az_workload-orchestration_context_create(workload-orchestration-preview)
+- az_workload-orchestration_context_current(workload-orchestration)
+- az_workload-orchestration_context_current(workload-orchestration-preview)
+- az_workload-orchestration_context_delete(workload-orchestration)
+- az_workload-orchestration_context_delete(workload-orchestration-preview)
+- az_workload-orchestration_context_list(workload-orchestration)
+- az_workload-orchestration_context_list(workload-orchestration-preview)
+- az_workload-orchestration_context_list-subscriptions(workload-orchestration)
+- az_workload-orchestration_context_list-subscriptions(workload-orchestration-preview)
+- az_workload-orchestration_context_remove-capability(workload-orchestration)
+- az_workload-orchestration_context_remove-capability(workload-orchestration-preview)
+- az_workload-orchestration_context_set(workload-orchestration)
+- az_workload-orchestration_context_set(workload-orchestration-preview)
+- az_workload-orchestration_context_show(workload-orchestration)
+- az_workload-orchestration_context_show(workload-orchestration-preview)
 - az_workload-orchestration_context_site-reference
-- az_workload-orchestration_context_site-reference_create
-- az_workload-orchestration_context_site-reference_delete
-- az_workload-orchestration_context_site-reference_list
-- az_workload-orchestration_context_site-reference_show
-- az_workload-orchestration_context_site-reference_wait
-- az_workload-orchestration_context_use
-- az_workload-orchestration_context_wait
+- az_workload-orchestration_context_site-reference_create(workload-orchestration)
+- az_workload-orchestration_context_site-reference_create(workload-orchestration-preview)
+- az_workload-orchestration_context_site-reference_delete(workload-orchestration)
+- az_workload-orchestration_context_site-reference_delete(workload-orchestration-preview)
+- az_workload-orchestration_context_site-reference_list(workload-orchestration)
+- az_workload-orchestration_context_site-reference_list(workload-orchestration-preview)
+- az_workload-orchestration_context_site-reference_show(workload-orchestration)
+- az_workload-orchestration_context_site-reference_show(workload-orchestration-preview)
+- az_workload-orchestration_context_site-reference_wait(workload-orchestration)
+- az_workload-orchestration_context_site-reference_wait(workload-orchestration-preview)
+- az_workload-orchestration_context_use(workload-orchestration)
+- az_workload-orchestration_context_use(workload-orchestration-preview)
+- az_workload-orchestration_context_wait(workload-orchestration)
+- az_workload-orchestration_context_wait(workload-orchestration-preview)
 metadata:
   description: Workload-orchestration context helps to manage contexts.
