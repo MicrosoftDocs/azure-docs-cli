@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/17/2026
+ms.date: 06/18/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -104,7 +104,7 @@ You will be prompted to install an extension on first use.
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.51.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.75.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
-|[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.75.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
+|[durabletask](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask) | 2.75.0 | Microsoft Azure Command-Line Tools Durabletask Extension. | Preview | [1.0.0b8](https://github.com/Azure/azure-cli-extensions/tree/main/src/durabletask/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.75.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edge-action](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action) | 2.75.0 | Microsoft Azure Command-Line Tools Extension for Azure Front Door Edge Actions | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/edge-action/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
