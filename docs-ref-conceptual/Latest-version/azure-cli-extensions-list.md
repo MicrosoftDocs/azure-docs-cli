@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/18/2026
+ms.date: 06/21/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples/HISTORY.rst) |
 |[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b23](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
 |[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.76.0 | Provides a preview for upcoming AKS features | Preview | [21.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
-|[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.77.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.111](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
+|[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.77.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.113](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
@@ -92,7 +92,7 @@ You will be prompted to install an extension on first use.
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog) | 2.75.0 | Microsoft Azure Command-Line Tools Datadog Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.75.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
-|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.75.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.11.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
+|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.75.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.11.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[dell](https://github.com/Azure/azure-cli-extensions/tree/main/src/dell) | 2.75.0 | Support for managing Dell.Storage filesystem resources. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dell/HISTORY.rst) |
 |[dependency-map](https://github.com/Azure/azure-cli-extensions/tree/main/src/dependency-map) | 2.70.0 | Microsoft Azure Command-Line Tools DependencyMap Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dependency-map/HISTORY.rst) |
