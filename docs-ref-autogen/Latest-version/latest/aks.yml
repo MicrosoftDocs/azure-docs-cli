@@ -1798,6 +1798,7 @@ directCommands:
                   [--enable-cluster-autoscaler]
                   [--enable-container-network-logs]
                   [--enable-continuous-control-plane-and-addon-monitor]
+                  [--enable-control-plane-metrics --enable-cp-metrics]
                   [--enable-cost-analysis]
                   [--enable-default-domain]
                   [--enable-defender]
@@ -1905,6 +1906,7 @@ directCommands:
                   [--opentelemetry-metrics-port]
                   [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, CBLMariner, Flatcar, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {block, loadBalancer, managedNATGateway, managedNATGatewayV2, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--pis-id --prepared-image-specification-id]
                   [--pod-cidr]
                   [--pod-cidrs]
                   [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
@@ -2413,6 +2415,10 @@ directCommands:
     summary: |-
       Enable continuous control plane and addon monitor for the cluster.
     isPreview: true
+  - name: --enable-control-plane-metrics --enable-cp-metrics
+    defaultValue: "False"
+    summary: |-
+      Enable collection of Azure Monitor managed Prometheus control plane metrics for managed cluster components (controlplane-apiserver and controlplane-etcd targets by default). Requires Azure Monitor metrics to be enabled (already enabled or via --enable-azure-monitor-metrics).
   - name: --enable-cost-analysis
     defaultValue: "False"
     summary: |-
@@ -2895,6 +2901,10 @@ directCommands:
       How outbound traffic will be configured for a cluster.
     description: |-
       Select between loadBalancer, userDefinedRouting, managedNATGateway, managedNATGatewayV2, userAssignedNATGateway, none and block. If not set, defaults to type loadBalancer. managedNATGatewayV2 uses Azure NAT Gateway Standard V2 SKU and supports IPv6, user-provided public IPs, and user-provided IP prefixes.
+  - name: --pis-id --prepared-image-specification-id
+    summary: |-
+      The resource ID of the prepared image specification to use for provisioning nodes in the default node pool.
+    isPreview: true
   - name: --pod-cidr
     summary: |-
       A CIDR notation IP range from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
@@ -6371,6 +6381,7 @@ directCommands:
                   [--disable-cluster-autoscaler]
                   [--disable-container-network-logs]
                   [--disable-continuous-control-plane-and-addon-monitor]
+                  [--disable-control-plane-metrics --disable-cp-metrics]
                   [--disable-cost-analysis]
                   [--disable-defender]
                   [--disable-disk-driver]
@@ -6415,6 +6426,7 @@ directCommands:
                   [--enable-cluster-autoscaler]
                   [--enable-container-network-logs]
                   [--enable-continuous-control-plane-and-addon-monitor]
+                  [--enable-control-plane-metrics --enable-cp-metrics]
                   [--enable-cost-analysis]
                   [--enable-defender]
                   [--enable-disk-driver]
@@ -6850,6 +6862,10 @@ directCommands:
     summary: |-
       Disable continuous control plane and addon monitor for the cluster.
     isPreview: true
+  - name: --disable-control-plane-metrics --disable-cp-metrics
+    defaultValue: "False"
+    summary: |-
+      Disable collection of Azure Monitor managed Prometheus control plane metrics. Leaves Azure Monitor metrics enabled.
   - name: --disable-cost-analysis
     defaultValue: "False"
     summary: |-
@@ -7050,6 +7066,10 @@ directCommands:
     summary: |-
       Enable continuous control plane and addon monitor for the cluster.
     isPreview: true
+  - name: --enable-control-plane-metrics --enable-cp-metrics
+    defaultValue: "False"
+    summary: |-
+      Enable collection of Azure Monitor managed Prometheus control plane metrics for managed cluster components (controlplane-apiserver and controlplane-etcd targets by default). Requires Azure Monitor metrics to be enabled (already enabled or via --enable-azure-monitor-metrics).
   - name: --enable-cost-analysis
     defaultValue: "False"
     summary: |-
@@ -8575,6 +8595,16 @@ commands:
 - az_aks_pod-identity_exception_list
 - az_aks_pod-identity_exception_update
 - az_aks_pod-identity_list
+- az_aks_prepared-image-specification
+- az_aks_prepared-image-specification_create
+- az_aks_prepared-image-specification_delete
+- az_aks_prepared-image-specification_list
+- az_aks_prepared-image-specification_show
+- az_aks_prepared-image-specification_update
+- az_aks_prepared-image-specification_version
+- az_aks_prepared-image-specification_version_delete
+- az_aks_prepared-image-specification_version_list
+- az_aks_prepared-image-specification_version_show
 - az_aks_remove-dev-spaces
 - az_aks_rotate-certs
 - az_aks_rotate-certs(aks-preview)
