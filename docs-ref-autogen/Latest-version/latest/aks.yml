@@ -1750,6 +1750,8 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--azure-monitor-workspace-resource-id]
+                  [--backup-configuration]
+                  [--backup-strategy {Custom, DisasterRecovery, Month, Week}]
                   [--bootstrap-artifact-source {Cache, Direct}]
                   [--bootstrap-container-registry-resource-id]
                   [--ca-certs --custom-ca-trust-certificates]
@@ -1794,6 +1796,7 @@ directCommands:
                   [--enable-azure-monitor-logs]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
+                  [--enable-backup]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-container-network-logs]
@@ -1883,6 +1886,7 @@ directCommands:
                   [--no-ssh-key]
                   [--no-wait]
                   [--node-count]
+                  [--node-disruption-policy {Allow, AllowDuringMaintenanceWindow, Block}]
                   [--node-init-taints --nodepool-initialization-taints]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--node-osdisk-diskencryptionset-id]
@@ -2084,6 +2088,9 @@ directCommands:
   - summary: |-
       Create an automatic cluster with hosted system components enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --sku automatic --enable-hosted-system
+  - summary: |-
+      Create a kubernetes cluster with Azure Backup enabled (default Week strategy). Requires the 'dataprotection' extension. Implicitly waits for cluster creation.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --generate-ssh-keys --enable-backup --yes
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -2193,6 +2200,15 @@ directCommands:
   - name: --azure-monitor-workspace-resource-id
     summary: |-
       Resource ID of the Azure Monitor Workspace.
+  - name: --backup-configuration
+    summary: |-
+      Backup configuration as inline JSON string or @file.json. Supports storageAccountResourceId, blobContainerName, backupResourceGroupId, backupVaultId, backupPolicyId, tags. backupVaultId and backupPolicyId are required for Custom strategy. Only valid with --enable-backup.
+    isPreview: true
+  - name: --backup-strategy
+    acceptedValues: Custom, DisasterRecovery, Month, Week
+    summary: |-
+      Backup strategy preset. Week (default, 7-day operational retention), Month (30-day operational retention), DisasterRecovery (7-day operational + 90-day vault retention), Custom (bring your own vault and policy via --backup-configuration). Only valid with --enable-backup.
+    isPreview: true
   - name: --bootstrap-artifact-source
     defaultValue: Direct
     acceptedValues: Cache, Direct
@@ -2398,6 +2414,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure RBAC to control authorization checks on cluster.
+  - name: --enable-backup
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Backup for this AKS cluster. Orchestrates the same flow as 'az dataprotection enable-backup trigger' (requires the 'dataprotection' extension). Implicitly waits for cluster creation to complete (ignores --no-wait).
+    isPreview: true
   - name: --enable-blob-driver
     summary: |-
       Enable AzureBlob CSI Driver.
@@ -2805,6 +2826,11 @@ directCommands:
     defaultValue: "3"
     summary: |-
       Number of nodes in the Kubernetes node pool. It is required when --enable-cluster-autoscaler specified. After creating a cluster, you can change the size of its node pool with `az aks scale`.
+  - name: --node-disruption-policy
+    acceptedValues: Allow, AllowDuringMaintenanceWindow, Block
+    summary: |-
+      Set the node disruption policy for the cluster.
+    isPreview: true
   - name: --node-init-taints --nodepool-initialization-taints
     summary: |-
       The node initialization taints for node pools created with aks create operation.
@@ -6352,6 +6378,8 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--azure-monitor-workspace-resource-id]
+                  [--backup-configuration]
+                  [--backup-strategy {Custom, DisasterRecovery, Month, Week}]
                   [--bootstrap-artifact-source {Cache, Direct}]
                   [--bootstrap-container-registry-resource-id]
                   [--ca-certs --custom-ca-trust-certificates]
@@ -6422,6 +6450,7 @@ directCommands:
                   [--enable-azure-monitor-logs]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
+                  [--enable-backup]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-container-network-logs]
@@ -6630,6 +6659,12 @@ directCommands:
       Enable Azure Monitor logs for a kubernetes cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
   - summary: |-
+      Enable Azure Backup for a kubernetes cluster (default Week strategy). Requires the 'dataprotection' extension.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-backup --yes
+  - summary: |-
+      Enable Azure Backup with a custom strategy using an existing vault and policy
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-backup --backup-strategy Custom --backup-configuration @config.json --yes
+  - summary: |-
       Disable Azure Monitor logs for a kubernetes cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-azure-monitor-logs
   - summary: |-
@@ -6739,6 +6774,15 @@ directCommands:
   - name: --azure-monitor-workspace-resource-id
     summary: |-
       Resource ID of the Azure Monitor Workspace.
+  - name: --backup-configuration
+    summary: |-
+      Backup configuration as inline JSON string or @file.json. Supports storageAccountResourceId, blobContainerName, backupResourceGroupId, backupVaultId, backupPolicyId, tags. backupVaultId and backupPolicyId are required for Custom strategy. Only valid with --enable-backup.
+    isPreview: true
+  - name: --backup-strategy
+    acceptedValues: Custom, DisasterRecovery, Month, Week
+    summary: |-
+      Backup strategy preset. Week (default, 7-day operational retention), Month (30-day operational retention), DisasterRecovery (7-day operational + 90-day vault retention), Custom (bring your own vault and policy via --backup-configuration). Only valid with --enable-backup.
+    isPreview: true
   - name: --bootstrap-artifact-source
     acceptedValues: Cache, Direct
     summary: |-
@@ -7051,6 +7095,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure RBAC to control authorization checks on cluster.
+  - name: --enable-backup
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Backup for this AKS cluster. Orchestrates the same flow as 'az dataprotection enable-backup trigger' (requires the 'dataprotection' extension).
+    isPreview: true
   - name: --enable-blob-driver
     summary: |-
       Enable AzureBlob CSI Driver.
@@ -8488,6 +8537,13 @@ commands:
 - az_aks_maintenanceconfiguration_show(aks-preview)
 - az_aks_maintenanceconfiguration_update
 - az_aks_maintenanceconfiguration_update(aks-preview)
+- az_aks_maintenancewindow
+- az_aks_maintenancewindow_create
+- az_aks_maintenancewindow_delete
+- az_aks_maintenancewindow_list
+- az_aks_maintenancewindow_show
+- az_aks_maintenancewindow_update
+- az_aks_maintenancewindow_wait
 - az_aks_mesh
 - az_aks_mesh_disable
 - az_aks_mesh_disable(aks-preview)

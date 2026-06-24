@@ -89,11 +89,11 @@ directCommands:
 - uid: az_dataprotection_backup-policy_retention-rule_remove
   name: az dataprotection backup-policy retention-rule remove
   summary: |-
-    Remove existing retention rule in a backup policy.
+    Remove existing retention rule in a backup policy. The Default retention rule is reserved and cannot be removed; on AzureBlob, Default_OperationalStore is removable.
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-policy retention-rule remove --name {Daily, Default, Monthly, Weekly, Yearly}
+    az dataprotection backup-policy retention-rule remove --name {Daily, Default, Default_OperationalStore, Monthly, Weekly, Yearly}
                                                           --policy
                                                           [--acquire-policy-token]
                                                           [--change-reference]
@@ -104,7 +104,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name
-    acceptedValues: Daily, Default, Monthly, Weekly, Yearly
+    acceptedValues: Daily, Default, Default_OperationalStore, Monthly, Weekly, Yearly
     summary: |-
       Specify the retention rule name to be removed in policy.
   - isRequired: true
@@ -155,14 +155,20 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az dataprotection backup-policy retention-rule set --lifecycles
-                                                       --name {Daily, Default, Monthly, Weekly, Yearly}
+                                                       --name {Daily, Default, Default_OperationalStore, Monthly, Weekly, Yearly}
                                                        --policy
                                                        [--acquire-policy-token]
                                                        [--change-reference]
   examples:
   - summary: |-
-      Add daily retention rule
+      Add retention rule
     syntax: az dataprotection backup-policy retention-rule set --lifecycles dailylifecycle.json --name Daily --policy policy.json
+  - summary: |-
+      Add AzureBlob OperationalStore default retention rule
+    syntax: az dataprotection backup-policy retention-rule set --lifecycles oplifecycle.json --name Default_OperationalStore --policy policy.json
+  - summary: |-
+      Add AzureBlob VaultStore default retention rule
+    syntax: az dataprotection backup-policy retention-rule set --lifecycles vaultlifecycle.json --name Default --policy policy.json
   requiredParameters:
   - isRequired: true
     name: --lifecycles
@@ -170,7 +176,7 @@ directCommands:
       Lifecycles to be associated with the retention rule. Specify space separated json file names.
   - isRequired: true
     name: --name
-    acceptedValues: Daily, Default, Monthly, Weekly, Yearly
+    acceptedValues: Daily, Default, Default_OperationalStore, Monthly, Weekly, Yearly
     summary: |-
       Specify the retention rule name to be edited in policy.
   - isRequired: true
