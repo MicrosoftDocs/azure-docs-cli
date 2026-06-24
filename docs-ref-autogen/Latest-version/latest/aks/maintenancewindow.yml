@@ -1,0 +1,636 @@
+### YamlMime:AzureCLIGroup
+uid: az_aks_maintenancewindow
+name: az aks maintenancewindow
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **aks-preview** extension for the Azure CLI (version 2.76.0 or higher). The extension will automatically install the first time you run an **az aks maintenancewindow** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Commands to manage MaintenanceWindow peer ARM resources.
+description: |-
+  MaintenanceWindow is a resource-group-scoped ARM resource that defines
+  a reusable maintenance schedule. Users can link this resource to a
+  pre-existing maintenanceConfiguration via `maintenanceWindowId`, so
+  multiple managedCluster maintenance configurations share a single
+  MaintenanceWindow and the schedule lives in one place.
+
+  Requires the Microsoft.ContainerService/AKSSharedMaintenanceWindowPreview
+  feature to be registered on the subscription. Auto-approval is enabled:
+  `az feature register --namespace Microsoft.ContainerService --name AKSSharedMaintenanceWindowPreview`.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_aks_maintenancewindow_create
+  name: az aks maintenancewindow create
+  summary: |-
+    Create a MaintenanceWindow.
+  description: |-
+    Requires the Microsoft.ContainerService/AKSSharedMaintenanceWindowPreview
+    feature to be registered on the subscription. Register once (auto-approved):
+    `az feature register --namespace Microsoft.ContainerService --name AKSSharedMaintenanceWindowPreview`.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks maintenancewindow create --name
+                                    --resource-group
+                                    [--acquire-policy-token]
+                                    [--change-reference]
+                                    [--config-file]
+                                    [--day-of-month]
+                                    [--day-of-week]
+                                    [--duration]
+                                    [--interval-days]
+                                    [--interval-months]
+                                    [--interval-weeks]
+                                    [--location]
+                                    [--no-wait]
+                                    [--schedule-type {AbsoluteMonthly, Daily, RelativeMonthly, Weekly}]
+                                    [--start-date]
+                                    [--start-time]
+                                    [--tags]
+                                    [--utc-offset]
+                                    [--week-index {First, Fourth, Last, Second, Third}]
+  examples:
+  - summary: |-
+      Create a weekly Saturday window (the canonical "production weekends" shape).
+    syntax: >-
+      az aks maintenancewindow create -g rg-maintenance -n production-weekends -l eastus \
+        --schedule-type Weekly --day-of-week Saturday --interval-weeks 1 \
+        --start-time "02:00" --duration 8 --utc-offset=-07:00 \
+        --tags environment=production
+  - summary: |-
+      Create a daily window every 2 days from a specific start date.
+    syntax: >-
+      az aks maintenancewindow create -g rg-maintenance -n nightly -l eastus \
+        --schedule-type Daily --interval-days 2 \
+        --start-date 2026-06-01 --start-time "00:00" --duration 6 --utc-offset=-08:00
+  - summary: |-
+      Create an absolute monthly window on the 15th.
+    syntax: >-
+      az aks maintenancewindow create -g rg-maintenance -n monthly-15 -l eastus \
+        --schedule-type AbsoluteMonthly --day-of-month 15 --interval-months 1 \
+        --start-time "09:30" --duration 6 --utc-offset=+05:30
+  - summary: |-
+      Create a relative monthly window on the last Friday.
+    syntax: >-
+      az aks maintenancewindow create -g rg-maintenance -n last-friday -l eastus \
+        --schedule-type RelativeMonthly --day-of-week Friday --week-index Last --interval-months 1 \
+        --start-time "01:00" --duration 4 --utc-offset=+00:00
+  - summary: |-
+      Create a weekly window with blackout dates via a config file.
+    syntax: >-
+      az aks maintenancewindow create -g rg-maintenance -n weekly-with-holidays -l eastus \
+        --config-file ./mw-body.json
+        The contents of mw-body.json:
+        {
+          "properties": {
+            "schedule": { "weekly": { "intervalWeeks": 1, "dayOfWeek": "Saturday" } },
+            "startTime": "02:00",
+            "durationHours": 8,
+            "utcOffset": "-07:00",
+            "notAllowedDates": [
+              { "start": "2026-12-23", "end": "2027-01-05" },
+              { "start": "2026-07-04", "end": "2026-07-05" }
+            ]
+          }
+        }
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The maintenance window name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --config-file
+    summary: |-
+      Path to a JSON file describing the MaintenanceWindow body. Use when you need to set fields without dedicated flags (e.g. notAllowedDates / blackout date ranges).
+  - name: --day-of-month
+    summary: |-
+      Day of month the maintenance occurs. e.g. 15. AbsoluteMonthly schedule only.
+  - name: --day-of-week
+    summary: |-
+      Day of week the maintenance occurs. e.g. Monday. Weekly or RelativeMonthly schedules only.
+  - name: --duration
+    summary: |-
+      The length of the maintenance window in hours. Range 4-24.
+  - name: --interval-days
+    summary: |-
+      Number of days between occurrences. Daily schedule only.
+  - name: --interval-months
+    summary: |-
+      Number of months between occurrences. AbsoluteMonthly or RelativeMonthly schedules only.
+  - name: --interval-weeks
+    summary: |-
+      Number of weeks between occurrences. Weekly schedule only.
+  - name: --location -l
+    summary: |-
+      Location for the MaintenanceWindow. Defaults to the resource group's location when omitted.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --schedule-type
+    acceptedValues: AbsoluteMonthly, Daily, RelativeMonthly, Weekly
+    summary: |-
+      Recurrence type. One of Daily, Weekly, AbsoluteMonthly or RelativeMonthly.
+  - name: --start-date
+    summary: |-
+      The date the maintenance window activates. e.g. 2026-06-01. If not specified, the window activates immediately.
+  - name: --start-time
+    summary: |-
+      The start time of the maintenance window. Accepted values are from '00:00' to '23:59'. --utc-offset applies to this field.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --utc-offset
+    summary: |-
+      The UTC offset in format +/-HH:mm. For example, '+05:30' for IST or '-07:00' for PST. Default is '+00:00'.
+  - name: --week-index
+    acceptedValues: First, Fourth, Last, Second, Third
+    summary: |-
+      Instance of the day-of-week the maintenance occurs (First, Second, Third, Fourth, Last). RelativeMonthly schedule only.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_maintenancewindow_delete
+  name: az aks maintenancewindow delete
+  summary: |-
+    Delete a MaintenanceWindow.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks maintenancewindow delete --name
+                                    --resource-group
+                                    [--acquire-policy-token]
+                                    [--change-reference]
+                                    [--no-wait]
+                                    [--yes]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The maintenance window name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_maintenancewindow_list
+  name: az aks maintenancewindow list
+  summary: |-
+    List MaintenanceWindows in a resource group, or across the subscription if --resource-group is omitted.
+  status: GA
+  sourceType: Extension
+  syntax: az aks maintenancewindow list [--resource-group]
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_maintenancewindow_show
+  name: az aks maintenancewindow show
+  summary: |-
+    Show a MaintenanceWindow.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks maintenancewindow show --name
+                                  --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The maintenance window name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_maintenancewindow_update
+  name: az aks maintenancewindow update
+  summary: |-
+    Update a MaintenanceWindow.
+  description: |-
+    Read-modify-write semantics matching `az aks update` and
+    `az aks nodepool update`: the existing MW is fetched, your supplied
+    fields are merged onto it, and the resulting body is PUT back.
+    Fields you do not supply are preserved as-is (existing tags,
+    existing schedule scalars, existing blackout dates, etc.).
+
+    When you do supply a schedule arg (--schedule-type / --interval-* /
+    --day-of-week / --day-of-month / --week-index), the schedule shape
+    is re-built end-to-end from your args (you cannot partially mix
+    Daily + Weekly fields — pick one schedule type and supply its
+    required args).
+
+    --tags follows `aks update` convention: passing --tags replaces the
+    whole tags dictionary; omit --tags to keep the existing tags.
+
+    --location cannot be changed (TrackedResource semantics — ARM
+    rejects location changes on PUT). If supplied with a different
+    value than the existing location it is ignored with a warning.
+
+    --config-file: when supplied, the JSON file's `properties` block
+    replaces the existing `properties` wholesale. This is the only
+    way today to mutate notAllowedDates / blackout date ranges.
+    Individual schedule flags are ignored on this path; tags follow
+    the same `--tags` rule as without --config-file.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks maintenancewindow update --name
+                                    --resource-group
+                                    [--acquire-policy-token]
+                                    [--change-reference]
+                                    [--config-file]
+                                    [--day-of-month]
+                                    [--day-of-week]
+                                    [--duration]
+                                    [--interval-days]
+                                    [--interval-months]
+                                    [--interval-weeks]
+                                    [--location]
+                                    [--no-wait]
+                                    [--schedule-type {AbsoluteMonthly, Daily, RelativeMonthly, Weekly}]
+                                    [--start-date]
+                                    [--start-time]
+                                    [--tags]
+                                    [--utc-offset]
+                                    [--week-index {First, Fourth, Last, Second, Third}]
+  examples:
+  - summary: |-
+      Update only tags (existing schedule is preserved).
+    syntax: az aks maintenancewindow update -g rg-maintenance -n production-weekends --tags environment=staging
+  - summary: |-
+      Update only the schedule's day-of-week (existing duration / start-time / tags preserved).
+    syntax: >-
+      az aks maintenancewindow update -g rg-maintenance -n production-weekends \
+        --schedule-type Weekly --day-of-week Sunday --interval-weeks 1
+  - summary: |-
+      Change duration only (existing schedule shape preserved).
+    syntax: az aks maintenancewindow update -g rg-maintenance -n production-weekends --duration 6
+  - summary: |-
+      Replace blackout dates via a config file (preserves tags, location).
+    syntax: >-
+      az aks maintenancewindow update -g rg-maintenance -n production-weekends --config-file ./mw-body.json
+        The contents of mw-body.json should include a complete properties block, e.g.:
+        {
+          "properties": {
+            "schedule": { "weekly": { "intervalWeeks": 1, "dayOfWeek": "Saturday" } },
+            "startTime": "02:00",
+            "durationHours": 8,
+            "utcOffset": "-07:00",
+            "notAllowedDates": [ { "start": "2026-12-23", "end": "2027-01-05" } ]
+          }
+        }
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The maintenance window name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --config-file
+    summary: |-
+      Path to a JSON file describing the MaintenanceWindow body. When supplied, the JSON wholly defines the resource on create, or replaces the existing `properties` block on update. This is the only path that can set fields without dedicated flags (notAllowedDates, etc.).
+  - name: --day-of-month
+    summary: |-
+      Day of month the maintenance occurs for AbsoluteMonthly schedule.
+  - name: --day-of-week
+    summary: |-
+      Day of week the maintenance occurs for Weekly or RelativeMonthly schedule.
+  - name: --duration
+    summary: |-
+      The length of the maintenance window in hours. Range 4-24.
+  - name: --interval-days
+    summary: |-
+      The number of days between each set of occurrences for Daily schedule.
+  - name: --interval-months
+    summary: |-
+      The number of months between each set of occurrences for AbsoluteMonthly or RelativeMonthly schedule.
+  - name: --interval-weeks
+    summary: |-
+      The number of weeks between each set of occurrences for Weekly schedule.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --schedule-type
+    acceptedValues: AbsoluteMonthly, Daily, RelativeMonthly, Weekly
+    summary: |-
+      Recurrence type: Daily, Weekly, AbsoluteMonthly or RelativeMonthly.
+  - name: --start-date
+    summary: |-
+      The date the maintenance window activates. e.g. 2026-06-01.
+  - name: --start-time
+    summary: |-
+      The start time of the maintenance window. e.g. 09:30.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --utc-offset
+    summary: |-
+      The UTC offset in format +/-HH:mm. e.g. -08:00 or +05:30.
+  - name: --week-index
+    acceptedValues: First, Fourth, Last, Second, Third
+    summary: |-
+      Instance of the weekday specified in --day-of-week the maintenance occurs for RelativeMonthly schedule.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_maintenancewindow_wait
+  name: az aks maintenancewindow wait
+  summary: |-
+    Wait for a MaintenanceWindow to reach a desired state.
+  description: |-
+    If an operation on a MaintenanceWindow was interrupted or was started
+    with `--no-wait`, use this command to wait for it to complete.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks maintenancewindow wait --name
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--created]
+                                  [--custom]
+                                  [--deleted]
+                                  [--exists]
+                                  [--interval]
+                                  [--timeout]
+                                  [--updated]
+  examples:
+  - summary: |-
+      Wait for a MaintenanceWindow to be created.
+    syntax: az aks maintenancewindow wait -g rg-maintenance -n production-weekends --created
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The maintenance window name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_aks_maintenancewindow_create
+- az_aks_maintenancewindow_delete
+- az_aks_maintenancewindow_list
+- az_aks_maintenancewindow_show
+- az_aks_maintenancewindow_update
+- az_aks_maintenancewindow_wait
+metadata:
+  description: >-
+    MaintenanceWindow is a resource-group-scoped ARM resource that defines
+
+    a reusable maintenance schedule. Users can link this resource to a
+
+    pre-existing maintenanceConfiguration via `maintenanceWindowId`, so
+
+    multiple managedCluster maintenance configurations share a single
+
+    MaintenanceWindow and the schedule lives in one place.
+
+
+    Requires the Microsoft.ContainerService/AKSSharedMaintenanceWindowPreview
+
+    feature to be registered on the subscription. Auto-approval is enabled:
+
+    `az feature register --namespace Microsoft.ContainerService --name AKSSharedMaintenanceWindowPreview`.
