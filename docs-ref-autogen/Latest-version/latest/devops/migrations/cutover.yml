@@ -14,7 +14,9 @@ directCommands:
 - uid: az_devops_migrations_cutover_approve
   name: az devops migrations cutover approve
   summary: |-
-    Approve cutover by accepting a count of unprocessed items.
+    Approve cutover by accepting unprocessed items and/or verifying rewired pipelines.
+  description: |-
+    Provide --accept-failures when cutover review surfaces unprocessed items, and/or --pipelines-verified when cutover review reports requiresPipelineVerificationAcknowledgment: true. At least one of the two must be supplied; both may be sent together in a single call.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'devops migrations cutover' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -25,11 +27,18 @@ directCommands:
                                          [--change-reference]
                                          [--detect {false, true}]
                                          [--org --organization]
+                                         [--pipelines-verified]
                                          [--repository-id]
   examples:
   - summary: |-
       Approve cutover after reviewing failures.
     syntax: az devops migrations cutover approve --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --accept-failures 3
+  - summary: |-
+      Acknowledge pipeline verification only (no unprocessed items).
+    syntax: az devops migrations cutover approve --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --pipelines-verified
+  - summary: |-
+      Combine failure acceptance and pipeline verification in one call.
+    syntax: az devops migrations cutover approve --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000 --accept-failures 3 --pipelines-verified
   optionalParameters:
   - name: --accept-failures
     summary: |-
@@ -49,6 +58,10 @@ directCommands:
   - name: --org --organization
     summary: |-
       Azure DevOps organization URL. You can configure the default organization using az devops configure -d organization=ORG_URL. Required if not configured as default or picked up via git config. Example: `https://dev.azure.com/MyOrganizationName/`.
+  - name: --pipelines-verified
+    defaultValue: "False"
+    summary: |-
+      Acknowledge that all rewired pipelines have been verified. Required when "cutover review" returns requiresPipelineVerificationAcknowledgment: true. Can be combined with --accept-failures in a single approve call.
   - name: --repository-id
     summary: |-
       ID of the Azure Repos repository (GUID).
@@ -143,6 +156,8 @@ directCommands:
   name: az devops migrations cutover review
   summary: |-
     Review unprocessed migration items before cutover.
+  description: |-
+    The response includes requiresPipelineVerificationAcknowledgment. When true, cutover approve must be re-run with --pipelines-verified before the migration can proceed.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'devops migrations cutover' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
