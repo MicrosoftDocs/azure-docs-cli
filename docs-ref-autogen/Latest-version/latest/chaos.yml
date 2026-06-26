@@ -1,0 +1,204 @@
+### YamlMime:AzureCLIGroup
+uid: az_chaos
+name: az chaos
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **chaos** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az chaos** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Azure Chaos Studio resources.
+description: |-
+  Create and manage Chaos Studio v2 workspaces, scenarios, scenario configurations, and runs for chaos engineering experiments.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_chaos_setup
+  name: az chaos setup
+  summary: |-
+    Stand up a ready-to-use Chaos Studio environment in one step.
+  description: |-
+    First-day-experience command that orchestrates the full bootstrap workflow
+    so you do not have to run the individual commands yourself:
+
+      1. Creates the resource group if it does not already exist. If the group
+         already exists it is reused, and '--location' is optional (it defaults
+         to the group's location). If the group does not exist, '--location' is
+         required because setup creates the group and has no region to default
+         to.
+      2. Creates the workspace with a managed identity (user-assigned if
+         '--user-assigned' is supplied, otherwise a system-assigned identity).
+      3. Grants that identity the built-in 'Reader' role on each '--scopes'
+         target (skip with '--skip-permissions') — discovery and evaluation run
+         under the workspace identity and cannot enumerate resources without it.
+         Re-assigning an existing role is a no-op.
+      4. Evaluates scenarios for the workspace (resource discovery + scenario
+         recommendations). When a NEW Reader assignment was just made, the
+         evaluation is retried for a few minutes to absorb Azure Resource Graph
+         propagation lag; pass '--skip-evaluation-wait' to run a single attempt
+         (e.g. in CI) and get a rerun hint instead of waiting.
+      5. Prints the discovered scenarios and the commands to run next.
+
+    This is a composite "porcelain" command: it wraps the granular 'workspace
+    create', 'workspace refresh-recommendation', and role-assignment operations
+    behind a single workflow verb. For fine-grained control, run those commands
+    directly.
+
+    WHY '--scopes' IS REQUIRED:
+    A workspace must declare which resources Chaos Studio is allowed to target —
+    there is no safe default. You are expected to already have a resource group
+    or service group (or a subscription) you plan to run experiments against.
+    Pass one or more ARM resource IDs as the scope. The Azure portal's Create
+    Workspace blade requires the same explicit choice.
+
+    ARM RESOURCE ID FORMATS (for '--scopes'):
+      Resource group (most common scope):
+        `/subscriptions/<sub-id>/resourceGroups/<rg-name>`
+      Subscription:
+        `/subscriptions/<sub-id>`
+      Service group:
+        `/providers/Microsoft.Management/serviceGroups/<service-group-name>`
+
+    ARM RESOURCE ID FORMAT (for '--user-assigned'):
+      User-assigned managed identity:
+        `/subscriptions/<sub-id>/resourceGroups/<rg-name>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<identity-name>`
+
+    Tip: copy a resource group's ID with
+    `az group show -n <rg> --query id -o tsv`.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az chaos setup --name
+                   --resource-group
+                   --scopes
+                   [--acquire-policy-token]
+                   [--change-reference]
+                   [--location]
+                   [--mi-user-assigned --user-assigned]
+                   [--skip-evaluation-wait]
+                   [--skip-permissions]
+                   [--tags]
+  examples:
+  - summary: |-
+      Bootstrap a workspace scoped to a resource group, using a system-assigned identity
+    syntax: az chaos setup --name MyWorkspace --resource-group MyRG --location westus2 --scopes "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG"
+  - summary: |-
+      Bootstrap with a user-assigned identity as the workspace identity
+    syntax: az chaos setup --name MyWorkspace --resource-group MyRG --location westus2 --scopes "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG" --user-assigned "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity"
+  - summary: |-
+      Bootstrap a workspace scoped to a service group
+    syntax: az chaos setup --name MyWorkspace --resource-group MyRG --location westus2 --scopes "/providers/Microsoft.Management/serviceGroups/my-critical-services"
+  - summary: |-
+      Bootstrap scoped to multiple resource groups and manage RBAC yourself
+    syntax: az chaos setup --name MyWorkspace --resource-group MyRG --location westus2 --scopes "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/AppRG" "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/DataRG" --skip-permissions
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Chaos Studio workspace to create.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --scopes
+    summary: |-
+      Space-separated list of ARM resource IDs that the workspace is allowed to target: a resource group, subscription, or service group. Required — there is no default scope. Examples: `/subscriptions/<sub-id>/resourceGroups/<rg-name>` or `/providers/Microsoft.Management/serviceGroups/<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --location -l
+    summary: |-
+      Location for the workspace. Optional only when the resource group already exists (defaults to the resource group's location). Required when the resource group does not exist, because setup creates it and has no region to default to.
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Space-separated ARM resource ID(s) of user-assigned managed identities to use as the workspace identity. When omitted, the workspace uses a system-assigned identity. Example: `/subscriptions/<sub-id>/resourceGroups/<rg-name>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<name>`.
+  - name: --skip-evaluation-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait/retry for Azure Resource Graph propagation after a new Reader role assignment; run a single evaluation attempt and report a rerun hint if it has not propagated yet. Useful for non-interactive/CI runs.
+  - name: --skip-permissions
+    defaultValue: "False"
+    summary: |-
+      Skip granting the workspace identity the Reader role on the target scopes. Use when you manage RBAC out of band. Evaluation still runs, but can only discover resources if the identity already holds Reader on the scopes.
+  - name: --tags
+    summary: |-
+      Space-separated tags in KEY=VALUE form for the workspace.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_chaos_discovered-resource
+- az_chaos_discovered-resource_list
+- az_chaos_discovered-resource_show
+- az_chaos_scenario
+- az_chaos_scenario_config
+- az_chaos_scenario_config_create
+- az_chaos_scenario_config_delete
+- az_chaos_scenario_config_execute
+- az_chaos_scenario_config_fix-permissions
+- az_chaos_scenario_config_list
+- az_chaos_scenario_config_show
+- az_chaos_scenario_config_show-permission-fix
+- az_chaos_scenario_config_show-validation
+- az_chaos_scenario_config_update
+- az_chaos_scenario_config_validate
+- az_chaos_scenario_config_wait
+- az_chaos_scenario_create
+- az_chaos_scenario_delete
+- az_chaos_scenario_list
+- az_chaos_scenario_run
+- az_chaos_scenario_run_cancel
+- az_chaos_scenario_run_list
+- az_chaos_scenario_run_show
+- az_chaos_scenario_run_start
+- az_chaos_scenario_run_wait
+- az_chaos_scenario_show
+- az_chaos_scenario_update
+- az_chaos_setup
+- az_chaos_workspace
+- az_chaos_workspace_create
+- az_chaos_workspace_delete
+- az_chaos_workspace_evaluate-scenarios
+- az_chaos_workspace_identity
+- az_chaos_workspace_identity_assign
+- az_chaos_workspace_identity_remove
+- az_chaos_workspace_identity_show
+- az_chaos_workspace_identity_wait
+- az_chaos_workspace_list
+- az_chaos_workspace_refresh-recommendation
+- az_chaos_workspace_show
+- az_chaos_workspace_show-discovery
+- az_chaos_workspace_show-evaluation
+- az_chaos_workspace_update
+- az_chaos_workspace_wait
+metadata:
+  description: Create and manage Chaos Studio v2 workspaces, scenarios, scenario configurations, and runs for chaos engineering experiments.
