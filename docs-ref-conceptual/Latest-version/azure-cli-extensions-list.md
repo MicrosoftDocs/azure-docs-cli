@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/25/2026
+ms.date: 06/28/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -67,6 +67,7 @@ You will be prompted to install an extension on first use.
 |[carbon](https://github.com/Azure/azure-cli-extensions/tree/main/src/carbon) | 2.70.0 | Microsoft Azure Command-Line Tools Carbon Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/carbon/HISTORY.rst) |
 |[cdn](https://github.com/Azure/azure-cli-extensions/tree/main/src/cdn) | 2.85.0 | Microsoft Azure Command-Line Tools CDN and AFD Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/cdn/HISTORY.rst) |
 |[change-analysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis) | 2.37.0 | Microsoft Azure Command-Line Tools ChangeAnalysis Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis/HISTORY.rst) |
+|[chaos](https://github.com/Azure/azure-cli-extensions/tree/main/src/chaos) | 2.75.0 | Support for Azure Chaos Studio v2 workspaces, scenario configuration, and fault-injection run management. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/chaos/HISTORY.rst) |
 |[cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 2.13.0 | Translate ARM template to executable Azure CLI scripts. | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) |
 |[cloud-service](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudservice) | 2.55.0 | Microsoft Azure Command-Line Tools ComputeManagementClient Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudservice/HISTORY.rst) |
 |[cloudhsm](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudhsm) | 2.70.0 | Microsoft Azure Command-Line Tools Cloudhsm Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudhsm/HISTORY.rst) |
