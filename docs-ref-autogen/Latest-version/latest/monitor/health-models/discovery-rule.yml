@@ -1,48 +1,46 @@
 ### YamlMime:AzureCLIGroup
-uid: az_qumulo_storage_file-system
-name: az qumulo storage file-system
+uid: az_monitor_health-models_discovery-rule
+name: az monitor health-models discovery-rule
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **qumulo** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az qumulo storage file-system** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **health-models** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az monitor health-models discovery-rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Perform management operations on Qumulo file system storage resource.
+  Manage Discoveryrule.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_qumulo_storage_file-system_create
-  name: az qumulo storage file-system create
+- uid: az_monitor_health-models_discovery-rule_create
+  name: az monitor health-models discovery-rule create
   summary: |-
-    Create a new Qumulo file system storage resource.
+    Create a DiscoveryRule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az qumulo storage file-system create --file-system-name --name
-                                         --resource-group
-                                         [--acquire-policy-token]
-                                         [--admin-password]
-                                         [--availability-zone]
-                                         [--change-reference]
-                                         [--cluster-login-url]
-                                         [--delegated-subnet-id]
-                                         [--location]
-                                         [--marketplace-details]
-                                         [--mi-system-assigned --system-assigned]
-                                         [--mi-user-assigned --user-assigned]
-                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                         [--performance-tier]
-                                         [--private-ips]
-                                         [--storage-sku]
-                                         [--tags]
-                                         [--user-details]
+    az monitor health-models discovery-rule create --discovery-rule-name --name
+                                                   --health-model-name
+                                                   --resource-group
+                                                   [--acquire-policy-token]
+                                                   [--add-recommended-signals {Disabled, Enabled}]
+                                                   [--add-resource-health-signal {Disabled, Enabled}]
+                                                   [--authentication-setting]
+                                                   [--change-reference]
+                                                   [--discover-relationships {Disabled, Enabled}]
+                                                   [--display-name]
+                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--specification]
   examples:
   - summary: |-
-      FileSystems_CreateOrUpdate_MaximumSet
-    syntax: az qumulo storage file-system create -g <resource-group> -n <file-system-name> --marketplace-details "{offerId:<offerId>,planId:<planId>,publisherId:<publisherId>}" --storage-sku <Hot|Cold> --user-details "{email:user@example.com}" --delegated-subnet-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Network/virtualNetworks/<vnet>/subnets/<subnet> --admin-password <password> --availability-zone <zone> --tags "{}" --location <location>
+      DiscoveryRules_CreateOrUpdate
+    syntax: az monitor health-models discovery-rule create --resource-group myResourceGroup --health-model-name myHealthModel --discovery-rule-name myDiscoveryRule --authentication-setting authSetting1 --display-name myDisplayName --discover-relationships Enabled --add-recommended-signals Enabled --specification "{resourceGraphQuery:'resources | where subscriptionId == '/7ddfffd7-9b32-40df-1234-828cbd55d6f4'/ | where resourceGroup == '/my-rg'/',resource-graph-query:{resource-graph-query:'resources | where subscriptionId == '/7ddfffd7-9b32-40df-1234-828cbd55d6f4'/ | where resourceGroup == '/my-rg'/'}}" --add-resource-health-signal Enabled
   requiredParameters:
   - isRequired: true
-    name: --file-system-name --name -n
+    name: --discovery-rule-name --name -n
     summary: |-
-      Name of the File System resource.
+      Name of the discovery rule. Must be unique within a health model.
+  - isRequired: true
+    name: --health-model-name
+    summary: |-
+      Name of health model resource.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -52,65 +50,41 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --admin-password
+  - name: --add-recommended-signals
+    acceptedValues: Disabled, Enabled
     summary: |-
-      Initial administrator password of the resource  If value is blank it's asked from the tty.
+      Whether to add all recommended signals to the discovered entities.
     groupName: Properties Arguments
-  - name: --availability-zone
+  - name: --add-resource-health-signal
+    defaultValue: Enabled
+    acceptedValues: Disabled, Enabled
     summary: |-
-      Availability zone.
+      Whether to automatically add a signal for the Azure resource's availability state from Azure Resource Health to the discovered entities. Defaults to `Enabled`: discovery rules updated via this API version without setting this field will begin emitting a Resource Health availability signal. Pass `Disabled` to preserve pre-`2026-05-01-preview` behavior.
+    groupName: Properties Arguments
+  - name: --authentication-setting
+    summary: |-
+      Reference to the name of the authentication setting which is used for querying Azure Resource Graph. The same authentication setting will also be assigned to any discovered entities.
     groupName: Properties Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --cluster-login-url
+  - name: --discover-relationships
+    acceptedValues: Disabled, Enabled
     summary: |-
-      Cluster login URL of the resource.
+      Whether to create relationships between the discovered entities based on a set of built-in rules. These relationships cannot be manually deleted.
     groupName: Properties Arguments
-  - name: --delegated-subnet-id
+  - name: --display-name
     summary: |-
-      Delegated subnet id for Vnet injection.
+      Display name.
     groupName: Properties Arguments
-  - name: --location -l
-    summary: |-
-      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
-    groupName: Resource Arguments
-  - name: --marketplace-details
-    summary: |-
-      Marketplace details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
-  - name: --mi-system-assigned --system-assigned
-    summary: |-
-      Set the system managed identity.
-    groupName: Identity Arguments
-  - name: --mi-user-assigned --user-assigned
-    summary: |-
-      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Identity Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --performance-tier
+  - name: --specification
     summary: |-
-      Pre-Provisioned Performance of the Resource.
-    groupName: Properties Arguments
-  - name: --private-ips
-    summary: |-
-      Private IPs of the resource  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
-  - name: --storage-sku
-    summary: |-
-      Storage Sku.
-    groupName: Properties Arguments
-  - name: --tags
-    summary: |-
-      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Resource Arguments
-  - name: --user-details
-    summary: |-
-      User Details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Specification of the discovery rule defining how entities are discovered.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -139,25 +113,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_qumulo_storage_file-system_delete
-  name: az qumulo storage file-system delete
+- uid: az_monitor_health-models_discovery-rule_delete
+  name: az monitor health-models discovery-rule delete
   summary: |-
-    Delete the specified existing Qumulo file system storage resource permanently.
+    Delete a DiscoveryRule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az qumulo storage file-system delete [--acquire-policy-token]
-                                         [--change-reference]
-                                         [--file-system-name --name]
-                                         [--ids]
-                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                         [--resource-group]
-                                         [--subscription]
-                                         [--yes]
+    az monitor health-models discovery-rule delete [--acquire-policy-token]
+                                                   [--change-reference]
+                                                   [--discovery-rule-name --name]
+                                                   [--health-model-name]
+                                                   [--ids]
+                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--resource-group]
+                                                   [--subscription]
+                                                   [--yes]
   examples:
   - summary: |-
-      FileSystems_Delete_MaximumSet
-    syntax: az qumulo storage file-system delete --resource-group  ankit-test --file-system-name cli-test-qumulo
+      DiscoveryRules_Delete
+    syntax: az monitor health-models discovery-rule delete --resource-group my-resource-group --health-model-name my-health-model --discovery-rule-name my-discovery-rule
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -167,9 +142,13 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --file-system-name --name -n
+  - name: --discovery-rule-name --name -n
     summary: |-
-      Name of the File System resource.
+      Name of the discovery rule. Must be unique within a health model.
+    groupName: Resource Id Arguments
+  - name: --health-model-name
+    summary: |-
+      Name of health model resource.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -215,20 +194,31 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_qumulo_storage_file-system_list
-  name: az qumulo storage file-system list
+- uid: az_monitor_health-models_discovery-rule_list
+  name: az monitor health-models discovery-rule list
   summary: |-
-    List all existing Qumulo file system storage resources.
+    List DiscoveryRule resources by HealthModel.
   status: GA
   sourceType: Extension
   syntax: >-
-    az qumulo storage file-system list [--max-items]
-                                       [--next-token]
-                                       [--resource-group]
+    az monitor health-models discovery-rule list --health-model-name
+                                                 --resource-group
+                                                 [--max-items]
+                                                 [--next-token]
+                                                 [--timestamp]
   examples:
   - summary: |-
-      List file system by resource group
-    syntax: az qumulo storage file-system list -g rg
+      DiscoveryRules_ListByHealthModel
+    syntax: az monitor health-models discovery-rule list --resource-group my-resource-group --health-model-name my-health-model
+  requiredParameters:
+  - isRequired: true
+    name: --health-model-name
+    summary: |-
+      Name of health model resource.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -238,9 +228,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
-  - name: --resource-group -g
+  - name: --timestamp
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -268,21 +258,30 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_qumulo_storage_file-system_show
-  name: az qumulo storage file-system show
+- uid: az_monitor_health-models_discovery-rule_show
+  name: az monitor health-models discovery-rule show
   summary: |-
-    Retrieve details of a specific file system resource in Qumulo storage.
+    Get a DiscoveryRule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az qumulo storage file-system show [--file-system-name --name]
-                                       [--ids]
-                                       [--resource-group]
-                                       [--subscription]
+    az monitor health-models discovery-rule show [--discovery-rule-name --name]
+                                                 [--health-model-name]
+                                                 [--ids]
+                                                 [--resource-group]
+                                                 [--subscription]
+  examples:
+  - summary: |-
+      DiscoveryRules_Get
+    syntax: az monitor health-models discovery-rule show --resource-group myResourceGroup --health-model-name myHealthModel --discovery-rule-name myDiscoveryRule
   optionalParameters:
-  - name: --file-system-name --name -n
+  - name: --discovery-rule-name --name -n
     summary: |-
-      Name of the File System resource.
+      Name of the discovery rule. Must be unique within a health model.
+    groupName: Resource Id Arguments
+  - name: --health-model-name
+    summary: |-
+      Name of health model resource.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -320,38 +319,35 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_qumulo_storage_file-system_update
-  name: az qumulo storage file-system update
+- uid: az_monitor_health-models_discovery-rule_update
+  name: az monitor health-models discovery-rule update
   summary: |-
-    Update a FileSystemResource.
+    Update a DiscoveryRule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az qumulo storage file-system update [--acquire-policy-token]
-                                         [--add]
-                                         [--admin-password]
-                                         [--availability-zone]
-                                         [--change-reference]
-                                         [--cluster-login-url]
-                                         [--delegated-subnet-id]
-                                         [--file-system-name --name]
-                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                         [--ids]
-                                         [--marketplace-details]
-                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                         [--performance-tier]
-                                         [--private-ips]
-                                         [--remove]
-                                         [--resource-group]
-                                         [--set]
-                                         [--storage-sku]
-                                         [--subscription]
-                                         [--tags]
-                                         [--user-details]
+    az monitor health-models discovery-rule update [--acquire-policy-token]
+                                                   [--add]
+                                                   [--add-recommended-signals {Disabled, Enabled}]
+                                                   [--add-resource-health-signal {Disabled, Enabled}]
+                                                   [--authentication-setting]
+                                                   [--change-reference]
+                                                   [--discover-relationships {Disabled, Enabled}]
+                                                   [--discovery-rule-name --name]
+                                                   [--display-name]
+                                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--health-model-name]
+                                                   [--ids]
+                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--remove]
+                                                   [--resource-group]
+                                                   [--set]
+                                                   [--specification]
+                                                   [--subscription]
   examples:
   - summary: |-
-      Update tags for a Qumulo file system.
-    syntax: az qumulo storage file-system update -g <resource-group> -n <file-system-name> --tags "{updatedBy:scenario}"
+      DiscoveryRules_CreateOrUpdate
+    syntax: az monitor health-models discovery-rule update --resource-group myResourceGroup --health-model-name myHealthModel --discovery-rule-name myDiscoveryRule
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -361,55 +357,54 @@ directCommands:
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
-  - name: --admin-password
+  - name: --add-recommended-signals
+    acceptedValues: Disabled, Enabled
     summary: |-
-      Initial administrator password of the resource  If value is blank it's asked from the tty.
+      Whether to add all recommended signals to the discovered entities.
     groupName: Properties Arguments
-  - name: --availability-zone
+  - name: --add-resource-health-signal
+    acceptedValues: Disabled, Enabled
     summary: |-
-      Availability zone.
+      Whether to automatically add a signal for the Azure resource's availability state from Azure Resource Health to the discovered entities. Defaults to `Enabled`: discovery rules updated via this API version without setting this field will begin emitting a Resource Health availability signal. Pass `Disabled` to preserve pre-`2026-05-01-preview` behavior.
+    groupName: Properties Arguments
+  - name: --authentication-setting
+    summary: |-
+      Reference to the name of the authentication setting which is used for querying Azure Resource Graph. The same authentication setting will also be assigned to any discovered entities.
     groupName: Properties Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --cluster-login-url
+  - name: --discover-relationships
+    acceptedValues: Disabled, Enabled
     summary: |-
-      Cluster login URL of the resource.
+      Whether to create relationships between the discovered entities based on a set of built-in rules. These relationships cannot be manually deleted.
     groupName: Properties Arguments
-  - name: --delegated-subnet-id
+  - name: --discovery-rule-name --name -n
     summary: |-
-      Delegated subnet id for Vnet injection.
-    groupName: Properties Arguments
-  - name: --file-system-name --name -n
-    summary: |-
-      Name of the File System resource.
+      Name of the discovery rule. Must be unique within a health model.
     groupName: Resource Id Arguments
+  - name: --display-name
+    summary: |-
+      Display name.
+    groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     groupName: Generic Update Arguments
+  - name: --health-model-name
+    summary: |-
+      Name of health model resource.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --marketplace-details
-    summary: |-
-      Marketplace details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --performance-tier
-    summary: |-
-      Pre-Provisioned Performance of the Resource.
-    groupName: Properties Arguments
-  - name: --private-ips
-    summary: |-
-      Private IPs of the resource  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -422,22 +417,14 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
-  - name: --storage-sku
+  - name: --specification
     summary: |-
-      Storage Sku.
+      Specification of the discovery rule defining how entities are discovered.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
-  - name: --tags
-    summary: |-
-      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Resource Arguments
-  - name: --user-details
-    summary: |-
-      User Details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -462,26 +449,27 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_qumulo_storage_file-system_wait
-  name: az qumulo storage file-system wait
+- uid: az_monitor_health-models_discovery-rule_wait
+  name: az monitor health-models discovery-rule wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az qumulo storage file-system wait [--acquire-policy-token]
-                                       [--change-reference]
-                                       [--created]
-                                       [--custom]
-                                       [--deleted]
-                                       [--exists]
-                                       [--file-system-name --name]
-                                       [--ids]
-                                       [--interval]
-                                       [--resource-group]
-                                       [--subscription]
-                                       [--timeout]
-                                       [--updated]
+    az monitor health-models discovery-rule wait [--acquire-policy-token]
+                                                 [--change-reference]
+                                                 [--created]
+                                                 [--custom]
+                                                 [--deleted]
+                                                 [--discovery-rule-name --name]
+                                                 [--exists]
+                                                 [--health-model-name]
+                                                 [--ids]
+                                                 [--interval]
+                                                 [--resource-group]
+                                                 [--subscription]
+                                                 [--timeout]
+                                                 [--updated]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -505,14 +493,18 @@ directCommands:
     summary: |-
       Wait until deleted.
     groupName: Wait Condition Arguments
+  - name: --discovery-rule-name --name -n
+    summary: |-
+      Name of the discovery rule. Must be unique within a health model.
+    groupName: Resource Id Arguments
   - name: --exists
     defaultValue: "False"
     summary: |-
       Wait until the resource exists.
     groupName: Wait Condition Arguments
-  - name: --file-system-name --name -n
+  - name: --health-model-name
     summary: |-
-      Name of the File System resource.
+      Name of health model resource.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -566,16 +558,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_qumulo_storage_file-system_create
-- az_qumulo_storage_file-system_delete
-- az_qumulo_storage_file-system_identity
-- az_qumulo_storage_file-system_identity_assign
-- az_qumulo_storage_file-system_identity_remove
-- az_qumulo_storage_file-system_identity_show
-- az_qumulo_storage_file-system_identity_wait
-- az_qumulo_storage_file-system_list
-- az_qumulo_storage_file-system_show
-- az_qumulo_storage_file-system_update
-- az_qumulo_storage_file-system_wait
+- az_monitor_health-models_discovery-rule_create
+- az_monitor_health-models_discovery-rule_delete
+- az_monitor_health-models_discovery-rule_list
+- az_monitor_health-models_discovery-rule_show
+- az_monitor_health-models_discovery-rule_update
+- az_monitor_health-models_discovery-rule_wait
 metadata:
-  description: Perform management operations on Qumulo file system storage resource.
+  description: Manage Discoveryrule.
