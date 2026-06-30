@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 06/01/2026
+ms.date: 06/30/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -40,6 +40,18 @@ The breaking changes listed in this section are planned for the next major relea
 - 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'az compute-recommender spot-placement-score' instead.
 
 ## netappfiles
+
+### `netappfiles volume create`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- --enable-subvolumes is being deprecated and will be removed in a future release.
+
+### `netappfiles volume update`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- --enable-subvolumes is being deprecated and will be removed in a future release.
 
 ### `netappfiles subvolume`
 
@@ -83,6 +95,20 @@ The breaking changes listed in this section are planned for the next major relea
 - Template Specs and Deployments Stacks to support their scenarios beyond that date.
 - Migration documentation is available at
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/migrate-blueprint.
+
+## azext_netappfiles_preview
+
+### `netappfiles volume create`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- --enable-subvolumes is being deprecated and will be removed in a future release.
+
+### `netappfiles volume update`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- --enable-subvolumes is being deprecated and will be removed in a future release.
 
 ## azext_redisenterprise
 
