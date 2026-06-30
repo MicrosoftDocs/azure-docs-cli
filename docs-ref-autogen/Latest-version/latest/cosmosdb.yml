@@ -390,12 +390,13 @@ directCommands:
                        [--capabilities]
                        [--capacity-mode {None, Provisioned, Serverless}]
                        [--change-reference]
-                       [--continuous-tier {Continuous30Days, Continuous7Days}]
+                       [--continuous-tier {Continuous30Days, Continuous35Days, Continuous7Days}]
                        [--databases-to-restore]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
                        [--default-identity]
                        [--default-priority-level {High, Low}]
                        [--disable-key-based-metadata-write-access {false, true}]
+                       [--disable-local-auth {false, true}]
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
                        [--enable-burst-capacity {false, true}]
@@ -489,7 +490,7 @@ directCommands:
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
   - name: --continuous-tier
-    acceptedValues: Continuous30Days, Continuous7Days
+    acceptedValues: Continuous30Days, Continuous35Days, Continuous7Days
     summary: |-
       The tier of Continuous backup.
     groupName: Backup Policy Arguments
@@ -516,6 +517,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Disable write operations on metadata resources (databases, containers, throughput) via account keys.
+  - name: --disable-local-auth
+    acceptedValues: false, true
+    summary: |-
+      Flag to disable local authentication and ensure only MSI and AAD can be used exclusively for authentication.
   - name: --enable-analytical-storage
     acceptedValues: false, true
     summary: |-
@@ -1121,6 +1126,7 @@ directCommands:
                         [--change-reference]
                         [--databases-to-restore]
                         [--default-identity]
+                        [--disable-local-auth {false, true}]
                         [--disable-ttl {false, true}]
                         [--gremlin-databases-to-restore]
                         [--public-network-access {DISABLED, ENABLED}]
@@ -1181,6 +1187,10 @@ directCommands:
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more.
+  - name: --disable-local-auth
+    acceptedValues: false, true
+    summary: |-
+      Flag to disable local authentication and ensure only MSI and AAD can be used exclusively for authentication.
   - name: --disable-ttl
     acceptedValues: false, true
     summary: |-
@@ -1609,7 +1619,7 @@ directCommands:
                        [--capabilities]
                        [--capacity-mode {None, Provisioned, Serverless}]
                        [--change-reference]
-                       [--continuous-tier {Continuous30Days, Continuous7Days}]
+                       [--continuous-tier {Continuous30Days, Continuous35Days, Continuous7Days}]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
                        [--default-identity]
                        [--default-priority-level {High, Low}]
@@ -1634,6 +1644,7 @@ directCommands:
                        [--public-network-access {DISABLED, ENABLED, SECUREDBYPERIMETER}]
                        [--resource-group]
                        [--server-version {3.2, 3.6, 4.0, 4.2, 5.0, 6.0, 7.0}]
+                       [--soft-delete-config]
                        [--subscription]
                        [--tags]
                        [--virtual-network-rules]
@@ -1644,6 +1655,12 @@ directCommands:
   - summary: |-
       Update an Azure Cosmos DB database account to enable materialized views.
     syntax: az cosmosdb update --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --enable-materialized-views true
+  - summary: |-
+      Enable soft deletion on the account with a 1440 minutes (24 hours) retention period.
+    syntax: az cosmosdb update --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --soft-delete-config '{"softDeletionEnabled":true,"softDeleteRetentionPeriodInMinutes":1440,"minMinutesBeforePermanentDeletionAllowed":60}'
+  - summary: |-
+      Configure soft deletion on the account from a JSON file.
+    syntax: az cosmosdb update --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --soft-delete-config @soft-delete-config.json
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1685,7 +1702,7 @@ directCommands:
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
   - name: --continuous-tier
-    acceptedValues: Continuous30Days, Continuous7Days
+    acceptedValues: Continuous30Days, Continuous35Days, Continuous7Days
     summary: |-
       The tier of Continuous backup.
     groupName: Backup Policy Arguments
@@ -1791,6 +1808,11 @@ directCommands:
     acceptedValues: 3.2, 3.6, 4.0, 4.2, 5.0, 6.0, 7.0
     summary: |-
       Valid only for MongoDB accounts.
+  - name: --soft-delete-config
+    summary: |-
+      Soft delete configuration for the account, as a JSON string or a path to a JSON file, e.g. --soft-delete-config @soft-delete-config.json. Supported keys: softDeletionEnabled (bool), softDeleteRetentionPeriodInMinutes (int) and minMinutesBeforePermanentDeletionAllowed (int).
+    isPreview: true
+    groupName: Soft Delete Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1969,6 +1991,7 @@ commands:
 - az_cosmosdb_keys
 - az_cosmosdb_keys_list
 - az_cosmosdb_keys_regenerate
+- az_cosmosdb_keys_regenerate(cosmosdb-preview)
 - az_cosmosdb_list
 - az_cosmosdb_list(cosmosdb-preview)
 - az_cosmosdb_locations
@@ -2144,6 +2167,11 @@ commands:
 - az_cosmosdb_service_update(cosmosdb-preview)
 - az_cosmosdb_show
 - az_cosmosdb_show(cosmosdb-preview)
+- az_cosmosdb_softdeleted-account
+- az_cosmosdb_softdeleted-account_delete
+- az_cosmosdb_softdeleted-account_list
+- az_cosmosdb_softdeleted-account_recover
+- az_cosmosdb_softdeleted-account_show
 - az_cosmosdb_sql
 - az_cosmosdb_sql_container
 - az_cosmosdb_sql_container_create
@@ -2204,6 +2232,16 @@ commands:
 - az_cosmosdb_sql_role_definition_show
 - az_cosmosdb_sql_role_definition_update
 - az_cosmosdb_sql_role_definition_wait
+- az_cosmosdb_sql_softdeleted-container
+- az_cosmosdb_sql_softdeleted-container_delete
+- az_cosmosdb_sql_softdeleted-container_list
+- az_cosmosdb_sql_softdeleted-container_recover
+- az_cosmosdb_sql_softdeleted-container_show
+- az_cosmosdb_sql_softdeleted-database
+- az_cosmosdb_sql_softdeleted-database_delete
+- az_cosmosdb_sql_softdeleted-database_list
+- az_cosmosdb_sql_softdeleted-database_recover
+- az_cosmosdb_sql_softdeleted-database_show
 - az_cosmosdb_sql_stored-procedure
 - az_cosmosdb_sql_stored-procedure_create
 - az_cosmosdb_sql_stored-procedure_delete
