@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/28/2026
+ms.date: 06/29/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -126,6 +126,7 @@ You will be prompted to install an extension on first use.
 |[guestconfig](https://github.com/Azure/azure-cli-extensions/tree/master/src/guestconfig) | 2.3.1 | Microsoft Azure Command-Line Tools GuestConfigurationClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/guestconfig/HISTORY.rst) |
 |[hack](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack) | 2.0.67 | Microsoft Azure Command-Line Tools Hack Extension | Preview | [0.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack/HISTORY.rst) |
 |[hardware-security-modules](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules) | 2.15.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/hardware-security-modules/HISTORY.rst) |
+|[health-models](https://github.com/Azure/azure-cli-extensions/tree/main/src/health-models) | 2.75.0 | Support for managing Azure Monitor health models, including entities, signals, relationships, authentication settings, and discovery rules. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/health-models/HISTORY.rst) |
 |[healthbot](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthbot/HISTORY.rst) |
 |[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.66.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[horizondb](https://github.com/Azure/azure-cli-extensions/tree/main/src/horizondb) | 2.17.1 | Microsoft Azure Command-Line Tools HorizonDB Extension | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/horizondb/HISTORY.rst) |
@@ -188,7 +189,7 @@ You will be prompted to install an extension on first use.
 |[pscloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud) | 2.75.0 | Microsoft Azure Command-Line Tools Pscloud Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/pscloud/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
 |[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.73.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b16](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
-|[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.70.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
+|[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.75.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.54.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
 |[redisenterprise](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise) | 2.75.0 | Microsoft Azure Command-Line Tools RedisEnterprise Extension. | GA | [1.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise/HISTORY.rst) |
