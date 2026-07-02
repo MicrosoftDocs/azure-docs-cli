@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 06/30/2026
+ms.date: 07/02/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -90,11 +90,10 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to blueprint reference group](/cli/azure/blueprint)
 
 - 'az blueprint' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026.
-- Blueprints and associated commands will be deprecated
-- as early as July 2026. Customers are encouraged to transition to
-- Template Specs and Deployments Stacks to support their scenarios beyond that date.
-- Migration documentation is available at
-- https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/migrate-blueprint.
+- Azure Blueprints is retiring on 31 January 2027, with phased restrictions starting 31 July 2026.
+- After retirement, the service API stops responding and these commands will stop functioning; they will be removed from the Azure CLI in a later release.
+- Migrate blueprint definitions to Template Specs and assignments to Azure Deployment Stacks (recommended).
+- Migration guidance: https://aka.ms/AzureBlueprintsRetirement
 
 ## azext_netappfiles_preview
 
