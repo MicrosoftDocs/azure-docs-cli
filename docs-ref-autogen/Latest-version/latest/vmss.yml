@@ -25,6 +25,7 @@ directCommands:
                    [--additional-events --additional-scheduled-events {false, true}]
                    [--admin-password]
                    [--admin-username]
+                   [--all-instance-down --enable-all-instance-down {false, true}]
                    [--app-gateway]
                    [--app-gateway-capacity]
                    [--app-gateway-sku]
@@ -131,6 +132,7 @@ directCommands:
                    [--regular-priority-percentage]
                    [--role]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
+                   [--scheduled-events-api-version --se-api-version]
                    [--scope]
                    [--secrets]
                    [--security-posture-id --security-posture-reference-id]
@@ -280,6 +282,10 @@ directCommands:
     summary: |-
       Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://learn.microsoft.com/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
     groupName: Authentication Arguments
+  - name: --all-instance-down --enable-all-instance-down
+    acceptedValues: false, true
+    summary: |-
+      Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true.
   - name: --app-gateway
     summary: |-
       Name to use when creating a new application gateway (default) or referencing an existing one. Can also reference an existing application gateway by ID or specify "" for none.
@@ -700,6 +706,9 @@ directCommands:
     acceptedValues: Default, NewestVM, OldestVM
     summary: |-
       Specify the scale-in policy (space delimited) that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
+  - name: --scheduled-events-api-version --se-api-version
+    summary: |-
+      Specifies the api-version to determine which Scheduled Events configuration schema version will be delivered.
   - name: --scope
     summary: |-
       Scope that the system assigned identity can access.
@@ -713,7 +722,7 @@ directCommands:
   - name: --security-type
     acceptedValues: ConfidentialVM, Standard, TrustedLaunch
     summary: |-
-      Specify the security type of the virtual machine scale set. The value Standard can be used if subscription has feature flag UseStandardSecurityType registered under Microsoft.Compute namespace. Refer to https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features for steps to enable required feature.
+      Specify the security type of the virtual machine scale set.
   - name: --single-placement-group
     acceptedValues: false, true
     summary: |-
@@ -2334,6 +2343,7 @@ directCommands:
                    [--add]
                    [--add-proxy-agent-ext --add-proxy-agent-extension {false, true}]
                    [--additional-events --additional-scheduled-events {false, true}]
+                   [--all-instance-down --enable-all-instance-down {false, true}]
                    [--automatic-repairs-action {Reimage, Replace, Restart}]
                    [--automatic-repairs-grace-period]
                    [--automatic-zone-balancing-behavior --balancing-behavior {CreateBeforeDelete}]
@@ -2361,11 +2371,13 @@ directCommands:
                    [--ephemeral-os-disk {false, true}]
                    [--ephemeral-os-disk-placement --ephemeral-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                    [--exclude-extensions --security-posture-reference-exclude-extensions]
+                   [--exclude-zones]
                    [--force-deletion]
                    [--force-string]
                    [--ids]
                    [--imds-access-control-profile-reference-id --imds-profile-id]
                    [--imds-mode {Audit, Enforce}]
+                   [--include-zones]
                    [--instance-id]
                    [--instance-percent-policy --ipp {false, true}]
                    [--is-overridable --security-posture-reference-is-overridable {false, true}]
@@ -2391,6 +2403,7 @@ directCommands:
                    [--remove]
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
+                   [--scheduled-events-api-version --se-api-version]
                    [--security-posture-id --security-posture-reference-id]
                    [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--set]
@@ -2409,6 +2422,7 @@ directCommands:
                    [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                    [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
+                   [--zone-placement-policy {Auto}]
                    [--zones]
   examples:
   - summary: |-
@@ -2455,6 +2469,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       The configuration parameter used while creating event grid and resource graph scheduled event setting.
+  - name: --all-instance-down --enable-all-instance-down
+    acceptedValues: false, true
+    summary: |-
+      Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true.
   - name: --automatic-repairs-action
     acceptedValues: Reimage, Replace, Restart
     summary: |-
@@ -2564,6 +2582,9 @@ directCommands:
   - name: --exclude-extensions --security-posture-reference-exclude-extensions
     summary: |-
       List of virtual machine extensions to exclude when applying the Security Posture. Either a Json string or a file path is acceptable. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachinescalesets/get#virtualmachineextension for the data format.
+  - name: --exclude-zones
+    summary: |-
+      Specify a list of availability zones that must be excluded from placement when --zone-placement-policy is set to Auto. If not specified, no availability zones are excluded.
   - name: --force-deletion
     summary: |-
       This property allow you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.
@@ -2584,6 +2605,9 @@ directCommands:
     acceptedValues: Audit, Enforce
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
+  - name: --include-zones
+    summary: |-
+      Specify a list of availability zones that must be considered for placement when --zone-placement-policy is set to Auto. If not specified, all availability zones in the region are considered.
   - name: --instance-id
     summary: |-
       Update the VM instance with this ID. If missing, update the VMSS.
@@ -2683,13 +2707,16 @@ directCommands:
     acceptedValues: Default, NewestVM, OldestVM
     summary: |-
       Specify the scale-in policy (space delimited) that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
+  - name: --scheduled-events-api-version --se-api-version
+    summary: |-
+      Specifies the api-version to determine which Scheduled Events configuration schema version will be delivered.
   - name: --security-posture-id --security-posture-reference-id
     summary: |-
       The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest.
   - name: --security-type
     acceptedValues: ConfidentialVM, Standard, TrustedLaunch
     summary: |-
-      Specify the security type of the virtual machine scale set. The value Standard can be used if subscription has feature flag UseStandardSecurityType registered under Microsoft.Compute namespace. Refer to https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features for steps to enable required feature.
+      Specify the security type of the virtual machine scale set.
   - name: --set
     defaultValue: '[]'
     summary: |-
@@ -2747,6 +2774,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage.
+  - name: --zone-placement-policy
+    acceptedValues: Auto
+    summary: |-
+      Specify the policy for availability zone placement of the virtual machine scale set. When set to Auto, the platform automatically selects the availability zones.
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.

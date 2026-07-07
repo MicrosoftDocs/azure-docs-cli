@@ -21,9 +21,10 @@ directCommands:
                               [--async-scaling-enabled {false, true}]
                               [--change-reference]
                               [--default-identity]
+                              [--enriched-errors {false, true}]
                               [--hyper-v]
                               [--install-script]
-                              [--is-linux]
+                              [--is-linux {false, true}]
                               [--is-managed-instance]
                               [--location]
                               [--mi-system-assigned {false, true}]
@@ -93,6 +94,11 @@ directCommands:
     summary: |-
       Accept system or user assigned identity separated. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity.
     isPreview: true
+  - name: --enriched-errors
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      If true, Linux App Service plan creation failures will show context-enriched diagnostics with error codes, suggested fixes, and Copilot prompts. This flag only applies to Linux plans and has no effect on Windows or Hyper-V plans.
   - name: --hyper-v
     summary: |-
       Host Windows Container Web App on Hyper-V worker.
@@ -101,8 +107,9 @@ directCommands:
       Install script configurations. Provide key-value pairs for `name=<name> source-uri=<uri> type=<type>`.
     isPreview: true
   - name: --is-linux
+    acceptedValues: false, true
     summary: |-
-      Host web app on Linux worker.
+      Host web app on Linux worker. Defaults to true unless --hyper-v is specified. Use "--is-linux false" to create a Windows plan.
   - name: --is-managed-instance
     summary: |-
       Host web app on managed instance.

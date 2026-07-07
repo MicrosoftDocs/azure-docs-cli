@@ -18,16 +18,16 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
   syntax: >-
-    az policy exemption create --exemption-category {Mitigated, Waiver}
-                               --policy-assignment
-                               [--acquire-policy-token]
+    az policy exemption create [--acquire-policy-token]
                                [--assignment-scope-validation {Default, DoNotValidate}]
                                [--change-reference]
                                [--description]
                                [--display-name]
+                               [--exemption-category {Mitigated, Waiver}]
                                [--expires-on]
                                [--metadata]
                                [--name]
+                               [--policy-assignment]
                                [--policy-definition-reference-ids]
                                [--resource-group]
                                [--resource-selectors]
@@ -42,18 +42,6 @@ directCommands:
   - summary: |-
       Create a policy exemption in a management group
     syntax: az policy exemption create -n exemptTestVM --policy-assignment "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policyAssignments/limitVMSku" --exemption-category "Waiver" --scope "/providers/Microsoft.Management/managementGroups/{managementGroupName}"
-  requiredParameters:
-  - isRequired: true
-    name: --exemption-category -e
-    acceptedValues: Mitigated, Waiver
-    summary: |-
-      The policy exemption category.
-    groupName: Properties Arguments
-  - isRequired: true
-    name: --policy-assignment -a
-    summary: |-
-      The policy assignment to exempt.
-    groupName: Properties Arguments
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -77,18 +65,26 @@ directCommands:
     summary: |-
       The display name of the policy exemption.
     groupName: Properties Arguments
+  - name: --exemption-category -e
+    acceptedValues: Mitigated, Waiver
+    summary: |-
+      The policy exemption category.
+    groupName: Properties Arguments
   - name: --expires-on
     summary: |-
       The expiration date and time.
-    isBreakingChange: true
     groupName: Properties Arguments
   - name: --metadata
     summary: |-
-      The policy exemption metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The policy exemption metadata.  Support shorthand-syntax(full value only), json-file and yaml-file.
     groupName: Properties Arguments
   - name: --name -n
     summary: |-
       The name of the policy exemption.
+  - name: --policy-assignment -a
+    summary: |-
+      The policy assignment to exempt.
+    groupName: Properties Arguments
   - name: --policy-definition-reference-ids -r
     summary: |-
       The policy definition reference IDs.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -244,7 +240,7 @@ directCommands:
     groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
-      The resource group.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --scope
     summary: |-
       Scope at which to list applicable policy exemptions. If scope is not provided, the scope will be the implied or specified subscription.
@@ -408,7 +404,6 @@ directCommands:
   - name: --expires-on
     summary: |-
       The expiration date and time.
-    isBreakingChange: true
     groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -417,7 +412,7 @@ directCommands:
     groupName: Generic Update Arguments
   - name: --metadata
     summary: |-
-      The policy exemption metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The policy exemption metadata.  Support shorthand-syntax(full value only), json-file and yaml-file.
     groupName: Properties Arguments
   - name: --policy-assignment -a
     summary: |-
@@ -479,5 +474,5 @@ commands:
 - az_policy_exemption_show
 - az_policy_exemption_update
 metadata:
-  ms.date: 02/06/2026
+  ms.date: 06/02/2026
   description: Policy exemptions specify resources that a policy assignment does not apply to.

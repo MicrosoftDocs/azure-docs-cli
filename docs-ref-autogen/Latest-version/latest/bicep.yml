@@ -857,6 +857,168 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_bicep_run
+  name: az bicep run
+  summary: |-
+    Forward a raw command to the installed Bicep CLI.
+  description: |-
+    Runs the Bicep CLI with the arguments supplied via `--command`, allowing use of Bicep CLI
+    features that do not yet have a dedicated `az bicep` wrapper. The string passed to
+    `--command` is split using shell-style quoting and forwarded to the Bicep CLI verbatim.
+    When the forwarded command itself starts with `--` (for example `--version`), use the
+    `--command=<value>` form so the CLI parser does not mistake the value for another option.
+
+    Because the value is forwarded to the Bicep CLI without validation, do not pass strings
+    derived from untrusted input.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az bicep run --command
+                 [--acquire-policy-token]
+                 [--change-reference]
+  examples:
+  - summary: |-
+      Forward a build command to the Bicep CLI.
+    syntax: az bicep run --command "build main.bicep"
+  - summary: |-
+      Show the Bicep CLI help (use the --command=<value> form for option-like values).
+    syntax: az bicep run --command=--help
+  requiredParameters:
+  - isRequired: true
+    name: --command -c
+    summary: |-
+      The Bicep CLI command to run, including its arguments, as a single quoted string (e.g. "build main.bicep").
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_bicep_snapshot
+  name: az bicep snapshot
+  summary: |-
+    Capture or validate a snapshot of the resources predicted to be deployed by a .bicepparam file.
+  description: |-
+    Compiles a .bicepparam file together with its referenced Bicep template and writes a deployment
+    snapshot (a `*.snapshot.json` file) next to the .bicepparam file. When run with `--mode Validate`,
+    the existing snapshot is compared against the current template and the command fails if they
+    differ. This command requires Bicep CLI v0.41.2 or later.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az bicep snapshot --file
+                      [--acquire-policy-token]
+                      [--change-reference]
+                      [--deployment-name]
+                      [--location]
+                      [--management-group-id]
+                      [--mode {Overwrite, Validate}]
+                      [--resource-group]
+                      [--subscription-id]
+                      [--tenant-id]
+  examples:
+  - summary: |-
+      Capture a snapshot for a .bicepparam file.
+    syntax: az bicep snapshot --file main.bicepparam
+  - summary: |-
+      Validate that the existing snapshot still matches the current template.
+    syntax: az bicep snapshot --file main.bicepparam --mode Validate
+  - summary: |-
+      Capture a snapshot with explicit Azure context.
+    syntax: az bicep snapshot --file main.bicepparam --subscription-id 00000000-0000-0000-0000-000000000000 --resource-group myRg --location westus
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: |-
+      The path to the .bicepparam file to capture a snapshot for.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --deployment-name
+    summary: |-
+      Deployment name forwarded to the Bicep CLI as the deployment context used to resolve `existing` references when capturing the snapshot.
+  - name: --location -l
+    summary: |-
+      Location forwarded to the Bicep CLI as the deployment context used to resolve `existing` references when capturing the snapshot.
+  - name: --management-group-id
+    summary: |-
+      Management group ID forwarded to the Bicep CLI as the deployment context used to resolve `existing` references when capturing the snapshot.
+  - name: --mode
+    acceptedValues: Overwrite, Validate
+    summary: |-
+      The snapshot mode. 'Overwrite' (default) writes the snapshot file. 'Validate' compares the existing snapshot against the current template and fails if differences are detected.
+  - name: --resource-group -g
+    summary: |-
+      Resource group name forwarded to the Bicep CLI as the deployment context used to resolve `existing` references when capturing the snapshot.
+  - name: --subscription-id
+    summary: |-
+      Subscription ID forwarded to the Bicep CLI as the deployment context used to resolve `existing` references when capturing the snapshot. This does not affect Azure CLI authentication; use the global `--subscription` argument to switch the active subscription.
+  - name: --tenant-id
+    summary: |-
+      Tenant ID forwarded to the Bicep CLI as the deployment context used to resolve `existing` references when capturing the snapshot. This does not affect Azure CLI authentication.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_bicep_uninstall
   name: az bicep uninstall
   summary: |-
@@ -1016,6 +1178,8 @@ commands:
 - az_bicep_list-versions
 - az_bicep_publish
 - az_bicep_restore
+- az_bicep_run
+- az_bicep_snapshot
 - az_bicep_uninstall
 - az_bicep_upgrade
 - az_bicep_version
