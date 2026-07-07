@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/06/2026
+ms.date: 07/07/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -54,7 +54,7 @@ You will be prompted to install an extension on first use.
 |[automation](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation) | 2.75.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation/HISTORY.rst) |
 |[azure-changesafety](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety) | 2.75.0 | Microsoft Azure Command-Line Tools ChangeSafety Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety/HISTORY.rst) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
-|[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.5](https://github.com/Microsoft/azure-devops-cli-extension) |
+|[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.6](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.75.0 | Manage Azure Firewall resources. | GA | [2.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.70.0 | The Azure IoT extension for Azure CLI. | Preview | [0.30.0b2](https://github.com/azure/azure-iot-cli-extension) |
 |[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.70.0 | The Azure IoT Operations extension for Azure CLI. | GA | [2.7.0](https://github.com/azure/azure-iot-ops-cli-extension) |
