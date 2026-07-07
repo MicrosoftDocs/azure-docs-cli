@@ -1,0 +1,495 @@
+### YamlMime:AzureCLIGroup
+uid: az_monitor_sli
+name: az monitor sli
+summary: |-
+  Manage Service Level Indicators (SLIs) in Azure Monitor.
+description: |-
+  Identity model: SLIs only support user-assigned managed identities (UAMIs).
+  System-assigned identity is not supported by the service. A UAMI must be
+  referenced in three places that the service keeps in sync:
+  1. The ARM identity block (`identity.userAssignedIdentities`).
+  2. Each destination AMW (`properties.destinationAmwAccounts[].identity`).
+  3. Each signal source (`properties.sliProperties.{signals|goodSignals|
+  totalSignals}.signalSources[].sourceAmwAccountManagedIdentity`).
+  The service rejects PUTs where these three sets disagree. To rotate a UAMI,
+  update all three surfaces in a single `az monitor sli update` call so the
+  PUT is atomic. See `az monitor sli update --help` for worked rotation
+  examples. Run `az monitor sli show` first to confirm the actual indices
+  and which signal slot (`signals` for window-based, `goodSignals` +
+  `totalSignals` for request-based) is populated.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+sourceType: Core
+directCommands:
+- uid: az_monitor_sli_create
+  name: az monitor sli create
+  summary: |-
+    Create an SLI resource.
+  description: |-
+    A user-assigned managed identity is required and must match the identity
+    referenced by each destination AMW account and each signal source. Complex
+    object arguments (``--baseline-properties``, ``--destination-amw-accounts``,
+    ``--sli-properties``) are easiest to pass via JSON files using the
+    ``@filename.json`` syntax.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az monitor sli' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  syntax: >-
+    az monitor sli create --mi-user-assigned --user-assigned
+                          --service-group-name
+                          --sli-name
+                          [--acquire-policy-token]
+                          [--amw-accounts --destination-amw-accounts]
+                          [--baseline-properties]
+                          [--category {Availability, Latency}]
+                          [--change-reference]
+                          [--description]
+                          [--enable-alert {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--evaluation-type {RequestBased, WindowBased}]
+                          [--sli-properties]
+  examples:
+  - summary: |-
+      Create a window-based availability SLI from JSON payload files.
+    syntax: az monitor sli create --service-group-name MyServiceGroup --sli-name MySli --user-assigned <uami-arm-id> --category Availability --evaluation-type WindowBased --description "API availability SLI" --baseline-properties @baseline.json --destination-amw-accounts @destinations.json --sli-properties @sli-properties.json
+  requiredParameters:
+  - isRequired: true
+    name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities. At least one user-assigned managed identity is required; system-assigned identity is not supported by this service.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  - isRequired: true
+    name: --sli-name
+    summary: |-
+      Name of the SLI that is given by the user.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --amw-accounts --destination-amw-accounts
+    summary: |-
+      Destination AMW accounts.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --baseline-properties
+    summary: |-
+      Defines the SLO baseline associated with the SLI.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --category
+    acceptedValues: Availability, Latency
+    summary: |-
+      Specifies the category of the SLI, used to classify signals such as Availability and Latency.
+    groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --description
+    summary: |-
+      A user-provided description of the SLI, with a maximum length of 1000 characters.
+    groupName: Properties Arguments
+  - name: --enable-alert
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      A flag to determine whether alert is enabled.
+    groupName: Properties Arguments
+  - name: --evaluation-type
+    acceptedValues: RequestBased, WindowBased
+    summary: |-
+      Determines how the SLI is evaluated—either based on request counts or time windows.
+    groupName: Properties Arguments
+  - name: --sli-properties
+    summary: |-
+      Defines the SLI properties associated with the SLI.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_monitor_sli_delete
+  name: az monitor sli delete
+  summary: |-
+    Delete an SLI resource.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az monitor sli' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  syntax: >-
+    az monitor sli delete --service-group-name
+                          --sli-name
+                          [--acquire-policy-token]
+                          [--change-reference]
+                          [--yes]
+  examples:
+  - summary: |-
+      Delete an SLI without confirmation prompt.
+    syntax: az monitor sli delete --service-group-name MyServiceGroup --sli-name MySli --yes
+  requiredParameters:
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  - isRequired: true
+    name: --sli-name
+    summary: |-
+      Name of the SLI that is given by the user.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_monitor_sli_list
+  name: az monitor sli list
+  summary: |-
+    List all SLI resources under a parent resource.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az monitor sli' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  syntax: >-
+    az monitor sli list --service-group-name
+                        [--max-items]
+                        [--next-token]
+  examples:
+  - summary: |-
+      List all SLIs in a service group.
+    syntax: az monitor sli list --service-group-name MyServiceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_monitor_sli_show
+  name: az monitor sli show
+  summary: |-
+    Get an SLI resource.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az monitor sli' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  syntax: >-
+    az monitor sli show --service-group-name
+                        --sli-name
+  examples:
+  - summary: |-
+      Show an SLI by name.
+    syntax: az monitor sli show --service-group-name MyServiceGroup --sli-name MySli
+  requiredParameters:
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  - isRequired: true
+    name: --sli-name
+    summary: |-
+      Name of the SLI that is given by the user.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_monitor_sli_update
+  name: az monitor sli update
+  summary: |-
+    Update an SLI resource.
+  description: |-
+    Managed-identity changes must be applied to all three surfaces in a single
+    PUT, because the service validates set-equality across them:
+    1. ``identity.userAssignedIdentities`` (top-level ARM identity dictionary).
+    2. ``properties.destinationAmwAccounts[].identity``.
+    3. ``properties.sliProperties.{signals|goodSignals|totalSignals}.signalSources[].sourceAmwAccountManagedIdentity``.
+    Window-based SLIs populate the ``signals`` slot; request-based SLIs populate
+    ``goodSignals`` and ``totalSignals``. Run ``az monitor sli show`` first to
+    confirm the destination/signal-source indices and which slot is in use.
+    The examples below assume the window-based ``signals`` slot with one
+    destination AMW and one signal source.
+    Note: UAMI ARM IDs contain ``.`` (for example ``Microsoft.ManagedIdentity``),
+    so they cannot be addressed as path segments by ``--set/--remove`` (azure-cli
+    splits the path on ``.``). To change ``identity.userAssignedIdentities``,
+    replace the whole map by passing a JSON value rooted at ``identity.userAssignedIdentities``.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az monitor sli' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  syntax: >-
+    az monitor sli update --service-group-name
+                          --sli-name
+                          [--acquire-policy-token]
+                          [--add]
+                          [--amw-accounts --destination-amw-accounts]
+                          [--baseline-properties]
+                          [--category {Availability, Latency}]
+                          [--change-reference]
+                          [--description]
+                          [--enable-alert {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--evaluation-type {RequestBased, WindowBased}]
+                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--remove]
+                          [--set]
+                          [--sli-properties]
+  examples:
+  - summary: |-
+      Update the description.
+    syntax: az monitor sli update --service-group-name MyServiceGroup --sli-name MySli --set properties.description="Updated API availability SLI"
+  - summary: |-
+      Rotate the source-AMW managed identity (signal source 0) to a new UAMI.
+    syntax: az monitor sli update --service-group-name MyServiceGroup --sli-name MySli --set 'identity.userAssignedIdentities={"<new-source-uami-arm-id>":{}}' --set 'properties.sliProperties.signals.signalSources[0].sourceAmwAccountManagedIdentity=<new-source-uami-arm-id>'
+  - summary: |-
+      Rotate the destination-AMW managed identity (destination 0) to a new UAMI.
+    syntax: az monitor sli update --service-group-name MyServiceGroup --sli-name MySli --set 'identity.userAssignedIdentities={"<new-destination-uami-arm-id>":{}}' --set 'properties.destinationAmwAccounts[0].identity=<new-destination-uami-arm-id>'
+  - summary: |-
+      Rotate the source-AMW and destination-AMW managed identities together in a single update (single UAMI used for both).
+    syntax: az monitor sli update --service-group-name MyServiceGroup --sli-name MySli --set 'identity.userAssignedIdentities={"<new-uami-arm-id>":{}}' --set 'properties.destinationAmwAccounts[0].identity=<new-uami-arm-id>' --set 'properties.sliProperties.signals.signalSources[0].sourceAmwAccountManagedIdentity=<new-uami-arm-id>'
+  requiredParameters:
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  - isRequired: true
+    name: --sli-name
+    summary: |-
+      Name of the SLI that is given by the user.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --amw-accounts --destination-amw-accounts
+    summary: |-
+      Destination AMW accounts.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --baseline-properties
+    summary: |-
+      Defines the SLO baseline associated with the SLI.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --category
+    acceptedValues: Availability, Latency
+    summary: |-
+      Specifies the category of the SLI, used to classify signals such as Availability and Latency.
+    groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --description
+    summary: |-
+      A user-provided description of the SLI, with a maximum length of 1000 characters.
+    groupName: Properties Arguments
+  - name: --enable-alert
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      A flag to determine whether alert is enabled.
+    groupName: Properties Arguments
+  - name: --evaluation-type
+    acceptedValues: RequestBased, WindowBased
+    summary: |-
+      Determines how the SLI is evaluated—either based on request counts or time windows.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --sli-properties
+    summary: |-
+      Defines the SLI properties associated with the SLI.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_monitor_sli_create
+- az_monitor_sli_delete
+- az_monitor_sli_list
+- az_monitor_sli_show
+- az_monitor_sli_update
+metadata:
+  ms.date: 01/06/2025
+  description: >-
+    Identity model: SLIs only support user-assigned managed identities (UAMIs).
+
+    System-assigned identity is not supported by the service. A UAMI must be
+
+    referenced in three places that the service keeps in sync:
+
+    1. The ARM identity block (`identity.userAssignedIdentities`).
+
+    2. Each destination AMW (`properties.destinationAmwAccounts[].identity`).
+
+    3. Each signal source (`properties.sliProperties.{signals|goodSignals|
+
+    totalSignals}.signalSources[].sourceAmwAccountManagedIdentity`).
+
+    The service rejects PUTs where these three sets disagree. To rotate a UAMI,
+
+    update all three surfaces in a single `az monitor sli update` call so the
+
+    PUT is atomic. See `az monitor sli update --help` for worked rotation
+
+    examples. Run `az monitor sli show` first to confirm the actual indices
+
+    and which signal slot (`signals` for window-based, `goodSignals` +
+
+    `totalSignals` for request-based) is populated.

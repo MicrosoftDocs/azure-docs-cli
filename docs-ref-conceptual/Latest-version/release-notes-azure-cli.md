@@ -1,13 +1,120 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 06/02/2026
+ms.date: 07/07/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## July 07, 2026
+
+Version 2.88.0
+
+### ACR
+
+* `az acr create`: Add `--data-endpoint-enabled` parameter to support enabling dedicated data endpoint for client firewall configuration
+* `az acr create`: Add `--endpoint-protocol` parameter to support specifying the endpoint protocol for the registry
+* `az acr task logs`: Align log streaming with the default TLS behavior used by the rest of Azure CLI commands
+* `az acr run/build`: Align log streaming with the default TLS behavior used by the rest of Azure CLI commands
+* `az acr login`: Harden binary resolution and credential passing
+
+### AKS
+
+* `az aks nodepool upgrade`: Fix `--max-unavailable` being silently ignored
+* `az aks maintenanceconfiguration add/update`: Add support for maintenanceWindow format in default maintenance configuration
+* `az aks check-acr`: Support national/sovereign clouds where nodes report `cloud=AzureStackCloud` by pointing canipull at the on-node `akscustom.json` environment file
+* `az aks create`: Add `--enable-control-plane-metrics`/`--enable-cp-metrics` to opt new clusters into Azure Monitor managed Prometheus control-plane metrics
+* `az aks update`: Add `--enable-control-plane-metrics`/`--enable-cp-metrics` and `--disable-control-plane-metrics`/`--disable-cp-metrics` to toggle Azure Monitor managed Prometheus control-plane metrics on existing clusters
+* `az aks nodepool get-rollback-versions/rollback`: Add commands to get rollback versions and roll back an agent pool to the most recently used configuration
+* `az aks create/update`: Set `principalType` when creating role assignments to avoid `PrincipalNotFound` failures caused by Microsoft Entra ID replication delay
+
+### App Service
+
+* `az appservice plan create`: Make default OS as Linux when `--hyper-v` is not specified explicitly
+* `az appservice plan create`: Use `--is-linux false` to create a Windows app service plan
+* `az functionapp config ssl`: Support site-scoped certificates for Flex consumption
+* `az functionapp flex-migration`: Allow migrating Linux consumption apps with certificates
+* `az functionapp`: Add warning for Linux consumption EOL and recommend migration to Flex consumption
+* `az functionapp create`: Add warning for Linux consumption EOL and recommend using Flex consumption
+* `az appservice plan create`: Add `--enriched-errors` parameter to see detailed failure log
+* `az webapp up/deploy`: Add `--enriched-errors false` parameter to disable enriched deployment failure log
+
+### ARM
+
+* `az policy`: Rewrite Azure Policy CRUD commands using auto-generation
+
+### Backup
+
+* `az backup`: Add CRR config entries for Delos cloud regions
+
+### CDN
+
+* Migrate the entire module to `azure-cli-extensions`
+
+### Compute
+
+* `az vm create/update/show`: Support scheduled events profile via new parameters `--scheduled-events-api-version` and `--enable-all-instance-down`
+* `az vmss create/update/show`: Support scheduled events profile via new parameters `--scheduled-events-api-version` and `--enable-all-instance-down`
+* `az availability-set create/show`: Support scheduled events profile via new parameters `--scheduled-events-api-version` and `--enable-all-instance-down`
+* `az vm/vmss create/update`: Update help message for `--security-type`
+* `az vmss update`: Add new parameters `--zone-placement-policy`, `--include-zones` and `--exclude-zones`
+
+### Compute Fleet
+
+* `az compute-fleet`: Add support for Launch mode public preview
+
+### Identity
+
+* `az identity create`: Add new `--resource-restriction` parameter to support identity assignment restrictions
+* `az identity update`: Add new command to support updating an identity
+
+### Key Vault
+
+* `az keyvault key show/list`: Add AES key size to output
+* `az keyvault ekm-connection`: Add command group to manage External Key Manager (EKM) connections for Managed HSM (Preview)
+* `az keyvault key create`: Add `--external-key-id` to create EKM-backed external keys on Managed HSM (Preview)
+
+### NetAppFiles
+
+* `az netappfiles subvolumes`: Add deprecation notice `az netappfiles subvolume` command group is being deprecated and will be removed in a future release
+* `az netappfiles volume create/update`: Add deprecation notice `--enable-subvolumes` is being deprecated and will be removed in a future release
+
+### Network
+
+* Fix #33502: `az network vnet list`: List all VNets without specifying `--resource-group`
+* `az network vpn-connection create`: Fix `--shared-key` incorrectly required when `--auth-type Certificate` is used
+* `az network ddos-custom-policy`: Support specifying frontend IP configuration associations
+* `az network traffic-manager profile create/update`: Add `--record-type` parameter to support record type filtering
+* `az network private-endpoint-connection`: Add provider `Microsoft.HorizonDB/clusters`
+
+### Packaging
+
+* Support Python 3.14
+* Bump embedded Python to 3.14.5
+
+### Policy
+
+* `az policy`: Remove obsolete breaking change messages
+
+### PostgreSQL
+
+* `az postgres flexible-server create/restore/geo-restore/replica create`: Add new arguments `--federated-client-id` and `--backup-federated-client-id` to support multi-tenant application registration
+* `az postgresql flexible-server maintenance-event list/show/apply-now/reschedule`: Add commands for maintenance events
+
+### Resource
+
+* `az bicep`: Add snapshot and run subcommands
+
+### Role
+
+* `az role deny-assignment create/delete`: Add new commands
+
+### SSH
+
+* `az ssh`: Restore explicit failure for unsupported managed identity and Cloud Shell SSH cert flows
 
 ## June 02, 2026
 

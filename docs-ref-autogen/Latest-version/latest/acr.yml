@@ -326,8 +326,10 @@ directCommands:
                   [--allow-metadata-search {false, true}]
                   [--allow-trusted-services {false, true}]
                   [--change-reference]
+                  [--data-endpoint-enabled {false, true}]
                   [--default-action {Allow, Deny}]
                   [--dnl-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse, Unsecure}]
+                  [--endpoint-protocol {IPv4, IPv4AndIPv6}]
                   [--identity]
                   [--key-encryption-key]
                   [--location]
@@ -347,6 +349,9 @@ directCommands:
   - summary: |-
       Create a managed container registry with the Premium SKU and regional endpoints enabled.
     syntax: az acr create -n myregistry -g MyResourceGroup --sku Premium --regional-endpoints enabled
+  - summary: |-
+      Create a managed container registry with the Premium SKU and dual-stack (IPv4 and IPv6) endpoint protocol.
+    syntax: az acr create -n myregistry -g MyResourceGroup --sku Premium --data-endpoint-enabled true --endpoint-protocol IPv4AndIPv6
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -390,6 +395,11 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --data-endpoint-enabled
+    acceptedValues: false, true
+    summary: |-
+      Enable dedicated data endpoint for client firewall configuration.
+    groupName: Network Rule Arguments
   - name: --default-action
     acceptedValues: Allow, Deny
     summary: |-
@@ -400,6 +410,12 @@ directCommands:
     summary: |-
       Domain name label scope will add a hash to the resource name. The resulting login server name will be in the format `registryname`-`hash`.azurecr-io. Default is Unsecure.
     isPreview: true
+  - name: --endpoint-protocol
+    acceptedValues: IPv4, IPv4AndIPv6
+    summary: |-
+      The endpoint protocol for the registry. Allowed values: IPv4, IPv4AndIPv6.
+    isPreview: true
+    groupName: Network Rule Arguments
   - name: --identity
     summary: |-
       Use assigned managed identity resource id or name if in the same resource group.

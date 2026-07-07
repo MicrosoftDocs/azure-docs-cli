@@ -1,0 +1,296 @@
+### YamlMime:AzureCLIGroup
+uid: az_role_deny-assignment
+name: az role deny-assignment
+summary: |-
+  Manage deny assignments.
+description: |-
+  Deny assignments block users from performing specific Azure resource actions even if a role assignment grants them access. User-assigned deny assignments can be created to deny write, delete, and action operations at a given scope while excluding specific principals.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_role_deny-assignment_create
+  name: az role deny-assignment create
+  summary: |-
+    Create a user-assigned deny assignment.
+  description: |-
+    Creates a deny assignment that blocks specific actions at the given scope. Two modes are supported: (1) Everyone mode (default) — denies actions for all principals, requiring at least one excluded principal; (2) Per-principal mode — denies actions for a specific User or ServicePrincipal specified via --principal-object-id. DataActions are not supported, DoNotApplyToChildScopes is not supported, read actions (*/read) are not permitted, and Group type principals are not allowed.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
+  syntax: >-
+    az role deny-assignment create [--acquire-policy-token]
+                                   [--actions]
+                                   [--assignment-name]
+                                   [--change-reference]
+                                   [--description]
+                                   [--exclude-principal-ids]
+                                   [--exclude-principal-types]
+                                   [--name]
+                                   [--not-actions]
+                                   [--principal-object-id]
+                                   [--principal-type {ServicePrincipal, User}]
+                                   [--scope]
+  examples:
+  - summary: |-
+      Create a deny assignment blocking role assignment writes for everyone, excluding a service principal.
+    syntax: az role deny-assignment create --name "Block role assignment changes" --scope /subscriptions/00000000-0000-0000-0000-000000000000 --actions "Microsoft.Authorization/roleAssignments/write" "Microsoft.Authorization/roleAssignments/delete" --exclude-principal-ids 00000000-0000-0000-0000-000000000001 --exclude-principal-types ServicePrincipal
+  - summary: |-
+      Create a deny assignment targeting a specific user.
+    syntax: az role deny-assignment create --name "Deny resource deletion for user" --scope /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup --actions "*/delete" --principal-object-id 00000000-0000-0000-0000-000000000001 --principal-type User
+  - summary: |-
+      Create a deny assignment targeting a specific service principal with exclusions.
+    syntax: az role deny-assignment create --name "Deny write actions for app" --scope /subscriptions/00000000-0000-0000-0000-000000000000 --actions "*/write" --principal-object-id 00000000-0000-0000-0000-000000000001 --principal-type ServicePrincipal --exclude-principal-ids 00000000-0000-0000-0000-000000000002 --exclude-principal-types ServicePrincipal --description "Block write operations for this application"
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --actions
+    summary: |-
+      Space-separated list of actions to deny, e.g. "Microsoft.Authorization/roleAssignments/write". Note: read actions (*/read) are not permitted for user-assigned deny assignments.
+  - name: --assignment-name
+    summary: |-
+      A GUID for the deny assignment. If omitted, a new GUID is generated.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --description
+    summary: |-
+      Description of the deny assignment.
+  - name: --exclude-principal-ids
+    summary: |-
+      Space-separated list of principal object IDs to exclude from the deny. Required when no --principal-object-id is specified (Everyone mode). Optional when --principal-object-id is specified.
+  - name: --exclude-principal-types
+    summary: |-
+      Space-separated list of principal types corresponding to --exclude-principal-ids. Accepted values: User, Group, ServicePrincipal.
+  - name: --name -n
+    summary: |-
+      The display name of the deny assignment.
+  - name: --not-actions
+    summary: |-
+      Space-separated list of actions to exclude from the deny.
+  - name: --principal-object-id
+    summary: |-
+      The object ID of a specific User or ServicePrincipal to deny. If omitted, the deny assignment applies to Everyone (all principals) and --exclude-principal-ids is required. Group principals are not permitted.
+  - name: --principal-type
+    acceptedValues: ServicePrincipal, User
+    summary: |-
+      The type of the principal specified by --principal-object-id. Required when --principal-object-id is provided. Accepted values: User, ServicePrincipal.
+  - name: --scope
+    summary: |-
+      Scope at which the deny assignment applies. For example, /subscriptions/00000000-0000-0000-0000-000000000000 or /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_role_deny-assignment_delete
+  name: az role deny-assignment delete
+  summary: |-
+    Delete a user-assigned deny assignment.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
+  syntax: >-
+    az role deny-assignment delete [--acquire-policy-token]
+                                   [--change-reference]
+                                   [--id]
+                                   [--name]
+                                   [--scope]
+                                   [--yes]
+  examples:
+  - summary: |-
+      Delete a deny assignment by its fully qualified ID.
+    syntax: az role deny-assignment delete --id /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Authorization/denyAssignments/00000000-0000-0000-0000-000000000001
+  - summary: |-
+      Delete a deny assignment by name and scope.
+    syntax: az role deny-assignment delete --name 00000000-0000-0000-0000-000000000001 --scope /subscriptions/00000000-0000-0000-0000-000000000000
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --id
+    summary: |-
+      The fully qualified ID of the deny assignment to delete.
+  - name: --name -n
+    summary: |-
+      The name (GUID) of the deny assignment to delete.
+  - name: --scope
+    summary: |-
+      Scope at which the deny assignment applies. For example, /subscriptions/00000000-0000-0000-0000-000000000000 or /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_role_deny-assignment_list
+  name: az role deny-assignment list
+  summary: |-
+    List deny assignments.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
+  syntax: >-
+    az role deny-assignment list [--filter]
+                                 [--scope]
+  examples:
+  - summary: |-
+      List deny assignments at the subscription scope.
+    syntax: az role deny-assignment list --scope /subscriptions/00000000-0000-0000-0000-000000000000
+  - summary: |-
+      List all deny assignments in the current subscription.
+    syntax: az role deny-assignment list
+  - summary: |-
+      List deny assignments at a resource group scope.
+    syntax: az role deny-assignment list --scope /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup
+  optionalParameters:
+  - name: --filter
+    summary: |-
+      OData filter expression to apply. For example, "atScope()" to list at the current scope, or "gdprExportPrincipalId eq '{objectId}'" to list for a specific principal.
+  - name: --scope
+    summary: |-
+      Scope at which the deny assignment applies. For example, /subscriptions/00000000-0000-0000-0000-000000000000 or /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_role_deny-assignment_show
+  name: az role deny-assignment show
+  summary: |-
+    Get a deny assignment.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
+  syntax: >-
+    az role deny-assignment show [--id]
+                                 [--name]
+                                 [--scope]
+  examples:
+  - summary: |-
+      Show a deny assignment by its fully qualified ID.
+    syntax: az role deny-assignment show --id /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Authorization/denyAssignments/00000000-0000-0000-0000-000000000001
+  - summary: |-
+      Show a deny assignment by name and scope.
+    syntax: az role deny-assignment show --name 00000000-0000-0000-0000-000000000001 --scope /subscriptions/00000000-0000-0000-0000-000000000000
+  optionalParameters:
+  - name: --id
+    summary: |-
+      The fully qualified ID of the deny assignment including scope, e.g. /subscriptions/{id}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}.
+  - name: --name -n
+    summary: |-
+      The name (GUID) of the deny assignment.
+  - name: --scope
+    summary: |-
+      Scope at which the deny assignment applies. For example, /subscriptions/00000000-0000-0000-0000-000000000000 or /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_role_deny-assignment_create
+- az_role_deny-assignment_delete
+- az_role_deny-assignment_list
+- az_role_deny-assignment_show
+metadata:
+  ms.date: 06/26/2026
+  description: Deny assignments block users from performing specific Azure resource actions even if a role assignment grants them access. User-assigned deny assignments can be created to deny write, delete, and action operations at a given scope while excluding specific principals.

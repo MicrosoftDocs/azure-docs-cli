@@ -141,11 +141,6 @@ directCommands:
                                  [--cifs {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
-                                 [--default-group-quota]
-                                 [--default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--default-user-quota]
-                                 [--default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--desired-arp-state --desired-ransomware-protection-state {Disabled, Enabled}]
                                  [--enable-subvolumes {Disabled, Enabled}]
@@ -155,7 +150,6 @@ directCommands:
                                  [--external-server-name]
                                  [--external-volume-name]
                                  [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos5-r {0, 1, f, false, n, no, t, true, y, yes}]
@@ -300,36 +294,6 @@ directCommands:
     summary: |-
       Specifies the number of days after which data that is not accessed by clients will be tiered.
     groupName: Properties Arguments
-  - name: --default-group-quota
-    defaultValue: "0"
-    summary: |-
-      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-    groupName: Properties Arguments
-  - name: --default-group-quota-in-ki-bs
-    defaultValue: "0"
-    summary: |-
-      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-    isDeprecated: true
-    deprecateInfo: Option '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled
-    defaultValue: "False"
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Specifies if default quota is enabled for the volume.
-    groupName: Properties Arguments
-  - name: --default-user-quota
-    defaultValue: "0"
-    summary: |-
-      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    groupName: Properties Arguments
-  - name: --default-user-quota-in-ki-bs
-    defaultValue: "0"
-    summary: |-
-      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    isDeprecated: true
-    deprecateInfo: Option '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -345,6 +309,8 @@ directCommands:
     acceptedValues: Disabled, Enabled
     summary: |-
       Flag indicating whether subvolume operations are enabled on the volume.
+    isDeprecated: true
+    deprecateInfo: --enable-subvolumes is being deprecated and will be removed in a future release.
     groupName: Properties Arguments
   - name: --encryption-key-source
     defaultValue: Microsoft.NetApp
@@ -373,14 +339,6 @@ directCommands:
     summary: |-
       Has root access to volume. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
     groupName: ExportPolicy backwards compatibility Arguments
-  - name: --is-default-quota-enabled
-    defaultValue: "False"
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Specifies if default quota is enabled for the volume.
-    isDeprecated: true
-    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
   - name: --is-large-volume
     defaultValue: "False"
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -438,7 +396,7 @@ directCommands:
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     groupName: Body Arguments
   - name: --network-features
-    defaultValue: Basic
+    defaultValue: Standard
     acceptedValues: Basic, Standard
     summary: |-
       Basic network, or Standard features available to the volume.
@@ -641,18 +599,15 @@ directCommands:
                                  [--cifs {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
-                                 [--default-group-quota]
-                                 [--default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--default-user-quota]
-                                 [--default-user-quota-in-ki-bs]
+                                 [--default-group-quota --default-group-quota-in-ki-bs]
+                                 [--default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--default-user-quota --default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
                                  [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
                                  [--endpoint-type {dst, src}]
                                  [--export-policy-rules --rules]
                                  [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos-enabled {0, 1, f, false, n, no, t, true, y, yes}]
@@ -799,35 +754,21 @@ directCommands:
     summary: |-
       Specifies the number of days after which data that is not accessed by clients will be tiered.
     groupName: Properties Arguments
-  - name: --default-group-quota
+  - name: --default-group-quota --default-group-quota-in-ki-bs
     defaultValue: "0"
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
     groupName: Properties Arguments
-  - name: --default-group-quota-in-ki-bs
-    defaultValue: "0"
-    summary: |-
-      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-    isDeprecated: true
-    deprecateInfo: Option '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
     defaultValue: "False"
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Specifies if default quota is enabled for the volume.
     groupName: Properties Arguments
-  - name: --default-user-quota
+  - name: --default-user-quota --default-user-quota-in-ki-bs
     defaultValue: "0"
     summary: |-
       Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    groupName: Properties Arguments
-  - name: --default-user-quota-in-ki-bs
-    defaultValue: "0"
-    summary: |-
-      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    isDeprecated: true
-    deprecateInfo: Option '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -839,6 +780,8 @@ directCommands:
     acceptedValues: Disabled, Enabled
     summary: |-
       Flag indicating whether subvolume operations are enabled on the volume.
+    isDeprecated: true
+    deprecateInfo: --enable-subvolumes is being deprecated and will be removed in a future release.
     groupName: Properties Arguments
   - name: --encryption-key-source
     defaultValue: Microsoft.NetApp
@@ -860,14 +803,6 @@ directCommands:
     summary: |-
       Has root access to volume. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
     groupName: ExportPolicy backwards compatibility Arguments
-  - name: --is-default-quota-enabled
-    defaultValue: "False"
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Specifies if default quota is enabled for the volume.
-    isDeprecated: true
-    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
   - name: --is-large-volume
     defaultValue: "False"
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -2782,18 +2717,12 @@ directCommands:
                                  [--change-reference]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
-                                 [--default-group-quota]
-                                 [--default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--default-user-quota]
-                                 [--default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
                                  [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
                                  [--export-policy-rules --rules]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
-                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id --kv-private-endpoint-id]
                                  [--name --volume-name]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -2876,31 +2805,6 @@ directCommands:
     summary: |-
       Specifies the number of days after which data that is not accessed by clients will be tiered.
     groupName: Properties Arguments
-  - name: --default-group-quota
-    summary: |-
-      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-    groupName: Properties Arguments
-  - name: --default-group-quota-in-ki-bs
-    summary: |-
-      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-    isDeprecated: true
-    deprecateInfo: Option '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Specifies if default quota is enabled for the volume.
-    groupName: Properties Arguments
-  - name: --default-user-quota
-    summary: |-
-      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    groupName: Properties Arguments
-  - name: --default-user-quota-in-ki-bs
-    summary: |-
-      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    isDeprecated: true
-    deprecateInfo: Option '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -2910,6 +2814,8 @@ directCommands:
     acceptedValues: Disabled, Enabled
     summary: |-
       Flag indicating whether subvolume operations are enabled on the volume.
+    isDeprecated: true
+    deprecateInfo: --enable-subvolumes is being deprecated and will be removed in a future release.
     groupName: Properties Arguments
   - name: --encryption-key-source
     acceptedValues: Microsoft.KeyVault, Microsoft.NetApp
@@ -2929,13 +2835,6 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --is-default-quota-enabled
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Specifies if default quota is enabled for the volume.
-    isDeprecated: true
-    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
   - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
     summary: |-
       The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
@@ -3111,11 +3010,9 @@ directCommands:
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--creation-token]
-                                 [--default-group-quota]
-                                 [--default-group-quota-in-ki-bs]
-                                 [--default-quota-enabled --is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--default-user-quota]
-                                 [--default-user-quota-in-ki-bs]
+                                 [--default-group-quota --default-group-quota-in-ki-bs]
+                                 [--default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--default-user-quota --default-user-quota-in-ki-bs]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
                                  [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
@@ -3123,7 +3020,6 @@ directCommands:
                                  [--export-policy-rules --rules]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
-                                 [--is-default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id --kv-private-endpoint-id]
@@ -3216,30 +3112,18 @@ directCommands:
     summary: |-
       A unique file path for the volume. Used when creating mount targets.
     groupName: Properties Arguments
-  - name: --default-group-quota
+  - name: --default-group-quota --default-group-quota-in-ki-bs
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
     groupName: Properties Arguments
-  - name: --default-group-quota-in-ki-bs
-    summary: |-
-      Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-    isDeprecated: true
-    deprecateInfo: Option '--default-group-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
-  - name: --default-quota-enabled --is-def-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Specifies if default quota is enabled for the volume.
     groupName: Properties Arguments
-  - name: --default-user-quota
+  - name: --default-user-quota --default-user-quota-in-ki-bs
     summary: |-
       Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    groupName: Properties Arguments
-  - name: --default-user-quota-in-ki-bs
-    summary: |-
-      Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
-    isDeprecated: true
-    deprecateInfo: Option '--default-user-quota-in-ki-bs' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
     groupName: Properties Arguments
   - name: --delete-base-snapshot
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -3250,6 +3134,8 @@ directCommands:
     acceptedValues: Disabled, Enabled
     summary: |-
       Flag indicating whether subvolume operations are enabled on the volume.
+    isDeprecated: true
+    deprecateInfo: --enable-subvolumes is being deprecated and will be removed in a future release.
     groupName: Properties Arguments
   - name: --encryption-key-source
     acceptedValues: Microsoft.KeyVault, Microsoft.NetApp
@@ -3274,13 +3160,6 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --is-default-quota-enabled
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Specifies if default quota is enabled for the volume.
-    isDeprecated: true
-    deprecateInfo: Option '--is-default-quota-enabled' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'netappfiles volume quota-rule' instead.
-    groupName: Properties Arguments
   - name: --is-large-volume
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
