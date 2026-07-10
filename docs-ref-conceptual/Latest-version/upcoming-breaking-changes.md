@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 07/06/2026
+ms.date: 07/10/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -82,6 +82,69 @@ The breaking changes listed in this section are planned for the next major relea
 
 - The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
 - The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
+
+## azext_blueprint
+
+### `blueprint`
+
+[Link to blueprint reference group](/cli/azure/blueprint)
+
+- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026.
+- Azure Blueprints is retiring on 31 January 2027, with phased restrictions starting 31 July 2026.
+- After retirement, the service API stops responding and these commands will stop functioning; they will be removed from the Azure CLI in a later release.
+- Migrate blueprint definitions to Template Specs and assignments to Azure Deployment Stacks (recommended).
+- Migration guidance: https://aka.ms/AzureBlueprintsRetirement
+
+## azext_netappfiles_preview
+
+### `netappfiles volume create`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- --enable-subvolumes is being deprecated and will be removed in a future release.
+
+### `netappfiles volume update`
+
+[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
+
+- --enable-subvolumes is being deprecated and will be removed in a future release.
+
+## azext_redisenterprise
+
+### `redisenterprise create`
+
+[Link to redisenterprise reference group](/cli/azure/redisenterprise)
+
+- The argument '--public-network-access' will become required in next breaking change release(2.92.0) scheduled for Nov 2026.
+- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.92.0) scheduled for Nov 2026.
+
+## azext_spring
+
+### `spring`
+
+[Link to spring reference group](/cli/azure/spring)
+
+- 'spring' has been deprecated and will be removed in Mar 2028.
+
+## azext_ssh
+
+### `ssh vm`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh commands connecting to ARC machines on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
+
+### `ssh config`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh commands connecting to ARC machines on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
+
+### `ssh arc`
+
+[Link to ssh reference group](/cli/azure/ssh)
+
+- On May 21st 2025, any ssh arc commands on versions <2.0.4 will no longer work. Please upgrade to az ssh version >=2.0.4
 
 > [!NOTE]
 > This article provides information on upcoming breaking changes. For previously published breaking changes, see [Azure CLI release notes](./release-notes-azure-cli.md).
