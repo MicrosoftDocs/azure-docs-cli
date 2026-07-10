@@ -91,7 +91,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_change-disaster-recovery-configuration
   name: az oracle-database autonomous-database change-disaster-recovery-configuration
   summary: |-
-    Perform ChangeDisasterRecoveryConfiguration action on Autonomous Database.
+    Change the disaster recovery configuration of a cross-region disaster recovery peer Autonomous Database.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -108,8 +108,8 @@ directCommands:
                                                                                   [--time-snapshot-standby-enabled-till]
   examples:
   - summary: |-
-      AutonomousDatabases_ChangeDisasterRecoveryConfiguration
-    syntax: az oracle-database autonomous-database change-disaster-recovery-configuration --resource-group rg000 --autonomousdatabasename databasedb1 --disaster-recovery-type Adg --is-replicate-automatic-backups False
+      Change the disaster recovery configuration of a cross-region disaster recovery peer
+    syntax: az oracle-database autonomous-database change-disaster-recovery-configuration --resource-group MyResourceGroup --autonomousdatabasename MyCrossRegionPeerDB --disaster-recovery-type Adg --is-replicate-automatic-backups false
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -117,7 +117,7 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --autonomousdatabasename
     summary: |-
-      The database name.
+      The peer Autonomous Database name for the existing cross-region disaster recovery association.
     groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
@@ -185,7 +185,12 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_create
   name: az oracle-database autonomous-database create
   summary: |-
-    Create a AutonomousDatabase.
+    Create an Autonomous Database.
+  description: |-
+    Use one create mode option per request. The database type is inferred from --regular, --clone,
+    --clone-from-backup-timestamp, or --cross-region-disaster-recovery. Do not pass dataBaseType
+    directly. Clone and disaster recovery fields must be nested inside the matching create mode
+    option.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -230,8 +235,17 @@ directCommands:
                                                   [--whitelisted-ips]
   examples:
   - summary: |-
-      Create an Autonomous database
-    syntax: az oracle-database autonomous-database create --location <location> --autonomousdatabasename <name> --resource-group <resource_group> --subnet-id /<subnet_id> --display-name <display_name> --compute-model ECPU --compute-count <compute_count> --data-storage-size-in-gbs <storage_size> --license-model <BringYourOwnLicense/LicenseIncluded> --db-workload <OLTP> --admin-password <password> --db-version 19c --character-set AL32UTF8 --ncharacter-set AL16UTF16 --vnet-id <virtual network id> --regular
+      Create an Autonomous Database
+    syntax: az oracle-database autonomous-database create --location <location> --autonomousdatabasename <name> --resource-group <resource_group> --subnet-id <subnet_id> --display-name <display_name> --compute-model ECPU --compute-count <compute_count> --data-storage-size-in-gbs <storage_size> --license-model <BringYourOwnLicense/LicenseIncluded> --db-workload OLTP --admin-password <password> --db-version 19c --character-set AL32UTF8 --ncharacter-set AL16UTF16 --vnet-id <vnet_id> --regular
+  - summary: |-
+      Clone from an existing Autonomous Database
+    syntax: az oracle-database autonomous-database create --resource-group MyResourceGroup --location eastus --autonomousdatabasename MyCloneDB --display-name MyCloneDB --db-version 19c --admin-password <password> --compute-model ECPU --compute-count 2 --data-storage-size-in-gbs 1024 --license-model LicenseIncluded --db-workload OLTP --character-set AL32UTF8 --ncharacter-set AL16UTF16 --vnet-id <vnet_id> --subnet-id <subnet_id> --clone clone-type=Full source=Database source-id=<source_autonomous_database_id>
+  - summary: |-
+      Clone from a backup timestamp
+    syntax: az oracle-database autonomous-database create --resource-group MyResourceGroup --location eastus --autonomousdatabasename MyBackupCloneDB --display-name MyBackupCloneDB --db-version 19c --admin-password <password> --compute-model ECPU --compute-count 2 --data-storage-size-in-gbs 32 --license-model BringYourOwnLicense --db-workload OLTP --character-set AL32UTF8 --ncharacter-set AL16UTF16 --vnet-id <vnet_id> --subnet-id <subnet_id> --clone-from-backup-timestamp clone-type=Full source=BackupFromTimestamp source-id=<source_autonomous_database_id> timestamp=2026-06-03T15:45:11.000Z use-latest-available-backup-time-stamp=false
+  - summary: |-
+      Create a cross-region disaster recovery peer
+    syntax: az oracle-database autonomous-database create --resource-group MyResourceGroup --location germanywestcentral --autonomousdatabasename MyCrossRegionPeerDB --display-name MyCrossRegionPeerDB --db-version 19c --compute-model ECPU --compute-count 2 --data-storage-size-in-gbs 1024 --license-model LicenseIncluded --character-set AL32UTF8 --ncharacter-set AL16UTF16 --vnet-id <destination_vnet_id> --subnet-id <destination_subnet_id> --cross-region-disaster-recovery remote-disaster-recovery-type=Adg source=CrossRegionDisasterRecovery source-id=<source_autonomous_database_id> source-location=eastus is-replicate-automatic-backups=true
   requiredParameters:
   - isRequired: true
     name: --autonomousdatabasename --name -n
@@ -316,7 +330,7 @@ directCommands:
   - name: --database-edition
     acceptedValues: EnterpriseEdition, StandardEdition
     summary: |-
-      The Oracle Database Edition that applies to the Autonomous databases.
+      The Oracle Database edition that applies to the Autonomous Database. Use this only with --license-model BringYourOwnLicense.
     groupName: Properties Arguments
   - name: --db-version
     summary: |-
@@ -334,7 +348,7 @@ directCommands:
   - name: --is-auto-scaling-for-storage-enabled --store-auto-scaling
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Indicates if auto scaling is enabled for the Autonomous Database storage.
+      Indicates if auto scaling is enabled for the Autonomous Database storage. For clones from an existing database, this value must match the source database storage auto-scaling setting.
     groupName: Properties Arguments
   - name: --is-local-data-guard-enabled --local-data-guard
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -430,7 +444,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_delete
   name: az oracle-database autonomous-database delete
   summary: |-
-    Delete a AutonomousDatabase.
+    Delete an Autonomous Database.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -444,7 +458,7 @@ directCommands:
                                                   [--yes]
   examples:
   - summary: |-
-      Delete an Autonomous database
+      Delete an Autonomous Database
     syntax: az oracle-database autonomous-database delete --name <ADBS name> --resource-group <resource_group>
   optionalParameters:
   - name: --acquire-policy-token
@@ -600,6 +614,7 @@ directCommands:
                                                            [--acquire-policy-token]
                                                            [--autonomousdatabasename]
                                                            [--change-reference]
+                                                           [--file]
                                                            [--generate-type {All, Single}]
                                                            [--ids]
                                                            [--is-regional {0, 1, f, false, n, no, t, true, y, yes}]
@@ -608,7 +623,7 @@ directCommands:
   examples:
   - summary: |-
       Generate Wallet
-    syntax: az oracle-database autonomous-database generate-wallet --autonomousdatabasename <ADBS name> --resource-group <resource_group> --password <password> --is-regional True
+    syntax: az oracle-database autonomous-database generate-wallet --autonomousdatabasename MyAutoDB --resource-group MyResourceGroup --password <password> --is-regional True --file wallet-MyAutoDB.zip
   requiredParameters:
   - isRequired: true
     name: --password
@@ -628,6 +643,9 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --file -f
+    summary: |-
+      Local file path to save the generated wallet zip. Defaults to wallet-{autonomousdatabasename}.zip.
   - name: --generate-type
     acceptedValues: All, Single
     summary: |-
@@ -677,7 +695,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_list
   name: az oracle-database autonomous-database list
   summary: |-
-    List AutonomousDatabase resources by subscription ID.
+    List Autonomous Database resources by subscription ID.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -686,7 +704,7 @@ directCommands:
                                                 [--resource-group]
   examples:
   - summary: |-
-      List Autonomous databases
+      List Autonomous Databases
     syntax: az oracle-database autonomous-database list --resource-group <resource_group>
   optionalParameters:
   - name: --max-items
@@ -744,13 +762,13 @@ directCommands:
                                                    [--subscription]
   examples:
   - summary: |-
-      Restore Autonomous database
-    syntax: az oracle-database autonomous-database restore --autonomousdatabasename <ADBS name> --resource-group <resource_group> --timestamp <timestamp>
+      Restore an Autonomous Database
+    syntax: az oracle-database autonomous-database restore --autonomousdatabasename <ADBS name> --resource-group <resource_group> --timestamp 2026-06-03T15:45:11.000Z
   requiredParameters:
   - isRequired: true
     name: --timestamp
     summary: |-
-      The time to restore the database to.
+      The point in time to restore the database to. Use RFC3339 UTC format, for example 2026-06-03T15:45:11.000Z.
     groupName: Body Arguments
   optionalParameters:
   - name: --acquire-policy-token
@@ -808,7 +826,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_show
   name: az oracle-database autonomous-database show
   summary: |-
-    Get a AutonomousDatabase.
+    Get an Autonomous Database.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -818,7 +836,7 @@ directCommands:
                                                 [--subscription]
   examples:
   - summary: |-
-      Get Autonomous database
+      Get an Autonomous Database
     syntax: az oracle-database autonomous-database show --autonomousdatabasename <ADBS name> --resource-group <resource_group>
   optionalParameters:
   - name: --autonomousdatabasename --name -n
@@ -1021,7 +1039,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_update
   name: az oracle-database autonomous-database update
   summary: |-
-    Update a AutonomousDatabase.
+    Update an Autonomous Database.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -1066,8 +1084,11 @@ directCommands:
                                                   [--whitelisted-ips]
   examples:
   - summary: |-
-      Update Autonomous database
+      Update an Autonomous Database
     syntax: az oracle-database autonomous-database update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --tags {Tagkey:TagValue}
+  - summary: |-
+      Enable local Autonomous Data Guard
+    syntax: az oracle-database autonomous-database update --resource-group MyResourceGroup --autonomousdatabasename MyAutoDB --local-data-guard true --local-adg-auto-failover-max-data-loss-limit 0
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1142,7 +1163,7 @@ directCommands:
   - name: --database-edition
     acceptedValues: EnterpriseEdition, StandardEdition
     summary: |-
-      The Oracle Database Edition that applies to the Autonomous databases.
+      The Oracle Database edition that applies to the Autonomous Database.
     groupName: Properties Arguments
   - name: --display-name
     summary: |-
@@ -1150,7 +1171,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --failover-limit --local-adg-auto-failover-max-data-loss-limit
     summary: |-
-      Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard.
+      Maximum data loss limit, in seconds, for local Autonomous Data Guard automatic failover when supported.
     groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -1169,7 +1190,7 @@ directCommands:
   - name: --is-local-data-guard-enabled --local-data-guard
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Indicates whether the Autonomous Database has local or called in-region Data Guard enabled.
+      Indicates whether local, in-region Autonomous Data Guard is enabled for the Autonomous Database.
     groupName: Properties Arguments
   - name: --is-mtls-connection-required --mtls-reqd
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes

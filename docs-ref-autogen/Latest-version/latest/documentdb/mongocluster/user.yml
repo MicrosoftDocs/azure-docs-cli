@@ -1,45 +1,42 @@
 ### YamlMime:AzureCLIGroup
-uid: az_oracle-database_autonomous-database_backup
-name: az oracle-database autonomous-database backup
+uid: az_documentdb_mongocluster_user
+name: az documentdb mongocluster user
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **oracle-database** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az oracle-database autonomous-database backup** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **documentdb** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az documentdb mongocluster user** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Autonomous Databases Backup.
+  Manage User.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_oracle-database_autonomous-database_backup_create
-  name: az oracle-database autonomous-database backup create
+- uid: az_documentdb_mongocluster_user_create
+  name: az documentdb mongocluster user create
   summary: |-
-    Create an Autonomous Database backup.
+    Create a new user or updates an existing user on a mongo cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup create --adbbackupid --name
-                                                         --autonomousdatabasename
-                                                         --resource-group
-                                                         [--acquire-policy-token]
-                                                         [--change-reference]
-                                                         [--display-name]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--retention-days --retention-period-in-days]
+    az documentdb mongocluster user create --cluster-name
+                                           --name --user-name
+                                           --resource-group
+                                           [--acquire-policy-token]
+                                           [--change-reference]
+                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--role --roles]
+                                           [--type {ServicePrincipal, User}]
   examples:
   - summary: |-
-      Create an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --display-name <display name> --retention-period-in-days <days>
-  - summary: |-
-      Create and return the Azure backup resource ID
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days> --query "{id:id,name:name}"
+      Create an Entra-backed user.
+    syntax: az documentdb mongocluster user create -n alice-entra --cluster-name MyCluster -g MyResourceGroup --type User --role db=admin role=root
   requiredParameters:
   - isRequired: true
-    name: --adbbackupid --name -n
+    name: --cluster-name
     summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
+      The name of the mongo cluster.
   - isRequired: true
-    name: --autonomousdatabasename
+    name: --name --user-name -n
     summary: |-
-      The database name.
+      The name of the mongo cluster user.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -53,17 +50,18 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --display-name
-    summary: |-
-      The user-friendly name for the backup. The name does not have to be unique.
-    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --retention-days --retention-period-in-days
+  - name: --role --roles
     summary: |-
-      Retention period, in days, for long-term backups.
+      Database roles that are assigned to the user. Usage: --role db=admin role=root. Multiple roles can be specified by using more than one --role argument.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--role`.
+    groupName: Properties Arguments
+  - name: --type -t
+    acceptedValues: ServicePrincipal, User
+    summary: |-
+      The Microsoft Entra principal type of the user. Allowed values: User, ServicePrincipal. Example: --type User.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -92,46 +90,46 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_delete
-  name: az oracle-database autonomous-database backup delete
+- uid: az_documentdb_mongocluster_user_delete
+  name: az documentdb mongocluster user delete
   summary: |-
-    Delete an Autonomous Database backup.
+    Delete a mongo cluster user.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup delete [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--resource-group]
-                                                         [--subscription]
-                                                         [--yes]
+    az documentdb mongocluster user delete [--acquire-policy-token]
+                                           [--change-reference]
+                                           [--cluster-name]
+                                           [--ids]
+                                           [--name --user-name]
+                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--resource-group]
+                                           [--subscription]
+                                           [--yes]
   examples:
   - summary: |-
-      Delete an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup delete --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --yes
+      Delete a user.
+    syntax: az documentdb mongocluster user delete -n alice@contoso.com --cluster-name MyCluster -g MyResourceGroup
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --user-name -n
+    summary: |-
+      The name of the mongo cluster user.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -173,26 +171,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_list
-  name: az oracle-database autonomous-database backup list
+- uid: az_documentdb_mongocluster_user_list
+  name: az documentdb mongocluster user list
   summary: |-
-    List Autonomous Database backup resources by Autonomous Database.
+    List all the users on a mongo cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup list --autonomousdatabasename
-                                                       --resource-group
-                                                       [--max-items]
-                                                       [--next-token]
+    az documentdb mongocluster user list --cluster-name
+                                         --resource-group
+                                         [--max-items]
+                                         [--next-token]
   examples:
   - summary: |-
-      List Autonomous Database backups
-    syntax: az oracle-database autonomous-database backup list --autonomousdatabasename <ADBS name> --resource-group <resource_group>
+      List users on a cluster.
+    syntax: az documentdb mongocluster user list --cluster-name MyCluster -g MyResourceGroup
   requiredParameters:
   - isRequired: true
-    name: --autonomousdatabasename
+    name: --cluster-name
     summary: |-
-      The database name.
+      The name of the mongo cluster.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -233,37 +231,34 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_show
-  name: az oracle-database autonomous-database backup show
+- uid: az_documentdb_mongocluster_user_show
+  name: az documentdb mongocluster user show
   summary: |-
-    Get an Autonomous Database backup.
+    Get the defintion of a Mongo cluster user.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup show [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--ids]
-                                                       [--resource-group]
-                                                       [--subscription]
+    az documentdb mongocluster user show [--cluster-name]
+                                         [--ids]
+                                         [--name --user-name]
+                                         [--resource-group]
+                                         [--subscription]
   examples:
   - summary: |-
-      Get an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id>
-  - summary: |-
-      Get a backup using the Azure backup resource name/id returned by backup create or backup list
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_id>
+      Get a user.
+    syntax: az documentdb mongocluster user show -n alice@contoso.com --cluster-name MyCluster -g MyResourceGroup
   optionalParameters:
-  - name: --adbbackupid --name -n
+  - name: --cluster-name
     summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
+      The name of the mongo cluster.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --user-name -n
+    summary: |-
+      The name of the mongo cluster user.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -297,51 +292,48 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_update
-  name: az oracle-database autonomous-database backup update
+- uid: az_documentdb_mongocluster_user_update
+  name: az documentdb mongocluster user update
   summary: |-
-    Update an Autonomous Database backup.
+    Update a new user or updates an existing user on a mongo cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup update [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--add]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--remove]
-                                                         [--resource-group]
-                                                         [--retention-days --retention-period-in-days]
-                                                         [--set]
-                                                         [--subscription]
+    az documentdb mongocluster user update [--acquire-policy-token]
+                                           [--add]
+                                           [--change-reference]
+                                           [--cluster-name]
+                                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--ids]
+                                           [--name --user-name]
+                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--remove]
+                                           [--resource-group]
+                                           [--role --roles]
+                                           [--set]
+                                           [--subscription]
+                                           [--type {ServicePrincipal, User}]
   examples:
   - summary: |-
-      Update an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days>
+      Update a user's roles.
+    syntax: az documentdb mongocluster user update -n alice-entra --cluster-name MyCluster -g MyResourceGroup --role db=admin role=root
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -350,6 +342,10 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --user-name -n
+    summary: |-
+      The name of the mongo cluster user.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -363,9 +359,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --retention-days --retention-period-in-days
+  - name: --role --roles
     summary: |-
-      Retention period, in days, for long-term backups.
+      Database roles that are assigned to the user. Usage: --role db=admin role=root. Multiple roles can be specified by using more than one --role argument.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--role`.
     groupName: Properties Arguments
   - name: --set
     summary: |-
@@ -375,6 +371,11 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --type -t
+    acceptedValues: ServicePrincipal, User
+    summary: |-
+      The Microsoft Entra principal type of the user. Allowed values: User, ServicePrincipal. Example: --type User.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -399,44 +400,40 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_wait
-  name: az oracle-database autonomous-database backup wait
+- uid: az_documentdb_mongocluster_user_wait
+  name: az documentdb mongocluster user wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup wait [--acquire-policy-token]
-                                                       [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--change-reference]
-                                                       [--created]
-                                                       [--custom]
-                                                       [--deleted]
-                                                       [--exists]
-                                                       [--ids]
-                                                       [--interval]
-                                                       [--resource-group]
-                                                       [--subscription]
-                                                       [--timeout]
-                                                       [--updated]
+    az documentdb mongocluster user wait [--acquire-policy-token]
+                                         [--change-reference]
+                                         [--cluster-name]
+                                         [--created]
+                                         [--custom]
+                                         [--deleted]
+                                         [--exists]
+                                         [--ids]
+                                         [--interval]
+                                         [--name --user-name]
+                                         [--resource-group]
+                                         [--subscription]
+                                         [--timeout]
+                                         [--updated]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -465,6 +462,10 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
+  - name: --name --user-name -n
+    summary: |-
+      The name of the mongo cluster user.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -508,11 +509,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_oracle-database_autonomous-database_backup_create
-- az_oracle-database_autonomous-database_backup_delete
-- az_oracle-database_autonomous-database_backup_list
-- az_oracle-database_autonomous-database_backup_show
-- az_oracle-database_autonomous-database_backup_update
-- az_oracle-database_autonomous-database_backup_wait
+- az_documentdb_mongocluster_user_create
+- az_documentdb_mongocluster_user_delete
+- az_documentdb_mongocluster_user_list
+- az_documentdb_mongocluster_user_show
+- az_documentdb_mongocluster_user_update
+- az_documentdb_mongocluster_user_wait
 metadata:
-  description: Autonomous Databases Backup.
+  description: Manage User.
