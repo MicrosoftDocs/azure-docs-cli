@@ -1,45 +1,42 @@
 ### YamlMime:AzureCLIGroup
-uid: az_oracle-database_autonomous-database_backup
-name: az oracle-database autonomous-database backup
+uid: az_documentdb_mongocluster_firewall-rule
+name: az documentdb mongocluster firewall-rule
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **oracle-database** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az oracle-database autonomous-database backup** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **documentdb** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az documentdb mongocluster firewall-rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Autonomous Databases Backup.
+  Manage Firewall Rule.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_oracle-database_autonomous-database_backup_create
-  name: az oracle-database autonomous-database backup create
+- uid: az_documentdb_mongocluster_firewall-rule_create
+  name: az documentdb mongocluster firewall-rule create
   summary: |-
-    Create an Autonomous Database backup.
+    Create a new firewall rule or updates an existing firewall rule on a mongo cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup create --adbbackupid --name
-                                                         --autonomousdatabasename
-                                                         --resource-group
-                                                         [--acquire-policy-token]
-                                                         [--change-reference]
-                                                         [--display-name]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--retention-days --retention-period-in-days]
+    az documentdb mongocluster firewall-rule create --cluster-name
+                                                    --firewall-rule-name --name
+                                                    --resource-group
+                                                    [--acquire-policy-token]
+                                                    [--change-reference]
+                                                    [--end-ip-address]
+                                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                    [--start-ip-address]
   examples:
   - summary: |-
-      Create an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --display-name <display name> --retention-period-in-days <days>
-  - summary: |-
-      Create and return the Azure backup resource ID
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days> --query "{id:id,name:name}"
+      Create a firewall rule.
+    syntax: az documentdb mongocluster firewall-rule create -n AllowOffice --cluster-name MyCluster -g MyResourceGroup --start-ip-address 1.2.3.4 --end-ip-address 1.2.3.9
   requiredParameters:
   - isRequired: true
-    name: --adbbackupid --name -n
+    name: --cluster-name
     summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
+      The name of the mongo cluster.
   - isRequired: true
-    name: --autonomousdatabasename
+    name: --firewall-rule-name --name -n
     summary: |-
-      The database name.
+      The name of the mongo cluster firewall rule.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -53,17 +50,17 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --display-name
+  - name: --end-ip-address
     summary: |-
-      The user-friendly name for the backup. The name does not have to be unique.
+      The end IP address of the mongo cluster firewall rule. Must be IPv4 format.
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --retention-days --retention-period-in-days
+  - name: --start-ip-address
     summary: |-
-      Retention period, in days, for long-term backups.
+      The start IP address of the mongo cluster firewall rule. Must be IPv4 format.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -92,43 +89,43 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_delete
-  name: az oracle-database autonomous-database backup delete
+- uid: az_documentdb_mongocluster_firewall-rule_delete
+  name: az documentdb mongocluster firewall-rule delete
   summary: |-
-    Delete an Autonomous Database backup.
+    Delete a mongo cluster firewall rule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup delete [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--resource-group]
-                                                         [--subscription]
-                                                         [--yes]
+    az documentdb mongocluster firewall-rule delete [--acquire-policy-token]
+                                                    [--change-reference]
+                                                    [--cluster-name]
+                                                    [--firewall-rule-name --name]
+                                                    [--ids]
+                                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                    [--resource-group]
+                                                    [--subscription]
+                                                    [--yes]
   examples:
   - summary: |-
-      Delete an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup delete --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --yes
+      Delete a firewall rule.
+    syntax: az documentdb mongocluster firewall-rule delete -n AllowOffice --cluster-name MyCluster -g MyResourceGroup
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
+  - name: --firewall-rule-name --name -n
+    summary: |-
+      The name of the mongo cluster firewall rule.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -173,26 +170,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_list
-  name: az oracle-database autonomous-database backup list
+- uid: az_documentdb_mongocluster_firewall-rule_list
+  name: az documentdb mongocluster firewall-rule list
   summary: |-
-    List Autonomous Database backup resources by Autonomous Database.
+    List all the firewall rules in a given mongo cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup list --autonomousdatabasename
-                                                       --resource-group
-                                                       [--max-items]
-                                                       [--next-token]
+    az documentdb mongocluster firewall-rule list --cluster-name
+                                                  --resource-group
+                                                  [--max-items]
+                                                  [--next-token]
   examples:
   - summary: |-
-      List Autonomous Database backups
-    syntax: az oracle-database autonomous-database backup list --autonomousdatabasename <ADBS name> --resource-group <resource_group>
+      List firewall rules on a cluster.
+    syntax: az documentdb mongocluster firewall-rule list --cluster-name MyCluster -g MyResourceGroup
   requiredParameters:
   - isRequired: true
-    name: --autonomousdatabasename
+    name: --cluster-name
     summary: |-
-      The database name.
+      The name of the mongo cluster.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -233,33 +230,30 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_show
-  name: az oracle-database autonomous-database backup show
+- uid: az_documentdb_mongocluster_firewall-rule_show
+  name: az documentdb mongocluster firewall-rule show
   summary: |-
-    Get an Autonomous Database backup.
+    Get information about a mongo cluster firewall rule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup show [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--ids]
-                                                       [--resource-group]
-                                                       [--subscription]
+    az documentdb mongocluster firewall-rule show [--cluster-name]
+                                                  [--firewall-rule-name --name]
+                                                  [--ids]
+                                                  [--resource-group]
+                                                  [--subscription]
   examples:
   - summary: |-
-      Get an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id>
-  - summary: |-
-      Get a backup using the Azure backup resource name/id returned by backup create or backup list
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_id>
+      Get a firewall rule.
+    syntax: az documentdb mongocluster firewall-rule show -n AllowOffice --cluster-name MyCluster -g MyResourceGroup
   optionalParameters:
-  - name: --adbbackupid --name -n
+  - name: --cluster-name
     summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
+      The name of the mongo cluster.
     groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
+  - name: --firewall-rule-name --name -n
     summary: |-
-      The database name.
+      The name of the mongo cluster firewall rule.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -297,51 +291,56 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_update
-  name: az oracle-database autonomous-database backup update
+- uid: az_documentdb_mongocluster_firewall-rule_update
+  name: az documentdb mongocluster firewall-rule update
   summary: |-
-    Update an Autonomous Database backup.
+    Update a new firewall rule or updates an existing firewall rule on a mongo cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup update [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--add]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--remove]
-                                                         [--resource-group]
-                                                         [--retention-days --retention-period-in-days]
-                                                         [--set]
-                                                         [--subscription]
+    az documentdb mongocluster firewall-rule update [--acquire-policy-token]
+                                                    [--add]
+                                                    [--change-reference]
+                                                    [--cluster-name]
+                                                    [--end-ip-address]
+                                                    [--firewall-rule-name --name]
+                                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                    [--ids]
+                                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                    [--remove]
+                                                    [--resource-group]
+                                                    [--set]
+                                                    [--start-ip-address]
+                                                    [--subscription]
   examples:
   - summary: |-
-      Update an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days>
+      Update a firewall rule's IP range.
+    syntax: az documentdb mongocluster firewall-rule update -n AllowOffice --cluster-name MyCluster -g MyResourceGroup --end-ip-address 1.2.3.20
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
+  - name: --end-ip-address
+    summary: |-
+      The end IP address of the mongo cluster firewall rule. Must be IPv4 format.
+    groupName: Properties Arguments
+  - name: --firewall-rule-name --name -n
+    summary: |-
+      The name of the mongo cluster firewall rule.
+    groupName: Resource Id Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -363,14 +362,14 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --retention-days --retention-period-in-days
-    summary: |-
-      Retention period, in days, for long-term backups.
-    groupName: Properties Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
+  - name: --start-ip-address
+    summary: |-
+      The start IP address of the mongo cluster firewall rule. Must be IPv4 format.
+    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -399,44 +398,40 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_wait
-  name: az oracle-database autonomous-database backup wait
+- uid: az_documentdb_mongocluster_firewall-rule_wait
+  name: az documentdb mongocluster firewall-rule wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup wait [--acquire-policy-token]
-                                                       [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--change-reference]
-                                                       [--created]
-                                                       [--custom]
-                                                       [--deleted]
-                                                       [--exists]
-                                                       [--ids]
-                                                       [--interval]
-                                                       [--resource-group]
-                                                       [--subscription]
-                                                       [--timeout]
-                                                       [--updated]
+    az documentdb mongocluster firewall-rule wait [--acquire-policy-token]
+                                                  [--change-reference]
+                                                  [--cluster-name]
+                                                  [--created]
+                                                  [--custom]
+                                                  [--deleted]
+                                                  [--exists]
+                                                  [--firewall-rule-name --name]
+                                                  [--ids]
+                                                  [--interval]
+                                                  [--resource-group]
+                                                  [--subscription]
+                                                  [--timeout]
+                                                  [--updated]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -456,6 +451,10 @@ directCommands:
     summary: |-
       Wait until the resource exists.
     groupName: Wait Condition Arguments
+  - name: --firewall-rule-name --name -n
+    summary: |-
+      The name of the mongo cluster firewall rule.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -508,11 +507,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_oracle-database_autonomous-database_backup_create
-- az_oracle-database_autonomous-database_backup_delete
-- az_oracle-database_autonomous-database_backup_list
-- az_oracle-database_autonomous-database_backup_show
-- az_oracle-database_autonomous-database_backup_update
-- az_oracle-database_autonomous-database_backup_wait
+- az_documentdb_mongocluster_firewall-rule_create
+- az_documentdb_mongocluster_firewall-rule_delete
+- az_documentdb_mongocluster_firewall-rule_list
+- az_documentdb_mongocluster_firewall-rule_show
+- az_documentdb_mongocluster_firewall-rule_update
+- az_documentdb_mongocluster_firewall-rule_wait
 metadata:
-  description: Autonomous Databases Backup.
+  description: Manage Firewall Rule.
