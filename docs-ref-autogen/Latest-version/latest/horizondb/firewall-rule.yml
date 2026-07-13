@@ -1,52 +1,46 @@
 ### YamlMime:AzureCLIGroup
-uid: az_aks_jwtauthenticator
-name: az aks jwtauthenticator
+uid: az_horizondb_firewall-rule
+name: az horizondb firewall-rule
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **aks-preview** extension for the Azure CLI (version 2.85.0 or higher). The extension will automatically install the first time you run an **az aks jwtauthenticator** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **horizondb** extension for the Azure CLI (version 2.17.1 or higher). The extension will automatically install the first time you run an **az horizondb firewall-rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage JWT authenticators in Azure Kubernetes Service.
+  Manage firewall rules for an Azure HorizonDB cluster.
 description: |-
-  JWT authenticators enable external JWT token validation for Kubernetes authentication. For more information, see https://aka.ms/aks-external-issuers-docs.
+  Firewall rules control public access to a HorizonDB cluster and are applied to the cluster's default pool. Use these commands to allow inbound connections from specific IP addresses or ranges.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_aks_jwtauthenticator_add
-  name: az aks jwtauthenticator add
+- uid: az_horizondb_firewall-rule_create
+  name: az horizondb firewall-rule create
   summary: |-
-    Add a JWT authenticator to a managed cluster.
-  description: |-
-    Adds a new JWT authenticator configuration to the managed cluster for external JWT validation. The configuration will be applied to the kube-apiserver to enable JWT token authentication.
+    Create a firewall rule for an Azure HorizonDB cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az aks jwtauthenticator add --cluster-name
-                                --config-file
-                                --name
-                                --resource-group
-                                [--acquire-policy-token]
-                                [--aks-custom-headers]
-                                [--change-reference]
-                                [--no-wait]
+    az horizondb firewall-rule create --cluster-name
+                                      --resource-group
+                                      [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--description]
+                                      [--end-ip-address]
+                                      [--name]
+                                      [--start-ip-address]
   examples:
   - summary: |-
-      Add a JWT authenticator from a configuration file
-    syntax: az aks jwtauthenticator add -g MyResourceGroup --cluster-name MyCluster --name myjwt --config-file config.json
+      Create a firewall rule allowing a single IP address.
+    syntax: az horizondb firewall-rule create --resource-group exampleresourcegroup --cluster-name examplecluster --name allowclientip --start-ip-address 12.12.12.12
+  - summary: |-
+      Create a firewall rule allowing a range of IP addresses.
+    syntax: az horizondb firewall-rule create --resource-group exampleresourcegroup --cluster-name examplecluster --name allowrange --start-ip-address 12.12.12.0 --end-ip-address 12.12.12.255
+  - summary: |-
+      Create a firewall rule allowing access from all Azure-internal IP addresses.
+    syntax: az horizondb firewall-rule create --resource-group exampleresourcegroup --cluster-name examplecluster --name allowazure --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name -c
     summary: |-
-      Name of the managed cluster.
-  - isRequired: true
-    name: --config-file
-    summary: |-
-      Path to JSON file containing the JWT authenticator configuration.
-    description: |-
-      The JSON file should contain the properties schema for one JWT authenticator. For details on how to configure the properties of a JWT authenticator, please refer to the Kubernetes documentation at https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration. Please note that not all fields available in the Kubernetes documentation are supported by AKS. For troubleshooting, please see https://aka.ms/aks-external-issuers-docs.
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the JWT authenticator (must be unique within the cluster).
+      Name of the HorizonDB cluster.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -56,17 +50,22 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --aks-custom-headers
-    summary: |-
-      Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --no-wait
-    defaultValue: "False"
+  - name: --description
     summary: |-
-      Do not wait for the long-running operation to finish.
+      The description of the firewall rule.
+  - name: --end-ip-address
+    summary: |-
+      The end IP address of the firewall rule (IPv4). Must be dotted-quad format. Use 0.0.0.0 to represent all Azure-internal IP addresses.
+  - name: --name -n
+    summary: |-
+      The name of the firewall rule.
+  - name: --start-ip-address
+    summary: |-
+      The start IP address of the firewall rule (IPv4). Must be dotted-quad format. Use 0.0.0.0 to represent all Azure-internal IP addresses.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -94,36 +93,32 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_aks_jwtauthenticator_delete
-  name: az aks jwtauthenticator delete
+- uid: az_horizondb_firewall-rule_delete
+  name: az horizondb firewall-rule delete
   summary: |-
-    Delete a JWT authenticator from a managed cluster.
-  description: |-
-    Removes the JWT authenticator configuration from the managed cluster and updates the kube-apiserver.
+    Delete a firewall rule for an Azure HorizonDB cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az aks jwtauthenticator delete --cluster-name
-                                   --name
-                                   --resource-group
-                                   [--acquire-policy-token]
-                                   [--aks-custom-headers]
-                                   [--change-reference]
-                                   [--no-wait]
-                                   [--yes]
+    az horizondb firewall-rule delete --cluster-name
+                                      --name
+                                      --resource-group
+                                      [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--yes]
   examples:
   - summary: |-
-      Delete a JWT authenticator
-    syntax: az aks jwtauthenticator delete -g MyResourceGroup --cluster-name MyCluster --name myjwt
+      Delete a firewall rule.
+    syntax: az horizondb firewall-rule delete --resource-group exampleresourcegroup --cluster-name examplecluster --name allowclientip
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name -c
     summary: |-
-      Name of the managed cluster.
+      Name of the HorizonDB cluster.
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the JWT authenticator to delete.
+      The name of the firewall rule.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -133,17 +128,10 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --aks-custom-headers
-    summary: |-
-      Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -175,33 +163,28 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_aks_jwtauthenticator_list
-  name: az aks jwtauthenticator list
+- uid: az_horizondb_firewall-rule_list
+  name: az horizondb firewall-rule list
   summary: |-
-    List all JWT authenticators in a managed cluster.
+    List the firewall rules for an Azure HorizonDB cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az aks jwtauthenticator list --cluster-name
-                                 --resource-group
-                                 [--aks-custom-headers]
+    az horizondb firewall-rule list --cluster-name
+                                    --resource-group
   examples:
   - summary: |-
-      List all JWT authenticators in a cluster
-    syntax: az aks jwtauthenticator list -g MyResourceGroup --cluster-name MyCluster
+      List all firewall rules for a cluster.
+    syntax: az horizondb firewall-rule list --resource-group exampleresourcegroup --cluster-name examplecluster
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name -c
     summary: |-
-      Name of the managed cluster.
+      Name of the HorizonDB cluster.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --aks-custom-headers
-    summary: |-
-      Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -229,38 +212,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_aks_jwtauthenticator_show
-  name: az aks jwtauthenticator show
+- uid: az_horizondb_firewall-rule_show
+  name: az horizondb firewall-rule show
   summary: |-
-    Show details of a JWT authenticator in a managed cluster.
+    Show the details of a firewall rule for an Azure HorizonDB cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az aks jwtauthenticator show --cluster-name
-                                 --name
-                                 --resource-group
-                                 [--aks-custom-headers]
+    az horizondb firewall-rule show --cluster-name
+                                    --name
+                                    --resource-group
   examples:
   - summary: |-
-      Show a specific JWT authenticator configuration
-    syntax: az aks jwtauthenticator show -g MyResourceGroup --cluster-name MyCluster --name myjwt
+      Show a firewall rule.
+    syntax: az horizondb firewall-rule show --resource-group exampleresourcegroup --cluster-name examplecluster --name allowclientip
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name -c
     summary: |-
-      Name of the managed cluster.
+      Name of the HorizonDB cluster.
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the JWT authenticator to show.
+      The name of the firewall rule.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --aks-custom-headers
-    summary: |-
-      Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -288,42 +266,34 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_aks_jwtauthenticator_update
-  name: az aks jwtauthenticator update
+- uid: az_horizondb_firewall-rule_update
+  name: az horizondb firewall-rule update
   summary: |-
-    Update a JWT authenticator in a managed cluster.
-  description: |-
-    Updates an existing JWT authenticator configuration. The entire configuration will be replaced with the configuration from the provided file.
+    Update a firewall rule for an Azure HorizonDB cluster.
   status: GA
   sourceType: Extension
   syntax: >-
-    az aks jwtauthenticator update --cluster-name
-                                   --config-file
-                                   --name
-                                   --resource-group
-                                   [--acquire-policy-token]
-                                   [--aks-custom-headers]
-                                   [--change-reference]
-                                   [--no-wait]
+    az horizondb firewall-rule update --cluster-name
+                                      --name
+                                      --resource-group
+                                      [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--description]
+                                      [--end-ip-address]
+                                      [--start-ip-address]
   examples:
   - summary: |-
-      Update a JWT authenticator configuration
-    syntax: az aks jwtauthenticator update -g MyResourceGroup --cluster-name MyCluster --name myjwt --config-file updated-config.json
+      Update the IP range of an existing firewall rule.
+    syntax: az horizondb firewall-rule update --resource-group exampleresourcegroup --cluster-name examplecluster --name allowrange --start-ip-address 12.12.12.0 --end-ip-address 12.12.12.128
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name -c
     summary: |-
-      Name of the managed cluster.
-  - isRequired: true
-    name: --config-file
-    summary: |-
-      Path to JSON file containing the updated JWT authenticator configuration.
-    description: |-
-      The JSON file should contain the properties schema for one JWT authenticator. For details on how to configure the properties of a JWT authenticator, please refer to the Kubernetes documentation at https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration. Please note that not all fields available in the Kubernetes documentation are supported by AKS. For troubleshooting, please see https://aka.ms/aks-external-issuers-docs.
+      Name of the HorizonDB cluster.
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the JWT authenticator to update.
+      The name of the firewall rule.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -333,17 +303,19 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --aks-custom-headers
-    summary: |-
-      Send custom headers. When specified, format should be Key1=Value1.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --no-wait
-    defaultValue: "False"
+  - name: --description
     summary: |-
-      Do not wait for the long-running operation to finish.
+      The description of the firewall rule.
+  - name: --end-ip-address
+    summary: |-
+      The end IP address of the firewall rule (IPv4). Must be dotted-quad format. Use 0.0.0.0 to represent all Azure-internal IP addresses.
+  - name: --start-ip-address
+    summary: |-
+      The start IP address of the firewall rule (IPv4). Must be dotted-quad format. Use 0.0.0.0 to represent all Azure-internal IP addresses.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -372,10 +344,10 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_aks_jwtauthenticator_add
-- az_aks_jwtauthenticator_delete
-- az_aks_jwtauthenticator_list
-- az_aks_jwtauthenticator_show
-- az_aks_jwtauthenticator_update
+- az_horizondb_firewall-rule_create
+- az_horizondb_firewall-rule_delete
+- az_horizondb_firewall-rule_list
+- az_horizondb_firewall-rule_show
+- az_horizondb_firewall-rule_update
 metadata:
-  description: JWT authenticators enable external JWT token validation for Kubernetes authentication. For more information, see https://aka.ms/aks-external-issuers-docs.
+  description: Firewall rules control public access to a HorizonDB cluster and are applied to the cluster's default pool. Use these commands to allow inbound connections from specific IP addresses or ranges.
