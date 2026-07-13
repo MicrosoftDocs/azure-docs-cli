@@ -22,11 +22,13 @@ directCommands:
                         [--change-reference]
                         [--location]
                         [--name]
+                        [--public-access]
                         [--replica-count]
                         [--resource-group]
                         [--tags]
                         [--v-cores]
                         [--version]
+                        [--yes]
                         [--zone-placement-policy {BestEffort, Strict}]
   examples:
   - summary: |-
@@ -35,6 +37,15 @@ directCommands:
   - summary: |-
       Create a HorizonDB cluster with zone placement policy.
     syntax: az horizondb create --name examplecluster --resource-group exampleresourcegroup --location centralus --administrator-login myadmin --administrator-login-password examplepassword --version 17 --v-cores 4 --replica-count 3 --zone-placement-policy Strict
+  - summary: |-
+      Create a HorizonDB cluster and allow public access from a single IP address (creates a firewall rule).
+    syntax: az horizondb create --name examplecluster --resource-group exampleresourcegroup --location centralus --administrator-login myadmin --administrator-login-password examplepassword --version 17 --v-cores 4 --public-access 12.12.12.12
+  - summary: |-
+      Create a HorizonDB cluster and allow public access from a range of IP addresses.
+    syntax: az horizondb create --name examplecluster --resource-group exampleresourcegroup --location centralus --administrator-login myadmin --administrator-login-password examplepassword --version 17 --v-cores 4 --public-access 12.12.12.0-12.12.12.255
+  - summary: |-
+      Create a HorizonDB cluster and allow public access from all IP addresses.
+    syntax: az horizondb create --name examplecluster --resource-group exampleresourcegroup --location centralus --administrator-login myadmin --administrator-login-password examplepassword --version 17 --v-cores 4 --public-access All
   requiredParameters:
   - isRequired: true
     name: --administrator-login -u
@@ -59,6 +70,9 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the cluster. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --public-access
+    summary: |-
+      Determines the public access for the cluster by creating a firewall rule on the default pool. Enter a single IP address or a range of IP addresses (dash-separated, no spaces) to be included in the allowed list of IPs. Specifying 'All' allows public access from any IP (0.0.0.0-255.255.255.255). 'Enabled' detects your current client IP and prompts to allow it. 'None' and 'Disabled' do not create a firewall rule. Acceptable values: 'Enabled', 'Disabled', 'All', 'None', '{startIP}' and '{startIP}-{endIP}' where each IP ranges from 0.0.0.0 to 255.255.255.255.
   - name: --replica-count -r
     summary: |-
       Number of replicas. Must be between 1 and 16, inclusive.
@@ -74,6 +88,10 @@ directCommands:
   - name: --version -v
     summary: |-
       The version of the HorizonDb cluster.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   - name: --zone-placement-policy -z
     acceptedValues: BestEffort, Strict
     summary: |-
@@ -291,10 +309,12 @@ directCommands:
                         [--name]
                         [--no-wait]
                         [--parameter-group]
+                        [--public-access {Disabled, Enabled}]
                         [--resource-group]
                         [--subscription]
                         [--tags]
                         [--v-cores]
+                        [--yes]
   examples:
   - summary: |-
       Update an existing HorizonDB cluster to have 6 vCores.
@@ -302,6 +322,9 @@ directCommands:
   - summary: |-
       Assign a parameter group to an existing HorizonDB cluster.
     syntax: az horizondb update --name examplecluster --resource-group exampleresourcegroup --parameter-group /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.HorizonDb/parameterGroups/{parameterGroup}
+  - summary: |-
+      Enable public access on an existing HorizonDB cluster (detects your client IP and prompts to create a firewall rule).
+    syntax: az horizondb update --name examplecluster --resource-group exampleresourcegroup --public-access Enabled
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -329,6 +352,10 @@ directCommands:
   - name: --parameter-group
     summary: |-
       The resource ID of the parameter group.
+  - name: --public-access
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable public access on the cluster. 'Enabled' detects your current client IP and prompts to create a firewall rule on the default pool. 'Disabled' points you to the 'az horizondb firewall-rule' commands to remove public access.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -343,6 +370,10 @@ directCommands:
   - name: --v-cores
     summary: |-
       Number of vCores.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -370,6 +401,12 @@ directCommands:
 commands:
 - az_horizondb_create
 - az_horizondb_delete
+- az_horizondb_firewall-rule
+- az_horizondb_firewall-rule_create
+- az_horizondb_firewall-rule_delete
+- az_horizondb_firewall-rule_list
+- az_horizondb_firewall-rule_show
+- az_horizondb_firewall-rule_update
 - az_horizondb_list
 - az_horizondb_show
 - az_horizondb_update
