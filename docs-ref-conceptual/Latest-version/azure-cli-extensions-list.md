@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/13/2026
+ms.date: 07/14/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -55,7 +55,7 @@ You will be prompted to install an extension on first use.
 |[azure-changesafety](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety) | 2.75.0 | Microsoft Azure Command-Line Tools ChangeSafety Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety/HISTORY.rst) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.6](https://github.com/Microsoft/azure-devops-cli-extension) |
-|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.75.0 | Manage Azure Firewall resources. | GA | [2.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
+|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.75.0 | Manage Azure Firewall resources. | GA | [2.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.70.0 | The Azure IoT extension for Azure CLI. | Preview | [0.30.0b2](https://github.com/azure/azure-iot-cli-extension) |
 |[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.70.0 | The Azure IoT Operations extension for Azure CLI. | GA | [2.7.0](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.75.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.4](https://docs.microsoft.com/azure-sphere) |
@@ -116,7 +116,7 @@ You will be prompted to install an extension on first use.
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection) | 2.61.0 | Microsoft Azure Command-Line Tools ExpressRouteCrossConnection Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/express-route-cross-connection/HISTORY.rst) |
 |[fileshare](https://github.com/Azure/azure-cli-extensions/tree/main/src/fileshare) | 2.75.0 | Microsoft Azure Command-Line Tools Fileshare Extension. | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/fileshare/HISTORY.rst) |
 |[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.75.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | GA | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
-|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.10.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
+|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.11.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
 |[footprint](https://github.com/Azure/azure-cli-extensions/tree/main/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Preview | [1.0.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/footprint/HISTORY.rst) |
 |[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.75.0 | Manage networking Front Doors. | GA | [2.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
@@ -204,7 +204,7 @@ You will be prompted to install an extension on first use.
 |[self-help](https://github.com/Azure/azure-cli-extensions/tree/main/src/self-help) | 2.57.0 | Microsoft Azure Command-Line Tools SelfHelp Extension. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/self-help/HISTORY.rst) |
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console/HISTORY.rst) |
-|[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.60.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | GA | [3.3.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
+|[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.87.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | GA | [3.3.7](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
 |[servicegroup](https://github.com/Azure/azure-cli-extensions/tree/main/src/servicegroup) | 2.67.0 | Microsoft Azure Command-Line Tools ServiceGroup Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/servicegroup/HISTORY.rst) |
 |[sftp](https://github.com/Azure/azure-cli-extensions/tree/master/src/sftp) | 2.75.0 | Secure access to Azure Storage blob data via SFTP with SSH certificates. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/master/src/sftp/HISTORY.rst) |
 |[site](https://github.com/Azure/azure-cli-extensions/tree/main/src/site) | 2.75.0 | Microsoft Azure Command-Line Tools Site Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/site/HISTORY.rst) |
@@ -232,7 +232,7 @@ You will be prompted to install an extension on first use.
 |[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.75.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [3.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap) | 2.61.0 | Manage virtual network taps (VTAP). | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap/HISTORY.rst) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.55.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
-|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [2.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
+|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [2.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
 |[vme](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme) | 2.70.0 | Microsoft Azure Command-Line Tools Vme Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme/HISTORY.rst) |
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.75.0 | Azure VMware Solution commands. | GA | [8.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
