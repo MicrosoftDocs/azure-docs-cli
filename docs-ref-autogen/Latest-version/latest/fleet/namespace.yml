@@ -37,6 +37,7 @@ directCommands:
                               [--memory-limits]
                               [--memory-requests]
                               [--no-wait]
+                              [--rollout-update-strategy --rus]
                               [--tags]
   examples:
   - summary: |-
@@ -51,6 +52,9 @@ directCommands:
   - summary: |-
       Create a fleet managed namespace on specific member clusters.
     syntax: az fleet namespace create -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --member-cluster-names team-01 team-02 team-03 team-04
+  - summary: |-
+      Create a fleet managed namespace with a rollout update strategy.
+    syntax: az fleet namespace create -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --member-cluster-names team-01 team-02 --rollout-update-strategy MyUpdateStrategy
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
@@ -116,6 +120,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --rollout-update-strategy --rus
+    summary: |-
+      Name of an existing cluster staged update strategy. When specified, rollout strategy is automatically set to External; otherwise defaults to RollingUpdate.
+    isPreview: true
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -434,16 +442,40 @@ directCommands:
                               --name
                               --resource-group
                               [--acquire-policy-token]
+                              [--adoption-policy {Always, IfIdentical, Never}]
+                              [--annotations]
                               [--change-reference]
+                              [--cpu-limits]
+                              [--cpu-requests]
+                              [--delete-policy {Delete, Keep}]
+                              [--egress-policy {AllowAll, AllowSameNamespace, DenyAll}]
+                              [--ingress-policy {AllowAll, AllowSameNamespace, DenyAll}]
+                              [--labels]
+                              [--member-cluster-names]
+                              [--memory-limits]
+                              [--memory-requests]
                               [--no-wait]
+                              [--rollout-update-strategy --rus]
                               [--tags]
   examples:
   - summary: |-
-      Updates a fleet managed namespace.
-    syntax: az fleet namespace update -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace
-  - summary: |-
       Update tags for a fleet managed namespace.
     syntax: az fleet namespace update -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --tags environment=production
+  - summary: |-
+      Update labels and annotations.
+    syntax: az fleet namespace update -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --labels "env=production team=devops" --annotations "owner=team-a"
+  - summary: |-
+      Update resource quotas.
+    syntax: az fleet namespace update -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --cpu-requests 1m --cpu-limits 4m --memory-requests 1Mi --memory-limits 4Mi
+  - summary: |-
+      Update network and lifecycle policies.
+    syntax: az fleet namespace update -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --ingress-policy AllowAll --egress-policy DenyAll --adoption-policy IfIdentical --delete-policy Delete
+  - summary: |-
+      Update member cluster placement.
+    syntax: az fleet namespace update -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --member-cluster-names team-01 team-02 team-03
+  - summary: |-
+      Update with a rollout update strategy.
+    syntax: az fleet namespace update -g MyFleetResourceGroup -f MyFleetName -n MyManagedNamespace --rollout-update-strategy my-update-strategy
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
@@ -462,14 +494,55 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --adoption-policy
+    acceptedValues: Always, IfIdentical, Never
+    summary: |-
+      Adoption policy for the namespace.
+  - name: --annotations
+    summary: |-
+      Space-separated annotations in key=value format. Example: env=production region=us-west team=devops.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cpu-limits
+    summary: |-
+      CPU limits for the namespace. Example: 1000m.
+  - name: --cpu-requests
+    summary: |-
+      CPU requests for the namespace. Example: 1000m.
+  - name: --delete-policy
+    acceptedValues: Delete, Keep
+    summary: |-
+      Delete policy for the namespace.
+  - name: --egress-policy
+    acceptedValues: AllowAll, AllowSameNamespace, DenyAll
+    summary: |-
+      Egress policy for the namespace.
+  - name: --ingress-policy
+    acceptedValues: AllowAll, AllowSameNamespace, DenyAll
+    summary: |-
+      Ingress policy for the namespace.
+  - name: --labels
+    summary: |-
+      Space-separated labels in key=value format. Example: env=production region=us-west team=devops.
+  - name: --member-cluster-names
+    summary: |-
+      Space-separated list of member cluster names to apply the namespace to.
+  - name: --memory-limits
+    summary: |-
+      Memory limits for the namespace. Example: 500Mi.
+  - name: --memory-requests
+    summary: |-
+      Memory requests for the namespace. Example: 500Mi.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --rollout-update-strategy --rus
+    summary: |-
+      Name of the cluster update strategy. When specified, rollout strategy is automatically set to External; otherwise defaults to RollingUpdate.
+    isPreview: true
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
