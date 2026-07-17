@@ -1904,6 +1904,7 @@ directCommands:
                   [--node-public-ip-prefix-ids]
                   [--node-public-ip-tags]
                   [--node-resource-group]
+                  [--node-subnet-id]
                   [--node-vm-size]
                   [--nodepool-allowed-host-ports]
                   [--nodepool-asg-ids]
@@ -1941,6 +1942,7 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--system-node-subnet-id]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
@@ -2094,6 +2096,12 @@ directCommands:
   - summary: |-
       Create an automatic cluster with hosted system components enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --sku automatic --enable-hosted-system
+  - summary: |-
+      Create a hosted-system automatic cluster in a BYO VNet.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --sku automatic --system-node-subnet-id <systemNodeSubnetID> --node-subnet-id <nodeSubnetID> --apiserver-subnet-id <apiserverSubnetID>
+  - summary: |-
+      Create a hosted-system automatic cluster in a BYO VNet with Load Balancer outbound.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --sku automatic --enable-hosted-system --system-node-subnet-id <systemNodeSubnetID> --node-subnet-id <nodeSubnetID> --apiserver-subnet-id <apiserverSubnetID> --outbound-type loadBalancer
   - summary: |-
       Create a kubernetes cluster with Azure Backup enabled (default Week strategy). Requires the 'dataprotection' extension. Implicitly waits for cluster creation.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --generate-ssh-keys --enable-backup --yes
@@ -2495,7 +2503,12 @@ directCommands:
   - name: --enable-hosted-system
     defaultValue: "False"
     summary: |-
-      Create a cluster with fully hosted system components. This applies only when creating a new automatic cluster.
+      (Automatic SKU) Explicitly opt in to a Managed System Pool for the Automatic cluster.
+    description: |-
+      Only valid with `--sku automatic`. Use this flag when you want to deterministically
+      request a Managed System Pool regardless of region defaults. It is also implied when
+      you supply the bring-your-own VNet subnet trio (`--system-node-subnet-id`,
+      `--node-subnet-id`, `--apiserver-subnet-id`).
     isPreview: true
   - name: --enable-image-cleaner
     defaultValue: "False"
@@ -2890,6 +2903,15 @@ directCommands:
   - name: --node-resource-group
     summary: |-
       The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
+  - name: --node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by user node pools in an Automatic cluster.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (for the Managed System Pool), `--node-subnet-id` (this flag,
+      for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet and can only be used with `--sku automatic`.
+    isPreview: true
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes. If the user does not specify one, server will select a default VM size for her/him.
@@ -3045,6 +3067,15 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --system-node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by the Managed System Pool in an Automatic cluster.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (this flag, for the Managed System Pool), `--node-subnet-id`
+      (for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet and can only be used with `--sku automatic`.
+    isPreview: true
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
