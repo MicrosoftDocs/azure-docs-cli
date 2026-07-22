@@ -22,13 +22,14 @@ directCommands:
                            [--acquire-policy-token]
                            [--change-reference]
                            [--enabled-state {Disabled, Enabled}]
+                           [--enforce-mtls {Disabled, Enabled}]
                            [--name-reuse-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse}]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                            [--tags]
   examples:
   - summary: |-
-      Creates an enabled endpoint
-    syntax: az afd endpoint create -g group --endpoint-name endpoint1 --profile-name profile --enabled-state Enabled
+      AFDEndpoints_Create
+    syntax: az afd endpoint create --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --location global --name-reuse-scope TenantReuse --enabled-state Enabled --enforce-mtls Disabled --tags "{}"
   requiredParameters:
   - isRequired: true
     name: --endpoint-name --name -n
@@ -55,6 +56,11 @@ directCommands:
     acceptedValues: Disabled, Enabled
     summary: |-
       Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'.
+    groupName: Properties Arguments
+  - name: --enforce-mtls
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources.
     groupName: Properties Arguments
   - name: --name-reuse-scope
     acceptedValues: NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse
@@ -114,8 +120,8 @@ directCommands:
                            [--yes]
   examples:
   - summary: |-
-      Delete an endpoint named endpoint1.
-    syntax: az afd endpoint delete -g group --profile-name profile --endpoint-name endpoint1
+      AFDEndpoints_Delete
+    syntax: az afd endpoint delete --resource-group RG --profile-name profile1 --endpoint-name endpoint1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -190,8 +196,8 @@ directCommands:
                          [--next-token]
   examples:
   - summary: |-
-      List all the endpoints within the specified profile.
-    syntax: az afd endpoint list -g group --profile-name profile
+      AFDEndpoints_ListByProfile
+    syntax: az afd endpoint list --resource-group RG --profile-name profile1
   requiredParameters:
   - isRequired: true
     name: --profile-name
@@ -256,8 +262,8 @@ directCommands:
                           [--subscription]
   examples:
   - summary: |-
-      Remove all cached contents under directory "/script" for domain www.contoso.com
-    syntax: az afd endpoint purge -g group --profile-name profile --domains www.contoso.com --content-paths '/scripts/*'
+      AFDEndpoints_PurgeContent
+    syntax: az afd endpoint purge --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --content-paths "[/folder1]" --domains "[endpoint1-abcdefghijklmnop.z01.azurefd.net]"
   requiredParameters:
   - isRequired: true
     name: --content-paths
@@ -275,7 +281,7 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --domains
     summary: |-
-      List of domains. Example: "www.contoso.com, www.contoso1.com"  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      List of domains.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Contents Arguments
   - name: --endpoint-name
     summary: |-
@@ -339,8 +345,8 @@ directCommands:
                          [--subscription]
   examples:
   - summary: |-
-      show details of the endpoint named endpoint1.
-    syntax: az afd endpoint show -g group --profile-name profile  --endpoint-name endpoint1
+      AFDEndpoints_Get
+    syntax: az afd endpoint show --resource-group RG --profile-name profile1 --endpoint-name endpoint1
   optionalParameters:
   - name: --endpoint-name --name -n
     summary: |-
@@ -398,6 +404,7 @@ directCommands:
                            [--change-reference]
                            [--enabled-state {Disabled, Enabled}]
                            [--endpoint-name --name]
+                           [--enforce-mtls {Disabled, Enabled}]
                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                            [--ids]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -409,8 +416,8 @@ directCommands:
                            [--tags]
   examples:
   - summary: |-
-      Update an endpoint's state to disabled.
-    syntax: az afd endpoint update -g group --endpoint-name endpoint1 --profile-name profile --enabled-state Disabled
+      AFDEndpoints_Create
+    syntax: az afd endpoint update --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --name-reuse-scope TenantReuse --enabled-state Enabled --enforce-mtls Disabled --tags "{}"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -433,6 +440,11 @@ directCommands:
     summary: |-
       Name of the endpoint under the profile which is unique globally.
     groupName: Resource Id Arguments
+  - name: --enforce-mtls
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources.
+    groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-

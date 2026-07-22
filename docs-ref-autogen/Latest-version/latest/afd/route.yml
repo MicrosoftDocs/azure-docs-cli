@@ -21,12 +21,11 @@ directCommands:
                         --profile-name
                         --resource-group
                         [--acquire-policy-token]
+                        [--cache-configuration]
                         [--change-reference]
-                        [--content-types-to-compress]
-                        [--custom-domains]
-                        [--enable-caching {0, 1, f, false, n, no, t, true, y, yes}]
-                        [--enable-compression {0, 1, f, false, n, no, t, true, y, yes}]
                         [--enabled-state {Disabled, Enabled}]
+                        [--formatted-custom-domains]
+                        [--formatted-rule-sets]
                         [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
                         [--https-redirect {Disabled, Enabled}]
                         [--link-to-default-domain {Disabled, Enabled}]
@@ -34,20 +33,11 @@ directCommands:
                         [--origin-group]
                         [--origin-path]
                         [--patterns-to-match]
-                        [--query-parameters]
-                        [--query-string-caching-behavior]
-                        [--rule-sets]
                         [--supported-protocols]
   examples:
   - summary: |-
-      Creates a route to associate the endpoint's default domain with an origin group for all HTTPS requests.
-    syntax: az afd route create -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --https-redirect Disabled --origin-group og001 --supported-protocols Https --link-to-default-domain Enabled --forwarding-protocol MatchRequest
-  - summary: |-
-      Creates a route to associate the endpoint's default domain with an origin group for all requests and use the specified rule sets to customize the route behavior.
-    syntax: az afd route create -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --rule-sets ruleset1 rulseset2 --origin-group og001 --supported-protocols Http Https --link-to-default-domain Enabled --forwarding-protocol MatchRequest --https-redirect Disabled
-  - summary: |-
-      Creates a route to associate the endpoint's default domain and a custom domain with an origin group for all requests with the specified path patterns and redirect all trafic to use Https.
-    syntax: az afd route create -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --patterns-to-match /test1/* /tes2/* --origin-group og001 --supported-protocols Http Https --custom-domains cd001 --forwarding-protocol MatchRequest --https-redirect Enabled --link-to-default-domain Enabled
+      Routes_Create
+    syntax: az afd route create --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --route-name route1 --cache-configuration "{compression-settings:{content-types-to-compress:[text/html,application/octet-stream],is-compression-enabled:True},query-parameters:querystring=test,query-string-caching-behavior:IgnoreSpecifiedQueryStrings}" --formatted-custom-domains "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/customDomains/domain1}]" --enabled-state Enabled --forwarding-protocol MatchRequest --https-redirect Enabled --link-to-default-domain Enabled --origin-group /subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/originGroups/originGroup1 --origin-path None --patterns-to-match "[/*]" --formatted-rule-sets "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/ruleSets/ruleSet1}]" --supported-protocols "[Https,Http]"
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
@@ -70,28 +60,26 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cache-configuration
+    summary: |-
+      The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --content-types-to-compress
-    summary: |-
-      List of content types on which compression applies.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --custom-domains
-    summary: |-
-      Custom domains referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --enable-caching
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether caching is enabled on that route.
-  - name: --enable-compression
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled,content will be served as compressed if user requests for a compressed version.Content won't be compressed on AzureFrontDoorwhen requested content is smaller than 8 MB or larger than 1 KB.
   - name: --enabled-state
     acceptedValues: Disabled, Enabled
     summary: |-
       Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'.
+    groupName: Properties Arguments
+  - name: --formatted-custom-domains
+    summary: |-
+      Domains referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --formatted-rule-sets
+    summary: |-
+      Rule sets referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --forwarding-protocol
     defaultValue: MatchRequest
@@ -127,15 +115,6 @@ directCommands:
     summary: |-
       The route patterns of the rule.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --query-parameters
-    summary: |-
-      Query parameters to include or exclude.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --query-string-caching-behavior
-    summary: |-
-      Defines how Frontdoor caches requests that include query strings.You can ignore any query strings when caching, ignore specific query strings,cache every request with a unique URL, or cache specific query strings.
-  - name: --rule-sets
-    summary: |-
-      Collection of ID or name of rule set referenced by the route.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --supported-protocols
     defaultValue: "['Http', 'Https']"
     summary: |-
@@ -187,8 +166,8 @@ directCommands:
                         [--yes]
   examples:
   - summary: |-
-      Delete an route named route1.
-    syntax: az afd route delete -g group --profile-name profile --endpoint-name endpoint1 --route-name route1
+      Routes_Delete
+    syntax: az afd route delete --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --route-name route1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -266,6 +245,10 @@ directCommands:
                       --resource-group
                       [--max-items]
                       [--next-token]
+  examples:
+  - summary: |-
+      Routes_ListByEndpoint
+    syntax: az afd route list --resource-group RG --profile-name profile1 --endpoint-name endpoint1
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
@@ -328,6 +311,10 @@ directCommands:
                       [--profile-name]
                       [--resource-group]
                       [--subscription]
+  examples:
+  - summary: |-
+      Routes_Get
+    syntax: az afd route show --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --route-name route1
   optionalParameters:
   - name: --endpoint-name
     summary: |-
@@ -386,14 +373,13 @@ directCommands:
   syntax: >-
     az afd route update [--acquire-policy-token]
                         [--add]
+                        [--cache-configuration]
                         [--change-reference]
-                        [--content-types-to-compress]
-                        [--custom-domains]
-                        [--enable-caching {0, 1, f, false, n, no, t, true, y, yes}]
-                        [--enable-compression {0, 1, f, false, n, no, t, true, y, yes}]
                         [--enabled-state {Disabled, Enabled}]
                         [--endpoint-name]
                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                        [--formatted-custom-domains]
+                        [--formatted-rule-sets]
                         [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
                         [--https-redirect {Disabled, Enabled}]
                         [--ids]
@@ -404,24 +390,15 @@ directCommands:
                         [--origin-path]
                         [--patterns-to-match]
                         [--profile-name]
-                        [--query-parameters]
-                        [--query-string-caching-behavior]
                         [--remove]
                         [--resource-group]
-                        [--rule-sets]
                         [--set]
                         [--subscription]
                         [--supported-protocols]
   examples:
   - summary: |-
-      Update a route to accept both Http and Https requests and redirect all trafic to use Https.
-    syntax: az afd route update -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --supported-protocols Http Https --https-redirect Enabled
-  - summary: |-
-      Update a route's rule sets settings to customize the route behavior.
-    syntax: az afd route update -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --rule-sets ruleset1 rulseset2
-  - summary: |-
-      Update a route's compression settings to enable compression for the specified content types.
-    syntax: az afd route update -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --query-string-caching-behavior IgnoreQueryString --enable-compression true --content-types-to-compress text/javascript text/plain
+      Routes_Create
+    syntax: az afd route update --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --route-name route1 --cache-configuration "{compression-settings:{content-types-to-compress:[text/html,application/octet-stream],is-compression-enabled:True},query-parameters:querystring=test,query-string-caching-behavior:IgnoreSpecifiedQueryStrings}" --formatted-custom-domains "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/customDomains/domain1}]" --enabled-state Enabled --forwarding-protocol MatchRequest --https-redirect Enabled --link-to-default-domain Enabled --origin-group /subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/originGroups/originGroup1 --origin-path None --patterns-to-match "[/*]" --formatted-rule-sets "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/ruleSets/ruleSet1}]" --supported-protocols "[Https,Http]"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -431,24 +408,14 @@ directCommands:
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
+  - name: --cache-configuration
+    summary: |-
+      The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --content-types-to-compress
-    summary: |-
-      List of content types on which compression applies.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --custom-domains
-    summary: |-
-      Custom domains referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --enable-caching
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether caching is enabled on that route.
-  - name: --enable-compression
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether content compression is enabled on AzureFrontDoor. Default value is false.If compression is enabled, content will be served as compressed if user requests for a compressed version.Content won't be compressed on AzureFrontDoorwhen requested content is smaller than 8 MB or larger than 1 KB.
   - name: --enabled-state
     acceptedValues: Disabled, Enabled
     summary: |-
@@ -463,6 +430,14 @@ directCommands:
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     groupName: Generic Update Arguments
+  - name: --formatted-custom-domains
+    summary: |-
+      Domains referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --formatted-rule-sets
+    summary: |-
+      Rule sets referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --forwarding-protocol
     acceptedValues: HttpOnly, HttpsOnly, MatchRequest
     summary: |-
@@ -506,12 +481,6 @@ directCommands:
     summary: |-
       Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
     groupName: Resource Id Arguments
-  - name: --query-parameters
-    summary: |-
-      Query parameters to include or exclude.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --query-string-caching-behavior
-    summary: |-
-      Defines how Frontdoor caches requests that include query strings.You can ignore any query strings when caching, ignore specific query strings,cache every request with a unique URL, or cache specific query strings.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
@@ -520,9 +489,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --rule-sets
-    summary: |-
-      Collection of ID or name of rule set referenced by the route.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.

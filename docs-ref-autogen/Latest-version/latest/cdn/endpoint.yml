@@ -42,20 +42,8 @@ directCommands:
                            [--web-application-firewall-policy-link]
   examples:
   - summary: |-
-      Create an endpoint to service content for hostname over HTTP or HTTPS.
-    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com
-  - summary: |-
-      Create an endpoint with a custom domain origin with HTTP and HTTPS ports.
-    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com 88 4444
-  - summary: |-
-      Create an endpoint with a custom domain origin with private link enabled.
-    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com 80 443 /subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Network/privateLinkServices/pls1 eastus "Please approve this request"
-  - summary: |-
-      Create an https-only endpoint with a custom domain origin and support compression for Azure CDN's default compression MIME types.
-    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com --no-http --enable-compression
-  - summary: |-
-      Create an endpoint with a custom domain origin and support compression for specific MIME types.
-    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com --enable-compression --content-types-to-compress text/plain text/html
+      Endpoints_Create
+    syntax: az cdn endpoint create --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --location WestUs --content-types-to-compress "[text/html,application/octet-stream]" --default-origin-group /subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/originGroups/originGroup1 --delivery-policy "{description:'Test description for a policy.',rules:[{name:rule1,actions:[{parameters:{cacheBehavior:Override,cacheDuration:'10:10:09',cacheType:All,typeName:DeliveryRuleCacheExpirationActionParameters},cache-expiration:{parameters:{typeName:DeliveryRuleCacheExpirationActionParameters,cache-behavior:Override,cache-duration:'10:10:09',cache-type:All}}},{parameters:{headerAction:Overwrite,headerName:Access-Control-Allow-Origin,typeName:DeliveryRuleHeaderActionParameters,value:*},modify-response-header:{parameters:{headerAction:Overwrite,headerName:Access-Control-Allow-Origin,typeName:DeliveryRuleHeaderActionParameters,value:*}}},{parameters:{headerAction:Overwrite,headerName:Accept-Encoding,typeName:DeliveryRuleHeaderActionParameters,value:gzip},modify-request-header:{parameters:{headerAction:Overwrite,headerName:Accept-Encoding,typeName:DeliveryRuleHeaderActionParameters,value:gzip}}}],conditions:[{parameters:{matchValues:[192.168.1.0/24,10.0.0.0/24],negateCondition:True,operator:IPMatch,typeName:DeliveryRuleRemoteAddressConditionParameters},remote-address:{parameters:{typeName:DeliveryRuleRemoteAddressConditionParameters,match-values:[192.168.1.0/24,10.0.0.0/24],negate-condition:True,operator:IPMatch}}}],order:1}]}" --is-compression-enabled True --is-http-allowed True --is-https-allowed True --origin-groups "[{name:originGroup1,health-probe-settings:{probe-interval-in-seconds:120,probe-path:/health.aspx,probe-protocol:Http,probe-request-type:GET},origins:[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin1},{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin2}],response-based-origin-error-detection-settings:{response-based-detected-error-types:TcpErrorsOnly,response-based-failover-threshold-percentage:10}}]" --origin-host-header www.bing.com --origin-path /photos --origins "[{name:origin1,enabled:True,host-name:www.someDomain1.net,http-port:80,https-port:443,origin-host-header:www.someDomain1.net,priority:1,weight:50},{name:origin2,enabled:True,host-name:www.someDomain2.net,http-port:80,https-port:443,origin-host-header:www.someDomain2.net,priority:2,weight:50}]" --query-string-caching-behavior BypassCaching --tags "{key1:value1}"
   requiredParameters:
   - isRequired: true
     name: --endpoint-name --name -n
@@ -201,8 +189,8 @@ directCommands:
                            [--subscription]
   examples:
   - summary: |-
-      Delete a CDN endpoint.
-    syntax: az cdn endpoint delete -g group -n endpoint --profile-name profile-name
+      Endpoints_Delete
+    syntax: az cdn endpoint delete --resource-group RG --profile-name profile1 --endpoint-name endpoint1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -273,8 +261,8 @@ directCommands:
                          [--next-token]
   examples:
   - summary: |-
-      List all endpoints within a given CDN profile.
-    syntax: az cdn endpoint list -g group --profile-name profile-name
+      Endpoints_ListByProfile
+    syntax: az cdn endpoint list --resource-group RG --profile-name profile1
   requiredParameters:
   - isRequired: true
     name: --profile-name
@@ -338,8 +326,8 @@ directCommands:
                          [--subscription]
   examples:
   - summary: |-
-      Pre-load Javascript and CSS content for an endpoint.
-    syntax: az cdn endpoint load -g group -n endpoint --profile-name profile-name --content-paths '/scripts/app.js' '/styles/main.css'
+      Endpoints_LoadContent
+    syntax: az cdn endpoint load --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --content-paths "[/folder1]"
   requiredParameters:
   - isRequired: true
     name: --content-paths
@@ -416,8 +404,8 @@ directCommands:
                                 [--type {Microsoft.Cdn/Profiles/AfdEndpoints, Microsoft.Cdn/Profiles/Endpoints}]
   examples:
   - summary: |-
-      Check whether the resource name contoso is available or not.
-    syntax: az cdn name-exists --name contoso
+      CheckNameAvailabilityWithSubscription
+    syntax: az cdn name-exists --name sampleName --type Microsoft.Cdn/Profiles/Endpoints
   requiredParameters:
   - isRequired: true
     name: --name
@@ -484,8 +472,8 @@ directCommands:
                           [--subscription]
   examples:
   - summary: |-
-      Purge pre-loaded Javascript and CSS content.
-    syntax: az cdn endpoint purge -g group -n endpoint --profile-name profile-name --content-paths '/scripts/app.js' '/styles/*'
+      Endpoints_PurgeContent
+    syntax: az cdn endpoint purge --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --content-paths "[/folder1]"
   requiredParameters:
   - isRequired: true
     name: --content-paths
@@ -561,6 +549,10 @@ directCommands:
                          [--profile-name]
                          [--resource-group]
                          [--subscription]
+  examples:
+  - summary: |-
+      Endpoints_Get
+    syntax: az cdn endpoint show --resource-group RG --profile-name profile1 --endpoint-name endpoint1
   optionalParameters:
   - name: --endpoint-name --name -n
     summary: |-
@@ -623,8 +615,8 @@ directCommands:
                           [--subscription]
   examples:
   - summary: |-
-      Start a CDN endpoint.
-    syntax: az cdn endpoint start -g group -n endpoint --profile-name profile-name
+      Endpoints_Start
+    syntax: az cdn endpoint start --resource-group RG --profile-name profile1 --endpoint-nameendpoint-name endpoint1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -699,8 +691,8 @@ directCommands:
                          [--subscription]
   examples:
   - summary: |-
-      Stop a CDN endpoint.
-    syntax: az cdn endpoint stop -g group -n endpoint --profile-name profile-name
+      Endpoints_Stop
+    syntax: az cdn endpoint stop --resource-group RG --profile-name profile1 --endpoint-name endpoint1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -766,40 +758,47 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az cdn endpoint update [--acquire-policy-token]
+                           [--add]
                            [--change-reference]
                            [--content-types-to-compress]
                            [--default-origin-group]
                            [--delivery-policy]
                            [--enable-compression {0, 1, f, false, n, no, t, true, y, yes}]
                            [--endpoint-name --name]
+                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                            [--geo-filters]
                            [--ids]
                            [--no-http {0, 1, f, false, n, no, t, true, y, yes}]
                            [--no-https {0, 1, f, false, n, no, t, true, y, yes}]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                            [--optimization-type {DynamicSiteAcceleration, GeneralMediaStreaming, GeneralWebDelivery, LargeFileDownload, VideoOnDemandMediaStreaming}]
+                           [--origin-groups]
                            [--origin-host-header]
                            [--origin-path]
+                           [--origins]
                            [--probe-path]
                            [--profile-name]
                            [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                           [--remove]
                            [--resource-group]
+                           [--set]
                            [--subscription]
                            [--tags]
                            [--url-signing-keys]
                            [--web-application-firewall-policy-link]
   examples:
   - summary: |-
-      Turn off HTTP traffic for an endpoint.
-    syntax: az cdn endpoint update -g group -n endpoint --profile-name profile --no-http
-  - summary: |-
-      Enable content compression for an endpoint.
-    syntax: az cdn endpoint update -g group -n endpoint --profile-name profile --enable-compression
+      Endpoints_Create
+    syntax: az cdn endpoint update --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --content-types-to-compress "[text/html,application/octet-stream]" --default-origin-group /subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/originGroups/originGroup1 --delivery-policy "{description:'Test description for a policy.',rules:[{name:rule1,actions:[{name:CacheExpiration,parameters:{cacheBehavior:Override,cacheDuration:'10:10:09',cacheType:All,typeName:DeliveryRuleCacheExpirationActionParameters}},{name:ModifyResponseHeader,parameters:{headerAction:Overwrite,headerName:Access-Control-Allow-Origin,typeName:DeliveryRuleHeaderActionParameters,value:*}},{name:ModifyRequestHeader,parameters:{headerAction:Overwrite,headerName:Accept-Encoding,typeName:DeliveryRuleHeaderActionParameters,value:gzip}}],conditions:[{name:RemoteAddress,parameters:{matchValues:[192.168.1.0/24,10.0.0.0/24],negateCondition:True,operator:IPMatch,typeName:DeliveryRuleRemoteAddressConditionParameters}}],order:1}]}" --is-compression-enabled True --is-http-allowed True --is-https-allowed True --origin-groups "[{name:originGroup1,health-probe-settings:{probe-interval-in-seconds:120,probe-path:/health.aspx,probe-protocol:Http,probe-request-type:GET},origins:[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin1},{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin2}],response-based-origin-error-detection-settings:{response-based-detected-error-types:TcpErrorsOnly,response-based-failover-threshold-percentage:10}}]" --origin-host-header www.bing.com --origin-path /photos --origins "[{name:origin1,enabled:True,host-name:www.someDomain1.net,http-port:80,https-port:443,origin-host-header:www.someDomain1.net,priority:1,weight:50},{name:origin2,enabled:True,host-name:www.someDomain2.net,http-port:80,https-port:443,origin-host-header:www.someDomain2.net,priority:2,weight:50}]" --query-string-caching-behavior BypassCaching --tags "{key1:value1}"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -824,6 +823,11 @@ directCommands:
     summary: |-
       Name of the endpoint under the profile which is unique globally.
     groupName: Resource Id Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --geo-filters
     summary: |-
       List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -849,6 +853,10 @@ directCommands:
     summary: |-
       Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization.
     groupName: Properties Arguments
+  - name: --origin-groups
+    summary: |-
+      The origin groups comprising of origins that are used for load balancing the traffic based on availability.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --origin-host-header
     summary: |-
       The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
@@ -856,6 +864,10 @@ directCommands:
   - name: --origin-path
     summary: |-
       A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+    groupName: Properties Arguments
+  - name: --origins
+    summary: |-
+      The source of the content being delivered via CDN.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --probe-path
     summary: |-
@@ -870,18 +882,26 @@ directCommands:
     summary: |-
       Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     groupName: Properties Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --tags
     summary: |-
-      Endpoint tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: EndpointUpdateProperties Arguments
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Endpoint Arguments
   - name: --url-signing-keys
     summary: |-
       List of keys used to validate the signed URL hashes.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -931,8 +951,8 @@ directCommands:
                                            [--subscription]
   examples:
   - summary: |-
-      Validate domain www.contoso.com to see whether it maps to the correct CDN endpoint in DNS.
-    syntax: az cdn endpoint validate-custom-domain -g group -n endpoint --profile-name profile-name --host-name www.contoso.com
+      Endpoints_ValidateCustomDomain
+    syntax: az cdn endpoint validate-custom-domain --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --host-name www.someDomain.com
   requiredParameters:
   - isRequired: true
     name: --host-name

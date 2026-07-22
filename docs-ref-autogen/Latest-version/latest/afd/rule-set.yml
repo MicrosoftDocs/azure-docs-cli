@@ -20,7 +20,10 @@ directCommands:
                            --profile-name
                            --resource-group
                            [--acquire-policy-token]
+                           [--batch-mode {0, 1, f, false, n, no, t, true, y, yes}]
                            [--change-reference]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--rules]
   examples:
   - summary: |-
       Create a new rule set under the specified profile.
@@ -43,10 +46,23 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --batch-mode
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether rule set is in batch mode. When batch mode is enabled, rules will be processed in a batch along with the rule set. When batch mode is disabled, rules would need to be processed independently. This property can only be set during rule set creation and cannot be updated later. For switching modes, a new rule set needs to be created with the desired mode and rules need to be migrated to the new rule set.
+    groupName: Properties Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --rules
+    summary: |-
+      A list of rules that are part of this rule set provided the rule set is in batch mode. This property will be ignored if the rule set is not in batch mode.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -166,6 +182,10 @@ directCommands:
                          --resource-group
                          [--max-items]
                          [--next-token]
+  examples:
+  - summary: |-
+      RuleSets_ListByProfile
+    syntax: az afd rule-set list --resource-group RG --profile-name profile1
   requiredParameters:
   - isRequired: true
     name: --profile-name

@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/20/2026
+ms.date: 07/21/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples/HISTORY.rst) |
 |[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b23](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
 |[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.85.0 | Provides a preview for upcoming AKS features | Preview | [21.0.0b10](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
-|[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.77.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.114](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
+|[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.77.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.116](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
@@ -65,7 +65,7 @@ You will be prompted to install an extension on first use.
 |[billing-benefits](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits) | 2.43.0 | Microsoft Azure Command-Line Tools BillingBenefits Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits/HISTORY.rst) |
 |[blueprint](https://github.com/Azure/azure-cli-extensions/tree/main/src/blueprint) | 2.50.0 | Microsoft Azure Command-Line Tools Blueprint Extension | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/blueprint/HISTORY.rst) |
 |[carbon](https://github.com/Azure/azure-cli-extensions/tree/main/src/carbon) | 2.70.0 | Microsoft Azure Command-Line Tools Carbon Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/carbon/HISTORY.rst) |
-|[cdn](https://github.com/Azure/azure-cli-extensions/tree/main/src/cdn) | 2.85.0 | Microsoft Azure Command-Line Tools CDN and AFD Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/cdn/HISTORY.rst) |
+|[cdn](https://github.com/Azure/azure-cli-extensions/tree/main/src/cdn) | 2.85.0 | Microsoft Azure Command-Line Tools CDN and AFD Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/cdn/HISTORY.rst) |
 |[change-analysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis) | 2.37.0 | Microsoft Azure Command-Line Tools ChangeAnalysis Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis/HISTORY.rst) |
 |[chaos](https://github.com/Azure/azure-cli-extensions/tree/main/src/chaos) | 2.75.0 | Support for Azure Chaos Studio v2 workspaces, scenario configuration, and fault-injection run management. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/chaos/HISTORY.rst) |
 |[cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 2.13.0 | Translate ARM template to executable Azure CLI scripts. | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) |

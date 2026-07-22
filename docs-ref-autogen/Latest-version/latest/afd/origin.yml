@@ -22,7 +22,6 @@ directCommands:
                          --resource-group
                          [--acquire-policy-token]
                          [--change-reference]
-                         [--enable-private-link {0, 1, f, false, n, no, t, true, y, yes}]
                          [--enabled-state {Disabled, Enabled}]
                          [--enforce-certificate-name-check {0, 1, f, false, n, no, t, true, y, yes}]
                          [--host-name]
@@ -31,18 +30,12 @@ directCommands:
                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--origin-host-header]
                          [--priority]
-                         [--private-link-location]
-                         [--private-link-request-message]
-                         [--private-link-resource]
-                         [--private-link-sub-resource-type]
+                         [--shared-private-link-resource]
                          [--weight]
   examples:
   - summary: |-
-      Create an regular origin
-    syntax: 'az afd origin create -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 1 --weight 500 --enabled-state Enabled --http-port 80 --https-port 443 - name: Create a private link origin'
-  - summary: |-
-      Create a private link origin
-    syntax: az afd origin create -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 1 --weight 500 --enabled-state Enabled --http-port 80 --https-port 443 --private-link-resource /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group/providers/Microsoft.Storage/storageAccounts/plstest --private-link-location EastUS --private-link-request-message 'Please approve this request' --private-link-sub-resource-type table
+      AFDOrigins_Create
+    syntax: az afd origin create --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --origin-name origin1 --enabled-state Enabled --host-name host1.blob.core.windows.net --http-port 80 --https-port 443 --origin-host-header host1.foo.com
   requiredParameters:
   - isRequired: true
     name: --name --origin-name -n
@@ -69,15 +62,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --enable-private-link
-    defaultValue: "False"
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether private link is enabled on that origin.
   - name: --enabled-state
     acceptedValues: Disabled, Enabled
     summary: |-
-      Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. When an origin is disabled, both routing and health probes to the origin are also disabled.
+      Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
     groupName: Properties Arguments
   - name: --enforce-certificate-name-check
     defaultValue: "True"
@@ -111,18 +99,10 @@ directCommands:
     summary: |-
       Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
     groupName: Properties Arguments
-  - name: --private-link-location
+  - name: --shared-private-link-resource
     summary: |-
-      The location of origin that will be connected to using the private link.
-  - name: --private-link-request-message
-    summary: |-
-      The message that is shown to the approver of the private link request.
-  - name: --private-link-resource
-    summary: |-
-      The resource ID of the origin that will be connected to using the private link.
-  - name: --private-link-sub-resource-type
-    summary: |-
-      The sub-resource type of the origin that will be connected to using the private link.You can use "az network private-link-resource list" to obtain the supported sub-resource types.
+      The properties of the private link resource for private origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --weight
     summary: |-
       Weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
@@ -171,6 +151,10 @@ directCommands:
                          [--resource-group]
                          [--subscription]
                          [--yes]
+  examples:
+  - summary: |-
+      AFDOrigins_Delete
+    syntax: az afd origin delete --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --origin-name origin1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -248,6 +232,10 @@ directCommands:
                        --resource-group
                        [--max-items]
                        [--next-token]
+  examples:
+  - summary: |-
+      AFDOrigins_ListByOriginGroup
+    syntax: az afd origin list --resource-group RG --profile-name profile1 --origin-group-name origingroup1
   requiredParameters:
   - isRequired: true
     name: --origin-group-name
@@ -310,6 +298,10 @@ directCommands:
                        [--profile-name]
                        [--resource-group]
                        [--subscription]
+  examples:
+  - summary: |-
+      AFDOrigins_Get
+    syntax: az afd origin show --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --origin-name origin1
   optionalParameters:
   - name: --ids
     summary: |-
@@ -369,7 +361,6 @@ directCommands:
     az afd origin update [--acquire-policy-token]
                          [--add]
                          [--change-reference]
-                         [--enable-private-link {0, 1, f, false, n, no, t, true, y, yes}]
                          [--enabled-state {Disabled, Enabled}]
                          [--enforce-certificate-name-check {0, 1, f, false, n, no, t, true, y, yes}]
                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -382,23 +373,17 @@ directCommands:
                          [--origin-group-name]
                          [--origin-host-header]
                          [--priority]
-                         [--private-link-location]
-                         [--private-link-request-message]
-                         [--private-link-resource]
-                         [--private-link-sub-resource-type]
                          [--profile-name]
                          [--remove]
                          [--resource-group]
                          [--set]
+                         [--shared-private-link-resource]
                          [--subscription]
                          [--weight]
   examples:
   - summary: |-
-      Update the host header and priority of the specified origin.
-    syntax: az afd origin update -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 3
-  - summary: |-
-      Disable private link of the origin.
-    syntax: az afd origin update -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --enable-private-link False
+      AFDOrigins_Create
+    syntax: az afd origin update --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --origin-name origin1 --enabled-state Enabled --host-name host1.blob.core.windows.net --http-port 80 --https-port 443 --origin-host-header host1.foo.com
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -412,14 +397,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --enable-private-link
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether private link is enabled on that origin.
   - name: --enabled-state
     acceptedValues: Disabled, Enabled
     summary: |-
-      Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. When an origin is disabled, both routing and health probes to the origin are also disabled.
+      Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
     groupName: Properties Arguments
   - name: --enforce-certificate-name-check
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -467,18 +448,6 @@ directCommands:
     summary: |-
       Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
     groupName: Properties Arguments
-  - name: --private-link-location
-    summary: |-
-      The location of origin that will be connected to using the private link.
-  - name: --private-link-request-message
-    summary: |-
-      The message that is shown to the approver of the private link request.
-  - name: --private-link-resource
-    summary: |-
-      The resource ID of the origin that will be connected to using the private link.
-  - name: --private-link-sub-resource-type
-    summary: |-
-      The sub-resource type of the origin that will be connected to using the private link.You can use "az network private-link-resource list" to obtain the supported sub-resource types.
   - name: --profile-name
     summary: |-
       Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
@@ -495,6 +464,10 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
+  - name: --shared-private-link-resource
+    summary: |-
+      The properties of the private link resource for private origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
