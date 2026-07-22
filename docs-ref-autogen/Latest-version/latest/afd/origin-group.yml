@@ -23,21 +23,17 @@ directCommands:
                                [--additional-latency-in-milliseconds]
                                [--authentication]
                                [--change-reference]
-                               [--enable-health-probe {0, 1, f, false, n, no, t, true, y, yes}]
-                               [--health-probe-settings]
                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--probe-interval-in-seconds]
                                [--probe-path]
                                [--probe-protocol {Http, Https, NotSet}]
                                [--probe-request-type {GET, HEAD, NotSet}]
                                [--sample-size]
-                               [--session-affinity-state {Disabled, Enabled}]
                                [--successful-samples-required]
-                               [--traffic-restoration-time-to-healed-or-new-endpoints-in-minutes]
   examples:
   - summary: |-
-      Creates a new origin group within the specified profile.
-    syntax: az afd origin-group create --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --sample-size 3 --successful-samples-required 3 --additional-latency-in-milliseconds 1000 --health-probe-settings "{probe-path:/path2,probe-request-type:NotSet,probe-protocol:NotSet,probe-interval-in-seconds:10}" --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes 5
+      AFDOriginGroups_Create
+    syntax: az afd origin-group create --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --authentication "{type:UserAssignedIdentity,scope:'https://www.contoso.com/.default',user-assigned-identity:{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-assigned-id-1}}" --probe-interval-in-seconds 10 --probe-path /path2 --probe-protocol NotSet --probe-request-type NotSet --additional-latency-in-milliseconds 1000 --sample-size 3 --successful-samples-required 3 --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes 5
   requiredParameters:
   - isRequired: true
     name: --name --origin-group-name -n
@@ -46,7 +42,7 @@ directCommands:
   - isRequired: true
     name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -68,14 +64,6 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --enable-health-probe
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether to enable probe on the origin group.
-  - name: --health-probe-settings
-    summary: |-
-      Health probe settings to the origin that is used to determine the health of the origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -102,19 +90,10 @@ directCommands:
     summary: |-
       The number of samples to consider for load balancing decisions.
     groupName: LoadBalancingSettings Arguments
-  - name: --session-affinity-state
-    acceptedValues: Disabled, Enabled
-    summary: |-
-      Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'.
-    groupName: Properties Arguments
   - name: --successful-samples-required
     summary: |-
       The number of samples within the sample period that must succeed.
     groupName: LoadBalancingSettings Arguments
-  - name: --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes
-    summary: |-
-      Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -160,8 +139,8 @@ directCommands:
                                [--yes]
   examples:
   - summary: |-
-      Deletes an existing origin group within a profile.
-    syntax: az afd origin-group delete -g group --origin-group-name og1 --profile-name profile
+      AFDOriginGroups_Delete
+    syntax: az afd origin-group delete --resource-group RG --profile-name profile1 --origin-group-name origingroup1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -185,7 +164,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -234,6 +213,10 @@ directCommands:
                              --resource-group
                              [--max-items]
                              [--next-token]
+  examples:
+  - summary: |-
+      AFDOriginGroups_ListByProfile
+    syntax: az afd origin-group list --resource-group RG --profile-name profile1
   requiredParameters:
   - isRequired: true
     name: --profile-name
@@ -293,7 +276,7 @@ directCommands:
                              [--subscription]
   examples:
   - summary: |-
-      Get an existing origin group within a profile.
+      AFDOriginGroups_Get
     syntax: az afd origin-group show --resource-group RG --profile-name profile1 --origin-group-name origingroup1
   optionalParameters:
   - name: --ids
@@ -306,7 +289,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -352,7 +335,6 @@ directCommands:
                                [--additional-latency-in-milliseconds]
                                [--authentication]
                                [--change-reference]
-                               [--enable-health-probe {0, 1, f, false, n, no, t, true, y, yes}]
                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                [--health-probe-settings]
                                [--ids]
@@ -366,15 +348,13 @@ directCommands:
                                [--remove]
                                [--resource-group]
                                [--sample-size]
-                               [--session-affinity-state {Disabled, Enabled}]
                                [--set]
                                [--subscription]
                                [--successful-samples-required]
-                               [--traffic-restoration-time-to-healed-or-new-endpoints-in-minutes]
   examples:
   - summary: |-
-      Update a new origin group within the specified profile.
-    syntax: az afd origin-group update -g group --origin-group-name og1 --profile-name profile --probe-request-type HEAD --probe-protocol Https --probe-interval-in-seconds 120 --probe-path /test1/azure.txt
+      AFDOriginGroups_Create
+    syntax: az afd origin-group update --resource-group RG --profile-name profile1 --origin-group-name origingroup1 --authentication "{type:UserAssignedIdentity,scope:'https://www.contoso.com/.default',user-assigned-identity:{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-assigned-id-1}}" --probe-interval-in-seconds 10 --probe-path /path2 --probe-protocol NotSet --probe-request-type NotSet --additional-latency-in-milliseconds 1000 --sample-size 3 --successful-samples-required 3 --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes 5
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -396,10 +376,6 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --enable-health-probe
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Indicates whether to enable probe on the origin group.
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -407,8 +383,7 @@ directCommands:
     groupName: Generic Update Arguments
   - name: --health-probe-settings
     summary: |-
-      Health probe settings to the origin that is used to determine the health of the origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
+      Legacy health probe settings. Use flat --probe-* arguments for field updates.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -441,7 +416,7 @@ directCommands:
     groupName: HealthProbeSettings Arguments
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
     groupName: Resource Id Arguments
   - name: --remove
     summary: |-
@@ -455,11 +430,6 @@ directCommands:
     summary: |-
       The number of samples to consider for load balancing decisions.
     groupName: LoadBalancingSettings Arguments
-  - name: --session-affinity-state
-    acceptedValues: Disabled, Enabled
-    summary: |-
-      Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'.
-    groupName: Properties Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
@@ -472,10 +442,6 @@ directCommands:
     summary: |-
       The number of samples within the sample period that must succeed.
     groupName: LoadBalancingSettings Arguments
-  - name: --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes
-    summary: |-
-      Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -564,7 +530,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --profile-name
     summary: |-
-      Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-

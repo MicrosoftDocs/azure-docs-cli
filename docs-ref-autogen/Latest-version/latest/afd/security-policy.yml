@@ -16,23 +16,18 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az afd security-policy create --domains
-                                  --name --security-policy-name
+    az afd security-policy create --name --security-policy-name
                                   --profile-name
                                   --resource-group
-                                  --waf-policy
                                   [--acquire-policy-token]
                                   [--change-reference]
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--web-application-firewall]
   examples:
   - summary: |-
-      Creates a security policy to apply the specified WAF policy to an endpoint's default domain and a custom domain.
-    syntax: az afd security-policy create -g group --profile-name profile --security-policy-name sp1 --domains /subscriptions/sub1/resourcegroups/rg1/providers/Microsoft.Cdn/profiles/profile1/afdEndpoints/endpoint1 /subscriptions/sub1/resourcegroups/rg1/providers/Microsoft.Cdn/profiles/profile1/customDomains/customDomain1 --waf-policy /subscriptions/sub1/resourcegroups/rg1/providers/Microsoft.Network/frontdoorwebapplicationfirewallpolicies/waf1
+      SecurityPolicies_Create
+    syntax: az afd security-policy create --resource-group RG --profile-name profile1 --security-policy-name securityPolicy1
   requiredParameters:
-  - isRequired: true
-    name: --domains
-    summary: |-
-      The domains to associate with the WAF policy. Could either be the ID of an endpoint(default domain will be used in that case) or ID of a custom domain.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - isRequired: true
     name: --name --security-policy-name -n
     summary: |-
@@ -45,10 +40,6 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --waf-policy
-    summary: |-
-      The ID of Front Door WAF policy.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -62,6 +53,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --web-application-firewall
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Parameters Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -105,6 +100,10 @@ directCommands:
                                   [--resource-group]
                                   [--subscription]
                                   [--yes]
+  examples:
+  - summary: |-
+      SecurityPolicies_Delete
+    syntax: az afd security-policy delete --resource-group RG --profile-name profile1 --security-policy-name securityPolicy1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -177,6 +176,10 @@ directCommands:
                                 --resource-group
                                 [--max-items]
                                 [--next-token]
+  examples:
+  - summary: |-
+      SecurityPolicies_ListByProfile
+    syntax: az afd security-policy list --resource-group RG --profile-name profile1
   requiredParameters:
   - isRequired: true
     name: --profile-name
@@ -234,6 +237,10 @@ directCommands:
                                 [--profile-name]
                                 [--resource-group]
                                 [--subscription]
+  examples:
+  - summary: |-
+      SecurityPolicies_Get
+    syntax: az afd security-policy show --resource-group RG --profile-name profile1 --security-policy-name securityPolicy1
   optionalParameters:
   - name: --ids
     summary: |-
@@ -289,7 +296,6 @@ directCommands:
     az afd security-policy update [--acquire-policy-token]
                                   [--add]
                                   [--change-reference]
-                                  [--domains]
                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--ids]
                                   [--name --security-policy-name]
@@ -299,11 +305,11 @@ directCommands:
                                   [--resource-group]
                                   [--set]
                                   [--subscription]
-                                  [--waf-policy]
+                                  [--web-application-firewall]
   examples:
   - summary: |-
-      Update the specified security policy's domain list.
-    syntax: az afd security-policy update -g group --security-policy-name sp1 --profile-name profile --domains /subscriptions/sub1/resourcegroups/rg1/providers/Microsoft.Cdn/profiles/profile1/customDomains/customDomain1
+      SecurityPolicies_Create
+    syntax: az afd security-policy update --resource-group RG --profile-name profile1 --security-policy-name securityPolicy1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -317,9 +323,6 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --domains
-    summary: |-
-      The domains to associate with the WAF policy. Could either be the ID of an endpoint(default domain will be used in that case) or ID of a custom domain.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -357,9 +360,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
-  - name: --waf-policy
+  - name: --web-application-firewall
     summary: |-
-      The ID of Front Door WAF policy.
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Parameters Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"

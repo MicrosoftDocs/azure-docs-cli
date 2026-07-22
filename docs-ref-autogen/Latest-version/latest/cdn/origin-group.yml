@@ -25,23 +25,12 @@ directCommands:
                                [--formatted-origins]
                                [--health-probe-settings]
                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                               [--origins]
-                               [--probe-interval]
-                               [--probe-method]
-                               [--probe-path]
-                               [--probe-protocol]
                                [--response-based-origin-error-detection-settings]
-                               [--response-error-detection-error-types]
-                               [--response-error-detection-failover-threshold]
-                               [--response-error-detection-status-code-ranges]
                                [--traffic-restoration-time-to-healed-or-new-endpoints-in-minutes]
   examples:
   - summary: |-
-      Create an origin group
-    syntax: az cdn origin-group create -g group --profile-name profile --endpoint-name endpoint -n origin-group --origins origin-0,origin-1
-  - summary: |-
-      Create an origin group with a custom health probe
-    syntax: az cdn origin-group create -g group --profile-name profile --endpoint-name endpoint -n origin-group --origins origin-0,origin-1 --probe-path /healthz --probe-interval 90 --probe-protocol HTTPS --probe-method GET
+      OriginGroups_Create
+    syntax: az cdn origin-group create --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --origin-group-name origingroup1 --health-probe-settings "{probe-interval-in-seconds:120,probe-path:/health.aspx,probe-protocol:Http,probe-request-type:GET}" --formatted-origins "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin1}]" --response-based-origin-error-detection-settings "{response-based-detected-error-types:TcpErrorsOnly,response-based-failover-threshold-percentage:10}"
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
@@ -80,34 +69,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --origins
-    summary: |-
-      The origins load balanced by this origin group, as a comma-separated list of origin names or origin resource IDs.
-  - name: --probe-interval
-    summary: |-
-      The frequency to perform health probes in seconds.
-  - name: --probe-method
-    summary: |-
-      The request method to use for health probes.
-  - name: --probe-path
-    summary: |-
-      The path relative to the origin that is used to determine the health of the origin.
-  - name: --probe-protocol
-    summary: |-
-      The protocol to use for health probes.
   - name: --response-based-origin-error-detection-settings
     summary: |-
       The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --response-error-detection-error-types
-    summary: |-
-      The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy.
-  - name: --response-error-detection-failover-threshold
-    summary: |-
-      The percentage of failed requests in the sample where failover should trigger.
-  - name: --response-error-detection-status-code-ranges
-    summary: |-
-      Type of response errors for real user requests for which origin will be deemed unhealthy.
   - name: --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes
     summary: |-
       Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
@@ -156,6 +121,10 @@ directCommands:
                                [--resource-group]
                                [--subscription]
                                [--yes]
+  examples:
+  - summary: |-
+      OriginGroups_Delete
+    syntax: az cdn origin-group delete --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --origin-group-name originGroup1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -233,6 +202,10 @@ directCommands:
                              --resource-group
                              [--max-items]
                              [--next-token]
+  examples:
+  - summary: |-
+      OriginsGroups_ListByEndpoint
+    syntax: az cdn origin-group list --resource-group RG --profile-name profile1 --endpoint-name endpoint1
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
@@ -295,6 +268,10 @@ directCommands:
                              [--profile-name]
                              [--resource-group]
                              [--subscription]
+  examples:
+  - summary: |-
+      OriginGroups_Get
+    syntax: az cdn origin-group show --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --origin-group-name originGroup1
   optionalParameters:
   - name: --endpoint-name
     summary: |-
@@ -361,28 +338,17 @@ directCommands:
                                [--ids]
                                [--name --origin-group-name]
                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                               [--origins]
-                               [--probe-interval]
-                               [--probe-method]
-                               [--probe-path]
-                               [--probe-protocol]
                                [--profile-name]
                                [--remove]
                                [--resource-group]
                                [--response-based-origin-error-detection-settings]
-                               [--response-error-detection-error-types]
-                               [--response-error-detection-failover-threshold]
-                               [--response-error-detection-status-code-ranges]
                                [--set]
                                [--subscription]
                                [--traffic-restoration-time-to-healed-or-new-endpoints-in-minutes]
   examples:
   - summary: |-
-      Update which origins are included in an origin group.
-    syntax: az cdn origin-group update -g group --profile-name profile --endpoint-name endpoint -n origin-group --origins origin-0,origin-2
-  - summary: |-
-      Update an origin group with a custom health probe
-    syntax: az cdn origin-group update -g group --profile-name profile --endpoint-name endpoint -n origin-group --origins origin-0,origin-1 --probe-path /healthz --probe-interval 90 --probe-protocol HTTPS --probe-method GET
+      OriginGroups_Create
+    syntax: az cdn origin-group update --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --origin-group-name origingroup1 --health-probe-settings "{probe-interval-in-seconds:120,probe-path:/health.aspx,probe-protocol:Http,probe-request-type:GET}" --formatted-origins "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin1}]" --response-based-origin-error-detection-settings "{response-based-detected-error-types:TcpErrorsOnly,response-based-failover-threshold-percentage:10}"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -425,21 +391,6 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --origins
-    summary: |-
-      The origins load balanced by this origin group, as a comma-separated list of origin names or origin resource IDs.
-  - name: --probe-interval
-    summary: |-
-      The frequency to perform health probes in seconds.
-  - name: --probe-method
-    summary: |-
-      The request method to use for health probes.
-  - name: --probe-path
-    summary: |-
-      The path relative to the origin that is used to determine the health of the origin.
-  - name: --probe-protocol
-    summary: |-
-      The protocol to use for health probes.
   - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
@@ -456,15 +407,6 @@ directCommands:
     summary: |-
       The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
-  - name: --response-error-detection-error-types
-    summary: |-
-      The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy.
-  - name: --response-error-detection-failover-threshold
-    summary: |-
-      The percentage of failed requests in the sample where failover should trigger.
-  - name: --response-error-detection-status-code-ranges
-    summary: |-
-      Type of response errors for real user requests for which origin will be deemed unhealthy.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.

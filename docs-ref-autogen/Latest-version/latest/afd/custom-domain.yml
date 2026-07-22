@@ -27,15 +27,13 @@ directCommands:
                                 [--customized-cipher-suite-set]
                                 [--host-name]
                                 [--minimum-tls-version {TLS10, TLS12, TLS13}]
+                                [--mtls-settings]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--secret]
   examples:
   - summary: |-
-      Create a custom domain that uses AFD managed certificate for SSL/TLS encryption.
-    syntax: az afd custom-domain create -g group --custom-domain-name customDomain --profile-name profile --host-name www.contoso.com --minimum-tls-version TLS12 --certificate-type ManagedCertificate
-  - summary: |-
-      Create a custom domain that uses your own certificate for SSL/TLS encryption, the certificate is stored in Azure Key Vault and referenced by an AFD secret.
-    syntax: az afd custom-domain create -g group --custom-domain-name example-custom-domain --profile-name profile --host-name www.contoso.com --minimum-tls-version TLS12 --certificate-type CustomerCertificate --secret secretName
+      AFDCustomDomains_Create
+    syntax: az afd custom-domain create --resource-group RG --profile-name profile1 --custom-domain-name domain1 --azure-dns-zone  --host-name www.someDomain.net --mtls-settings "{allowedFqdns:[foo.contoso.com],secrets:[{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name1},{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name2}],client-certificate-required-and-validated:{allowed-fqdns:[foo.contoso.com],secrets:[{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name1},{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name2}]}}" --certificate-type ManagedCertificate --cipher-suite-set-type Customized --customized-cipher-suite-set "{cipher-suite-set-for-tls12:[ECDHE_RSA_AES128_GCM_SHA256],cipher-suite-set-for-tls13:[TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384]}" --minimum-tls-version TLS12
   requiredParameters:
   - isRequired: true
     name: --custom-domain-name --name -n
@@ -85,6 +83,10 @@ directCommands:
     summary: |-
       TLS protocol version that will be used for Https.
     groupName: TlsSettings Arguments
+  - name: --mtls-settings
+    summary: |-
+      The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -138,8 +140,8 @@ directCommands:
                                 [--yes]
   examples:
   - summary: |-
-      Delete a custom domain.
-    syntax: az afd custom-domain delete -g group --profile-name profile  --custom-domain-name customDomainName
+      AFDCustomDomains_Delete
+    syntax: az afd custom-domain delete --resource-group RG --profile-name profile1 --custom-domain-name domain1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -214,8 +216,8 @@ directCommands:
                               [--next-token]
   examples:
   - summary: |-
-      List all the custom domains within the specified profile.
-    syntax: az afd custom-domain list -g group --profile-name profile
+      AFDCustomDomains_ListByProfile
+    syntax: az afd custom-domain list --resource-group RG --profile-name profile1
   requiredParameters:
   - isRequired: true
     name: --profile-name
@@ -278,8 +280,8 @@ directCommands:
                                                      [--subscription]
   examples:
   - summary: |-
-      Regenerate the domain validation token.
-    syntax: az afd custom-domain regenerate-validation-token -g MyResourceGroup --profile-name MyProfle --custom-domain-name MyCustomDomain
+      AFDCustomDomains_Delete
+    syntax: az afd custom-domain regenerate-validation-token --resource-group RG --profile-name profile1 --custom-domain-name domain1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -351,8 +353,8 @@ directCommands:
                               [--subscription]
   examples:
   - summary: |-
-      show details of the custom domain within the specified profile.
-    syntax: az afd custom-domain show -g group --profile-name profile  --custom-domain-name customDomainName
+      AFDCustomDomains_Get
+    syntax: az afd custom-domain show --resource-group RG --profile-name profile1 --custom-domain-name domain1
   optionalParameters:
   - name: --custom-domain-name --name -n
     summary: |-
@@ -416,6 +418,7 @@ directCommands:
                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--ids]
                                 [--minimum-tls-version {TLS10, TLS12, TLS13}]
+                                [--mtls-settings]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--profile-name]
                                 [--remove]
@@ -425,11 +428,8 @@ directCommands:
                                 [--subscription]
   examples:
   - summary: |-
-      Update the custom domain's supported minimum TLS version.
-    syntax: az afd custom-domain update -g group --custom-domain-name customDomain --profile-name profile --minimum-tls-version TLS12
-  - summary: |-
-      Update the custom domain's certificate type to AFD managed certificate.
-    syntax: az afd custom-domain update -g group --custom-domain-name customDomain --profile-name profile --certificate-type ManagedCertificate
+      AFDCustomDomains_Create
+    syntax: az afd custom-domain update --resource-group RG --profile-name profile1 --custom-domain-name domain1 --azure-dns-zone  --host-name www.someDomain.net --mtls-settings "{allowedFqdns:[foo.contoso.com],scenario:ClientCertificateRequiredAndValidated,secrets:[{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name1},{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name2}]}" --certificate-type ManagedCertificate --cipher-suite-set-type Customized --customized-cipher-suite-set "{cipher-suite-set-for-tls12:[ECDHE_RSA_AES128_GCM_SHA256],cipher-suite-set-for-tls13:[TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384]}" --minimum-tls-version TLS12
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -479,6 +479,10 @@ directCommands:
     summary: |-
       TLS protocol version that will be used for Https.
     groupName: TlsSettings Arguments
+  - name: --mtls-settings
+    summary: |-
+      The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
