@@ -1,15 +1,15 @@
 ---
-title: Azure Developer CLI vs Azure CLI - differences and when to use each
-description: Learn the differences between Azure Developer CLI (azd) and Azure CLI (az), including their purpose, capabilities, and when to use each tool for your Azure workflow.
+title: Azure CLI vs Azure Developer CLI - differences and when to use each
+description: Learn the differences between Azure CLI (az) and Azure Developer CLI (azd), including their purpose, capabilities, and when to use each tool for your Azure workflow.
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 ms.topic: concept-article
-keywords: azure developer cli, azd vs az, azure cli comparison, azure developer cli vs azure cli, azd cli
+keywords: azure cli vs azure developer cli, az vs azd, azure cli comparison, azure developer cli vs azure cli, azd cli
 ---
 
-# Azure Developer CLI vs Azure CLI
+# Azure CLI vs Azure Developer CLI
 
-Azure Developer CLI (`azd`) and Azure CLI (`az`) are both command-line tools for working with Azure, but they serve different purposes. This article explains the differences and helps you choose the right tool for your workflow.
+Azure CLI (`az`) and Azure Developer CLI (`azd`) are both command-line tools for working with Azure, but they serve different purposes. This article explains the differences and helps you choose the right tool for your workflow.
 
 ## Overview
 
