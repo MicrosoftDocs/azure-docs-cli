@@ -89,15 +89,15 @@ azd pipeline config
 ### Workflow focus
 
 - **Azure CLI** focuses on Azure resource management and automation.
-- **Azure Developer CLI** focuses on the inner-loop and outer-loop developer experience — from writing code to deploying applications.
+- **Azure Developer CLI** focuses on the inner-loop and outer-loop developer experience, from writing code to deploying applications.
 
 ## Using both tools together
 
 Azure CLI and Azure Developer CLI are complementary. A common workflow is:
 
-1. Use `azd` to scaffold and deploy your application from a template.
-1. Use `az` to fine-tune individual resource configurations or troubleshoot specific services.
-1. Use `az` in scripts for resource-level automation that goes beyond the application template.
+1. Use `az` to create and configure individual Azure resources or automate infrastructure tasks.
+1. Use `azd` to scaffold and deploy full application stacks from templates.
+1. Combine both tools in CI/CD pipelines for end-to-end workflows that manage infrastructure and application code.
 
 ## Related content
 
