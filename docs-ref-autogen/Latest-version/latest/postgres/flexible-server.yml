@@ -339,7 +339,10 @@ directCommands:
     syntax: az postgres flexible-server create -g testgroup -n testserver --location testlocation --storage-auto-grow Enabled
   - summary: |-
       Create elastic cluster with node count of 5.
-    syntax: az postgres flexible-server create -g testGroup -n testCluster --location testLocation --node-count 5
+    syntax: az postgres flexible-server create -g testgroup -n testcluster --location testlocation --node-count 5
+  - summary: |-
+      Create elastic cluster with node count of 3 and custom database name.
+    syntax: az postgres flexible-server create -g testgroup -n testcluster --location testlocation --node-count 3 --database-name testdatabase
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -360,7 +363,7 @@ directCommands:
     summary: |-
       Type of the Microsoft Entra administrator.
   - name: --admin-user -u
-    defaultValue: remotecobra8
+    defaultValue: longingcamel1
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
@@ -767,7 +770,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-07-22T11:12:49+00:00
+    defaultValue: 2026-07-23T23:13:51+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
   - name: --subnet
@@ -1168,7 +1171,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-07-22T11:12:49+00:00
+    defaultValue: 2026-07-23T23:13:51+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
   - name: --storage-type
@@ -1891,11 +1894,15 @@ directCommands:
                                         [--name]
                                         [--resource-group]
                                         [--subscription]
+                                        [--validate-only]
                                         [--yes]
   examples:
   - summary: |-
       Upgrade server 'testserver' to PostgreSQL major version 18.
     syntax: az postgres flexible-server upgrade -g testgroup -n testserver -v 18
+  - summary: |-
+      Run pre-upgrade validation for server targeting a later PostgreSQL major version without performing the upgrade.
+    syntax: az postgres flexible-server upgrade -g testgroup -n testserver -v 18 --validate-only
   requiredParameters:
   - isRequired: true
     name: --version -v
@@ -1926,6 +1933,9 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --validate-only
+    summary: |-
+      Run a pre-upgrade validation against the server without performing major version upgrade on resource. Returns the prevalidation check result.
   - name: --yes -y
     summary: |-
       Do not prompt for confirmation.
