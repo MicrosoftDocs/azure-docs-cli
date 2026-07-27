@@ -1,45 +1,46 @@
 ### YamlMime:AzureCLIGroup
-uid: az_oracle-database_autonomous-database_backup
-name: az oracle-database autonomous-database backup
+uid: az_discovery_supercomputer
+name: az discovery supercomputer
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **oracle-database** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az oracle-database autonomous-database backup** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **discovery** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az discovery supercomputer** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Autonomous Databases Backup.
+  Manage supercomputers and nodepools.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_oracle-database_autonomous-database_backup_create
-  name: az oracle-database autonomous-database backup create
+- uid: az_discovery_supercomputer_create
+  name: az discovery supercomputer create
   summary: |-
-    Create an Autonomous Database backup.
+    Create a Supercomputer.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup create --adbbackupid --name
-                                                         --autonomousdatabasename
-                                                         --resource-group
-                                                         [--acquire-policy-token]
-                                                         [--change-reference]
-                                                         [--display-name]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--retention-days --retention-period-in-days]
+    az discovery supercomputer create --name --supercomputer-name
+                                      --resource-group
+                                      [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--customer-managed-keys {Disabled, Enabled}]
+                                      [--disk-encryption-set-id]
+                                      [--identities]
+                                      [--identity]
+                                      [--la-cluster-id --log-analytics-cluster-id]
+                                      [--location]
+                                      [--management-subnet-id]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--outbound-type {LoadBalancer, None}]
+                                      [--subnet-id]
+                                      [--system-sku {Standard_D4s_v4, Standard_D4s_v5, Standard_D4s_v6}]
+                                      [--tags]
   examples:
   - summary: |-
-      Create an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --display-name <display name> --retention-period-in-days <days>
-  - summary: |-
-      Create and return the Azure backup resource ID
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days> --query "{id:id,name:name}"
+      Create a supercomputer with user-assigned identities.
+    syntax: az discovery supercomputer create --resource-group MyResourceGroup --name MySupercomputer --location eastus --subnet-id /subscriptions/<subscription-id>/resourceGroups/MyNetworkRG/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySupercomputerSubnet --identities "{cluster-identity:{id:'/subscriptions/<subscription-id>/resourceGroups/MyIdentityRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyUami'},kubelet-identity:{id:'/subscriptions/<subscription-id>/resourceGroups/MyIdentityRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyUami'},workload-identities:{'/subscriptions/<subscription-id>/resourceGroups/MyIdentityRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyUami':{}}}" --tags SkipAssociateKeyVaultToNsp=True
   requiredParameters:
   - isRequired: true
-    name: --adbbackupid --name -n
+    name: --name --supercomputer-name -n
     summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
-  - isRequired: true
-    name: --autonomousdatabasename
-    summary: |-
-      The database name.
+      The name of the Supercomputer.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -53,18 +54,58 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --display-name
+  - name: --customer-managed-keys
+    acceptedValues: Disabled, Enabled
     summary: |-
-      The user-friendly name for the backup. The name does not have to be unique.
+      Whether or not to use a customer managed key when encrypting data at rest.
+    groupName: Properties Arguments
+  - name: --disk-encryption-set-id
+    summary: |-
+      Disk Encryption Set ID to use for Customer Managed Keys encryption. Required if Customer Managed Keys is enabled.
+    groupName: Properties Arguments
+  - name: --identities
+    summary: |-
+      Dictionary of identity properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --identity
+    summary: |-
+      The managed service identities assigned to this resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --la-cluster-id --log-analytics-cluster-id
+    summary: |-
+      The Log Analytics Cluster to use for debug logs. This is required when Customer Managed Keys are enabled.
+    groupName: Properties Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --management-subnet-id
+    summary: |-
+      System Subnet ID associated with AKS apiserver. Must be delegated to Microsoft.ContainerService/managedClusters.     It should have connectivity to the system subnet and nodepool subnets.
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --retention-days --retention-period-in-days
+  - name: --outbound-type
+    defaultValue: LoadBalancer
+    acceptedValues: LoadBalancer, None
     summary: |-
-      Retention period, in days, for long-term backups.
+      Network egress type provisioned for the supercomputer workloads.     Defaults to LoadBalancer if not specified.     If None is specified, the customer is responsible for providing outbound connectivity for Supercomputer functionality.
     groupName: Properties Arguments
+  - name: --subnet-id
+    summary: |-
+      System Subnet ID associated with managed NodePool for system resources.     It should have connectivity to the child NodePool subnets.
+    groupName: Properties Arguments
+  - name: --system-sku
+    acceptedValues: Standard_D4s_v4, Standard_D4s_v5, Standard_D4s_v6
+    summary: |-
+      The SKU to use for the system node pool.
+    groupName: Properties Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -92,39 +133,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_delete
-  name: az oracle-database autonomous-database backup delete
+- uid: az_discovery_supercomputer_delete
+  name: az discovery supercomputer delete
   summary: |-
-    Delete an Autonomous Database backup.
+    Delete a Supercomputer.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup delete [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--resource-group]
-                                                         [--subscription]
-                                                         [--yes]
-  examples:
-  - summary: |-
-      Delete an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup delete --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_name> --yes
+    az discovery supercomputer delete [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--ids]
+                                      [--name --supercomputer-name]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--resource-group]
+                                      [--subscription]
+                                      [--yes]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name. Use the final segment of the id returned by backup list, not the full Azure resource ID.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -132,6 +160,10 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --supercomputer-name -n
+    summary: |-
+      The name of the Supercomputer.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -173,30 +205,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_list
-  name: az oracle-database autonomous-database backup list
+- uid: az_discovery_supercomputer_list
+  name: az discovery supercomputer list
   summary: |-
-    List Autonomous Database backup resources by Autonomous Database.
+    List Supercomputer resources by subscription ID.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup list --autonomousdatabasename
-                                                       --resource-group
-                                                       [--max-items]
-                                                       [--next-token]
-  examples:
-  - summary: |-
-      List Autonomous Database backups
-    syntax: az oracle-database autonomous-database backup list --autonomousdatabasename <ADBS name> --resource-group <resource_group>
-  requiredParameters:
-  - isRequired: true
-    name: --autonomousdatabasename
-    summary: |-
-      The database name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    az discovery supercomputer list [--max-items]
+                                    [--next-token]
+                                    [--resource-group]
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -206,6 +224,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -233,37 +254,25 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_show
-  name: az oracle-database autonomous-database backup show
+- uid: az_discovery_supercomputer_show
+  name: az discovery supercomputer show
   summary: |-
-    Get an Autonomous Database backup.
+    Get a Supercomputer.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup show [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--ids]
-                                                       [--resource-group]
-                                                       [--subscription]
-  examples:
-  - summary: |-
-      Get an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id>
-  - summary: |-
-      Get a backup using the Azure backup resource name/id returned by backup create or backup list
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_id>
+    az discovery supercomputer show [--ids]
+                                    [--name --supercomputer-name]
+                                    [--resource-group]
+                                    [--subscription]
   optionalParameters:
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --supercomputer-name -n
+    summary: |-
+      The name of the Supercomputer.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -297,65 +306,89 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_update
-  name: az oracle-database autonomous-database backup update
+- uid: az_discovery_supercomputer_update
+  name: az discovery supercomputer update
   summary: |-
-    Update an Autonomous Database backup.
+    Update a Supercomputer.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup update --retention-days --retention-period-in-days
-                                                         [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--resource-group]
-                                                         [--subscription]
+    az discovery supercomputer update [--acquire-policy-token]
+                                      [--add]
+                                      [--change-reference]
+                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--identities]
+                                      [--identity]
+                                      [--ids]
+                                      [--name --supercomputer-name]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--remove]
+                                      [--resource-group]
+                                      [--set]
+                                      [--subscription]
+                                      [--tags]
   examples:
   - summary: |-
-      Update an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days>
-  requiredParameters:
-  - isRequired: true
-    name: --retention-days --retention-period-in-days
-    summary: |-
-      Retention period, in days, for long-term backups.
-    groupName: Properties Arguments
+      Update tags on a supercomputer.
+    syntax: az discovery supercomputer update --resource-group MyResourceGroup --name MySupercomputer --tags env=prod workload=training
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
+  - name: --add
     summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --identities
+    summary: |-
+      Dictionary of identity properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --identity
+    summary: |-
+      The managed service identities assigned to this resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --supercomputer-name -n
+    summary: |-
+      The name of the Supercomputer.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -380,40 +413,31 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_wait
-  name: az oracle-database autonomous-database backup wait
+- uid: az_discovery_supercomputer_wait
+  name: az discovery supercomputer wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup wait [--acquire-policy-token]
-                                                       [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--change-reference]
-                                                       [--created]
-                                                       [--custom]
-                                                       [--deleted]
-                                                       [--exists]
-                                                       [--ids]
-                                                       [--interval]
-                                                       [--resource-group]
-                                                       [--subscription]
-                                                       [--timeout]
-                                                       [--updated]
+    az discovery supercomputer wait [--acquire-policy-token]
+                                    [--change-reference]
+                                    [--created]
+                                    [--custom]
+                                    [--deleted]
+                                    [--exists]
+                                    [--ids]
+                                    [--interval]
+                                    [--name --supercomputer-name]
+                                    [--resource-group]
+                                    [--subscription]
+                                    [--timeout]
+                                    [--updated]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -446,6 +470,10 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
+  - name: --name --supercomputer-name -n
+    summary: |-
+      The name of the Supercomputer.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -489,11 +517,18 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_oracle-database_autonomous-database_backup_create
-- az_oracle-database_autonomous-database_backup_delete
-- az_oracle-database_autonomous-database_backup_list
-- az_oracle-database_autonomous-database_backup_show
-- az_oracle-database_autonomous-database_backup_update
-- az_oracle-database_autonomous-database_backup_wait
+- az_discovery_supercomputer_create
+- az_discovery_supercomputer_delete
+- az_discovery_supercomputer_list
+- az_discovery_supercomputer_node-pool
+- az_discovery_supercomputer_node-pool_create
+- az_discovery_supercomputer_node-pool_delete
+- az_discovery_supercomputer_node-pool_list
+- az_discovery_supercomputer_node-pool_show
+- az_discovery_supercomputer_node-pool_update
+- az_discovery_supercomputer_node-pool_wait
+- az_discovery_supercomputer_show
+- az_discovery_supercomputer_update
+- az_discovery_supercomputer_wait
 metadata:
-  description: Autonomous Databases Backup.
+  description: Manage supercomputers and nodepools.
