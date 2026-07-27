@@ -1,102 +1,117 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_opcua_event
-name: az iot ops ns asset opcua event
+uid: az_iot_ops_ns_asset_mgmt-action
+name: az iot ops ns asset mgmt-action
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset opcua event** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset mgmt-action** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage individual events for OPC UA asset event groups in Device Registry namespaces.
+  Manage actions for asset management groups in IoT Operations namespaces.
+description: |-
+  The connector type is detected automatically from the existing asset. For connector-specific parameters use --action-config (inline JSON or file). Use --show-template to discover the supported configuration schema for the asset's connector type.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_opcua_event_add
-  name: az iot ops ns asset opcua event add
+- uid: az_iot_ops_ns_asset_mgmt-action_add
+  name: az iot ops ns asset mgmt-action add
   summary: |-
-    Add an event to an OPC UA asset event group in a Device Registry namespace.
-  status: GA
+    Add an action to an asset management group in an IoT Operations namespace.
+  description: |-
+    The connector type is detected from the asset's device endpoint. Connector-specific configuration can be supplied via --action-config. Use --show-template to discover the supported config schema. For non-OPC UA connectors, a connector template must exist in the instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event add --asset
-                                        --eg --event-group
+    az iot ops ns asset mgmt-action add --asset
+                                        --group
                                         --instance
                                         --name
                                         --resource-group
+                                        [--ac --action-config]
                                         [--acquire-policy-token]
+                                        [--action-type --at {Call, Read, Write}]
                                         [--change-reference]
-                                        [--condition-refresh --cr {false, true}]
-                                        [--data-source --ds]
-                                        [--fc --filter-clause]
-                                        [--filter-type --ft]
-                                        [--qs --queue-size]
                                         [--replace {false, true}]
-                                        [--sampling-interval --si]
+                                        [--show-template {config, schema}]
+                                        [--target-uri --uri]
+                                        [--timeout --to]
+                                        [--topic]
+                                        [--tr --type-ref]
   examples:
   - summary: |-
-      Add a basic OPC UA event
-    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity"
+      Add a basic action to any asset type
+    syntax: az iot ops ns asset mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls --name restart --target-uri "opc.tcp://boiler/restart"
   - summary: |-
-      Add an OPC UA event with sampling interval and queue size
-    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name pressure --data-source "alarm.pressure" --sampling-int 500 --queue-size 5
+      Show the action config template for the asset's connector type
+    syntax: az iot ops ns asset mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls --name restart --show-template config
   - summary: |-
-      Replace an OPC UA event with same name
-    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity.updated" --replace
+      Add an action with connector-specific configuration from inline JSON
+    syntax: "az iot ops ns asset mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls --name restart --target-uri \"opc.tcp://boiler/restart\" --action-config '{\"actionConfiguration\": {\"retryCount\": 3}}'"
   - summary: |-
-      Add an OPC UA event with filter type and filter clauses
-    syntax: az iot ops ns asset opcua event add --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name criticalAlarm --data-source "alarm.critical" --filter-type "ns=2;i=5001" --filter-clause path="/EventType" type="ns=2;i=5001"
+      Add an action with configuration from a file
+    syntax: az iot ops ns asset mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls --name restart --target-uri "opc.tcp://boiler/restart" --action-config ./action_config.json
+  - summary: |-
+      Replace an existing action
+    syntax: az iot ops ns asset mgmt-action add --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls --name restart --target-uri "opc.tcp://boiler/restart" --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --eg --event-group
+    name: --group
     summary: |-
-      Event-group name.
+      Management group name.
   - isRequired: true
     name: --instance -i
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: |-
-      Event name.
+      Action name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       The resource group of the Azure IoT Operations instance.
   optionalParameters:
+  - name: --ac --action-config
+    summary: |-
+      Inline JSON string or path to a JSON/YAML file (.json, .yaml, .yml) containing connector-specific action configuration. The accepted key is 'actionConfiguration' (connector-specific config object). Use --show-template to discover the supported keys and schema for the asset's connector type. Cannot be combined with --show-template. For non-OPC UA connectors, a connector template must exist in the instance.
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --action-type --at
+    defaultValue: Call
+    acceptedValues: Call, Read, Write
+    summary: |-
+      Type of management action.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --condition-refresh --cr
-    acceptedValues: false, true
-    summary: |-
-      If enabled, a ConditionRefresh is requested from the OPC UA server after subscription creation. Set to false to opt-out of condition refresh for this event within a group that has it enabled.
-  - name: --data-source --ds
-    summary: |-
-      Data source for the event.
-  - name: --fc --filter-clause
-    summary: |-
-      Space-separated key=value pairs for event filter clauses. Allowed keys are `path` (required), `type`, and `field`. This parameter can be specified multiple times to add multiple clauses.
-  - name: --filter-type --ft
-    summary: |-
-      Filter type definition ID for the event.
-  - name: --qs --queue-size
-    summary: |-
-      Queue size.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the event if another event with the same name is already present.
-  - name: --sampling-interval --si
+      Replace the action if another action with the same name is already present.
+  - name: --show-template
+    acceptedValues: config, schema
     summary: |-
-      Sampling interval in milliseconds.
+      Show a starter action configuration template for the asset's connector type and exit without modifying the action. The connector type is read from the existing asset. config: fields shown with their default values (null if no default); output is directly usable as --action-config input. schema: every field includes type, default, and constraints (min, max, enum, pattern). Draft-07 $ref pointers (#/definitions/...) are resolved inline in both modes.
+  - name: --target-uri --uri
+    summary: |-
+      Target URI for the management action.
+  - name: --timeout --to
+    summary: |-
+      Timeout in seconds for this specific action. Minimum: 0.
+  - name: --topic -t
+    summary: |-
+      Topic override for this specific action.
+  - name: --tr --type-ref
+    summary: |-
+      Type definition ID or URI.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -124,17 +139,17 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event_export
-  name: az iot ops ns asset opcua event export
+- uid: az_iot_ops_ns_asset_mgmt-action_export
+  name: az iot ops ns asset mgmt-action export
   summary: |-
-    Export events to file.
-  description: |-
-    Export events from an event-group to JSON, YAML, or CSV format.
-  status: GA
+    Export management group actions to file.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event export --asset
-                                           --eg --event-group
+    az iot ops ns asset mgmt-action export --asset
+                                           --group
                                            --instance
                                            --resource-group
                                            [--acquire-policy-token]
@@ -142,15 +157,19 @@ directCommands:
                                            [--format {csv, json, yaml}]
                                            [--od --output-dir]
                                            [--replace {false, true}]
+  examples:
+  - summary: |-
+      Export actions to JSON
+    syntax: az iot ops ns asset mgmt-action export --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --eg --event-group
+    name: --group
     summary: |-
-      Event-group name.
+      Management group name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -181,7 +200,7 @@ directCommands:
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the event if another event with the same name is already present.
+      Replace the local file if present.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -209,32 +228,36 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event_import
-  name: az iot ops ns asset opcua event import
+- uid: az_iot_ops_ns_asset_mgmt-action_import
+  name: az iot ops ns asset mgmt-action import
   summary: |-
-    Import events from file.
-  description: |-
-    Import events from JSON, YAML, or CSV file. Use --replace to merge with overwrite.
-  status: GA
+    Import management group actions from file.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event import --asset
-                                           --eg --event-group
+    az iot ops ns asset mgmt-action import --asset
+                                           --group
                                            --if --input-file
                                            --instance
                                            --resource-group
                                            [--acquire-policy-token]
                                            [--change-reference]
                                            [--replace {false, true}]
+  examples:
+  - summary: |-
+      Import actions from a JSON file
+    syntax: az iot ops ns asset mgmt-action import --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls --input-file ./actions.json
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --eg --event-group
+    name: --group
     summary: |-
-      Event-group name.
+      Management group name.
   - isRequired: true
     name: --if --input-file
     summary: |-
@@ -260,7 +283,7 @@ directCommands:
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the event if another event with the same name is already present.
+      Replace existing actions that share a name with an imported action.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -288,30 +311,32 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event_list
-  name: az iot ops ns asset opcua event list
+- uid: az_iot_ops_ns_asset_mgmt-action_list
+  name: az iot ops ns asset mgmt-action list
   summary: |-
-    List events for an OPC UA asset event group in a Device Registry namespace.
-  status: GA
+    List actions for an asset management group in an IoT Operations namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event list --asset
-                                         --eg --event-group
+    az iot ops ns asset mgmt-action list --asset
+                                         --group
                                          --instance
                                          --resource-group
   examples:
   - summary: |-
-      List all events for an event group
-    syntax: az iot ops ns asset opcua event list --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup
+      List all actions for a management group
+    syntax: az iot ops ns asset mgmt-action list --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --eg --event-group
+    name: --group
     summary: |-
-      Event-group name.
+      Management group name.
   - isRequired: true
     name: --instance -i
     summary: |-
@@ -347,15 +372,17 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_opcua_event_remove
-  name: az iot ops ns asset opcua event remove
+- uid: az_iot_ops_ns_asset_mgmt-action_remove
+  name: az iot ops ns asset mgmt-action remove
   summary: |-
-    Remove an event from an OPC UA asset event group in a Device Registry namespace.
-  status: GA
+    Remove an action from an asset management group in an IoT Operations namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset opcua event remove --asset
-                                           --eg --event-group
+    az iot ops ns asset mgmt-action remove --asset
+                                           --group
                                            --instance
                                            --name
                                            --resource-group
@@ -363,25 +390,25 @@ directCommands:
                                            [--change-reference]
   examples:
   - summary: |-
-      Remove an event from an event group
-    syntax: az iot ops ns asset opcua event remove --asset myopcuaasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity
+      Remove an action from a management group
+    syntax: az iot ops ns asset mgmt-action remove --asset myasset --instance myInstance -g myInstanceResourceGroup --group boilerControls --name restart
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
-    name: --eg --event-group
+    name: --group
     summary: |-
-      Event-group name.
+      Management group name.
   - isRequired: true
     name: --instance -i
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: |-
-      Event name.
+      Action name.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -423,10 +450,10 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_opcua_event_add
-- az_iot_ops_ns_asset_opcua_event_export
-- az_iot_ops_ns_asset_opcua_event_import
-- az_iot_ops_ns_asset_opcua_event_list
-- az_iot_ops_ns_asset_opcua_event_remove
+- az_iot_ops_ns_asset_mgmt-action_add
+- az_iot_ops_ns_asset_mgmt-action_export
+- az_iot_ops_ns_asset_mgmt-action_import
+- az_iot_ops_ns_asset_mgmt-action_list
+- az_iot_ops_ns_asset_mgmt-action_remove
 metadata:
-  description: Manage individual events for OPC UA asset event groups in Device Registry namespaces.
+  description: The connector type is detected automatically from the existing asset. For connector-specific parameters use --action-config (inline JSON or file). Use --show-template to discover the supported configuration schema for the asset's connector type.

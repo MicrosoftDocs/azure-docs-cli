@@ -1,42 +1,58 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_ns_asset_sse_event
-name: az iot ops ns asset sse event
+uid: az_iot_ops_ns_asset_event
+name: az iot ops ns asset event
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset sse event** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops ns asset event** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage individual events for SSE event groups in Device Registry namespaces.
+  Manage events for asset event-groups in IoT Operations namespaces.
+description: |-
+  The connector type is detected automatically from the existing asset. For connector-specific parameters use --event-config (inline JSON or file). Use --show-template to discover the supported configuration schema for the asset's connector type.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_ns_asset_sse_event_add
-  name: az iot ops ns asset sse event add
+- uid: az_iot_ops_ns_asset_event_add
+  name: az iot ops ns asset event add
   summary: |-
-    Add an event to an SSE asset event group in a Device Registry namespace.
-  status: GA
+    Add an event to an asset event-group in an IoT Operations namespace.
+  description: |-
+    The connector type is detected from the asset's device endpoint. Connector-specific configuration (queue size, sampling interval, etc.) and destinations can be supplied via --event-config. Use --show-template to discover the supported config schema. For non-OPC UA connectors, a connector template must exist in the instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset sse event add --asset
-                                      --eg --event-group
-                                      --instance
-                                      --name
-                                      --resource-group
-                                      [--acquire-policy-token]
-                                      [--change-reference]
-                                      [--data-source --ds]
-                                      [--dest --destination]
-                                      [--replace {false, true}]
-                                      [--tr --type-ref]
+    az iot ops ns asset event add --asset
+                                  --eg --event-group
+                                  --instance
+                                  --name
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--data-source --ds]
+                                  [--ec --event-config]
+                                  [--replace {false, true}]
+                                  [--show-template {config, schema}]
+                                  [--tr --type-ref]
   examples:
   - summary: |-
-      Add a basic SSE event
-    syntax: az iot ops ns asset sse event add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name temperature --data-source "/events/temperature"
+      Add a basic event to any asset type
+    syntax: az iot ops ns asset event add --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity"
   - summary: |-
-      Add an SSE event with MQTT destination
-    syntax: az iot ops ns asset sse event add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name pressure --data-source "/events/pressure" --dest topic="factory/sse/pressure" retain=Keep qos=Qos1 ttl=3600
+      Show the event config template for the asset's connector type
+    syntax: az iot ops ns asset event add --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity" --show-template config
   - summary: |-
-      Replace an SSE event with same name
-    syntax: az iot ops ns asset sse event add --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name temperature --data-source "/events/temperature/updated" --replace
+      Add an event with connector-specific configuration from inline JSON
+    syntax: "az iot ops ns asset event add --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source \"alarm.severity\" --event-config '{\"eventConfiguration\": {\"samplingInterval\": 1000, \"queueSize\": 5}}'"
+  - summary: |-
+      Add an event with configuration from a file
+    syntax: az iot ops ns asset event add --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity" --event-config ./event_config.json
+  - summary: |-
+      Add an event with an MQTT destination
+    syntax: "az iot ops ns asset event add --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source \"alarm.severity\" --event-config '{\"destinations\": [{\"target\": \"Mqtt\", \"configuration\": {\"topic\": \"factory/alarms\", \"retain\": \"Keep\", \"qos\": \"Qos1\", \"ttl\": 3600}}]}'"
+  - summary: |-
+      Replace an existing event
+    syntax: az iot ops ns asset event add --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity --data-source "alarm.severity.updated" --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -51,7 +67,7 @@ directCommands:
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: |-
       Event name.
   - isRequired: true
@@ -70,14 +86,18 @@ directCommands:
   - name: --data-source --ds
     summary: |-
       Data source for the event.
-  - name: --dest --destination
+  - name: --ec --event-config
     summary: |-
-      Key=value pairs representing the destination for events. Allowed arguments include: `topic`, `retain`, `qos`, and `ttl` for MQTT. Allowed values for `retain` are `Keep` and `Never` and allowed values for `qos` are `Qos0` and `Qos1`.
+      Inline JSON string or path to a JSON/YAML file (.json, .yaml, .yml) containing connector-specific event configuration and/or destinations. Accepted keys are 'eventConfiguration' (connector-specific config object) and 'destinations' (list of destination objects). Use --show-template to discover the supported keys and schema for the asset's connector type. Cannot be combined with --show-template. For non-OPC UA connectors, a connector template must exist in the instance.
   - name: --replace
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       Replace the event if another event with the same name is already present.
+  - name: --show-template
+    acceptedValues: config, schema
+    summary: |-
+      Show a starter event configuration template for the asset's connector type and exit without modifying the event. The connector type is read from the existing asset. config: fields shown with their default values (null if no default); output is directly usable as --event-config input. schema: every field includes type, default, and constraints (min, max, enum, pattern). Draft-07 $ref pointers (#/definitions/...) are resolved inline in both modes.
   - name: --tr --type-ref
     summary: |-
       Type definition ID or URI.
@@ -108,24 +128,28 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_sse_event_export
-  name: az iot ops ns asset sse event export
+- uid: az_iot_ops_ns_asset_event_export
+  name: az iot ops ns asset event export
   summary: |-
     Export events to file.
-  description: |-
-    Export events from an event-group to JSON, YAML, or CSV format.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset sse event export --asset
-                                         --eg --event-group
-                                         --instance
-                                         --resource-group
-                                         [--acquire-policy-token]
-                                         [--change-reference]
-                                         [--format {csv, json, yaml}]
-                                         [--od --output-dir]
-                                         [--replace {false, true}]
+    az iot ops ns asset event export --asset
+                                     --eg --event-group
+                                     --instance
+                                     --resource-group
+                                     [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--format {csv, json, yaml}]
+                                     [--od --output-dir]
+                                     [--replace {false, true}]
+  examples:
+  - summary: |-
+      Export events to JSON
+    syntax: az iot ops ns asset event export --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -165,7 +189,7 @@ directCommands:
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the event if another event with the same name is already present.
+      Replace the local file if present.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -193,23 +217,27 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_sse_event_import
-  name: az iot ops ns asset sse event import
+- uid: az_iot_ops_ns_asset_event_import
+  name: az iot ops ns asset event import
   summary: |-
     Import events from file.
-  description: |-
-    Import events from JSON, YAML, or CSV file. Use --replace to merge with overwrite.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset sse event import --asset
-                                         --eg --event-group
-                                         --if --input-file
-                                         --instance
-                                         --resource-group
-                                         [--acquire-policy-token]
-                                         [--change-reference]
-                                         [--replace {false, true}]
+    az iot ops ns asset event import --asset
+                                     --eg --event-group
+                                     --if --input-file
+                                     --instance
+                                     --resource-group
+                                     [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--replace {false, true}]
+  examples:
+  - summary: |-
+      Import events from a JSON file
+    syntax: az iot ops ns asset event import --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --input-file ./events.json
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -244,7 +272,7 @@ directCommands:
     defaultValue: "False"
     acceptedValues: false, true
     summary: |-
-      Replace the event if another event with the same name is already present.
+      Replace existing events that share a name with an imported event.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -272,21 +300,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_sse_event_list
-  name: az iot ops ns asset sse event list
+- uid: az_iot_ops_ns_asset_event_list
+  name: az iot ops ns asset event list
   summary: |-
-    List events for an SSE asset event group in a Device Registry namespace.
-  status: GA
+    List events for an asset event-group in an IoT Operations namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset sse event list --asset
-                                       --eg --event-group
-                                       --instance
-                                       --resource-group
+    az iot ops ns asset event list --asset
+                                   --eg --event-group
+                                   --instance
+                                   --resource-group
   examples:
   - summary: |-
-      List all events for an event group
-    syntax: az iot ops ns asset sse event list --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents
+      List all events for an event-group
+    syntax: az iot ops ns asset event list --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -331,24 +361,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_ops_ns_asset_sse_event_remove
-  name: az iot ops ns asset sse event remove
+- uid: az_iot_ops_ns_asset_event_remove
+  name: az iot ops ns asset event remove
   summary: |-
-    Remove an event from an SSE asset event group in a Device Registry namespace.
-  status: GA
+    Remove an event from an asset event-group in an IoT Operations namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
-    az iot ops ns asset sse event remove --asset
-                                         --eg --event-group
-                                         --instance
-                                         --name
-                                         --resource-group
-                                         [--acquire-policy-token]
-                                         [--change-reference]
+    az iot ops ns asset event remove --asset
+                                     --eg --event-group
+                                     --instance
+                                     --name
+                                     --resource-group
+                                     [--acquire-policy-token]
+                                     [--change-reference]
   examples:
   - summary: |-
-      Remove an event from an event group
-    syntax: az iot ops ns asset sse event remove --asset mysseAsset --instance myInstance -g myInstanceResourceGroup --event-group alertEvents --name temperature
+      Remove an event from an event-group
+    syntax: az iot ops ns asset event remove --asset myasset --instance myInstance -g myInstanceResourceGroup --event-group alarmGroup --name severity
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -363,7 +395,7 @@ directCommands:
     summary: |-
       The name of the Azure IoT Operations instance.
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: |-
       Event name.
   - isRequired: true
@@ -407,10 +439,10 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_ops_ns_asset_sse_event_add
-- az_iot_ops_ns_asset_sse_event_export
-- az_iot_ops_ns_asset_sse_event_import
-- az_iot_ops_ns_asset_sse_event_list
-- az_iot_ops_ns_asset_sse_event_remove
+- az_iot_ops_ns_asset_event_add
+- az_iot_ops_ns_asset_event_export
+- az_iot_ops_ns_asset_event_import
+- az_iot_ops_ns_asset_event_list
+- az_iot_ops_ns_asset_event_remove
 metadata:
-  description: Manage individual events for SSE event groups in Device Registry namespaces.
+  description: The connector type is detected automatically from the existing asset. For connector-specific parameters use --event-config (inline JSON or file). Use --show-template to discover the supported configuration schema for the asset's connector type.

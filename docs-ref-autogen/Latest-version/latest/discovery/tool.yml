@@ -1,45 +1,40 @@
 ### YamlMime:AzureCLIGroup
-uid: az_oracle-database_autonomous-database_backup
-name: az oracle-database autonomous-database backup
+uid: az_discovery_tool
+name: az discovery tool
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **oracle-database** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az oracle-database autonomous-database backup** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **discovery** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az discovery tool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Autonomous Databases Backup.
+  Manage tools.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_oracle-database_autonomous-database_backup_create
-  name: az oracle-database autonomous-database backup create
+- uid: az_discovery_tool_create
+  name: az discovery tool create
   summary: |-
-    Create an Autonomous Database backup.
+    Create a Tool.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup create --adbbackupid --name
-                                                         --autonomousdatabasename
-                                                         --resource-group
-                                                         [--acquire-policy-token]
-                                                         [--change-reference]
-                                                         [--display-name]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--retention-days --retention-period-in-days]
+    az discovery tool create --name --tool-name
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--definition-content]
+                             [--environment-variables]
+                             [--location]
+                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--tags]
+                             [--version]
   examples:
   - summary: |-
-      Create an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --display-name <display name> --retention-period-in-days <days>
-  - summary: |-
-      Create and return the Azure backup resource ID
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days> --query "{id:id,name:name}"
+      Create a tool from inline definition content.
+    syntax: az discovery tool create --resource-group MyResourceGroup --name MyTool --location eastus --version 1.0.0 --definition-content '{"name":"mytool","description":"Utility tool","version":"1.0.0","category":"testing","infra":[{"infra_type":"container","name":"worker","image":{"acr":"myregistry.azurecr.io/mytool:1.0.0"},"compute":{"min_resources":{"cpu":"1","ram":"2Gi","gpu":"0","storage":"0"},"max_resources":{"cpu":"2","ram":"4Gi","storage":"0"},"recommended_sku":["Standard_D4s_v6"],"pool_type":"static","pool_size":1}}]}'
   requiredParameters:
   - isRequired: true
-    name: --adbbackupid --name -n
+    name: --name --tool-name -n
     summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
-  - isRequired: true
-    name: --autonomousdatabasename
-    summary: |-
-      The database name.
+      The name of the Tool.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -53,17 +48,29 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --display-name
+  - name: --definition-content
     summary: |-
-      The user-friendly name for the backup. The name does not have to be unique.
+      The JSON content for defining a resource  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
+  - name: --environment-variables
+    summary: |-
+      Environment variables to make available  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --retention-days --retention-period-in-days
+  - name: --tags
     summary: |-
-      Retention period, in days, for long-term backups.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --version
+    summary: |-
+      The version of a resource definition.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -92,39 +99,26 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_delete
-  name: az oracle-database autonomous-database backup delete
+- uid: az_discovery_tool_delete
+  name: az discovery tool delete
   summary: |-
-    Delete an Autonomous Database backup.
+    Delete a Tool.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup delete [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--resource-group]
-                                                         [--subscription]
-                                                         [--yes]
-  examples:
-  - summary: |-
-      Delete an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup delete --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_name> --yes
+    az discovery tool delete [--acquire-policy-token]
+                             [--change-reference]
+                             [--ids]
+                             [--name --tool-name]
+                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--resource-group]
+                             [--subscription]
+                             [--yes]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name. Use the final segment of the id returned by backup list, not the full Azure resource ID.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -132,6 +126,10 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --tool-name -n
+    summary: |-
+      The name of the Tool.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -173,30 +171,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_list
-  name: az oracle-database autonomous-database backup list
+- uid: az_discovery_tool_list
+  name: az discovery tool list
   summary: |-
-    List Autonomous Database backup resources by Autonomous Database.
+    List Tool resources by subscription ID.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup list --autonomousdatabasename
-                                                       --resource-group
-                                                       [--max-items]
-                                                       [--next-token]
-  examples:
-  - summary: |-
-      List Autonomous Database backups
-    syntax: az oracle-database autonomous-database backup list --autonomousdatabasename <ADBS name> --resource-group <resource_group>
-  requiredParameters:
-  - isRequired: true
-    name: --autonomousdatabasename
-    summary: |-
-      The database name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    az discovery tool list [--max-items]
+                           [--next-token]
+                           [--resource-group]
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -206,6 +190,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -233,37 +220,25 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_show
-  name: az oracle-database autonomous-database backup show
+- uid: az_discovery_tool_show
+  name: az discovery tool show
   summary: |-
-    Get an Autonomous Database backup.
+    Get a Tool.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup show [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--ids]
-                                                       [--resource-group]
-                                                       [--subscription]
-  examples:
-  - summary: |-
-      Get an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id>
-  - summary: |-
-      Get a backup using the Azure backup resource name/id returned by backup create or backup list
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_id>
+    az discovery tool show [--ids]
+                           [--name --tool-name]
+                           [--resource-group]
+                           [--subscription]
   optionalParameters:
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --tool-name -n
+    summary: |-
+      The name of the Tool.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -297,65 +272,94 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_update
-  name: az oracle-database autonomous-database backup update
+- uid: az_discovery_tool_update
+  name: az discovery tool update
   summary: |-
-    Update an Autonomous Database backup.
+    Update a Tool.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup update --retention-days --retention-period-in-days
-                                                         [--acquire-policy-token]
-                                                         [--adbbackupid --name]
-                                                         [--autonomousdatabasename]
-                                                         [--change-reference]
-                                                         [--ids]
-                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                         [--resource-group]
-                                                         [--subscription]
+    az discovery tool update [--acquire-policy-token]
+                             [--add]
+                             [--change-reference]
+                             [--definition-content]
+                             [--environment-variables]
+                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--ids]
+                             [--name --tool-name]
+                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--remove]
+                             [--resource-group]
+                             [--set]
+                             [--subscription]
+                             [--tags]
+                             [--version]
   examples:
   - summary: |-
-      Update an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days>
-  requiredParameters:
-  - isRequired: true
-    name: --retention-days --retention-period-in-days
-    summary: |-
-      Retention period, in days, for long-term backups.
-    groupName: Properties Arguments
+      Update the version of a tool.
+    syntax: az discovery tool update --resource-group MyResourceGroup --name MyTool --version 2.0.0
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
+  - name: --add
     summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --definition-content
+    summary: |-
+      The JSON content for defining a resource  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --environment-variables
+    summary: |-
+      Environment variables to make available  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --tool-name -n
+    summary: |-
+      The name of the Tool.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --version
+    summary: |-
+      The version of a resource definition.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -380,40 +384,31 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_oracle-database_autonomous-database_backup_wait
-  name: az oracle-database autonomous-database backup wait
+- uid: az_discovery_tool_wait
+  name: az discovery tool wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az oracle-database autonomous-database backup wait [--acquire-policy-token]
-                                                       [--adbbackupid --name]
-                                                       [--autonomousdatabasename]
-                                                       [--change-reference]
-                                                       [--created]
-                                                       [--custom]
-                                                       [--deleted]
-                                                       [--exists]
-                                                       [--ids]
-                                                       [--interval]
-                                                       [--resource-group]
-                                                       [--subscription]
-                                                       [--timeout]
-                                                       [--updated]
+    az discovery tool wait [--acquire-policy-token]
+                           [--change-reference]
+                           [--created]
+                           [--custom]
+                           [--deleted]
+                           [--exists]
+                           [--ids]
+                           [--interval]
+                           [--name --tool-name]
+                           [--resource-group]
+                           [--subscription]
+                           [--timeout]
+                           [--updated]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --adbbackupid --name -n
-    summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
-    groupName: Resource Id Arguments
-  - name: --autonomousdatabasename
-    summary: |-
-      The database name.
-    groupName: Resource Id Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -446,6 +441,10 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
+  - name: --name --tool-name -n
+    summary: |-
+      The name of the Tool.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -489,11 +488,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_oracle-database_autonomous-database_backup_create
-- az_oracle-database_autonomous-database_backup_delete
-- az_oracle-database_autonomous-database_backup_list
-- az_oracle-database_autonomous-database_backup_show
-- az_oracle-database_autonomous-database_backup_update
-- az_oracle-database_autonomous-database_backup_wait
+- az_discovery_tool_create
+- az_discovery_tool_delete
+- az_discovery_tool_list
+- az_discovery_tool_show
+- az_discovery_tool_update
+- az_discovery_tool_wait
 metadata:
-  description: Autonomous Databases Backup.
+  description: Manage tools.
