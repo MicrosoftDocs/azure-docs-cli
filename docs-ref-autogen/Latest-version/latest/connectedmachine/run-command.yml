@@ -83,7 +83,7 @@ directCommands:
     groupName: Source Arguments
   - name: --error-blob-id --error-blob-managed-identity
     summary: |-
-      User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The managed identity used to access the error blob.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --error-blob-uri
     summary: |-
@@ -92,7 +92,7 @@ directCommands:
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
-    groupName: RunCommandProperties Arguments
+    groupName: Resource Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -136,7 +136,7 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: RunCommandProperties Arguments
+    groupName: Resource Arguments
   - name: --timeout-in-seconds
     summary: |-
       The timeout in seconds to execute the run command.
@@ -383,7 +383,7 @@ directCommands:
 - uid: az_connectedmachine_run-command_update
   name: az connectedmachine run-command update
   summary: |-
-    Update operation to create or update a run command.
+    Update a run command.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az connectedmachine run-command' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -393,6 +393,7 @@ directCommands:
                                            [--add]
                                            [--async-execution {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--change-reference]
+                                           [--command-id]
                                            [--error-blob-id --error-blob-managed-identity]
                                            [--error-blob-uri]
                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -408,14 +409,16 @@ directCommands:
                                            [--resource-group]
                                            [--run-as-password]
                                            [--run-as-user]
+                                           [--script]
+                                           [--script-uri]
+                                           [--script-uri-id --script-uri-managed-id --script-uri-managed-identity]
                                            [--set]
-                                           [--source]
                                            [--subscription]
                                            [--tags]
                                            [--timeout-in-seconds]
   examples:
   - summary: |-
-      sample command for run-command update
+      Sample command for run-command update
     syntax: az connetcedmachine run-command update --resource-group myResourceGroup --name myRunCommand --machine-name myMachine --subscription mySubscription --tags Tag1=Value1
   optionalParameters:
   - name: --acquire-policy-token
@@ -435,6 +438,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --command-id
+    summary: |-
+      Specifies the commandId of predefined built-in script.
+    groupName: Source Arguments
   - name: --error-blob-id --error-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -496,14 +503,22 @@ directCommands:
     summary: |-
       Specifies the user account on the machine when executing the run command.
     groupName: Properties Arguments
+  - name: --script
+    summary: |-
+      Specifies the script content to be executed on the machine.
+    groupName: Source Arguments
+  - name: --script-uri
+    summary: |-
+      Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or public URI.
+    groupName: Source Arguments
+  - name: --script-uri-id --script-uri-managed-id --script-uri-managed-identity
+    summary: |-
+      User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Source Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
-  - name: --source
-    summary: |-
-      The source of the run command script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -511,7 +526,7 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: RunCommandProperties Arguments
+    groupName: Resource Arguments
   - name: --timeout-in-seconds
     summary: |-
       The timeout in seconds to execute the run command.

@@ -249,6 +249,7 @@ directCommands:
                                         [--interval-days]
                                         [--interval-months]
                                         [--interval-weeks]
+                                        [--maintenance-window-id]
                                         [--schedule-type {AbsoluteMonthly, Daily, RelativeMonthly, Weekly}]
                                         [--start-date]
                                         [--start-hour]
@@ -322,6 +323,11 @@ directCommands:
       az aks maintenanceconfiguration add -g MyResourceGroup --cluster-name test1 -n aksManagedAutoUpgradeSchedule --schedule-type RelativeMonthly --day-of-week Tuesday --week-index Last --interval-months 3 --duration 6 --start-date 2023-01-16 --start-time 09:30
         The maintenance is allowed on the last Tuesday from 09:30 to 15:30 in default UTC time every 3 months, and this configuration will be effective from 2023-01-16.
   - summary: |-
+      Link a maintenance configuration to a shared MaintenanceWindow resource.
+    syntax: >-
+      az aks maintenanceconfiguration add -g MyResourceGroup --cluster-name test1 -n aksManagedAutoUpgradeSchedule --maintenance-window-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.ContainerService/maintenanceWindows/myWindow
+        The schedule lives in the referenced MaintenanceWindow resource and is shared across configurations. Inline schedule arguments cannot be combined with --maintenance-window-id.
+  - summary: |-
       Add aksManagedAutoUpgradeSchedule maintenance configuration with json file.
     syntax: >-
       az aks maintenanceconfiguration add -g MyResourceGroup --cluster-name test1 -n aksManagedAutoUpgradeSchedule --config-file ./test.json
@@ -393,6 +399,9 @@ directCommands:
   - name: --interval-weeks
     summary: |-
       The number of weeks between each set of occurrences. Applicable to weekly schedule types only.
+  - name: --maintenance-window-id
+    summary: |-
+      Resource ID of a shared MaintenanceWindow resource to link this maintenance configuration to. When set, the schedule lives in the referenced MaintenanceWindow and inline schedule arguments cannot be used. Cannot be combined with --config-file (set the maintenanceWindowId property in the JSON instead). Omit for no shared resource.
   - name: --schedule-type
     acceptedValues: AbsoluteMonthly, Daily, RelativeMonthly, Weekly
     summary: |-
@@ -1000,6 +1009,7 @@ directCommands:
                                            [--interval-days]
                                            [--interval-months]
                                            [--interval-weeks]
+                                           [--maintenance-window-id]
                                            [--schedule-type {AbsoluteMonthly, Daily, RelativeMonthly, Weekly}]
                                            [--start-date]
                                            [--start-hour]
@@ -1073,6 +1083,11 @@ directCommands:
       az aks maintenanceconfiguration update -g MyResourceGroup --cluster-name test1 -n aksManagedAutoUpgradeSchedule --schedule-type RelativeMonthly --day-of-week Tuesday --week-index Last --interval-months 3 --duration 6 --start-date 2023-01-16 --start-time 09:30
         The maintenance is allowed on the last Tuesday from 09:30 to 15:30 in default UTC time every 3 months. This configuration will be effective from 2023-01-16.
   - summary: |-
+      Link a maintenance configuration to a shared MaintenanceWindow resource.
+    syntax: >-
+      az aks maintenanceconfiguration update -g MyResourceGroup --cluster-name test1 -n aksManagedAutoUpgradeSchedule --maintenance-window-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.ContainerService/maintenanceWindows/myWindow
+        The schedule lives in the referenced MaintenanceWindow resource and is shared across configurations. Inline schedule arguments cannot be combined with --maintenance-window-id.
+  - summary: |-
       Update aksManagedAutoUpgradeSchedule maintenance configuration with json file.
     syntax: >-
       az aks maintenanceconfiguration update -g MyResourceGroup --cluster-name test1 -n aksManagedAutoUpgradeSchedule --config-file ./test.json
@@ -1144,6 +1159,9 @@ directCommands:
   - name: --interval-weeks
     summary: |-
       The number of weeks between each set of occurrences. Applicable to weekly schedule types only.
+  - name: --maintenance-window-id
+    summary: |-
+      Resource ID of a shared MaintenanceWindow resource to link this maintenance configuration to. When set, the schedule lives in the referenced MaintenanceWindow and inline schedule arguments cannot be used. Cannot be combined with --config-file (set the maintenanceWindowId property in the JSON instead). Omit for no shared resource.
   - name: --schedule-type
     acceptedValues: AbsoluteMonthly, Daily, RelativeMonthly, Weekly
     summary: |-
