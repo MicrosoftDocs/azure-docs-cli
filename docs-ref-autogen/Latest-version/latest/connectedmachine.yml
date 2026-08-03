@@ -91,6 +91,7 @@ directCommands:
                                [--change-reference]
                                [--ids]
                                [--machine-name --name]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--resource-group]
                                [--subscription]
                                [--yes]
@@ -115,6 +116,10 @@ directCommands:
     summary: |-
       The name of the hybrid machine.
     groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -249,7 +254,7 @@ directCommands:
 - uid: az_connectedmachine_list
   name: az connectedmachine list
   summary: |-
-    List all the hybrid machines in the specified subscription or resource group.
+    List all Azure Arc-Enabled Servers in the specified resource group.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -259,8 +264,8 @@ directCommands:
                              [--resource-group]
   examples:
   - summary: |-
-      sample command of list
-    syntax: az connectedmachine list
+      Sample command for list
+    syntax: az connectedmachine list --resource-group myResourceGroup
   optionalParameters:
   - name: --expand
     summary: |-
@@ -367,33 +372,51 @@ directCommands:
 - uid: az_connectedmachine_update
   name: az connectedmachine update
   summary: |-
-    Update operation to update a hybrid machine.
+    Update an Azure Arc-Enabled Server. Please note some properties can be set only during machine creation.
   status: GA
   sourceType: Extension
   syntax: >-
     az connectedmachine update [--acquire-policy-token]
+                               [--add]
                                [--agent-upgrade]
                                [--change-reference]
+                               [--client-public-key]
+                               [--expand {instanceView}]
+                               [--extensions]
+                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--hardware-resource-id]
                                [--identity]
+                               [--identity-key-store {Default, TPM}]
                                [--ids]
                                [--kind {AVS, AWS, EPS, GCP, HCI, SCVMM, VMware}]
+                               [--license-profile]
                                [--location-data]
                                [--machine-name --name]
+                               [--mssql-discovered]
                                [--os-profile]
+                               [--os-type]
                                [--parent-cluster-id --parent-cluster-resource-id]
                                [--private-link-scope-id --private-link-scope-resource-id]
+                               [--remove]
                                [--resource-group]
+                               [--service-statuses]
+                               [--set]
                                [--subscription]
                                [--tags]
+                               [--tpm-ek-certificate]
   examples:
   - summary: |-
-      sample command for update
+      Sample command for update
     syntax: az connectedmachine update --name myMachine --resource-group myResourceGroup --location eastus2euap
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
   - name: --agent-upgrade
     summary: |-
       The info of the machine w.r.t Agent Upgrade  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -402,10 +425,36 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --client-public-key
+    summary: |-
+      Public Key that the client provides to be used during initial resource onboarding.
+    groupName: Properties Arguments
+  - name: --expand
+    acceptedValues: instanceView
+    summary: |-
+      The expand expression to apply on the operation.
+  - name: --extensions
+    summary: |-
+      Machine Extensions information (deprecated field)  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --hardware-resource-id
+    summary: |-
+      Specifies the resource ID of the associated hardware device. Only settable by HCI RP.
+    groupName: Properties Arguments
   - name: --identity
     summary: |-
       Identity for the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Parameters Arguments
+    groupName: Resource Arguments
+  - name: --identity-key-store
+    acceptedValues: Default, TPM
+    summary: |-
+      Specifies the identity key store a machine is using.
+    groupName: Properties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -414,7 +463,11 @@ directCommands:
     acceptedValues: AVS, AWS, EPS, GCP, HCI, SCVMM, VMware
     summary: |-
       Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc.
-    groupName: Parameters Arguments
+    groupName: Resource Arguments
+  - name: --license-profile
+    summary: |-
+      Specifies the License related properties for a machine.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --location-data
     summary: |-
       Metadata pertaining to the geographic location of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -423,9 +476,17 @@ directCommands:
     summary: |-
       The name of the hybrid machine.
     groupName: Resource Id Arguments
+  - name: --mssql-discovered
+    summary: |-
+      Specifies whether any MS SQL instance is discovered on the machine.
+    groupName: Properties Arguments
   - name: --os-profile
     summary: |-
       Specifies the operating system settings for the hybrid machine.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --os-type
+    summary: |-
+      The type of Operating System (windows/linux).
     groupName: Properties Arguments
   - name: --parent-cluster-id --parent-cluster-resource-id
     summary: |-
@@ -435,18 +496,34 @@ directCommands:
     summary: |-
       The resource id of the private link scope this machine is assigned to, if any.
     groupName: Properties Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --service-statuses
+    summary: |-
+      Statuses of dependent services that are reported back to ARM.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
   - name: --tags
     summary: |-
-      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Parameters Arguments
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --tpm-ek-certificate
+    summary: |-
+      Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -502,7 +579,7 @@ directCommands:
   - name: --extension-targets
     summary: |-
       Describes the Extension Target Properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: ExtensionUpgradeParameters Arguments
+    groupName: Body Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -547,6 +624,114 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_connectedmachine_wait
+  name: az connectedmachine wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az connectedmachine wait [--acquire-policy-token]
+                             [--change-reference]
+                             [--created]
+                             [--custom]
+                             [--deleted]
+                             [--exists]
+                             [--expand {instanceView}]
+                             [--ids]
+                             [--interval]
+                             [--machine-name --name]
+                             [--resource-group]
+                             [--subscription]
+                             [--timeout]
+                             [--updated]
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --expand
+    acceptedValues: instanceView
+    summary: |-
+      The expand expression to apply on the operation.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --machine-name --name -n
+    summary: |-
+      The name of the hybrid machine.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_connectedmachine_assess-patches
 - az_connectedmachine_delete
@@ -557,9 +742,17 @@ commands:
 - az_connectedmachine_extension_image_list
 - az_connectedmachine_extension_image_show
 - az_connectedmachine_extension_list
+- az_connectedmachine_extension_publisher
+- az_connectedmachine_extension_publisher_list
 - az_connectedmachine_extension_show
+- az_connectedmachine_extension_type
+- az_connectedmachine_extension_type_list
 - az_connectedmachine_extension_update
 - az_connectedmachine_extension_wait
+- az_connectedmachine_identity
+- az_connectedmachine_identity_assign
+- az_connectedmachine_identity_remove
+- az_connectedmachine_identity_show
 - az_connectedmachine_install-patches
 - az_connectedmachine_license
 - az_connectedmachine_license-profile
@@ -574,6 +767,7 @@ commands:
 - az_connectedmachine_license_list
 - az_connectedmachine_license_show
 - az_connectedmachine_license_update
+- az_connectedmachine_license_validate
 - az_connectedmachine_license_wait
 - az_connectedmachine_list
 - az_connectedmachine_private-endpoint-connection
@@ -593,6 +787,7 @@ commands:
 - az_connectedmachine_private-link-scope_network-security-perimeter-configuration_list
 - az_connectedmachine_private-link-scope_network-security-perimeter-configuration_reconcile
 - az_connectedmachine_private-link-scope_network-security-perimeter-configuration_show
+- az_connectedmachine_private-link-scope_network-security-perimeter-configuration_wait
 - az_connectedmachine_private-link-scope_show
 - az_connectedmachine_private-link-scope_update
 - az_connectedmachine_private-link-scope_wait
@@ -606,5 +801,6 @@ commands:
 - az_connectedmachine_show
 - az_connectedmachine_update
 - az_connectedmachine_upgrade-extension
+- az_connectedmachine_wait
 metadata:
   description: Manage Azure Arc-Enabled Server.
