@@ -338,6 +338,7 @@ directCommands:
                   [--role-assignment-mode {rbac, rbac-abac}]
                   [--tags]
                   [--workspace]
+                  [--writable-cache-repos {Disabled, Enabled}]
                   [--zone-redundancy {Disabled, Enabled}]
   examples:
   - summary: |-
@@ -352,6 +353,9 @@ directCommands:
   - summary: |-
       Create a managed container registry with the Premium SKU and dual-stack (IPv4 and IPv6) endpoint protocol.
     syntax: az acr create -n myregistry -g MyResourceGroup --sku Premium --data-endpoint-enabled true --endpoint-protocol IPv4AndIPv6
+  - summary: |-
+      Create a managed container registry with writable cache repositories enabled.
+    syntax: az acr create -n myregistry -g MyResourceGroup --sku Premium --writable-cache-repos enabled
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -449,6 +453,11 @@ directCommands:
   - name: --workspace
     summary: |-
       Name or ID of the Log Analytics workspace to send registry diagnostic logs to. All events will be enabled. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
+    isPreview: true
+  - name: --writable-cache-repos
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      'Enable or disable writing to repositories backed by cache rules. If not specified, this is set to Disabled by default'.
     isPreview: true
   - name: --zone-redundancy
     acceptedValues: Disabled, Enabled
@@ -1245,6 +1254,7 @@ directCommands:
                   [--set]
                   [--sku {Basic, Premium, Standard}]
                   [--tags]
+                  [--writable-cache-repos {Disabled, Enabled}]
   examples:
   - summary: |-
       Update tags for an Azure Container Registry.
@@ -1261,6 +1271,9 @@ directCommands:
   - summary: |-
       Update the endpoint protocol for an Azure Container Registry.
     syntax: az acr update -n myregistry --endpoint-protocol IPv4AndIPv6
+  - summary: |-
+      Enable writable cache repositories on an existing registry.
+    syntax: az acr update -n myregistry --writable-cache-repos enabled
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1360,6 +1373,11 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --writable-cache-repos
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      'Enable or disable writing to repositories backed by cache rules. If not specified, this is set to Disabled by default'.
+    isPreview: true
   globalParameters:
   - name: --debug
     defaultValue: "False"

@@ -109,6 +109,7 @@ directCommands:
                                        --update-version --uv
                                        [--acquire-policy-token]
                                        [--change-reference]
+                                       [--download-security {http, https}]
                                        [--failed-count --fc]
                                        [--failed-percentage --fp]
                                        [--rbun --rollback-update-name]
@@ -126,6 +127,9 @@ directCommands:
   - summary: |-
       Create a device group deployment scheduled to start immediately with a defined cloud-initiated rollback policy. The cloud rollback is initiated when failed count or failed percentage targets are met.
     syntax: az iot du device deployment create -n {account_name} -i {instance_name} --group-id {device_group_id} --deployment-id {deployment_id} --update-name {update_name} --update-provider {update_provider} --update-version {update_version} --failed-count 10 --failed-percentage 5 --rollback-update-name {rollback_update_name} --rollback-update-provider {rollback_update_provider} --rollback-update-version {rollback_update_version}
+  - summary: |-
+      Create a device group deployment using HTTP (not recommended; compatibility only) for update payload downloads.
+    syntax: az iot du device deployment create -n {account_name} -i {instance_name} --group-id {device_group_id} --deployment-id {deployment_id} --update-name {update_name} --update-provider {update_provider} --update-version {update_version} --download-security http
   requiredParameters:
   - isRequired: true
     name: --account -n
@@ -169,6 +173,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --download-security
+    acceptedValues: http, https
+    summary: |-
+      Protocol used for update payload downloads. Defaults to https (TLS). Use http only when the target environment does not support TLS.
   - name: --failed-count --fc
     summary: |-
       Integer representing the number of failed devices in a deployment before a cloud initated rollback occurs. Required when defining rollback policy.
