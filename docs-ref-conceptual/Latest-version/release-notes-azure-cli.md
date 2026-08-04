@@ -1,13 +1,86 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 07/07/2026
+ms.date: 08/04/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## August 04, 2026
+
+Version 2.89.0
+
+### ACR
+
+* `az acr import`: Fix regional endpoint source resolution for multi-label sovereign suffixes
+* `az acr create/update`: Add new parameter `--writable-cache-repo` to enable writable behavior for cache repositories within a registry
+
+### AKS
+
+* `az aks upgrade`: Skip Machines mode agent pools during node image and Kubernetes version upgrade
+* `az aks identity-binding`: Add command group to manage identity bindings (trust domain) for a managed cluster
+* `az aks update`: Fix `--outbound-type` validation for `userDefinedRouting` and `userAssignedNATGateway` so BYO VNet clusters no longer require `--vnet-subnet-id` and managed VNet clusters get a clear error message
+* `az aks nodepool rollback`: Fix false auto-upgrade warning when upgrade channels are disabled
+* Vendor new SDK and bump API version to 2026-05-01
+
+### App Config
+
+* Update CLI to use Audience and update to 1.8.0
+
+* `az appconfig`: Increase retry resilience for data-plane operations to better handle transient server throttling (HTTP 429) and network errors
+
+### App Service
+
+* `az appservice plan`: Remove preview flag for managed instance app service plans
+* `az appservice plan`: Add Premium V3 SKU support (`P0V3`, `P1-3V3`, `P1-5MV3`) for managed instances
+* `az webapp troubleshoot status`: Provide latest application startup attempt data
+
+### ARM
+
+* `az stack-whatif group/sub/mg`: Add deployment stacks what-if commands
+
+### Backup
+
+* Add support for cost management settings
+
+### Cognitive Services
+
+* `az cognitiveservices account compute`: Support compute cluster resources management
+
+### Compute
+
+* `az vmss application set`: Fix command silently failing to set gallery applications and remove leftover debug output
+
+### CosmosDB
+
+* `az cosmosdb`: Revert API version from `2026-03-15` back to `2025-10-15`
+
+### MySQL
+
+* `az mysql flexible-server mirroring`: Add `enable` and `disable` commands to support Fabric Mirroring
+
+### MySQL Flexible Server
+
+* `az mysql flexible-server update`: Add `--maintenance-batch` to set the batch (Default, Batch1, Batch2) of the custom-managed maintenance window; existing batch is preserved when omitted
+
+### NetAppFiles
+
+* `az netappfiles volume create`: Add `--breakthrough-mode` to specify whether the volume operates in Breakthrough Mode
+
+### Network
+
+* `az network nat gateway`: Add `--nat64` to enable/disable NAT64 on StandardV2 NAT gateway
+* `az network private-endpoint-connection`: Update provider `Microsoft.HardwareSecurityModules/cloudHsmClusters`
+* `az network virtual-appliance migration`: Support migrating NVA to ILB architecture
+
+### PostgreSQL
+
+* `az postgres flexible-server backup create`: Fix duplicate auto-generated backup names after deletions
+* `az postgres flexible-server create`: Add example to create elastic cluster with custom database name
+* `az postgres flexible-server upgrade`: Introduced `--validate-only` param for PVC
 
 ## July 07, 2026
 

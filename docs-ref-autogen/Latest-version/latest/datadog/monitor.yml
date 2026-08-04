@@ -6,14 +6,18 @@ extensionInformation: |-
   > This reference is part of the **datadog** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az datadog monitor** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Provides a set of commands to manage Datadog monitor resources in your Azure subscription, enabling integration and observability of your Azure resources through Datadog.
-status: GA
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'az datadog' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
 - uid: az_datadog_monitor_create
   name: az datadog monitor create
   summary: |-
     Creates a new Datadog monitor resource in your Azure subscription. This sets up the integration between Azure and your Datadog account, enabling observability and monitoring of your Azure resources through Datadog.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor create --monitor-name --name
@@ -22,9 +26,11 @@ directCommands:
                               [--change-reference]
                               [--identity]
                               [--location]
+                              [--marketplace-offer-details]
                               [--monitoring-status {Disabled, Enabled}]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--org-properties]
+                              [--saas-data]
                               [--sku]
                               [--tags]
                               [--user-info]
@@ -61,6 +67,10 @@ directCommands:
     summary: |-
       The geo-location where the resource lives.
     groupName: Body Arguments
+  - name: --marketplace-offer-details
+    summary: |-
+      Details about the marketplace offer associated with the resource. Required for API version 2025-11 and later. For earlier API versions, defaults to the legacy offer.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --monitoring-status
     defaultValue: Enabled
     acceptedValues: Disabled, Enabled
@@ -74,6 +84,10 @@ directCommands:
   - name: --org-properties
     summary: |-
       Datadog organization properties  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --saas-data
+    summary: |-
+      SaaS details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --sku
     summary: |-
@@ -118,7 +132,9 @@ directCommands:
   name: az datadog monitor delete
   summary: |-
     Deletes an existing Datadog monitor resource from your Azure subscription, removing the integration and stopping the observability of your Azure resources through Datadog.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor delete [--acquire-policy-token]
@@ -194,7 +210,9 @@ directCommands:
   name: az datadog monitor get-billing-info
   summary: |-
     Get marketplace and organization info mapped to the given monitor.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor get-billing-info [--acquire-policy-token]
@@ -256,11 +274,81 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_datadog_monitor_get-default-application-key
+  name: az datadog monitor get-default-application-key
+  summary: |-
+    Get the default application key.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az datadog monitor get-default-application-key [--acquire-policy-token]
+                                                   [--change-reference]
+                                                   [--ids]
+                                                   [--monitor-name]
+                                                   [--resource-group]
+                                                   [--subscription]
+  examples:
+  - summary: |-
+      Monitors_GetDefaultApplicationKey
+    syntax: az datadog monitor get-default-application-key --monitor-name "myMonitor" --resource-group "myResourceGroup"
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
+    summary: |-
+      Monitor resource name.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_datadog_monitor_get-default-key
   name: az datadog monitor get-default-key
   summary: |-
     Fetches the default Datadog API key associated with your monitor resource, which is used for authenticating and sending telemetry data from Azure to Datadog.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor get-default-key [--acquire-policy-token]
@@ -322,11 +410,159 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_datadog_monitor_latest-linked-saas
+  name: az datadog monitor latest-linked-saas
+  summary: |-
+    Returns the latest SaaS linked to the Datadog organization of the underlying monitor.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az datadog monitor latest-linked-saas [--acquire-policy-token]
+                                          [--change-reference]
+                                          [--ids]
+                                          [--monitor-name]
+                                          [--resource-group]
+                                          [--subscription]
+  examples:
+  - summary: |-
+      Monitors_LatestLinkedSaaS
+    syntax: az datadog monitor latest-linked-saas --monitor-name "myMonitor" --resource-group "myResourceGroup"
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
+    summary: |-
+      Monitor resource name.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_datadog_monitor_link-saas
+  name: az datadog monitor link-saas
+  summary: |-
+    Links a new SaaS to the Datadog organization of the underlying monitor.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az datadog monitor link-saas [--acquire-policy-token]
+                                 [--change-reference]
+                                 [--ids]
+                                 [--monitor-name]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--resource-group]
+                                 [--saas-resource-id]
+                                 [--subscription]
+  examples:
+  - summary: |-
+      Monitors_LinkSaaS
+    syntax: az datadog monitor link-saas --monitor-name "myMonitor" --resource-group "myResourceGroup" --saas-resource-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.SaaS/resources/mySaaSResource"
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
+    summary: |-
+      Monitor resource name.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --saas-resource-id
+    summary: |-
+      SaaS resource id of marketplace saas subscription to be activated.
+    groupName: Body Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_datadog_monitor_list
   name: az datadog monitor list
   summary: |-
     Retrieves a list of all Datadog monitor resources either within a specific resource group or across the entire subscription, helping you quickly audit and manage your monitoring setup.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor list [--max-items]
@@ -379,7 +615,9 @@ directCommands:
   name: az datadog monitor list-api-key
   summary: |-
     Lists all API keys associated with a specific Datadog monitor resource, allowing you to manage and audit the keys used for authentication and data transmission.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor list-api-key --monitor-name --name
@@ -449,7 +687,9 @@ directCommands:
   name: az datadog monitor list-host
   summary: |-
     Lists all hosts being monitored by a specific Datadog monitor resource, providing visibility into the infrastructure components under observation.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor list-host --monitor-name --name
@@ -519,7 +759,9 @@ directCommands:
   name: az datadog monitor list-linked-resource
   summary: |-
     Lists all Azure resources that are linked to the same Datadog organization as the specified monitor resource, helping you understand the scope of integration.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor list-linked-resource --monitor-name --name
@@ -589,7 +831,9 @@ directCommands:
   name: az datadog monitor list-monitored-resource
   summary: |-
     Lists all Azure resources that are currently being monitored by the specified Datadog monitor resource, providing insight into the coverage of your observability setup.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor list-monitored-resource --monitor-name --name
@@ -655,11 +899,95 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_datadog_monitor_manage-sre-agent-connector
+  name: az datadog monitor manage-sre-agent-connector
+  summary: |-
+    Manages Datadog MCP connectors to add/remove for the SRE Agent.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az datadog monitor manage-sre-agent-connector --action {Add, Remove}
+                                                  --mcp-connector-resource-id-list
+                                                  [--acquire-policy-token]
+                                                  [--change-reference]
+                                                  [--ids]
+                                                  [--monitor-name]
+                                                  [--resource-group]
+                                                  [--subscription]
+  examples:
+  - summary: |-
+      Monitors_ManageSreAgentConnectors
+    syntax: az datadog monitor manage-sre-agent-connector --monitor-name "myMonitor" --resource-group "myResourceGroup" --action "Add" --mcp-connector-resource-id-list "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Datadog/monitors/myMonitor/mcpConnectors/myConnector"
+  requiredParameters:
+  - isRequired: true
+    name: --action
+    acceptedValues: Add, Remove
+    summary: |-
+      Add/Remove action.
+    groupName: Request Arguments
+  - isRequired: true
+    name: --mcp-connector-resource-id-list
+    summary: |-
+      The list of ARM resource ID of the MCP connector integrated with SRE Agent resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Request Arguments
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
+    summary: |-
+      Monitor resource name.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_datadog_monitor_refresh-set-password-link
   name: az datadog monitor refresh-set-password-link
   summary: |-
     Refreshes the link used to set the password for the Datadog monitor resource and returns the latest link, ensuring secure access management.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor refresh-set-password-link [--acquire-policy-token]
@@ -725,7 +1053,9 @@ directCommands:
   name: az datadog monitor set-default-key
   summary: |-
     Sets the default Datadog API key for the specified monitor resource, which will be used for authenticating and sending telemetry data from Azure to Datadog.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor set-default-key [--acquire-policy-token]
@@ -811,7 +1141,9 @@ directCommands:
   name: az datadog monitor show
   summary: |-
     Retrieves the properties and configuration details of a specific Datadog monitor resource, providing insight into its setup and status.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor show [--ids]
@@ -867,7 +1199,9 @@ directCommands:
   name: az datadog monitor update
   summary: |-
     Updates the configuration of an existing Datadog monitor resource in your Azure subscription, allowing you to modify its settings and integration parameters.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor update [--acquire-policy-token]
@@ -876,14 +1210,17 @@ directCommands:
                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                               [--identity]
                               [--ids]
+                              [--marketplace-offer-details]
                               [--monitor-name --name]
                               [--monitoring-status {Disabled, Enabled}]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--org-properties]
                               [--remove]
                               [--resource-group]
+                              [--saas-data]
                               [--set]
                               [--sku]
+                              [--sre-agent-configuration]
                               [--subscription]
                               [--tags]
                               [--user-info]
@@ -917,6 +1254,10 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --marketplace-offer-details
+    summary: |-
+      Details about the marketplace offer associated with the resource. Required for API version 2025-11 and later. For earlier API versions, defaults to the legacy offer.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --monitor-name --name -n
     summary: |-
       Monitor resource name.
@@ -942,6 +1283,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --saas-data
+    summary: |-
+      SaaS details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
@@ -950,6 +1295,10 @@ directCommands:
     summary: |-
       Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Body Arguments
+  - name: --sre-agent-configuration
+    summary: |-
+      SRE Agent configuration to connect to MCP server of Datadog for given organization.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -990,7 +1339,9 @@ directCommands:
   name: az datadog monitor wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az datadog monitor' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az datadog monitor wait [--acquire-policy-token]
@@ -1093,12 +1444,16 @@ commands:
 - az_datadog_monitor_create
 - az_datadog_monitor_delete
 - az_datadog_monitor_get-billing-info
+- az_datadog_monitor_get-default-application-key
 - az_datadog_monitor_get-default-key
+- az_datadog_monitor_latest-linked-saas
+- az_datadog_monitor_link-saas
 - az_datadog_monitor_list
 - az_datadog_monitor_list-api-key
 - az_datadog_monitor_list-host
 - az_datadog_monitor_list-linked-resource
 - az_datadog_monitor_list-monitored-resource
+- az_datadog_monitor_manage-sre-agent-connector
 - az_datadog_monitor_monitored-subscription
 - az_datadog_monitor_monitored-subscription_create
 - az_datadog_monitor_monitored-subscription_delete
