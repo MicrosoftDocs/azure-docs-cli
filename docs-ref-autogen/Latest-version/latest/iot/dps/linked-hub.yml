@@ -1,10 +1,14 @@
 ### YamlMime:AzureCLIGroup
 uid: az_iot_dps_linked-hub
 name: az iot dps linked-hub
+importantNote: >-
+  > [!NOTE]
+
+  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage linked IoT Hubs in an Azure IoT Hub Device Provisioning Service instance.
 status: GA
-sourceType: Core
+sourceType: Core and Extension
 directCommands:
 - uid: az_iot_dps_linked-hub_create
   name: az iot dps linked-hub create
@@ -98,6 +102,116 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_dps_linked-hub_create(azure-iot)
+  name: az iot dps linked-hub create
+  extensionSuffix: azure-iot
+  summary: |-
+    Create a linked IoT hub in an Azure IoT Hub Device Provisioning Service instance.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot dps linked-hub create --dps-name
+                                 [--acquire-policy-token]
+                                 [--allocation-weight]
+                                 [--apply-allocation-policy {false, true}]
+                                 [--auth-type --authentication-type {KeyBased, SystemAssigned, UserAssigned}]
+                                 [--change-reference]
+                                 [--connection-string --cs]
+                                 [--hn --hub-name]
+                                 [--hostname-type --ht {auto, classic, device}]
+                                 [--hrg --hub-resource-group]
+                                 [--no-wait]
+                                 [--resource-group]
+                                 [--uai --user-assigned-identity]
+  examples:
+  - summary: |-
+      Create a linked IoT hub in an Azure IoT Hub Device Provisioning Service instance
+    syntax: az iot dps linked-hub create --dps-name MyDps --resource-group MyResourceGroup --location westus --connection-string 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+  - summary: |-
+      Create a linked IoT hub in an Azure IoT Hub Device Provisioning Service which applies allocation weight and weight being 10
+    syntax: az iot dps linked-hub create --dps-name MyDps --resource-group MyResourceGroup --location westus --allocation-weight 10 --apply-allocation-policy True --connection-string 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+  requiredParameters:
+  - isRequired: true
+    name: --dps-name
+    summary: |-
+      IoT Hub Device Provisioning Service name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --allocation-weight
+    summary: |-
+      Allocation weight of the IoT hub.
+  - name: --apply-allocation-policy
+    acceptedValues: false, true
+    summary: |-
+      A boolean indicating whether to apply allocation policy to the IoT hub.
+  - name: --auth-type --authentication-type
+    acceptedValues: KeyBased, SystemAssigned, UserAssigned
+    summary: |-
+      Authentication type for the linked IoT Hub. 'KeyBased' uses a connection string. 'SystemAssigned' uses the DPS system-assigned managed identity. 'UserAssigned' uses a user-assigned managed identity.
+    isPreview: true
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --connection-string --cs
+    summary: |-
+      Connection string of the IoT hub. Required if hub name is not provided using --hub-name.
+    groupName: IoT Hub Identifier Arguments
+  - name: --hn --hub-name
+    summary: |-
+      IoT Hub name.
+    groupName: IoT Hub Identifier Arguments
+  - name: --hostname-type --ht
+    defaultValue: auto
+    acceptedValues: auto, classic, device
+    summary: |-
+      Type of IoT Hub hostname to use when linking. 'auto' uses the TLS 1.3 device hostname if available, classic otherwise. 'device' uses the TLS 1.3 device hostname (errors if not GWv2). 'classic' uses the classic hostname (hub.azure-devices.net). Only applies when --hub-name is provided.
+    isPreview: true
+  - name: --hrg --hub-resource-group
+    summary: |-
+      IoT Hub resource group name.
+    groupName: IoT Hub Identifier Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --uai --user-assigned-identity
+    summary: |-
+      User-assigned managed identity resource ID. Required when authentication type is UserAssigned.
+    isPreview: true
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_dps_linked-hub_delete
   name: az iot dps linked-hub delete
   summary: |-
@@ -105,6 +219,76 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
+  syntax: >-
+    az iot dps linked-hub delete --dps-name
+                                 --linked-hub
+                                 [--acquire-policy-token]
+                                 [--change-reference]
+                                 [--no-wait]
+                                 [--resource-group]
+  examples:
+  - summary: |-
+      Delete linked IoT hub 'MyLinkedHub' in an Azure IoT Hub Device Provisioning Service instance
+    syntax: az iot dps linked-hub delete --dps-name MyDps --resource-group MyResourceGroup --linked-hub MyLinkedHub
+  requiredParameters:
+  - isRequired: true
+    name: --dps-name
+    summary: |-
+      IoT Hub Device Provisioning Service name.
+  - isRequired: true
+    name: --linked-hub
+    summary: |-
+      Host name of linked IoT Hub.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_dps_linked-hub_delete(azure-iot)
+  name: az iot dps linked-hub delete
+  extensionSuffix: azure-iot
+  summary: |-
+    Update a linked IoT hub in an Azure IoT Hub Device Provisioning Service instance.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az iot dps linked-hub delete --dps-name
                                  --linked-hub
@@ -218,6 +402,56 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_dps_linked-hub_list(azure-iot)
+  name: az iot dps linked-hub list
+  extensionSuffix: azure-iot
+  summary: |-
+    List all linked IoT hubs in an Azure IoT Hub Device Provisioning Service instance.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot dps linked-hub list --dps-name
+                               [--resource-group]
+  examples:
+  - summary: |-
+      List all linked IoT hubs in MyDps
+    syntax: az iot dps linked-hub list --dps-name MyDps --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --dps-name
+    summary: |-
+      IoT Hub Device Provisioning Service name.
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_dps_linked-hub_show
   name: az iot dps linked-hub show
   summary: |-
@@ -225,6 +459,61 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
+  syntax: >-
+    az iot dps linked-hub show --dps-name
+                               --linked-hub
+                               [--resource-group]
+  examples:
+  - summary: |-
+      Show details of linked IoT hub 'MyLinkedHub' in an Azure IoT Hub Device Provisioning Service
+    syntax: az iot dps linked-hub show --dps-name MyDps --resource-group MyResourceGroup --linked-hub MyLinkedHub
+  requiredParameters:
+  - isRequired: true
+    name: --dps-name
+    summary: |-
+      IoT Hub Device Provisioning Service name.
+  - isRequired: true
+    name: --linked-hub
+    summary: |-
+      Host name of linked IoT Hub.
+  optionalParameters:
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_dps_linked-hub_show(azure-iot)
+  name: az iot dps linked-hub show
+  extensionSuffix: azure-iot
+  summary: |-
+    Show details of a linked IoT hub in an Azure IoT Hub Device Provisioning Service instance.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az iot dps linked-hub show --dps-name
                                --linked-hub
@@ -352,12 +641,117 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_dps_linked-hub_update(azure-iot)
+  name: az iot dps linked-hub update
+  extensionSuffix: azure-iot
+  summary: |-
+    Update a linked IoT hub in an Azure IoT Hub Device Provisioning Service instance.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az iot dps linked-hub update --dps-name
+                                 [--acquire-policy-token]
+                                 [--allocation-weight]
+                                 [--apply-allocation-policy {false, true}]
+                                 [--auth-type --authentication-type {KeyBased, SystemAssigned, UserAssigned}]
+                                 [--change-reference]
+                                 [--connection-string --cs]
+                                 [--hn --hub-name]
+                                 [--linked-hub]
+                                 [--no-wait]
+                                 [--resource-group]
+                                 [--uai --user-assigned-identity]
+  examples:
+  - summary: |-
+      Update linked IoT hub 'MyLinkedHub.azure-devices.net' in an Azure IoT Hub Device Provisioning Service
+    syntax: az iot dps linked-hub update --dps-name MyDps --resource-group MyResourceGroup --linked-hub MyLinkedHub.azure-devices.net --allocation-weight 10 --apply-allocation-policy True
+  requiredParameters:
+  - isRequired: true
+    name: --dps-name
+    summary: |-
+      IoT Hub Device Provisioning Service name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --allocation-weight
+    summary: |-
+      Allocation weight of the IoT hub.
+  - name: --apply-allocation-policy
+    acceptedValues: false, true
+    summary: |-
+      A boolean indicating whether to apply allocation policy to the IoT hub.
+  - name: --auth-type --authentication-type
+    acceptedValues: KeyBased, SystemAssigned, UserAssigned
+    summary: |-
+      Switch the linked hub to a different authentication type. 'KeyBased' uses a connection string (supplied via --connection-string, otherwise auto-fetched from the identified hub). 'SystemAssigned' uses the DPS system-assigned managed identity. 'UserAssigned' uses a user-assigned managed identity.
+    isPreview: true
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --connection-string --cs
+    summary: |-
+      IoT Hub connection string to use when switching to KeyBased authentication. If omitted, the key is auto-fetched from the identified hub.
+    isPreview: true
+  - name: --hn --hub-name
+    summary: |-
+      IoT Hub short name. Preferred over --linked-hub; resolves to the correct entry regardless of classic/device hostname.
+    isPreview: true
+    groupName: Linked Hub Identifier Arguments
+  - name: --linked-hub
+    summary: |-
+      Full host name of the linked IoT Hub (e.g. `myhub.device.azure-devices.net`). Use this to disambiguate when --hub-name resolves to multiple entries.
+    groupName: Linked Hub Identifier Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --uai --user-assigned-identity
+    summary: |-
+      User-assigned managed identity resource ID. Required when --authentication-type is UserAssigned.
+    isPreview: true
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_dps_linked-hub_create
+- az_iot_dps_linked-hub_create(azure-iot)
 - az_iot_dps_linked-hub_delete
+- az_iot_dps_linked-hub_delete(azure-iot)
 - az_iot_dps_linked-hub_list
+- az_iot_dps_linked-hub_list(azure-iot)
 - az_iot_dps_linked-hub_show
+- az_iot_dps_linked-hub_show(azure-iot)
 - az_iot_dps_linked-hub_update
+- az_iot_dps_linked-hub_update(azure-iot)
 metadata:
-  ms.date: 08/08/2025
   description: Manage linked IoT Hubs in an Azure IoT Hub Device Provisioning Service instance.

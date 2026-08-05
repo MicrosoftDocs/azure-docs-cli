@@ -29,6 +29,9 @@ directCommands:
   - summary: |-
       AttachDisk
     syntax: az stack-hci-vm disk attach --resource-group "test-rg" --vm-name "test-vm" --disks "disk1" "disk2"
+  - summary: |-
+      AttachDiskFromDifferentResourceGroup
+    syntax: az stack-hci-vm disk attach --resource-group "vm-rg" --vm-name "test-vm" --disks "/subscriptions/{sub-id}/resourceGroups/disk-rg/providers/Microsoft.AzureStackHCI/virtualHardDisks/disk1"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -42,6 +45,8 @@ directCommands:
     summary: |-
       One or more names or IDs of the managed disk (space-delimited).
     description: |-
+      One or more names or ARM resource IDs of the managed disks (space-delimited).
+      To attach a disk from a different resource group than the virtual machine, specify the full ARM resource ID.
       Usage: --disks "disk1" "disk2".
   - name: --ids
     summary: |-
@@ -51,11 +56,14 @@ directCommands:
     summary: |-
       The name or ID of the managed disk.
     description: |-
+      The name or ARM resource ID of the managed disk.
       Usage: --name "test-disk".
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: |-
+      The resource group of the virtual machine.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
