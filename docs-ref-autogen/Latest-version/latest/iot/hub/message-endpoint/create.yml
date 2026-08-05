@@ -3,7 +3,7 @@ uid: az_iot_hub_message-endpoint_create
 name: az iot hub message-endpoint create
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az iot hub message-endpoint create** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot hub message-endpoint create** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Add an endpoint to an IoT Hub.
 status: Preview
@@ -23,7 +23,6 @@ directCommands:
     az iot hub message-endpoint create cosmosdb-container --container --container-name
                                                           --database-name --db
                                                           --en --endpoint --endpoint-name
-                                                          --hub-name
                                                           [--acquire-policy-token]
                                                           [--change-reference]
                                                           [--connection-string]
@@ -31,12 +30,15 @@ directCommands:
                                                           [--endpoint-resource-group --erg]
                                                           [--endpoint-subscription-id]
                                                           [--endpoint-uri]
+                                                          [--hub-name]
                                                           [--identity]
+                                                          [--ids]
                                                           [--partition-key-name --pkn]
                                                           [--partition-key-template --pkt]
                                                           [--pk --primary-key]
                                                           [--resource-group]
                                                           [--secondary-key --sk]
+                                                          [--subscription]
   examples:
   - summary: |-
       Create a key-based Cosmos DB Container endpoint for an IoT Hub.
@@ -66,10 +68,6 @@ directCommands:
     name: --en --endpoint --endpoint-name
     summary: |-
       Name of the routing endpoint.
-  - isRequired: true
-    name: --hub-name -n
-    summary: |-
-      IoT Hub name.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -94,9 +92,17 @@ directCommands:
   - name: --endpoint-uri
     summary: |-
       The uri of the endpoint resource.
+  - name: --hub-name -n
+    summary: |-
+      IoT Hub name.
+    groupName: Resource Id Arguments
   - name: --identity
     summary: |-
       Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --partition-key-name --pkn
     summary: |-
       The name of the partition key associated with this Cosmos DB SQL Container if one exists.
@@ -109,9 +115,14 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --secondary-key --sk
     summary: |-
       The secondary key of the cosmos DB account.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -132,9 +143,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -149,7 +157,6 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot hub message-endpoint create eventhub --en --endpoint --endpoint-name
-                                                --hub-name
                                                 [--acquire-policy-token]
                                                 [--change-reference]
                                                 [--connection-string]
@@ -159,8 +166,11 @@ directCommands:
                                                 [--endpoint-subscription-id]
                                                 [--endpoint-uri]
                                                 [--entity-path]
+                                                [--hub-name]
                                                 [--identity]
+                                                [--ids]
                                                 [--resource-group]
+                                                [--subscription]
   examples:
   - summary: |-
       Create a key-based Event Hub endpoint for an IoT Hub.
@@ -179,10 +189,6 @@ directCommands:
     name: --en --endpoint --endpoint-name
     summary: |-
       Name of the routing endpoint.
-  - isRequired: true
-    name: --hub-name -n
-    summary: |-
-      IoT Hub name.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -213,12 +219,25 @@ directCommands:
   - name: --entity-path
     summary: |-
       The entity path of the endpoint resource.
+  - name: --hub-name -n
+    summary: |-
+      IoT Hub name.
+    groupName: Resource Id Arguments
   - name: --identity
     summary: |-
       Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -239,9 +258,121 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_hub_message-endpoint_create_fabric-eventstream
+  name: az iot hub message-endpoint create fabric-eventstream
+  summary: |-
+    Add a Microsoft Fabric Eventstream endpoint for an IoT Hub.
+  description: |-
+    The Fabric Custom Endpoint source (workspace, Eventstream item, and source) must be
+    created separately in Microsoft Fabric — via the Fabric portal or the `fab` CLI — before
+    running this command. Then take the source's connection details (sb:// endpoint URI,
+    entity path, and the workspace / eventstream / source GUIDs) and register them here.
+
+    This endpoint type supports identity-based authentication only. The hub must have a
+    managed identity assigned (system-assigned or user-assigned).
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot hub message-endpoint' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot hub message-endpoint create fabric-eventstream --en --endpoint --endpoint-name
+                                                          --endpoint-uri
+                                                          --entity-path
+                                                          --es-id --eventstream-id
+                                                          --identity
+                                                          --source-id
+                                                          --workspace-id --ws-id
+                                                          [--acquire-policy-token]
+                                                          [--change-reference]
+                                                          [--hub-name]
+                                                          [--ids]
+                                                          [--resource-group]
+                                                          [--subscription]
+  examples:
+  - summary: |-
+      Create a Fabric Eventstream endpoint using the hub's system-assigned identity.
+    syntax: az iot hub message-endpoint create fabric-eventstream -n {iothub_name} --en {endpoint_name} --endpoint-uri {endpoint_uri} --entity-path {entity_path} --identity [system] --workspace-id {workspace_id} --eventstream-id {eventstream_id} --source-id {source_id}
+  - summary: |-
+      Create a Fabric Eventstream endpoint using a user-assigned identity.
+    syntax: az iot hub message-endpoint create fabric-eventstream -n {iothub_name} --en {endpoint_name} --endpoint-uri {endpoint_uri} --entity-path {entity_path} --identity {user_identity_resource_id} --workspace-id {workspace_id} --eventstream-id {eventstream_id} --source-id {source_id}
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint --endpoint-name
+    summary: |-
+      Name of the routing endpoint.
+  - isRequired: true
+    name: --endpoint-uri
+    summary: |-
+      The uri of the endpoint resource.
+  - isRequired: true
+    name: --entity-path
+    summary: |-
+      The entity path of the endpoint resource.
+  - isRequired: true
+    name: --es-id --eventstream-id
+    summary: |-
+      The Fabric Eventstream Id. Required so the Azure Portal and Fabric Portal can render this connection as a deep link to the specific Eventstream.
+  - isRequired: true
+    name: --identity
+    summary: |-
+      Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+  - isRequired: true
+    name: --source-id
+    summary: |-
+      The Fabric Custom Endpoint source Id. Required so the Azure Portal and Fabric Portal can render this connection as a deep link to the specific source inside the Eventstream.
+  - isRequired: true
+    name: --workspace-id --ws-id
+    summary: |-
+      The Fabric workspace Id. Required so the Azure Portal and Fabric Portal can render this connection as a deep link to the specific Fabric workspace.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --hub-name -n
+    summary: |-
+      IoT Hub name.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -256,7 +387,6 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot hub message-endpoint create servicebus-queue --en --endpoint --endpoint-name
-                                                        --hub-name
                                                         [--acquire-policy-token]
                                                         [--change-reference]
                                                         [--connection-string]
@@ -266,8 +396,11 @@ directCommands:
                                                         [--endpoint-subscription-id]
                                                         [--endpoint-uri]
                                                         [--entity-path]
+                                                        [--hub-name]
                                                         [--identity]
+                                                        [--ids]
                                                         [--resource-group]
+                                                        [--subscription]
   examples:
   - summary: |-
       Create a key-based Service Bus Queue endpoint for an IoT Hub.
@@ -286,10 +419,6 @@ directCommands:
     name: --en --endpoint --endpoint-name
     summary: |-
       Name of the routing endpoint.
-  - isRequired: true
-    name: --hub-name -n
-    summary: |-
-      IoT Hub name.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -320,12 +449,25 @@ directCommands:
   - name: --entity-path
     summary: |-
       The entity path of the endpoint resource.
+  - name: --hub-name -n
+    summary: |-
+      IoT Hub name.
+    groupName: Resource Id Arguments
   - name: --identity
     summary: |-
       Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -346,9 +488,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -363,7 +502,6 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot hub message-endpoint create servicebus-topic --en --endpoint --endpoint-name
-                                                        --hub-name
                                                         [--acquire-policy-token]
                                                         [--change-reference]
                                                         [--connection-string]
@@ -373,8 +511,11 @@ directCommands:
                                                         [--endpoint-subscription-id]
                                                         [--endpoint-uri]
                                                         [--entity-path]
+                                                        [--hub-name]
                                                         [--identity]
+                                                        [--ids]
                                                         [--resource-group]
+                                                        [--subscription]
   examples:
   - summary: |-
       Create a key-based Service Bus Topic endpoint for an IoT Hub.
@@ -393,10 +534,6 @@ directCommands:
     name: --en --endpoint --endpoint-name
     summary: |-
       Name of the routing endpoint.
-  - isRequired: true
-    name: --hub-name -n
-    summary: |-
-      IoT Hub name.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -427,12 +564,25 @@ directCommands:
   - name: --entity-path
     summary: |-
       The entity path of the endpoint resource.
+  - name: --hub-name -n
+    summary: |-
+      IoT Hub name.
+    groupName: Resource Id Arguments
   - name: --identity
     summary: |-
       Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -453,9 +603,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -471,7 +618,6 @@ directCommands:
   syntax: >-
     az iot hub message-endpoint create storage-container --container --container-name
                                                          --en --endpoint --endpoint-name
-                                                         --hub-name
                                                          [--acquire-policy-token]
                                                          [--batch-frequency]
                                                          [--change-reference]
@@ -483,8 +629,11 @@ directCommands:
                                                          [--endpoint-subscription-id]
                                                          [--endpoint-uri]
                                                          [--ff --file-name-format]
+                                                         [--hub-name]
                                                          [--identity]
+                                                         [--ids]
                                                          [--resource-group]
+                                                         [--subscription]
   examples:
   - summary: |-
       Create a key-based Storage Container endpoint for an IoT Hub.
@@ -507,10 +656,6 @@ directCommands:
     name: --en --endpoint --endpoint-name
     summary: |-
       Name of the routing endpoint.
-  - isRequired: true
-    name: --hub-name -n
-    summary: |-
-      IoT Hub name.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -552,12 +697,25 @@ directCommands:
     defaultValue: '{iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}'
     summary: |-
       File name format for the blob. The file name format must contain {iothub}, {partition}, {YYYY}, {MM}, {DD}, {HH} and {mm} fields. All parameters are mandatory but can be reordered with or without delimiters.
+  - name: --hub-name -n
+    summary: |-
+      IoT Hub name.
+    groupName: Resource Id Arguments
   - name: --identity
     summary: |-
       Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -578,9 +736,6 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -588,6 +743,7 @@ directCommands:
 commands:
 - az_iot_hub_message-endpoint_create_cosmosdb-container
 - az_iot_hub_message-endpoint_create_eventhub
+- az_iot_hub_message-endpoint_create_fabric-eventstream
 - az_iot_hub_message-endpoint_create_servicebus-queue
 - az_iot_hub_message-endpoint_create_servicebus-topic
 - az_iot_hub_message-endpoint_create_storage-container
