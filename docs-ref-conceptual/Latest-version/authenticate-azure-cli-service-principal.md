@@ -3,6 +3,7 @@ title: Sign in with Azure CLI using a service principal
 description: Learn how to sign into Azure using a service principal and the Azure CLI. Find an example for appending a certification to a private key.
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
+ms.date: 08/05/2026
 #customer intent: As an app developer, I need to security automate authentication to Azure using a service principal.
 ---
 
@@ -36,6 +37,15 @@ To log in with a client secret, use the following command:
 ```azurecli-interactive
 az login --service-principal --username APP_ID --password CLIENT_SECRET --tenant TENANT_ID
 ```
+
+> [!TIP]
+> If your client secret starts with a special character such as a hyphen (`-`), the shell or CLI
+> parser might interpret it as an option flag. To avoid this issue, use the `=` syntax to attach the
+> value directly to the parameter:
+>
+> ```azurecli-interactive
+> az login --service-principal --username APP_ID --password=CLIENT_SECRET --tenant TENANT_ID
+> ```
 
 To log in with a certificate, use the following command:
 
