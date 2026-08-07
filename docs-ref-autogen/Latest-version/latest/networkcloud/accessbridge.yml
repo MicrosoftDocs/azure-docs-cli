@@ -1,70 +1,57 @@
 ### YamlMime:AzureCLIGroup
-uid: az_networkcloud_virtualmachine_console
-name: az networkcloud virtualmachine console
+uid: az_networkcloud_accessbridge
+name: az networkcloud accessbridge
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **networkcloud** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az networkcloud virtualmachine console** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **networkcloud** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az networkcloud accessbridge** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage virtual machine's console.
+  Manage Access Bridge.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_networkcloud_virtualmachine_console_create
-  name: az networkcloud virtualmachine console create
+- uid: az_networkcloud_accessbridge_create
+  name: az networkcloud accessbridge create
   summary: |-
-    Create a new virtual machine console or update the properties of the existing virtual machine console.
-  description: |-
-    A single console is allowed for each virtual machine and is always named 'default'.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Create a new access bridge or update the properties of the existing access bridge.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az networkcloud virtualmachine console create --enabled {False, True}
-                                                  --extended-location
-                                                  --resource-group
-                                                  --ssh-public-key
-                                                  --virtual-machine-name
-                                                  [--acquire-policy-token]
-                                                  [--change-reference]
-                                                  [--expiration]
-                                                  [--if-match]
-                                                  [--if-none-match]
-                                                  [--location]
-                                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                  [--tags]
+    az networkcloud accessbridge create --access-bridge-name --name {Bastion, PrivateVault, StorageDashboard}
+                                        --extended-location
+                                        --network-id
+                                        --resource-group
+                                        [--acquire-policy-token]
+                                        [--change-reference]
+                                        [--ipv4-connected-prefix]
+                                        [--ipv6-connected-prefix]
+                                        [--location]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--security-rules]
+                                        [--tags]
   examples:
   - summary: |-
-      Create or update virtual machine console
-    syntax: az networkcloud virtualmachine console create --extended-location name="/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterManagerExtendedLocationName" type="CustomLocation" --location "location" --enabled "True" --expiration "2024-06-01T01:27:03.008Z" --ssh-public-key key-data="ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --virtual-machine-name "virtualMachineName"
-  - summary: |-
-      Create or update virtual machine console with SSH key file
-    syntax: az networkcloud virtualmachine console create --extended-location name="/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterManagerExtendedLocationName" type="CustomLocation" --location "location" --enabled "True" --expiration "2024-06-01T01:27:03.008Z" --ssh-public-key key-data=~/.ssh/id_rsa.pub --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --virtual-machine-name "virtualMachineName"
+      Create or update access bridge
+    syntax: az networkcloud accessbridge create --resource-group resourceGroupName --access-bridge-name Bastion --location location --tags "{key1:myvalue1,key2:myvalue2}" --extended-location "{type:CustomLocation,name:/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName}" --ipv4-connected-prefix 198.51.100.0/24 --ipv6-connected-prefix 2001:db8::/64 --network-id /subscriptions/123e4567-e89b-12d3-a456-426655440000/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/l3IsolationDomainName/internalNetworks/internalNetworkName --security-rules "[{description:'Allow management plane egress',port:24562-24570,ipv4-addresses:[10.10.20.10-10.10.20.20],ipv6-addresses:['2001:db8:abcd:12::1000-2001:db8:abcd:12::1fff'],direction:Outbound}]"
   requiredParameters:
   - isRequired: true
-    name: --enabled
-    acceptedValues: False, True
+    name: --access-bridge-name --name -n
+    acceptedValues: Bastion, PrivateVault, StorageDashboard
     summary: |-
-      The indicator of whether the console access is enabled.
-    groupName: Properties Arguments
+      The name of the access bridge.
   - isRequired: true
     name: --extended-location
     summary: |-
-      The extended location of the cluster manager associated with the cluster this virtual machine is created on.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: ConsoleParameters Arguments
+      The extended location of the cluster associated with the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: AccessBridge Arguments
+  - isRequired: true
+    name: --network-id
+    summary: |-
+      The resource ID of the internal network in a layer 3 isolation domain containing the IP subnets to use.
+    groupName: Properties Arguments
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --ssh-public-key
-    summary: |-
-      The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Properties Arguments
-  - isRequired: true
-    name: --virtual-machine-name
-    summary: |-
-      The name of the virtual machine.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -74,28 +61,30 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --expiration
+  - name: --ipv4-connected-prefix
     summary: |-
-      The date and time after which the key will be disallowed access.
+      The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId.
     groupName: Properties Arguments
-  - name: --if-match
+  - name: --ipv6-connected-prefix
     summary: |-
-      The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
-  - name: --if-none-match
-    summary: |-
-      Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported.
+      The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId.
+    groupName: Properties Arguments
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
-    groupName: ConsoleParameters Arguments
+    groupName: AccessBridge Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --security-rules
+    summary: |-
+      The list of security rules enforced by the access bridge.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: ConsoleParameters Arguments
+    groupName: AccessBridge Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -123,30 +112,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_networkcloud_virtualmachine_console_delete
-  name: az networkcloud virtualmachine console delete
+- uid: az_networkcloud_accessbridge_delete
+  name: az networkcloud accessbridge delete
   summary: |-
-    Delete the provided virtual machine console.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Delete the specified access bridge.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az networkcloud virtualmachine console delete [--acquire-policy-token]
-                                                  [--change-reference]
-                                                  [--ids]
-                                                  [--if-match]
-                                                  [--if-none-match]
-                                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                  [--resource-group]
-                                                  [--subscription]
-                                                  [--virtual-machine-name]
-                                                  [--yes]
+    az networkcloud accessbridge delete [--access-bridge-name --name {Bastion, PrivateVault, StorageDashboard}]
+                                        [--acquire-policy-token]
+                                        [--change-reference]
+                                        [--ids]
+                                        [--if-match]
+                                        [--if-none-match]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--resource-group]
+                                        [--subscription]
+                                        [--yes]
   examples:
   - summary: |-
-      Delete virtual machine console
-    syntax: az networkcloud virtualmachine console delete --resource-group "resourceGroupName" --virtual-machine-name "virtualMachineName"
+      Delete access bridge
+    syntax: az networkcloud accessbridge delete --resource-group resourceGroupName --access-bridge-name Bastion
   optionalParameters:
+  - name: --access-bridge-name --name -n
+    acceptedValues: Bastion, PrivateVault, StorageDashboard
+    summary: |-
+      The name of the access bridge.
+    groupName: Resource Id Arguments
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
@@ -177,10 +169,6 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
-  - name: --virtual-machine-name
-    summary: |-
-      The name of the virtual machine.
-    groupName: Resource Id Arguments
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -209,34 +197,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_networkcloud_virtualmachine_console_list
-  name: az networkcloud virtualmachine console list
+- uid: az_networkcloud_accessbridge_list
+  name: az networkcloud accessbridge list
   summary: |-
-    List consoles of the virtual machine.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    List a list of access bridges in the provided subscription.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az networkcloud virtualmachine console list --resource-group
-                                                --virtual-machine-name
-                                                [--max-items]
-                                                [--next-token]
-                                                [--skip-token]
-                                                [--top]
+    az networkcloud accessbridge list [--max-items]
+                                      [--next-token]
+                                      [--resource-group]
+                                      [--skip-token]
+                                      [--top]
   examples:
   - summary: |-
-      List consoles of the virtual machine
-    syntax: az networkcloud virtualmachine console list --resource-group "resourceGroupName" --virtual-machine-name "virtualMachineName"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --virtual-machine-name
-    summary: |-
-      The name of the virtual machine.
+      List access bridges for subscription
+    syntax: az networkcloud accessbridge list
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -246,6 +222,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --skip-token
     summary: |-
       The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets.
@@ -279,24 +258,27 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_networkcloud_virtualmachine_console_show
-  name: az networkcloud virtualmachine console show
+- uid: az_networkcloud_accessbridge_show
+  name: az networkcloud accessbridge show
   summary: |-
-    Get properties of the provided virtual machine console.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Get the properties of the provided access bridge.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az networkcloud virtualmachine console show [--ids]
-                                                [--resource-group]
-                                                [--subscription]
-                                                [--virtual-machine-name]
+    az networkcloud accessbridge show [--access-bridge-name --name {Bastion, PrivateVault, StorageDashboard}]
+                                      [--ids]
+                                      [--resource-group]
+                                      [--subscription]
   examples:
   - summary: |-
-      Get virtual machine console
-    syntax: az networkcloud virtualmachine console show --resource-group "resourceGroupName" --virtual-machine-name "virtualMachineName"
+      Get access bridge
+    syntax: az networkcloud accessbridge show --resource-group resourceGroupName --access-bridge-name Bastion
   optionalParameters:
+  - name: --access-bridge-name --name -n
+    acceptedValues: Bastion, PrivateVault, StorageDashboard
+    summary: |-
+      The name of the access bridge.
+    groupName: Resource Id Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -308,10 +290,6 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    groupName: Resource Id Arguments
-  - name: --virtual-machine-name
-    summary: |-
-      The name of the virtual machine.
     groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
@@ -337,36 +315,34 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_networkcloud_virtualmachine_console_update
-  name: az networkcloud virtualmachine console update
+- uid: az_networkcloud_accessbridge_update
+  name: az networkcloud accessbridge update
   summary: |-
-    Update the properties of the provided virtual machine console, or update the tags associated with the virtual machine console. Properties and tag updates can be done independently.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Update properties of the provided access bridge, or update tags associated with the access bridge. Properties and tag updates can be done independently.
+  status: GA
   sourceType: Extension
   syntax: >-
-    az networkcloud virtualmachine console update [--acquire-policy-token]
-                                                  [--change-reference]
-                                                  [--enabled {False, True}]
-                                                  [--expiration]
-                                                  [--ids]
-                                                  [--if-match]
-                                                  [--if-none-match]
-                                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                  [--resource-group]
-                                                  [--ssh-public-key]
-                                                  [--subscription]
-                                                  [--tags]
-                                                  [--virtual-machine-name]
+    az networkcloud accessbridge update [--access-bridge-name --name {Bastion, PrivateVault, StorageDashboard}]
+                                        [--acquire-policy-token]
+                                        [--change-reference]
+                                        [--ids]
+                                        [--if-match]
+                                        [--if-none-match]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--resource-group]
+                                        [--security-rules]
+                                        [--subscription]
+                                        [--tags]
   examples:
   - summary: |-
-      Patch virtual machine console
-    syntax: az networkcloud virtualmachine console update --enabled "True" --expiration "2022-06-01T01:27:03.008Z" --ssh-public-key key-data="ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --virtual-machine-name "virtualMachineName"
-  - summary: |-
-      Patch virtual machine console with SSH key file
-    syntax: az networkcloud virtualmachine console update --enabled "True" --expiration "2022-06-01T01:27:03.008Z" --ssh-public-key key-data=~/.ssh/id_rsa.pub --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --virtual-machine-name "virtualMachineName"
+      Patch access bridge resource
+    syntax: az networkcloud accessbridge update --resource-group resourceGroupName --access-bridge-name Bastion --security-rules "[{description:'Allow management plane egress',port:24562-24570,ipv4-addresses:[10.10.20.10-10.10.20.20],ipv6-addresses:['2001:db8:abcd:12::1000-2001:db8:abcd:12::1fff'],direction:Outbound}]"
   optionalParameters:
+  - name: --access-bridge-name --name -n
+    acceptedValues: Bastion, PrivateVault, StorageDashboard
+    summary: |-
+      The name of the access bridge.
+    groupName: Resource Id Arguments
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
@@ -375,15 +351,6 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --enabled
-    acceptedValues: False, True
-    summary: |-
-      The indicator of whether the console access is enabled.
-    groupName: Properties Arguments
-  - name: --expiration
-    summary: |-
-      The date and time after which the key will be disallowed access.
-    groupName: Properties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -402,9 +369,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --ssh-public-key
+  - name: --security-rules
     summary: |-
-      The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The list of security rules enforced by the access bridge.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --subscription
     summary: |-
@@ -413,11 +380,7 @@ directCommands:
   - name: --tags
     summary: |-
       The Azure resource tags that will replace the existing ones.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: ConsoleUpdateParameters Arguments
-  - name: --virtual-machine-name
-    summary: |-
-      The name of the virtual machine.
-    groupName: Resource Id Arguments
+    groupName: AccessBridgeUpdateParameters Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -442,28 +405,32 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_networkcloud_virtualmachine_console_wait
-  name: az networkcloud virtualmachine console wait
+- uid: az_networkcloud_accessbridge_wait
+  name: az networkcloud accessbridge wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Extension
   syntax: >-
-    az networkcloud virtualmachine console wait [--acquire-policy-token]
-                                                [--change-reference]
-                                                [--console-name --name]
-                                                [--created]
-                                                [--custom]
-                                                [--deleted]
-                                                [--exists]
-                                                [--ids]
-                                                [--interval]
-                                                [--resource-group]
-                                                [--subscription]
-                                                [--timeout]
-                                                [--updated]
-                                                [--virtual-machine-name]
+    az networkcloud accessbridge wait [--access-bridge-name --name {Bastion, PrivateVault, StorageDashboard}]
+                                      [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--created]
+                                      [--custom]
+                                      [--deleted]
+                                      [--exists]
+                                      [--ids]
+                                      [--interval]
+                                      [--resource-group]
+                                      [--subscription]
+                                      [--timeout]
+                                      [--updated]
   optionalParameters:
+  - name: --access-bridge-name --name -n
+    acceptedValues: Bastion, PrivateVault, StorageDashboard
+    summary: |-
+      The name of the access bridge.
+    groupName: Resource Id Arguments
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
@@ -472,10 +439,6 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --console-name --name -n
-    summary: |-
-      The name of the virtual machine console.
-    groupName: Resource Id Arguments
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -522,10 +485,6 @@ directCommands:
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
     groupName: Wait Condition Arguments
-  - name: --virtual-machine-name
-    summary: |-
-      The name of the virtual machine.
-    groupName: Resource Id Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -551,11 +510,11 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_networkcloud_virtualmachine_console_create
-- az_networkcloud_virtualmachine_console_delete
-- az_networkcloud_virtualmachine_console_list
-- az_networkcloud_virtualmachine_console_show
-- az_networkcloud_virtualmachine_console_update
-- az_networkcloud_virtualmachine_console_wait
+- az_networkcloud_accessbridge_create
+- az_networkcloud_accessbridge_delete
+- az_networkcloud_accessbridge_list
+- az_networkcloud_accessbridge_show
+- az_networkcloud_accessbridge_update
+- az_networkcloud_accessbridge_wait
 metadata:
-  description: Manage virtual machine's console.
+  description: Manage Access Bridge.
