@@ -1,0 +1,646 @@
+### YamlMime:AzureCLIGroup
+uid: az_mission_virtual-enclave
+name: az mission virtual-enclave
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **mission** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az mission virtual-enclave** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Virtual Enclave.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_mission_virtual-enclave_create
+  name: az mission virtual-enclave create
+  summary: |-
+    Create a EnclaveResource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az mission virtual-enclave create --name --virtual-enclave-name
+                                      --resource-group
+                                      [--acquire-policy-token]
+                                      [--approval-settings]
+                                      [--bastion-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--change-reference]
+                                      [--community-resource-id]
+                                      [--dedicated-hub-resource-id]
+                                      [--enclave-default-settings]
+                                      [--enclave-role-assignments]
+                                      [--enclave-virtual-network]
+                                      [--governed-service-list]
+                                      [--location]
+                                      [--maintenance-mode-configuration]
+                                      [--mi-system-assigned --system-assigned]
+                                      [--mi-user-assigned --user-assigned]
+                                      [--monitoring-settings]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--rbac-inheritance {Disabled, Enabled}]
+                                      [--tags]
+                                      [--workload-resource-visibility {Disabled, Enabled}]
+                                      [--workload-role-assignments]
+  examples:
+  - summary: |-
+      VirtualEnclave_CreateOrUpdate
+    syntax: az mission virtual-enclave create --resource-group rgopenapi --virtual-enclave-name TestMyEnclave --type SystemAssigned,UserAssigned --user-assigned-identities "{/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1:{}}" --enclave-virtual-network "{network-size:small,custom-cidr-range:10.0.0.0/24,subnet-configurations:[{subnet-name:test,network-prefix-size:26}],allow-subnet-communication:True}" --community-resource-id /subscriptions/c64f6eca-bdc5-4bc2-88d6-f8f1dc23f86c/resourceGroups/TestMyRg/providers/microsoft.mission/communities/TestMyCommunity --enclave-default-settings "{diagnostic-destination:Both}" --maintenance-mode-configuration "{mode:Off,principals:[{id:355a6bb0-abc0-4cba-000d-12a345b678c9,type:User}],justification:Off}" --dedicated-hub-resource-id /subscriptions/c64f6eca-bdc5-4bc2-88d6-f8f1dc23f86c/resourceGroups/TestResourceGroup/providers/Microsoft.Mission/communities/TestMyCommunity/dedicatedHubs/TestDedicatedHub --bastion-enabled True --workload-resource-visibility Disabled --rbac-inheritance Disabled --enclave-role-assignments "[{roleDefinitionId:b24988ac-6180-42a0-ab88-20f7382dd24c,principals:[{id:355a6bb0-abc0-4cba-000d-12a345b678c9,type:User},{id:355a6bb0-abc0-4cba-000d-12a345b678c0,type:User}],condition:'@RoleDefinition.Name StringNotEquals '/Owner'/'},{roleDefinitionId:18d7d88d-d35e-4fb5-a5c3-7773c20a72d9,principals:[{id:355a6bb0-abc0-4cba-000d-12a345b678c9,type:User}]}]" --workload-role-assignments "[{roleDefinitionId:d73bb868-a0df-4d4d-bd69-98a00b01fccb,principals:[{id:01234567-89ab-ef01-2345-0123456789ab,type:Group}],condition:'@RoleDefinition.Name StringNotEquals '/Owner'/'},{roleDefinitionId:fb879df8-f326-4884-b1cf-06f3ad86be52,principals:[{id:01234567-89ab-ef01-2345-0123456789ab,type:Group}]}]" --approval-settings "{enclave-endpoint-update:{approvalPolicy:Required,minimumApproversRequired:1,mandatoryApprovers:[{approverEntraId:00000000-0000-0000-0000-000000000001}]},connection-creation:{approvalPolicy:Required,minimumApproversRequired:2,mandatoryApprovers:[{approverEntraId:00000000-0000-0000-0000-000000000002}]},connection-update:{approvalPolicy:Required,minimumApproversRequired:1},enclave-maintenance-mode:{approvalPolicy:NotRequired}}" --monitoring-settings "{diagnostic-destinations:[{destinationType:CommunityWorkspace},{destinationType:EnclaveWorkspace,diagnosticSettingsName:customName},{destinationType:CustomWorkspace,customWorkspaceResourceId:/subscriptions/c64f6eca-bdc5-4bc2-88d6-f8f1dc23f86c/resourceGroups/rgopenapi/providers/Microsoft.OperationalInsights/workspaces/CustomWorkspace,diagnosticSettingsName:customName},{destinationType:CustomWorkspace,customWorkspaceResourceId:/subscriptions/c64f6eca-bdc5-4bc2-88d6-f8f1dc23f86c/resourceGroups/rgopenapi/providers/Microsoft.OperationalInsights/workspaces/CustomWorkspace,diagnosticSettingsName:customName}],flow-log-destination:{destinationType:CustomWorkspace,customWorkspaceResourceId:/subscriptions/c64f6eca-bdc5-4bc2-88d6-f8f1dc23f86c/resourceGroups/rgopenapi/providers/Microsoft.OperationalInsights/workspaces/CustomWorkspace,diagnosticSettingsName:customName}}" --tags "{Tag1:Value1}" --location westcentralus
+  requiredParameters:
+  - isRequired: true
+    name: --name --virtual-enclave-name -n
+    summary: |-
+      The name of the enclaveResource Resource.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --approval-settings
+    summary: |-
+      Approval requirements for various actions on the enclave's resources.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --bastion-enabled
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Deploy Bastion service (True or False).
+    groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --community-resource-id
+    summary: |-
+      Community Resource Id.
+    groupName: Properties Arguments
+  - name: --dedicated-hub-resource-id
+    summary: |-
+      DedicatedHub Resource ID.
+    groupName: Properties Arguments
+  - name: --enclave-default-settings
+    summary: |-
+      Enclave default settings.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --enclave-role-assignments
+    summary: |-
+      Enclave role assignments  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --enclave-virtual-network
+    summary: |-
+      Virtual Network.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --governed-service-list
+    summary: |-
+      Enclave specific policies  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --maintenance-mode-configuration
+    summary: |-
+      Maintenance Mode configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
+  - name: --monitoring-settings
+    summary: |-
+      Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --rbac-inheritance
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Controls whether standard Azure RBAC role inheritance applies to the workload resource group(s).
+    groupName: Properties Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --workload-resource-visibility
+    defaultValue: Disabled
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Specifies whether resources in the workload resource group(s) are visible through standard RBAC.
+    groupName: Properties Arguments
+  - name: --workload-role-assignments
+    summary: |-
+      Workload role assignments  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_mission_virtual-enclave_delete
+  name: az mission virtual-enclave delete
+  summary: |-
+    Delete a EnclaveResource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az mission virtual-enclave delete [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--ids]
+                                      [--name --virtual-enclave-name]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--resource-group]
+                                      [--subscription]
+                                      [--yes]
+  examples:
+  - summary: |-
+      VirtualEnclave_Delete
+    syntax: az mission virtual-enclave delete --resource-group rgopenapi --virtual-enclave-name TestMyEnclave
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --virtual-enclave-name -n
+    summary: |-
+      The name of the enclaveResource Resource.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_mission_virtual-enclave_list
+  name: az mission virtual-enclave list
+  summary: |-
+    List EnclaveResource resources by subscription ID.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az mission virtual-enclave list [--max-items]
+                                    [--next-token]
+                                    [--resource-group]
+  examples:
+  - summary: |-
+      VirtualEnclave_ListBySubscription
+    syntax: az mission virtual-enclave list
+  - summary: |-
+      VirtualEnclave_ListByResourceGroup
+    syntax: az mission virtual-enclave list --resource-group rgopenapi
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_mission_virtual-enclave_show
+  name: az mission virtual-enclave show
+  summary: |-
+    Get a EnclaveResource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az mission virtual-enclave show [--ids]
+                                    [--name --virtual-enclave-name]
+                                    [--resource-group]
+                                    [--subscription]
+  examples:
+  - summary: |-
+      VirtualEnclave_Get
+    syntax: az mission virtual-enclave show --resource-group rgopenapi --virtual-enclave-name TestMyEnclave
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --virtual-enclave-name -n
+    summary: |-
+      The name of the enclaveResource Resource.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_mission_virtual-enclave_update
+  name: az mission virtual-enclave update
+  summary: |-
+    Update a EnclaveResource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az mission virtual-enclave update [--acquire-policy-token]
+                                      [--add]
+                                      [--approval-settings]
+                                      [--bastion-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--change-reference]
+                                      [--dedicated-hub-resource-id]
+                                      [--enclave-default-settings]
+                                      [--enclave-role-assignments]
+                                      [--enclave-virtual-network]
+                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--governed-service-list]
+                                      [--ids]
+                                      [--maintenance-mode-configuration]
+                                      [--monitoring-settings]
+                                      [--name --virtual-enclave-name]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--rbac-inheritance {Disabled, Enabled}]
+                                      [--remove]
+                                      [--resource-group]
+                                      [--set]
+                                      [--subscription]
+                                      [--tags]
+                                      [--workload-resource-visibility {Disabled, Enabled}]
+                                      [--workload-role-assignments]
+  examples:
+  - summary: |-
+      VirtualEnclave_CreateOrUpdate
+    syntax: az mission virtual-enclave update --resource-group rgopenapi --virtual-enclave-name TestMyEnclave
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --approval-settings
+    summary: |-
+      Approval requirements for various actions on the enclave's resources.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --bastion-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Deploy Bastion service (True or False).
+    groupName: Properties Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --dedicated-hub-resource-id
+    summary: |-
+      DedicatedHub Resource ID.
+    groupName: Properties Arguments
+  - name: --enclave-default-settings
+    summary: |-
+      Enclave default settings.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --enclave-role-assignments
+    summary: |-
+      Enclave role assignments  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --enclave-virtual-network
+    summary: |-
+      Virtual Network.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --governed-service-list
+    summary: |-
+      Enclave specific policies  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --maintenance-mode-configuration
+    summary: |-
+      Maintenance Mode configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --monitoring-settings
+    summary: |-
+      Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --name --virtual-enclave-name -n
+    summary: |-
+      The name of the enclaveResource Resource.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --rbac-inheritance
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Controls whether standard Azure RBAC role inheritance applies to the workload resource group(s).
+    groupName: Properties Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --workload-resource-visibility
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Specifies whether resources in the workload resource group(s) are visible through standard RBAC.
+    groupName: Properties Arguments
+  - name: --workload-role-assignments
+    summary: |-
+      Workload role assignments  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_mission_virtual-enclave_wait
+  name: az mission virtual-enclave wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az mission virtual-enclave wait [--acquire-policy-token]
+                                    [--change-reference]
+                                    [--created]
+                                    [--custom]
+                                    [--deleted]
+                                    [--exists]
+                                    [--ids]
+                                    [--interval]
+                                    [--name --virtual-enclave-name]
+                                    [--resource-group]
+                                    [--subscription]
+                                    [--timeout]
+                                    [--updated]
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --name --virtual-enclave-name -n
+    summary: |-
+      The name of the enclaveResource Resource.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_mission_virtual-enclave_create
+- az_mission_virtual-enclave_delete
+- az_mission_virtual-enclave_enclave-endpoint
+- az_mission_virtual-enclave_enclave-endpoint_create
+- az_mission_virtual-enclave_enclave-endpoint_delete
+- az_mission_virtual-enclave_enclave-endpoint_list
+- az_mission_virtual-enclave_enclave-endpoint_show
+- az_mission_virtual-enclave_enclave-endpoint_update
+- az_mission_virtual-enclave_enclave-endpoint_wait
+- az_mission_virtual-enclave_identity
+- az_mission_virtual-enclave_identity_assign
+- az_mission_virtual-enclave_identity_remove
+- az_mission_virtual-enclave_identity_show
+- az_mission_virtual-enclave_identity_wait
+- az_mission_virtual-enclave_list
+- az_mission_virtual-enclave_show
+- az_mission_virtual-enclave_update
+- az_mission_virtual-enclave_wait
+- az_mission_virtual-enclave_workload
+- az_mission_virtual-enclave_workload_create
+- az_mission_virtual-enclave_workload_delete
+- az_mission_virtual-enclave_workload_list
+- az_mission_virtual-enclave_workload_show
+- az_mission_virtual-enclave_workload_update
+- az_mission_virtual-enclave_workload_wait
+metadata:
+  description: Manage Virtual Enclave.
