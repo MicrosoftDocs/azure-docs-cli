@@ -1776,6 +1776,7 @@ directCommands:
                   [--disable-file-driver]
                   [--disable-local-accounts]
                   [--disable-opentelemetry-logs]
+                  [--disable-opentelemetry-logs-traces]
                   [--disable-opentelemetry-metrics]
                   [--disable-public-fqdn]
                   [--disable-rbac]
@@ -1826,6 +1827,7 @@ directCommands:
                   [--enable-oidc-issuer]
                   [--enable-on-demand-monitor]
                   [--enable-opentelemetry-logs]
+                  [--enable-opentelemetry-logs-traces]
                   [--enable-opentelemetry-metrics]
                   [--enable-optimized-addon-scaling]
                   [--enable-osdisk-fc --enable-osdisk-full-caching]
@@ -1914,7 +1916,11 @@ directCommands:
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--opentelemetry-logs-port]
+                  [--opentelemetry-logs-traces-port-grpc]
+                  [--opentelemetry-logs-traces-port-http]
                   [--opentelemetry-metrics-port]
+                  [--opentelemetry-metrics-port-grpc]
+                  [--opentelemetry-metrics-port-http]
                   [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, CBLMariner, Flatcar, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604}]
                   [--outbound-type {block, loadBalancer, managedNATGateway, managedNATGatewayV2, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pis-id --prepared-image-specification-id]
@@ -2059,25 +2065,28 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
   - summary: |-
       Create a kubernetes cluster with Azure Monitor Metrics enabled.
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azuremonitormetrics
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-metrics
   - summary: |-
       Create a kubernetes cluster with Azure Monitor App Monitoring enabled
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-app-monitoring
   - summary: |-
       Create a kubernetes cluster with OpenTelemetry metrics collection enabled
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --enable-azuremonitormetrics
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --enable-azure-monitor-metrics
   - summary: |-
-      Create a kubernetes cluster with OpenTelemetry logs collection enabled
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs --enable-addons monitoring
+      Create a kubernetes cluster with OpenTelemetry logs and traces collection enabled
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs-traces --enable-addons monitoring
   - summary: |-
       Create a kubernetes cluster with Azure Monitor logs enabled (shorthand)
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
   - summary: |-
       Create a kubernetes cluster with OpenTelemetry metrics on custom port
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port 8888 --enable-azuremonitormetrics
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port-http 8888 --enable-azure-monitor-metrics
   - summary: |-
-      Create a kubernetes cluster with OpenTelemetry logs on custom port
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs --opentelemetry-logs-port 4317 --enable-azure-monitor-logs
+      Create a kubernetes cluster with OpenTelemetry logs and traces on custom ports
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs-traces --opentelemetry-logs-traces-port-http 8080 --opentelemetry-logs-traces-port-grpc 8082 --enable-azure-monitor-logs
+  - summary: |-
+      Create a kubernetes cluster with OpenTelemetry metrics on custom HTTP and gRPC ports
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port-http 8888 --opentelemetry-metrics-port-grpc 8889 --enable-azure-monitor-metrics
   - summary: |-
       Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
@@ -2307,7 +2316,13 @@ directCommands:
   - name: --disable-opentelemetry-logs
     defaultValue: "False"
     summary: |-
-      Disable OpenTelemetry logs collection.
+      Disable OpenTelemetry logs and traces collection.
+    isDeprecated: true
+    deprecateInfo: Option '--disable-opentelemetry-logs' has been deprecated and will be removed in a future release. Use '--disable-opentelemetry-logs-traces' instead.
+  - name: --disable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Disable OpenTelemetry logs and traces collection.
     isPreview: true
   - name: --disable-opentelemetry-metrics
     defaultValue: "False"
@@ -2553,7 +2568,13 @@ directCommands:
   - name: --enable-opentelemetry-logs
     defaultValue: "False"
     summary: |-
-      Enable OpenTelemetry logs collection. Requires Azure Monitor logs to be enabled.
+      Enable OpenTelemetry logs and traces collection.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-opentelemetry-logs' has been deprecated and will be removed in a future release. Use '--enable-opentelemetry-logs-traces' instead.
+  - name: --enable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Enable OpenTelemetry logs and traces collection. Requires Azure Monitor logs to be enabled.
     isPreview: true
   - name: --enable-opentelemetry-metrics
     defaultValue: "False"
@@ -2944,11 +2965,29 @@ directCommands:
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --opentelemetry-logs-port
     summary: |-
-      Port for OpenTelemetry logs collection (default port will be used if not specified).
+      HTTP/protobuf port for OpenTelemetry logs and traces collection.
+    isDeprecated: true
+    deprecateInfo: Option '--opentelemetry-logs-port' has been deprecated and will be removed in a future release. Use '--opentelemetry-logs-traces-port-http' instead.
+  - name: --opentelemetry-logs-traces-port-grpc
+    summary: |-
+      GRPC port for OpenTelemetry logs and traces collection (default port will be used if not specified).
+    isPreview: true
+  - name: --opentelemetry-logs-traces-port-http
+    summary: |-
+      HTTP/protobuf port for OpenTelemetry logs and traces collection (default port will be used if not specified).
     isPreview: true
   - name: --opentelemetry-metrics-port
     summary: |-
-      Port for OpenTelemetry metrics collection (default port will be used if not specified).
+      HTTP/protobuf port for OpenTelemetry metrics collection.
+    isDeprecated: true
+    deprecateInfo: Option '--opentelemetry-metrics-port' has been deprecated and will be removed in a future release. Use '--opentelemetry-metrics-port-http' instead.
+  - name: --opentelemetry-metrics-port-grpc
+    summary: |-
+      GRPC port for OpenTelemetry metrics collection (default port will be used if not specified).
+    isPreview: true
+  - name: --opentelemetry-metrics-port-http
+    summary: |-
+      HTTP/protobuf port for OpenTelemetry metrics collection (default port will be used if not specified).
     isPreview: true
   - name: --os-sku
     acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, CBLMariner, Flatcar, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604
@@ -6477,6 +6516,7 @@ directCommands:
                   [--disable-local-accounts]
                   [--disable-on-demand-monitor]
                   [--disable-opentelemetry-logs]
+                  [--disable-opentelemetry-logs-traces]
                   [--disable-opentelemetry-metrics]
                   [--disable-optimized-addon-scaling]
                   [--disable-pod-identity]
@@ -6528,6 +6568,7 @@ directCommands:
                   [--enable-oidc-issuer]
                   [--enable-on-demand-monitor]
                   [--enable-opentelemetry-logs]
+                  [--enable-opentelemetry-logs-traces]
                   [--enable-opentelemetry-metrics]
                   [--enable-optimized-addon-scaling]
                   [--enable-pod-identity]
@@ -6590,7 +6631,11 @@ directCommands:
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--opentelemetry-logs-port]
+                  [--opentelemetry-logs-traces-port-grpc]
+                  [--opentelemetry-logs-traces-port-http]
                   [--opentelemetry-metrics-port]
+                  [--opentelemetry-metrics-port-grpc]
+                  [--opentelemetry-metrics-port-http]
                   [--outbound-type {block, loadBalancer, managedNATGateway, managedNATGatewayV2, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--private-dns-zone]
@@ -6734,20 +6779,23 @@ directCommands:
       Enable OpenTelemetry metrics collection on an existing cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics
   - summary: |-
-      Enable OpenTelemetry logs collection on an existing cluster
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs
+      Enable OpenTelemetry logs and traces collection on an existing cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs-traces
   - summary: |-
       Configure OpenTelemetry metrics with custom port
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port 8888
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port-http 8888
   - summary: |-
-      Configure OpenTelemetry logs with custom port
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs --opentelemetry-logs-port 4317
+      Configure OpenTelemetry logs and traces with custom ports
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs-traces --opentelemetry-logs-traces-port-http 8080 --opentelemetry-logs-traces-port-grpc 8082
+  - summary: |-
+      Configure OpenTelemetry metrics with custom HTTP and gRPC ports
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port-http 8888 --opentelemetry-metrics-port-grpc 8889
   - summary: |-
       Disable OpenTelemetry metrics collection on an existing cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-opentelemetry-metrics
   - summary: |-
-      Disable OpenTelemetry logs collection on an existing cluster
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-opentelemetry-logs
+      Disable OpenTelemetry logs and traces collection on an existing cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-opentelemetry-logs-traces
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -7032,7 +7080,13 @@ directCommands:
   - name: --disable-opentelemetry-logs
     defaultValue: "False"
     summary: |-
-      Disable OpenTelemetry logs collection.
+      Disable OpenTelemetry logs and traces collection.
+    isDeprecated: true
+    deprecateInfo: Option '--disable-opentelemetry-logs' has been deprecated and will be removed in a future release. Use '--disable-opentelemetry-logs-traces' instead.
+  - name: --disable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Disable OpenTelemetry logs and traces collection.
     isPreview: true
   - name: --disable-opentelemetry-metrics
     defaultValue: "False"
@@ -7272,7 +7326,13 @@ directCommands:
   - name: --enable-opentelemetry-logs
     defaultValue: "False"
     summary: |-
-      Enable OpenTelemetry logs collection. Requires Azure Monitor logs to be enabled.
+      Enable OpenTelemetry logs and traces collection.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-opentelemetry-logs' has been deprecated and will be removed in a future release. Use '--enable-opentelemetry-logs-traces' instead.
+  - name: --enable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Enable OpenTelemetry logs and traces collection. Requires Azure Monitor logs to be enabled.
     isPreview: true
   - name: --enable-opentelemetry-metrics
     defaultValue: "False"
@@ -7552,11 +7612,29 @@ directCommands:
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --opentelemetry-logs-port
     summary: |-
-      Port for OpenTelemetry logs collection (default port will be used if not specified).
+      HTTP/protobuf port for OpenTelemetry logs and traces collection.
+    isDeprecated: true
+    deprecateInfo: Option '--opentelemetry-logs-port' has been deprecated and will be removed in a future release. Use '--opentelemetry-logs-traces-port-http' instead.
+  - name: --opentelemetry-logs-traces-port-grpc
+    summary: |-
+      GRPC port for OpenTelemetry logs and traces collection (default port will be used if not specified).
+    isPreview: true
+  - name: --opentelemetry-logs-traces-port-http
+    summary: |-
+      HTTP/protobuf port for OpenTelemetry logs and traces collection (default port will be used if not specified).
     isPreview: true
   - name: --opentelemetry-metrics-port
     summary: |-
-      Port for OpenTelemetry metrics collection (default port will be used if not specified).
+      HTTP/protobuf port for OpenTelemetry metrics collection.
+    isDeprecated: true
+    deprecateInfo: Option '--opentelemetry-metrics-port' has been deprecated and will be removed in a future release. Use '--opentelemetry-metrics-port-http' instead.
+  - name: --opentelemetry-metrics-port-grpc
+    summary: |-
+      GRPC port for OpenTelemetry metrics collection (default port will be used if not specified).
+    isPreview: true
+  - name: --opentelemetry-metrics-port-http
+    summary: |-
+      HTTP/protobuf port for OpenTelemetry metrics collection (default port will be used if not specified).
     isPreview: true
   - name: --outbound-type
     acceptedValues: block, loadBalancer, managedNATGateway, managedNATGatewayV2, none, userAssignedNATGateway, userDefinedRouting
