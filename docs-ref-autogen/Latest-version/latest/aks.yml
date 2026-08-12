@@ -6557,6 +6557,7 @@ directCommands:
                   [--enable-force-upgrade]
                   [--enable-gateway-api]
                   [--enable-high-log-scale-mode {false, true}]
+                  [--enable-hosted-system]
                   [--enable-http-proxy]
                   [--enable-image-cleaner]
                   [--enable-image-integrity]
@@ -6627,6 +6628,7 @@ directCommands:
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--node-provisioning-default-pools {Auto, None}]
                   [--node-provisioning-mode {Auto, Manual}]
+                  [--node-subnet-id]
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
@@ -6650,6 +6652,7 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp, all}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--system-node-subnet-id]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
@@ -6796,6 +6799,12 @@ directCommands:
   - summary: |-
       Disable OpenTelemetry logs and traces collection on an existing cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-opentelemetry-logs-traces
+  - summary: |-
+      Convert an existing Automatic cluster to use a Managed System Pool.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-hosted-system
+  - summary: |-
+      Convert an existing Automatic cluster to use a Managed System Pool with a bring-your-own VNet.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-hosted-system --system-node-subnet-id <systemNodeSubnetID> --node-subnet-id <nodeSubnetID> --apiserver-subnet-id <apiserverSubnetID>
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -7278,6 +7287,16 @@ directCommands:
     summary: |-
       Enable High Log Scale Mode for Container Logs. Auto-enabled when --enable-container-network-logs is specified.
     isPreview: true
+  - name: --enable-hosted-system
+    defaultValue: "False"
+    summary: |-
+      (Automatic SKU) Convert an existing Automatic cluster to use a Managed System Pool.
+    description: |-
+      Only valid for clusters with the Automatic SKU. Optionally provide the bring-your-own
+      VNet subnet trio (`--system-node-subnet-id`, `--node-subnet-id`, `--apiserver-subnet-id`)
+      to move the cluster onto an existing VNet at the same time. Supplying the full trio also
+      implies this flag.
+    isPreview: true
   - name: --enable-http-proxy
     defaultValue: "False"
     summary: |-
@@ -7598,6 +7617,15 @@ directCommands:
     summary: |-
       Set the node provisioning mode of the cluster. Valid values are "Auto" and "Manual". For more information on "Auto" mode see aka.ms/aks/nap.
     isPreview: true
+  - name: --node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by user node pools.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (for the Managed System Pool), `--node-subnet-id` (this flag,
+      for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet.
+    isPreview: true
   - name: --nodepool-labels
     summary: |-
       The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
@@ -7692,6 +7720,15 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --system-node-subnet-id
+    summary: |-
+      (Automatic SKU) The ID of a subnet in an existing VNet to be used by the Managed System Pool.
+    description: |-
+      Bring-your-own VNet for an Automatic cluster requires three subnets supplied together:
+      `--system-node-subnet-id` (this flag, for the Managed System Pool), `--node-subnet-id`
+      (for user node pools), and `--apiserver-subnet-id` (for the control plane API server).
+      All three subnets must belong to the same VNet.
+    isPreview: true
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
