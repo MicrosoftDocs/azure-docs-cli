@@ -6,32 +6,37 @@ extensionInformation: |-
   > This reference is part of the **documentdb** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az documentdb mongocluster replica** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Replica.
-status: GA
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'az documentdb mongocluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
 - uid: az_documentdb_mongocluster_replica_create
   name: az documentdb mongocluster replica create
   summary: |-
-    Create a cross-region read replica of an existing mongo cluster.
+    Create a read replica of an existing mongo cluster.
   description: |-
     The source cluster must have the "GeoReplicas" preview feature enabled. The replica
-    is provisioned as a new mongo cluster in the target region and inherits its
-    configuration (compute, storage, sharding) from the source cluster.
-  status: GA
+    is provisioned as a new mongo cluster and inherits its configuration (compute,
+    storage, sharding) from the source cluster. A replica in the same region as the
+    source is created as an in-region ``AsyncReplica``; a replica in a different region
+    is created as a cross-region ``GeoAsyncReplica``.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster replica' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az documentdb mongocluster replica create --cluster-name --name
                                               --resource-group
                                               --source-cluster
-                                              --source-location
                                               [--acquire-policy-token]
                                               [--change-reference]
                                               [--location]
                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
-      Create a replica of a cluster in another region.
-    syntax: az documentdb mongocluster replica create -n MyReplica -g MyResourceGroup --location centralus --source-cluster MySourceCluster --source-location eastus2
+      Create a replica of a cluster.
+    syntax: az documentdb mongocluster replica create -n MyReplica -g MyResourceGroup --location centralus --source-cluster MySourceCluster
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -44,12 +49,7 @@ directCommands:
   - isRequired: true
     name: --source-cluster
     summary: |-
-      Name or resource ID of the source (primary) mongo cluster to replicate from. If a name is given, the current subscription and resource group are assumed.
-    groupName: Replica Arguments
-  - isRequired: true
-    name: --source-location
-    summary: |-
-      The Azure region of the source cluster (for example: eastus2).
+      Name or resource ID of the source (primary) mongo cluster to replicate from. If a name is given, the current subscription and resource group are assumed. Provide a full ARM ID for a source in another resource group or subscription.
     groupName: Replica Arguments
   optionalParameters:
   - name: --acquire-policy-token
@@ -99,26 +99,28 @@ directCommands:
   name: az documentdb mongocluster replica list
   summary: |-
     List all the replicas for the mongo cluster.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster replica' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az documentdb mongocluster replica list --cluster-name
-                                            --resource-group
+    az documentdb mongocluster replica list --resource-group
+                                            --source-cluster
                                             [--max-items]
                                             [--next-token]
   examples:
   - summary: |-
       List replicas of a cluster.
-    syntax: az documentdb mongocluster replica list --cluster-name MyCluster -g MyResourceGroup
+    syntax: az documentdb mongocluster replica list --source-cluster MyCluster -g MyResourceGroup
   requiredParameters:
-  - isRequired: true
-    name: --cluster-name
-    summary: |-
-      The name of the mongo cluster.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --source-cluster
+    summary: |-
+      The name of the source mongo cluster.
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -159,10 +161,13 @@ directCommands:
   name: az documentdb mongocluster replica promote
   summary: |-
     Promotes a replica mongo cluster to a primary role.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster replica' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az documentdb mongocluster replica promote --promote-option {Forced}
+                                               --source-cluster
                                                [--acquire-policy-token]
                                                [--change-reference]
                                                [--ids]
@@ -171,6 +176,7 @@ directCommands:
                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                [--resource-group]
                                                [--subscription]
+                                               [--yes]
   examples:
   - summary: |-
       Promote a replica to primary.
@@ -182,6 +188,11 @@ directCommands:
     summary: |-
       The promote option to apply to the operation.
     groupName: Body Arguments
+  - isRequired: true
+    name: --source-cluster
+    summary: |-
+      Name or resource ID of the expected source (primary) cluster of this replica. Promotion only proceeds if it matches the replica's actual source cluster; otherwise the operation fails.
+    groupName: Replica Arguments
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -216,6 +227,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"

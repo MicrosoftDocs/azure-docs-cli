@@ -1,46 +1,39 @@
 ### YamlMime:AzureCLIGroup
-uid: az_documentdb_mongocluster_user
-name: az documentdb mongocluster user
+uid: az_documentdb_mongocluster_microsoft-entra-user
+name: az documentdb mongocluster microsoft-entra-user
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **documentdb** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az documentdb mongocluster user** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **documentdb** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az documentdb mongocluster microsoft-entra-user** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage User.
-status: GA
+  Manage Microsoft Entra ID users on a mongo cluster.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'az documentdb mongocluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_documentdb_mongocluster_user_create
-  name: az documentdb mongocluster user create
+- uid: az_documentdb_mongocluster_microsoft-entra-user_assign
+  name: az documentdb mongocluster microsoft-entra-user assign
   summary: |-
-    Create a new user or updates an existing user on a mongo cluster.
-  status: GA
+    Grant a Microsoft Entra ID principal access to a mongo cluster by assigning it database roles.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster microsoft-entra-user' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az documentdb mongocluster user create --cluster-name
-                                           --name --user-name
-                                           --resource-group
-                                           [--acquire-policy-token]
-                                           [--change-reference]
-                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--role --roles]
-                                           [--type {ServicePrincipal, User}]
+    az documentdb mongocluster microsoft-entra-user assign [--acquire-policy-token]
+                                                           [--change-reference]
+                                                           [--cluster-name]
+                                                           [--ids]
+                                                           [--name --object-id]
+                                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                           [--resource-group]
+                                                           [--role --roles]
+                                                           [--subscription]
+                                                           [--type {ServicePrincipal, User}]
   examples:
   - summary: |-
-      Create an Entra-backed user.
-    syntax: az documentdb mongocluster user create -n alice-entra --cluster-name MyCluster -g MyResourceGroup --type User --role db=admin role=root
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name
-    summary: |-
-      The name of the mongo cluster.
-  - isRequired: true
-    name: --name --user-name -n
-    summary: |-
-      The name of the mongo cluster user.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Assign admin access to an Entra ID user (or service principal) by object ID.
+    syntax: az documentdb mongocluster microsoft-entra-user assign --object-id 11111111-1111-1111-1111-111111111111 --cluster-name MyCluster -g MyResourceGroup --type User --role db=admin role=root
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -50,14 +43,34 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --object-id -n
+    summary: |-
+      Object ID (client ID) of the Microsoft Entra principal. Provide the GUID of the service principal or user, not a friendly name or UPN.
+    groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
   - name: --role --roles
     summary: |-
       Database roles that are assigned to the user. Usage: --role db=admin role=root. Multiple roles can be specified by using more than one --role argument.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--role`.
     groupName: Properties Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
   - name: --type -t
     acceptedValues: ServicePrincipal, User
     summary: |-
@@ -83,109 +96,27 @@ directCommands:
   - name: --query
     summary: |-
       JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --verbose
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_documentdb_mongocluster_user_delete
-  name: az documentdb mongocluster user delete
+- uid: az_documentdb_mongocluster_microsoft-entra-user_list
+  name: az documentdb mongocluster microsoft-entra-user list
   summary: |-
-    Delete a mongo cluster user.
-  status: GA
+    List the Microsoft Entra ID users on a mongo cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster microsoft-entra-user' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az documentdb mongocluster user delete [--acquire-policy-token]
-                                           [--change-reference]
-                                           [--cluster-name]
-                                           [--ids]
-                                           [--name --user-name]
-                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--resource-group]
-                                           [--subscription]
-                                           [--yes]
+    az documentdb mongocluster microsoft-entra-user list --cluster-name
+                                                         --resource-group
+                                                         [--max-items]
+                                                         [--next-token]
   examples:
   - summary: |-
-      Delete a user.
-    syntax: az documentdb mongocluster user delete -n alice@contoso.com --cluster-name MyCluster -g MyResourceGroup
-  optionalParameters:
-  - name: --acquire-policy-token
-    summary: |-
-      Acquiring an Azure Policy token automatically for this resource operation.
-    groupName: Global Policy Arguments
-  - name: --change-reference
-    summary: |-
-      The related change reference ID for this resource operation.
-    groupName: Global Policy Arguments
-  - name: --cluster-name
-    summary: |-
-      The name of the mongo cluster.
-    groupName: Resource Id Arguments
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --name --user-name -n
-    summary: |-
-      The name of the mongo cluster user.
-    groupName: Resource Id Arguments
-  - name: --no-wait
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    groupName: Resource Id Arguments
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    groupName: Resource Id Arguments
-  - name: --yes -y
-    defaultValue: "False"
-    summary: |-
-      Do not prompt for confirmation.
-  globalParameters:
-  - name: --debug
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity to show all debug logs.
-  - name: --help -h
-    summary: |-
-      Show this help message and exit.
-  - name: --only-show-errors
-    defaultValue: "False"
-    summary: |-
-      Only show errors, suppressing warnings.
-  - name: --output -o
-    defaultValue: json
-    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
-    summary: |-
-      Output format.
-  - name: --query
-    summary: |-
-      JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --verbose
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_documentdb_mongocluster_user_list
-  name: az documentdb mongocluster user list
-  summary: |-
-    List all the users on a mongo cluster.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az documentdb mongocluster user list --cluster-name
-                                         --resource-group
-                                         [--max-items]
-                                         [--next-token]
-  examples:
-  - summary: |-
-      List users on a cluster.
-    syntax: az documentdb mongocluster user list --cluster-name MyCluster -g MyResourceGroup
+      List Entra ID users on a cluster.
+    syntax: az documentdb mongocluster microsoft-entra-user list --cluster-name MyCluster -g MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -231,101 +162,33 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_documentdb_mongocluster_user_show
-  name: az documentdb mongocluster user show
+- uid: az_documentdb_mongocluster_microsoft-entra-user_remove
+  name: az documentdb mongocluster microsoft-entra-user remove
   summary: |-
-    Get the defintion of a Mongo cluster user.
-  status: GA
+    Remove a Microsoft Entra ID principal's access from a mongo cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster microsoft-entra-user' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az documentdb mongocluster user show [--cluster-name]
-                                         [--ids]
-                                         [--name --user-name]
-                                         [--resource-group]
-                                         [--subscription]
+    az documentdb mongocluster microsoft-entra-user remove [--acquire-policy-token]
+                                                           [--change-reference]
+                                                           [--cluster-name]
+                                                           [--ids]
+                                                           [--name --object-id]
+                                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                           [--resource-group]
+                                                           [--subscription]
+                                                           [--yes]
   examples:
   - summary: |-
-      Get a user.
-    syntax: az documentdb mongocluster user show -n alice@contoso.com --cluster-name MyCluster -g MyResourceGroup
-  optionalParameters:
-  - name: --cluster-name
-    summary: |-
-      The name of the mongo cluster.
-    groupName: Resource Id Arguments
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    groupName: Resource Id Arguments
-  - name: --name --user-name -n
-    summary: |-
-      The name of the mongo cluster user.
-    groupName: Resource Id Arguments
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    groupName: Resource Id Arguments
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    groupName: Resource Id Arguments
-  globalParameters:
-  - name: --debug
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity to show all debug logs.
-  - name: --help -h
-    summary: |-
-      Show this help message and exit.
-  - name: --only-show-errors
-    defaultValue: "False"
-    summary: |-
-      Only show errors, suppressing warnings.
-  - name: --output -o
-    defaultValue: json
-    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
-    summary: |-
-      Output format.
-  - name: --query
-    summary: |-
-      JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --verbose
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_documentdb_mongocluster_user_update
-  name: az documentdb mongocluster user update
-  summary: |-
-    Update a new user or updates an existing user on a mongo cluster.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az documentdb mongocluster user update [--acquire-policy-token]
-                                           [--add]
-                                           [--change-reference]
-                                           [--cluster-name]
-                                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--ids]
-                                           [--name --user-name]
-                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--remove]
-                                           [--resource-group]
-                                           [--role --roles]
-                                           [--set]
-                                           [--subscription]
-                                           [--type {ServicePrincipal, User}]
-  examples:
-  - summary: |-
-      Update a user's roles.
-    syntax: az documentdb mongocluster user update -n alice-entra --cluster-name MyCluster -g MyResourceGroup --role db=admin role=root
+      Remove an Entra ID user's access by object ID.
+    syntax: az documentdb mongocluster microsoft-entra-user remove --object-id 11111111-1111-1111-1111-111111111111 --cluster-name MyCluster -g MyResourceGroup
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --add
-    summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
-    groupName: Generic Update Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -334,48 +197,30 @@ directCommands:
     summary: |-
       The name of the mongo cluster.
     groupName: Resource Id Arguments
-  - name: --force-string
-    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
-    summary: |-
-      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    groupName: Generic Update Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --name --user-name -n
+  - name: --name --object-id -n
     summary: |-
-      The name of the mongo cluster user.
+      Object ID (client ID) of the Microsoft Entra principal. Provide the GUID of the service principal or user, not a friendly name or UPN.
     groupName: Resource Id Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --remove
-    summary: |-
-      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
-    groupName: Generic Update Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --role --roles
-    summary: |-
-      Database roles that are assigned to the user. Usage: --role db=admin role=root. Multiple roles can be specified by using more than one --role argument.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--role`.
-    groupName: Properties Arguments
-  - name: --set
-    summary: |-
-      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
-    groupName: Generic Update Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
-  - name: --type -t
-    acceptedValues: ServicePrincipal, User
+  - name: --yes -y
+    defaultValue: "False"
     summary: |-
-      The Microsoft Entra principal type of the user. Allowed values: User, ServicePrincipal. Example: --type User.
-    groupName: Properties Arguments
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -400,27 +245,92 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_documentdb_mongocluster_user_wait
-  name: az documentdb mongocluster user wait
+- uid: az_documentdb_mongocluster_microsoft-entra-user_show
+  name: az documentdb mongocluster microsoft-entra-user show
   summary: |-
-    Place the CLI in a waiting state until a condition is met.
-  status: GA
+    Get the definition of a Microsoft Entra ID user on a mongo cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster microsoft-entra-user' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az documentdb mongocluster user wait [--acquire-policy-token]
-                                         [--change-reference]
-                                         [--cluster-name]
-                                         [--created]
-                                         [--custom]
-                                         [--deleted]
-                                         [--exists]
-                                         [--ids]
-                                         [--interval]
-                                         [--name --user-name]
-                                         [--resource-group]
-                                         [--subscription]
-                                         [--timeout]
-                                         [--updated]
+    az documentdb mongocluster microsoft-entra-user show [--cluster-name]
+                                                         [--ids]
+                                                         [--name --object-id]
+                                                         [--resource-group]
+                                                         [--subscription]
+  examples:
+  - summary: |-
+      Get an Entra ID user by object ID.
+    syntax: az documentdb mongocluster microsoft-entra-user show --object-id 11111111-1111-1111-1111-111111111111 --cluster-name MyCluster -g MyResourceGroup
+  optionalParameters:
+  - name: --cluster-name
+    summary: |-
+      The name of the mongo cluster.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --object-id -n
+    summary: |-
+      Object ID (client ID) of the Microsoft Entra principal. Provide the GUID of the service principal or user, not a friendly name or UPN.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_documentdb_mongocluster_microsoft-entra-user_wait
+  name: az documentdb mongocluster microsoft-entra-user wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az documentdb mongocluster microsoft-entra-user' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az documentdb mongocluster microsoft-entra-user wait [--acquire-policy-token]
+                                                         [--change-reference]
+                                                         [--cluster-name]
+                                                         [--created]
+                                                         [--custom]
+                                                         [--deleted]
+                                                         [--exists]
+                                                         [--ids]
+                                                         [--interval]
+                                                         [--name --object-id]
+                                                         [--resource-group]
+                                                         [--subscription]
+                                                         [--timeout]
+                                                         [--updated]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -462,9 +372,9 @@ directCommands:
     summary: |-
       Polling interval in seconds.
     groupName: Wait Condition Arguments
-  - name: --name --user-name -n
+  - name: --name --object-id -n
     summary: |-
-      The name of the mongo cluster user.
+      Object ID (client ID) of the Microsoft Entra principal. Provide the GUID of the service principal or user, not a friendly name or UPN.
     groupName: Resource Id Arguments
   - name: --resource-group -g
     summary: |-
@@ -509,11 +419,10 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_documentdb_mongocluster_user_create
-- az_documentdb_mongocluster_user_delete
-- az_documentdb_mongocluster_user_list
-- az_documentdb_mongocluster_user_show
-- az_documentdb_mongocluster_user_update
-- az_documentdb_mongocluster_user_wait
+- az_documentdb_mongocluster_microsoft-entra-user_assign
+- az_documentdb_mongocluster_microsoft-entra-user_list
+- az_documentdb_mongocluster_microsoft-entra-user_remove
+- az_documentdb_mongocluster_microsoft-entra-user_show
+- az_documentdb_mongocluster_microsoft-entra-user_wait
 metadata:
-  description: Manage User.
+  description: Manage Microsoft Entra ID users on a mongo cluster.
