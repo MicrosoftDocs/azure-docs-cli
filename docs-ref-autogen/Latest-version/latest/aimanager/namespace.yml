@@ -16,7 +16,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aimanager namespace add --manager
+    az aimanager namespace add --aimanager-name --manager
                                --name
                                --resource-group
                                [--acquire-policy-token]
@@ -34,7 +34,7 @@ directCommands:
     syntax: az aimanager namespace add -m my-ai-manager -g myrg --name team-alpha --labels team=alpha --annotations owner=alice
   requiredParameters:
   - isRequired: true
-    name: --manager -m
+    name: --aimanager-name --manager -m
     summary: |-
       The name of the AI Manager resource.
   - isRequired: true
@@ -101,7 +101,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aimanager namespace delete --manager
+    az aimanager namespace delete --aimanager-name --manager
                                   --name
                                   --resource-group
                                   [--acquire-policy-token]
@@ -114,7 +114,7 @@ directCommands:
     syntax: az aimanager namespace delete -m my-ai-manager -g myrg --name team-alpha
   requiredParameters:
   - isRequired: true
-    name: --manager -m
+    name: --aimanager-name --manager -m
     summary: |-
       The name of the AI Manager resource.
   - isRequired: true
@@ -179,7 +179,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aimanager namespace get-credentials --manager
+    az aimanager namespace get-credentials --aimanager-name --manager
                                            --name
                                            --resource-group
                                            [--acquire-policy-token]
@@ -197,7 +197,7 @@ directCommands:
     syntax: az aimanager namespace get-credentials -m my-ai-manager -g myrg --name team-alpha -f -
   requiredParameters:
   - isRequired: true
-    name: --manager -m
+    name: --aimanager-name --manager -m
     summary: |-
       The name of the AI Manager resource.
   - isRequired: true
@@ -265,7 +265,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aimanager namespace list --manager
+    az aimanager namespace list --aimanager-name --manager
                                 --resource-group
   examples:
   - summary: |-
@@ -273,13 +273,168 @@ directCommands:
     syntax: az aimanager namespace list -m my-ai-manager -g myrg
   requiredParameters:
   - isRequired: true
-    name: --manager -m
+    name: --aimanager-name --manager -m
     summary: |-
       The name of the AI Manager resource.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aimanager_namespace_list-accesskeys
+  name: az aimanager namespace list-accesskeys
+  summary: |-
+    List the LLM gateway endpoint and API keys of an AI Manager namespace.
+  description: |-
+    Returns the namespace-scoped, OpenAI-compatible inference gateway endpoint together with the
+    current primary and secondary API keys. Treat the keys as secrets: do not log them or persist
+    them in plaintext.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aimanager namespace list-accesskeys --aimanager-name --manager
+                                           --name
+                                           --resource-group
+                                           [--acquire-policy-token]
+                                           [--aks-custom-headers]
+                                           [--change-reference]
+  examples:
+  - summary: |-
+      List the access keys of a namespace
+    syntax: az aimanager namespace list-accesskeys -g myrg --aimanager-name my-ai-manager --name team-alpha
+  - summary: |-
+      Show only the gateway endpoint
+    syntax: az aimanager namespace list-accesskeys -g myrg --aimanager-name my-ai-manager --name team-alpha --query endpoint -o tsv
+  requiredParameters:
+  - isRequired: true
+    name: --aimanager-name --manager -m
+    summary: |-
+      The name of the AI Manager resource.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the AI Manager namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --aks-custom-headers
+    summary: |-
+      Comma-separated key=value pairs to specify custom headers.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aimanager_namespace_rotate-accesskeys
+  name: az aimanager namespace rotate-accesskeys
+  summary: |-
+    Rotate the LLM gateway API keys of an AI Manager namespace.
+  description: |-
+    A new key is generated and installed as the primary key, and the previous primary key
+    overwrites the secondary key so clients can roll over without downtime. Returns the updated
+    access info. Any client still using the previous secondary key will stop being able to
+    authenticate.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aimanager namespace rotate-accesskeys --aimanager-name --manager
+                                             --name
+                                             --resource-group
+                                             [--acquire-policy-token]
+                                             [--aks-custom-headers]
+                                             [--change-reference]
+                                             [--yes]
+  examples:
+  - summary: |-
+      Rotate the access keys of a namespace
+    syntax: az aimanager namespace rotate-accesskeys -g myrg --aimanager-name my-ai-manager --name team-alpha
+  requiredParameters:
+  - isRequired: true
+    name: --aimanager-name --manager -m
+    summary: |-
+      The name of the AI Manager resource.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the AI Manager namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --aks-custom-headers
+    summary: |-
+      Comma-separated key=value pairs to specify custom headers.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -314,7 +469,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aimanager namespace show --manager
+    az aimanager namespace show --aimanager-name --manager
                                 --name
                                 --resource-group
   examples:
@@ -323,7 +478,7 @@ directCommands:
     syntax: az aimanager namespace show -m my-ai-manager -g myrg --name team-alpha
   requiredParameters:
   - isRequired: true
-    name: --manager -m
+    name: --aimanager-name --manager -m
     summary: |-
       The name of the AI Manager resource.
   - isRequired: true
@@ -368,7 +523,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aimanager namespace update --manager
+    az aimanager namespace update --aimanager-name --manager
                                   --name
                                   --resource-group
                                   [--acquire-policy-token]
@@ -383,7 +538,7 @@ directCommands:
     syntax: az aimanager namespace update -m my-ai-manager -g myrg --name team-alpha --labels team=beta
   requiredParameters:
   - isRequired: true
-    name: --manager -m
+    name: --aimanager-name --manager -m
     summary: |-
       The name of the AI Manager resource.
   - isRequired: true
@@ -450,7 +605,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aimanager namespace wait --manager
+    az aimanager namespace wait --aimanager-name --manager
                                 --name
                                 --resource-group
                                 [--acquire-policy-token]
@@ -464,7 +619,7 @@ directCommands:
                                 [--updated]
   requiredParameters:
   - isRequired: true
-    name: --manager -m
+    name: --aimanager-name --manager -m
     summary: |-
       The name of the AI Manager resource.
   - isRequired: true
@@ -550,6 +705,7 @@ commands:
 - az_aimanager_namespace_delete
 - az_aimanager_namespace_get-credentials
 - az_aimanager_namespace_list
+- az_aimanager_namespace_list-accesskeys
 - az_aimanager_namespace_modeldeployment
 - az_aimanager_namespace_modeldeployment_add
 - az_aimanager_namespace_modeldeployment_delete
@@ -557,6 +713,7 @@ commands:
 - az_aimanager_namespace_modeldeployment_show
 - az_aimanager_namespace_modeldeployment_update
 - az_aimanager_namespace_modeldeployment_wait
+- az_aimanager_namespace_rotate-accesskeys
 - az_aimanager_namespace_show
 - az_aimanager_namespace_update
 - az_aimanager_namespace_wait
