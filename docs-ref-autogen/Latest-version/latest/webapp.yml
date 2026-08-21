@@ -658,6 +658,147 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_webapp_exec
+  name: az webapp exec
+  summary: |-
+    Open an interactive shell session or run a command in a Linux web app container.
+  description: |-
+    Interact with your Linux web app container in two modes:
+    - 'shell' (default): open an interactive shell session in your main app container.
+    - 'execute': fire-and-forget a command in your main app container; returns immediately, no output.
+
+    Only supported for Linux App Service plans.
+
+    'shell' mode: Open an interactive shell in your app's main container.
+    A session ends automatically after 3 hours of inactivity,
+    and may also end if the underlying instance is reimaged or platform components are updated.
+
+    'execute' mode: Fire-and-forget a command in the main app container. A 'succeeded' result means the command was accepted.
+    It does not confirm the command ran or completed, and no logs, output, or exit code are returned. For immediate output, use 'shell' mode.
+    The CLI reports failure only if the command (or the shell) could not be started.
+    This makes execute mode well-suited to background or long-running work.
+    The process runs detached and lives for the lifetime of the container (or until it finishes on its own).
+    Use --command to run a single program, e.g. "npm start".
+    Use --shell-command to run a shell command line where shell operators (|, &&, >, etc.) work, e.g. "cat log.txt | grep error > out.txt".
+    Check the parameters and examples below, including how to capture output to a file.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  syntax: >-
+    az webapp exec --name
+                   --resource-group
+                   [--acquire-policy-token]
+                   [--change-reference]
+                   [--command]
+                   [--cwd --working-directory]
+                   [--instance]
+                   [--mode {execute, shell}]
+                   [--shell]
+                   [--shell-command]
+                   [--slot]
+  examples:
+  - summary: |-
+      Start an interactive shell session with the web app container
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode shell
+  - summary: |-
+      Start an interactive shell session on a specific instance
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode shell --instance MyInstanceId
+  - summary: |-
+      Start an interactive shell session using a specific shell
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode shell --shell /bin/sh
+  - summary: |-
+      Run a direct command in the container
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode execute --command "mkdir /home/site/newdir"
+  - summary: |-
+      Run a shell command and redirect output to a file
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode execute --shell-command "echo hello > /home/LogFiles/out.txt 2>&1"
+  - summary: |-
+      Run a command in a specific working directory
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode execute --cwd /home/site --command "touch newfile.txt"
+  - summary: |-
+      Run a Python script in the container
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode execute --command "python3 /home/site/wwwroot/script.py"
+  - summary: |-
+      Run a shell command with a non-default shell
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode execute --shell /bin/sh --shell-command "echo hi | grep h"
+  - summary: |-
+      Execute a command on a specific instance
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode execute --command "touch newfile.txt" --instance MyInstanceId
+  - summary: |-
+      Execute a command on all instances
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp --mode execute --command "touch newfile.txt" --instance all
+  - summary: |-
+      Execute a command on a deployment slot
+    syntax: az webapp exec -g MyResourceGroup -n MyWebapp -s staging --mode execute --command "touch newfile.txt"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the web app.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --command
+    summary: |-
+      [Execute mode] A command to run directly in the container, without a shell. Quote the whole command (e.g. --command "python /home/site/app.py --port 8080"). Shell operators (>, |, &&, etc.) are not interpreted - use --shell-command for those. Mutually exclusive with --shell-command.
+  - name: --cwd --working-directory
+    summary: |-
+      [Execute mode] Absolute working directory for command execution. Defaults to the container's working directory.
+  - name: --instance -i
+    summary: |-
+      Webapp instance(s) to target. Specify a comma-separated list of instance IDs (use "az webapp list-instances" to get IDs) or "all" for all instances. Defaults to a random instance. Specifying multiple instances (a comma-separated list or "all") is supported only in 'execute' mode.
+  - name: --mode
+    defaultValue: shell
+    acceptedValues: execute, shell
+    summary: |-
+      Execution mode. 'shell' (default): Starts an interactive shell session with the main web app container. 'execute': Starts command execution and returns immediately without returning command output.
+  - name: --shell
+    summary: |-
+      Absolute path of the shell to use (e.g. /bin/sh); defaults to /bin/bash. In 'shell' mode it is the interactive shell to launch; in 'execute' mode it is the shell used to run --shell-command.
+  - name: --shell-command
+    summary: |-
+      [Execute mode] A command line to run through a shell, so shell operators (|, &&, >, etc.) work (e.g. --shell-command "echo hi > /home/LogFiles/out.txt"). Runs as `<shell> -c <command>`; the shell defaults to /bin/bash and can be overridden with --shell. Mutually exclusive with --command.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Default to the production slot if not specified.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_webapp_list
   name: az webapp list
   summary: |-
@@ -1721,6 +1862,7 @@ commands:
 - az_webapp_deployment_user
 - az_webapp_deployment_user_set
 - az_webapp_deployment_user_show
+- az_webapp_exec
 - az_webapp_hybrid-connection
 - az_webapp_hybrid-connection_add
 - az_webapp_hybrid-connection_list
