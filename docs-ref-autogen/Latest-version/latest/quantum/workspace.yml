@@ -79,6 +79,7 @@ directCommands:
                                 [--auto-accept]
                                 [--change-reference]
                                 [--provider-sku-list]
+                                [--quota]
                                 [--skip-autoadd]
                                 [--skip-role-assignment]
                                 [--workspace-kind {V1, V2}]
@@ -96,6 +97,13 @@ directCommands:
 
       To display a list of available providers and their SKUs, use the following command:
           az quantum offerings list -l MyLocation -o table
+  - summary: |-
+      Create a V2 workspace with quota allocations for provider targets.
+    syntax: >-
+      az quantum workspace create -g MyResourceGroup -w MyWorkspace -l MyLocation \
+          --workspace-kind V2 -r "MyProvider/default" --skip-autoadd -a MyStorageAccountName \
+          --quota provider-id=MyProvider target-id=MyProvider.Target1 standard-minutes-lifetime=500 high-minutes-lifetime=50 \
+          --quota provider-id=MyProvider target-id=MyProvider.Target2 standard-minutes-lifetime=250
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -129,6 +137,9 @@ directCommands:
   - name: --provider-sku-list -r
     summary: |-
       Comma separated list of Provider/SKU pairs. Separate the Provider and SKU with a slash. Enclose the entire list in quotes. Values from `az quantum offerings list -l <location> -o table`.
+  - name: --quota
+    summary: |-
+      Target quota allocation as provider-id, target-id, standard-minutes-lifetime, and optional high-minutes-lifetime key=value pairs, a JSON object or array, or `@{file}` with JSON content. standard-minutes-lifetime is required for a new allocation. camelCase keys (providerId, targetId, ...) are also accepted. Repeat --quota once per target.
   - name: --skip-autoadd
     defaultValue: "False"
     summary: |-
@@ -474,6 +485,7 @@ directCommands:
     az quantum workspace update [--acquire-policy-token]
                                 [--change-reference]
                                 [--enable-api-key]
+                                [--quota]
                                 [--resource-group]
                                 [--workspace-name]
   examples:
@@ -483,6 +495,11 @@ directCommands:
   - summary: |-
       Disable a provided Azure Quantum workspace api keys.
     syntax: az quantum workspace update --enable-api-key False
+  - summary: |-
+      Update a target quota allocation on a V2 workspace.
+    syntax: >-
+      az quantum workspace update -g MyResourceGroup -w MyWorkspace \
+          --quota provider-id=MyProvider target-id=MyProvider.Target1 standard-minutes-lifetime=1000
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -495,6 +512,9 @@ directCommands:
   - name: --enable-api-key
     summary: |-
       Enable or disable API key authentication.
+  - name: --quota
+    summary: |-
+      Target quota allocation as provider-id, target-id, standard-minutes-lifetime, and optional high-minutes-lifetime key=value pairs, a JSON object or array, or `@{file}` with JSON content. standard-minutes-lifetime is required for a new allocation. camelCase keys (providerId, targetId, ...) are also accepted. Repeat --quota once per target.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
