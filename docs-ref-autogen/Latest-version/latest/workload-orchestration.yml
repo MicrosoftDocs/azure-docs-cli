@@ -9,6 +9,159 @@ summary: |-
 status: GA
 sourceType: Extension
 directCommands:
+- uid: az_workload-orchestration_init
+  name: az workload-orchestration init
+  summary: |-
+    Prepare an Arc-connected cluster for Workload Orchestration and create a Context.
+  description: |-
+    Steps performed:
+    1. Verify cluster is Arc-connected with required features enabled
+    2. Install Workload Orchestration Extension Dependencies
+    3. Install Workload Orchestration Extension
+    4. Create Custom Location (validates cluster binding if already exists)
+    5. Create Context resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-orchestration init --capabilities
+                                   --cluster-name
+                                   --context-location
+                                   --context-name
+                                   --hierarchies
+                                   --location
+                                   --resource-group
+                                   [--acquire-policy-token]
+                                   [--change-reference]
+                                   [--context-resource-group]
+                                   [--custom-location-location]
+                                   [--custom-location-name]
+                                   [--custom-location-resource-group]
+                                   [--extension-dependency-version]
+                                   [--extension-name]
+                                   [--extension-version]
+                                   [--release-train]
+                                   [--site-id]
+                                   [--tags]
+  examples:
+  - summary: |-
+      Initialize a cluster and create a context
+    syntax: az workload-orchestration init -c my-cluster -g my-rg -l eastus2euap --context-name MyContext --context-location eastus --capabilities '[{"description":"desc","name":"cap1"}]' --hierarchies '[{"description":"desc","name":"country"}]'
+  - summary: |-
+      Use a specific release train
+    syntax: az workload-orchestration init -c my-cluster -g my-rg -l eastus2euap --release-train dev --context-name MyContext --context-location eastus --capabilities '[{"description":"desc","name":"cap1"}]' --hierarchies '[{"description":"desc","name":"country"}]'
+  - summary: |-
+      Create the context in a different resource group / region
+    syntax: az workload-orchestration init -c my-cluster -g my-rg -l eastus2euap --context-name MyContext --context-resource-group ctx-rg --context-location eastus --capabilities '[{"description":"desc","name":"cap1"}]' --hierarchies '[{"description":"desc","name":"country"}]'
+  requiredParameters:
+  - isRequired: true
+    name: --capabilities
+    summary: |-
+      List of Capabilities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Context Arguments
+  - isRequired: true
+    name: --cluster-name -c
+    summary: |-
+      Name of the Arc-connected Kubernetes cluster.
+    groupName: Cluster Arguments
+  - isRequired: true
+    name: --context-location
+    summary: |-
+      Azure region where the Context will be created.
+    groupName: Context Arguments
+  - isRequired: true
+    name: --context-name
+    summary: |-
+      The name of the Context to create.
+    groupName: Context Arguments
+  - isRequired: true
+    name: --hierarchies
+    summary: |-
+      List of Hierarchies.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Context Arguments
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      Azure region for the custom location (e.g. eastus2euap).
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Resource group of the Arc-connected cluster.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context-resource-group
+    summary: |-
+      Resource group where the Context will be created. Default: same as --resource-group.
+    groupName: Context Arguments
+  - name: --custom-location-location
+    summary: |-
+      Azure region where the custom location will be created. Default: same as --location.
+    groupName: Cluster Arguments
+  - name: --custom-location-name
+    summary: |-
+      Name for the custom location. Default: `{cluster-name}-cl`.
+    groupName: Cluster Arguments
+  - name: --custom-location-resource-group
+    summary: |-
+      Resource group where the custom location will be created. Default: same as --resource-group.
+    groupName: Cluster Arguments
+  - name: --extension-dependency-version
+    summary: |-
+      Pin dependency extension versions. Supported key: iotplatform. Example: iotplatform=0.7.6, {iotplatform:0.7.6}, deps.json.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Cluster Arguments
+  - name: --extension-name
+    summary: |-
+      Name for the WO extension resource. Default: wo-extension.
+    groupName: Cluster Arguments
+  - name: --extension-version
+    summary: |-
+      Specific WO extension version to install.
+    groupName: Cluster Arguments
+  - name: --release-train
+    summary: |-
+      Extension release train. Default: stable.
+    groupName: Cluster Arguments
+  - name: --site-id
+    summary: |-
+      ARM resource ID of a Site to auto-create a site reference after context creation.
+    groupName: Context Arguments
+  - name: --tags
+    summary: |-
+      Context resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Context Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_workload-orchestration_sync
   name: az workload-orchestration sync
   summary: |-
@@ -118,6 +271,7 @@ commands:
 - az_workload-orchestration_diagnostic_wait
 - az_workload-orchestration_hierarchy
 - az_workload-orchestration_hierarchy_create
+- az_workload-orchestration_init
 - az_workload-orchestration_schema
 - az_workload-orchestration_schema_create
 - az_workload-orchestration_schema_delete
