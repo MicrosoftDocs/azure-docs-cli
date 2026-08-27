@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 07/13/2026
+ms.date: 08/27/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -94,6 +94,56 @@ The breaking changes listed in this section are planned for the next major relea
 - After retirement, the service API stops responding and these commands will stop functioning; they will be removed from the Azure CLI in a later release.
 - Migrate blueprint definitions to Template Specs and assignments to Azure Deployment Stacks (recommended).
 - Migration guidance: https://aka.ms/AzureBlueprintsRetirement
+
+## azext_managednetworkfabric
+
+### `networkfabric fabric commit-configuration`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- 'networkfabric fabric commit-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric commit-config' instead.
+
+### `networkfabric fabric validate-configuration`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- 'networkfabric fabric validate-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric validate-config' instead.
+
+### `networkfabric fabric view-device-configuration`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- 'networkfabric fabric view-device-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric view-device-config' instead.
+
+### `networkfabric device reboot`
+
+[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
+
+- '--network-device-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric device refresh-configuration`
+
+[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
+
+- 'networkfabric device refresh-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric device refresh-config' instead.
+
+### `networkfabric bootstrapinterface list`
+
+[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
+
+- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
+
+### `networkfabric bootstrapinterface show`
+
+[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
+
+- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
+
+### `networkfabric bootstrapinterface wait`
+
+[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
+
+- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
 
 ## azext_netappfiles_preview
 
