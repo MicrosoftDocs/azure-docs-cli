@@ -27,11 +27,11 @@ directCommands:
                                            [--async-execution {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--change-reference]
                                            [--command-id]
-                                           [--error-blob-id --error-blob-managed-identity]
+                                           [--error-blob-id --error-blob-identity --error-blob-managed-identity]
                                            [--error-blob-uri]
                                            [--location]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--output-blob-id --output-blob-managed-identity]
+                                           [--output-blob-id --output-blob-identity --output-blob-managed-identity]
                                            [--output-blob-uri]
                                            [--parameters]
                                            [--protected-parameters]
@@ -40,6 +40,7 @@ directCommands:
                                            [--script]
                                            [--script-uri]
                                            [--script-uri-id --script-uri-managed-identity]
+                                           [--source]
                                            [--tags]
                                            [--timeout-in-seconds]
   examples:
@@ -81,9 +82,9 @@ directCommands:
     summary: |-
       Specifies the commandId of predefined built-in script.
     groupName: Source Arguments
-  - name: --error-blob-id --error-blob-managed-identity
+  - name: --error-blob-id --error-blob-identity --error-blob-managed-identity
     summary: |-
-      The managed identity used to access the error blob.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --error-blob-uri
     summary: |-
@@ -92,12 +93,12 @@ directCommands:
   - name: --location -l
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
-    groupName: Resource Arguments
+    groupName: RunCommandProperties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --output-blob-id --output-blob-managed-identity
+  - name: --output-blob-id --output-blob-identity --output-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -115,7 +116,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --run-as-password
     summary: |-
-      Specifies the user account password on the machine when executing the run command.
+      Specifies the user account password on the machine when executing the run command.  If value is blank it's asked from the tty.
     groupName: Properties Arguments
   - name: --run-as-user
     summary: |-
@@ -133,10 +134,14 @@ directCommands:
     summary: |-
       User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Source Arguments
+  - name: --source
+    summary: |-
+      The source of the run command script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Resource Arguments
+    groupName: RunCommandProperties Arguments
   - name: --timeout-in-seconds
     summary: |-
       The timeout in seconds to execute the run command.
@@ -394,14 +399,14 @@ directCommands:
                                            [--async-execution {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--change-reference]
                                            [--command-id]
-                                           [--error-blob-id --error-blob-managed-identity]
+                                           [--error-blob-id --error-blob-identity --error-blob-managed-identity]
                                            [--error-blob-uri]
                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--ids]
                                            [--machine-name]
                                            [--name --run-command-name]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--output-blob-id --output-blob-managed-identity]
+                                           [--output-blob-id --output-blob-identity --output-blob-managed-identity]
                                            [--output-blob-uri]
                                            [--parameters]
                                            [--protected-parameters]
@@ -411,8 +416,9 @@ directCommands:
                                            [--run-as-user]
                                            [--script]
                                            [--script-uri]
-                                           [--script-uri-id --script-uri-managed-id --script-uri-managed-identity]
+                                           [--script-uri-id --script-uri-managed-identity]
                                            [--set]
+                                           [--source]
                                            [--subscription]
                                            [--tags]
                                            [--timeout-in-seconds]
@@ -442,7 +448,7 @@ directCommands:
     summary: |-
       Specifies the commandId of predefined built-in script.
     groupName: Source Arguments
-  - name: --error-blob-id --error-blob-managed-identity
+  - name: --error-blob-id --error-blob-identity --error-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -471,7 +477,7 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --output-blob-id --output-blob-managed-identity
+  - name: --output-blob-id --output-blob-identity --output-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
@@ -497,7 +503,7 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --run-as-password
     summary: |-
-      Specifies the user account password on the machine when executing the run command.
+      Specifies the user account password on the machine when executing the run command.  If value is blank it's asked from the tty.
     groupName: Properties Arguments
   - name: --run-as-user
     summary: |-
@@ -511,7 +517,7 @@ directCommands:
     summary: |-
       Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or public URI.
     groupName: Source Arguments
-  - name: --script-uri-id --script-uri-managed-id --script-uri-managed-identity
+  - name: --script-uri-id --script-uri-managed-identity
     summary: |-
       User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Source Arguments
@@ -519,6 +525,10 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
+  - name: --source
+    summary: |-
+      The source of the run command script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -526,7 +536,7 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Resource Arguments
+    groupName: RunCommandProperties Arguments
   - name: --timeout-in-seconds
     summary: |-
       The timeout in seconds to execute the run command.
