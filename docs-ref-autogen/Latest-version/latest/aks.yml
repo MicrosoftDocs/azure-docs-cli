@@ -572,6 +572,7 @@ directCommands:
                   [--enable-static-egress-gateway]
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
+                  [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-vtpm]
                   [--enable-windows-gmsa]
@@ -1163,6 +1164,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable UltraSSD, default value is false.
+  - name: --enable-upstream-kubescheduler-user-configuration
+    defaultValue: "False"
+    summary: |-
+      Enable user-defined scheduler configuration for kube-scheduler upstream on the cluster.
   - name: --enable-vpa
     defaultValue: "False"
     summary: |-
@@ -5492,6 +5497,7 @@ directCommands:
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
                   [--disable-static-egress-gateway]
+                  [--disable-upstream-kubescheduler-user-configuration]
                   [--disable-vpa]
                   [--disable-windows-gmsa]
                   [--disable-workload-identity]
@@ -5529,6 +5535,7 @@ directCommands:
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-static-egress-gateway]
+                  [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
                   [--enable-windows-recording-rules]
@@ -5842,7 +5849,7 @@ directCommands:
   - name: --disable-cluster-autoscaler -d
     defaultValue: "False"
     summary: |-
-      Disable cluster autoscaler.
+      Disable cluster autoscaler. For VirtualMachines pools, converts all autoscale profiles back to manual scale profiles.
   - name: --disable-container-network-logs
     summary: |-
       Disable container network log collection functionalities on a cluster.
@@ -5914,6 +5921,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Static Egress Gateway addon to the cluster.
+  - name: --disable-upstream-kubescheduler-user-configuration
+    defaultValue: "False"
+    summary: |-
+      Disable user-defined scheduler configuration for kube-scheduler upstream on the cluster.
   - name: --disable-vpa
     defaultValue: "False"
     summary: |-
@@ -5978,7 +5989,7 @@ directCommands:
   - name: --enable-cluster-autoscaler -e
     defaultValue: "False"
     summary: |-
-      Enable cluster autoscaler.
+      Enable cluster autoscaler. For VirtualMachines pools, converts all manual scale profiles to autoscale profiles using the same min/max counts.
   - name: --enable-container-network-logs
     summary: |-
       Enable container network log collection functionalities on a cluster. Automatically enables --enable-high-log-scale-mode.
@@ -6062,6 +6073,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Static Egress Gateway addon to the cluster.
+  - name: --enable-upstream-kubescheduler-user-configuration
+    defaultValue: "False"
+    summary: |-
+      Enable user-defined scheduler configuration for kube-scheduler upstream on the cluster.
   - name: --enable-vpa
     defaultValue: "False"
     summary: |-
@@ -6296,7 +6311,7 @@ directCommands:
   - name: --update-cluster-autoscaler -u
     defaultValue: "False"
     summary: |-
-      Update min-count or max-count for cluster autoscaler.
+      Update min-count or max-count for cluster autoscaler. Not supported for VirtualMachines pools; use 'az aks nodepool auto-scale update' instead.
   - name: --upgrade-override-until
     summary: |-
       Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
@@ -8090,7 +8105,7 @@ directCommands:
     defaultValue: Public
     acceptedValues: None, Private, Public
     summary: |-
-      The endpoint type to be used for a Azure Dev Spaces controller. See https://aka.ms/azds-networking for more information.
+      The endpoint type to be used for an Azure Dev Spaces controller. See https://aka.ms/azds-networking for more information.
   - name: --space -s
     summary: |-
       Name of the new or existing dev space to select. Defaults to an interactive selection experience.
@@ -8180,7 +8195,7 @@ directCommands:
     defaultValue: Public
     acceptedValues: None, Private, Public
     summary: |-
-      The endpoint type to be used for a Azure Dev Spaces controller. See https://aka.ms/azds-networking for more information.
+      The endpoint type to be used for an Azure Dev Spaces controller. See https://aka.ms/azds-networking for more information.
   - name: --space -s
     summary: |-
       Name of the new or existing dev space to select. Defaults to an interactive selection experience.
@@ -8687,8 +8702,11 @@ commands:
 - az_aks_nodepool_add(aks-preview)
 - az_aks_nodepool_auto-scale
 - az_aks_nodepool_auto-scale_add
+- az_aks_nodepool_auto-scale_add(aks-preview)
 - az_aks_nodepool_auto-scale_delete
+- az_aks_nodepool_auto-scale_delete(aks-preview)
 - az_aks_nodepool_auto-scale_update
+- az_aks_nodepool_auto-scale_update(aks-preview)
 - az_aks_nodepool_delete
 - az_aks_nodepool_delete(aks-preview)
 - az_aks_nodepool_delete-machines

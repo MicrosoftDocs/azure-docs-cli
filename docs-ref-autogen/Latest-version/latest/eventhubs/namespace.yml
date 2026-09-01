@@ -2,7 +2,7 @@
 uid: az_eventhubs_namespace
 name: az eventhubs namespace
 summary: |-
-  Eventhub namespace.
+  Manage Namespace.
 status: GA
 sourceType: Core
 directCommands:
@@ -27,6 +27,7 @@ directCommands:
                                   [--encryption-config]
                                   [--geo-data-replication-config --replica-config]
                                   [--infra-encryption {false, true}]
+                                  [--ip-address-type]
                                   [--location]
                                   [--max-lag --max-replication-lag-duration-in-seconds]
                                   [--maximum-throughput-units]
@@ -93,6 +94,9 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       A boolean value that indicates whether Infrastructure Encryption (Double Encryption) is enabled/disabled.
+  - name: --ip-address-type
+    summary: |-
+      The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dualstack).  Allowed values: DualStack, IPv4.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -174,10 +178,6 @@ directCommands:
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--resource-group]
                                   [--subscription]
-  examples:
-  - summary: |-
-      Delete the Namespace
-    syntax: az eventhubs namespace delete --resource-group myresourcegroup --name mynamespace
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -374,13 +374,6 @@ directCommands:
     az eventhubs namespace list [--max-items]
                                 [--next-token]
                                 [--resource-group]
-  examples:
-  - summary: |-
-      List the Event Hubs Namespaces by resource group.
-    syntax: az eventhubs namespace list --resource-group myresourcegroup
-  - summary: |-
-      Get the Namespaces by Subscription.
-    syntax: az eventhubs namespace list
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -432,10 +425,6 @@ directCommands:
                                 [--name --namespace-name]
                                 [--resource-group]
                                 [--subscription]
-  examples:
-  - summary: |-
-      shows the Namespace details.
-    syntax: az eventhubs namespace show --resource-group myresourcegroup --name mynamespace
   optionalParameters:
   - name: --ids
     summary: |-
@@ -498,13 +487,15 @@ directCommands:
                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--identity]
                                   [--ids]
+                                  [--ip-address-type {DualStack, IPv4}]
                                   [--kafka-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--locations]
                                   [--max-lag --max-replication-lag-duration-in-seconds]
                                   [--maximum-throughput-units]
-                                  [--minimum-tls-version {1.0, 1.1, 1.2}]
+                                  [--minimum-tls-version {1.0, 1.1, 1.2, 1.3}]
                                   [--name --namespace-name]
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--platform-capabilities]
                                   [--public-network-access {Disabled, Enabled, SecuredByPerimeter}]
                                   [--remove]
                                   [--resource-group]
@@ -514,10 +505,6 @@ directCommands:
                                   [--tags]
                                   [--tier {Basic, Premium, Standard}]
                                   [--zone-redundant {0, 1, f, false, n, no, t, true, y, yes}]
-  examples:
-  - summary: |-
-      Update a new namespace.
-    syntax: az eventhubs namespace update --resource-group myresourcegroup --name mynamespace --tags tag=value --enable-auto-inflate True
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -574,6 +561,11 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --ip-address-type
+    acceptedValues: DualStack, IPv4
+    summary: |-
+      The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack).
+    groupName: Properties Arguments
   - name: --kafka-enabled
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -592,7 +584,7 @@ directCommands:
       Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true).
     groupName: Properties Arguments
   - name: --minimum-tls-version
-    acceptedValues: 1.0, 1.1, 1.2
+    acceptedValues: 1.0, 1.1, 1.2, 1.3
     summary: |-
       The minimum TLS version for the cluster to support, e.g. '1.2'.
     groupName: Properties Arguments
@@ -604,6 +596,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --platform-capabilities
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --public-network-access
     acceptedValues: Disabled, Enabled, SecuredByPerimeter
     summary: |-
@@ -841,4 +837,4 @@ commands:
 - az_eventhubs_namespace_wait
 metadata:
   ms.date: 11/12/2024
-  description: Eventhub namespace.
+  description: Manage Namespace.
