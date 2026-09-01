@@ -8,10 +8,10 @@ ms.custom: devx-track-azurecli, linux-related-content
 - The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been
   tested on the following distributions.
 
-    | Distribution | Version                                                                |
-    |:-------------|:-----------------------------------------------------------------------|
-    | Debian       | 11 (Bullseye), 12 (Bookworm)                                           |
-    | Ubuntu       | 22.04 (Jammy Jellyfish), 24.04 (Noble Numbat) |
+    | Distribution | Version                                                                 |
+    |:-------------|:------------------------------------------------------------------------|
+    | Debian       | 11 (Bullseye), 12 (Bookworm)                                            |
+    | Ubuntu       | 22.04 (Jammy Jellyfish), 24.04 (Noble Numbat), 26.04 (Resolute Raccoon) |
 
 ## Install Azure CLI
 
