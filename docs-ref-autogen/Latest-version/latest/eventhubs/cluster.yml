@@ -65,12 +65,14 @@ directCommands:
                                 [--acquire-policy-token]
                                 [--capacity]
                                 [--change-reference]
+                                [--confidential-compute-mode --mode {Disabled, Enabled}]
                                 [--location]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--provisioning-state]
                                 [--sku {Dedicated}]
                                 [--supports-scaling {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--tags]
+                                [--zone-redundant {0, 1, f, false, n, no, t, true, y, yes}]
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -94,9 +96,14 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --confidential-compute-mode --mode
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Setting to Enable or Disable Confidential Compute.
+    groupName: ConfidentialCompute Arguments
   - name: --location -l
     summary: |-
-      Resource location.  When not specified, the location of the resource group will be used.
+      Resource location.
     groupName: Parameters Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -121,6 +128,11 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Parameters Arguments
+  - name: --zone-redundant
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      A value that indicates whether the cluster is zone redundant.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -228,8 +240,19 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventhubs/_help.py
-  syntax: az eventhubs cluster list [--resource-group]
+  syntax: >-
+    az eventhubs cluster list [--max-items]
+                              [--next-token]
+                              [--resource-group]
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -326,6 +349,7 @@ directCommands:
                                 [--capacity]
                                 [--change-reference]
                                 [--cluster-name --name]
+                                [--confidential-compute-mode --mode {Disabled, Enabled}]
                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--ids]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -337,6 +361,7 @@ directCommands:
                                 [--subscription]
                                 [--supports-scaling {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--tags]
+                                [--zone-redundant {0, 1, f, false, n, no, t, true, y, yes}]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -358,6 +383,11 @@ directCommands:
     summary: |-
       The name of the Event Hubs Cluster.
     groupName: Resource Id Arguments
+  - name: --confidential-compute-mode --mode
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Setting to Enable or Disable Confidential Compute.
+    groupName: ConfidentialCompute Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -405,6 +435,11 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Parameters Arguments
+  - name: --zone-redundant
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      A value that indicates whether the cluster is zone redundant.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"

@@ -393,6 +393,7 @@ directCommands:
                  [--data-disk-iops]
                  [--data-disk-mbps]
                  [--data-disk-sizes-gb]
+                 [--disable-capacity-reservation-assignment --no-cap-reservation {false, true}]
                  [--disable-integrity-monitoring-autoupgrade]
                  [--disk-controller-type {NVMe, SCSI}]
                  [--edge-zone]
@@ -568,6 +569,9 @@ directCommands:
   - summary: |-
       Create a VM from community gallery image
     syntax: az vm create -n MyVm -g MyResourceGroup --image /CommunityGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
+  - summary: |-
+      Create a VM that is not associated with any capacity reservation.
+    syntax: az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204 --disable-capacity-reservation-assignment true
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -680,6 +684,10 @@ directCommands:
     summary: |-
       Space-separated empty managed data disk sizes in GB to create.
     groupName: Storage Arguments
+  - name: --disable-capacity-reservation-assignment --no-cap-reservation
+    acceptedValues: false, true
+    summary: |-
+      Explicitly opt out the VM from being associated with any capacity reservation. The VM will consume publicly available capacity.
   - name: --disable-integrity-monitoring-autoupgrade
     defaultValue: "False"
     summary: |-
@@ -1100,6 +1108,7 @@ directCommands:
   syntax: >-
     az vm deallocate [--acquire-policy-token]
                      [--change-reference]
+                     [--force-deallocate {0, 1, f, false, n, no, t, true, y, yes}]
                      [--hibernate {0, 1, f, false, n, no, t, true, y, yes}]
                      [--ids]
                      [--name --vm-name]
@@ -1135,6 +1144,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --force-deallocate
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Optional parameter to force deallocate a virtual machine. Default is false.
   - name: --hibernate
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -2918,6 +2931,7 @@ directCommands:
                  [--all-instance-down --enable-all-instance-down {false, true}]
                  [--capacity-reservation-group --crg]
                  [--change-reference]
+                 [--disable-capacity-reservation-assignment --no-cap-reservation {false, true}]
                  [--disk-caching]
                  [--disk-controller-type {NVMe, SCSI}]
                  [--enable-hibernation {false, true}]
@@ -2991,6 +3005,9 @@ directCommands:
       az vm update -n name -g group --host-group my-host-group
 
       az vm start -n name -g group
+  - summary: |-
+      Opt out a VM from being associated with any capacity reservation.
+    syntax: az vm update -n name -g group --disable-capacity-reservation-assignment true
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -3024,6 +3041,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --disable-capacity-reservation-assignment --no-cap-reservation
+    acceptedValues: false, true
+    summary: |-
+      Explicitly opt out the VM from being associated with any capacity reservation. The VM will consume publicly available capacity.
   - name: --disk-caching
     summary: |-
       Use singular value to apply across, or specify individual disks, e.g. 'os=ReadWrite 0=None 1=ReadOnly' should enable update os disk and 2 data disks.

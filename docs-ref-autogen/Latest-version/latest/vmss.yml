@@ -49,6 +49,7 @@ directCommands:
                    [--data-disk-iops]
                    [--data-disk-mbps]
                    [--data-disk-sizes-gb]
+                   [--disable-capacity-reservation-assignment --no-cap-reservation {false, true}]
                    [--disable-integrity-monitoring-autoupgrade]
                    [--disable-overprovision]
                    [--disk-controller-type {NVMe, SCSI}]
@@ -237,6 +238,9 @@ directCommands:
       Create a VMSS from community gallery image.
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image /CommunityGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
   - summary: |-
+      Create a VMSS that is not associated with any capacity reservation.
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image Ubuntu2204 --disable-capacity-reservation-assignment true
+  - summary: |-
       Create a Windows VMSS with patch mode 'Manual' (Currently patch mode 'AutomaticByPlatform' is not supported during VMSS creation as health extension which is required for 'AutomaticByPlatform' mode cannot be set during VMSS creation).
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image Win2019Datacenter --enable-agent --enable-auto-update false --patch-mode Manual --orchestration-mode Flexible
   - summary: |-
@@ -378,6 +382,10 @@ directCommands:
     summary: |-
       Space-separated empty managed data disk sizes in GB to create.
     groupName: Storage Arguments
+  - name: --disable-capacity-reservation-assignment --no-cap-reservation
+    acceptedValues: false, true
+    summary: |-
+      Specifies whether the virtual machine scale set is explicitly opted out from being associated with any capacity reservation. When set to true, its virtual machines will not be allowed to implicitly or explicitly associate with any type of capacity reservation and will consume publicly available capacity. This option applies to the parent VMSS only.
   - name: --disable-integrity-monitoring-autoupgrade
     defaultValue: "False"
     summary: |-
@@ -2351,6 +2359,7 @@ directCommands:
                    [--capacity-reservation-group --crg]
                    [--change-reference]
                    [--custom-data]
+                   [--disable-capacity-reservation-assignment --no-cap-reservation {false, true}]
                    [--disk-controller-type {NVMe, SCSI}]
                    [--enable-auto-os-upgrade {false, true}]
                    [--enable-automatic-repairs {false, true}]
@@ -2451,6 +2460,9 @@ directCommands:
     syntax: >-
       az vmss update -n MyVmss -g MyResourceGroup --security-posture-reference-id /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{version} \
           --security-posture-reference-exclude-extensions "c:\tmp\exclude_extensions.json"
+  - summary: |-
+      Opt out a VMSS from being associated with any capacity reservation.
+    syntax: az vmss update -n MyVmss -g MyResourceGroup --disable-capacity-reservation-assignment true
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -2500,6 +2512,10 @@ directCommands:
   - name: --custom-data
     summary: |-
       Custom init script file or text (cloud-init, cloud-config, etc..).
+  - name: --disable-capacity-reservation-assignment --no-cap-reservation
+    acceptedValues: false, true
+    summary: |-
+      Specifies whether the virtual machine scale set is explicitly opted out from being associated with any capacity reservation. When set to true, its virtual machines will not be allowed to implicitly or explicitly associate with any type of capacity reservation and will consume publicly available capacity. This option applies to the parent VMSS only.
   - name: --disk-controller-type
     acceptedValues: NVMe, SCSI
     summary: |-
@@ -3112,6 +3128,18 @@ commands:
 - az_vmss_identity_assign
 - az_vmss_identity_remove
 - az_vmss_identity_show
+- az_vmss_lifecycle-hook
+- az_vmss_lifecycle-hook-event
+- az_vmss_lifecycle-hook-event_approve
+- az_vmss_lifecycle-hook-event_list
+- az_vmss_lifecycle-hook-event_reject
+- az_vmss_lifecycle-hook-event_show
+- az_vmss_lifecycle-hook-event_update
+- az_vmss_lifecycle-hook_add
+- az_vmss_lifecycle-hook_list
+- az_vmss_lifecycle-hook_remove
+- az_vmss_lifecycle-hook_show
+- az_vmss_lifecycle-hook_update
 - az_vmss_list
 - az_vmss_list-instance-connection-info
 - az_vmss_list-instance-public-ips
@@ -3147,5 +3175,5 @@ commands:
 - az_vmss_update-instances
 - az_vmss_wait
 metadata:
-  ms.date: 03/19/2026
+  ms.date: 08/24/2026
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
