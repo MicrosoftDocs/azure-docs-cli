@@ -1735,6 +1735,7 @@ directCommands:
                   [--enable-keda]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
+                  [--enable-node-hardening]
                   [--enable-node-public-ip]
                   [--enable-oidc-issuer]
                   [--enable-on-demand-monitor]
@@ -2417,7 +2418,7 @@ directCommands:
   - name: --enable-fips-image
     defaultValue: "False"
     summary: |-
-      Use FIPS-enabled OS on agent nodes.
+      Use FIPS-enabled OS on agent nodes. Required and always enabled when --os-sku is Windows2025; cannot be disabled for these node pools.
   - name: --enable-gateway-api
     defaultValue: "False"
     summary: |-
@@ -2463,6 +2464,19 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
+    isPreview: true
+  - name: --enable-node-hardening
+    defaultValue: "False"
+    summary: |-
+      Enable node hardening at the cluster level.
+    description: |-
+      Applies hardened defaults for soft eviction thresholds, kube-reserved,
+      and system-reserved on all Linux node pools in the cluster. Per-node-pool
+      kubeletConfig settings take precedence over hardening defaults. On agent
+      pools running Kubernetes 1.37 or later, node hardening is enabled by
+      default and cannot be disabled.
+      Requires the Microsoft.ContainerService/CustomNodeConfigPreview feature
+      to be registered on the subscription.
     isPreview: true
   - name: --enable-node-public-ip
     defaultValue: "False"
@@ -2904,7 +2918,7 @@ directCommands:
   - name: --os-sku
     acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, CBLMariner, Flatcar, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604
     summary: |-
-      The os-sku of the agent node pool. Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604, CBLMariner, AzureLinux, AzureLinux3, AzureLinuxOSGuard, AzureLinux3OSGuard, AzureContainerLinux, or Flatcar when os-type is Linux, default is Ubuntu if not set; Windows2019, Windows2022, Windows2025, or WindowsAnnual when os-type is Windows, the current default is Windows2022 if not set.
+      The os-sku of the agent node pool. Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604, CBLMariner, AzureLinux, AzureLinux3, AzureLinuxOSGuard, AzureLinux3OSGuard, AzureContainerLinux, or Flatcar when os-type is Linux, default is Ubuntu if not set; Windows2019, Windows2022, Windows2025, or WindowsAnnual when os-type is Windows, the current default is Windows2022 if k8s version is less than 1.37 or Windows2025 if k8s is 1.37 or greater.
   - name: --outbound-type
     acceptedValues: block, loadBalancer, managedNATGateway, managedNATGatewayV2, none, userAssignedNATGateway, userDefinedRouting
     summary: |-
@@ -6436,6 +6450,7 @@ directCommands:
                   [--disable-imds-restriction]
                   [--disable-keda]
                   [--disable-local-accounts]
+                  [--disable-node-hardening]
                   [--disable-on-demand-monitor]
                   [--disable-opentelemetry-logs]
                   [--disable-opentelemetry-logs-traces]
@@ -6488,6 +6503,7 @@ directCommands:
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
+                  [--enable-node-hardening]
                   [--enable-oidc-issuer]
                   [--enable-on-demand-monitor]
                   [--enable-opentelemetry-logs]
@@ -7006,6 +7022,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (Preview) If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-node-hardening
+    defaultValue: "False"
+    summary: |-
+      Disable node hardening at the cluster level.
+    description: |-
+      Turns off the cluster-level node hardening flag. Agent pools running
+      Kubernetes 1.37 or later remain hardened by default regardless of this
+      setting.
+    isPreview: true
   - name: --disable-on-demand-monitor
     defaultValue: "False"
     summary: |-
@@ -7258,6 +7283,19 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
+    isPreview: true
+  - name: --enable-node-hardening
+    defaultValue: "False"
+    summary: |-
+      Enable node hardening at the cluster level.
+    description: |-
+      Applies hardened defaults for soft eviction thresholds, kube-reserved,
+      and system-reserved on all Linux node pools in the cluster. Per-node-pool
+      kubeletConfig settings take precedence over hardening defaults. On agent
+      pools running Kubernetes 1.37 or later, node hardening is enabled by
+      default and cannot be disabled.
+      Requires the Microsoft.ContainerService/CustomNodeConfigPreview feature
+      to be registered on the subscription.
     isPreview: true
   - name: --enable-oidc-issuer
     defaultValue: "False"
