@@ -401,6 +401,7 @@ directCommands:
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
                         [--enable-fips-image]
+                        [--enable-managed-dranet]
                         [--enable-managed-gpu {false, true}]
                         [--enable-node-public-ip]
                         [--enable-osdisk-fc --enable-osdisk-full-caching]
@@ -411,6 +412,7 @@ directCommands:
                         [--final-soak-duration]
                         [--gateway-prefix-size]
                         [--gpu-driver {Install, None}]
+                        [--gpu-driver-mode --managed-gpu-driver-mode {DRA, DevicePlugin}]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                         [--gpu-mig-strategy {Mixed, Single}]
                         [--host-group-id]
@@ -574,7 +576,12 @@ directCommands:
   - name: --enable-fips-image
     defaultValue: "False"
     summary: |-
-      Use FIPS-enabled OS on agent nodes.
+      Use FIPS-enabled OS on agent nodes. Required and always enabled when --os-sku is Windows2025; cannot be disabled for these node pools.
+  - name: --enable-managed-dranet
+    defaultValue: "False"
+    summary: |-
+      Enable Managed DRANET on the node pool.
+    isPreview: true
   - name: --enable-managed-gpu
     defaultValue: "False"
     acceptedValues: false, true
@@ -625,6 +632,11 @@ directCommands:
     acceptedValues: Install, None
     summary: |-
       Whether to install driver for GPU node pool. Possible values are "Install" or "None". Default is "Install".
+  - name: --gpu-driver-mode --managed-gpu-driver-mode
+    acceptedValues: DRA, DevicePlugin
+    summary: |-
+      Specify the Managed GPU driver mode. Valid values are "DRA" and "DevicePlugin". The default is "DevicePlugin". Requires `--enable-managed-gpu` to be set to true.
+    isPreview: true
   - name: --gpu-instance-profile
     acceptedValues: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
     summary: |-
@@ -2692,11 +2704,13 @@ directCommands:
                            [--enable-artifact-streaming]
                            [--enable-cluster-autoscaler]
                            [--enable-fips-image]
+                           [--enable-managed-dranet]
                            [--enable-managed-gpu {false, true}]
                            [--enable-secure-boot]
                            [--enable-vtpm]
                            [--final-soak-duration]
                            [--gpu-driver {Install, None}]
+                           [--gpu-driver-mode --managed-gpu-driver-mode {DRA, DevicePlugin}]
                            [--gpu-mig-strategy {Mixed, Single}]
                            [--if-match]
                            [--if-none-match]
@@ -2712,7 +2726,7 @@ directCommands:
                            [--node-soak-duration]
                            [--node-taints]
                            [--node-vm-size]
-                           [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, Flatcar, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604}]
+                           [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, Flatcar, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604, Windows2022, Windows2025}]
                            [--pis-id --prepared-image-specification-id]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--ssh-access {disabled, entraid, localuser}]
@@ -2842,6 +2856,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Switch to use FIPS-enabled OS on agent nodes.
+  - name: --enable-managed-dranet
+    defaultValue: "False"
+    summary: |-
+      Enable Managed DRANET on the node pool.
+    isPreview: true
   - name: --enable-managed-gpu
     defaultValue: "False"
     acceptedValues: false, true
@@ -2865,6 +2884,11 @@ directCommands:
     acceptedValues: Install, None
     summary: |-
       Whether to install driver for GPU node pool. Possible values are "Install" or "None".
+  - name: --gpu-driver-mode --managed-gpu-driver-mode
+    acceptedValues: DRA, DevicePlugin
+    summary: |-
+      Specify the Managed GPU driver mode. Valid values are "DRA" and "DevicePlugin". The default is "DevicePlugin". Requires `--enable-managed-gpu` to be set to true.
+    isPreview: true
   - name: --gpu-mig-strategy
     acceptedValues: Mixed, Single
     summary: |-
@@ -2916,7 +2940,7 @@ directCommands:
       VM size for Kubernetes nodes. For VMSS pools, changing this triggers a rolling upgrade to replace nodes with the new size (preview). For VirtualMachines pools, only configurable when updating autoscale settings.
     isPreview: true
   - name: --os-sku
-    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, Flatcar, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604
+    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, Flatcar, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604, Windows2022, Windows2025
     summary: |-
       The os-sku of the agent node pool.
   - name: --pis-id --prepared-image-specification-id
