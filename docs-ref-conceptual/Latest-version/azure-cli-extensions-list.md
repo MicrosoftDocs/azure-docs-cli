@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/01/2026
+ms.date: 09/02/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ai-examples/HISTORY.rst) |
 |[aimanager](https://github.com/Azure/azure-cli-extensions/tree/main/src/aimanager) | 2.61.0 | Manage AI Manager resources, namespaces, and GPU-backed model deployments for Azure Kubernetes Service (AKS). | Preview | [1.5.2b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aimanager/HISTORY.rst) |
 |[aks-agent](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent) | 2.76.0 | Provides an interactive AI-powered debugging tool for AKS | Preview | [1.0.0b23](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-agent/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.85.0 | Provides a preview for upcoming AKS features | Preview | [22.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.85.0 | Provides a preview for upcoming AKS features | Preview | [22.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.77.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.5.116](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.67.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [2.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
