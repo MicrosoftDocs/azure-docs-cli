@@ -1,0 +1,213 @@
+### YamlMime:AzureCLIGroup
+uid: az
+name: az
+summary: |-
+  AzClips CLI.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_login
+  name: az login
+  summary: |-
+    Authenticate to Azure.
+  description: |-
+    Authenticate to Azure and persist account context for subsequent commands.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/login/index.md
+  syntax: >-
+    az login [--client-id]
+             [--identity]
+             [--object-id]
+             [--out-profile]
+             [--profile]
+             [--resource-id]
+             [--subscription-id]
+             [--tenant-id]
+             [--use-device-code]
+  examples:
+  - summary: |-
+      Login with subscription id
+    syntax: az login --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Login with device code
+    syntax: az login --subscription-id 00000000-0000-0000-0000-000000000000 --use-device-code
+  optionalParameters:
+  - name: --client-id
+    summary: |-
+      Client ID of the user-assigned managed identity.
+    groupName: Managed Identity Arguments
+  - name: --identity
+    summary: |-
+      Login using managed identity in the current environment.
+    groupName: Managed Identity Arguments
+  - name: --object-id
+    summary: |-
+      Object ID of the user-assigned managed identity.
+    groupName: Managed Identity Arguments
+  - name: --out-profile
+    summary: |-
+      Create or overwrite a named profile with the login result (mutually exclusive with --profile).
+  - name: --profile
+    summary: |-
+      Re-authenticate the named existing profile (mutually exclusive with --out-profile).
+  - name: --resource-id
+    summary: |-
+      Resource ID of the user-assigned managed identity.
+    groupName: Managed Identity Arguments
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id.
+  - name: --tenant-id
+    summary: |-
+      Tenant ID to login to.
+  - name: --use-device-code
+    summary: |-
+      Use device code flow for authentication.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_logout
+  name: az logout
+  summary: |-
+    Sign out of the active profile.
+  description: |-
+    Sign out of the active profile by removing its account from the token cache and clearing the active-profile pointer. When no profile is active, this command does nothing.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/logout/index.md
+  syntax: az logout
+  examples:
+  - summary: |-
+      Sign out
+    syntax: az logout
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_rest
+  name: az rest
+  summary: |-
+    Send an authenticated HTTP request to Azure Resource Manager.
+  description: |-
+    Universal authenticated HTTP passthrough for Azure Resource Manager (ARM), mirroring `az rest`. Builds an arbitrary request from the supplied method, endpoint, body, and headers, sends it through the already-authenticated pipeline, and surfaces the raw status code, response headers, and body. There is no LRO polling and no pagination — a single request is sent and a single untyped response is returned. The ARM bearer token is attached to every request, so absolute URLs must target an Azure management host (management.azure.com and the US Gov, China, and Germany sovereign clouds). The endpoint can be supplied two ways, which are mutually exclusive: as a full URL with `--uri`, or piece-wise with the ByParameters flags (`--subscription`, `--resource-group`, `--resource-provider`, `--resource-type`, `--name`, `--api-version`). Supported parameters: `--method` (HTTP method, defaults to GET), `--uri` (absolute URL or relative ARM path; `{subscriptionId}` is replaced with the current subscription), `--body` (request body, typically JSON; sent whenever provided, for any method), `--headers` (KEY=VALUE request headers), `--subscription`, `--resource-group`, `--resource-provider`, `--resource-type`, `--name`, `--api-version`, and `--uri-parameters` (KEY=VALUE query-string parameters, allowed in both modes). An HTTP status of 400 or higher still prints the response body but exits non-zero.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/rest/index.md
+  syntax: >-
+    az rest [--api-version]
+            [--body]
+            [--headers]
+            [--method]
+            [--name]
+            [--profile]
+            [--resource-group]
+            [--resource-provider]
+            [--resource-type]
+            [--subscription]
+            [--uri]
+            [--uri-parameters]
+  examples:
+  - summary: |-
+      GET a resource group with a full URI
+    syntax: az rest --method GET --uri "/subscriptions/{subscriptionId}/resourceGroups/myresourcegroup?api-version=2021-04-01"
+  - summary: |-
+      GET a resource using the piece-wise ByParameters flags
+    syntax: az rest --method GET --subscription 00000000-0000-0000-0000-000000000000 --resource-group myresourcegroup --resource-provider Microsoft.Storage --resource-type storageAccounts --name mystorageacct --api-version 2023-01-01
+  - summary: |-
+      PUT a resource with a JSON body and a custom header
+    syntax: az rest --method PUT --uri "/subscriptions/{subscriptionId}/resourceGroups/myresourcegroup?api-version=2021-04-01" --body '{"location":"eastus"}' --headers Content-Type=application/json
+  - summary: |-
+      List resources with an extra query-string parameter
+    syntax: az rest --method GET --uri "/subscriptions/{subscriptionId}/resources" --uri-parameters api-version=2021-04-01 '$filter=resourceType eq '\''Microsoft.Storage/storageAccounts'\'''
+  optionalParameters:
+  - name: --api-version
+    summary: |-
+      api-version for a piece-wise ARM URL. Required when building from flags. Mutually exclusive with --uri.
+  - name: --body
+    summary: |-
+      Optional request body (typically JSON); sent whenever provided, for any method.
+  - name: --headers
+    summary: |-
+      Optional request headers in KEY=VALUE form (space-separated).
+  - name: --method
+    summary: |-
+      HTTP method (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS). Defaults to GET.
+  - name: --name
+    summary: |-
+      Resource name segments (space-separated), interleaved with --resource-type (may have one fewer entry for a collection GET). Mutually exclusive with --uri.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      Resource group name segment for a piece-wise ARM URL. Mutually exclusive with --uri.
+  - name: --resource-provider
+    summary: |-
+      Resource provider namespace (e.g. Microsoft.Resources) for a piece-wise ARM URL. Mutually exclusive with --uri.
+  - name: --resource-type
+    summary: |-
+      Resource type segments (space-separated), interleaved with --name, for a piece-wise ARM URL. Mutually exclusive with --uri.
+  - name: --subscription
+    summary: |-
+      Subscription id used to build an ARM URL from piece-wise flags. Defaults to the current subscription. Mutually exclusive with --uri.
+  - name: --uri
+    summary: |-
+      Absolute URL or relative ARM path. Relative paths are prefixed with https://management.azure.com. The token {subscriptionId} is replaced with the current subscription. Mutually exclusive with the piece-wise ByParameters flags.
+  - name: --uri-parameters
+    summary: |-
+      Optional query-string parameters in KEY=VALUE form (space-separated), appended to the final URL. Allowed in both --uri and ByParameters modes.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+commands:
+- az_agent
+- az_config
+- az_deployment
+- az_disk
+- az_extension
+- az_group
+- az_identity
+- az_login
+- az_logout
+- az_msgraph
+- az_profile
+- az_rest
+- az_vm
+metadata:
+  description: AzClips CLI.
