@@ -1,0 +1,213 @@
+### YamlMime:AzureCLIGroup
+uid: az_deployment_group
+name: az deployment group
+summary: |-
+  Manage Azure Resource Manager deployments scoped to a resource group.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_deployment_group_create
+  name: az deployment group create
+  summary: |-
+    Create a resource group scoped deployment from an ARM or Bicep template.
+  description: |-
+    Create (start) a resource group scoped deployment, mirroring `az deployment group create`. The template is supplied with exactly one of `--template-file` (a local ARM or Bicep template deployed inline), `--template-uri` (a remote template URL), or `--template-spec-id` (the resource id of a Template Spec). `--resource-group` (required) is the resource group to deploy into and `--name` (required) is the deployment name; `--subscription-id` (optional) selects the subscription. Parameters can be supplied with `--parameters-file` (a local parameters file), `--parameters-uri` (a remote parameters file URL), and/or one or more repeatable inline `--parameter KEY=VALUE` pairs; inline parameter values are parsed as JSON when possible (for example `count=3` becomes a number and `flag=true` becomes a bool) and otherwise treated as strings, quote a value to force a string (for example `zip="01234"`). Inline parameters overlay same-named keys from a parameters file and cannot be combined with `--parameters-uri`. `--query-string` carries a SAS token or other query string to use with the template URI and/or the parameters URI. `--mode` selects the deployment mode, `Incremental` (default) or `Complete`. `--validation-level` sets the validation level, one of `Template`, `Provider`, or `ProviderNoRbac`. On failure the deployment can roll back with either `--rollback-on-error` (roll the resource group back to the last successful deployment) or `--rollback-to-deployment-name <name>` (roll back to a specific named deployment); the two rollback options are mutually exclusive. The command waits for the deployment long-running operation to finish and returns the final deployment result.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group create --name
+                               --resource-group
+                               [--mode {Incremental, Complete}]
+                               [--parameter]
+                               [--parameters-file]
+                               [--parameters-uri]
+                               [--profile]
+                               [--query-string]
+                               [--rollback-on-error]
+                               [--rollback-to-deployment-name]
+                               [--subscription-id]
+                               [--template-file]
+                               [--template-spec-id]
+                               [--template-uri]
+                               [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Deploy a local Bicep template with inline parameters
+    syntax: az deployment group create --resource-group myResourceGroup --name myDeployment --template-file ./main.bicep --parameter location=eastus --parameter instanceCount=3
+  - summary: |-
+      Deploy a remote ARM template with a remote parameters file
+    syntax: az deployment group create --resource-group myResourceGroup --name myDeployment --template-uri https://example.com/azuredeploy.json --parameters-uri https://example.com/azuredeploy.parameters.json --mode Incremental --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Deploy a Template Spec in Complete mode with rollback on error
+    syntax: az deployment group create --resource-group myResourceGroup --name myDeployment --template-spec-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Resources/templateSpecs/myTemplateSpec/versions/1.0 --mode Complete --validation-level Template --rollback-on-error
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group to deploy into.
+  optionalParameters:
+  - name: --mode
+    acceptedValues: Incremental, Complete
+    summary: |-
+      The deployment mode. Incremental (default) or Complete.
+  - name: --parameter
+    summary: |-
+      Inline deployment parameter(s) in KEY=VALUE form (repeatable). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local parameters file to deploy inline.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a parameters file.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      The query string (such as a SAS token) to use with the template URI and/or the parameters URI.
+  - name: --rollback-on-error
+    summary: |-
+      Roll the resource group back to the last successful deployment on error.
+  - name: --rollback-to-deployment-name
+    summary: |-
+      Roll the resource group back to a specific named deployment on error. Mutually exclusive with rollback-on-error.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM template file to deploy inline.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec to deploy.
+  - name: --template-uri
+    summary: |-
+      The URI of the ARM template to deploy.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level of the deployment.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_deployment_group_what-if
+  name: az deployment group what-if
+  summary: |-
+    Preview the changes a resource group scoped deployment would make, without applying them.
+  description: |-
+    Run a resource group scoped what-if operation, mirroring `az deployment group what-if`. What-if is read-only: it predicts the set of changes (Create, Modify, Delete, Deploy, NoChange, Ignore) an ARM or Bicep template would make without creating or modifying any resources. The template is supplied with exactly one of `--template-file` (a local ARM or Bicep template evaluated inline), `--template-uri` (a remote template URL), or `--template-spec-id` (the resource id of a Template Spec). `--resource-group` (required) is the resource group to evaluate against and `--name` (required) is the deployment name; `--subscription-id` (optional) selects the subscription. Parameters can be supplied with `--parameters-file` (a local parameters file), `--parameters-uri` (a remote parameters file URL), and/or one or more repeatable inline `--parameter KEY=VALUE` pairs; inline parameter values are parsed as JSON when possible (for example `count=3` becomes a number and `flag=true` becomes a bool) and otherwise treated as strings, quote a value to force a string (for example `zip="01234"`). Inline parameters overlay same-named keys from a parameters file and cannot be combined with `--parameters-uri`. `--query-string` carries a SAS token or other query string to use with the template URI and/or the parameters URI. `--mode` selects the deployment mode, `Incremental` (default) or `Complete`. `--validation-level` sets the validation level, one of `Template`, `Provider`, or `ProviderNoRbac`. `--result-format` selects how much detail the predicted changes carry, `FullResourcePayloads` (default, full before/after resource snapshots) or `ResourceIdOnly` (resource ids only). The command waits for the what-if long-running operation to finish and returns the predicted change list.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group what-if --name
+                                --resource-group
+                                [--mode {Incremental, Complete}]
+                                [--parameter]
+                                [--parameters-file]
+                                [--parameters-uri]
+                                [--profile]
+                                [--query-string]
+                                [--result-format {FullResourcePayloads, ResourceIdOnly}]
+                                [--subscription-id]
+                                [--template-file]
+                                [--template-spec-id]
+                                [--template-uri]
+                                [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Preview a local Bicep template with inline parameters
+    syntax: az deployment group what-if --resource-group myResourceGroup --name myDeployment --template-file ./main.bicep --parameter location=eastus --parameter instanceCount=3
+  - summary: |-
+      Preview a remote ARM template with a remote parameters file
+    syntax: az deployment group what-if --resource-group myResourceGroup --name myDeployment --template-uri https://example.com/azuredeploy.json --parameters-uri https://example.com/azuredeploy.parameters.json --mode Incremental --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Preview a Template Spec in Complete mode returning resource ids only
+    syntax: az deployment group what-if --resource-group myResourceGroup --name myDeployment --template-spec-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Resources/templateSpecs/myTemplateSpec/versions/1.0 --mode Complete --validation-level Template --result-format ResourceIdOnly
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group to run the what-if against.
+  optionalParameters:
+  - name: --mode
+    acceptedValues: Incremental, Complete
+    summary: |-
+      The deployment mode. Incremental (default) or Complete.
+  - name: --parameter
+    summary: |-
+      Inline deployment parameter(s) in KEY=VALUE form (repeatable). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local parameters file to evaluate inline.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a parameters file.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      The query string (such as a SAS token) to use with the template URI and/or the parameters URI.
+  - name: --result-format
+    acceptedValues: FullResourcePayloads, ResourceIdOnly
+    summary: |-
+      The format of the what-if results. FullResourcePayloads (default) or ResourceIdOnly.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM template file to evaluate inline.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec to evaluate.
+  - name: --template-uri
+    summary: |-
+      The URI of the ARM template to evaluate.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level of the what-if operation.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+commands:
+- az_deployment_group_create
+- az_deployment_group_what-if
+metadata:
+  ms.date: 06/24/2026
+  description: Manage Azure Resource Manager deployments scoped to a resource group.
