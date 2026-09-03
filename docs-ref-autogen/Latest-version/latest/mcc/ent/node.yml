@@ -25,8 +25,8 @@ directCommands:
                            [--tags]
   examples:
   - summary: |-
-      Create MCC Enterprise Cache Node
-    syntax: az mcc ent resource create --mcc-resource-name [MccResourceName] --cache-node-name [MccCacheNodeName] --host-os [WindowsOrLinux] --resource-group [MccResourceRgName]
+      Create an MCC Enterprise cache node on an existing MCC resource
+    syntax: az mcc ent node create --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --host-os Linux --resource-group MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --cache-node-name
@@ -103,8 +103,8 @@ directCommands:
                            [--yes]
   examples:
   - summary: |-
-      Delete MCC Enterprise Cache Node
-    syntax: az mcc ent node delete --mcc-resource-name [MccResourceName] --cache-node-name [MccCacheNodeName] --resource-group [MccResourceRgName]
+      Delete an MCC Enterprise cache node
+    syntax: az mcc ent node delete --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -178,8 +178,8 @@ directCommands:
                                            [--subscription]
   examples:
   - summary: |-
-      Get Deployment Details For MCC Enterprise Cache Node
-    syntax: az mcc ent node get-deployment-details --mcc-resource-name [MccResourceName] --cache-node-name [MccCacheNodeName] --resource-group [MccResourceRgName]
+      Get the keys and details needed to deploy a cache node
+    syntax: az mcc ent node get-deployment-details --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -247,8 +247,11 @@ directCommands:
                          [--next-token]
   examples:
   - summary: |-
-      List MCC Enterprise Cache Nodes Attached to a Resource
-    syntax: az mcc ent resource list --resource-group [MccResourceRgName]
+      List every cache node attached to an MCC Enterprise resource
+    syntax: az mcc ent node list --mcc-resource-name MyMccResource --resource-group MyResourceGroup
+  - summary: |-
+      List cache nodes with the full set of details
+    syntax: az mcc ent node list --mcc-resource-name MyMccResource --resource-group MyResourceGroup --expand-output
   requiredParameters:
   - isRequired: true
     name: --mcc-resource-name
@@ -313,8 +316,11 @@ directCommands:
                          [--subscription]
   examples:
   - summary: |-
-      Show MCC Enterprise Cache Node
-    syntax: az mcc ent node show --mcc-resource-name [MccResourceName] --cache-node-name [MccCacheNodeName] --resource-group [MccResourceRgName]
+      Show an MCC Enterprise cache node
+    syntax: az mcc ent node show --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup
+  - summary: |-
+      Show a cache node with the full set of details
+    syntax: az mcc ent node show --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup --expand-output
   optionalParameters:
   - name: --cache-node-name
     summary: |-
@@ -374,7 +380,7 @@ directCommands:
     az mcc ent node update [--acquire-policy-token]
                            [--add]
                            [--auto-update-day]
-                           [--auto-update-ring {Fast, Preview, Slow}]
+                           [--auto-update-ring {Beta, Stable}]
                            [--auto-update-time]
                            [--auto-update-week]
                            [--cache-drive]
@@ -383,7 +389,7 @@ directCommands:
                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                            [--ids]
                            [--mcc-resource-name]
-                           [--proxy {Disabled, Enabled, None, Required}]
+                           [--proxy {Disabled, Enabled}]
                            [--proxy-host]
                            [--proxy-port]
                            [--remove]
@@ -393,8 +399,17 @@ directCommands:
                            [--tags]
   examples:
   - summary: |-
-      Update MCC Enterprise Cache Node
-    syntax: az mcc ent node update --mcc-resource-name [MccResourceName] --cache-node-name [MccCacheNodeName] --resource-group [MccResourceRgName] --cache-drive "[{physical-path:/var/mcc,size-in-gb:XX}]" --proxy [EnabledOrDisabled] --proxy-host [URLOrIPForProxy] --proxy-port [ProxyPortNumber] --auto-update-day [AutoUpdateDay] --auto-update-time [HH:mm] --auto-update-week [AutoUpdateWeekOfMonth] --auto-update-ring [SlowOrFastUpdateRing]
+      Configure the cache drives of a cache node
+    syntax: az mcc ent node update --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup --cache-drive "[{physical-path:/var/mcc,size-in-gb:200}]"
+  - summary: |-
+      Move a cache node to the Stable update ring (an install schedule is required)
+    syntax: az mcc ent node update --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup --auto-update-ring Stable --auto-update-day 2 --auto-update-week 3 --auto-update-time 02:00
+  - summary: |-
+      Move a cache node to the Beta update ring (the schedule is managed by Microsoft)
+    syntax: az mcc ent node update --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup --auto-update-ring Beta
+  - summary: |-
+      Route a cache node through an outbound proxy
+    syntax: az mcc ent node update --mcc-resource-name MyMccResource --cache-node-name MyCacheNode --resource-group MyResourceGroup --proxy Enabled --proxy-host proxy.contoso.com --proxy-port 8080
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -406,24 +421,24 @@ directCommands:
     groupName: Generic Update Arguments
   - name: --auto-update-day
     summary: |-
-      Day of week (1-7) that cache node will automatically install software update.
+      Day of week that cache node will automatically install software update. Allowed values: 1-7. Only valid on the "Stable" update ring.
     groupName: Configuration Arguments
   - name: --auto-update-ring
-    acceptedValues: Fast, Preview, Slow
+    acceptedValues: Beta, Stable
     summary: |-
-      Cache node automatic software update periodicity ring.
+      Cache node automatic software update periodicity ring. Use "Stable" to choose the install schedule yourself, which requires --auto-update-day, --auto-update-week and --auto-update-time. Use "Beta" to let Microsoft manage the schedule, in which case those three arguments must not be provided.
     groupName: Configuration Arguments
   - name: --auto-update-time
     summary: |-
-      Time of day in 24-hour time (hh:mm) that cache node will automatically install software update.
+      Time of day in 24-hour time (hh:mm) that cache node will automatically install software update. Only valid on the "Stable" update ring.
     groupName: Configuration Arguments
   - name: --auto-update-week
     summary: |-
-      Week of month that cache node will automatically install software update. Allowed Values: 2-3.
+      Week of month that cache node will automatically install software update. Allowed values: 2-3. Only valid on the "Stable" update ring.
     groupName: Configuration Arguments
   - name: --cache-drive
     summary: |-
-      The physical path and size of cache drive. For Windows cache node physical path should be "/var/mcc". Minimum cache drive size should be 50gb.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The physical path and size of cache drive. For a Windows cache node exactly one drive is allowed and its physical path must be "/var/mcc"; a Linux cache node allows up to 9 drives. Size must be between 50 and 10000 GB.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Configuration Arguments
   - name: --cache-node-name
     summary: |-
@@ -447,9 +462,9 @@ directCommands:
       Name of Microsoft Connected Cache for Enterprise resource.
     groupName: Resource Id Arguments
   - name: --proxy
-    acceptedValues: Disabled, Enabled, None, Required
+    acceptedValues: Disabled, Enabled
     summary: |-
-      Enable or disable proxy. Allowed values "Enabled, Disabled". If proxy is enabled, provide proxy host and proxy port.
+      Enable or disable proxy. When enabled, provide --proxy-host and --proxy-port.
     groupName: Configuration Arguments
   - name: --proxy-host
     summary: |-
