@@ -26,6 +26,7 @@ directCommands:
                         [--copy-disk-name]
                         [--copy-tags]
                         [--disable-trusted-launch]
+                        [--disk-controller-type]
                         [--distro]
                         [--enable-nested]
                         [--encrypt-recovery-key]
@@ -69,6 +70,9 @@ directCommands:
   - summary: |-
       Create a repair VM with an OS Disk storage type of StandardSSD_LRS.
     syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username <username> --repair-password <password> --os-disk-type StandardSSD_LRS
+  - summary: |-
+      Create a repair VM using the NVMe disk controller.
+    syntax: az vm repair create -g MyResourceGroup -n MySourceVM --disk-controller-type NVMe --verbose
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -102,6 +106,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Option to disable Trusted Launch security type on the repair vm by setting the security type to Standard.
+  - name: --disk-controller-type
+    summary: |-
+      Disk controller type for the repair VM (SCSI or NVMe). By default the repair VM uses SCSI when the selected size supports it, so that offline repair scripts can enumerate the attached OS disk.
   - name: --distro
     defaultValue: ubuntu
     summary: |-
