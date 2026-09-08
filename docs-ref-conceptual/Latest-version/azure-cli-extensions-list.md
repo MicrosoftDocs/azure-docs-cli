@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/03/2026
+ms.date: 09/06/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -54,7 +54,7 @@ You will be prompted to install an extension on first use.
 |[automation](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation) | 2.75.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automation/HISTORY.rst) |
 |[azure-changesafety](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety) | 2.75.0 | Microsoft Azure Command-Line Tools ChangeSafety Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-changesafety/HISTORY.rst) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
-|[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.7](https://github.com/Microsoft/azure-devops-cli-extension) |
+|[azure-devops](https://github.com/Azure/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.8](https://github.com/Azure/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.75.0 | Manage Azure Firewall resources. | GA | [2.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.70.0 | The Azure IoT extension for Azure CLI. | Preview | [0.32.0b1](https://github.com/azure/azure-iot-cli-extension) |
 |[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.70.0 | The Azure IoT Operations extension for Azure CLI. | GA | [2.9.0](https://github.com/azure/azure-iot-ops-cli-extension) |
@@ -154,14 +154,14 @@ You will be prompted to install an extension on first use.
 |[maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) | 2.75.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance/HISTORY.rst) |
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
 |[managedcleanroom](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom) | 2.75.0 | Microsoft Azure Command-Line Tools Managedcleanroom Extension. | Preview | [1.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom/HISTORY.rst) |
-|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2026-01-15-preview API version. | Preview | [10.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
+|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2026-01-15-preview API version. | Preview | [10.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner) | 2.61.0 | Support for Management Partner preview | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner/HISTORY.rst) |
 |[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.75.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
 |[mdp](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp) | 2.57.0 | Microsoft Azure Command-Line Tools Mdp Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp/HISTORY.rst) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh) | 2.67.0 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh/HISTORY.rst) |
 |[microsoft-fabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric) | 2.61.0 | Microsoft Azure Command-Line Tools Microsoft Fabric Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric/HISTORY.rst) |
 |[migrate](https://github.com/Azure/azure-cli-extensions/tree/main/src/migrate) | 2.75.0 | Support for Azure Migrate preview | Preview | [3.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/migrate/HISTORY.rst) |
-|[mission](https://github.com/Azure/azure-cli-extensions/tree/main/src/mission) | 2.75.0 | Microsoft Azure Command-Line Tools Mission Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mission/HISTORY.rst) |
+|[mission](https://github.com/Azure/azure-cli-extensions/tree/main/src/mission) | 2.75.0 | Microsoft Azure Command-Line Tools Mission Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/mission/HISTORY.rst) |
 |[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality) | 2.49.0 | Mixed Reality Azure CLI Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality/HISTORY.rst) |
 |[ml](https://docs.microsoft.com/azure/machine-learning/azure-machine-learning-release-notes-cli-v2?view=azureml-api-2) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension | GA | [2.44.1](https://docs.microsoft.com/azure/machine-learning/azure-machine-learning-release-notes-cli-v2?view=azureml-api-2/HISTORY.rst) |
 |[mongo-db](https://github.com/Azure/azure-cli-extensions/tree/main/src/mongo-db) | 2.75.0 | Microsoft Azure Command-Line Tools MongoDb Extension. | Preview | [1.1.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mongo-db/HISTORY.rst) |
