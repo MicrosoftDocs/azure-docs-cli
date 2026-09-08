@@ -26,6 +26,7 @@ directCommands:
                         [--copy-disk-name]
                         [--copy-tags]
                         [--disable-trusted-launch]
+                        [--disk-controller-type]
                         [--distro]
                         [--enable-nested]
                         [--encrypt-recovery-key]
@@ -69,6 +70,9 @@ directCommands:
   - summary: |-
       Create a repair VM with an OS Disk storage type of StandardSSD_LRS.
     syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username <username> --repair-password <password> --os-disk-type StandardSSD_LRS
+  - summary: |-
+      Create a repair VM using the NVMe disk controller.
+    syntax: az vm repair create -g MyResourceGroup -n MySourceVM --disk-controller-type NVMe --verbose
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -102,6 +106,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Option to disable Trusted Launch security type on the repair vm by setting the security type to Standard.
+  - name: --disk-controller-type
+    summary: |-
+      Disk controller type for the repair VM (SCSI or NVMe). By default the repair VM uses SCSI when the selected size supports it, so that offline repair scripts can enumerate the attached OS disk.
   - name: --distro
     defaultValue: ubuntu
     summary: |-
@@ -246,6 +253,7 @@ directCommands:
                                     [--copy-tags]
                                     [--ids]
                                     [--name]
+                                    [--no --no-cleanup]
                                     [--repair-group-name]
                                     [--repair-password]
                                     [--repair-username]
@@ -285,6 +293,10 @@ directCommands:
     summary: |-
       The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     groupName: Resource Id Arguments
+  - name: --no --no-cleanup
+    defaultValue: "False"
+    summary: |-
+      Keeps the repair resources instead of deleting them, including when the repair script fails. Use to inspect a failed repair.
   - name: --repair-group-name
     summary: |-
       Name for new or existing resource group that will contain repair VM.
@@ -351,6 +363,7 @@ directCommands:
                                [--copy-tags]
                                [--ids]
                                [--name]
+                               [--no --no-cleanup]
                                [--repair-group-name]
                                [--repair-password]
                                [--repair-username]
@@ -396,6 +409,10 @@ directCommands:
     summary: |-
       The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     groupName: Resource Id Arguments
+  - name: --no --no-cleanup
+    defaultValue: "False"
+    summary: |-
+      Keeps the repair resources instead of deleting them, including when the repair script fails. Use to inspect a failed repair.
   - name: --repair-group-name
     summary: |-
       Name for new or existing resource group that will contain repair VM.
@@ -541,6 +558,7 @@ directCommands:
                          [--disk-name]
                          [--ids]
                          [--name]
+                         [--no --no-cleanup]
                          [--repair-vm-id]
                          [--resource-group]
                          [--subscription]
@@ -552,6 +570,12 @@ directCommands:
   - summary: |-
       Restore from the repair VM, specify the disk to restore
     syntax: az vm repair restore -g MyResourceGroup -n MyVM --disk-name MyDiskCopy --verbose
+  - summary: |-
+      Restore from the repair VM and delete the repair resources without confirmation.
+    syntax: az vm repair restore -g MyResourceGroup -n MyVM --yes --verbose
+  - summary: |-
+      Restore from the repair VM and keep the repair resources without confirmation. Use for unattended runs that need the repair VM preserved for inspection.
+    syntax: az vm repair restore -g MyResourceGroup -n MyVM --no-cleanup --verbose
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -572,6 +596,10 @@ directCommands:
     summary: |-
       The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     groupName: Resource Id Arguments
+  - name: --no --no-cleanup
+    defaultValue: "False"
+    summary: |-
+      Keeps the repair resources without confirmation. Use for unattended runs that need the repair VM and disk copy preserved for inspection. Cannot be combined with --yes.
   - name: --repair-vm-id
     summary: |-
       Repair VM resource id.

@@ -157,6 +157,46 @@ The breaking changes listed in this section are planned for the next major relea
 
 - 'networkfabric fabric view-device-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric view-device-config' instead.
 
+### `networkfabric networkmonitor create`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor delete`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor show`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor update`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor wait`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
 ### `networkfabric bootstrapinterface list`
 
 [Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
