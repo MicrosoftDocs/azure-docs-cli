@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/06/2026
+ms.date: 09/07/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -46,7 +46,6 @@ You will be prompted to install an extension on first use.
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.73.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.8.0](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.32](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[arcgateway](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway) | 2.57.0 | Microsoft Azure Command-Line Tools Arcgateway Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/arcgateway/HISTORY.rst) |
-|[arize-ai](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai) | 2.75.0 | Microsoft Azure Command-Line Tools ArizeAi Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/arize-ai/HISTORY.rst) |
 |[artifact-signing](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing) | 2.75.0 | Microsoft Azure Command-Line Tools Artifact Signing Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/artifact-signing/HISTORY.rst) |
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.55.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
@@ -156,7 +155,7 @@ You will be prompted to install an extension on first use.
 |[managedcleanroom](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom) | 2.75.0 | Microsoft Azure Command-Line Tools Managedcleanroom Extension. | Preview | [1.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedcleanroom/HISTORY.rst) |
 |[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.75.0 | Support for managednetworkfabric commands based on 2026-01-15-preview API version. | Preview | [10.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner) | 2.61.0 | Support for Management Partner preview | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managementpartner/HISTORY.rst) |
-|[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.75.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
+|[mcc](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc) | 2.75.0 | Microsoft Connected Cache CLI Commands. | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/mcc/HISTORY.rst) |
 |[mdp](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp) | 2.57.0 | Microsoft Azure Command-Line Tools Mdp Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mdp/HISTORY.rst) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh) | 2.67.0 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh/HISTORY.rst) |
 |[microsoft-fabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric) | 2.61.0 | Microsoft Azure Command-Line Tools Microsoft Fabric Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/microsoft-fabric/HISTORY.rst) |
@@ -234,7 +233,7 @@ You will be prompted to install an extension on first use.
 |[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.75.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [3.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap) | 2.61.0 | Manage virtual network taps (VTAP). | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap/HISTORY.rst) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.55.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
-|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [2.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
+|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [2.3.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
 |[vme](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme) | 2.70.0 | Microsoft Azure Command-Line Tools Vme Extension | Preview | [1.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/vme/HISTORY.rst) |
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.75.0 | Azure VMware Solution commands. | GA | [8.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
