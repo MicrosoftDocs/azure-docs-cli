@@ -27,17 +27,18 @@ directCommands:
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--org-creation-source {LIFTR, NEWRELIC}]
                                 [--plan-data]
+                                [--saas-data]
                                 [--tags]
                                 [--user-info]
   examples:
   - summary: |-
-      Create a NewRelicMonitorResource.
-    syntax: az new-relic monitor create --resource-group MyResourceGroup --name MyNewRelicMonitor --location eastus2euap --user-info first-name="vdftzcggiref" last-name="bcsztgqovdlmzf" email-address="UserEmail@123.com" phone-number="123456" --plan-data billing-cycle="MONTHLY" effective-date='2022-10-25T15:14:33+02:00' plan-details="newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg" usage-type="PAYG" --account-creation-source "LIFTR" --org-creation-source "LIFTR" --tags key6976=oaxfhf
+      Create a New Relic monitor
+    syntax: az new-relic monitor create --resource-group myResourceGroup --name myNewRelicMonitor --location eastus --user-info first-name=FirstName last-name=LastName email-address=user@example.com phone-number=0000000000 --plan-data billing-cycle=MONTHLY effective-date=2026-06-01T00:00:00Z plan-details=newrelic-pay-as-you-go-free-live@TIDn7ja87drquhy@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg_2025 usage-type=PAYG --account-creation-source LIFTR --org-creation-source LIFTR --tags environment=Production
   requiredParameters:
   - isRequired: true
     name: --monitor-name --name -n
     summary: |-
-      Name of the Monitors resource.
+      Name of the Monitoring resource.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -81,6 +82,10 @@ directCommands:
   - name: --plan-data
     summary: |-
       Plan details Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --saas-data
+    summary: |-
+      SaaS details  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --tags
     summary: |-
@@ -220,7 +225,7 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --g --resource-group
+  - name: --g --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
@@ -411,6 +416,148 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_new-relic_monitor_latest-linked-saas
+  name: az new-relic monitor latest-linked-saas
+  summary: |-
+    Returns the latest SaaS linked to the newrelic organization of the underlying monitor.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az new-relic monitor latest-linked-saas [--acquire-policy-token]
+                                            [--change-reference]
+                                            [--ids]
+                                            [--monitor-name]
+                                            [--resource-group]
+                                            [--subscription]
+  examples:
+  - summary: |-
+      Get the latest SaaS resource linked to a New Relic monitor
+    syntax: az new-relic monitor latest-linked-saas --resource-group myResourceGroup --monitor-name myMonitor
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
+    summary: |-
+      Name of the Monitors resource.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_new-relic_monitor_link-saas
+  name: az new-relic monitor link-saas
+  summary: |-
+    Links a new SaaS to the newrelic organization of the underlying monitor.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az new-relic monitor link-saas [--acquire-policy-token]
+                                   [--change-reference]
+                                   [--ids]
+                                   [--monitor-name]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--resource-group]
+                                   [--saas-resource-id]
+                                   [--subscription]
+  examples:
+  - summary: |-
+      Link a SaaS resource to a New Relic monitor
+    syntax: az new-relic monitor link-saas --resource-group myResourceGroup --monitor-name myMonitor --saas-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mySaaSResourceGroup/providers/Microsoft.SaaS/resources/myNewRelicSaaS
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
+    summary: |-
+      Name of the Monitors resource.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --saas-resource-id
+    summary: |-
+      SaaS resource id.
+    groupName: Body Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_new-relic_monitor_list
   name: az new-relic monitor list
   summary: |-
@@ -562,7 +709,7 @@ directCommands:
   examples:
   - summary: |-
       List of all active deployments that are associated with the marketplace subscription linked to the given monitor.
-    syntax: az new-relic monitor list-connected-partner-resource --resource-group MyResourceGroup --monitor-name MyNewRelicMonitor
+    syntax: az new-relic monitor list-connected-partner-resource --resource-group MyResourceGroup --monitor-name MyNewRelicMonitor --body UserEmail@123.com
   requiredParameters:
   - isRequired: true
     name: --monitor-name
@@ -840,6 +987,72 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_new-relic_monitor_refresh-ingestion-key
+  name: az new-relic monitor refresh-ingestion-key
+  summary: |-
+    Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az new-relic monitor refresh-ingestion-key [--acquire-policy-token]
+                                               [--change-reference]
+                                               [--ids]
+                                               [--monitor-name]
+                                               [--resource-group]
+                                               [--subscription]
+  examples:
+  - summary: |-
+      Refresh the ingestion key for a New Relic monitor
+    syntax: az new-relic monitor refresh-ingestion-key --resource-group myResourceGroup --monitor-name myMonitor
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --monitor-name
+    summary: |-
+      Name of the Monitors resource.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_new-relic_monitor_show
   name: az new-relic monitor show
   summary: |-
@@ -916,7 +1129,7 @@ directCommands:
   examples:
   - summary: |-
       Switches the billing for NewRelic monitor resource.
-    syntax: az new-relic monitor switch-billing --monitor-name MyNewRelicMonitor --resource-group MyResourceGroup --azure-resource-id resourceId --organization-id organizationId --user-email="UserEmail@123.com" --plan-data billing-cycle="MONTHLY" effective-date='2022-10-25T15:14:33+02:00' plan-details="nr-privateofferplan03-upfront@TID5xd5yfrmr6no@PUBIDnewrelicinc-privateoffers.nr-privateoffers1" usage-type="COMMITTED"
+    syntax: az new-relic monitor switch-billing --monitor-name MyNewRelicMonitor --resource-group MyResourceGroup --azure-resource-id resourceId --organization-id organizationId --user-email="UserEmail@123.com" --plan-data billing-cycle="MONTHLY" effective-date='2026-06-01T00:00:00Z' plan-details="newrelic-pay-as-you-go-free-live@TIDn7ja87drquhy@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg_2025" usage-type="PAYG"
   requiredParameters:
   - isRequired: true
     name: --user-email
@@ -1159,6 +1372,8 @@ commands:
 - az_new-relic_monitor_get-billing-info
 - az_new-relic_monitor_get-metric-rule
 - az_new-relic_monitor_get-metric-statu
+- az_new-relic_monitor_latest-linked-saas
+- az_new-relic_monitor_link-saas
 - az_new-relic_monitor_list
 - az_new-relic_monitor_list-app-service
 - az_new-relic_monitor_list-connected-partner-resource
@@ -1168,9 +1383,11 @@ commands:
 - az_new-relic_monitor_monitored-subscription
 - az_new-relic_monitor_monitored-subscription_create
 - az_new-relic_monitor_monitored-subscription_delete
+- az_new-relic_monitor_monitored-subscription_list
 - az_new-relic_monitor_monitored-subscription_show
 - az_new-relic_monitor_monitored-subscription_update
 - az_new-relic_monitor_monitored-subscription_wait
+- az_new-relic_monitor_refresh-ingestion-key
 - az_new-relic_monitor_show
 - az_new-relic_monitor_switch-billing
 - az_new-relic_monitor_tag-rule
