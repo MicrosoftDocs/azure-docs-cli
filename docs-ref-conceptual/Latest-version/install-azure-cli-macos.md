@@ -24,8 +24,18 @@ Homebrew is the easiest way to manage your Azure CLI install. It provides conven
 install, update, and uninstall. If you don't have homebrew available on your system,
 [install homebrew][04] before continuing.
 
+> [!NOTE]
+> Azure CLI has migrated from a Homebrew Core formula to a Homebrew Cask. Both commands below
+> install the same CLI. No action is required if you already have Azure CLI installed.
+
 You can install the Azure CLI on macOS by updating your brew repository information, and then
 running the `install` command:
+
+```bash
+brew update && brew install --cask azure-cli
+```
+
+or
 
 ```bash
 brew update && brew install azure-cli
@@ -49,6 +59,23 @@ Zsh profile.
 autoload bashcompinit && bashcompinit
 source $(brew --prefix)/etc/bash_completion.d/az
 ```
+
+### Issues after the Homebrew Core to Cask migration
+
+If you experience unexpected behavior after the migration from the Homebrew Core formula to the
+Homebrew Cask, perform a one-time clean reinstall:
+
+```bash
+brew uninstall azure-cli
+brew cleanup azure-cli
+brew update
+brew install azure-cli
+az version
+```
+
+> [!IMPORTANT]
+> Running `brew update` is required. It refreshes local metadata so Homebrew knows the formula has
+> moved to the cask. Your `~/.azure` configuration is preserved during uninstall.
 
 ### Unable to find Python or installed packages
 
