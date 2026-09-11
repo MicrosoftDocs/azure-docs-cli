@@ -1,0 +1,277 @@
+### YamlMime:AzureCLIGroup
+uid: az_agent_tool_resource
+name: az agent tool resource
+summary: |-
+  Search and inspect Azure resources from the local ARM cache.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_agent_tool_resource_find
+  name: az agent tool resource find
+  summary: |-
+    Search the local ARM resource cache by name pattern, returning matching resources as JSON.
+  description: |-
+    `az agent tool resource find` wraps the agent's `find_resources` tool: exact match preferred, falls back to substring, then Levenshtein typo correction. Results include the resource id, name, type, resource group, and location. External AI tools use this to resolve a user-supplied name to a concrete resource id before performing further operations. Backed by the on-disk ARM cache under `~/.azclips/arm-cache/`, so it is orders of magnitude faster than an ARM roundtrip.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/agent/index.md
+  syntax: >-
+    az agent tool resource find --name
+                                [--kind]
+                                [--resource-group]
+                                [--subscription-id]
+                                [--top]
+  examples:
+  - summary: |-
+      Find any resource whose name matches "prod"
+    syntax: az agent tool resource find --name prod
+  - summary: |-
+      Restrict the search to resource groups only
+    syntax: az agent tool resource find --name prod --kind resourceGroup
+  - summary: |-
+      Disambiguate a name that repeats across subscriptions
+    syntax: az agent tool resource find --name prod --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Narrow to a resource group and cap the result count
+    syntax: az agent tool resource find --name prod --kind resource --resource-group my-rg --top 25
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Name pattern to match against cached Azure resource names.
+  optionalParameters:
+  - name: --kind
+    summary: |-
+      Optional kind filter (tenant | subscription | resourceGroup | resource). Defaults to all kinds.
+  - name: --resource-group
+    summary: |-
+      Optional resource group name to narrow the search (only meaningful for kind=resource).
+  - name: --subscription-id
+    summary: |-
+      Optional subscription id or display name to narrow the search.
+  - name: --top
+    summary: |-
+      Max candidates to return. Default 10.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_agent_tool_resource_refresh
+  name: az agent tool resource refresh
+  summary: |-
+    Synchronously refresh the on-disk ARM cache used by agent tool resource find/tree/show.
+  description: |-
+    `az agent tool resource refresh` rebuilds the on-disk cache under `~/.azclips/arm-cache/<tenantId>/` and waits for it to finish before returning. The other resource commands (`find`, `tree`, `show`) kick a background refresh and answer from whatever is on disk — on a cold machine that's empty. Use this command once at setup, then again whenever the cache looks stale (e.g. you just created resources and they are missing from `find` results).
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/agent/index.md
+  syntax: az agent tool resource refresh
+  examples:
+  - summary: |-
+      First-time setup
+    syntax: az agent tool resource refresh
+  - summary: |-
+      After creating new resources you want to query immediately
+    syntax: >-
+      az group create --name my-new-rg --location eastus --subscription-id 00000000-0000-0000-0000-000000000000
+
+      az agent tool resource refresh
+
+      az agent tool resource find --name my-new-rg --kind resourceGroup
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_agent_tool_resource_show
+  name: az agent tool resource show
+  summary: |-
+    Return details for one resource from the local ARM cache, optionally augmented with a live ARM GET for deep fields (properties, provisioningState).
+  description: |-
+    `az agent tool resource show` wraps the agent's `get_resource_details` tool. Given a resource name or full ARM id, returns the cache row (id, type, location, sku, tags, kind, identity, managedBy). Pass `--live` to also fetch the current ARM body — costs one live GET (~200-500ms) but exposes fields the cache does not carry (`properties`, `provisioningState`, endpoints, encryption). Default is cache-only.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/agent/index.md
+  syntax: >-
+    az agent tool resource show --name
+                                [--kind]
+                                [--live]
+                                [--resource-group]
+                                [--subscription-id]
+  examples:
+  - summary: |-
+      Show one VM from the cache
+    syntax: az agent tool resource show --name my-vm --kind resource
+  - summary: |-
+      Get live ARM state (needed for provisioningState / properties)
+    syntax: az agent tool resource show --name my-vm --kind resource --live
+  - summary: |-
+      Look up by ARM id
+    syntax: az agent tool resource show --name /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg/providers/Microsoft.Compute/virtualMachines/my-vm
+  - summary: |-
+      Disambiguate a name shared across subscriptions or resource groups
+    syntax: az agent tool resource show --name my-vm --kind resource --subscription-id 00000000-0000-0000-0000-000000000000 --resource-group my-rg
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Name or full ARM id.
+  optionalParameters:
+  - name: --kind
+    summary: |-
+      Optional kind filter: tenant | subscription | resourceGroup | resource.
+  - name: --live
+    summary: |-
+      Fetch live ARM body (properties, provisioningState, endpoints). Adds ~200-500ms. Default false.
+  - name: --resource-group
+    summary: |-
+      Optional resource group to scope the lookup (only meaningful for kind=resource).
+  - name: --subscription-id
+    summary: |-
+      Optional subscription id or display name to scope the lookup.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_agent_tool_resource_sku
+  name: az agent tool resource sku
+  summary: |-
+    Given a VM SKU, report which Azure regions currently expose that SKU for the current subscription.
+  description: |-
+    `az agent tool resource sku` wraps the agent's `find_available_locations` tool. Given a VM SKU (for example `Standard_D2s_v5`), it probes a common set of Azure regions in parallel via `providers/Microsoft.Compute/skus` and returns a JSON list showing which locations have the SKU available, which are blocked at the location level, and which zones inside each location expose it. Backs the agent's automatic recovery from `SkuNotAvailable` errors on `vm create`.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/agent/index.md
+  syntax: >-
+    az agent tool resource sku --vm-size
+                               [--subscription-id]
+  examples:
+  - summary: |-
+      Check where Standard_D2s_v5 is available
+    syntax: az agent tool resource sku --vm-size Standard_D2s_v5
+  - summary: |-
+      Check availability for a specific subscription
+    syntax: az agent tool resource sku --vm-size Standard_D2s_v5 --subscription-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --vm-size
+    summary: |-
+      VM SKU to check, e.g. 'Standard_D2s_v5'.
+  optionalParameters:
+  - name: --subscription-id
+    summary: |-
+      Optional subscription id. Defaults to the current auth-context subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_agent_tool_resource_tree
+  name: az agent tool resource tree
+  summary: |-
+    Return the resource hierarchy under a node (tenant, subscription, resource group, or resource) from the local ARM cache.
+  description: |-
+    `az agent tool resource tree` wraps the agent's `get_resource_tree` tool. Given a node identifier and its kind (`tenant`, `subscription`, `resourceGroup`, or `resource`), returns the subtree beneath it as JSON — subscriptions under a tenant, resource groups under a subscription, resources under a group. `--max-depth` (default 2) caps the traversal so the JSON does not balloon on large scopes. Backed by the on-disk ARM cache under `~/.azclips/arm-cache/`.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/agent/index.md
+  syntax: >-
+    az agent tool resource tree --kind
+                                --name
+                                [--max-depth]
+                                [--subscription-id]
+  examples:
+  - summary: |-
+      List every resource group in a subscription
+    syntax: az agent tool resource tree --name my-subscription --kind subscription
+  - summary: |-
+      Drill deeper (subscription → RG → resource)
+    syntax: az agent tool resource tree --name my-subscription --kind subscription --max-depth 3
+  - summary: |-
+      Show what a resource group contains
+    syntax: az agent tool resource tree --name my-rg --kind resourceGroup
+  - summary: |-
+      Disambiguate a resource group whose name repeats across subscriptions
+    syntax: az agent tool resource tree --name my-rg --kind resourceGroup --subscription-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --kind
+    summary: |-
+      Kind of node to root the tree at: tenant | subscription | resourceGroup | resource.
+  - isRequired: true
+    name: --name
+    summary: |-
+      Name, full ARM id, subscription id/name, or tenant id.
+  optionalParameters:
+  - name: --max-depth
+    summary: |-
+      Max depth from the root node. Defaults to 2.
+  - name: --subscription-id
+    summary: |-
+      Optional subscription scope when kind=resourceGroup and the RG name repeats across subscriptions.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+commands:
+- az_agent_tool_resource_find
+- az_agent_tool_resource_refresh
+- az_agent_tool_resource_show
+- az_agent_tool_resource_sku
+- az_agent_tool_resource_tree
+metadata:
+  ms.date: 07/07/2026
+  description: Search and inspect Azure resources from the local ARM cache.
