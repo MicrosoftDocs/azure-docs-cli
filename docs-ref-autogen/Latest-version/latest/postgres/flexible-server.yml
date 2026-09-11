@@ -363,7 +363,7 @@ directCommands:
     summary: |-
       Type of the Microsoft Entra administrator.
   - name: --admin-user -u
-    defaultValue: shypoultry7
+    defaultValue: crassshrimp7
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
@@ -770,7 +770,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-09-10T11:13:45+00:00
+    defaultValue: 2026-09-10T23:14:24+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
   - name: --subnet
@@ -1088,9 +1088,11 @@ directCommands:
                                         [--private-dns-zone]
                                         [--resource-group]
                                         [--restore-time]
+                                        [--sku-name]
                                         [--storage-type {PremiumV2_LRS}]
                                         [--subnet]
                                         [--subscription]
+                                        [--tier]
                                         [--vnet]
                                         [--yes]
                                         [--zone]
@@ -1114,6 +1116,12 @@ directCommands:
   - summary: |-
       Restore 'testserver' to current point-in-time as a new server 'testservernew' using Premium SSD v2 Disks by setting storage type to "PremiumV2_LRS"
     syntax: az postgres flexible-server restore --resource-group testgroup --name testservernew --source-server testserver --storage-type PremiumV2_LRS
+  - summary: |-
+      Restore 'testserver' to current point-in-time as a new server 'testservernew' with a different compute size.
+    syntax: az postgres flexible-server restore --resource-group testgroup --name testservernew --source-server testserver --sku-name Standard_D4s_v3
+  - summary: |-
+      Restore 'testserver' to current point-in-time as a new server 'testservernew' with a different compute tier and compute size.
+    syntax: az postgres flexible-server restore --resource-group testgroup --name testservernew --source-server testserver --tier MemoryOptimized --sku-name Standard_E2ds_v4
   requiredParameters:
   - isRequired: true
     name: --source-server
@@ -1171,9 +1179,12 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-09-10T11:13:45+00:00
+    defaultValue: 2026-09-10T23:14:24+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
+  - name: --sku-name
+    summary: |-
+      The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.
   - name: --storage-type
     acceptedValues: PremiumV2_LRS
     summary: |-
@@ -1185,6 +1196,9 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --tier
+    summary: |-
+      Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.
   - name: --vnet
     summary: |-
       Name or identifier of an existing virtual network. If you want to use a vnet from a different resource group or subscription, please provide a resource identifier. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.

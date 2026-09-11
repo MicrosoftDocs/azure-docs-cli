@@ -601,7 +601,7 @@ directCommands:
                          [--connection-string]
                          [--datetime]
                          [--endpoint]
-                         [--fields {content_type, etag, key, label, last_modified, locked, tags, value}]
+                         [--fields {content_type, description, etag, key, label, last_modified, locked, tags, value}]
                          [--key]
                          [--label]
                          [--name]
@@ -664,7 +664,7 @@ directCommands:
     summary: |-
       If auth mode is "login" or "anonymous", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
   - name: --fields
-    acceptedValues: content_type, etag, key, label, last_modified, locked, tags, value
+    acceptedValues: content_type, description, etag, key, label, last_modified, locked, tags, value
     summary: |-
       Space-separated customized output fields.
   - name: --key
@@ -927,6 +927,7 @@ directCommands:
                         [--change-reference]
                         [--connection-string]
                         [--content-type]
+                        [--description]
                         [--endpoint]
                         [--label]
                         [--name]
@@ -952,6 +953,9 @@ directCommands:
   - summary: |-
       Set a key-value using your 'az login' credentials.
     syntax: az appconfig kv set --endpoint https://contoso.azconfig.io --key color --value red --auth-mode login
+  - summary: |-
+      Set a key-value with a description.
+    syntax: az appconfig kv set -n MyAppConfiguration --key color --value red --description "The theme color"
   requiredParameters:
   - isRequired: true
     name: --key
@@ -977,6 +981,9 @@ directCommands:
   - name: --content-type
     summary: |-
       Content type of the key-value to be set.
+  - name: --description
+    summary: |-
+      Description of the key-value to be set.
   - name: --endpoint
     summary: |-
       If auth mode is "login" or "anonymous", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
@@ -1037,6 +1044,7 @@ directCommands:
                                  [--auth-mode {anonymous, key, login}]
                                  [--change-reference]
                                  [--connection-string]
+                                 [--description]
                                  [--endpoint]
                                  [--label]
                                  [--name]
@@ -1049,6 +1057,9 @@ directCommands:
   - summary: |-
       Set a keyvault reference with null label and multiple tags using connection string.
     syntax: az appconfig kv set-keyvault --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key HostSecret --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret --tags tag1=value1 tag2=value2
+  - summary: |-
+      Set a keyvault reference with a description.
+    syntax: az appconfig kv set-keyvault -n MyAppConfiguration --key HostSecret --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret --description "Reference to the host secret"
   requiredParameters:
   - isRequired: true
     name: --key
@@ -1075,6 +1086,9 @@ directCommands:
   - name: --connection-string
     summary: |-
       Combination of access key and endpoint of the App Configuration store. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+  - name: --description
+    summary: |-
+      Description of the key vault reference to be set.
   - name: --endpoint
     summary: |-
       If auth mode is "login" or "anonymous", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
@@ -1132,6 +1146,7 @@ directCommands:
                                            [--auth-mode {anonymous, key, login}]
                                            [--change-reference]
                                            [--connection-string]
+                                           [--description]
                                            [--endpoint]
                                            [--label]
                                            [--name]
@@ -1147,6 +1162,9 @@ directCommands:
   - summary: |-
       Set a snapshot reference with tags using connection string.
     syntax: az appconfig kv set-snapshot-reference --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key MySnapshotRef --snapshot-name MySnapshot --tags tag1=value1 tag2=value2
+  - summary: |-
+      Set a snapshot reference with a description.
+    syntax: az appconfig kv set-snapshot-reference -n MyAppConfiguration --key MySnapshotRef --snapshot-name MySnapshot --description "Reference to MySnapshot"
   requiredParameters:
   - isRequired: true
     name: --key
@@ -1173,6 +1191,9 @@ directCommands:
   - name: --connection-string
     summary: |-
       Combination of access key and endpoint of the App Configuration store. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+  - name: --description
+    summary: |-
+      Description of the snapshot reference to be set.
   - name: --endpoint
     summary: |-
       If auth mode is "login" or "anonymous", provide endpoint URL of the App Configuration store. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
@@ -1393,5 +1414,5 @@ commands:
 - az_appconfig_kv_show
 - az_appconfig_kv_unlock
 metadata:
-  ms.date: 05/20/2026
+  ms.date: 09/04/2026
   description: Manage key-values stored in an App Configuration store.
