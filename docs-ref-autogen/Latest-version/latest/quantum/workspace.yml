@@ -139,7 +139,7 @@ directCommands:
       Comma separated list of Provider/SKU pairs. Separate the Provider and SKU with a slash. Enclose the entire list in quotes. Values from `az quantum offerings list -l <location> -o table`.
   - name: --quota
     summary: |-
-      Target quota allocation as provider-id, target-id, standard-minutes-lifetime, and optional high-minutes-lifetime key=value pairs, a JSON object or array, or `@{file}` with JSON content. standard-minutes-lifetime is required for a new allocation. camelCase keys (providerId, targetId, ...) are also accepted. Repeat --quota once per target.
+      Target quota allocation for a V2 workspace as provider-id, target-id, standard-minutes-lifetime, and optional high-minutes-lifetime key=value pairs, a JSON object or array, or `@{file}` with JSON content. Use --workspace-kind V2 when creating a workspace. Values are absolute and cannot exceed the suite target allocation or, when updating, be below current workspace usage. standard-minutes-lifetime is required for a new allocation. camelCase keys (providerId, targetId, ...) are also accepted. Repeat --quota once per target.
   - name: --skip-autoadd
     defaultValue: "False"
     summary: |-
@@ -300,7 +300,11 @@ directCommands:
 - uid: az_quantum_workspace_quotas
   name: az quantum workspace quotas
   summary: |-
-    List the quotas for the given (or current) Azure Quantum workspace.
+    List quota allocations and consumed usages for an Azure Quantum workspace.
+  description: |-
+    Preserves the existing quota dimension response for v1 providers. For v2 providers, returns
+    separate StandardMinutesLifetime and HighMinutesLifetime rows for each target, with targetId,
+    limit, and utilization reported in minutes. Missing allocation or usage values are returned as 0.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'quantum' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -312,8 +316,8 @@ directCommands:
                                 [--change-reference]
   examples:
   - summary: |-
-      List the quota information of a specified Azure Quantum workspace. If a default workspace has been set, the -g and -w parameters are not required.
-    syntax: az quantum workspace quotas -g MyResourceGroup -w MyWorkspace
+      View quota allocations and usages for the given (or current) workspace. If a default workspace has been set, the -g and -w parameters are not required.
+    syntax: az quantum workspace quotas -g MyResourceGroup -w MyWorkspace -o table
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -514,7 +518,7 @@ directCommands:
       Enable or disable API key authentication.
   - name: --quota
     summary: |-
-      Target quota allocation as provider-id, target-id, standard-minutes-lifetime, and optional high-minutes-lifetime key=value pairs, a JSON object or array, or `@{file}` with JSON content. standard-minutes-lifetime is required for a new allocation. camelCase keys (providerId, targetId, ...) are also accepted. Repeat --quota once per target.
+      Target quota allocation for a V2 workspace as provider-id, target-id, standard-minutes-lifetime, and optional high-minutes-lifetime key=value pairs, a JSON object or array, or `@{file}` with JSON content. Use --workspace-kind V2 when creating a workspace. Values are absolute and cannot exceed the suite target allocation or, when updating, be below current workspace usage. standard-minutes-lifetime is required for a new allocation. camelCase keys (providerId, targetId, ...) are also accepted. Repeat --quota once per target.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
