@@ -1836,6 +1836,7 @@ directCommands:
                   [--opentelemetry-metrics-port-http]
                   [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, AzureLinux3OSGuard, AzureLinuxOSGuard, CBLMariner, Flatcar, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404, Ubuntu2604}]
                   [--outbound-type {block, loadBalancer, managedNATGateway, managedNATGatewayV2, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pis-id --prepared-image-specification-id]
                   [--pod-cidr]
                   [--pod-cidrs]
@@ -2741,12 +2742,12 @@ directCommands:
     summary: |-
       NAT gateway idle timeout in minutes.
     description: |-
-      Desired idle timeout for NAT gateway outbound flows, default is 4 minutes. Please specify a value in the range of [4, 120]. Valid for Standard SKU load balancer cluster with managedNATGateway or managedNATGatewayV2 outbound type only.
+      Desired idle timeout for NAT gateway outbound flows, default is 4 minutes. Please specify a value in the range of [4, 120]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --nat-gateway-managed-outbound-ip-count
     summary: |-
       NAT gateway managed outbound IP count.
     description: |-
-      Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway or managedNATGatewayV2 outbound type only.
+      Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
     summary: |-
       NAT gateway managed outbound IPv6 IP count. Valid only with --outbound-type managedNATGatewayV2.
@@ -2924,7 +2925,13 @@ directCommands:
     summary: |-
       How outbound traffic will be configured for a cluster.
     description: |-
-      Select between loadBalancer, userDefinedRouting, managedNATGateway, managedNATGatewayV2, userAssignedNATGateway, none and block. If not set, defaults to type loadBalancer. managedNATGatewayV2 uses Azure NAT Gateway Standard V2 SKU and supports IPv6, user-provided public IPs, and user-provided IP prefixes.
+      Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway, none and block. If not set, defaults to type loadBalancer. For NAT Gateway V2 (IPv6, user-provided public IPs, and user-provided IP prefixes), use managedNATGateway with --outbound-type-sku StandardV2. The legacy managedNATGatewayV2 value is no longer supported.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. StandardV2 selects the NAT Gateway V2 shape, which supports IPv6, user-provided public IPs, and user-provided IP prefixes. If omitted, defaults to StandardV2 where the region supports it, otherwise Standard.
   - name: --pis-id --prepared-image-specification-id
     summary: |-
       The resource ID of the prepared image specification to use for provisioning nodes in the default node pool.
@@ -6577,6 +6584,7 @@ directCommands:
                   [--opentelemetry-metrics-port-grpc]
                   [--opentelemetry-metrics-port-http]
                   [--outbound-type {block, loadBalancer, managedNATGateway, managedNATGatewayV2, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
@@ -7509,12 +7517,12 @@ directCommands:
     summary: |-
       NAT gateway idle timeout in minutes.
     description: |-
-      Desired idle timeout for NAT gateway outbound flows, default is 4 minutes. Please specify a value in the range of [4, 120]. Valid for Standard SKU load balancer cluster with managedNATGateway or managedNATGatewayV2 outbound type only.
+      Desired idle timeout for NAT gateway outbound flows, default is 4 minutes. Please specify a value in the range of [4, 120]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --nat-gateway-managed-outbound-ip-count
     summary: |-
       NAT gateway managed outbound IP count.
     description: |-
-      Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway or managedNATGatewayV2 outbound type only.
+      Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
     summary: |-
       NAT gateway managed outbound IPv6 IP count. Valid only with --outbound-type managedNATGatewayV2.
@@ -7631,7 +7639,13 @@ directCommands:
     summary: |-
       How outbound traffic will be configured for a cluster.
     description: |-
-      This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, managedNATGatewayV2, userAssignedNATGateway, userDefinedRouting, none and block. For clusters using a custom virtual network, supported values are loadbalancer, userAssignedNATGateway and userDefinedRouting. For clusters using an AKS-managed virtual network, supported values are loadbalancer, managedNATGateway, managedNATGatewayV2 and userDefinedRouting.
+      This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting, none and block. For clusters using a custom virtual network, supported values are loadbalancer, userAssignedNATGateway and userDefinedRouting. For clusters using an AKS-managed virtual network, supported values are loadbalancer, managedNATGateway and userDefinedRouting. For NAT Gateway V2, use managedNATGateway with --outbound-type-sku StandardV2; the legacy managedNATGatewayV2 value is no longer supported.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. StandardV2 selects the NAT Gateway V2 shape, which supports IPv6, user-provided public IPs, and user-provided IP prefixes. If omitted, defaults to StandardV2 where the region supports it, otherwise Standard.
   - name: --pod-cidr
     summary: |-
       A CIDR notation IP range from which to assign pod IPs when kubenet is used.
@@ -8497,6 +8511,12 @@ commands:
 - az_aks_agent
 - az_aks_agent-cleanup
 - az_aks_agent-init
+- az_aks_alert-config
+- az_aks_alert-config_add
+- az_aks_alert-config_delete
+- az_aks_alert-config_list
+- az_aks_alert-config_show
+- az_aks_alert-config_update
 - az_aks_app
 - az_aks_app_up
 - az_aks_applicationloadbalancer
