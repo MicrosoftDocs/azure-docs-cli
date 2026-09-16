@@ -96,10 +96,10 @@ Removes the install directory. Pass `--force` / `-Force` to remove a folder that
 
 | You want to… | Guide |
 | --- | --- |
-| Install azcli manually / offline (no `gh`, or you already have the archive) | [install-cli-manual.md](./install-cli-manual.md) |
-| Add an add-on azcli extension (lean installs, or a specific version) | [install-cli-extensions.md](./install-cli-extensions.md) |
-| Enable `az` tab completion (bash / zsh / PowerShell) | [install-cli-completions.md](./install-cli-completions.md) |
-| Enable AI-based error recovery in Azure CLI | [ai-based-error-recovery.md](./ai-based-error-recovery.md) |
+| Install azcli manually / offline (no `gh`, or you already have the archive) | [Install the Azure CLI preview manually or offline](./install-cli-manual.md) |
+| Add an add-on azcli extension (lean installs, or a specific version) | [Install Azure CLI preview extensions](./install-cli-extensions.md) |
+| Enable `az` tab completion (bash / zsh / PowerShell) | [Enable Azure CLI preview tab completion](./install-cli-completions.md) |
+| Enable AI-based error recovery in Azure CLI | [AI-based error recovery in Azure CLI](./ai-based-error-recovery.md) |
 
 ## What's in a release
 

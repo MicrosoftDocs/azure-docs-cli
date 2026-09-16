@@ -115,6 +115,6 @@ function again) to return to your default.
 
 | You want to… | Guide |
 | --- | --- |
-| Install the Azure CLI preview build | [docs/install-overview.md](./install-overview.md) |
-| Install the Azure PowerShell preview modules | [docs/install-powershell-modules.md](../../azure-powershell/docs-conceptual/install-powershell-modules.md) |
+| Install the Azure CLI preview build | [Install the Azure CLI preview](./install-overview.md) |
+| Install the Azure PowerShell preview modules | [Install the Azure PowerShell preview modules](../../azure-powershell/docs-conceptual/install-powershell-modules.md) |
 | Report a problem or share feedback | [Log an issue on GitHub](https://github.com/Azure/azclips/issues) |

@@ -88,4 +88,4 @@ Commands that contact Azure require sign-in and a subscription. If `az` is found
 | Permission denied (Linux/macOS) | Run `chmod +x <install-root>/az`. |
 | macOS blocks the binary | Validate the source, then `xattr -dr com.apple.quarantine <install-root>`. |
 | File name doesn't match examples | Use the platform suffix from your downloaded file (e.g. `linux-arm64`, `win-arm64`). |
-| A command says an extension is missing | On lean installs, add it from the extensions bundle (see [install-cli-extensions.md](./install-cli-extensions.md)) or use the full package. |
+| A command says an extension is missing | On lean installs, add it from the extensions bundle (see [Install Azure CLI preview extensions](./install-cli-extensions.md)) or use the full package. |
