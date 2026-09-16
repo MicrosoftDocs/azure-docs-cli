@@ -1,21 +1,21 @@
 ---
-title: Install the Azure CLI private preview
-description: Learn how to install the Azure CLI private preview.
+title: Install the Azure CLI preview
+description: Learn how to install the Azure CLI preview.
 ---
 
-# Install the Azure CLI private preview
+# Install the Azure CLI preview
 
-The Azure CLI private preview ships as **azcli** — the `az` command-line tool (self-contained; no .NET SDK needed). It ships in two flavours:
+The Azure CLI preview ships as **azcli** — the `az` command-line tool (self-contained; no .NET SDK needed). It ships in two flavours:
 
 - **full** — built-in + add-on extensions bundled.
 - **lean** — built-in extensions only.
 
 > [!NOTE]
-> For the Az PowerShell modules, see the [Azure PowerShell private preview install overview](../../azure-powershell/docs-conceptual/install-overview.md).
+> For the Az PowerShell modules, see the [Azure PowerShell preview install overview](../../azure-powershell/docs-conceptual/install-overview.md).
 
 ## Install azcli (one command)
 
-Private-preview artifacts live in a **private** GitHub repo; your account has **read** access. The installer uses your authenticated GitHub CLI (`gh`) session — no personal access tokens or manual asset URLs.
+Preview artifacts live in a **private** GitHub repo; your account has **read** access. The installer uses your authenticated GitHub CLI (`gh`) session — no personal access tokens or manual asset URLs.
 
 **Prerequisites** — install the [GitHub CLI](https://cli.github.com/) and sign in once:
 

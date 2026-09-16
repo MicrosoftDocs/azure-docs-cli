@@ -1,6 +1,6 @@
 ---
 title: Switch between the classic Azure CLI and the preview build
-description: Learn how to switch between the classic Azure CLI and the Azure CLI private preview without reinstalling either version.
+description: Learn how to switch between the classic Azure CLI and the Azure CLI preview without reinstalling either version.
 ---
 
 # Switch between the classic Azure CLI and the preview build

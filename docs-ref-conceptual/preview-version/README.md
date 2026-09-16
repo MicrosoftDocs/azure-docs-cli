@@ -28,7 +28,7 @@ This article provides links to the conceptual documentation for the preview vers
 
 - [AI-based error recovery][09]
 - [Troubleshooting][10]
-- [Switch between classic Azure CLI and the private preview][11]
+- [Switch between classic Azure CLI and the preview][11]
 
 <!-- link references -->
 

@@ -1,13 +1,13 @@
 ---
-title: Troubleshoot Azure CLI issues (Private preview)
-description: Learn what to do if you encounter issues while using Azure CLI during the private preview and how to report problems to the development team.
+title: Troubleshoot Azure CLI issues (Preview)
+description: Learn what to do if you encounter issues while using Azure CLI during the preview and how to report problems to the development team.
 ms.topic: troubleshooting
 ---
 
-# Troubleshoot Azure CLI issues (Private preview)
+# Troubleshoot Azure CLI issues (Preview)
 
 This article provides general guidance for troubleshooting issues encountered while using Azure CLI
-during the private preview.
+during the preview.
 
 Because Azure CLI is under active development, you may encounter unexpected behavior, incomplete
 functionality, or other issues.

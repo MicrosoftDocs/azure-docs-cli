@@ -1,11 +1,11 @@
 ---
 title: Configuration management
-description: Learn how to manage Azure CLI private preview configuration settings, including keys, environment variables, and file locations.
+description: Learn how to manage Azure CLI preview configuration settings, including keys, environment variables, and file locations.
 ---
 
 # Configuration management
 
-Azure CLI private preview stores user-scope configuration in a global JSON file.
+Azure CLI preview stores user-scope configuration in a global JSON file.
 
 Configuration follows strict precedence: **command args > environment variables > global config > defaults**.
 

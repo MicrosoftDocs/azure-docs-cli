@@ -1,11 +1,11 @@
 ---
-title: What's new in Azure CLI (Private preview)
-description: Discover the latest Azure CLI features available in the private preview, including shell-native Tab completion for Azure CLI commands, parameters, and valid values.
+title: What's new in Azure CLI (Preview)
+description: Discover the latest Azure CLI features available in the preview, including shell-native Tab completion for Azure CLI commands, parameters, and valid values.
 ---
 
-# What's new in Azure CLI (Private preview)
+# What's new in Azure CLI (Preview)
 
-This article highlights new features and capabilities available in the Azure CLI private preview.
+This article highlights new features and capabilities available in the Azure CLI preview.
 
 ## Tab completion
 
@@ -39,9 +39,9 @@ The feature:
 Azure CLI doesn't introduce a new interface or change existing shell behavior. Existing shell
 features, such as history-based suggestions, continue to work as expected.
 
-### Private preview behavior
+### Preview behavior
 
-During the private preview:
+During the preview:
 
 - Tab completion isn't enabled by default.
 - Enable the feature by following the post-installation setup instructions.

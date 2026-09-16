@@ -1,11 +1,11 @@
 ---
-title: Enable Azure CLI private preview tab completion
-description: Learn how to enable shell tab completion for the Azure CLI private preview in bash, zsh, and PowerShell.
+title: Enable Azure CLI preview tab completion
+description: Learn how to enable shell tab completion for the Azure CLI preview in bash, zsh, and PowerShell.
 ---
 
-# Enable Azure CLI private preview tab completion
+# Enable Azure CLI preview tab completion
 
-Azure CLI private preview ships shell completion scripts for **bash**, **zsh**, and **PowerShell**. Once enabled, pressing `<Tab>` completes command groups, subcommands, and parameters for the `az` command. Completions are resolved by calling `az` at tab-time, so they always match the installed CLI.
+Azure CLI preview ships shell completion scripts for **bash**, **zsh**, and **PowerShell**. Once enabled, pressing `<Tab>` completes command groups, subcommands, and parameters for the `az` command. Completions are resolved by calling `az` at tab-time, so they always match the installed CLI.
 
 ## Where the scripts live
 

@@ -1,9 +1,9 @@
 ---
-title: Install the Azure CLI private preview manually or offline
-description: Learn how to install the Azure CLI private preview manually or offline when the one-command installer isn't available.
+title: Install the Azure CLI preview manually or offline
+description: Learn how to install the Azure CLI preview manually or offline when the one-command installer isn't available.
 ---
 
-# Install the Azure CLI private preview manually or offline
+# Install the Azure CLI preview manually or offline
 
 > **Most users should use the [one-command installer](../README.md).** Use this guide for offline installs, as a fallback when `gh` isn't available, when you already have the archive, or to understand the steps the installer performs.
 

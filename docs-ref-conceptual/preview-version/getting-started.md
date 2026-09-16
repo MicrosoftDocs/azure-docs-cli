@@ -1,12 +1,12 @@
 ---
-title: Get started with Azure CLI (Private preview)
-description: Learn the core concepts, supported environments, authentication model, current limitations, and coexistence guidance for Azure CLI during the private preview.
+title: Get started with Azure CLI (Preview)
+description: Learn the core concepts, supported environments, authentication model, current limitations, and coexistence guidance for Azure CLI during the preview.
 ---
 
-# Get started with Azure CLI (Private preview)
+# Get started with Azure CLI (Preview)
 
 This article introduces the core concepts of Azure CLI and explains what you need to know before you
-begin using the private preview.
+begin using the preview.
 
 ## What is Azure CLI?
 
@@ -38,7 +38,7 @@ For the best experience, use interactive user authentication.
 
 ## Current limitations
 
-The private preview focuses on interactive user scenarios. Some authentication methods aren't yet
+The preview focuses on interactive user scenarios. Some authentication methods aren't yet
 supported.
 
 The following authentication methods are currently **not supported**:
@@ -51,16 +51,16 @@ Additional authentication scenarios may be added in future releases.
 
 ## Coexistence with Azure CLI and Azure PowerShell
 
-Azure CLI private preview is designed to coexist with existing Azure CLI and Azure PowerShell
+Azure CLI preview is designed to coexist with existing Azure CLI and Azure PowerShell
 installations.
 
-Installing Azure CLI private preview doesn't replace your existing installation. You can continue
-using Azure CLI and Azure PowerShell exactly as you do today while evaluating Azure CLI private
+Installing Azure CLI preview doesn't replace your existing installation. You can continue
+using Azure CLI and Azure PowerShell exactly as you do today while evaluating Azure CLI
 preview.
 
 This allows you to:
 
-- Gradually evaluate Azure CLI private preview
+- Gradually evaluate Azure CLI preview
 - Compare workflows
 - Continue using existing scripts and automation
 - Roll back to your existing workflow at any time
@@ -70,7 +70,7 @@ To switch between the classic Azure CLI and the preview build within the same se
 
 ## Supported environments
 
-Azure CLI private preview supports modern, cross-platform environments.
+Azure CLI preview supports modern, cross-platform environments.
 
 ### Supported operating systems
 
@@ -93,14 +93,14 @@ The following environments aren't supported:
 
 ## Automation support
 
-The private preview is primarily intended for interactive command-line use.
+The preview is primarily intended for interactive command-line use.
 
 Some automation scenarios and non-interactive authentication methods aren't yet supported. For the
 latest information, see the current limitations section of this article.
 
 ## Logging issues and providing feedback
 
-Your feedback is essential during the private preview.
+Your feedback is essential during the preview.
 
 If you encounter an issue:
 
@@ -113,7 +113,7 @@ When reporting an issue, include:
 
 - Operating system
 - Shell (PowerShell, Bash, or Zsh)
-- Azure CLI private preview version
+- Azure CLI preview version
 - Azure CLI or Azure PowerShell version, if applicable
 - Steps to reproduce the problem
 - Expected behavior
@@ -122,7 +122,7 @@ When reporting an issue, include:
 
 ## Known preview limitations
 
-During the private preview, you should expect some limitations:
+During the preview, you should expect some limitations:
 
 - Not all Azure CLI and Azure PowerShell scenarios are available.
 - Some AI-generated responses may be incomplete or inaccurate.

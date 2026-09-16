@@ -1,9 +1,9 @@
 ---
-title: Install Azure CLI private preview extensions
-description: Learn how to install add-on extensions for the Azure CLI private preview.
+title: Install Azure CLI preview extensions
+description: Learn how to install add-on extensions for the Azure CLI preview.
 ---
 
-# Install Azure CLI private preview extensions
+# Install Azure CLI preview extensions
 
 > **Most users should start with the [install guide](install-overview.md).** This page covers add-on extensions, which you only need on **lean** installs or to pin a specific extension version.
 
