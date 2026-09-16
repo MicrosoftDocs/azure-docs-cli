@@ -2,7 +2,7 @@
 uid: az_functionapp_flex-migration
 name: az functionapp flex-migration
 summary: |-
-  Manage migration of Linux Consumption function apps to the Flex Consumption plan.
+  Manage migration between Linux Consumption and Flex Consumption plans.
 status: GA
 sourceType: Core
 directCommands:
@@ -45,22 +45,92 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_functionapp_flex-migration_revert
+  name: az functionapp flex-migration revert
+  summary: |-
+    Revert an in-place upgraded Flex Consumption function app to Linux Consumption.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+  syntax: >-
+    az functionapp flex-migration revert --source-name
+                                         --source-resource-group
+                                         [--acquire-policy-token]
+                                         [--change-reference]
+  examples:
+  - summary: |-
+      Revert a function app to Linux Consumption within its revert window.
+    syntax: az functionapp flex-migration revert --source-name MyFunctionApp --source-resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --source-name
+    summary: |-
+      The name of the function app to revert.
+  - isRequired: true
+    name: --source-resource-group
+    summary: |-
+      The resource group of the function app to revert.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_functionapp_flex-migration_start
   name: az functionapp flex-migration start
   summary: |-
-    Create a Flex Consumption app with the same settings as the provided Linux Consumption function app.
+    Migrate a Linux Consumption function app to Flex Consumption. Supports side-by-side (new app) or in-place (same app) upgrade.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp flex-migration start --resource-group
-                                        --source-name
+    az functionapp flex-migration start --source-name
                                         --source-resource-group
                                         [--acquire-policy-token]
+                                        [--always-ready-instances]
                                         [--change-reference]
+                                        [--deployment-storage-auth-type --dsat {StorageAccountConnectionString, SystemAssignedIdentity, UserAssignedIdentity}]
+                                        [--deployment-storage-auth-value --dsav]
+                                        [--deployment-storage-container-name --dscn]
+                                        [--deployment-storage-name --dsn]
                                         [--ids]
+                                        [--in-place {false, true}]
+                                        [--instance-memory]
                                         [--maximum-instance-count]
                                         [--name]
+                                        [--resource-group]
                                         [--sar --skip-access-restrictions {false, true}]
                                         [--sc --skip-cors {false, true}]
                                         [--sh --skip-hostnames {false, true}]
@@ -70,16 +140,15 @@ directCommands:
                                         [--subscription]
   examples:
   - summary: |-
-      Migrate a Linux Consumption function app to the Flex Consumption plan.
+      Migrate a Linux Consumption function app to the Flex Consumption plan (side-by-side, creates a new app).
     syntax: az functionapp flex-migration start --source-name MyLinuxConsumptionApp --source-resource-group MyLinuxConsumptionResourceGroup --name MyFunctionApp --resource-group MyResourceGroup --storage-account MyStorageAccount
   - summary: |-
       Migrate a Linux Consumption function app to the Flex Consumption plan without migrating managed identity configurations.
     syntax: az functionapp flex-migration start --source-name MyLinuxConsumptionApp --source-resource-group MyLinuxConsumptionResourceGroup --name MyFunctionApp --resource-group MyResourceGroup --storage-account MyStorageAccount --skip-managed-identities
+  - summary: |-
+      Upgrade a Linux Consumption function app to Flex Consumption in place (same app, same name).
+    syntax: az functionapp flex-migration start --source-name MyLinuxConsumptionApp --source-resource-group MyLinuxConsumptionResourceGroup --in-place
   requiredParameters:
-  - isRequired: true
-    name: --resource-group
-    summary: |-
-      The resource group of the target function app to migrate to.
   - isRequired: true
     name: --source-name
     summary: |-
@@ -93,21 +162,49 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --always-ready-instances
+    summary: |-
+      Space-separated configuration for the number of pre-allocated instances in the format `<name>=<value>`.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --deployment-storage-auth-type --dsat
+    acceptedValues: StorageAccountConnectionString, SystemAssignedIdentity, UserAssignedIdentity
+    summary: |-
+      The deployment storage account authentication type.
+  - name: --deployment-storage-auth-value --dsav
+    summary: |-
+      The deployment storage account authentication value. For the user-assigned managed identity authentication type, this should be the user assigned identity resource id. For the storage account connection string authentication type, this should be the name of the app setting that will contain the storage account connection string. For the system assigned managed-identity authentication type, this parameter is not applicable and should be left empty.
+  - name: --deployment-storage-container-name --dscn
+    summary: |-
+      The deployment storage account container name.
+  - name: --deployment-storage-name --dsn
+    summary: |-
+      The deployment storage account name.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --in-place -i
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Upgrade the source app to Flex Consumption in place (same app, same name, same hostname). Cannot be used with --name or --resource-group.
+    isPreview: true
+  - name: --instance-memory
+    summary: |-
+      The instance memory size in MB. See https://aka.ms/flex-instance-sizes for more information on the supported values.
   - name: --maximum-instance-count
     summary: |-
       The maximum number of instances.
   - name: --name -n
     summary: |-
-      The name of the target function app to migrate to.
+      The name of the target function app to migrate to. Not applicable with --in-place.
     groupName: Resource Id Arguments
+  - name: --resource-group
+    summary: |-
+      The resource group of the target function app to migrate to. Not applicable with --in-place.
   - name: --sar --skip-access-restrictions
     defaultValue: "False"
     acceptedValues: false, true
@@ -166,7 +263,8 @@ directCommands:
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_functionapp_flex-migration_list
+- az_functionapp_flex-migration_revert
 - az_functionapp_flex-migration_start
 metadata:
-  ms.date: 08/25/2026
-  description: Manage migration of Linux Consumption function apps to the Flex Consumption plan.
+  ms.date: 09/10/2026
+  description: Manage migration between Linux Consumption and Flex Consumption plans.

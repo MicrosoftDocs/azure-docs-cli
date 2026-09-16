@@ -613,6 +613,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count]
+                  [--nat-gateway-outbound-ip-prefixes --nat-gw-prefixes]
+                  [--nat-gateway-outbound-ips --nat-gw-ips]
                   [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode {overlay}]
@@ -640,6 +643,7 @@ directCommands:
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pod-cidr]
                   [--pod-cidrs]
                   [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
@@ -1331,6 +1335,15 @@ directCommands:
       NAT gateway managed outbound IP count.
     description: |-
       Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
+    summary: |-
+      NAT gateway managed outbound IPv6 count. Only valid with --outbound-type managedNATGateway and --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ip-prefixes --nat-gw-prefixes
+    summary: |-
+      Comma-separated public IP prefix resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ips --nat-gw-ips
+    summary: |-
+      Comma-separated public IP resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
   - name: --network-dataplane
     acceptedValues: azure, cilium
     summary: |-
@@ -1457,6 +1470,12 @@ directCommands:
       How outbound traffic will be configured for a cluster.
     description: |-
       Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway and none. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT Gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. Omit to default to StandardV2 where the region supports it, otherwise Standard. StandardV2 adds zone resiliency, IPv6 support, and higher bandwidth.
   - name: --pod-cidr
     summary: |-
       A CIDR notation IP range from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
@@ -5587,6 +5606,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count]
+                  [--nat-gateway-outbound-ip-prefixes --nat-gw-prefixes]
+                  [--nat-gateway-outbound-ips --nat-gw-ips]
                   [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
@@ -5599,6 +5621,7 @@ directCommands:
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
@@ -6226,6 +6249,15 @@ directCommands:
       NAT gateway managed outbound IP count.
     description: |-
       Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
+    summary: |-
+      NAT gateway managed outbound IPv6 count. Only valid with --outbound-type managedNATGateway and --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ip-prefixes --nat-gw-prefixes
+    summary: |-
+      Comma-separated public IP prefix resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ips --nat-gw-ips
+    summary: |-
+      Comma-separated public IP resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
   - name: --network-dataplane
     acceptedValues: azure, cilium
     summary: |-
@@ -6293,6 +6325,12 @@ directCommands:
       How outbound traffic will be configured for a cluster.
     description: |-
       This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting and none. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT Gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. Migrate an existing Standard (V1) cluster to StandardV2 by passing StandardV2. StandardV2 adds zone resiliency, IPv6 support, and higher bandwidth. Downgrade from StandardV2 to Standard is not supported.
   - name: --pod-cidr
     summary: |-
       Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
