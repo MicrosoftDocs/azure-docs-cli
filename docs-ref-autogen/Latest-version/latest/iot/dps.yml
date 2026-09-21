@@ -117,12 +117,11 @@ directCommands:
                       --resource-group
                       [--acquire-policy-token]
                       [--change-reference]
+                      [--disable-local-auth --dla {false, true}]
                       [--edr --enforce-data-residency {false, true}]
                       [--location]
                       [--mi-system-assigned {false, true}]
                       [--mi-user-assigned]
-                      [--ns-id --ns-resource-id]
-                      [--ns-identity-id]
                       [--sku {S1}]
                       [--tags]
                       [--unit]
@@ -137,11 +136,14 @@ directCommands:
       Create an Azure IoT Hub Device Provisioning Service with data residency enforced. This will disable cross-region disaster recovery.
     syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --edr
   - summary: |-
-      Create an Azure IoT Hub Device Provisioning Service with system identity and Device Registry namespace properties
-    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --mi-system-assigned --ns-resource-id NamespaceResourceId
+      Create an Azure IoT Hub Device Provisioning Service with a system-assigned identity
+    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --mi-system-assigned
   - summary: |-
-      Create an Azure IoT Hub Device Provisioning Service with user-managed identity and Device Registry namespace properties
-    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --mi-user-assigned IdentityResourceId --ns-resource-id NamespaceResourceId --ns-identity-id IdentityResourceId
+      Create an Azure IoT Hub Device Provisioning Service with a user-assigned identity
+    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --mi-user-assigned IdentityResourceId
+  - summary: |-
+      Create an Azure IoT Hub Device Provisioning Service with SAS key (local) authentication disabled, requiring Azure RBAC
+    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --disable-local-auth
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -160,6 +162,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --disable-local-auth --dla
+    acceptedValues: false, true
+    summary: |-
+      A boolean indicating whether or not to disable SAS key (shared access policy) authentication for this provisioning service. When disabled, only Azure RBAC is used to authorize data plane requests.
   - name: --edr --enforce-data-residency
     acceptedValues: false, true
     summary: |-
@@ -174,12 +180,6 @@ directCommands:
   - name: --mi-user-assigned
     summary: |-
       Enable user-assigned managed identities for this provisioning service. Accepts space-separated list of identity resource IDs.
-  - name: --ns-id --ns-resource-id
-    summary: |-
-      Device Registry namespace resource ID to link to this provisioning service.
-  - name: --ns-identity-id
-    summary: |-
-      User-managed identity resource ID to access Device Registry namespace.
   - name: --sku
     defaultValue: S1
     acceptedValues: S1
@@ -665,13 +665,12 @@ directCommands:
     az iot dps update [--acquire-policy-token]
                       [--add]
                       [--change-reference]
+                      [--disable-local-auth --dla {false, true}]
                       [--force-string]
                       [--ids]
                       [--mi-system-assigned {false, true}]
                       [--mi-user-assigned]
                       [--name]
-                      [--ns-id --ns-resource-id]
-                      [--ns-identity-id]
                       [--remove]
                       [--resource-group]
                       [--set]
@@ -681,6 +680,9 @@ directCommands:
   - summary: |-
       Update Allocation Policy to 'GeoLatency' of an Azure IoT Hub Device Provisioning Service 'MyDps'
     syntax: az iot dps update --name MyDps --resource-group MyResourceGroup --set properties.allocationPolicy="GeoLatency"
+  - summary: |-
+      Disable SAS key (local) authentication on an existing Device Provisioning Service, requiring Azure RBAC
+    syntax: az iot dps update --name MyDps --resource-group MyResourceGroup --disable-local-auth
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -695,6 +697,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --disable-local-auth --dla
+    acceptedValues: false, true
+    summary: |-
+      A boolean indicating whether or not to disable SAS key (shared access policy) authentication for this provisioning service. When disabled, only Azure RBAC is used to authorize data plane requests.
   - name: --force-string
     defaultValue: "False"
     summary: |-
@@ -715,12 +721,6 @@ directCommands:
     summary: |-
       IoT Hub Device Provisioning Service name.
     groupName: Resource Id Arguments
-  - name: --ns-id --ns-resource-id
-    summary: |-
-      Device Registry namespace resource ID to link to this provisioning service.
-  - name: --ns-identity-id
-    summary: |-
-      User-managed identity resource ID to access Device Registry namespace.
   - name: --remove
     defaultValue: '[]'
     summary: |-

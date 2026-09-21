@@ -1,101 +1,39 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_adr_ns_device
-name: az iot adr ns device
+uid: az_iot_adr_ns_identity
+name: az iot adr ns identity
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns device** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns identity** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Device Registry namespace devices.
+  Manage a namespace's system-assigned identity.
+description: |-
+  Only SystemAssigned and None identity types are supported.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_adr_ns_device_list
-  name: az iot adr ns device list
+- uid: az_iot_adr_ns_identity_assign
+  name: az iot adr ns identity assign
   summary: |-
-    List devices in a Device Registry namespace.
+    Enable a namespace's system-assigned identity.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns device' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns device list --namespace --ns
-                              --resource-group
+    az iot adr ns identity assign --name --namespace
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--no-wait]
   examples:
   - summary: |-
-      List all devices in a namespace
-    syntax: az iot adr ns device list --ns myNamespace -g myResourceGroup
+      Assign the system-assigned identity.
+    syntax: az iot adr ns identity assign -n mynamespace -g mygroup
   requiredParameters:
   - isRequired: true
-    name: --namespace --ns
-    summary: |-
-      Name of the Device Registry namespace.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  globalParameters:
-  - name: --debug
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity to show all debug logs.
-  - name: --help -h
-    summary: |-
-      Show this help message and exit.
-  - name: --only-show-errors
-    defaultValue: "False"
-    summary: |-
-      Only show errors, suppressing warnings.
-  - name: --output -o
-    defaultValue: json
-    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
-    summary: |-
-      Output format.
-  - name: --query
-    summary: |-
-      JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --verbose
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_device_revoke
-  name: az iot adr ns device revoke
-  summary: |-
-    Revoke credentials for a device in a Device Registry namespace.
-  description: |-
-    This command revokes all active credentials for the specified device. The device will need to re-authenticate and obtain new credentials.
-
-    Use --disable to also prevent the device from obtaining new credentials.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns device' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az iot adr ns device revoke --device-name --dn --name
-                                --namespace --ns
-                                --resource-group
-                                [--acquire-policy-token]
-                                [--change-reference]
-                                [--disable]
-                                [--yes {false, true}]
-  examples:
-  - summary: |-
-      Revoke device credentials
-    syntax: az iot adr ns device revoke -n myDevice --ns myNamespace -g myResourceGroup
-  - summary: |-
-      Revoke credentials and disable the device
-    syntax: az iot adr ns device revoke -n myDevice --ns myNamespace -g myResourceGroup --disable
-  requiredParameters:
-  - isRequired: true
-    name: --device-name --dn --name -n
-    summary: |-
-      Name of the device.
-  - isRequired: true
-    name: --namespace --ns
+    name: --name --namespace -n
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -111,14 +49,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --disable
+  - name: --no-wait
     defaultValue: "False"
     summary: |-
-      Disable the device after revoking credentials. Prevents new credentials from being issued.
-  - name: --yes -y
-    acceptedValues: false, true
-    summary: |-
-      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+      Do not wait for the long-running operation to finish.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -146,95 +80,27 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_device_show
-  name: az iot adr ns device show
+- uid: az_iot_adr_ns_identity_remove
+  name: az iot adr ns identity remove
   summary: |-
-    Show a device in a Device Registry namespace.
+    Disable a namespace's system-assigned identity.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns device' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns device show --device-name --dn --name
-                              --namespace --ns
-                              --resource-group
+    az iot adr ns identity remove --name --namespace
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--no-wait]
   examples:
   - summary: |-
-      Show device details
-    syntax: az iot adr ns device show -n myDevice --ns myNamespace -g myResourceGroup
+      Remove the system-assigned identity.
+    syntax: az iot adr ns identity remove -n mynamespace -g mygroup
   requiredParameters:
   - isRequired: true
-    name: --device-name --dn --name -n
-    summary: |-
-      Name of the device.
-  - isRequired: true
-    name: --namespace --ns
-    summary: |-
-      Name of the Device Registry namespace.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  globalParameters:
-  - name: --debug
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity to show all debug logs.
-  - name: --help -h
-    summary: |-
-      Show this help message and exit.
-  - name: --only-show-errors
-    defaultValue: "False"
-    summary: |-
-      Only show errors, suppressing warnings.
-  - name: --output -o
-    defaultValue: json
-    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
-    summary: |-
-      Output format.
-  - name: --query
-    summary: |-
-      JMESPath query string. See http://jmespath.org/ for more information and examples.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --verbose
-    defaultValue: "False"
-    summary: |-
-      Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_device_update
-  name: az iot adr ns device update
-  summary: |-
-    Update a device in a Device Registry namespace.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns device' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az iot adr ns device update --device-name --dn --name
-                                --namespace --ns
-                                --resource-group
-                                [--acquire-policy-token]
-                                [--attributes]
-                                [--change-reference]
-                                [--enabled {false, true}]
-                                [--os-version]
-                                [--policy-resource-id]
-                                [--tags]
-  examples:
-  - summary: |-
-      Disable a device
-    syntax: az iot adr ns device update -n myDevice --ns myNamespace -g myResourceGroup --enabled false
-  - summary: |-
-      Update device OS version
-    syntax: az iot adr ns device update -n myDevice --ns myNamespace -g myResourceGroup --os-version "2.0.1"
-  requiredParameters:
-  - isRequired: true
-    name: --device-name --dn --name -n
-    summary: |-
-      Name of the device.
-  - isRequired: true
-    name: --namespace --ns
+    name: --name --namespace -n
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -246,26 +112,164 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --attributes
-    summary: |-
-      Device attributes in JSON format.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --enabled
-    acceptedValues: false, true
+  - name: --no-wait
+    defaultValue: "False"
     summary: |-
-      Enable or disable the device. A disabled device cannot authenticate with Microsoft Entra ID.
-  - name: --os-version
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
     summary: |-
-      Operating system version of the device.
-  - name: --policy-resource-id
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
     summary: |-
-      Resource ID of the credential policy to associate with the device.
-  - name: --tags
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_identity_show
+  name: az iot adr ns identity show
+  summary: |-
+    Show a namespace's identity.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns identity show --name --namespace
+                                --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --name --namespace -n
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_identity_wait
+  name: az iot adr ns identity wait
+  summary: |-
+    Wait for a namespace identity update to complete.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns identity wait --name --namespace
+                                --resource-group
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--created]
+                                [--custom]
+                                [--deleted]
+                                [--exists]
+                                [--interval]
+                                [--timeout]
+                                [--updated]
+  examples:
+  - summary: |-
+      Wait until the namespace identity has been removed.
+    syntax: az iot adr ns identity wait -n mynamespace -g mygroup --custom "identity.type=='None'"
+  requiredParameters:
+  - isRequired: true
+    name: --name --namespace -n
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -294,9 +298,9 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_adr_ns_device_list
-- az_iot_adr_ns_device_revoke
-- az_iot_adr_ns_device_show
-- az_iot_adr_ns_device_update
+- az_iot_adr_ns_identity_assign
+- az_iot_adr_ns_identity_remove
+- az_iot_adr_ns_identity_show
+- az_iot_adr_ns_identity_wait
 metadata:
-  description: Manage Device Registry namespace devices.
+  description: Only SystemAssigned and None identity types are supported.

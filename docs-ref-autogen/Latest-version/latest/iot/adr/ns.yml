@@ -6,6 +6,8 @@ extensionInformation: |-
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Device Registry namespaces.
+description: |-
+  Uses the 2026-04-01 management API.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -14,11 +16,9 @@ directCommands:
 - uid: az_iot_adr_ns_create
   name: az iot adr ns create
   summary: |-
-    Create a Device Registry namespace.
+    Create or replace a namespace.
   description: |-
-    By default, a namespace is created with a system-assigned managed identity.
-    To create a credential and credential policy, use `--enable-certificate-management` or provide any policy parameters.
-    The policy resource name can be customized with the --policy-name argument, but the 'default' credential name cannot be changed.
+    A system-assigned identity is enabled by default.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -27,24 +27,19 @@ directCommands:
     az iot adr ns create --name --namespace
                          --resource-group
                          [--acquire-policy-token]
-                         [--cert-key-type {ECC, RSA}]
-                         [--cert-subject]
-                         [--cert-validity-days]
                          [--change-reference]
-                         [--ecm --enable-certificate-management {false, true}]
                          [--location]
-                         [--pn --policy-name]
+                         [--messaging-endpoints]
+                         [--no-wait]
+                         [--system-assigned {false, true}]
                          [--tags]
   examples:
   - summary: |-
-      Create a basic Device Registry namespace
-    syntax: az iot adr ns create -n myNamespace -g myResourceGroup
+      Create a namespace with a system-assigned identity.
+    syntax: az iot adr ns create -n mynamespace -g mygroup --location centraluseuap
   - summary: |-
-      Create a Device Registry namespace with credential and default policy
-    syntax: az iot adr ns create -n myNamespace -g myResourceGroup --enable-certificate-management
-  - summary: |-
-      Create a Device Registry namespace with custom credential policy
-    syntax: az iot adr ns create -n myNamespace -g myResourceGroup --policy-name myPolicy --cert-validity-days 30
+      Create with tags and a simple messaging endpoint.
+    syntax: az iot adr ns create -n mynamespace -g mygroup --tags environment=test --messaging-endpoints '{"events":{"address":"https://events.example"}}'
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -59,35 +54,25 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --cert-key-type
-    acceptedValues: ECC, RSA
-    summary: |-
-      Policy certificate authority key type.
-    groupName: Policy Certificate Arguments
-  - name: --cert-subject
-    summary: |-
-      Policy certificate subject.
-    groupName: Policy Certificate Arguments
-  - name: --cert-validity-days
-    summary: |-
-      Policy certificate validity period in days.
-    groupName: Policy Certificate Arguments
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --ecm --enable-certificate-management
-    acceptedValues: false, true
-    summary: |-
-      Create a credential and credential policy for this Device Registry namespace. This is also enabled when any custom policy parameters are provided.
-    groupName: Credential Arguments
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - name: --pn --policy-name
+  - name: --messaging-endpoints
     summary: |-
-      Customize the name of the namespace credential policy.
-    groupName: Policy Arguments
+      JSON object or file mapping endpoint names to objects with required address and optional endpointType/resourceId. Replaces the endpoint map; use '{}' to clear it.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --system-assigned
+    defaultValue: "True"
+    acceptedValues: false, true
+    summary: |-
+      Enable the system-assigned identity (SystemAssigned) or disable it (None). Defaults to enabled on create; unchanged on update.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -121,7 +106,9 @@ directCommands:
 - uid: az_iot_adr_ns_delete
   name: az iot adr ns delete
   summary: |-
-    Delete a Device Registry namespace.
+    Delete a namespace.
+  description: |-
+    Remove child resources before deleting the namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -131,14 +118,12 @@ directCommands:
                          --resource-group
                          [--acquire-policy-token]
                          [--change-reference]
+                         [--no-wait]
                          [--yes {false, true}]
   examples:
   - summary: |-
-      Delete a namespace
-    syntax: az iot adr ns delete -n myNamespace -g myResourceGroup
-  - summary: |-
-      Delete a namespace with no confirmation prompt
-    syntax: az iot adr ns delete -n myNamespace -g myResourceGroup --yes
+      Delete a namespace without confirmation.
+    syntax: az iot adr ns delete -n mynamespace -g mygroup --yes
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -157,6 +142,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --yes -y
     acceptedValues: false, true
     summary: |-
@@ -191,7 +180,7 @@ directCommands:
 - uid: az_iot_adr_ns_list
   name: az iot adr ns list
   summary: |-
-    List Device Registry namespaces.
+    List namespaces in a subscription or resource group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -199,11 +188,8 @@ directCommands:
   syntax: az iot adr ns list [--resource-group]
   examples:
   - summary: |-
-      List all namespaces in a resource group
-    syntax: az iot adr ns list -g myResourceGroup
-  - summary: |-
-      List all namespaces in the subscription
-    syntax: az iot adr ns list
+      List namespaces in a resource group.
+    syntax: az iot adr ns list -g mygroup
   optionalParameters:
   - name: --resource-group -g
     summary: |-
@@ -235,10 +221,84 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_migrate
+  name: az iot adr ns migrate
+  summary: |-
+    Migrate legacy assets into a namespace.
+  description: |-
+    Migrates only the supplied Microsoft.DeviceRegistry/assets resource IDs using the Resources scope.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns migrate --name --namespace
+                          --resource-group
+                          --resource-ids
+                          [--acquire-policy-token]
+                          [--change-reference]
+                          [--no-wait]
+  examples:
+  - summary: |-
+      Migrate a legacy asset.
+    syntax: az iot adr ns migrate -n mynamespace -g mygroup --resource-ids /subscriptions/{subscription}/resourceGroups/mygroup/providers/Microsoft.DeviceRegistry/assets/myasset
+  requiredParameters:
+  - isRequired: true
+    name: --name --namespace -n
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --resource-ids
+    summary: |-
+      Resource IDs of legacy Microsoft.DeviceRegistry/assets resources to migrate into the namespace.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_iot_adr_ns_show
   name: az iot adr ns show
   summary: |-
-    Show details of a Device Registry namespace.
+    Show a namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -248,8 +308,8 @@ directCommands:
                        --resource-group
   examples:
   - summary: |-
-      Show namespace details
-    syntax: az iot adr ns show -n myNamespace -g myResourceGroup
+      Show namespace details.
+    syntax: az iot adr ns show -n mynamespace -g mygroup
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -289,7 +349,9 @@ directCommands:
 - uid: az_iot_adr_ns_update
   name: az iot adr ns update
   summary: |-
-    Update a Device Registry namespace.
+    Update namespace tags, system-assigned identity or messaging endpoints.
+  description: |-
+    Omitted properties remain unchanged. Tags and the messaging endpoint map are replaced when supplied. Use an empty endpoint object to clear messaging endpoints.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -299,11 +361,20 @@ directCommands:
                          --resource-group
                          [--acquire-policy-token]
                          [--change-reference]
+                         [--messaging-endpoints]
+                         [--no-wait]
+                         [--system-assigned {false, true}]
                          [--tags]
   examples:
   - summary: |-
-      Update namespace tags
-    syntax: az iot adr ns update -n myNamespace -g myResourceGroup --tags key=value
+      Replace tags without changing other properties.
+    syntax: az iot adr ns update -n mynamespace -g mygroup --tags environment=production
+  - summary: |-
+      Load messaging endpoints from a JSON file.
+    syntax: az iot adr ns update -n mynamespace -g mygroup --messaging-endpoints endpoints.json
+  - summary: |-
+      Disable the system-assigned identity.
+    syntax: az iot adr ns update -n mynamespace -g mygroup --system-assigned false
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -322,6 +393,17 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --messaging-endpoints
+    summary: |-
+      JSON object or file mapping endpoint names to objects with required address and optional endpointType/resourceId. Replaces the endpoint map; use '{}' to clear it.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --system-assigned
+    acceptedValues: false, true
+    summary: |-
+      Enable the system-assigned identity (SystemAssigned) or disable it (None). Defaults to enabled on create; unchanged on update.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -352,29 +434,121 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_wait
+  name: az iot adr ns wait
+  summary: |-
+    Wait for a namespace to satisfy a condition.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns wait --name --namespace
+                       --resource-group
+                       [--acquire-policy-token]
+                       [--change-reference]
+                       [--created]
+                       [--custom]
+                       [--deleted]
+                       [--exists]
+                       [--interval]
+                       [--timeout]
+                       [--updated]
+  examples:
+  - summary: |-
+      Wait for namespace creation.
+    syntax: az iot adr ns wait -n mynamespace -g mygroup --created
+  requiredParameters:
+  - isRequired: true
+    name: --name --namespace -n
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_adr_ns_create
-- az_iot_adr_ns_credential
-- az_iot_adr_ns_credential_create
-- az_iot_adr_ns_credential_delete
-- az_iot_adr_ns_credential_show
-- az_iot_adr_ns_credential_sync
 - az_iot_adr_ns_delete
-- az_iot_adr_ns_device
-- az_iot_adr_ns_device_list
-- az_iot_adr_ns_device_revoke
-- az_iot_adr_ns_device_show
-- az_iot_adr_ns_device_update
+- az_iot_adr_ns_identity
+- az_iot_adr_ns_identity_assign
+- az_iot_adr_ns_identity_remove
+- az_iot_adr_ns_identity_show
+- az_iot_adr_ns_identity_wait
 - az_iot_adr_ns_list
-- az_iot_adr_ns_policy
-- az_iot_adr_ns_policy_activate-byor
-- az_iot_adr_ns_policy_create
-- az_iot_adr_ns_policy_delete
-- az_iot_adr_ns_policy_list
-- az_iot_adr_ns_policy_revoke-issuer
-- az_iot_adr_ns_policy_show
-- az_iot_adr_ns_policy_update
+- az_iot_adr_ns_migrate
 - az_iot_adr_ns_show
 - az_iot_adr_ns_update
+- az_iot_adr_ns_wait
 metadata:
-  description: Manage Device Registry namespaces.
+  description: Uses the 2026-04-01 management API.
