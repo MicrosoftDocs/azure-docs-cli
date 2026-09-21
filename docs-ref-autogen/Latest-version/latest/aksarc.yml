@@ -22,6 +22,7 @@ directCommands:
                      --vnet-id --vnet-ids
                      [--aad-admin-group-object-ids]
                      [--acquire-policy-token]
+                     [--ca-certs --custom-ca-trust-certificates]
                      [--ca-profile --cluster-autoscaler-profile]
                      [--change-reference]
                      [--control-plane-count --control-plane-node-count]
@@ -37,6 +38,7 @@ directCommands:
                      [--enable-wi --enable-workload-identity]
                      [--gateway-id]
                      [--generate-ssh-keys]
+                     [--gpu-count-per-node]
                      [--kubernetes-version]
                      [--load-balancer-count]
                      [--location]
@@ -82,6 +84,9 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --ca-certs --custom-ca-trust-certificates
+    summary: |-
+      Path to a file containing custom CA trust certificates for the security profile. The file can contain multiple PEM format certificates (up to 10). Each certificate will be base64 encoded and added to the trust store on all nodes.
   - name: --ca-profile --cluster-autoscaler-profile
     summary: |-
       Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
@@ -137,6 +142,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Generate ssh key-pair if not present.
+  - name: --gpu-count-per-node
+    summary: |-
+      Number of gpus attached to a node.
   - name: --kubernetes-version -k
     summary: |-
       The kubernetes version of the provisioned cluster.
@@ -255,6 +263,113 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aksarc_deploy
+  name: az aksarc deploy
+  summary: |-
+    Deploy a full AKS baremetal cluster onto one or more existing Arc-for-Servers (BareMetal) hosts.
+  description: |-
+    Deploys a complete AKS baremetal cluster onto one or more existing Arc-for-Servers
+    (BareMetal) hosts. The only required input is the list of Arc-enabled machine
+    names that make up the cluster. The hosts must already be Arc-for-Servers enabled.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aksarc deploy --arc-machine-name --arc-machine-names --machine-names
+                     --resource-group
+                     [--acquire-policy-token]
+                     [--change-reference]
+                     [--enable-wi --enable-workload-identity]
+                     [--hci-rp-object-id]
+                     [--kubernetes-version]
+                     [--no-wait]
+                     [--validate]
+                     [--yes]
+  examples:
+  - summary: |-
+      Deploy a single-node AKS baremetal cluster
+    syntax: az aksarc deploy --resource-group sample-rg --arc-machine-names myArcHost
+  - summary: |-
+      Deploy a multi-node AKS baremetal cluster
+    syntax: az aksarc deploy --resource-group sample-rg --arc-machine-names host1 host2 host3
+  - summary: |-
+      Deploy with WorkloadIdentity support enabled
+    syntax: az aksarc deploy --resource-group sample-rg --arc-machine-names myArcHost --enable-workload-identity
+  - summary: |-
+      Deploy a specific Kubernetes versioned bundle
+    syntax: az aksarc deploy --resource-group sample-rg --arc-machine-names myArcHost --kubernetes-version 1.35.5-20260701
+  - summary: |-
+      Deploy without Microsoft Graph lookup
+    syntax: az aksarc deploy --resource-group sample-rg --arc-machine-names myArcHost --hci-rp-object-id <hci-rp-object-id>
+  - summary: |-
+      Validate without deploying
+    syntax: az aksarc deploy --resource-group sample-rg --arc-machine-names host1 host2 --validate
+  requiredParameters:
+  - isRequired: true
+    name: --arc-machine-name --arc-machine-names --machine-names -m
+    summary: |-
+      Space-separated names of the existing Arc-enabled (Arc-for-Servers) machines in the resource group to form the cluster device pool. Provide one for a single-node pool or several for a multi-node pool. This is the only required input; all other cluster resources are auto-derived.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --enable-wi --enable-workload-identity
+    defaultValue: "False"
+    summary: |-
+      Enable workload identity and the OIDC issuer required for Azure IoT Operations.
+  - name: --hci-rp-object-id
+    summary: |-
+      Tenant-specific object ID of the Microsoft.AzureStackHCI resource provider service principal. When omitted, the CLI uses HCI_RP_OBJECT_ID if set, then falls back to Microsoft Graph.
+  - name: --kubernetes-version -k
+    summary: |-
+      Kubernetes versioned bundle for the cluster, such as 1.35.5-20260701. When omitted, the AKS Arc operator selects its current default version.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --validate
+    defaultValue: "False"
+    summary: |-
+      Validate the deployment template without actually deploying.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -704,6 +819,75 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aksarc_undeploy
+  name: az aksarc undeploy
+  summary: |-
+    Tear down an AKS baremetal cluster previously created by 'az aksarc deploy'.
+  description: |-
+    Tears down an AKS baremetal cluster previously created by 'az aksarc deploy', removing
+    all of its associated resources. If the teardown is left incomplete, re-run the
+    command to retry.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aksarc undeploy --arc-machine-name --arc-machine-names --machine-names
+                       --resource-group
+                       [--acquire-policy-token]
+                       [--change-reference]
+                       [--yes]
+  examples:
+  - summary: |-
+      Undeploy AKS Arc resources for the given Arc machines
+    syntax: az aksarc undeploy --resource-group sample-rg --arc-machine-names host1 host2 host3
+  requiredParameters:
+  - isRequired: true
+    name: --arc-machine-name --arc-machine-names --machine-names -m
+    summary: |-
+      Space-separated names of the Arc machines whose AKS Arc deployment should be torn down. Resource names are auto-derived from them.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aksarc_update
   name: az aksarc update
   summary: |-
@@ -715,9 +899,11 @@ directCommands:
                      --resource-group
                      [--aad-admin-group-object-ids]
                      [--acquire-policy-token]
+                     [--ca-certs --custom-ca-trust-certificates]
                      [--ca-profile --cluster-autoscaler-profile]
                      [--change-reference]
                      [--control-plane-count --control-plane-node-count]
+                     [--control-plane-vm-size]
                      [--disable-ahub]
                      [--disable-ai-toolchain-operator --disable-kaito]
                      [--disable-cluster-autoscaler]
@@ -765,6 +951,9 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --ca-certs --custom-ca-trust-certificates
+    summary: |-
+      Path to a file containing custom CA trust certificates for the security profile. The file can contain multiple PEM format certificates (up to 10). Each certificate will be base64 encoded and added to the trust store on all nodes.
   - name: --ca-profile --cluster-autoscaler-profile
     summary: |-
       Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
@@ -775,6 +964,9 @@ directCommands:
   - name: --control-plane-count --control-plane-node-count
     summary: |-
       Number of nodes to scale the Control Plane to.
+  - name: --control-plane-vm-size
+    summary: |-
+      VM Size of control plane.
   - name: --disable-ahub
     defaultValue: "False"
     summary: |-
@@ -943,6 +1135,7 @@ directCommands:
 commands:
 - az_aksarc_create
 - az_aksarc_delete
+- az_aksarc_deploy
 - az_aksarc_get-credentials
 - az_aksarc_get-logs
 - az_aksarc_get-upgrades
@@ -962,6 +1155,7 @@ commands:
 - az_aksarc_release_download
 - az_aksarc_release_save
 - az_aksarc_show
+- az_aksarc_undeploy
 - az_aksarc_update
 - az_aksarc_upgrade
 - az_aksarc_vmsize
