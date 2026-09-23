@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/22/2026
+ms.date: 09/23/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -24,7 +24,7 @@ You will be prompted to install an extension on first use.
 |----|-----------------|-------------|---------|---------------|
 |[acat](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat) | 2.61.0 | Microsoft Azure Command-Line Tools Acat Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acat/HISTORY.rst) |
 |[account](https://github.com/Azure/azure-cli-extensions/tree/main/src/account) | 2.38.0 | Microsoft Azure Command-Line Tools SubscriptionClient Extension | GA | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/account/HISTORY.rst) |
-|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.73.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
+|[acrcssc](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc) | 2.73.0 | Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension | Preview | [1.0.0b8](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrcssc/HISTORY.rst) |
 |[acrquery](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery) | 2.48.0 | Microsoft Azure Command-Line Tools AcrQuery Extension | Preview | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrquery/HISTORY.rst) |
 |[acrtransfer](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrtransfer) | 2.0.67 | Microsoft Azure Command-Line Tools Acrtransfer Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/acrtransfer/HISTORY.rst) |
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
@@ -75,7 +75,7 @@ You will be prompted to install an extension on first use.
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.67.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.14.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[computelimit](https://github.com/Azure/azure-cli-extensions/tree/main/src/computelimit) | 2.75.0 | Microsoft Azure Command-Line Tools Computelimit Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/computelimit/HISTORY.rst) |
 |[computeschedule](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule) | 2.67.0 | Microsoft Azure Command-Line Tools Computeschedule Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/computeschedule/HISTORY.rst) |
-|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [2.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
+|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [2.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.67.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.75.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.70.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.11.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
