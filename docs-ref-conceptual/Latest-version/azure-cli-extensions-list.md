@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/23/2026
+ms.date: 09/24/2026
 ms.topic: generated-reference
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -41,7 +41,7 @@ You will be prompted to install an extension on first use.
 |[amlfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs) | 2.75.0 | Microsoft Azure Command-Line Tools Amlfs Extension. | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs/HISTORY.rst) |
 |[aosm](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm) | 2.78.0 | Microsoft Azure Command-Line Tools Aosm Extension | Preview | [2.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm/HISTORY.rst) |
 |[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.57.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | Preview | [1.2.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
-|[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.71.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
+|[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.71.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appnet-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/appnet-preview) | 2.75.0 | Azure CLI commands for working with Azure Kubernetes Application Network resources. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/appnet-preview/HISTORY.rst) |
 |[apr](https://github.com/Azure/azure-cli-extensions/tree/main/src/apr) | 2.55.0 | Manage Azure Package Registry resources, repositories, packages, publications, and tasks. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/apr/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.73.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.8.0](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
