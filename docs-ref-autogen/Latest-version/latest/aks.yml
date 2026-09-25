@@ -613,6 +613,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count]
+                  [--nat-gateway-outbound-ip-prefixes --nat-gw-prefixes]
+                  [--nat-gateway-outbound-ips --nat-gw-ips]
                   [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode {overlay}]
@@ -640,6 +643,7 @@ directCommands:
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pod-cidr]
                   [--pod-cidrs]
                   [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
@@ -1331,6 +1335,15 @@ directCommands:
       NAT gateway managed outbound IP count.
     description: |-
       Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
+    summary: |-
+      NAT gateway managed outbound IPv6 count. Only valid with --outbound-type managedNATGateway and --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ip-prefixes --nat-gw-prefixes
+    summary: |-
+      Comma-separated public IP prefix resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ips --nat-gw-ips
+    summary: |-
+      Comma-separated public IP resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
   - name: --network-dataplane
     acceptedValues: azure, cilium
     summary: |-
@@ -1457,6 +1470,12 @@ directCommands:
       How outbound traffic will be configured for a cluster.
     description: |-
       Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway and none. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT Gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. Omit to default to StandardV2 where the region supports it, otherwise Standard. StandardV2 adds zone resiliency, IPv6 support, and higher bandwidth.
   - name: --pod-cidr
     summary: |-
       A CIDR notation IP range from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
@@ -4282,6 +4301,69 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_install-desktop
+  name: az aks install-desktop
+  summary: |-
+    Download and install AKS Desktop for the current platform.
+  description: |-
+    On macOS and Linux systems using Debian packages, complete installation in the opened application. GUI installer downloads are retained under the Azure CLI configuration directory; remove the logged installer directory after installation. Debian packages are used only on compatible x64 Linux systems with xdg-open and a graphical session. Other Linux systems, or systems where the Debian installer cannot be opened, use the portable archive when available. If GitHub API requests are rate-limited, set the GH_TOKEN environment variable or wait for the rate limit to reset. Prefer GH_TOKEN over --gh-token, which can expose credentials in shell history, process listings, and debug logs. An explicit --gh-token value overrides GH_TOKEN. The token is used only to retrieve release metadata, not to download the installer. If requests with a token are rate-limited, wait for the rate limit to reset and check the token's quota.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
+  syntax: >-
+    az aks install-desktop [--acquire-policy-token]
+                           [--change-reference]
+                           [--gh-token]
+                           [--version]
+  examples:
+  - summary: |-
+      Install the latest stable version of AKS Desktop
+    syntax: az aks install-desktop
+  - summary: |-
+      Install a specific version of AKS Desktop
+    syntax: az aks install-desktop --version 0.9.1
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --gh-token
+    summary: |-
+      GitHub authentication token used to retrieve AKS Desktop release metadata. Prefer the GH_TOKEN environment variable to avoid exposing credentials in shell history, process listings, or debug logs. This option overrides GH_TOKEN. Supplying a token helps avoid GitHub API rate limits.
+  - name: --version
+    summary: |-
+      Version of AKS Desktop to install. By default, the latest stable version is installed.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_aks_kanalyze
   name: az aks kanalyze
   summary: |-
@@ -5587,6 +5669,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count]
+                  [--nat-gateway-outbound-ip-prefixes --nat-gw-prefixes]
+                  [--nat-gateway-outbound-ips --nat-gw-ips]
                   [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
@@ -5599,6 +5684,7 @@ directCommands:
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
@@ -6226,6 +6312,15 @@ directCommands:
       NAT gateway managed outbound IP count.
     description: |-
       Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
+    summary: |-
+      NAT gateway managed outbound IPv6 count. Only valid with --outbound-type managedNATGateway and --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ip-prefixes --nat-gw-prefixes
+    summary: |-
+      Comma-separated public IP prefix resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ips --nat-gw-ips
+    summary: |-
+      Comma-separated public IP resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
   - name: --network-dataplane
     acceptedValues: azure, cilium
     summary: |-
@@ -6293,6 +6388,12 @@ directCommands:
       How outbound traffic will be configured for a cluster.
     description: |-
       This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting and none. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT Gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. Migrate an existing Standard (V1) cluster to StandardV2 by passing StandardV2. StandardV2 adds zone resiliency, IPv6 support, and higher bandwidth. Downgrade from StandardV2 to Standard is not supported.
   - name: --pod-cidr
     summary: |-
       Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
@@ -8672,6 +8773,7 @@ commands:
 - az_aks_identity-binding_show(aks-preview)
 - az_aks_identity-binding_update
 - az_aks_install-cli
+- az_aks_install-desktop
 - az_aks_jwtauthenticator
 - az_aks_jwtauthenticator_add
 - az_aks_jwtauthenticator_delete
