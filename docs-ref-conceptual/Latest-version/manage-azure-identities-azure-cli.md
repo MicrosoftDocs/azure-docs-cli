@@ -244,6 +244,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |  | [Use the Linux diagnostic extension 4.0 to monitor metrics and logs](/azure/virtual-machines/extensions/diagnostics-linux)
 |  | [Send Prometheus metrics from virtual machines, scale sets, or Kubernetes clusters to an Azure Monitor workspace](/azure/azure-monitor/essentials/prometheus-remote-write-virtual-machines)
 |  | [Send Prometheus data to Azure Monitor by using managed identity authentication](/azure/azure-monitor/containers/prometheus-remote-write-managed-identity)
+|  | [Manage Workspaces and Scenarios with the Azure CLI](/azure/chaos-studio/chaos-studio-manage-cli)
 |  | [Create a chaos experiment that uses an agent-based fault with the Azure CLI](/azure/chaos-studio/chaos-studio-tutorial-agent-based-cli)
 
 ## az webapp
