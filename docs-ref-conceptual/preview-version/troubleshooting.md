@@ -89,7 +89,7 @@ For more details, see:
 - <https://wslu.wedotstud.io/wslu/install.html>
 - <https://github.com/wslutilities/wslu>
 - <https://launchpad.net/~wslutilities/+archive/ubuntu/wslu>
-- <https://learn.microsoft.com/windows/wsl/>
+- [Windows Subsystem for Linux documentation](/windows/wsl/)
 
 ## Next steps
 

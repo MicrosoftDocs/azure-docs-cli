@@ -216,4 +216,4 @@ During the preview, feedback is collected through user interviews and surveys.
 
 <!-- link references -->
 
-[01]: ./config.md
+[01]: ./azure-cli-configuration.md

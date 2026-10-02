@@ -5,7 +5,7 @@ description: Learn how to install the Azure CLI preview manually or offline when
 
 # Install the Azure CLI preview manually or offline
 
-> **Most users should use the [one-command installer](../README.md).** Use this guide for offline installs, as a fallback when `gh` isn't available, when you already have the archive, or to understand the steps the installer performs.
+> **Most users should use the [one-command installer](install-overview.md).** Use this guide for offline installs, as a fallback when `gh` isn't available, when you already have the archive, or to understand the steps the installer performs.
 
 Get from a downloaded azcli archive to a working `az` command: pick the file for your OS and CPU, extract it, and run `az` from that folder. Adding it to `PATH` is optional and manual.
 

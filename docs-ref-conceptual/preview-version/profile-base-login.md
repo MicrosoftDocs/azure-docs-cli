@@ -1,7 +1,7 @@
 ---
 title: Manage sign-in profiles in Azure CLI (Preview)
 description: Learn how to use named profiles in Azure CLI to save sign-in context, switch between accounts and subscriptions, and run individual commands against a specific profile.
-ms.topic: conceptual
+ms.topic: concept-article
 ---
 
 # Manage sign-in profiles in Azure CLI (Preview)
