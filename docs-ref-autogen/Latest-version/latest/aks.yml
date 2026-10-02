@@ -527,6 +527,9 @@ directCommands:
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-local-accounts]
+                  [--disable-opentelemetry-logs-traces]
+                  [--disable-opentelemetry-metrics]
+                  [--disable-prometheus-metrics-scraping]
                   [--disable-public-fqdn]
                   [--disable-rbac]
                   [--disable-run-command]
@@ -546,6 +549,7 @@ directCommands:
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-app-monitoring]
+                  [--enable-azure-monitor-logs]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -565,7 +569,10 @@ directCommands:
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
                   [--enable-oidc-issuer]
+                  [--enable-opentelemetry-logs-traces]
+                  [--enable-opentelemetry-metrics]
                   [--enable-private-cluster]
+                  [--enable-prometheus-metrics-scraping]
                   [--enable-secret-rotation]
                   [--enable-secure-boot]
                   [--enable-sgxquotehelper]
@@ -613,6 +620,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count]
+                  [--nat-gateway-outbound-ip-prefixes --nat-gw-prefixes]
+                  [--nat-gateway-outbound-ips --nat-gw-ips]
                   [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode {overlay}]
@@ -638,8 +648,13 @@ directCommands:
                   [--nodepool-tags]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
+                  [--opentelemetry-logs-traces-port-grpc]
+                  [--opentelemetry-logs-traces-port-http]
+                  [--opentelemetry-metrics-port-grpc]
+                  [--opentelemetry-metrics-port-http]
                   [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404}]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pod-cidr]
                   [--pod-cidrs]
                   [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
@@ -659,6 +674,7 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--syslog-port]
                   [--system-node-subnet-id]
                   [--tags]
                   [--tier {free, premium, standard}]
@@ -774,6 +790,18 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with the Azure Monitor managed service for Prometheus integration enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-metrics
+  - summary: |-
+      Create a kubernetes cluster with Azure Monitor logs (Container Insights) enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
+  - summary: |-
+      Create a kubernetes cluster with Azure Monitor logs enabled and syslog collected on a custom port.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs --enable-syslog --syslog-port 28330
+  - summary: |-
+      Create a kubernetes cluster with the OpenTelemetry logs and traces receiver enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs --enable-opentelemetry-logs-traces --opentelemetry-logs-traces-port-grpc 4317
+  - summary: |-
+      Create a kubernetes cluster with the OpenTelemetry metrics receiver enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-metrics --enable-opentelemetry-metrics --opentelemetry-metrics-port-grpc 4319
   - summary: |-
       Create a kubernetes cluster with vertical pod autoscaler enaled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-vpa
@@ -962,6 +990,18 @@ directCommands:
     defaultValue: "False"
     summary: |-
       If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Disable the OpenTelemetry (OTLP) logs and traces receiver.
+  - name: --disable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Disable the OpenTelemetry (OTLP) metrics receiver.
+  - name: --disable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Disable Prometheus metrics scraping by the Azure Monitor agent. Requires --enable-azure-monitor-logs.
   - name: --disable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -1055,6 +1095,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
+  - name: --enable-azure-monitor-logs
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor logs (Container Insights) for the cluster using managed identity authentication.
+    description: |-
+      Configures Container Insights through the cluster's Azure Monitor profile instead of the monitoring addon.
+      Cannot be combined with "--enable-addons monitoring" or with "--enable-msi-auth-for-monitoring".
+      Requires the cluster to use a managed identity; clusters created with service principal authentication are not supported.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -1128,6 +1176,8 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enable Managed Identity Auth for Monitoring addon.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-msi-auth-for-monitoring' has been deprecated and will be removed in a future release. Use '--enable-azure-monitor-logs' instead.
   - name: --enable-node-public-ip
     defaultValue: "False"
     summary: |-
@@ -1136,10 +1186,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable OIDC issuer.
+  - name: --enable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Enable the OpenTelemetry (OTLP) logs and traces receiver. Requires --enable-azure-monitor-logs.
+  - name: --enable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Enable the OpenTelemetry (OTLP) metrics receiver. Requires --enable-azure-monitor-metrics.
   - name: --enable-private-cluster
     defaultValue: "False"
     summary: |-
       Enable private cluster.
+  - name: --enable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Enable Prometheus metrics scraping by the Azure Monitor agent. Requires --enable-azure-monitor-logs.
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -1331,6 +1393,15 @@ directCommands:
       NAT gateway managed outbound IP count.
     description: |-
       Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
+    summary: |-
+      NAT gateway managed outbound IPv6 count. Only valid with --outbound-type managedNATGateway and --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ip-prefixes --nat-gw-prefixes
+    summary: |-
+      Comma-separated public IP prefix resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ips --nat-gw-ips
+    summary: |-
+      Comma-separated public IP resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
   - name: --network-dataplane
     acceptedValues: azure, cilium
     summary: |-
@@ -1447,6 +1518,18 @@ directCommands:
       Restriction level on the managed node resource group.
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
+  - name: --opentelemetry-logs-traces-port-grpc
+    summary: |-
+      GRPC port for the OpenTelemetry logs and traces receiver.
+  - name: --opentelemetry-logs-traces-port-http
+    summary: |-
+      HTTP/protobuf port for the OpenTelemetry logs and traces receiver.
+  - name: --opentelemetry-metrics-port-grpc
+    summary: |-
+      GRPC port for the OpenTelemetry metrics receiver.
+  - name: --opentelemetry-metrics-port-http
+    summary: |-
+      HTTP/protobuf port for the OpenTelemetry metrics receiver.
   - name: --os-sku
     acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, CBLMariner, Mariner, Ubuntu, Ubuntu2204, Ubuntu2404
     summary: |-
@@ -1457,6 +1540,12 @@ directCommands:
       How outbound traffic will be configured for a cluster.
     description: |-
       Select between loadBalancer, userDefinedRouting, managedNATGateway, userAssignedNATGateway and none. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT Gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. Omit to default to StandardV2 where the region supports it, otherwise Standard. StandardV2 adds zone resiliency, IPv6 support, and higher bandwidth.
   - name: --pod-cidr
     summary: |-
       A CIDR notation IP range from which to assign pod IPs when Azure CNI Overlay or Kubenet is used (On 31 March 2028, Kubenet will be retired).
@@ -1539,6 +1628,9 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --syslog-port
+    summary: |-
+      TCP port that the Azure Monitor agent listens on for syslog data. Requires --enable-azure-monitor-logs.
   - name: --system-node-subnet-id
     summary: |-
       (Automatic SKU) The ID of a subnet in an existing VNet to be used by the Managed System Pool in an Automatic cluster.
@@ -3307,6 +3399,7 @@ directCommands:
                           [--acquire-policy-token]
                           [--change-reference]
                           [--no-wait]
+                          [--yes]
   examples:
   - summary: |-
       Disable Kubernetes addons. (autogenerated)
@@ -3337,6 +3430,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -3546,6 +3643,8 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enable Managed Identity Auth for Monitoring addon.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-msi-auth-for-monitoring' has been deprecated and will be removed in a future release. Use '--enable-azure-monitor-logs' instead.
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -4255,6 +4354,69 @@ directCommands:
     defaultValue: latest
     summary: |-
       Version of kubelogin to install.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aks_install-desktop
+  name: az aks install-desktop
+  summary: |-
+    Download and install AKS Desktop for the current platform.
+  description: |-
+    On macOS and Linux systems using Debian packages, complete installation in the opened application. GUI installer downloads are retained under the Azure CLI configuration directory; remove the logged installer directory after installation. Debian packages are used only on compatible x64 Linux systems with xdg-open and a graphical session. Other Linux systems, or systems where the Debian installer cannot be opened, use the portable archive when available. If GitHub API requests are rate-limited, set the GH_TOKEN environment variable or wait for the rate limit to reset. Prefer GH_TOKEN over --gh-token, which can expose credentials in shell history, process listings, and debug logs. An explicit --gh-token value overrides GH_TOKEN. The token is used only to retrieve release metadata, not to download the installer. If requests with a token are rate-limited, wait for the rate limit to reset and check the token's quota.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
+  syntax: >-
+    az aks install-desktop [--acquire-policy-token]
+                           [--change-reference]
+                           [--gh-token]
+                           [--version]
+  examples:
+  - summary: |-
+      Install the latest stable version of AKS Desktop
+    syntax: az aks install-desktop
+  - summary: |-
+      Install a specific version of AKS Desktop
+    syntax: az aks install-desktop --version 0.9.1
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --gh-token
+    summary: |-
+      GitHub authentication token used to retrieve AKS Desktop release metadata. Prefer the GH_TOKEN environment variable to avoid exposing credentials in shell history, process listings, or debug logs. This option overrides GH_TOKEN. Supplying a token helps avoid GitHub API rate limits.
+  - name: --version
+    summary: |-
+      Version of AKS Desktop to install. By default, the latest stable version is installed.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -5467,6 +5629,7 @@ directCommands:
                   [--acns-transit-encryption-type {None, WireGuard}]
                   [--acquire-policy-token]
                   [--aks-custom-headers]
+                  [--ampls-resource-id]
                   [--api-server-authorized-ip-ranges]
                   [--apiserver-subnet-id]
                   [--assign-identity]
@@ -5485,6 +5648,7 @@ directCommands:
                   [--ca-profile --cluster-autoscaler-profile]
                   [--change-reference]
                   [--container-storage-version {1, 2}]
+                  [--data-collection-settings]
                   [--defender-config]
                   [--detach-acr]
                   [--disable-acns]
@@ -5496,6 +5660,7 @@ directCommands:
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-app-monitoring]
+                  [--disable-azure-monitor-logs]
                   [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
                   [--disable-blob-driver]
@@ -5512,7 +5677,10 @@ directCommands:
                   [--disable-image-cleaner]
                   [--disable-keda]
                   [--disable-local-accounts]
+                  [--disable-opentelemetry-logs-traces]
+                  [--disable-opentelemetry-metrics]
                   [--disable-private-cluster]
+                  [--disable-prometheus-metrics-scraping]
                   [--disable-public-fqdn]
                   [--disable-run-command]
                   [--disable-secret-rotation]
@@ -5531,6 +5699,7 @@ directCommands:
                   [--enable-azure-container-storage]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-app-monitoring]
+                  [--enable-azure-monitor-logs]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -5549,13 +5718,18 @@ directCommands:
                   [--enable-keda]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
+                  [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-oidc-issuer]
+                  [--enable-opentelemetry-logs-traces]
+                  [--enable-opentelemetry-metrics]
                   [--enable-private-cluster]
+                  [--enable-prometheus-metrics-scraping]
                   [--enable-public-fqdn]
                   [--enable-run-command]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-static-egress-gateway]
+                  [--enable-syslog {false, true}]
                   [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
@@ -5587,6 +5761,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count]
+                  [--nat-gateway-outbound-ip-prefixes --nat-gw-prefixes]
+                  [--nat-gateway-outbound-ips --nat-gw-ips]
                   [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
@@ -5598,7 +5775,12 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
+                  [--opentelemetry-logs-traces-port-grpc]
+                  [--opentelemetry-logs-traces-port-http]
+                  [--opentelemetry-metrics-port-grpc]
+                  [--opentelemetry-metrics-port-http]
                   [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type-sku {Standard, StandardV2}]
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
@@ -5607,16 +5789,33 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp, all}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--syslog-port]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
                   [--upgrade-override-until]
                   [--windows-admin-password]
+                  [--workspace-resource-id]
                   [--yes]
   examples:
   - summary: |-
       Reconcile the cluster back to its current state.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster
+  - summary: |-
+      Enable Azure Monitor logs (Container Insights) on an existing cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
+  - summary: |-
+      Disable Azure Monitor logs (Container Insights) on an existing cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-azure-monitor-logs
+  - summary: |-
+      Change the syslog port used by Azure Monitor logs on an existing cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-syslog --syslog-port 28330
+  - summary: |-
+      Enable the OpenTelemetry logs and traces receiver on an existing cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-logs-traces --opentelemetry-logs-traces-port-grpc 4317
+  - summary: |-
+      Enable the OpenTelemetry metrics receiver on an existing cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port-grpc 4319
   - summary: |-
       Update a kubernetes cluster with standard SKU load balancer to use two AKS created IPs for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
@@ -5753,6 +5952,9 @@ directCommands:
   - name: --aks-custom-headers
     summary: |-
       Comma-separated key-value pairs to specify custom headers.
+  - name: --ampls-resource-id
+    summary: |-
+      Resource ID of Azure Monitor Private Link scope for Monitoring Addon.
   - name: --api-server-authorized-ip-ranges
     summary: |-
       Comma-separated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
@@ -5818,6 +6020,9 @@ directCommands:
     acceptedValues: 1, 2
     summary: |-
       Set azure container storage version, the latest version will be installed by default.
+  - name: --data-collection-settings
+    summary: |-
+      Path to JSON file containing data collection settings for Monitoring addon.
   - name: --defender-config
     summary: |-
       Path to JSON file containing Microsoft Defender profile configurations.
@@ -5856,10 +6061,21 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
+  - name: --disable-azure-monitor-logs
+    defaultValue: "False"
+    summary: |-
+      Disable Azure Monitor logs (Container Insights) for the cluster.
+    description: |-
+      Disables Container Insights, removes the data collection rule association, and resets the Container Insights settings (syslog port, Prometheus scraping and container network logs) back to their defaults. The workspace is left recorded on the profile but is unused while disabled, and is replaced on the next enable.
+      If OpenTelemetry logs and traces are enabled they are disabled as well, and confirmation is requested first unless "--yes" is specified.
   - name: --disable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
       Disable Azure Monitor Metrics Profile. This will delete all DCRA's associated with the cluster, any linked DCRs with the data stream = prometheus-stream and the recording rule groups created by the addon for this AKS cluster.
+    description: |-
+      If OpenTelemetry metrics are enabled, they are disabled as well, since they are collected
+      through the managed Prometheus pipeline. Confirmation is requested first unless "--yes" is
+      specified.
   - name: --disable-azure-rbac
     defaultValue: "False"
     summary: |-
@@ -5918,10 +6134,22 @@ directCommands:
     defaultValue: "False"
     summary: |-
       If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Disable the OpenTelemetry (OTLP) logs and traces receiver.
+  - name: --disable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Disable the OpenTelemetry (OTLP) metrics receiver.
   - name: --disable-private-cluster
     defaultValue: "False"
     summary: |-
       Disable private cluster for apiserver vnet integration cluster.
+  - name: --disable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Disable Prometheus metrics scraping by the Azure Monitor agent. Requires Azure Monitor logs to be enabled.
   - name: --disable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -5996,6 +6224,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Monitor Application Monitoring auto-instrumentation for a Kubernetes cluster.
+  - name: --enable-azure-monitor-logs
+    defaultValue: "False"
+    summary: |-
+      Enable Azure Monitor logs (Container Insights) for the cluster using managed identity authentication.
+    description: |-
+      Configures Container Insights through the cluster's Azure Monitor profile instead of the monitoring addon.
+      Clusters still using legacy shared key authentication must first migrate to managed identity authentication.
+      Requires the cluster to use a managed identity; clusters using service principal authentication are not supported.
+      Fails if Azure Monitor logs is already enabled on the cluster. To change the configuration, run "az aks update --disable-azure-monitor-logs" first.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -6066,14 +6303,32 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update current cluster to use managed identity to manage cluster resource group.
+  - name: --enable-msi-auth-for-monitoring
+    acceptedValues: false, true
+    summary: |-
+      Enable Managed Identity Auth for Monitoring addon.
+    isDeprecated: true
+    deprecateInfo: Option '--enable-msi-auth-for-monitoring' has been deprecated and will be removed in a future release. Use '--enable-azure-monitor-logs' instead.
   - name: --enable-oidc-issuer
     defaultValue: "False"
     summary: |-
       Enable OIDC issuer.
+  - name: --enable-opentelemetry-logs-traces
+    defaultValue: "False"
+    summary: |-
+      Enable the OpenTelemetry (OTLP) logs and traces receiver. Requires Azure Monitor logs to be enabled.
+  - name: --enable-opentelemetry-metrics
+    defaultValue: "False"
+    summary: |-
+      Enable the OpenTelemetry (OTLP) metrics receiver. Requires Azure Monitor metrics to be enabled.
   - name: --enable-private-cluster
     defaultValue: "False"
     summary: |-
       Enable private cluster for apiserver vnet integration cluster.
+  - name: --enable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Enable Prometheus metrics scraping by the Azure Monitor agent. Requires Azure Monitor logs to be enabled.
   - name: --enable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -6094,6 +6349,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Static Egress Gateway addon to the cluster.
+  - name: --enable-syslog
+    acceptedValues: false, true
+    summary: |-
+      Enable syslog data collection for Monitoring addon.
   - name: --enable-upstream-kubescheduler-user-configuration
     defaultValue: "False"
     summary: |-
@@ -6226,6 +6485,15 @@ directCommands:
       NAT gateway managed outbound IP count.
     description: |-
       Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ipv6-count --nat-gw-ipv6-count
+    summary: |-
+      NAT gateway managed outbound IPv6 count. Only valid with --outbound-type managedNATGateway and --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ip-prefixes --nat-gw-prefixes
+    summary: |-
+      Comma-separated public IP prefix resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
+  - name: --nat-gateway-outbound-ips --nat-gw-ips
+    summary: |-
+      Comma-separated public IP resource IDs for the cluster NAT gateway. Only valid with --outbound-type-sku StandardV2.
   - name: --network-dataplane
     acceptedValues: azure, cilium
     summary: |-
@@ -6287,12 +6555,30 @@ directCommands:
       Restriction level on the managed node resource group.
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
+  - name: --opentelemetry-logs-traces-port-grpc
+    summary: |-
+      GRPC port for the OpenTelemetry logs and traces receiver.
+  - name: --opentelemetry-logs-traces-port-http
+    summary: |-
+      HTTP/protobuf port for the OpenTelemetry logs and traces receiver.
+  - name: --opentelemetry-metrics-port-grpc
+    summary: |-
+      GRPC port for the OpenTelemetry metrics receiver.
+  - name: --opentelemetry-metrics-port-http
+    summary: |-
+      HTTP/protobuf port for the OpenTelemetry metrics receiver.
   - name: --outbound-type
     acceptedValues: loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting
     summary: |-
       How outbound traffic will be configured for a cluster.
     description: |-
       This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting and none. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
+  - name: --outbound-type-sku
+    acceptedValues: Standard, StandardV2
+    summary: |-
+      SKU of the managed NAT Gateway (Standard or StandardV2).
+    description: |-
+      Only valid with --outbound-type managedNATGateway. Migrate an existing Standard (V1) cluster to StandardV2 by passing StandardV2. StandardV2 adds zone resiliency, IPv6 support, and higher bandwidth. Downgrade from StandardV2 to Standard is not supported.
   - name: --pod-cidr
     summary: |-
       Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
@@ -6322,6 +6608,9 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --syslog-port
+    summary: |-
+      TCP port that the Azure Monitor agent listens on for syslog data. Requires Azure Monitor logs to be enabled.
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
@@ -6350,6 +6639,9 @@ directCommands:
             * Has a special character (Regex match [\W_])
           - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
       Reference: https://learn.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
+  - name: --workspace-resource-id
+    summary: |-
+      The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -8672,6 +8964,7 @@ commands:
 - az_aks_identity-binding_show(aks-preview)
 - az_aks_identity-binding_update
 - az_aks_install-cli
+- az_aks_install-desktop
 - az_aks_jwtauthenticator
 - az_aks_jwtauthenticator_add
 - az_aks_jwtauthenticator_delete
