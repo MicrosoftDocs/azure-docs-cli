@@ -5,9 +5,7 @@ extensionInformation: |-
   > [!NOTE]
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns identity** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage a namespace's system-assigned identity.
-description: |-
-  Only SystemAssigned and None identity types are supported.
+  Manage identities assigned to a Device Registry namespace.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -16,7 +14,7 @@ directCommands:
 - uid: az_iot_adr_ns_identity_assign
   name: az iot adr ns identity assign
   summary: |-
-    Enable a namespace's system-assigned identity.
+    Assign system- or user-assigned identities to a namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -27,10 +25,12 @@ directCommands:
                                   [--acquire-policy-token]
                                   [--change-reference]
                                   [--no-wait]
+                                  [--system --system-assigned {false, true}]
+                                  [--user --user-assigned-identity]
   examples:
   - summary: |-
-      Assign the system-assigned identity.
-    syntax: az iot adr ns identity assign -n mynamespace -g mygroup
+      Assign a system and user identity
+    syntax: az iot adr ns identity assign -n myNamespace -g myResourceGroup --system --user /subscriptions/.../userAssignedIdentities/myIdentity
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -53,6 +53,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --system --system-assigned
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Assign or remove the namespace system-assigned managed identity.
+  - name: --user --user-assigned-identity
+    summary: |-
+      Space-separated user-assigned managed identity resource IDs. On remove, omit values to remove all user-assigned identities.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -83,7 +91,9 @@ directCommands:
 - uid: az_iot_adr_ns_identity_remove
   name: az iot adr ns identity remove
   summary: |-
-    Disable a namespace's system-assigned identity.
+    Remove system- or user-assigned identities from a namespace.
+  description: |-
+    An identity configured as the namespace outbound identity must be changed before it can be removed.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -94,10 +104,12 @@ directCommands:
                                   [--acquire-policy-token]
                                   [--change-reference]
                                   [--no-wait]
+                                  [--system --system-assigned {false, true}]
+                                  [--user --user-assigned-identity]
   examples:
   - summary: |-
-      Remove the system-assigned identity.
-    syntax: az iot adr ns identity remove -n mynamespace -g mygroup
+      Remove all user-assigned identities
+    syntax: az iot adr ns identity remove -n myNamespace -g myResourceGroup --user
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -120,6 +132,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --system --system-assigned
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Assign or remove the namespace system-assigned managed identity.
+  - name: --user --user-assigned-identity
+    summary: |-
+      Space-separated user-assigned managed identity resource IDs. On remove, omit values to remove all user-assigned identities.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -150,7 +170,7 @@ directCommands:
 - uid: az_iot_adr_ns_identity_show
   name: az iot adr ns identity show
   summary: |-
-    Show a namespace's identity.
+    Show identities assigned to a namespace.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -158,6 +178,10 @@ directCommands:
   syntax: >-
     az iot adr ns identity show --name --namespace
                                 --resource-group
+  examples:
+  - summary: |-
+      Show namespace identities
+    syntax: az iot adr ns identity show -n myNamespace -g myResourceGroup
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -197,7 +221,9 @@ directCommands:
 - uid: az_iot_adr_ns_identity_wait
   name: az iot adr ns identity wait
   summary: |-
-    Wait for a namespace identity update to complete.
+    Wait for a namespace identity update to succeed.
+  description: |-
+    Without an explicit wait predicate, waits for namespace provisioningState Succeeded.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns identity' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -216,8 +242,8 @@ directCommands:
                                 [--updated]
   examples:
   - summary: |-
-      Wait until the namespace identity has been removed.
-    syntax: az iot adr ns identity wait -n mynamespace -g mygroup --custom "identity.type=='None'"
+      Wait until the namespace update completes
+    syntax: az iot adr ns identity wait -n myNamespace -g myResourceGroup
   requiredParameters:
   - isRequired: true
     name: --name --namespace -n
@@ -239,16 +265,16 @@ directCommands:
   - name: --created
     defaultValue: "False"
     summary: |-
-      Wait until created with 'provisioningState' at 'Succeeded'.
+      Wait until provisioningState is Succeeded.
     groupName: Wait Condition Arguments
   - name: --custom
     summary: |-
-      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+      Wait until a custom JMESPath expression evaluates to true.
     groupName: Wait Condition Arguments
   - name: --deleted
     defaultValue: "False"
     summary: |-
-      Wait until deleted.
+      Wait until the resource is deleted.
     groupName: Wait Condition Arguments
   - name: --exists
     defaultValue: "False"
@@ -263,12 +289,12 @@ directCommands:
   - name: --timeout
     defaultValue: "3600"
     summary: |-
-      Maximum wait in seconds.
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
     groupName: Wait Condition Arguments
   - name: --updated
     defaultValue: "False"
     summary: |-
-      Wait until updated with provisioningState at 'Succeeded'.
+      Wait until provisioningState is Succeeded.
     groupName: Wait Condition Arguments
   globalParameters:
   - name: --debug
@@ -303,4 +329,4 @@ commands:
 - az_iot_adr_ns_identity_show
 - az_iot_adr_ns_identity_wait
 metadata:
-  description: Only SystemAssigned and None identity types are supported.
+  description: Manage identities assigned to a Device Registry namespace.

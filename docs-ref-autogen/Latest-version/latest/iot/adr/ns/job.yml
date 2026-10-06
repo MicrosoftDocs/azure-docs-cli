@@ -1,54 +1,71 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_adr_ns
-name: az iot adr ns
+uid: az_iot_adr_ns_job
+name: az iot adr ns job
 extensionInformation: |-
   > [!NOTE]
-  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns job** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Device Registry namespaces.
+  Manage Device Registry namespace jobs.
 status: Preview
 isPreview: true
-previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_adr_ns_create
-  name: az iot adr ns create
+- uid: az_iot_adr_ns_job_create
+  name: az iot adr ns job create
   summary: |-
-    Create a Device Registry namespace.
+    Create a job in a Device Registry namespace.
   description: |-
-    A new namespace is created with a system-assigned managed identity by default.
-    Observability is disabled by default for a new namespace. This command does not
-    accept observability endpoint input. Re-running create for an existing namespace
-    preserves its complete observability configuration.
+    PUT is a long-running operation. SoftwareUpdate jobs require a target group.
+    OnboardingUpdate jobs target all compatible onboarding devices and do not
+    accept a target group. Job definition fields are immutable after creation.
+
+    The target group is specified by --target-group-name and must live in the
+    same namespace and resource group as the job (cross-namespace targets are
+    not supported in this preview release). The Software Update identity
+    (--update-id-provider, --update-id-name, --update-id-version) is passed
+    opaquely to the backend; no Software Updates preflight is performed.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns create --name --namespace
-                         --resource-group
-                         [--acquire-policy-token]
-                         [--change-reference]
-                         [--location]
-                         [--no-wait]
-                         [--omi-sa --outbound-system-assigned-mi {false, true}]
-                         [--omi-ua --outbound-user-assigned-mi]
-                         [--tags]
+    az iot adr ns job create --jn --job-name --name
+                             --namespace --ns
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--description]
+                             [--display-name]
+                             [--location]
+                             [--no-wait]
+                             [--tags]
+                             [--target-group-name --tg]
+                             [--type {OnboardingUpdate, SoftwareUpdate}]
+                             [--un --update-id-name --update-name]
+                             [--up --update-id-provider --update-provider]
+                             [--update-id-version --update-version --uv]
   examples:
   - summary: |-
-      Create a basic Device Registry namespace
-    syntax: az iot adr ns create -n myNamespace -g myResourceGroup
-  - summary: |-
-      Create a Device Registry namespace with system-assigned outbound identity
-    syntax: az iot adr ns create -n myNamespace -g myResourceGroup --outbound-system-assigned-mi
-  - summary: |-
-      Create a namespace with a user-assigned outbound identity
+      Create a SoftwareUpdate job targeting a group
     syntax: >-
-      az iot adr ns create -n myNamespace -g myResourceGroup \
-        --outbound-user-assigned-mi /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<id>
+      az iot adr ns job create -n myJob --ns myNamespace -g myResourceGroup \
+        --type SoftwareUpdate \
+        --target-group-name myGroup \
+        --update-id-provider Contoso --update-id-name gateway-firmware --update-id-version 1.2.3
+  - summary: |-
+      Create an OnboardingUpdate job
+    syntax: >-
+      az iot adr ns job create -n onboarding --ns myNamespace -g myResourceGroup \
+        --type OnboardingUpdate \
+        --update-id-provider Contoso --update-id-name gateway-firmware --update-id-version 1.2.3
   requiredParameters:
   - isRequired: true
-    name: --name --namespace -n
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -64,6 +81,12 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --description
+    summary: |-
+      Human-readable job description.
+  - name: --display-name
+    summary: |-
+      Human-readable display name for the job.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -71,18 +94,29 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --omi-sa --outbound-system-assigned-mi
-    acceptedValues: false, true
-    summary: |-
-      Enable the system-assigned managed identity as the outbound identity used by this namespace when calling linked Hub/DPS resources.
-    groupName: Outbound Identity Arguments
-  - name: --omi-ua --outbound-user-assigned-mi
-    summary: |-
-      User-assigned managed identity resource ID to assign to the namespace and use for outbound calls.
-    groupName: Outbound Identity Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --target-group-name --tg
+    summary: |-
+      Name of the target group. The group must live in the same namespace and resource group as the job; cross-namespace targets are not supported in this preview release.
+  - name: --type
+    defaultValue: SoftwareUpdate
+    acceptedValues: OnboardingUpdate, SoftwareUpdate
+    summary: |-
+      Job type: SoftwareUpdate targets a group; OnboardingUpdate targets all compatible onboarding devices.
+  - name: --un --update-id-name --update-name
+    summary: |-
+      Software Update updateId.name (e.g. 'gateway-firmware'). This is the update identity's name, distinct from the job's --name.
+    groupName: Update Arguments
+  - name: --up --update-id-provider --update-provider
+    summary: |-
+      Software Update updateId.provider (e.g. 'Contoso'). The update identity is a {provider, name, version} triple.
+    groupName: Update Arguments
+  - name: --update-id-version --update-version --uv
+    summary: |-
+      Software Update updateId.version (e.g. '1.2.3').
+    groupName: Update Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -110,31 +144,38 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_delete
-  name: az iot adr ns delete
+- uid: az_iot_adr_ns_job_delete
+  name: az iot adr ns job delete
   summary: |-
-    Delete a Device Registry namespace.
+    Delete a job from a Device Registry namespace.
+  description: |-
+    DELETE is a long-running operation. If any in-flight runs (status
+    'Scheduled' or 'Active') exist for this job, a warning is
+    surfaced before deletion; the backend cancels affected runs with reason
+    'CanceledByCustomer'.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns delete --name --namespace
-                         --resource-group
-                         [--acquire-policy-token]
-                         [--change-reference]
-                         [--no-wait]
-                         [--yes {false, true}]
+    az iot adr ns job delete --jn --job-name --name
+                             --namespace --ns
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--no-wait]
+                             [--yes {false, true}]
   examples:
   - summary: |-
-      Delete a namespace
-    syntax: az iot adr ns delete -n myNamespace -g myResourceGroup
-  - summary: |-
-      Delete a namespace with no confirmation prompt
-    syntax: az iot adr ns delete -n myNamespace -g myResourceGroup --yes
+      Delete a job
+    syntax: az iot adr ns job delete -n myJob --ns myNamespace -g myResourceGroup
   requiredParameters:
   - isRequired: true
-    name: --name --namespace -n
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -185,24 +226,28 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_list
-  name: az iot adr ns list
+- uid: az_iot_adr_ns_job_list
+  name: az iot adr ns job list
   summary: |-
-    List Device Registry namespaces.
+    List jobs in a Device Registry namespace.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
-  syntax: az iot adr ns list [--resource-group]
+  syntax: >-
+    az iot adr ns job list --namespace --ns
+                           --resource-group
   examples:
   - summary: |-
-      List all namespaces in a resource group
-    syntax: az iot adr ns list -g myResourceGroup
-  - summary: |-
-      List all namespaces in the subscription
-    syntax: az iot adr ns list
-  optionalParameters:
-  - name: --resource-group -g
+      List all jobs in a namespace
+    syntax: az iot adr ns job list --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   globalParameters:
@@ -232,37 +277,49 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_migrate
-  name: az iot adr ns migrate
+- uid: az_iot_adr_ns_job_schedule
+  name: az iot adr ns job schedule
   summary: |-
-    Migrate legacy assets into a Device Registry namespace.
+    Schedule an execution of a Device Registry job.
   description: |-
-    Migrates existing Microsoft.DeviceRegistry/assets resources into the
-    namespace. The response reports success or failure for each resource ID.
+    A job defines what to deploy and where; scheduling it creates a job run that
+    tracks one execution. Schedule the same job as many times as you need.
+
+    --scheduled-time is the only writable property on a run; every other property
+    is populated by the service. Omit it to start immediately.
+
+    --run-name is optional. When omitted, a UTC-timestamped name such as
+    'run-20251201080000' is generated and returned in the response. Use
+    'az iot adr ns job run' to show, cancel, or inspect the resulting run.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns migrate --ids --resource-ids
-                          --name --namespace
-                          --resource-group
-                          [--acquire-policy-token]
-                          [--change-reference]
-                          [--no-wait]
+    az iot adr ns job schedule --jn --job-name --name
+                               --namespace --ns
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--no-wait]
+                               [--rn --run-name]
+                               [--scheduled-time --st]
   examples:
   - summary: |-
-      Migrate legacy assets into a namespace
+      Schedule a job to run immediately
+    syntax: az iot adr ns job schedule -n myJob --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Schedule a job for a specific UTC time with an explicit run name
     syntax: >-
-      az iot adr ns migrate -n myNamespace -g myResourceGroup \
-        --resource-ids /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.DeviceRegistry/assets/asset1
+      az iot adr ns job schedule -n myJob --ns myNamespace -g myResourceGroup \
+        --run-name myRun --scheduled-time 2025-12-01T08:00:00Z
   requiredParameters:
   - isRequired: true
-    name: --ids --resource-ids
+    name: --jn --job-name --name -n
     summary: |-
-      Space-separated resource IDs of legacy Microsoft.DeviceRegistry/assets resources to migrate.
+      Name of the job.
   - isRequired: true
-    name: --name --namespace -n
+    name: --namespace --ns
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -282,6 +339,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --rn --run-name
+    summary: |-
+      Name of the job run to create. Defaults to a generated UTC-timestamped name such as 'run-20251201080000'.
+  - name: --scheduled-time --st
+    summary: |-
+      Optional ISO 8601 UTC timestamp at which the run should start (e.g. '2025-12-01T08:00:00Z'). Omit to start immediately.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -309,24 +372,29 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_show
-  name: az iot adr ns show
+- uid: az_iot_adr_ns_job_show
+  name: az iot adr ns job show
   summary: |-
-    Show details of a Device Registry namespace.
+    Show a job in a Device Registry namespace.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns show --name --namespace
-                       --resource-group
+    az iot adr ns job show --jn --job-name --name
+                           --namespace --ns
+                           --resource-group
   examples:
   - summary: |-
-      Show namespace details
-    syntax: az iot adr ns show -n myNamespace -g myResourceGroup
+      Show job details
+    syntax: az iot adr ns job show -n myJob --ns myNamespace -g myResourceGroup
   requiredParameters:
   - isRequired: true
-    name: --name --namespace -n
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -360,49 +428,40 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_update
-  name: az iot adr ns update
+- uid: az_iot_adr_ns_job_update
+  name: az iot adr ns job update
   summary: |-
-    Update a Device Registry namespace.
+    Update tags on a job in a Device Registry namespace.
   description: |-
-    Observability can only be enabled or disabled when the namespace already has a
-    service-configured observability endpoint. The existing endpoint configuration
-    is preserved. Raw observability endpoint input is not accepted by this command.
+    PATCH is synchronous and tags-only by design. The job's --type, target
+    group, update identity, and scheduling fields are immutable after creation
+    because mutating them would have unintended effects on already-scheduled
+    runs. To change these, delete and recreate the job.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns update --name --namespace
-                         --resource-group
-                         [--acquire-policy-token]
-                         [--change-reference]
-                         [--no-wait]
-                         [--observability-enabled {false, true}]
-                         [--omi-sa --outbound-system-assigned-mi {false, true}]
-                         [--omi-ua --outbound-user-assigned-mi]
-                         [--tags]
+    az iot adr ns job update --jn --job-name --name
+                             --namespace --ns
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--tags]
   examples:
   - summary: |-
-      Update namespace tags
-    syntax: az iot adr ns update -n myNamespace -g myResourceGroup --tags key=value
+      Update job tags
+    syntax: az iot adr ns job update -n myJob --ns myNamespace -g myResourceGroup --tags env=prod owner=platform
   - summary: |-
-      Disable namespace observability
-    syntax: az iot adr ns update -n myNamespace -g myResourceGroup --observability-enabled false
-  - summary: |-
-      Switch outbound identity to system-assigned managed identity
-    syntax: az iot adr ns update -n myNamespace -g myResourceGroup --outbound-system-assigned-mi
-  - summary: |-
-      Switch outbound identity to a user-assigned managed identity
-    syntax: >-
-      az iot adr ns update -n myNamespace -g myResourceGroup \
-        --outbound-user-assigned-mi /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<id>
-  - summary: |-
-      Clear the explicit outbound identity and use the namespace default
-    syntax: az iot adr ns update -n myNamespace -g myResourceGroup --outbound-system-assigned-mi false
+      Clear all job tags
+    syntax: az iot adr ns job update -n myJob --ns myNamespace -g myResourceGroup --tags ""
   requiredParameters:
   - isRequired: true
-    name: --name --namespace -n
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -418,23 +477,6 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --observability-enabled
-    acceptedValues: false, true
-    summary: |-
-      Enable or disable an existing namespace observability configuration. The namespace must already have a service-configured observability endpoint, which is preserved by this operation.
-  - name: --omi-sa --outbound-system-assigned-mi
-    acceptedValues: false, true
-    summary: |-
-      Enable the system-assigned managed identity as the outbound identity used by this namespace when calling linked Hub/DPS resources.
-    groupName: Outbound Identity Arguments
-  - name: --omi-ua --outbound-user-assigned-mi
-    summary: |-
-      User-assigned managed identity resource ID to assign to the namespace and use for outbound calls.
-    groupName: Outbound Identity Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -465,35 +507,40 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
-- uid: az_iot_adr_ns_wait
-  name: az iot adr ns wait
+- uid: az_iot_adr_ns_job_wait
+  name: az iot adr ns job wait
   summary: |-
-    Wait for a Device Registry namespace to reach a desired state.
+    Wait for a Device Registry job to reach a desired state.
   description: |-
     Without an explicit wait predicate, waits for provisioningState Succeeded.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot adr ns wait --name --namespace
-                       --resource-group
-                       [--acquire-policy-token]
-                       [--change-reference]
-                       [--created]
-                       [--custom]
-                       [--deleted]
-                       [--exists]
-                       [--interval]
-                       [--timeout]
-                       [--updated]
+    az iot adr ns job wait --jn --job-name --name
+                           --namespace --ns
+                           --resource-group
+                           [--acquire-policy-token]
+                           [--change-reference]
+                           [--created]
+                           [--custom]
+                           [--deleted]
+                           [--exists]
+                           [--interval]
+                           [--timeout]
+                           [--updated]
   examples:
   - summary: |-
-      Wait until namespace provisioning succeeds
-    syntax: az iot adr ns wait -n myNamespace -g myResourceGroup
+      Wait until job provisioning succeeds
+    syntax: az iot adr ns job wait -n myJob --ns myNamespace -g myResourceGroup
   requiredParameters:
   - isRequired: true
-    name: --name --namespace -n
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
     summary: |-
       Name of the Device Registry namespace.
   - isRequired: true
@@ -571,61 +618,6 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
-- az_iot_adr_ns_ca
-- az_iot_adr_ns_ca_activate
-- az_iot_adr_ns_ca_create
-- az_iot_adr_ns_ca_delete
-- az_iot_adr_ns_ca_list
-- az_iot_adr_ns_ca_policy
-- az_iot_adr_ns_ca_policy_create
-- az_iot_adr_ns_ca_policy_delete
-- az_iot_adr_ns_ca_policy_list
-- az_iot_adr_ns_ca_policy_show
-- az_iot_adr_ns_ca_policy_update
-- az_iot_adr_ns_ca_policy_wait
-- az_iot_adr_ns_ca_revoke
-- az_iot_adr_ns_ca_show
-- az_iot_adr_ns_ca_update
-- az_iot_adr_ns_ca_wait
-- az_iot_adr_ns_create
-- az_iot_adr_ns_delete
-- az_iot_adr_ns_device
-- az_iot_adr_ns_device_attribute
-- az_iot_adr_ns_device_attribute_create
-- az_iot_adr_ns_device_attribute_delete
-- az_iot_adr_ns_device_attribute_list
-- az_iot_adr_ns_device_attribute_show
-- az_iot_adr_ns_device_auth
-- az_iot_adr_ns_device_auth_list
-- az_iot_adr_ns_device_auth_revoke-certs
-- az_iot_adr_ns_device_auth_show
-- az_iot_adr_ns_device_auth_show-keys
-- az_iot_adr_ns_device_auth_wait
-- az_iot_adr_ns_device_capability
-- az_iot_adr_ns_device_capability_list
-- az_iot_adr_ns_device_capability_show
-- az_iot_adr_ns_device_create
-- az_iot_adr_ns_device_delete
-- az_iot_adr_ns_device_list
-- az_iot_adr_ns_device_show
-- az_iot_adr_ns_device_update
-- az_iot_adr_ns_device_wait
-- az_iot_adr_ns_group
-- az_iot_adr_ns_group_count
-- az_iot_adr_ns_group_create
-- az_iot_adr_ns_group_delete
-- az_iot_adr_ns_group_list
-- az_iot_adr_ns_group_list-members
-- az_iot_adr_ns_group_refresh
-- az_iot_adr_ns_group_show
-- az_iot_adr_ns_group_update
-- az_iot_adr_ns_group_wait
-- az_iot_adr_ns_identity
-- az_iot_adr_ns_identity_assign
-- az_iot_adr_ns_identity_remove
-- az_iot_adr_ns_identity_show
-- az_iot_adr_ns_identity_wait
-- az_iot_adr_ns_job
 - az_iot_adr_ns_job_create
 - az_iot_adr_ns_job_delete
 - az_iot_adr_ns_job_list
@@ -641,73 +633,5 @@ commands:
 - az_iot_adr_ns_job_show
 - az_iot_adr_ns_job_update
 - az_iot_adr_ns_job_wait
-- az_iot_adr_ns_link
-- az_iot_adr_ns_link_add
-- az_iot_adr_ns_link_dps
-- az_iot_adr_ns_link_dps_add
-- az_iot_adr_ns_link_dps_list
-- az_iot_adr_ns_link_dps_remove
-- az_iot_adr_ns_link_dps_show
-- az_iot_adr_ns_link_dps_update
-- az_iot_adr_ns_link_dps_wait
-- az_iot_adr_ns_link_hub
-- az_iot_adr_ns_link_hub_add
-- az_iot_adr_ns_link_hub_list
-- az_iot_adr_ns_link_hub_remove
-- az_iot_adr_ns_link_hub_show
-- az_iot_adr_ns_link_hub_update
-- az_iot_adr_ns_link_hub_wait
-- az_iot_adr_ns_link_su
-- az_iot_adr_ns_link_su_add
-- az_iot_adr_ns_link_su_list
-- az_iot_adr_ns_link_su_remove
-- az_iot_adr_ns_link_su_show
-- az_iot_adr_ns_link_su_update
-- az_iot_adr_ns_link_su_wait
-- az_iot_adr_ns_link_wait
-- az_iot_adr_ns_list
-- az_iot_adr_ns_migrate
-- az_iot_adr_ns_report
-- az_iot_adr_ns_report_generate
-- az_iot_adr_ns_report_latest
-- az_iot_adr_ns_show
-- az_iot_adr_ns_su
-- az_iot_adr_ns_su_device-class
-- az_iot_adr_ns_su_device-class_delete
-- az_iot_adr_ns_su_device-class_list
-- az_iot_adr_ns_su_device-class_show
-- az_iot_adr_ns_su_instance
-- az_iot_adr_ns_su_instance_check-name
-- az_iot_adr_ns_su_instance_create
-- az_iot_adr_ns_su_instance_delete
-- az_iot_adr_ns_su_instance_list
-- az_iot_adr_ns_su_instance_show
-- az_iot_adr_ns_su_instance_update
-- az_iot_adr_ns_su_instance_wait
-- az_iot_adr_ns_su_software-update
-- az_iot_adr_ns_su_software-update_calculate-hash
-- az_iot_adr_ns_su_software-update_catalog
-- az_iot_adr_ns_su_software-update_catalog_name
-- az_iot_adr_ns_su_software-update_catalog_name_list
-- az_iot_adr_ns_su_software-update_catalog_provider
-- az_iot_adr_ns_su_software-update_catalog_provider_list
-- az_iot_adr_ns_su_software-update_catalog_version
-- az_iot_adr_ns_su_software-update_catalog_version_list
-- az_iot_adr_ns_su_software-update_delete
-- az_iot_adr_ns_su_software-update_file
-- az_iot_adr_ns_su_software-update_file_list
-- az_iot_adr_ns_su_software-update_file_show
-- az_iot_adr_ns_su_software-update_import
-- az_iot_adr_ns_su_software-update_init
-- az_iot_adr_ns_su_software-update_init_v5
-- az_iot_adr_ns_su_software-update_list
-- az_iot_adr_ns_su_software-update_operation-status
-- az_iot_adr_ns_su_software-update_operation-status_list
-- az_iot_adr_ns_su_software-update_operation-status_show
-- az_iot_adr_ns_su_software-update_show
-- az_iot_adr_ns_su_software-update_stage
-- az_iot_adr_ns_su_software-update_wait
-- az_iot_adr_ns_update
-- az_iot_adr_ns_wait
 metadata:
-  description: Manage Device Registry namespaces.
+  description: Manage Device Registry namespace jobs.

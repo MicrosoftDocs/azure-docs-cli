@@ -120,11 +120,11 @@ directCommands:
                       [--disable-local-auth --dla {false, true}]
                       [--edr --enforce-data-residency {false, true}]
                       [--location]
-                      [--mi-system-assigned {false, true}]
-                      [--mi-user-assigned]
                       [--sku {S1}]
+                      [--system-assigned-mi {false, true}]
                       [--tags]
                       [--unit]
+                      [--user-assigned-mi]
   examples:
   - summary: |-
       Create an Azure IoT Hub Device Provisioning Service with the standard pricing tier S1, in the region of the resource group.
@@ -136,11 +136,14 @@ directCommands:
       Create an Azure IoT Hub Device Provisioning Service with data residency enforced. This will disable cross-region disaster recovery.
     syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --edr
   - summary: |-
-      Create an Azure IoT Hub Device Provisioning Service with a system-assigned identity
-    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --mi-system-assigned
+      Create DPS with a system-assigned identity for later namespace linking.
+    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --system-assigned-mi
+  - summary: |-
+      Create DPS with one unit (the default). Units must be an integer of at least 1.
+    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --unit 1
   - summary: |-
       Create an Azure IoT Hub Device Provisioning Service with a user-assigned identity
-    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --mi-user-assigned IdentityResourceId
+    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --user-assigned-mi IdentityResourceId
   - summary: |-
       Create an Azure IoT Hub Device Provisioning Service with SAS key (local) authentication disabled, requiring Azure RBAC
     syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --disable-local-auth
@@ -173,25 +176,25 @@ directCommands:
   - name: --location -l
     summary: |-
       Location of your IoT Hub Device Provisioning Service. Default is the location of target resource group.
-  - name: --mi-system-assigned
-    acceptedValues: false, true
-    summary: |-
-      Enable system-assigned managed identity for this provisioning service.
-  - name: --mi-user-assigned
-    summary: |-
-      Enable user-assigned managed identities for this provisioning service. Accepts space-separated list of identity resource IDs.
   - name: --sku
     defaultValue: S1
     acceptedValues: S1
     summary: |-
       Pricing tier for the IoT Hub Device Provisioning Service.
+  - name: --system-assigned-mi
+    acceptedValues: false, true
+    summary: |-
+      Enable system-assigned managed identity for this provisioning service.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --unit
     defaultValue: "1"
     summary: |-
-      Units in your IoT Hub Device Provisioning Service.
+      Units in your IoT Hub Device Provisioning Service. Integer minimum: 1.
+  - name: --user-assigned-mi
+    summary: |-
+      Enable user-assigned managed identities for this provisioning service. Accepts space-separated list of identity resource IDs.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -668,14 +671,14 @@ directCommands:
                       [--disable-local-auth --dla {false, true}]
                       [--force-string]
                       [--ids]
-                      [--mi-system-assigned {false, true}]
-                      [--mi-user-assigned]
                       [--name]
                       [--remove]
                       [--resource-group]
                       [--set]
                       [--subscription]
+                      [--system-assigned-mi {false, true}]
                       [--tags]
+                      [--user-assigned-mi]
   examples:
   - summary: |-
       Update Allocation Policy to 'GeoLatency' of an Azure IoT Hub Device Provisioning Service 'MyDps'
@@ -683,6 +686,9 @@ directCommands:
   - summary: |-
       Disable SAS key (local) authentication on an existing Device Provisioning Service, requiring Azure RBAC
     syntax: az iot dps update --name MyDps --resource-group MyResourceGroup --disable-local-auth
+  - summary: |-
+      Explicit capacity edits must retain an integer of at least 1.
+    syntax: az iot dps update --name MyDps --resource-group MyResourceGroup --set sku.capacity=1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -710,13 +716,6 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
-  - name: --mi-system-assigned
-    acceptedValues: false, true
-    summary: |-
-      Enable system-assigned managed identity for this provisioning service.
-  - name: --mi-user-assigned
-    summary: |-
-      Enable user-assigned managed identities for this provisioning service. Accepts space-separated list of identity resource IDs.
   - name: --name -n
     summary: |-
       IoT Hub Device Provisioning Service name.
@@ -739,9 +738,16 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --system-assigned-mi
+    acceptedValues: false, true
+    summary: |-
+      Enable system-assigned managed identity for this provisioning service.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --user-assigned-mi
+    summary: |-
+      Enable user-assigned managed identities for this provisioning service. Accepts space-separated list of identity resource IDs.
   globalParameters:
   - name: --debug
     defaultValue: "False"

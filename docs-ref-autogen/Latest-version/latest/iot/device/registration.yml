@@ -5,9 +5,12 @@ extensionInformation: |-
   > [!NOTE]
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot device registration** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage IoT device registrations for the IoT Device Provisioning Service.
+  Register a device through Azure IoT Hub Device Provisioning Service (DPS).
 description: |-
-  Use `az iot dps enrollment registration` or `az iot dps enrollment-group registration` to view and delete registrations.
+  Use create for an individual or group enrollment, then operation-status to
+  follow an accepted registration. Authenticate the device with its symmetric
+  key or an X.509 certificate. Service enrollment records and registration-state
+  administration remain under `az iot dps`.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -16,12 +19,43 @@ directCommands:
 - uid: az_iot_device_registration_create
   name: az iot device registration create
   summary: |-
-    Register an IoT device with the IoT Device Provisioning Service.
+    Register a device and optionally issue its operational certificate.
   description: |-
-    The following attestation mechanisms are supported:
-    - Symmetric key
-    - x509 certificate
-    If using x509 authentication methods, the certificate and key files (and passphrase if needed) must be provided.
+    For an individual enrollment, supply its device --symmetric-key. For a group
+    enrollment, supply the group key with --compute-key, or supply an already
+    derived device key without --compute-key. Alternatively, use --dps-name with
+    --auth-type login to discover the ID scope/endpoint and retrieve enrollment
+    keys; add --group-id and --compute-key for a group enrollment. Entra login
+    authorizes this bootstrap lookup, not the device registration request.
+
+    Use --id-scope with explicit device credentials to skip DPS resource
+    discovery. Set --host when using a non-default provisioning endpoint.
+    For X.509 authentication, supply --certificate-file-path and --key-file-path;
+    add --passphrase only if the private key is encrypted.
+
+    Add --csr (alias --csr-file-path) to request an operational certificate.
+    It accepts PEM or base64 DER PKCS #10, inline or from a file. The CSR signature
+    must be valid and its Common Name must match --registration-id.
+    A CSR does not replace the device's symmetric-key or X.509 authentication.
+
+    The command polls accepted registrations, honoring Retry-After. If it times
+    out after receiving an operation ID, use operation-status with that ID and
+    the same registration ID, ID scope, endpoint and device authentication.
+    A timeout does not cancel the backend operation; do not blindly rerun create.
+    --timeout applies a hard deadline to the same REST flow for both CSR and non-CSR registration, including
+    worker startup, HTTP retries and polling, after preliminary ID scope and bootstrap credential discovery.
+    Without --timeout, the existing bounded five-minute polling behavior is retained.
+
+    JSON output preserves issuedCertificateChain and connectionProfile when DPS
+    returns them, plus registryDeviceExternalId for Registry Device correlation.
+    The 2026-11-02-preview RegisterDeviceAndIssueCertificate contract describes issuedCertificateChain
+    only as an array of bytes and does not define its wire encoding or certificate
+    order. Consequently, this command preserves that field in JSON output but does
+    not offer a certificate-file output option; writing a guessed chain could
+    produce a non-TLS-ready or incorrectly ordered bundle.
+    --endorsement-key and --storage-root-key are retained as advanced request-schema
+    fields, but TPM-only authentication is explicitly unsupported because this
+    contract provides no client TPM challenge protocol.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot device registration' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -33,7 +67,9 @@ directCommands:
                                       [--certificate-file-path --cp]
                                       [--change-reference]
                                       [--ck --compute-key]
+                                      [--csr --csr-file-path]
                                       [--dps-name]
+                                      [--endorsement-key]
                                       [--enrollment-group-id --gid --group-id]
                                       [--host --provisioning-host]
                                       [--id-scope --scope]
@@ -43,31 +79,40 @@ directCommands:
                                       [--pass --passphrase]
                                       [--payload]
                                       [--resource-group]
+                                      [--storage-root-key]
+                                      [--timeout]
   examples:
   - summary: |-
-      Register an IoT device using an individual enrollment.
-    syntax: az iot device registration create -n {dps_name} --rid {registration_id}
+      Register an individual enrollment using Entra-authorized bootstrap key lookup
+    syntax: >-
+      az iot device registration create --dps-name MyDps --resource-group MyResourceGroup \
+        --registration-id device-01 --auth-type login
   - summary: |-
-      Register an IoT device using a group enrollment.
-    syntax: az iot device registration create -n {dps_name} --rid {registration_id} --gid {group_enrollment_id}
+      Register a group member using Entra-authorized bootstrap key lookup
+    syntax: >-
+      az iot device registration create --dps-name MyDps --registration-id device-01 \
+        --group-id MyEnrollmentGroup --compute-key --auth-type login
   - summary: |-
-      Register an IoT device using an individual enrollment, the Device Provisioning Service ID Scope, and given symmetric key. This will bypass retrieving the ID Scope and individal enrollment symmetric key.
-    syntax: az iot device registration create --id-scope {id_scope} --rid {registration_id} --key {symmetric_key}
+      Register with a device key and known ID scope, without bootstrap lookup
+    syntax: >-
+      az iot device registration create --id-scope 0ne00000000 \
+        --registration-id device-01 --symmetric-key DEVICE_KEY
   - summary: |-
-      Register an IoT device using a group enrollment, the Device Provisioning Service ID Scope, and given enrollment group symmetric key. This will bypass retrieving the ID Scope and enrollment-group symmetric key. The symmetric key used for the device registration will be computed from the given symmetric key.
-    syntax: az iot device registration create --id-scope {id_scope} --rid {registration_id} --gid {group_enrollment_id} --key {symmetric_key} --ck
+      Derive a device key from an enrollment group key and register
+    syntax: >-
+      az iot device registration create --id-scope 0ne00000000 \
+        --registration-id device-01 --symmetric-key GROUP_KEY --compute-key
   - summary: |-
-      Register an IoT device using a group enrollment, the Device Provisioning Service ID Scope, and given symmetric key. This will bypass retrieving the ID Scope. Note that since the symmetric key should be the computed device key, the enrollment group id is not needed.
-    syntax: az iot device registration create --id-scope {id_scope} --rid {registration_id} --key {symmetric_key}
+      Register and request an operational certificate from a PEM CSR
+    syntax: >-
+      az iot device registration create --id-scope 0ne00000000 --registration-id device-01 \
+        --symmetric-key DEVICE_KEY --csr ./device-01.csr --timeout 120
   - summary: |-
-      Register an IoT device using an individual enrollment, the Device Provisioning Service ID Scope, and given certificate and key files. This will bypass retrieving the ID Scope.
-    syntax: az iot device registration create --id-scope {id_scope} --rid {registration_id} --cp {certificate_file} --kp {key_file}
-  - summary: |-
-      Register an IoT device using an individual enrollment, the Device Provisioning Service ID Scope, and given certificate and key files and passphrase for the key file. This will bypass retrieving the ID Scope.
-    syntax: az iot device registration create --id-scope {id_scope} --rid {registration_id} --cp {certificate_file} --kp {key_file} --pass {passphrase}
-  - summary: |-
-      Register an IoT device using a group enrollment, the Device Provisioning Service ID Scope, and given certificate and key files. This will bypass retrieving the ID Scope. Note that the group enrollment id is not needed for x509 attestations and the subject of the certificate file is the registration id.
-    syntax: az iot device registration create --id-scope {id_scope} --rid {registration_id} --cp {certificate_file} --kp {key_file}
+      Register with an X.509 device certificate
+    syntax: >-
+      az iot device registration create --id-scope 0ne00000000 \
+        --registration-id device-01 --certificate-file-path ./device.pem \
+        --key-file-path ./device-key.pem
   requiredParameters:
   - isRequired: true
     name: --registration-id --rid
@@ -95,22 +140,29 @@ directCommands:
   - name: --ck --compute-key
     defaultValue: "False"
     summary: |-
-      Flag to indicate that the symmetric key for the device registration should be computed from the given key with --symmetric-key.
+      Compute the per-device key from --symmetric-key, or from the enrollment-group key resolved by --group-id with --dps-name/--login. Cannot be combined with X.509 inputs.
     groupName: Symmetric Key Authentication Arguments
+  - name: --csr --csr-file-path
+    summary: |-
+      Inline PEM/base64 DER PKCS #10 CSR or path to a CSR file. Its signature must be valid and Common Name must match the registration ID. The request sends base64 DER without PEM headers.
+    groupName: Certificate Issuance Arguments
   - name: --dps-name -n
     summary: |-
       Name of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided or authenticaton arguments and --id-scope are not provided.
     groupName: DPS Identifier Arguments
+  - name: --endorsement-key
+    summary: |-
+      Advanced TPM request field retained by the service schema. Must be used with --storage-root-key. TPM-only client authentication is not supported by this command.
+    groupName: TPM Arguments
   - name: --enrollment-group-id --gid --group-id
     summary: |-
       Enrollment group ID. Only needed to retrieve authentication arguments.
   - name: --host --provisioning-host
-    defaultValue: global.azure-devices-provisioning.net
     summary: |-
-      Endpoint pointing to the provisioning host to use.
+      DPS device endpoint. When omitted, the endpoint is derived from the selected DPS resource, then falls back to the global endpoint.
   - name: --id-scope --scope
     summary: |-
-      Id Scope of the Azure IoT Hub Device Provisioning Service. If provided with authentication arguments, will avoid session login.
+      ID scope of the Azure IoT Hub Device Provisioning Service. ID scope does not identify a device endpoint: --dps-name or --login is still resolved when supplied. With only --id-scope and explicit device credentials, the documented global endpoint fallback is used.
     groupName: DPS Identifier Arguments
   - name: --key --symmetric-key
     summary: |-
@@ -126,11 +178,157 @@ directCommands:
     groupName: DPS Identifier Arguments
   - name: --pass --passphrase
     summary: |-
-      Passphrase for the certificate.
+      Passphrase for the X.509 private key. Valid only with both --certificate-file-path and --key-file-path.
     groupName: x509 Authentication Arguments
   - name: --payload
     summary: |-
-      Custom allocation payload as JSON. Specifically for use with custom allocation policies using Azure Functions.
+      Registration payload as a JSON object or path to a JSON file.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --storage-root-key
+    summary: |-
+      Advanced TPM request field retained by the service schema. Must be used with --endorsement-key. TPM-only client authentication is not supported by this command.
+    groupName: TPM Arguments
+  - name: --timeout
+    summary: |-
+      Positive integer hard REST registration timeout in seconds, including worker startup, HTTP and polling. Excludes preliminary ID scope and bootstrap credential discovery.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_device_registration_operation-status
+  name: az iot device registration operation-status
+  summary: |-
+    Show the status of a DPS device registration operation.
+  description: |-
+    Supply the operation ID returned by DPS or reported by create after a timeout.
+    Reuse the registration ID, ID scope (or DPS name), provisioning host and device
+    authentication from create. This is a status read, not a new registration.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot device registration' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot device registration operation-status --operation-id
+                                                --registration-id --rid
+                                                [--acquire-policy-token]
+                                                [--auth-type {key, login}]
+                                                [--certificate-file-path --cp]
+                                                [--change-reference]
+                                                [--ck --compute-key]
+                                                [--dps-name]
+                                                [--enrollment-group-id --gid --group-id]
+                                                [--host --provisioning-host]
+                                                [--id-scope --scope]
+                                                [--key --symmetric-key]
+                                                [--key-file-path --kp]
+                                                [--login]
+                                                [--pass --passphrase]
+                                                [--resource-group]
+  examples:
+  - summary: |-
+      Follow an individual enrollment with bootstrap key lookup
+    syntax: >-
+      az iot device registration operation-status --dps-name MyDps \
+        --registration-id device-01 --operation-id OPERATION_ID --auth-type login
+  - summary: |-
+      Follow a group member with the same group key and provisioning host
+    syntax: >-
+      az iot device registration operation-status --id-scope 0ne00000000 \
+        --registration-id device-01 --operation-id OPERATION_ID \
+        --symmetric-key GROUP_KEY --compute-key --host MyProvisioningHost
+  - summary: |-
+      Follow an accepted operation after a timeout without resubmitting registration
+    syntax: >-
+      az iot device registration operation-status --id-scope 0ne00000000 \
+        --registration-id device-01 --operation-id OPERATION_ID --symmetric-key DEVICE_KEY
+  requiredParameters:
+  - isRequired: true
+    name: --operation-id
+    summary: |-
+      Registration operation identifier returned by create.
+  - isRequired: true
+    name: --registration-id --rid
+    summary: |-
+      Device registration ID or individual enrollment ID.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --auth-type
+    defaultValue: key
+    acceptedValues: key, login
+    summary: |-
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
+    groupName: Access Control Arguments
+  - name: --certificate-file-path --cp
+    summary: |-
+      Path to certificate PEM file. Required for x509 registrations.
+    groupName: x509 Authentication Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ck --compute-key
+    defaultValue: "False"
+    summary: |-
+      Compute the per-device key from --symmetric-key, or from the enrollment-group key resolved by --group-id with --dps-name/--login. Cannot be combined with X.509 inputs.
+    groupName: Symmetric Key Authentication Arguments
+  - name: --dps-name -n
+    summary: |-
+      Name of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided or authenticaton arguments and --id-scope are not provided.
+    groupName: DPS Identifier Arguments
+  - name: --enrollment-group-id --gid --group-id
+    summary: |-
+      Enrollment group ID. Only needed to retrieve authentication arguments.
+  - name: --host --provisioning-host
+    summary: |-
+      DPS device endpoint. When omitted, the endpoint is derived from the selected DPS resource, then falls back to the global endpoint.
+  - name: --id-scope --scope
+    summary: |-
+      ID scope of the Azure IoT Hub Device Provisioning Service. ID scope does not identify a device endpoint: --dps-name or --login is still resolved when supplied. With only --id-scope and explicit device credentials, the documented global endpoint fallback is used.
+    groupName: DPS Identifier Arguments
+  - name: --key --symmetric-key
+    summary: |-
+      The symmetric shared access key for the device registration.
+    groupName: Symmetric Key Authentication Arguments
+  - name: --key-file-path --kp
+    summary: |-
+      Path to key PEM file. Required for x509 registrations.
+    groupName: x509 Authentication Arguments
+  - name: --login -l
+    summary: |-
+      This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided or authenticaton arguments and --id-scope are not provided.
+    groupName: DPS Identifier Arguments
+  - name: --pass --passphrase
+    summary: |-
+      Passphrase for the X.509 private key. Valid only with both --certificate-file-path and --key-file-path.
+    groupName: x509 Authentication Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -163,5 +361,13 @@ directCommands:
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_iot_device_registration_create
+- az_iot_device_registration_operation-status
 metadata:
-  description: Use `az iot dps enrollment registration` or `az iot dps enrollment-group registration` to view and delete registrations.
+  description: >-
+    Use create for an individual or group enrollment, then operation-status to
+
+    follow an accepted registration. Authenticate the device with its symmetric
+
+    key or an X.509 certificate. Service enrollment records and registration-state
+
+    administration remain under `az iot dps`.

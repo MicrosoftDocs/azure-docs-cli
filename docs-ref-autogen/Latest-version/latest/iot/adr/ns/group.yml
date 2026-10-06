@@ -1,0 +1,751 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_adr_ns_group
+name: az iot adr ns group
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Device Registry namespace groups.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_adr_ns_group_count
+  name: az iot adr ns group count
+  summary: |-
+    Show the current member count of a group.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group count --gn --group-name --name
+                              --namespace --ns
+                              --resource-group
+                              [--acquire-policy-token]
+                              [--change-reference]
+  examples:
+  - summary: |-
+      Show member count
+    syntax: az iot adr ns group count -n myGroup --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_create
+  name: az iot adr ns group create
+  summary: |-
+    Create a group in a Device Registry namespace.
+  description: |-
+    The group's --group-type and --query-string are immutable after creation. Only
+    'RegistryDevice' is supported as the group type in the current preview API.
+
+    --query-string is passed to the service verbatim. Use '*' to include every device in
+    the namespace.
+
+    Creating a group starts its initial membership calculation. Use
+    'az iot adr ns group wait' without a predicate to wait for that calculation.
+    Manual membership refresh is rate-limited to once per hour.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group create --gn --group-name --name
+                               --namespace --ns
+                               --qs --query-string
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--description]
+                               [--display-name]
+                               [--group-type --gt {RegistryDevice}]
+                               [--location]
+                               [--tags]
+  examples:
+  - summary: |-
+      Create a group containing every device in the namespace
+    syntax: >-
+      az iot adr ns group create -n myGroup --ns myNamespace -g myResourceGroup \
+        --query-string "*"
+  - summary: |-
+      Create a group with a membership query, display name and description
+    syntax: >-
+      az iot adr ns group create -n myGroup --ns myNamespace -g myResourceGroup \
+        --query-string "properties.manufacturer = 'Contoso'" \
+        --display-name "Contoso devices" --description "All Contoso-manufactured devices"
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --qs --query-string
+    summary: |-
+      Membership query filter used to determine which devices belong to the group. Use '*' to include every device in the namespace. Required and immutable after creation.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --description
+    summary: |-
+      Human-readable description of the group.
+  - name: --display-name
+    summary: |-
+      Human-readable display name for the group.
+  - name: --group-type --gt
+    defaultValue: RegistryDevice
+    acceptedValues: RegistryDevice
+    summary: |-
+      Type of the group. Only 'RegistryDevice' is supported in the current preview API; this is immutable after creation.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_delete
+  name: az iot adr ns group delete
+  summary: |-
+    Delete a group from a Device Registry namespace.
+  description: |-
+    Deletion completes synchronously and does not delete jobs or job runs.
+    --no-wait is accepted for compatibility, but still waits for the delete response.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group delete --gn --group-name --name
+                               --namespace --ns
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--no-wait]
+                               [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete a group
+    syntax: az iot adr ns group delete -n myGroup --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Delete a group without confirmation prompt
+    syntax: az iot adr ns group delete -n myGroup --ns myNamespace -g myResourceGroup --yes
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Accepted for compatibility only; has no effect because group deletion is synchronous.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_list
+  name: az iot adr ns group list
+  summary: |-
+    List groups in a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group list --namespace --ns
+                             --resource-group
+  examples:
+  - summary: |-
+      List all groups in a namespace
+    syntax: az iot adr ns group list --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_list-members
+  name: az iot adr ns group list-members
+  summary: |-
+    List the current members of a group.
+  description: |-
+    Follows the service's skip-token pagination and returns member resource ID
+    objects.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group list-members --gn --group-name --name
+                                     --namespace --ns
+                                     --resource-group
+                                     [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--page-size]
+                                     [--skip-token]
+  examples:
+  - summary: |-
+      List group members
+    syntax: az iot adr ns group list-members -n myGroup --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --page-size
+    summary: |-
+      Maximum members per request. The service maximum is 1000.
+  - name: --skip-token
+    summary: |-
+      Opaque token from which to start listing members.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_refresh
+  name: az iot adr ns group refresh
+  summary: |-
+    Trigger an asynchronous refresh of a group's membership.
+  description: |-
+    Refreshing membership is a long-running operation. Use 'az iot adr ns group wait'
+    to wait for the refresh to complete, or 'az iot adr ns group show' to poll
+    the 'membershipState' field. If a membership calculation is already in
+    progress, this command reuses that calculation instead of starting another.
+    The service allows membership refresh at most once per hour, including the
+    initial membership calculation triggered by group creation.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group refresh --gn --group-name --name
+                                --namespace --ns
+                                --resource-group
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--no-wait]
+  examples:
+  - summary: |-
+      Refresh group membership
+    syntax: az iot adr ns group refresh -n myGroup --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_show
+  name: az iot adr ns group show
+  summary: |-
+    Show a group in a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group show --gn --group-name --name
+                             --namespace --ns
+                             --resource-group
+  examples:
+  - summary: |-
+      Show group details
+    syntax: az iot adr ns group show -n myGroup --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_update
+  name: az iot adr ns group update
+  summary: |-
+    Update a group in a Device Registry namespace.
+  description: |-
+    Only mutable fields are exposed: --display-name, --description and --tags. The group's
+    type and membership query cannot be changed after creation; recreate the group instead.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group update --gn --group-name --name
+                               --namespace --ns
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--description]
+                               [--display-name]
+                               [--tags]
+  examples:
+  - summary: |-
+      Update a group's display name
+    syntax: az iot adr ns group update -n myGroup --ns myNamespace -g myResourceGroup --display-name "New name"
+  - summary: |-
+      Update a group's description and tags
+    syntax: az iot adr ns group update -n myGroup --ns myNamespace -g myResourceGroup --description "Updated" --tags env=prod
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --description
+    summary: |-
+      Human-readable description of the group.
+  - name: --display-name
+    summary: |-
+      Human-readable display name for the group.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_group_wait
+  name: az iot adr ns group wait
+  summary: |-
+    Wait for a Device Registry group to reach a desired state.
+  description: |-
+    Without an explicit wait predicate, waits through membershipState Resolving
+    until Ready and fails immediately on FailedToResolveMembers. Explicit
+    standard wait predicates remain available.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns group wait --gn --group-name --name
+                             --namespace --ns
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--created]
+                             [--custom]
+                             [--deleted]
+                             [--exists]
+                             [--interval]
+                             [--timeout]
+                             [--updated]
+  examples:
+  - summary: |-
+      Wait until a group's membership refresh completes
+    syntax: az iot adr ns group wait -n myGroup --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Wait until a group is deleted
+    syntax: az iot adr ns group wait -n myGroup --ns myNamespace -g myResourceGroup --deleted
+  requiredParameters:
+  - isRequired: true
+    name: --gn --group-name --name -n
+    summary: |-
+      Name of the group.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until a custom JMESPath expression evaluates to true.
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource is deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_adr_ns_group_count
+- az_iot_adr_ns_group_create
+- az_iot_adr_ns_group_delete
+- az_iot_adr_ns_group_list
+- az_iot_adr_ns_group_list-members
+- az_iot_adr_ns_group_refresh
+- az_iot_adr_ns_group_show
+- az_iot_adr_ns_group_update
+- az_iot_adr_ns_group_wait
+metadata:
+  description: Manage Device Registry namespace groups.

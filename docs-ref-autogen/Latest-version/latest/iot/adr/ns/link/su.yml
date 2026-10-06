@@ -1,0 +1,581 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_adr_ns_link_su
+name: az iot adr ns link su
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns link su** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Software Updates links (updating endpoints) on a Device Registry namespace.
+description: |-
+  Links a 'Microsoft.DeviceUpdate/updateInstances' resource to the namespace as an
+  updating endpoint under properties.updating.endpoints. Links live on the namespace, not on
+  the Update Instance. Only one Software Updates instance may be linked per namespace.
+  Linking is asynchronous; read-only address fields (serviceAddress, deviceAddress,
+  legacyDeviceAddress) are resolved once linking succeeds.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_adr_ns_link_su_add
+  name: az iot adr ns link su add
+  summary: |-
+    Link an Update Instance to a Device Registry namespace.
+  description: |-
+    Adds a Software Updates updating endpoint entry under the namespace's properties.updating.endpoints.
+    Only one Software Updates instance may be linked per namespace. If one is already
+    linked, use 'link su update' to modify the existing endpoint.
+    Exactly one of --system-assigned-mi or --user-assigned-mi must be provided to set the
+    inbound caller identity that the update instance will use to call back into the namespace.
+    Required service-to-service roles: namespace outbound MI -> Contributor on SU; namespace outbound MI -> Device Update Administrator on SU; SU selected inbound MI -> Azure Device Registry Contributor on namespace.
+    These are exactly three service-to-service grants. Device Update Administrator enables
+    namespace-initiated ADU data-plane operations, including report generation; ARM Contributor
+    alone does not grant data-plane access. The configured namespace outbound identity
+    and the selected Update Instance inbound identity each support SAMI or an attached UAMI.
+    No ADU first-party service principal or Microsoft Graph lookup is required.
+    Missing assignments are created only when run by a caller who can create role assignments
+    (for example Owner, User Access Administrator, or Role Based Access Control Administrator).
+    A newly created assignment must become visible within 180 seconds.
+    This link workflow never grants the signed-in user Software Updates content roles.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link su' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link su add --en --endpoint-name --name
+                              --namespace --ns
+                              --resource-group
+                              --su-id --su-resource-id
+                              [--acquire-policy-token]
+                              [--change-reference]
+                              [--interval]
+                              [--mi-sa --system-assigned-mi {false, true}]
+                              [--mi-ua --user-assigned-mi]
+                              [--no-wait]
+                              [--timeout]
+  examples:
+  - summary: |-
+      Link an Update Instance using its system-assigned identity for inbound calls
+    syntax: >-
+      az iot adr ns link su add -n my-su --ns myNamespace -g myResourceGroup \
+        --su-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.DeviceUpdate/updateInstances/<instance> \
+        --system-assigned-mi
+  - summary: |-
+      Link an Update Instance with a user-assigned identity
+    syntax: >-
+      az iot adr ns link su add -n my-su --ns myNamespace -g myResourceGroup \
+        --su-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.DeviceUpdate/updateInstances/<instance> \
+        --user-assigned-mi /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<id>
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the Software Updates endpoint entry.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --su-id --su-resource-id
+    summary: |-
+      Azure resource ID of the Update Instance to link.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Positive polling interval in seconds. Default: 30.
+    groupName: Wait Condition Arguments
+  - name: --mi-sa --system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked Update Instance's system-assigned identity. The instance must have that identity enabled.
+    groupName: Inbound Caller Identity Arguments
+  - name: --mi-ua --user-assigned-mi
+    summary: |-
+      Resource ID of a user-assigned identity attached to the linked Update Instance.
+    groupName: Inbound Caller Identity Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Return after submission without observing endpoint readiness or recovering later failures.
+  - name: --timeout
+    defaultValue: "600"
+    summary: |-
+      Positive mutation/recovery budget in seconds after initial RBAC preflight. Default: 600.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_su_list
+  name: az iot adr ns link su list
+  summary: |-
+    List Software Updates updating endpoints on a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link su' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link su list --namespace --ns
+                               --resource-group
+  examples:
+  - summary: |-
+      List all Software Updates links on a namespace
+    syntax: az iot adr ns link su list --ns myNamespace -g myResourceGroup
+  - summary: |-
+      List endpoint names and linking states
+    syntax: az iot adr ns link su list --ns myNamespace -g myResourceGroup --query "[].{name:name,linkingState:linkingState}"
+  - summary: |-
+      List failed Software Updates endpoints
+    syntax: az iot adr ns link su list --ns myNamespace -g myResourceGroup --query "[?linkingState=='Failed']"
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_su_remove
+  name: az iot adr ns link su remove
+  summary: |-
+    Remove a Software Updates instance endpoint from a Device Registry namespace.
+  description: |-
+    Delete the linked Software Updates instance first; this command removes only the namespace endpoint.
+    The namespace outbound identity needs Reader on the linked resource's resource group.
+    A missing grant is created when you can create role assignments; it is kept after unlinking.
+    Keep that resource group until the unlink completes.
+    The command does not wait. Confirm removal with 'az iot adr ns show'.
+    Avoid concurrent namespace updates while this command runs.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link su' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link su remove --en --endpoint-name --name
+                                 --namespace --ns
+                                 --resource-group
+                                 [--acquire-policy-token]
+                                 [--change-reference]
+                                 [--yes {false, true}]
+  examples:
+  - summary: |-
+      Remove an endpoint after its linked Software Updates instance has been deleted
+    syntax: az iot adr ns link su remove -n primary --ns myNamespace -g myResourceGroup --yes
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the Software Updates endpoint entry.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_su_show
+  name: az iot adr ns link su show
+  summary: |-
+    Show a single Software Updates updating endpoint on a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link su' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link su show --en --endpoint-name --name
+                               --namespace --ns
+                               --resource-group
+  examples:
+  - summary: |-
+      Show a Software Updates link by endpoint name
+    syntax: az iot adr ns link su show -n my-su --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Show the endpoint linking state
+    syntax: az iot adr ns link su show -n my-su --ns myNamespace -g myResourceGroup --query linkingState -o tsv
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the Software Updates endpoint entry.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_su_update
+  name: az iot adr ns link su update
+  summary: |-
+    Update an existing Software Updates updating endpoint on a Device Registry namespace.
+  description: |-
+    Retry a Failed endpoint without identity options to reuse its saved inbound identity.
+    Pass --system-assigned-mi or --user-assigned-mi to change that identity.
+    Healthy endpoints require an explicit change. The linked Update Instance cannot be changed
+    in place. Before PATCH, update repeats add's target existence, region,
+    provisioning-state, selected identity attachment, namespace outbound principal,
+    automatic RBAC, and assignment-visibility preflight.
+    This includes Device Update Administrator for the namespace outbound identity on the linked
+    Update Instance, adding the missing grant for links created with older CLI versions.
+    ARM assignment visibility does not guarantee that the linked service already honors access.
+    Waited add/update commands recover only confirmed AdrMiNotAuthorized on the unchanged endpoint,
+    rechecking required assignments and preserving identity and settings. --timeout (600 seconds) bounds
+    mutation, polling and 30/60/120-second propagation backoff after initial RBAC preflight;
+    --interval (30 seconds) controls polling. Success requires endpoint linkingState Succeeded.
+    With --no-wait, use the matching link wait command to track completion.
+    After verifying access and allowing recent assignments to propagate, retry a persisted
+    failed endpoint with update, not add, passing its existing inbound identity. There is no
+    need to delete the linked Update Instance to retry the link.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link su' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link su update --en --endpoint-name --name
+                                 --namespace --ns
+                                 --resource-group
+                                 [--acquire-policy-token]
+                                 [--change-reference]
+                                 [--interval]
+                                 [--mi-sa --system-assigned-mi {false, true}]
+                                 [--mi-ua --user-assigned-mi]
+                                 [--no-wait]
+                                 [--timeout]
+  examples:
+  - summary: |-
+      Rotate to a system-assigned identity on an existing Software Updates link
+    syntax: az iot adr ns link su update -n my-su --ns myNamespace -g myResourceGroup --system-assigned-mi
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the Software Updates endpoint entry.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --interval
+    summary: |-
+      Positive polling interval in seconds. Default: 30.
+    groupName: Wait Condition Arguments
+  - name: --mi-sa --system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked Update Instance's system-assigned identity. The instance must have that identity enabled.
+    groupName: Inbound Caller Identity Arguments
+  - name: --mi-ua --user-assigned-mi
+    summary: |-
+      Resource ID of a user-assigned identity attached to the linked Update Instance.
+    groupName: Inbound Caller Identity Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Return after submission without observing endpoint readiness or recovering later failures.
+  - name: --timeout
+    summary: |-
+      Positive mutation/recovery budget in seconds after initial RBAC preflight. Default: 600.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_su_wait
+  name: az iot adr ns link su wait
+  summary: |-
+    Wait for a Software Updates endpoint to link successfully.
+  description: |-
+    The endpoint name is required. Without an explicit wait predicate, this command
+    polls that endpoint's linkingState and fails immediately if it reaches Failed.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link su' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link su wait --en --endpoint-name --name
+                               --namespace --ns
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--created]
+                               [--custom]
+                               [--deleted]
+                               [--exists]
+                               [--interval]
+                               [--timeout]
+                               [--updated]
+  examples:
+  - summary: |-
+      Wait until a Software Updates endpoint reaches linkingState Succeeded
+    syntax: az iot adr ns link su wait -n my-su --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the Software Updates endpoint entry.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until a custom JMESPath expression evaluates to true.
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource is deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_adr_ns_link_su_add
+- az_iot_adr_ns_link_su_list
+- az_iot_adr_ns_link_su_remove
+- az_iot_adr_ns_link_su_show
+- az_iot_adr_ns_link_su_update
+- az_iot_adr_ns_link_su_wait
+metadata:
+  description: >-
+    Links a 'Microsoft.DeviceUpdate/updateInstances' resource to the namespace as an
+
+    updating endpoint under properties.updating.endpoints. Links live on the namespace, not on
+
+    the Update Instance. Only one Software Updates instance may be linked per namespace.
+
+    Linking is asynchronous; read-only address fields (serviceAddress, deviceAddress,
+
+    legacyDeviceAddress) are resolved once linking succeeds.
