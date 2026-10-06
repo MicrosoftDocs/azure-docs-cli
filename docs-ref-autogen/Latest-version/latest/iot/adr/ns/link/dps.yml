@@ -1,0 +1,577 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_adr_ns_link_dps
+name: az iot adr ns link dps
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns link dps** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage DPS links (provisioning endpoints) on a Device Registry namespace.
+description: |-
+  Only one DPS may be linked per namespace today. Links live on the namespace, not on the
+  DPS resource. After deleting the DPS resource, run link dps remove to remove its
+  namespace endpoint.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_adr_ns_link_dps_add
+  name: az iot adr ns link dps add
+  summary: |-
+    Link a Device Provisioning Service (DPS) to a Device Registry namespace.
+  description: |-
+    Adds a DPS provisioning endpoint entry under the namespace's properties.provisioning.endpoints.
+    Rejected if the namespace already has a linked DPS (one DPS per namespace).
+    Exactly one of --system-assigned-mi or --user-assigned-mi must be provided.
+    Required service-to-service roles: namespace outbound MI -> Contributor on DPS; DPS selected inbound MI -> Contributor on namespace; namespace system-assigned MI -> Azure Device Registry Administrator on namespace.
+    The namespace must also have a system-assigned identity. It receives Azure Device Registry
+    Administrator on its own namespace for registry-device provisioning, even when the
+    namespace outbound identity is user-assigned. No role is granted to the signed-in caller;
+    DPS enrollment management with --auth-type login requires separate DPS data-plane access.
+    The command reuses inherited assignments and creates only missing assignments when run by
+    a caller who can create role assignments (for example Owner, User Access Administrator,
+    or Role Based Access Control Administrator). Otherwise it stops before changing the namespace and prints the exact commands
+    to run. A newly created assignment must become visible within 180 seconds.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link dps add --dps-id --dps-resource-id
+                               --en --endpoint-name --name
+                               --namespace --ns
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--interval]
+                               [--mi-sa --system-assigned-mi {false, true}]
+                               [--mi-ua --user-assigned-mi]
+                               [--no-wait]
+                               [--timeout]
+  examples:
+  - summary: |-
+      Link a DPS using the DPS resource's system-assigned identity
+    syntax: >-
+      az iot adr ns link dps add -n primary --ns myNamespace -g myResourceGroup \
+        --dps-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Devices/provisioningServices/<dps> \
+        --system-assigned-mi
+  - summary: |-
+      Link a DPS with a user-assigned identity
+    syntax: >-
+      az iot adr ns link dps add -n primary --ns myNamespace -g myResourceGroup \
+        --dps-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Devices/provisioningServices/<dps> \
+        --user-assigned-mi /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<id>
+  requiredParameters:
+  - isRequired: true
+    name: --dps-id --dps-resource-id
+    summary: |-
+      Azure resource ID of the Device Provisioning Service to link to this namespace.
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the provisioning endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Positive polling interval in seconds. Default: 30.
+    groupName: Wait Condition Arguments
+  - name: --mi-sa --system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked DPS resource's system-assigned identity as the inbound caller identity. DPS must have that identity enabled.
+    groupName: Inbound Caller Identity Arguments
+  - name: --mi-ua --user-assigned-mi
+    summary: |-
+      Resource ID of a user-assigned identity attached to the linked DPS resource.
+    groupName: Inbound Caller Identity Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Return after submission without observing endpoint readiness or recovering later failures.
+  - name: --timeout
+    defaultValue: "600"
+    summary: |-
+      Positive mutation/recovery budget in seconds after initial RBAC preflight. Default: 600.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_dps_list
+  name: az iot adr ns link dps list
+  summary: |-
+    List DPS provisioning endpoints on a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link dps list --namespace --ns
+                                --resource-group
+  examples:
+  - summary: |-
+      List all DPS links on a namespace
+    syntax: az iot adr ns link dps list --ns myNamespace -g myResourceGroup
+  - summary: |-
+      List endpoint names and linking states
+    syntax: az iot adr ns link dps list --ns myNamespace -g myResourceGroup --query "[].{name:name,linkingState:linkingState}"
+  - summary: |-
+      List failed DPS endpoints
+    syntax: az iot adr ns link dps list --ns myNamespace -g myResourceGroup --query "[?linkingState=='Failed']"
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_dps_remove
+  name: az iot adr ns link dps remove
+  summary: |-
+    Remove a DPS endpoint from a Device Registry namespace.
+  description: |-
+    Delete the linked DPS first; this command removes only the namespace endpoint.
+    The namespace outbound identity needs Reader on the linked resource's resource group.
+    A missing grant is created when you can create role assignments; it is kept after unlinking.
+    Keep that resource group until the unlink completes.
+    The command does not wait. Confirm removal with 'az iot adr ns show'.
+    Avoid concurrent namespace updates while this command runs.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link dps remove --en --endpoint-name --name
+                                  --namespace --ns
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--yes {false, true}]
+  examples:
+  - summary: |-
+      Remove an endpoint after its linked DPS has been deleted
+    syntax: az iot adr ns link dps remove -n primary --ns myNamespace -g myResourceGroup --yes
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the provisioning endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_dps_show
+  name: az iot adr ns link dps show
+  summary: |-
+    Show a single DPS provisioning endpoint on a Device Registry namespace.
+  description: |-
+    Inspect the named endpoint and decide which existing DPS Hubs to link to the namespace.
+    When the DPS read succeeds, brownfieldHubs contains its properties.iotHubs[] list and
+    brownfieldHubsAvailable is true. An empty list then means no Hubs are registered.
+    If access or a service failure prevents that read, brownfieldHubs is null,
+    brownfieldHubsAvailable is false, and a warning explains why. Namespace inspection
+    still succeeds; unavailable data must not be treated as an empty DPS registration list.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link dps show --en --endpoint-name --name
+                                --namespace --ns
+                                --resource-group
+  examples:
+  - summary: |-
+      Show a DPS link by endpoint name (with brownfield Hubs when accessible)
+    syntax: az iot adr ns link dps show -n primary --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Show the endpoint linking state
+    syntax: az iot adr ns link dps show -n primary --ns myNamespace -g myResourceGroup --query linkingState -o tsv
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the provisioning endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_dps_update
+  name: az iot adr ns link dps update
+  summary: |-
+    Update an existing DPS provisioning endpoint on a Device Registry namespace.
+  description: |-
+    Retry a Failed DPS endpoint without identity options to reuse its saved inbound identity.
+    Pass --system-assigned-mi or --user-assigned-mi to change that identity. A healthy endpoint
+    requires an explicit change; the target DPS cannot be changed in place.
+    Update checks target existence, region,
+    provisioning-state, selected identity attachment, namespace outbound principal,
+    automatic RBAC, and assignment-visibility preflight.
+    DPS preflight also ensures the namespace system-assigned identity has Azure Device Registry
+    Administrator on its own namespace, independently of the namespace outbound identity.
+    ARM assignment visibility does not guarantee that the linked service already honors access.
+    Waited add/update commands recover only confirmed AdrMiNotAuthorized on the unchanged endpoint,
+    rechecking required assignments and preserving identity and settings. --timeout (600 seconds) bounds
+    mutation, polling and 30/60/120-second propagation backoff after initial RBAC preflight;
+    --interval (30 seconds) controls polling. Success requires endpoint linkingState Succeeded.
+    With --no-wait, use the matching link wait command to track completion.
+    Use update, not add, for a persisted failure. Do not delete the linked DPS to retry it.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link dps update --en --endpoint-name --name
+                                  --namespace --ns
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--interval]
+                                  [--mi-sa --system-assigned-mi {false, true}]
+                                  [--mi-ua --user-assigned-mi]
+                                  [--no-wait]
+                                  [--timeout]
+  examples:
+  - summary: |-
+      Rotate to a system-assigned identity on an existing DPS link
+    syntax: az iot adr ns link dps update -n primary --ns myNamespace -g myResourceGroup --system-assigned-mi
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the provisioning endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --interval
+    summary: |-
+      Positive polling interval in seconds. Default: 30.
+    groupName: Wait Condition Arguments
+  - name: --mi-sa --system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked DPS resource's system-assigned identity as the inbound caller identity. DPS must have that identity enabled.
+    groupName: Inbound Caller Identity Arguments
+  - name: --mi-ua --user-assigned-mi
+    summary: |-
+      Resource ID of a user-assigned identity attached to the linked DPS resource.
+    groupName: Inbound Caller Identity Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Return after submission without observing endpoint readiness or recovering later failures.
+  - name: --timeout
+    summary: |-
+      Positive mutation/recovery budget in seconds after initial RBAC preflight. Default: 600.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_dps_wait
+  name: az iot adr ns link dps wait
+  summary: |-
+    Wait for a DPS endpoint to link successfully.
+  description: |-
+    The endpoint name is required. Without an explicit wait predicate, this command
+    polls that endpoint's linkingState and fails immediately if it reaches Failed.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link dps wait --en --endpoint-name --name
+                                --namespace --ns
+                                --resource-group
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--created]
+                                [--custom]
+                                [--deleted]
+                                [--exists]
+                                [--interval]
+                                [--timeout]
+                                [--updated]
+  examples:
+  - summary: |-
+      Wait until a DPS endpoint reaches linkingState Succeeded
+    syntax: az iot adr ns link dps wait -n primary --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the provisioning endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until a custom JMESPath expression evaluates to true.
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource is deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_adr_ns_link_dps_add
+- az_iot_adr_ns_link_dps_list
+- az_iot_adr_ns_link_dps_remove
+- az_iot_adr_ns_link_dps_show
+- az_iot_adr_ns_link_dps_update
+- az_iot_adr_ns_link_dps_wait
+metadata:
+  description: >-
+    Only one DPS may be linked per namespace today. Links live on the namespace, not on the
+
+    DPS resource. After deleting the DPS resource, run link dps remove to remove its
+
+    namespace endpoint.

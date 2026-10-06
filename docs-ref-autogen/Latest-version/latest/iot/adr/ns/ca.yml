@@ -1,0 +1,715 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_adr_ns_ca
+name: az iot adr ns ca
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns ca** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage certificate authorities for a Device Registry namespace.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_adr_ns_ca_activate
+  name: az iot adr ns ca activate
+  summary: |-
+    Activate an externally issued intermediate certificate authority.
+  description: |-
+    Use this after creating an ICA with --issuer-type External and signing the service-generated
+    CSR with your external PKI. The certificate chain file must be in PEM
+    format with certificates ordered from leaf to root. Sign the actual service CSR and preserve
+    its requested extensions. OpenSSL x509 -req does not copy them by default: the recipe below
+    requires an OpenSSL version supporting -copy_extensions copy and req -addext.
+    Protect the external root private key; use this disposable test root only for testing.
+    Remaining validity is measured at activation. Activation may be rejected when less than
+    365 days of validity remain, so allow margin and make sure the root covers the ICA's entire
+    validity. Keep the extensions requested in the CSR.
+    The CLI checks common certificate defects; the service does final validation.
+    Without --no-wait, returns the CA once it is Active.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca activate --ca-name --name
+                              --ccf --certificate-chain-file
+                              --namespace --ns
+                              --resource-group
+                              [--acquire-policy-token]
+                              [--change-reference]
+                              [--no-wait]
+  examples:
+  - summary: |-
+      Activate an externally issued ICA
+    syntax: az iot adr ns ca activate -n myExternalICA --ns myNamespace -g myResourceGroup --certificate-chain-file ./signed-chain.pem
+  - summary: |-
+      Create a disposable ECC root, sign the service CSR, and activate (Bash; supported OpenSSL required)
+    syntax: >-
+      (
+        set -eu
+        umask 077
+        pki=$(mktemp -d)
+        trap 'rm -f "$pki/root.key" "$pki/root.pem" "$pki/ica.csr" "$pki/ica.pem" "$pki/chain.pem"; rmdir "$pki"' EXIT
+        openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -nodes \
+          -keyout "$pki/root.key" -out "$pki/root.pem" -days 3650 -subj "/CN=Disposable ADR Root" \
+          -addext "basicConstraints=critical,CA:TRUE,pathlen:2" \
+          -addext "keyUsage=critical,keyCertSign,cRLSign"
+        az iot adr ns ca create -n myExternalICA --ns myNamespace -g myResourceGroup \
+          --type ICA --issuer-type External --key-type ECC
+        az iot adr ns ca show -n myExternalICA --ns myNamespace -g myResourceGroup \
+          --query properties.issuer.certificateSigningRequest -o tsv > "$pki/ica.csr"
+        openssl req -in "$pki/ica.csr" -noout -text
+        openssl x509 -req -in "$pki/ica.csr" -CA "$pki/root.pem" -CAkey "$pki/root.key" \
+          -set_serial 2 -days 730 -sha384 -copy_extensions copy -out "$pki/ica.pem"
+        cat "$pki/ica.pem" "$pki/root.pem" > "$pki/chain.pem"
+        az iot adr ns ca activate -n myExternalICA --ns myNamespace -g myResourceGroup \
+          --certificate-chain-file "$pki/chain.pem"
+      )
+  requiredParameters:
+  - isRequired: true
+    name: --ca-name --name -n
+    summary: |-
+      Name of the certificate authority.
+  - isRequired: true
+    name: --ccf --certificate-chain-file
+    summary: |-
+      Path to a PEM file containing the signed certificate chain for an externally issued ICA. Certificates must be ordered from leaf to root, match the service CSR key, and preserve requested extensions. Allow remaining-validity margin at activation; see activate help for the OpenSSL recipe and observed service constraints.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_ca_create
+  name: az iot adr ns ca create
+  summary: |-
+    Create a certificate authority for a Device Registry namespace.
+  description: |-
+    The certificate authority type determines the required associated properties:
+    - Root: a service-managed self-signed root CA.
+    - ICA with a Microsoft issuer: signed by a root CA in the same namespace. Pass the issuing
+      CA's name with --issuer-ca-name.
+    - ICA with an External issuer: signed by an external PKI. After creation the service returns
+      a CSR; sign that CSR (do not generate a replacement ICA key) and complete activation with
+      'az iot adr ns ca activate'. See activate help for a complete external ECC signing recipe.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca create --ca-name --name
+                            --ca-type --type {ICA, Root}
+                            --namespace --ns
+                            --resource-group
+                            [--acquire-policy-token]
+                            [--change-reference]
+                            [--issuer-ca-name --issuer-certificate-authority-name]
+                            [--issuer-type {External, Microsoft}]
+                            [--key-type {ECC}]
+                            [--location]
+                            [--no-wait]
+                            [--tags]
+  examples:
+  - summary: |-
+      Create a service-managed root certificate authority
+    syntax: az iot adr ns ca create -n myRootCA --ns myNamespace -g myResourceGroup --type Root
+  - summary: |-
+      Create a Microsoft-issued intermediate certificate authority
+    syntax: >-
+      az iot adr ns ca create -n myMicrosoftICA --ns myNamespace -g myResourceGroup \
+        --type ICA --issuer-type Microsoft --issuer-ca-name myRootCA
+  - summary: |-
+      Create an externally issued intermediate certificate authority
+    syntax: >-
+      az iot adr ns ca create -n myExternalICA --ns myNamespace -g myResourceGroup \
+        --type ICA --issuer-type External
+  requiredParameters:
+  - isRequired: true
+    name: --ca-name --name -n
+    summary: |-
+      Name of the certificate authority.
+  - isRequired: true
+    name: --ca-type --type
+    acceptedValues: ICA, Root
+    summary: |-
+      The certificate authority type. Use 'Root' for a service-managed self-signed root CA or 'ICA' for an intermediate CA.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --issuer-ca-name --issuer-certificate-authority-name
+    summary: |-
+      Name of the same-namespace issuing root CA. Required with --issuer-type Microsoft.
+  - name: --issuer-type
+    acceptedValues: External, Microsoft
+    summary: |-
+      Issuer type for an ICA. Use 'Microsoft' for a same-namespace CA or 'External' for an external PKI.
+  - name: --key-type
+    acceptedValues: ECC
+    summary: |-
+      The cryptographic key type for the certificate authority.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_ca_delete
+  name: az iot adr ns ca delete
+  summary: |-
+    Delete a certificate authority from a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca delete --ca-name --name
+                            --namespace --ns
+                            --resource-group
+                            [--acquire-policy-token]
+                            [--change-reference]
+                            [--no-wait]
+                            [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete a certificate authority
+    syntax: az iot adr ns ca delete -n myCA --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --ca-name --name -n
+    summary: |-
+      Name of the certificate authority.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_ca_list
+  name: az iot adr ns ca list
+  summary: |-
+    List the certificate authorities for a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca list --namespace --ns
+                          --resource-group
+  examples:
+  - summary: |-
+      List certificate authorities
+    syntax: az iot adr ns ca list --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_ca_revoke
+  name: az iot adr ns ca revoke
+  summary: |-
+    Revoke and rotate an intermediate certificate authority issued by a Microsoft CA.
+  description: |-
+    Applies only to an ICA whose issuerType is 'Microsoft'. The service revokes the current
+    certificate and issues a replacement signed by the same root CA.
+    Successful waited revocation returns a fresh CA resource; --no-wait returns submission only
+    without an added completion wait or output read. Microsoft issuers may not expose status or
+    thumbprint. Fields are returned as supplied by the service. provisioningState describes the
+    resource operation; it does not prove that an old certificate is rejected.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca revoke --ca-name --name
+                            --namespace --ns
+                            --resource-group
+                            [--acquire-policy-token]
+                            [--change-reference]
+                            [--no-wait]
+                            [--yes {false, true}]
+  examples:
+  - summary: |-
+      Revoke a certificate authority
+    syntax: az iot adr ns ca revoke -n myCA --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --ca-name --name -n
+    summary: |-
+      Name of the certificate authority.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_ca_show
+  name: az iot adr ns ca show
+  summary: |-
+    Show a certificate authority for a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca show --ca-name --name
+                          --namespace --ns
+                          --resource-group
+  examples:
+  - summary: |-
+      Show a certificate authority
+    syntax: az iot adr ns ca show -n myCA --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --ca-name --name -n
+    summary: |-
+      Name of the certificate authority.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_ca_update
+  name: az iot adr ns ca update
+  summary: |-
+    Update a certificate authority for a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca update --ca-name --name
+                            --namespace --ns
+                            --resource-group
+                            [--acquire-policy-token]
+                            [--change-reference]
+                            [--no-wait]
+                            [--tags]
+  examples:
+  - summary: |-
+      Update certificate authority tags
+    syntax: az iot adr ns ca update -n myCA --ns myNamespace -g myResourceGroup --tags env=prod
+  requiredParameters:
+  - isRequired: true
+    name: --ca-name --name -n
+    summary: |-
+      Name of the certificate authority.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_ca_wait
+  name: az iot adr ns ca wait
+  summary: |-
+    Wait for a certificate authority to reach a desired state.
+  description: |-
+    Without an explicit wait predicate, waits for provisioningState Succeeded.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns ca' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns ca wait --ca-name --name
+                          --namespace --ns
+                          --resource-group
+                          [--acquire-policy-token]
+                          [--change-reference]
+                          [--created]
+                          [--custom]
+                          [--deleted]
+                          [--exists]
+                          [--interval]
+                          [--timeout]
+                          [--updated]
+  examples:
+  - summary: |-
+      Wait until certificate authority provisioning succeeds
+    syntax: az iot adr ns ca wait -n myCA --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --ca-name --name -n
+    summary: |-
+      Name of the certificate authority.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until a custom JMESPath expression evaluates to true.
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource is deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_adr_ns_ca_activate
+- az_iot_adr_ns_ca_create
+- az_iot_adr_ns_ca_delete
+- az_iot_adr_ns_ca_list
+- az_iot_adr_ns_ca_policy
+- az_iot_adr_ns_ca_policy_create
+- az_iot_adr_ns_ca_policy_delete
+- az_iot_adr_ns_ca_policy_list
+- az_iot_adr_ns_ca_policy_show
+- az_iot_adr_ns_ca_policy_update
+- az_iot_adr_ns_ca_policy_wait
+- az_iot_adr_ns_ca_revoke
+- az_iot_adr_ns_ca_show
+- az_iot_adr_ns_ca_update
+- az_iot_adr_ns_ca_wait
+metadata:
+  description: Manage certificate authorities for a Device Registry namespace.

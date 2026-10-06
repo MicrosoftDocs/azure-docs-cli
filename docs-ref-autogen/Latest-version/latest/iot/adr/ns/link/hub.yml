@@ -1,0 +1,588 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_adr_ns_link_hub
+name: az iot adr ns link hub
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns link hub** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage IoT Hub links (messaging endpoints) on a Device Registry namespace.
+description: |-
+  A namespace must have a linked DPS before a new Hub can be linked or a failed
+  Hub link can be retried (DPS-first ordering). Hub updates preserve existing
+  provisioning settings. Links live on the namespace, not on the IoT Hub resource.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_adr_ns_link_hub_add
+  name: az iot adr ns link hub add
+  summary: |-
+    Link an IoT Hub to a Device Registry namespace.
+  description: |-
+    Link a Standard S-tier Hub, such as S1, as a namespace messaging endpoint.
+    Requires the namespace to already have at least one linked DPS (DPS-first ordering).
+    --system-assigned-mi and --user-assigned-mi are optional. When supplied, exactly one may be
+    used to set the inbound caller identity that the Hub will use to call back into the namespace.
+    Required service-to-service roles: namespace outbound MI -> Contributor on HUB; namespace outbound MI -> IoT Hub Data Contributor on HUB; when an inbound identity is selected, HUB selected inbound MI -> Contributor on namespace.
+    The command reuses inherited assignments and creates only missing assignments when run by
+    a caller who can create role assignments (for example Owner, User Access Administrator,
+    or Role Based Access Control Administrator). Otherwise it stops before changing the namespace and prints the exact commands
+    to run. A newly created assignment must become visible within 180 seconds.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link hub' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link hub add --en --endpoint-name --name
+                               --hub-id --hub-resource-id
+                               --namespace --ns
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--allocation-weight --weight]
+                               [--availability {Available, Disabled}]
+                               [--change-reference]
+                               [--interval]
+                               [--mi-sa --system-assigned-mi {false, true}]
+                               [--mi-ua --user-assigned-mi]
+                               [--no-wait]
+                               [--timeout]
+  examples:
+  - summary: |-
+      Link a Hub using the Hub's system-assigned identity for inbound calls
+    syntax: >-
+      az iot adr ns link hub add -n primary --ns myNamespace -g myResourceGroup \
+        --hub-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Devices/IotHubs/<hub> \
+        --system-assigned-mi
+  - summary: |-
+      Link a Hub without configuring an inbound caller identity
+    syntax: >-
+      az iot adr ns link hub add -n primary --ns myNamespace -g myResourceGroup \
+        --hub-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Devices/IotHubs/<hub>
+  - summary: |-
+      Link a Hub with a user-assigned identity and custom availability/weight
+    syntax: >-
+      az iot adr ns link hub add -n secondary --ns myNamespace -g myResourceGroup \
+        --hub-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Devices/IotHubs/<hub> \
+        --user-assigned-mi /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<id> \
+        --availability Available --allocation-weight 1
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the messaging endpoint entry on the namespace.
+  - isRequired: true
+    name: --hub-id --hub-resource-id
+    summary: |-
+      Azure resource ID of the IoT Hub to link to this namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --allocation-weight --weight
+    summary: |-
+      Relative allocation weight used when distributing devices across endpoints.
+    groupName: Provisioning Arguments
+  - name: --availability
+    acceptedValues: Available, Disabled
+    summary: |-
+      Whether the endpoint is available for provisioning new devices.
+    groupName: Provisioning Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Positive polling interval in seconds. Default: 30.
+    groupName: Wait Condition Arguments
+  - name: --mi-sa --system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked IoT Hub's system-assigned identity as the inbound caller identity. The Hub must have that identity enabled.
+    groupName: Inbound Caller Identity Arguments
+  - name: --mi-ua --user-assigned-mi
+    summary: |-
+      Resource ID of a user-assigned identity attached to the linked IoT Hub.
+    groupName: Inbound Caller Identity Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Return after submission without observing endpoint readiness or recovering later failures.
+  - name: --timeout
+    defaultValue: "600"
+    summary: |-
+      Positive mutation/recovery budget in seconds after initial RBAC preflight. Default: 600.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_hub_list
+  name: az iot adr ns link hub list
+  summary: |-
+    List IoT Hub messaging endpoints on a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link hub' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link hub list --namespace --ns
+                                --resource-group
+  examples:
+  - summary: |-
+      List all Hub links on a namespace
+    syntax: az iot adr ns link hub list --ns myNamespace -g myResourceGroup
+  - summary: |-
+      List endpoint names and linking states
+    syntax: az iot adr ns link hub list --ns myNamespace -g myResourceGroup --query "[].{name:name,linkingState:linkingState}"
+  - summary: |-
+      List failed Hub endpoints
+    syntax: az iot adr ns link hub list --ns myNamespace -g myResourceGroup --query "[?linkingState=='Failed']"
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_hub_remove
+  name: az iot adr ns link hub remove
+  summary: |-
+    Remove a IoT Hub endpoint from a Device Registry namespace.
+  description: |-
+    Delete the linked IoT Hub first; this command removes only the namespace endpoint.
+    The namespace outbound identity needs Reader on the linked resource's resource group.
+    A missing grant is created when you can create role assignments; it is kept after unlinking.
+    Keep that resource group until the unlink completes.
+    The command does not wait. Confirm removal with 'az iot adr ns show'.
+    Avoid concurrent namespace updates while this command runs.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link hub' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link hub remove --en --endpoint-name --name
+                                  --namespace --ns
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--yes {false, true}]
+  examples:
+  - summary: |-
+      Remove an endpoint after its linked IoT Hub has been deleted
+    syntax: az iot adr ns link hub remove -n primary --ns myNamespace -g myResourceGroup --yes
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the messaging endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_hub_show
+  name: az iot adr ns link hub show
+  summary: |-
+    Show a single IoT Hub messaging endpoint on a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link hub' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link hub show --en --endpoint-name --name
+                                --namespace --ns
+                                --resource-group
+  examples:
+  - summary: |-
+      Show a Hub link by endpoint name
+    syntax: az iot adr ns link hub show -n primary --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Show the endpoint linking state
+    syntax: az iot adr ns link hub show -n primary --ns myNamespace -g myResourceGroup --query linkingState -o tsv
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the messaging endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_hub_update
+  name: az iot adr ns link hub update
+  summary: |-
+    Update an existing IoT Hub messaging endpoint on a Device Registry namespace.
+  description: |-
+    Retry a Failed Hub endpoint without identity options to preserve its saved identity
+    (including no inbound identity) and provisioning settings. A linked DPS is required.
+    To change the inbound identity, pass --system-assigned-mi or --user-assigned-mi.
+    Healthy endpoints require an explicit identity change; target and provisioning settings
+    cannot be changed in place. A Succeeded endpoint remains updateable after DPS deletion.
+    Update checks target existence, region,
+    provisioning-state, Standard SKU, selected identity attachment, namespace outbound
+    principal, and automatic RBAC preflight. Newly created assignments must become visible
+    before namespace mutation.
+    ARM assignment visibility does not guarantee that the linked service already honors access.
+    Waited add/update commands recover only confirmed AdrMiNotAuthorized on the unchanged endpoint,
+    rechecking required assignments and preserving identity and settings. --timeout (600 seconds) bounds
+    mutation, polling and 30/60/120-second propagation backoff after initial RBAC preflight;
+    --interval (30 seconds) controls polling. Success requires endpoint linkingState Succeeded.
+    With --no-wait, use the matching link wait command to track completion.
+    Use update, not add, for a persisted failure. Do not delete the linked Hub to retry it.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link hub' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link hub update --en --endpoint-name --name
+                                  --namespace --ns
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--interval]
+                                  [--mi-sa --system-assigned-mi {false, true}]
+                                  [--mi-ua --user-assigned-mi]
+                                  [--no-wait]
+                                  [--timeout]
+  examples:
+  - summary: |-
+      Retry a failed Hub link with its saved identity and settings
+    syntax: az iot adr ns link hub update -n primary --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Switch a Hub link to a system-assigned identity
+    syntax: az iot adr ns link hub update -n primary --ns myNamespace -g myResourceGroup --system-assigned-mi
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the messaging endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --interval
+    summary: |-
+      Positive polling interval in seconds. Default: 30.
+    groupName: Wait Condition Arguments
+  - name: --mi-sa --system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked IoT Hub's system-assigned identity as the inbound caller identity. The Hub must have that identity enabled.
+    groupName: Inbound Caller Identity Arguments
+  - name: --mi-ua --user-assigned-mi
+    summary: |-
+      Resource ID of a user-assigned identity attached to the linked IoT Hub.
+    groupName: Inbound Caller Identity Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Return after submission without observing endpoint readiness or recovering later failures.
+  - name: --timeout
+    summary: |-
+      Positive mutation/recovery budget in seconds after initial RBAC preflight. Default: 600.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_hub_wait
+  name: az iot adr ns link hub wait
+  summary: |-
+    Wait for an IoT Hub endpoint to link successfully.
+  description: |-
+    The endpoint name is required. Without an explicit wait predicate, this command
+    polls that endpoint's linkingState and fails immediately if it reaches Failed.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link hub' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link hub wait --en --endpoint-name --name
+                                --namespace --ns
+                                --resource-group
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--created]
+                                [--custom]
+                                [--deleted]
+                                [--exists]
+                                [--interval]
+                                [--timeout]
+                                [--updated]
+  examples:
+  - summary: |-
+      Wait until a Hub endpoint reaches linkingState Succeeded
+    syntax: az iot adr ns link hub wait -n primary --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint-name --name -n
+    summary: |-
+      Logical name of the messaging endpoint entry on the namespace.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until a custom JMESPath expression evaluates to true.
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource is deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_adr_ns_link_hub_add
+- az_iot_adr_ns_link_hub_list
+- az_iot_adr_ns_link_hub_remove
+- az_iot_adr_ns_link_hub_show
+- az_iot_adr_ns_link_hub_update
+- az_iot_adr_ns_link_hub_wait
+metadata:
+  description: >-
+    A namespace must have a linked DPS before a new Hub can be linked or a failed
+
+    Hub link can be retried (DPS-first ordering). Hub updates preserve existing
+
+    provisioning settings. Links live on the namespace, not on the IoT Hub resource.

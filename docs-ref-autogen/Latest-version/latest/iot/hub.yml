@@ -244,7 +244,6 @@ directCommands:
                       [--c2d-max-delivery-count --cdd]
                       [--c2d-ttl --ct]
                       [--change-reference]
-                      [--custom-ns-role-id]
                       [--dds --disable-device-sas {false, true}]
                       [--disable-local-auth --dla {false, true}]
                       [--disable-module-sas --dms {false, true}]
@@ -262,20 +261,17 @@ directCommands:
                       [--fileupload-storage-auth-type --fsa {identityBased, keyBased}]
                       [--fileupload-storage-identity --fsi]
                       [--location]
-                      [--mi-system-assigned {false, true}]
-                      [--mi-user-assigned]
                       [--min-tls-version --mintls]
                       [--no-wait]
-                      [--ns-identity-id]
-                      [--ns-resource-id]
                       [--partition-count]
                       [--rd --retention-day]
                       [--role]
                       [--scopes]
-                      [--skip-ns-ra {false, true}]
-                      [--sku {B1, B2, B3, F1, GEN2, S1, S2, S3}]
+                      [--sku {B1, B2, B3, F1, S1, S2, S3}]
+                      [--system-assigned-mi {false, true}]
                       [--tags]
                       [--unit]
+                      [--user-assigned-mi]
   examples:
   - summary: |-
       Create an IoT Hub with the free pricing tier F1, in the region of the resource group.
@@ -293,14 +289,8 @@ directCommands:
       Create an IoT Hub with data residency enforced. This will disable cross-region disaster recovery.
     syntax: az iot hub create --resource-group MyResourceGroup --name MyIoTHub --edr
   - summary: |-
-      Create a Generation2 IoT Hub with Device Registry namespace properties.
-    syntax: az iot hub create --resource-group MyResourceGroup --name MyHub --sku GEN2 --ns-resource-id NamespaceResourceId --ns-identity-id UserIdentityResourceId
-  - summary: |-
-      Create a Generation2 IoT Hub with Device Registry namespace properties and custom role assignment.
-    syntax: az iot hub create --resource-group MyResourceGroup --name MyHub --sku GEN2 --ns-resource-id NamespaceResourceId --ns-identity-id UserIdentityResourceId --custom-ns-role-id RoleResourceId
-  - summary: |-
-      Create a Generation2 IoT Hub with Device Registry namespace properties and skip role assignment.
-    syntax: az iot hub create --resource-group MyResourceGroup --name MyHub --sku GEN2 --ns-resource-id NamespaceResourceId --ns-identity-id UserIdentityResourceId --skip-ns-ra
+      Create a Standard IoT Hub with a system-assigned identity for later namespace linking.
+    syntax: az iot hub create --resource-group MyResourceGroup --name MyHub --sku S1 --system-assigned-mi
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -316,21 +306,15 @@ directCommands:
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
   - name: --c2d-max-delivery-count --cdd
-    defaultValue: "10"
     summary: |-
       The number of times the IoT hub will attempt to deliver a cloud-to-device message to a device, between 1 and 100.
   - name: --c2d-ttl --ct
-    defaultValue: "1"
     summary: |-
       The amount of time a message is available for the device to consume before it is expired by IoT Hub, between 1 and 48 hours.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
-  - name: --custom-ns-role-id
-    summary: |-
-      Fully qualified role definition Id to apply to ADR Namespace, in the following format: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/{roleId}. Only applicable to Gen2 IoT Hubs.
-    groupName: ADR Namespace Role Assignment Arguments
   - name: --dds --disable-device-sas
     acceptedValues: false, true
     summary: |-
@@ -338,7 +322,7 @@ directCommands:
   - name: --disable-local-auth --dla
     acceptedValues: false, true
     summary: |-
-      A boolean indicating whether or not to disable IoT hub scoped SAS keys for authentication.
+      A boolean indicating whether or not to disable IoT hub scoped SAS keys for authentication. Defaults to true for new Hubs; existing Hub settings are preserved unless specified. Use --auth-type login for service data-plane commands.
   - name: --disable-module-sas --dms
     acceptedValues: false, true
     summary: |-
@@ -354,36 +338,28 @@ directCommands:
     summary: |-
       The connection string for the Azure Storage account to which files are uploaded.
   - name: --fd --feedback-max-delivery-count
-    defaultValue: "10"
     summary: |-
       The number of times the IoT hub attempts to deliver a message on the feedback queue, between 1 and 100.
   - name: --feedback-lock-duration --fld
-    defaultValue: "5"
     summary: |-
       The lock duration for the feedback queue, between 5 and 300 seconds.
   - name: --feedback-ttl --ft
-    defaultValue: "1"
     summary: |-
       The period of time for which the IoT hub will maintain the feedback for expiration or delivery of cloud-to-device messages, between 1 and 48 hours.
   - name: --fileupload-notification-lock-duration --fnld
-    defaultValue: "5"
     summary: |-
       The lock duration for the file upload notifications queue, between 5 and 300 seconds.
   - name: --fileupload-notification-max-delivery-count --fnd
-    defaultValue: "10"
     summary: |-
       The number of times the IoT hub will attempt to deliver a file notification message, between 1 and 100.
   - name: --fileupload-notification-ttl --fnt
-    defaultValue: "1"
     summary: |-
       The amount of time a file upload notification is available for the service to consume before it is expired by IoT Hub, between 1 and 48 hours.
   - name: --fileupload-notifications --fn
-    defaultValue: "False"
     acceptedValues: false, true
     summary: |-
       A boolean indicating whether to log information about uploaded files to the messages/servicebound/filenotifications IoT Hub endpoint.
   - name: --fileupload-sas-ttl --fst
-    defaultValue: "1"
     summary: |-
       The amount of time a SAS URI generated by IoT Hub is valid before it expires, between 1 and 24 hours.
   - name: --fileupload-storage-auth-type --fsa
@@ -396,13 +372,6 @@ directCommands:
   - name: --location -l
     summary: |-
       Location of your IoT Hub. Default is the location of target resource group.
-  - name: --mi-system-assigned
-    acceptedValues: false, true
-    summary: |-
-      Enable system-assigned managed identity for this hub.
-  - name: --mi-user-assigned
-    summary: |-
-      Enable user-assigned managed identities for this hub. Accept space-separated list of identity resource IDs.
   - name: --min-tls-version --mintls
     summary: |-
       Specify the minimum TLS version to support for this hub. Can be set to "1.0" or "1.2". For example, minimum TLS version set to "1.2" results in clients that use a TLS version below 1.2 to be rejected.
@@ -410,43 +379,35 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --ns-identity-id
-    summary: |-
-      User-managed identity resource ID to access Device Registry namespace.
-  - name: --ns-resource-id
-    summary: |-
-      Device Registry namespace resource ID to link to this IoT hub.
   - name: --partition-count
-    defaultValue: "4"
     summary: |-
-      The number of partitions of the backing Event Hub for device-to-cloud messages.
+      Device-to-cloud Event Hub partitions. New Hubs default to 4.
   - name: --rd --retention-day
-    defaultValue: "1"
     summary: |-
-      Specifies how long this IoT hub will maintain device-to-cloud events, between 1 and 7 days.
+      Device-to-cloud event retention in days (1-7). New Hubs default to 1.
   - name: --role
     summary: |-
       Role to assign to the hub's system-assigned managed identity.
   - name: --scopes
     summary: |-
       Space separated list of scopes to assign the role (--role) for the system-assigned managed identity.
-  - name: --skip-ns-ra
+  - name: --sku
+    acceptedValues: B1, B2, B3, F1, S1, S2, S3
+    summary: |-
+      Pricing tier. New Hubs default to S1. Only one free F1 Hub is allowed per subscription.
+  - name: --system-assigned-mi
     acceptedValues: false, true
     summary: |-
-      Used to skip ADR Namespace role assignment after IoT hub creation. Only applicable to Gen2 IoT Hubs.
-    groupName: ADR Namespace Role Assignment Arguments
-  - name: --sku
-    defaultValue: S1
-    acceptedValues: B1, B2, B3, F1, GEN2, S1, S2, S3
-    summary: |-
-      Pricing tier for Azure IoT Hub. Note that only one free IoT hub instance (F1) is allowed in each subscription. Exception will be thrown if free instances exceed one.
+      Enable system-assigned managed identity for this hub.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --unit
-    defaultValue: "1"
     summary: |-
-      Units in your IoT Hub.
+      Number of units. New Hubs default to 1.
+  - name: --user-assigned-mi
+    summary: |-
+      Enable user-assigned managed identities for this hub. Accept space-separated list of identity resource IDs.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -2276,12 +2237,11 @@ directCommands:
                       [--ids]
                       [--min-tls-version --mintls]
                       [--name]
-                      [--ns-identity-id]
                       [--rd --retention-day]
                       [--remove]
                       [--resource-group]
                       [--set]
-                      [--sku {B1, B2, B3, F1, GEN2, S1, S2, S3}]
+                      [--sku {B1, B2, B3, F1, S1, S2, S3}]
                       [--subscription]
                       [--tags]
                       [--unit]
@@ -2346,7 +2306,7 @@ directCommands:
   - name: --disable-local-auth --dla
     acceptedValues: false, true
     summary: |-
-      A boolean indicating whether or not to disable IoT hub scoped SAS keys for authentication.
+      A boolean indicating whether or not to disable IoT hub scoped SAS keys for authentication. Defaults to true for new Hubs; existing Hub settings are preserved unless specified. Use --auth-type login for service data-plane commands.
   - name: --disable-module-sas --dms
     acceptedValues: false, true
     summary: |-
@@ -2405,9 +2365,6 @@ directCommands:
     summary: |-
       IoT Hub name.
     groupName: Resource Id Arguments
-  - name: --ns-identity-id
-    summary: |-
-      User-managed identity resource ID to access Device Registry namespace.
   - name: --rd --retention-day
     summary: |-
       Specifies how long this IoT hub will maintain device-to-cloud events, between 1 and 7 days.
@@ -2426,7 +2383,7 @@ directCommands:
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
     groupName: Generic Update Arguments
   - name: --sku
-    acceptedValues: B1, B2, B3, F1, GEN2, S1, S2, S3
+    acceptedValues: B1, B2, B3, F1, S1, S2, S3
     summary: |-
       Pricing tier for Azure IoT Hub. Note that only one free IoT hub instance (F1) is allowed in each subscription. Exception will be thrown if free instances exceed one.
   - name: --subscription
