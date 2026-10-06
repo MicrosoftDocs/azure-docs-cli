@@ -32,6 +32,8 @@ directCommands:
                   [--publisher-contact --publisher-email]
                   [--publisher-uri]
                   [--soft-delete {0, 1, f, false, n, no, t, true, y, yes}]
+                  [--soft-delete-grace --soft-delete-grace-period]
+                  [--soft-delete-retention --soft-delete-retention-period]
                   [--tags]
   examples:
   - summary: |-
@@ -46,6 +48,9 @@ directCommands:
   - summary: |-
       Create a shared image gallery with both system and user assigned identity.
     syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery123 --system-assigned --user-assigned id1
+  - summary: |-
+      Create a gallery with soft deletion enabled.
+    syntax: az sig create --resource-group myResourceGroup --gallery-name myGalleryName --location westus --soft-delete True --soft-delete-retention-period 7 --soft-delete-grace-period 30
   requiredParameters:
   - isRequired: true
     name: --gallery-name -r
@@ -109,6 +114,14 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
+    groupName: SoftDeletePolicy Arguments
+  - name: --soft-delete-grace --soft-delete-grace-period
+    summary: |-
+      The grace period in days for a simulated hard-deleted resource. During this period the gallery image version is unusable but can still be recovered if required. After this period elapses, the gallery image version is permanently (hard) deleted.
+    groupName: SoftDeletePolicy Arguments
+  - name: --soft-delete-retention --soft-delete-retention-period
+    summary: |-
+      The retention period in days for a soft-deleted resource. After this period elapses, the soft-deleted gallery image version transitions to a simulated hard-deleted state.
     groupName: SoftDeletePolicy Arguments
   - name: --tags
     summary: |-
@@ -781,6 +794,8 @@ directCommands:
                   [--resource-group]
                   [--set]
                   [--soft-delete {0, 1, f, false, n, no, t, true, y, yes}]
+                  [--soft-delete-grace --soft-delete-grace-period]
+                  [--soft-delete-retention --soft-delete-retention-period]
                   [--subscription]
   examples:
   - summary: |-
@@ -789,6 +804,9 @@ directCommands:
   - summary: |-
       Update gallery from private to community
     syntax: az sig update -g myResourceGroup --gallery-name myGallery --permissions Community --publisher-uri myPublisherUri --publisher-email myPublisherEmail --eula myEula --public-name-prefix myPublicNamePrefix
+  - summary: |-
+      Update the soft-delete policy (use --soft-delete false to disable it)
+    syntax: az sig update --resource-group myResourceGroup --gallery-name myGalleryName --soft-delete true --soft-delete-retention-period 30 --soft-delete-grace-period 7
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -804,7 +822,7 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --eula
     summary: |-
-      Community gallery publisher eula.
+      End-user license agreement for community gallery image.
     groupName: CommunityGalleryInfo Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -813,7 +831,7 @@ directCommands:
     groupName: Generic Update Arguments
   - name: --gallery-name -r
     summary: |-
-      The name of the Shared Image Gallery to be deleted.
+      The name of the Shared Image Gallery.
     groupName: Resource Id Arguments
   - name: --ids
     summary: |-
@@ -830,19 +848,19 @@ directCommands:
   - name: --permissions
     acceptedValues: Community, Groups, Private
     summary: |-
-      This property allows you to specify the permission of sharing gallery.
+      This property allows you to specify the permission of sharing gallery. Possible values are: **Private,** **Groups,** **Community.**.
     groupName: SharingProfile Arguments
   - name: --public-name-prefix
     summary: |-
-      Community gallery public name prefix.
+      The prefix of the gallery name that will be displayed publicly. Visible to all users.
     groupName: CommunityGalleryInfo Arguments
   - name: --publisher-contact --publisher-email
     summary: |-
-      Community gallery publisher contact email.
+      Community gallery publisher support email. The email address of the publisher. Visible to all users.
     groupName: CommunityGalleryInfo Arguments
   - name: --publisher-uri
     summary: |-
-      Community gallery publisher uri.
+      The link to the publisher website. Visible to all users.
     groupName: CommunityGalleryInfo Arguments
   - name: --remove
     summary: |-
@@ -859,7 +877,15 @@ directCommands:
   - name: --soft-delete
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
+      Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
+    groupName: SoftDeletePolicy Arguments
+  - name: --soft-delete-grace --soft-delete-grace-period
+    summary: |-
+      The grace period in days for a simulated hard-deleted resource. During this period the gallery image version is unusable but can still be recovered if required. After this period elapses, the gallery image version is permanently (hard) deleted.
+    groupName: SoftDeletePolicy Arguments
+  - name: --soft-delete-retention --soft-delete-retention-period
+    summary: |-
+      The retention period in days for a soft-deleted resource. After this period elapses, the soft-deleted gallery image version transitions to a simulated hard-deleted state.
     groupName: SoftDeletePolicy Arguments
   - name: --subscription
     summary: |-
@@ -902,12 +928,10 @@ directCommands:
                 [--custom]
                 [--deleted]
                 [--exists]
-                [--expand {SharingProfile/Groups}]
                 [--gallery-name]
                 [--ids]
                 [--interval]
                 [--resource-group]
-                [--select {Permissions}]
                 [--subscription]
                 [--timeout]
                 [--updated]
@@ -939,10 +963,6 @@ directCommands:
     summary: |-
       Wait until the resource exists.
     groupName: Wait Condition Arguments
-  - name: --expand
-    acceptedValues: SharingProfile/Groups
-    summary: |-
-      The expand query option to apply on the operation.
   - name: --gallery-name -r
     summary: |-
       The name of the Shared Image Gallery.
@@ -960,10 +980,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
-  - name: --select
-    acceptedValues: Permissions
-    summary: |-
-      The select expression to apply on the operation.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1045,6 +1061,7 @@ commands:
 - az_sig_image-version_list-community
 - az_sig_image-version_list-community(image-gallery)
 - az_sig_image-version_list-shared
+- az_sig_image-version_list-soft-deleted
 - az_sig_image-version_show
 - az_sig_image-version_show-community
 - az_sig_image-version_show-community(image-gallery)

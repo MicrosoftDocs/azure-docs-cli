@@ -19,8 +19,11 @@ directCommands:
                                    [--acquire-policy-token]
                                    [--capacity]
                                    [--change-reference]
+                                   [--end]
                                    [--location]
+                                   [--min-commitment-days --minimum-commitment-days]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--schedule-profile-start]
                                    [--sku]
                                    [--tags]
                                    [--zone]
@@ -31,6 +34,9 @@ directCommands:
   - summary: |-
       Create a capacity reservation with specific capacity and zones.
     syntax: az capacity reservation create -c ReservationGroupName -n ReservationName -l centraluseuap -g MyResourceGroup  --sku Standard_A1_v2 --capacity 5 --zone 1 --tags key=val
+  - summary: |-
+      Create a Future capacity reservation.
+    syntax: az capacity reservation create -c ReservationGroupName -n ReservationName -g MyResourceGroup --sku Standard_A1_v2 --capacity 5 --schedule-profile-start 2026-12-01T12:00:00Z --minimum-commitment-days 30
   requiredParameters:
   - isRequired: true
     name: --capacity-reservation-group -c
@@ -57,14 +63,26 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --end
+    summary: |-
+      The required end date for Block capacity reservations. Must be after the start date, with a duration of either 1–14 whole days or 3–26 whole weeks. Example: 2025-06-28.
+    groupName: ScheduleProfile Arguments
   - name: --location -l
     summary: |-
       Resource location  When not specified, the location of the resource group will be used.
     groupName: Parameters Arguments
+  - name: --min-commitment-days --minimum-commitment-days
+    summary: |-
+      The minimum number of days after the start date before a committed Future capacity reservation can be updated or deleted. The service supplies a default when this value is omitted.
+    groupName: ScheduleProfile Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --schedule-profile-start
+    summary: |-
+      The start date and time of a Future capacity reservation. The value must be at least 7 days and at most 6 months in the future. Example: 2026-08-01T12:00:00Z.
+    groupName: ScheduleProfile Arguments
   - name: --sku -s
     summary: |-
       The SKU of the resource for which capacity needs be reserved. Currently VM Skus with the capability called \"CapacityReservationSupported\" set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://learn.microsoft.com/rest/api/compute/resourceskus/list) for supported values.
@@ -194,6 +212,7 @@ directCommands:
   syntax: >-
     az capacity reservation list --capacity-reservation-group
                                  --resource-group
+                                 [--expand {virtualMachineScaleSetVMs/$ref, virtualMachines/$ref}]
                                  [--max-items]
                                  [--next-token]
   examples:
@@ -210,6 +229,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --expand
+    acceptedValues: virtualMachineScaleSetVMs/$ref, virtualMachines/$ref
+    summary: |-
+      The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response.
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.

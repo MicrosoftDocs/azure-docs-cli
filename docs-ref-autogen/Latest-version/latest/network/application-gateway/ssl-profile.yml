@@ -18,6 +18,7 @@ directCommands:
                                                    --name
                                                    --resource-group
                                                    [--acquire-policy-token]
+                                                   [--auth-configuration]
                                                    [--change-reference]
                                                    [--cipher-suites]
                                                    [--client-auth-config --client-auth-configuration {0, 1, f, false, n, no, t, true, y, yes}]
@@ -29,8 +30,11 @@ directCommands:
                                                    [--trusted-client-cert --trusted-client-certificates]
   examples:
   - summary: |-
-      Update SSL profile for an existing application gateway.
-    syntax: az network application-gateway ssl-profile update --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile --client-auth-configuration False
+      Add an SSL profile for an existing application gateway.
+    syntax: az network application-gateway ssl-profile add --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile
+  - summary: |-
+      Add an SSL profile in Passthrough mode. The gateway forwards the client certificate to the backend without verifying it.
+    syntax: az network application-gateway ssl-profile add --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile --auth-configuration verify-client-auth-mode=Passthrough
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -49,6 +53,9 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --auth-configuration
+    summary: |-
+      Client authentication configuration of the application gateway resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -190,7 +197,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Name of the SSL profile.
+      Name of the SSL profile that is unique within an Application Gateway.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -258,7 +265,7 @@ directCommands:
   - isRequired: true
     name: --name
     summary: |-
-      Name of the SSL profile.
+      Name of the SSL profile that is unique within an Application Gateway.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -303,6 +310,7 @@ directCommands:
                                                       --resource-group
                                                       [--acquire-policy-token]
                                                       [--add]
+                                                      [--auth-configuration]
                                                       [--change-reference]
                                                       [--cipher-suites]
                                                       [--client-auth-config --client-auth-configuration {0, 1, f, false, n, no, t, true, y, yes}]
@@ -319,6 +327,9 @@ directCommands:
   - summary: |-
       Update SSL profile for an existing application gateway.
     syntax: az network application-gateway ssl-profile update --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile --client-auth-configuration False
+  - summary: |-
+      Update an SSL profile to Passthrough mode. The gateway forwards the client certificate to the backend without verifying it.
+    syntax: az network application-gateway ssl-profile update --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile --auth-configuration verify-client-auth-mode=Passthrough
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -341,6 +352,9 @@ directCommands:
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
+  - name: --auth-configuration
+    summary: |-
+      Client authentication configuration of the application gateway resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -531,5 +545,5 @@ commands:
 - az_network_application-gateway_ssl-profile_update
 - az_network_application-gateway_ssl-profile_wait
 metadata:
-  ms.date: 01/27/2026
+  ms.date: 09/21/2026
   description: Manage SSL profiles of application gateway.
