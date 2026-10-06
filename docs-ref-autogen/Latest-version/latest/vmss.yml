@@ -123,7 +123,8 @@ directCommands:
                    [--platform-fault-domain-count]
                    [--ppg]
                    [--prioritize-unhealthy-instances {false, true}]
-                   [--priority {Low, Regular, Spot}]
+                   [--priority {Low, Regular, Spot, SpotPlus}]
+                   [--processor-mode {Deterministic, Opportunistic}]
                    [--proxy-agent-mode {Audit, Enforce}]
                    [--public-ip-address]
                    [--public-ip-address-allocation {dynamic, static}]
@@ -164,6 +165,7 @@ directCommands:
                    [--vm-sku]
                    [--vnet-address-prefix]
                    [--vnet-name]
+                   [--wire-local-rules --wire-server-use-local-file-rules {false, true}]
                    [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                    [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
@@ -673,9 +675,13 @@ directCommands:
     summary: |-
       Set this Boolean property will lead to all unhealthy instances in a scale set getting upgraded before any healthy instances.
   - name: --priority
-    acceptedValues: Low, Regular, Spot
+    acceptedValues: Low, Regular, Spot, SpotPlus
     summary: |-
-      Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
+      Priority. Use 'Spot' or 'SpotPlus' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' or 'SpotPlus' to deploy Azure spot VM and/or VMSS. Default to Regular.
+  - name: --processor-mode
+    acceptedValues: Deterministic, Opportunistic
+    summary: |-
+      Specifies the processor mode for the virtual machine or virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VM or VMSS without deallocation or reboot.
   - name: --proxy-agent-mode
     acceptedValues: Audit, Enforce
     summary: |-
@@ -834,6 +840,10 @@ directCommands:
     summary: |-
       Name of the virtual network when creating a new one or referencing an existing one.
     groupName: Network Arguments
+  - name: --wire-local-rules --wire-server-use-local-file-rules
+    acceptedValues: false, true
+    summary: |-
+      When set to true, instructs the GuestProxyAgent inside the VM to load additional access control rules defined in a local file on the VM.
   - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
     summary: |-
       Specify the access control profile version resource id of wire server.
@@ -2403,7 +2413,8 @@ directCommands:
                    [--pause-time-between-batches]
                    [--ppg]
                    [--prioritize-unhealthy-instances {false, true}]
-                   [--priority {Low, Regular, Spot}]
+                   [--priority {Low, Regular, Spot, SpotPlus}]
+                   [--processor-mode {Deterministic, Opportunistic}]
                    [--protect-from-scale-in {false, true}]
                    [--protect-from-scale-set-actions {false, true}]
                    [--proxy-agent-mode {Audit, Enforce}]
@@ -2428,6 +2439,7 @@ directCommands:
                    [--v-cpus-available]
                    [--v-cpus-per-core]
                    [--vm-sku]
+                   [--wire-local-rules --wire-server-use-local-file-rules {false, true}]
                    [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                    [--wire-server-mode {Audit, Enforce}]
                    [--zone-balance {false, true}]
@@ -2683,9 +2695,13 @@ directCommands:
     summary: |-
       Set this Boolean property will lead to all unhealthy instances in a scale set getting upgraded before any healthy instances.
   - name: --priority
-    acceptedValues: Low, Regular, Spot
+    acceptedValues: Low, Regular, Spot, SpotPlus
     summary: |-
-      Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
+      Priority. Use 'Spot' or 'SpotPlus' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' or 'SpotPlus' to deploy Azure spot VM and/or VMSS. Default to Regular.
+  - name: --processor-mode
+    acceptedValues: Deterministic, Opportunistic
+    summary: |-
+      Specifies the processor mode for the virtual machine or virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VM or VMSS without deallocation or reboot.
   - name: --protect-from-scale-in
     acceptedValues: false, true
     summary: |-
@@ -2779,6 +2795,10 @@ directCommands:
     summary: |-
       The new size of the virtual machine instances in the scale set. Default to "Standard_D2s_v5". See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     isPreview: true
+  - name: --wire-local-rules --wire-server-use-local-file-rules
+    acceptedValues: false, true
+    summary: |-
+      When set to true, instructs the GuestProxyAgent inside the VM to load additional access control rules defined in a local file on the VM.
   - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
     summary: |-
       Specify the access control profile version resource id of wire server.
