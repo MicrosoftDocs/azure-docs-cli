@@ -119,6 +119,11 @@ WAM is available on Windows 10 and later, and on Windows Server 2019 and later.
 Beginning with Azure CLI version [2.91.0][19], broker-based authentication is available in preview
 on macOS. broker-based authentication on macOS is disabled by default and requires users to opt in.
 
+> [!IMPORTANT]
+> Before enabling broker-based authentication, install a compatible authentication broker, such as
+> Microsoft Company Portal, on your Mac. If a compatible broker isn't installed, Azure CLI falls
+> back to browser-based authentication.
+
 To enable broker-based authentication on macOS, set the [core.enable_broker_on_mac][03]
 configuration property to `true`:
 
@@ -127,10 +132,6 @@ az config set core.enable_broker_on_mac=true
 az account clear
 az login
 ```
-
-Broker-based authentication on macOS requires a compatible authentication broker, such as Microsoft
-Company Portal. If a compatible broker is unavailable, Azure CLI falls back to browser-based
-authentication.
 
 To disable broker-based authentication and return to browser-based authentication, set the
 configuration property to `false`:
