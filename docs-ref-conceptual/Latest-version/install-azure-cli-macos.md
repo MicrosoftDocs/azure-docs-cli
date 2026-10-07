@@ -31,6 +31,12 @@ running the `install` command:
 brew update && brew install azure-cli
 ```
 
+Or explicitly install the cask:
+
+```bash
+brew update && brew install --cask azure-cli
+```
+
 ## Troubleshooting
 
 If you encounter a problem when installing the Azure CLI through Homebrew, here are some common
@@ -82,6 +88,27 @@ following addresses:
 
 - `https://formulae.brew.sh`
 - `https://homebrew.bintray.com`
+
+### Already installed via the old formula
+
+If you installed Azure CLI before it migrated to Homebrew Cask, uninstall and reinstall once so
+future upgrades come from Homebrew Cask:
+
+```bash
+brew uninstall azure-cli
+brew update
+brew install azure-cli
+```
+
+Or:
+
+```bash
+brew uninstall azure-cli
+brew update
+brew install --cask azure-cli
+```
+
+After this one-time step, future upgrades come from `homebrew-cask`.
 
 ## Update
 
