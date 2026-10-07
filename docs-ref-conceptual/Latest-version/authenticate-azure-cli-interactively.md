@@ -114,6 +114,33 @@ az login
 
 WAM is available on Windows 10 and later, and on Windows Server 2019 and later.
 
+## Sign in with an authentication broker on macOS
+
+Beginning with Azure CLI version [2.91.0][19], broker-based authentication is available in preview
+on macOS. broker-based authentication on macOS is disabled by default and requires users to opt in.
+
+To enable broker-based authentication on macOS, set the [core.enable_broker_on_mac][03]
+configuration property to `true`:
+
+```azurecli-interactive
+az config set core.enable_broker_on_mac=true
+az account clear
+az login
+```
+
+Broker-based authentication on macOS requires a compatible authentication broker, such as Microsoft
+Company Portal. If a compatible broker is unavailable, Azure CLI falls back to browser-based
+authentication.
+
+To disable broker-based authentication and return to browser-based authentication, set the
+configuration property to `false`:
+
+```azurecli-interactive
+az account clear
+az config set core.enable_broker_on_mac=false
+az login
+```
+
 ## Sign in with a browser
 
 Azure CLI defaults to a browser-based authentication method when one of the following conditions is
@@ -259,3 +286,4 @@ of choice, use the `--tenant` parameter. For more information, see
 [16]: #sign-in-with-a-different-tenant
 [17]: edge://net-internals/#hsts
 [18]: manage-azure-subscriptions-azure-cli.md#change-the-active-tenant
+[19]: ./release-notes-azure-cli.md#october-06-2026
