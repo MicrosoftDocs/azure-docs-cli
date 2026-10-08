@@ -354,6 +354,58 @@ variables should include the authentication, such as
 `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see
 [How to configure proxies for the Azure SDK for Python][11].
 
+## Error: az ad sp create-for-rbac modifies an existing application or service principal
+
+`az ad sp create-for-rbac --name <name>` matches by display name, and display names in Microsoft
+Entra ID aren't unique. If `--name` matches an existing application or service principal, the
+command can replace that identity's credentials or add a role assignment to it instead of creating
+a new identity, because it treats the match as the one you intended to use.
+
+To avoid this, use a unique display name (or omit `--name` so Azure CLI generates one) when
+creating a new service principal, and target existing identities explicitly by app ID or object ID
+rather than by display name. The following examples show each scenario.
+
+### Scenario 1: Create a new application, service principal, and role assignment
+
+```azurecli-interactive
+az ad sp create-for-rbac \
+    --name appA \
+    --role Contributor \
+    --scopes "/subscriptions/<subscription-id>/resourceGroups/<resource-group>"
+```
+
+### Scenario 2: Use an existing application to create a service principal, then assign a role by object ID
+
+```azurecli-interactive
+APP_ID="11111111-1111-1111-1111-111111111111"
+SCOPE="/subscriptions/<subscription-id>/resourceGroups/<resource-group>"
+
+az ad sp create --id "$APP_ID"
+
+SP_OBJECT_ID=$(az ad sp show \
+    --id "$APP_ID" \
+    --query id \
+    --output tsv)
+
+az role assignment create \
+    --assignee-object-id "$SP_OBJECT_ID" \
+    --assignee-principal-type ServicePrincipal \
+    --role Contributor \
+    --scope "$SCOPE"
+```
+
+### Scenario 3: Assign a role to an existing service principal by app ID
+
+```azurecli-interactive
+APP_ID="11111111-1111-1111-1111-111111111111"
+SCOPE="/subscriptions/<subscription-id>/resourceGroups/<resource-group>"
+
+az role assignment create \
+    --assignee "$APP_ID" \
+    --role Contributor \
+    --scope "$SCOPE"
+```
+
 ## Service principals
 
 For information on troubleshooting service principals, see [Cleanup and Troubleshooting][02] in the
