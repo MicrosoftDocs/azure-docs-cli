@@ -31,16 +31,6 @@ running the `install` command:
 brew update && brew install azure-cli
 ```
 
-Or explicitly install the cask:
-
-```bash
-brew update && brew install --cask azure-cli
-```
-
-Beginning with Azure CLI version [2.85.0][09] (preview), Azure CLI also supports installation
-through Homebrew Cask. Homebrew Cask installation was introduced to provide a more secure
-installation method and to support broker-based authentication on macOS.
-
 ## Troubleshooting
 
 If you encounter a problem when installing the Azure CLI through Homebrew, here are some common
@@ -92,27 +82,6 @@ following addresses:
 
 - `https://formulae.brew.sh`
 - `https://homebrew.bintray.com`
-
-### Already installed via the old formula
-
-If you installed Azure CLI before it migrated to Homebrew Cask, uninstall and reinstall once so
-future upgrades come from Homebrew Cask:
-
-```bash
-brew uninstall azure-cli
-brew update
-brew install azure-cli
-```
-
-Or:
-
-```bash
-brew uninstall azure-cli
-brew update
-brew install --cask azure-cli
-```
-
-After this one-time step, future upgrades come from `homebrew-cask`.
 
 ## Update
 
@@ -173,4 +142,3 @@ commands.
 [06]: https://docs.brew.sh/Shell-Completion
 [07]: https://github.com/Azure/azure-cli/issues
 [08]: install-azure-cli-linux.md
-[09]: ./release-notes-azure-cli.md#april-07-2026
