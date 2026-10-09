@@ -419,6 +419,7 @@ directCommands:
                         [--gpu-driver {Install, None}]
                         [--gpu-driver-mode --managed-gpu-driver-mode {DRA, DevicePlugin}]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
+                        [--gpu-mig-profiles {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                         [--gpu-mig-strategy {Mixed, Single}]
                         [--host-group-id]
                         [--if-match]
@@ -503,6 +504,9 @@ directCommands:
   - summary: |-
       Create a node pool with blue-green upgrade strategy and default parameters
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --upgrade-strategy BlueGreen
+  - summary: |-
+      Create a node pool with an ordered mixed MIG profile layout
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-managed-gpu --gpu-mig-strategy Mixed --gpu-mig-profiles MIG1g MIG2g MIG2g MIG2g
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -646,6 +650,13 @@ directCommands:
     acceptedValues: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
     summary: |-
       GPU instance profile to partition multi-gpu Nvidia GPUs.
+  - name: --gpu-mig-profiles
+    acceptedValues: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
+    summary: |-
+      Space-separated ordered list of MIG partition profiles. Valid values are "MIG1g", "MIG2g", "MIG3g", "MIG4g", and "MIG7g".
+    description: |-
+      Duplicate profiles are allowed and meaningful. "Single" accepts one profile; "Mixed" accepts an ordered profile layout. This option cannot be used with --gpu-instance-profile. The service validates the VM size and profile layout.
+    isPreview: true
   - name: --gpu-mig-strategy
     acceptedValues: Mixed, Single
     summary: |-
@@ -2727,6 +2738,7 @@ directCommands:
                            [--final-soak-duration]
                            [--gpu-driver {Install, None}]
                            [--gpu-driver-mode --managed-gpu-driver-mode {DRA, DevicePlugin}]
+                           [--gpu-mig-profiles {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                            [--gpu-mig-strategy {Mixed, Single}]
                            [--if-match]
                            [--if-none-match]
@@ -2739,6 +2751,7 @@ directCommands:
                            [--min-count]
                            [--mode {Gateway, Machines, ManagedSystem, System, User}]
                            [--no-wait]
+                           [--node-public-ip-prefix-ids]
                            [--node-soak-duration]
                            [--node-taints]
                            [--node-vm-size]
@@ -2780,6 +2793,9 @@ directCommands:
   - summary: |-
       Update a node pool with blue-green upgrade settings
     syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --drain-batch-size 50% --drain-timeout-bg 5 --batch-soak-duration 10 --final-soak-duration 10
+  - summary: |-
+      Add an IPv6 public IP prefix to an existing dual-stack node pool (grows the assigned prefixes; existing nodes are recreated with the new public IPs)
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-public-ip-prefix-ids "/subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Network/publicIPPrefixes/<v4prefix>,/subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Network/publicIPPrefixes/<v6prefix>"
   - summary: |-
       Update a nodepool with a Capacity Reservation Group(CRG) ID.
     syntax: az aks nodepool update -g MyResourceGroup -n MyNodePool --cluster-name MyMC --node-vm-size VMSize --crg-id "/subscriptions/SubID/resourceGroups/ResourceGroupName/providers/Microsoft.Compute/CapacityReservationGroups/MyCRGID"
@@ -2904,6 +2920,13 @@ directCommands:
     summary: |-
       Specify the Managed GPU driver mode. Valid values are "DRA" and "DevicePlugin". The default is "DevicePlugin". Requires `--enable-managed-gpu` to be set to true.
     isPreview: true
+  - name: --gpu-mig-profiles
+    acceptedValues: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
+    summary: |-
+      Space-separated ordered list of MIG partition profiles. Valid values are "MIG1g", "MIG2g", "MIG3g", "MIG4g", and "MIG7g".
+    description: |-
+      Duplicate profiles are allowed and meaningful. The service rejects changes to this immutable property. This option cannot be used with --gpu-instance-profile.
+    isPreview: true
   - name: --gpu-mig-strategy
     acceptedValues: Mixed, Single
     summary: |-
@@ -2944,6 +2967,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --node-public-ip-prefix-ids
+    summary: |-
+      Comma-separated list of public IP prefix resource IDs for dual-stack node public IPs (IPv4 and/or IPv6).
+    description: |-
+      At most one IPv4 and one IPv6 prefix may be specified. On an existing node pool this adds or replaces the assigned prefixes; an accepted change rolls the pool so existing nodes are recreated with the new public IPs. Requires the NodePublicIPv6PrefixPreview feature flag.
   - name: --node-soak-duration
     summary: |-
       The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node.
