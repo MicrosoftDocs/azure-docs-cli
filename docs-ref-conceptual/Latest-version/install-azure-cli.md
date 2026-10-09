@@ -29,6 +29,7 @@ in a Docker container and Azure Cloud Shell.
   - [Install on Azure Linux with tdnf][07]
 
 - [Install on macOS][18]
+- [Install on macOS (preview)][21]
 
 - [Run in Docker container][20]
 
@@ -94,3 +95,4 @@ information on managing extensions, see [Use and manage extensions with the Azur
 [18]: install-azure-cli-macos.md
 [19]: install-azure-cli-windows.md
 [20]: run-azure-cli-docker.md
+[21]: install-azure-cli-macos-preview.md
