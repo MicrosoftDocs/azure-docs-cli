@@ -28,14 +28,11 @@ directCommands:
   - summary: |-
       Create an Autonomous Database backup
     syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --display-name <display name> --retention-period-in-days <days>
-  - summary: |-
-      Create and return the Azure backup resource ID
-    syntax: az oracle-database autonomous-database backup create --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days> --query "{id:id,name:name}"
   requiredParameters:
   - isRequired: true
     name: --adbbackupid --name -n
     summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
+      Name for the new Azure backup resource.
   - isRequired: true
     name: --autonomousdatabasename
     summary: |-
@@ -176,7 +173,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_backup_list
   name: az oracle-database autonomous-database backup list
   summary: |-
-    List Autonomous Database backup resources by Autonomous Database.
+    List Autonomous Database backups.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -186,7 +183,7 @@ directCommands:
                                                        [--next-token]
   examples:
   - summary: |-
-      List Autonomous Database backups
+      List ADBS Backups
     syntax: az oracle-database autonomous-database backup list --autonomousdatabasename <ADBS name> --resource-group <resource_group>
   requiredParameters:
   - isRequired: true
@@ -248,14 +245,11 @@ directCommands:
   examples:
   - summary: |-
       Get an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id>
-  - summary: |-
-      Get a backup using the Azure backup resource name/id returned by backup create or backup list
-    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_id>
+    syntax: az oracle-database autonomous-database backup show --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_name>
   optionalParameters:
   - name: --adbbackupid --name -n
     summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
+      Azure backup resource name. Use the final segment of the id returned by backup create or backup list, not the full Azure resource ID.
     groupName: Resource Id Arguments
   - name: --autonomousdatabasename
     summary: |-
@@ -316,7 +310,7 @@ directCommands:
   examples:
   - summary: |-
       Update an Autonomous Database backup
-    syntax: az oracle-database autonomous-database backup update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <id> --retention-period-in-days <days>
+    syntax: az oracle-database autonomous-database backup update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_name> --retention-period-in-days <days>
   requiredParameters:
   - isRequired: true
     name: --retention-days --retention-period-in-days
@@ -330,7 +324,7 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --adbbackupid --name -n
     summary: |-
-      Azure backup resource name/id. Use the value returned by backup create or backup list.
+      Azure backup resource name. Use the final segment of the id returned by backup create or backup list, not the full Azure resource ID.
     groupName: Resource Id Arguments
   - name: --autonomousdatabasename
     summary: |-
@@ -383,7 +377,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_backup_wait
   name: az oracle-database autonomous-database backup wait
   summary: |-
-    Place the CLI in a waiting state until a condition is met.
+    Wait until an Autonomous Database backup meets a condition.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -401,6 +395,10 @@ directCommands:
                                                        [--subscription]
                                                        [--timeout]
                                                        [--updated]
+  examples:
+  - summary: |-
+      Wait for an Autonomous Database backup to be created
+    syntax: az oracle-database autonomous-database backup wait --autonomousdatabasename <ADBS name> --resource-group <resource_group> --adbbackupid <backup_resource_name> --created
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -408,7 +406,7 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --adbbackupid --name -n
     summary: |-
-      Azure backup resource id. Use the value returned by backup create or backup list.
+      Azure backup resource name. Use the final segment of the id returned by backup create or backup list, not the full Azure resource ID.
     groupName: Resource Id Arguments
   - name: --autonomousdatabasename
     summary: |-
