@@ -119,10 +119,12 @@ WAM is available on Windows 10 and later, and on Windows Server 2019 and later.
 Beginning with Azure CLI version [2.91.0][19], broker-based authentication is available in preview
 on macOS. broker-based authentication on macOS is disabled by default and requires users to opt in.
 
-> [!IMPORTANT]
-> Before enabling broker-based authentication, install a compatible authentication broker, such as
-> Microsoft Company Portal, on your Mac. If a compatible broker isn't installed, Azure CLI falls
-> back to browser-based authentication.
+### Prerequisites
+
+- Install a compatible authentication broker on your Mac before enabling broker-based
+  authentication. For enterprise and organization-managed devices, this means installing and
+  enrolling [Microsoft Intune Company Portal][20] first. If a compatible broker isn't installed,
+  Azure CLI falls back to browser-based authentication.
 
 To enable broker-based authentication on macOS, set the [core.enable_broker_on_mac][03]
 configuration property to `true`:
@@ -288,3 +290,4 @@ of choice, use the `--tenant` parameter. For more information, see
 [17]: edge://net-internals/#hsts
 [18]: manage-azure-subscriptions-azure-cli.md#change-the-active-tenant
 [19]: ./release-notes-azure-cli.md#october-06-2026
+[20]: /intune/user-help/enrollment/enroll-company-portal-macos

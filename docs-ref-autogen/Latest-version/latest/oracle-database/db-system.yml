@@ -21,9 +21,11 @@ directCommands:
                                         [--acquire-policy-token]
                                         [--admin-password]
                                         [--change-reference]
+                                        [--character-set]
                                         [--cluster-name]
                                         [--compute-count]
                                         [--compute-model {ECPU, OCPU}]
+                                        [--data-collection-options]
                                         [--database-edition {EnterpriseEdition, EnterpriseEditionDeveloper, EnterpriseEditionExtreme, EnterpriseEditionHighPerformance, StandardEdition}]
                                         [--db-system-options]
                                         [--db-version]
@@ -34,6 +36,7 @@ directCommands:
                                         [--initial-data-storage-size-in-gb]
                                         [--license-model {BringYourOwnLicense, LicenseIncluded}]
                                         [--location]
+                                        [--ncharacter-set]
                                         [--network-anchor-id]
                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--node-count]
@@ -45,10 +48,6 @@ directCommands:
                                         [--tags]
                                         [--time-zone]
                                         [--zones]
-  examples:
-  - summary: |-
-      DbSystems_Create
-    syntax: az oracle-database db-system create --resource-group rgo --db-system-name dbsystem1 --database-edition StandardEdition --admin-password ******** --db-version 19.0.0.0 --resource-anchor-id /subscriptions/00000000-0000-4025-0000-000000000000/resourceGroups/rg001/providers/Oracle.Database/resourceAnchors/resourceanchor1 --network-anchor-id /subscriptions/00000000-0000-4025-0000-000000000000/resourceGroups/rg001/providers/Oracle.Database/networkAnchors/networkanchor1 --cluster-name example --display-name example --initial-data-storage-size-in-gb 19 --db-system-options "{storage-management:LVM}" --disk-redundancy High --hostname krixp --node-count 24 --shape VM.Standard.E5.Flex --ssh-public-keys "[sha-xx]" --storage-volume-performance-mode Balanced --time-zone utc --compute-model ECPU --compute-count 28 --zones "[2]" --tags "{tag:test}" --location eastus
   requiredParameters:
   - isRequired: true
     name: --db-system-name --name -n
@@ -71,6 +70,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --character-set
+    summary: |-
+      The character set for the DB system. The default is AL32UTF8.
+    groupName: Properties Arguments
   - name: --cluster-name
     summary: |-
       The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
@@ -83,6 +86,10 @@ directCommands:
     acceptedValues: ECPU, OCPU
     summary: |-
       The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.
+    groupName: Properties Arguments
+  - name: --data-collection-options
+    summary: |-
+      Indicates user preferences for the various diagnostic collection options for the Base DB.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --database-edition
     acceptedValues: EnterpriseEdition, EnterpriseEditionDeveloper, EnterpriseEditionExtreme, EnterpriseEditionHighPerformance, StandardEdition
@@ -129,6 +136,10 @@ directCommands:
     summary: |-
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     groupName: Resource Arguments
+  - name: --ncharacter-set
+    summary: |-
+      The national character set for the DB system. The default is AL16UTF16.
+    groupName: Properties Arguments
   - name: --network-anchor-id
     summary: |-
       Azure Network Anchor ID.
@@ -217,10 +228,6 @@ directCommands:
                                         [--resource-group]
                                         [--subscription]
                                         [--yes]
-  examples:
-  - summary: |-
-      DbSystems_Delete_MaximumSet
-    syntax: az oracle-database db-system delete --resource-group rg --db-system-name dbsystem1
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -338,10 +345,6 @@ directCommands:
                                       [--ids]
                                       [--resource-group]
                                       [--subscription]
-  examples:
-  - summary: |-
-      DbSystems_Get
-    syntax: az oracle-database db-system show --resource-group rg --db-system-name dbsystem1
   optionalParameters:
   - name: --db-system-name --name -n
     summary: |-
@@ -403,10 +406,6 @@ directCommands:
                                         [--subscription]
                                         [--tags]
                                         [--zones]
-  examples:
-  - summary: |-
-      DbSystems_CreateOrUpdate_MaximumSet
-    syntax: az oracle-database db-system update --resource-group rg --db-system-name dbsystem1 --zones "[2]" --tags "{example:test}"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-

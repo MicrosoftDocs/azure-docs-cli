@@ -189,8 +189,7 @@ directCommands:
   description: |-
     Use one create mode option per request. The database type is inferred from --regular, --clone,
     --clone-from-backup-timestamp, or --cross-region-disaster-recovery. Do not pass dataBaseType
-    directly. Clone and disaster recovery fields must be nested inside the matching create mode
-    option.
+    directly. Clone and disaster recovery fields must be nested inside the matching create mode option.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -200,6 +199,7 @@ directCommands:
                                                   [--admin-password]
                                                   [--autonomous-database-id]
                                                   [--autonomous-maintenance-schedule-type --schedule-type {Early, Regular}]
+                                                  [--backup-destination {AZURE, OCI}]
                                                   [--backup-retention-period-in-days --retention-days]
                                                   [--change-reference]
                                                   [--character-set]
@@ -215,7 +215,7 @@ directCommands:
                                                   [--data-storage-size-in-tbs --storage-tbs]
                                                   [--database-edition {EnterpriseEdition, StandardEdition}]
                                                   [--db-version]
-                                                  [--db-workload {AJD, APEX, DW, OLTP}]
+                                                  [--db-workload {AJD, APEX, DW, LH, OLTP}]
                                                   [--display-name]
                                                   [--is-auto-scaling-for-storage-enabled --store-auto-scaling {0, 1, f, false, n, no, t, true, y, yes}]
                                                   [--is-local-data-guard-enabled --local-data-guard {0, 1, f, false, n, no, t, true, y, yes}]
@@ -224,19 +224,25 @@ directCommands:
                                                   [--license-model {BringYourOwnLicense, LicenseIncluded}]
                                                   [--location]
                                                   [--ncharacter-set]
+                                                  [--network-anchor-id]
                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                   [--private-endpoint-ip]
                                                   [--private-endpoint-label]
                                                   [--regular]
+                                                  [--resource-anchor-id]
                                                   [--scheduled-operations-list]
                                                   [--subnet-id]
                                                   [--tags]
                                                   [--vnet-id]
                                                   [--whitelisted-ips]
+                                                  [--zone]
   examples:
   - summary: |-
       Create an Autonomous Database
     syntax: az oracle-database autonomous-database create --location <location> --autonomousdatabasename <name> --resource-group <resource_group> --subnet-id <subnet_id> --display-name <display_name> --compute-model ECPU --compute-count <compute_count> --data-storage-size-in-gbs <storage_size> --license-model <BringYourOwnLicense/LicenseIncluded> --db-workload OLTP --admin-password <password> --db-version 19c --character-set AL32UTF8 --ncharacter-set AL16UTF16 --vnet-id <vnet_id> --regular
+  - summary: |-
+      Create an Autonomous Database with Resource and Network Anchors
+    syntax: az oracle-database autonomous-database create --location eastus --autonomousdatabasename MyAutoDB --resource-group MyResourceGroup --display-name MyAutoDB --resource-anchor-id <resource_anchor_id> --network-anchor-id <network_anchor_id> --compute-model ECPU --compute-count 2 --data-storage-size-in-gbs 1024 --license-model LicenseIncluded --db-workload OLTP --admin-password <password> --db-version 19c --character-set AL32UTF8 --ncharacter-set AL16UTF16 --regular
   - summary: |-
       Clone from an existing Autonomous Database
     syntax: az oracle-database autonomous-database create --resource-group MyResourceGroup --location eastus --autonomousdatabasename MyCloneDB --display-name MyCloneDB --db-version 19c --admin-password <password> --compute-model ECPU --compute-count 2 --data-storage-size-in-gbs 1024 --license-model LicenseIncluded --db-workload OLTP --character-set AL32UTF8 --ncharacter-set AL16UTF16 --vnet-id <vnet_id> --subnet-id <subnet_id> --clone clone-type=Full source=Database source-id=<source_autonomous_database_id>
@@ -272,6 +278,11 @@ directCommands:
     acceptedValues: Early, Regular
     summary: |-
       The maintenance schedule type of the Autonomous Database Serverless.
+    groupName: Properties Arguments
+  - name: --backup-destination
+    acceptedValues: AZURE, OCI
+    summary: |-
+      Backup destination for auto and long-term backups. Existing backups stay in their original destination when this value changes.
     groupName: Properties Arguments
   - name: --backup-retention-period-in-days --retention-days
     summary: |-
@@ -330,14 +341,14 @@ directCommands:
   - name: --database-edition
     acceptedValues: EnterpriseEdition, StandardEdition
     summary: |-
-      The Oracle Database edition that applies to the Autonomous Database. Use this only with --license-model BringYourOwnLicense.
+      The Oracle Database Edition that applies to the Autonomous databases.
     groupName: Properties Arguments
   - name: --db-version
     summary: |-
       A valid Oracle Database version for Autonomous Database.
     groupName: Properties Arguments
   - name: --db-workload
-    acceptedValues: AJD, APEX, DW, OLTP
+    acceptedValues: AJD, APEX, DW, LH, OLTP
     summary: |-
       The Autonomous Database workload type.
     groupName: Properties Arguments
@@ -348,7 +359,7 @@ directCommands:
   - name: --is-auto-scaling-for-storage-enabled --store-auto-scaling
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Indicates if auto scaling is enabled for the Autonomous Database storage. For clones from an existing database, this value must match the source database storage auto-scaling setting.
+      Indicates if auto scaling is enabled for the Autonomous Database storage.
     groupName: Properties Arguments
   - name: --is-local-data-guard-enabled --local-data-guard
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -378,6 +389,10 @@ directCommands:
     summary: |-
       The character set for the Autonomous Database.
     groupName: Properties Arguments
+  - name: --network-anchor-id
+    summary: |-
+      Azure Network Anchor ID.
+    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -393,6 +408,10 @@ directCommands:
   - name: --regular
     summary: |-
       Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --resource-anchor-id
+    summary: |-
+      Azure Resource Anchor ID.
     groupName: Properties Arguments
   - name: --scheduled-operations-list
     summary: |-
@@ -413,6 +432,10 @@ directCommands:
   - name: --whitelisted-ips
     summary: |-
       The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --zone
+    summary: |-
+      The logical zone where the Autonomous Database is provisioned.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -444,7 +467,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_delete
   name: az oracle-database autonomous-database delete
   summary: |-
-    Delete an Autonomous Database.
+    Delete a AutonomousDatabase.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -458,7 +481,7 @@ directCommands:
                                                   [--yes]
   examples:
   - summary: |-
-      Delete an Autonomous Database
+      Delete an Autonomous database
     syntax: az oracle-database autonomous-database delete --name <ADBS name> --resource-group <resource_group>
   optionalParameters:
   - name: --acquire-policy-token
@@ -561,7 +584,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --peer-db-id
     summary: |-
-      The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
+      The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. Use --peer-db-ocid for the OCI database OCID.
     groupName: Body Arguments
   - name: --peer-db-location
     summary: |-
@@ -569,7 +592,7 @@ directCommands:
     groupName: Body Arguments
   - name: --peer-db-ocid
     summary: |-
-      Ocid of the Disaster Recovery peer database, which is located in a different region from the current peer database.
+      The OCI database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
     groupName: Body Arguments
   - name: --resource-group -g
     summary: |-
@@ -623,7 +646,7 @@ directCommands:
   examples:
   - summary: |-
       Generate Wallet
-    syntax: az oracle-database autonomous-database generate-wallet --autonomousdatabasename MyAutoDB --resource-group MyResourceGroup --password <password> --is-regional True --file wallet-MyAutoDB.zip
+    syntax: az oracle-database autonomous-database generate-wallet --autonomousdatabasename <ADBS name> --resource-group <resource_group> --password <password> --is-regional True --file wallet-<ADBS name>.zip
   requiredParameters:
   - isRequired: true
     name: --password
@@ -695,7 +718,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_list
   name: az oracle-database autonomous-database list
   summary: |-
-    List Autonomous Database resources by subscription ID.
+    List AutonomousDatabase resources by subscription ID.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -704,7 +727,7 @@ directCommands:
                                                 [--resource-group]
   examples:
   - summary: |-
-      List Autonomous Databases
+      List Autonomous databases
     syntax: az oracle-database autonomous-database list --resource-group <resource_group>
   optionalParameters:
   - name: --max-items
@@ -748,7 +771,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_restore
   name: az oracle-database autonomous-database restore
   summary: |-
-    Restores an Autonomous Database based on the provided request parameters.
+    Restore an Autonomous Database to a point in time.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -826,7 +849,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_show
   name: az oracle-database autonomous-database show
   summary: |-
-    Get an Autonomous Database.
+    Get a AutonomousDatabase.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -836,7 +859,7 @@ directCommands:
                                                 [--subscription]
   examples:
   - summary: |-
-      Get an Autonomous Database
+      Get Autonomous database
     syntax: az oracle-database autonomous-database show --autonomousdatabasename <ADBS name> --resource-group <resource_group>
   optionalParameters:
   - name: --autonomousdatabasename --name -n
@@ -994,7 +1017,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --peer-db-id
     summary: |-
-      The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
+      The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. Use --peer-db-ocid for the OCI database OCID.
     groupName: Body Arguments
   - name: --peer-db-location
     summary: |-
@@ -1002,7 +1025,7 @@ directCommands:
     groupName: Body Arguments
   - name: --peer-db-ocid
     summary: |-
-      Ocid of the Disaster Recovery peer database, which is located in a different region from the current peer database.
+      The OCI database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
     groupName: Body Arguments
   - name: --resource-group -g
     summary: |-
@@ -1039,7 +1062,7 @@ directCommands:
 - uid: az_oracle-database_autonomous-database_update
   name: az oracle-database autonomous-database update
   summary: |-
-    Update an Autonomous Database.
+    Update a AutonomousDatabase.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -1048,6 +1071,7 @@ directCommands:
                                                   [--admin-password]
                                                   [--autonomous-maintenance-schedule-type --schedule-type {Early, Regular}]
                                                   [--autonomousdatabasename --name]
+                                                  [--backup-destination {AZURE, OCI}]
                                                   [--backup-retention-period-in-days --retention-days]
                                                   [--backup-schedule --long-term-backup-schedule]
                                                   [--change-reference]
@@ -1068,6 +1092,7 @@ directCommands:
                                                   [--is-auto-scaling-for-storage-enabled --store-auto-scaling {0, 1, f, false, n, no, t, true, y, yes}]
                                                   [--is-local-data-guard-enabled --local-data-guard {0, 1, f, false, n, no, t, true, y, yes}]
                                                   [--is-mtls-connection-required --mtls-reqd {0, 1, f, false, n, no, t, true, y, yes}]
+                                                  [--is-schedule-az-update-to-earliest {0, 1, f, false, n, no, t, true, y, yes}]
                                                   [--license-model {BringYourOwnLicense, LicenseIncluded}]
                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                   [--open-mode {ReadOnly, ReadWrite}]
@@ -1081,14 +1106,13 @@ directCommands:
                                                   [--set]
                                                   [--subscription]
                                                   [--tags]
+                                                  [--time-scheduled-az-update]
                                                   [--whitelisted-ips]
+                                                  [--zone]
   examples:
   - summary: |-
-      Update an Autonomous Database
+      Update Autonomous database
     syntax: az oracle-database autonomous-database update --autonomousdatabasename <ADBS name> --resource-group <resource_group> --tags {Tagkey:TagValue}
-  - summary: |-
-      Enable local Autonomous Data Guard
-    syntax: az oracle-database autonomous-database update --resource-group MyResourceGroup --autonomousdatabasename MyAutoDB --local-data-guard true --local-adg-auto-failover-max-data-loss-limit 0
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1111,6 +1135,11 @@ directCommands:
     summary: |-
       The database name.
     groupName: Resource Id Arguments
+  - name: --backup-destination
+    acceptedValues: AZURE, OCI
+    summary: |-
+      Backup destination for auto and long-term backups. Existing backups stay in their original destination when this value changes.
+    groupName: Properties Arguments
   - name: --backup-retention-period-in-days --retention-days
     summary: |-
       Retention period, in days, for long-term backups.
@@ -1163,7 +1192,7 @@ directCommands:
   - name: --database-edition
     acceptedValues: EnterpriseEdition, StandardEdition
     summary: |-
-      The Oracle Database edition that applies to the Autonomous Database.
+      The Oracle Database Edition that applies to the Autonomous databases.
     groupName: Properties Arguments
   - name: --display-name
     summary: |-
@@ -1171,7 +1200,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --failover-limit --local-adg-auto-failover-max-data-loss-limit
     summary: |-
-      Maximum data loss limit, in seconds, for local Autonomous Data Guard automatic failover when supported.
+      Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard.
     groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -1190,12 +1219,17 @@ directCommands:
   - name: --is-local-data-guard-enabled --local-data-guard
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Indicates whether local, in-region Autonomous Data Guard is enabled for the Autonomous Database.
+      Indicates whether the Autonomous Database has local or called in-region Data Guard enabled.
     groupName: Properties Arguments
   - name: --is-mtls-connection-required --mtls-reqd
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Specifies if the Autonomous Database requires mTLS connections.
+    groupName: Properties Arguments
+  - name: --is-schedule-az-update-to-earliest
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Update AZ at the earliest available opportunity.
     groupName: Properties Arguments
   - name: --license-model
     acceptedValues: BringYourOwnLicense, LicenseIncluded
@@ -1253,9 +1287,17 @@ directCommands:
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Resource Arguments
+  - name: --time-scheduled-az-update
+    summary: |-
+      The date and time when the Autonomous Database availability zone is to be updated.
+    groupName: Properties Arguments
   - name: --whitelisted-ips
     summary: |-
       The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --zone
+    summary: |-
+      The logical zone where the Autonomous Database is provisioned.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
