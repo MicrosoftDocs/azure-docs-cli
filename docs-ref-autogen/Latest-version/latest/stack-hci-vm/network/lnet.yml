@@ -43,7 +43,10 @@ directCommands:
   examples:
   - summary: |-
       PutLogicalNetwork
-    syntax: az stack-hci-vm network lnet create --resource-group "test-rg" --name "test-lnet" --location "eastus2euap" --tags env=prod --custom-location "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.ExtendedLocation/customLocations/test-location" --address-prefixes "10.0.0.0/16" --ip-allocation-method Static --ip-pool-type "vm" --ip-pool-start "10.0.0.0" --ip-pool-end "10.0.0.16" --vlan 10 --vm-switch-name "sampleVnet0920" --dns-servers 8.8.8.8 8.8.4.4 --fabric-network-configuration-id "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/example-l2domain" --gateway 10.0.0.1 --network-security-group "myNSG" --polling-interval 30
+    syntax: az stack-hci-vm network lnet create --resource-group "test-rg" --name "test-lnet" --location "eastus2euap" --tags env=prod --custom-location "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.ExtendedLocation/customLocations/test-location" --address-prefixes "10.0.0.0/16" --ip-allocation-method Static --ip-pool-type "vm" --ip-pool-start "10.0.0.0" --ip-pool-end "10.0.0.16" --vlan 10 --vm-switch-name "sampleVnet0920" --dns-servers 8.8.8.8 8.8.4.4 --fabric-network-configuration-id "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/example-l3domain/internalNetworks/example-internal-network" --gateway 10.0.0.1 --network-security-group "myNSG" --polling-interval 30
+  - summary: |-
+      PutDynamicLogicalNetworkWithL2IsolationDomain
+    syntax: az stack-hci-vm network lnet create --resource-group "test-rg" --name "test-dynamic-lnet" --location "eastus2euap" --custom-location "/subscriptions/xxxx/resourceGroups/test-rg/providers/Microsoft.ExtendedLocation/customLocations/test-location" --ip-allocation-method Dynamic --vlan 10 --vm-switch-name "sampleVnet0920" --fabric-network-configuration-id "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/example-l2domain"
   requiredParameters:
   - isRequired: true
     name: --custom-location
@@ -78,7 +81,10 @@ directCommands:
       Usage: --dns-servers 10.220.32.16 10.220.32.17.
   - name: --fabric-netcfg-id --fabric-network-configuration-id
     summary: |-
-      The Azure Resource ID for a Managed Network Fabric L2ISD or L3ISD internal network to associate with this logical network.
+      The Azure Resource ID for a Managed Network Fabric isolation domain to associate with this logical network. A Dynamic logical network must reference an L2 isolation domain (Microsoft.ManagedNetworkFabric/l2IsolationDomains), and a Static logical network must reference an L3 isolation domain internal network (Microsoft.ManagedNetworkFabric/l3IsolationDomains/internalNetworks).
+    description: |-
+      Usage: --fabric-network-configuration-id "/subscriptions/xxxx/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/example-l2domain"
+      A Dynamic logical network must reference an L2 isolation domain, and a Static logical network must reference an L3 isolation domain internal network.
   - name: --gateway
     summary: |-
       Gateway.
