@@ -1,0 +1,314 @@
+### YamlMime:AzureCLIGroup
+uid: az_extension
+name: az extension
+summary: |-
+  Manage extension packages and discovery-backed extension state.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_extension_add
+  name: az extension add
+  summary: |-
+    Install an extension package from a feed or local file.
+  description: |-
+    Install an extension package into the user extension directory from a NuGet feed or a local .nupkg file. Use `--name` for package-based installs or `--path` for local artifacts. After installation, the package is discoverable by subsequent `az` commands without any manual registry edits.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/extension/index.md
+  syntax: >-
+    az extension add [--feed-url]
+                     [--force]
+                     [--name]
+                     [--path]
+                     [--pin]
+                     [--version]
+  examples:
+  - summary: |-
+      Install from official feed
+    syntax: az extension add --name MyExtension --version 1.0.0 --feed-url https://api.nuget.org/v3/index.json
+  - summary: |-
+      Install from custom feed
+    syntax: az extension add --name MyExtension --version 1.0.0 --feed-url https://packages.example.com/nuget
+  - summary: |-
+      Install from local file
+    syntax: az extension add --path ./MyExtension.1.0.0.nupkg
+  optionalParameters:
+  - name: --feed-url
+    summary: |-
+      NuGet feed URL to install from when using --name.
+  - name: --force
+    summary: |-
+      Allow add to overwrite an existing pinned installation of the same package.
+  - name: --name
+    summary: |-
+      Package id (full or short suffix) of the extension to add from a feed. Verb and namespace tokens are not accepted. Omit when using --path.
+  - name: --path
+    summary: |-
+      Path to a local extension .nupkg file to install.
+  - name: --pin
+    summary: |-
+      Pin the installed version so future 'update' commands skip it without --force.
+  - name: --version
+    summary: |-
+      Optional version to install when using --name. Omit to use the latest available package version.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_extension_list
+  name: az extension list
+  summary: |-
+    List discovered installed extensions.
+  description: |-
+    Display every extension the CLI can currently load off disk, overlaid with user preferences from the registry. Includes both packages bundled with the `az` install (under `<install>/Extensions/`) and packages installed by the user via `az extension add` (under `~/.azclips/extensions/`). By default, output is grouped by package; use `--by-verb` to regroup by each contributed CLI verb. Each row includes a `Location` field with the absolute path to the primary DLL that would be loaded for that extension, a `selectedVersion` field naming the version dispatch will route to, and a `candidates` array listing every discovered candidate for the package with its tier (Bundled or Installed) and location.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/extension/index.md
+  syntax: az extension list [--by-verb]
+  examples:
+  - summary: |-
+      List installed extensions
+    syntax: az extension list
+  - summary: |-
+      Group by verb
+    syntax: az extension list --by-verb
+  - summary: |-
+      Emit structured JSON
+    syntax: az extension list --output json
+  optionalParameters:
+  - name: --by-verb
+    summary: |-
+      Regroup output verb-headed: one section per verb, listing every package that contributes to it.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_extension_pin
+  name: az extension pin
+  summary: |-
+    Pin an installed extension so it won't be updated automatically.
+  description: |-
+    Mark an extension as pinned. Pinned extensions are skipped by `az extension update` unless `--force` is specified. Use this to hold a known-good version while other extensions update. The extension is identified by its package id (full or short suffix); verb and namespace tokens are not accepted as selectors.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/extension/index.md
+  syntax: az extension pin --name
+  examples:
+  - summary: |-
+      Pin by short name
+    syntax: az extension pin --name Compute
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Package id (full or short suffix) of the extension to pin. Verb and namespace tokens are not accepted.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_extension_remove
+  name: az extension remove
+  summary: |-
+    Remove an installed extension package.
+  description: |-
+    Uninstall an extension package by deleting its installed payload and removing any persisted preference entry. The extension is identified by its package id (full or short suffix). Verb and namespace tokens are not accepted; a missed lookup includes a `Did you mean '--name <Package>'?` hint when the token unambiguously maps to an installed package. Built-in extensions cannot be removed.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/extension/index.md
+  syntax: az extension remove --name
+  examples:
+  - summary: |-
+      Remove by short name
+    syntax: az extension remove --name Compute
+  - summary: |-
+      Remove by package id
+    syntax: az extension remove --name Microsoft.Azure.Azclips.Extensions.Compute
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Package id (full or short suffix) of the extension to remove. Verb and namespace tokens are not accepted.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_extension_show
+  name: az extension show
+  summary: |-
+    Show discovery-backed details of an installed extension.
+  description: |-
+    Display metadata for a single installed extension package as discovered on disk, including its package id, installed version, pin state, contributed CLI verbs, and the on-disk `Location` of the primary DLL that would be loaded. The extension is identified by its package id (full or short suffix); verb and namespace tokens are not accepted as selectors.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/extension/index.md
+  syntax: az extension show --name
+  examples:
+  - summary: |-
+      Show by short name
+    syntax: az extension show --name Compute
+  - summary: |-
+      Show by package id
+    syntax: az extension show --name Microsoft.Azure.Azclips.Extensions.Compute
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Package id (full or short suffix) of the extension to show. Verb and namespace tokens are not accepted.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_extension_unpin
+  name: az extension unpin
+  summary: |-
+    Remove the pin from an extension so it can be updated again.
+  description: |-
+    Clear the pin flag on a previously-pinned extension. After unpinning, `az extension update` will once again consider the extension for automatic upgrades. The extension is identified by its package id (full or short suffix); verb and namespace tokens are not accepted as selectors.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/extension/index.md
+  syntax: az extension unpin --name
+  examples:
+  - summary: |-
+      Unpin by short name
+    syntax: az extension unpin --name Compute
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Package id (full or short suffix) of the extension to unpin. Verb and namespace tokens are not accepted.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+- uid: az_extension_update
+  name: az extension update
+  summary: |-
+    Update an installed extension to a newer version.
+  description: |-
+    Replace the installed version of an extension with a newer one from the configured feed. Pinned extensions are skipped unless `--force` is supplied. The extension is identified by its package id (full or short suffix); verb and namespace tokens are not accepted as selectors.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/extension/index.md
+  syntax: >-
+    az extension update --name
+                        [--feed-url]
+                        [--force]
+                        [--version]
+  examples:
+  - summary: |-
+      Update to the latest version
+    syntax: az extension update --name Compute
+  - summary: |-
+      Update to a specific version
+    syntax: az extension update --name Compute --version 2.1.0
+  - summary: |-
+      Force update over a pin
+    syntax: az extension update --name Compute --force
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Package id (full or short suffix) of the extension to update. Verb and namespace tokens are not accepted.
+  optionalParameters:
+  - name: --feed-url
+    summary: |-
+      Feed URL to install the new version from.
+  - name: --force
+    summary: |-
+      Update even if the extension is pinned.
+  - name: --version
+    summary: |-
+      Target version. Defaults to the latest available from the configured feed.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: plain
+    acceptedValues: json, plain
+    summary: |-
+      Output format.
+commands:
+- az_extension_add
+- az_extension_list
+- az_extension_pin
+- az_extension_remove
+- az_extension_show
+- az_extension_unpin
+- az_extension_update
+metadata:
+  ms.date: 06/30/2026
+  description: Manage extension packages and discovery-backed extension state.
