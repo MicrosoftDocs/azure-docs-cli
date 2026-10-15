@@ -157,7 +157,7 @@ The required sign-in depends on the configured AI provider:
 
 ### Which model powers this feature?
 
-AI-based error recovery uses a built-in AI model (GPT-5.4).
+AI-based error recovery is powered by a built-in AI model.
 
 You can also configure Azure CLI to use your GitHub Copilot subscription:
 
@@ -212,7 +212,7 @@ deleting resources, resizing resources, or changing permissions.
 
 ### How can I provide feedback?
 
-During the preview, feedback is collected through user interviews and surveys.
+During the preview, feedback is collected through user interviews and surveys. You can also run `az survey` to share feedback directly from the command line.
 
 <!-- link references -->
 
