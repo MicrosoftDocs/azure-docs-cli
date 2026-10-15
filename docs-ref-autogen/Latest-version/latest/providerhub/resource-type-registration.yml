@@ -25,6 +25,7 @@ directCommands:
                                                      [--allowed-resource-names]
                                                      [--allowed-templ-actions --allowed-template-deployment-reference-actions]
                                                      [--allowed-unauthorized-actions --aua]
+                                                     [--allowed-unauthorized-actions-extensions --aua-extensions]
                                                      [--api-profiles]
                                                      [--async-op-rt-name --async-operation-resource-type-name]
                                                      [--async-timeout-rules]
@@ -40,7 +41,8 @@ directCommands:
                                                      [--cross-tenant-token-validation --token-validation {EnsureSecureValidation, PassthroughInsecureToken}]
                                                      [--dav --disallowed-action-verbs]
                                                      [--default-api-version]
-                                                     [--deletion-policy --resource-deletion-policy {CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified}]
+                                                     [--deletion-policies --resource-deletion-policies]
+                                                     [--deletion-policy --resource-deletion-policy {CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified, SoftDelete}]
                                                      [--disallowed-end-user-operations --disallowed-ops]
                                                      [--dsts-configuration]
                                                      [--enable-3p-s2s --enable-third-party-s2-s {0, 1, f, false, n, no, t, true, y, yes}]
@@ -55,6 +57,7 @@ directCommands:
                                                      [--legacy-name]
                                                      [--legacy-names]
                                                      [--legacy-policy]
+                                                     [--lifecycle-info]
                                                      [--linked-access-check --linked-access-checks --linked-access-checks]
                                                      [--linked-notif-rules --linked-notification-rules]
                                                      [--linked-operation-rules]
@@ -63,7 +66,7 @@ directCommands:
                                                      [--management]
                                                      [--manifest-link]
                                                      [--marketplace-options]
-                                                     [--marketplace-type {AddOn, Bypass, NotSpecified, Store}]
+                                                     [--marketplace-type {AddOn, Bypass, NotSpecified, ProviderHub, Store}]
                                                      [--metadata]
                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                      [--notifications]
@@ -93,12 +96,14 @@ directCommands:
                                                      [--sku-link]
                                                      [--soft-delete-ttl]
                                                      [--sub-state-rule --sub-state-rules --sub-state-rules --subscription-state-rules]
+                                                     [--super-scale-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                                      [--supports-tags {0, 1, f, false, n, no, t, true, y, yes}]
                                                      [--swagger-specification --swagger-specifications --swagger-specifications]
                                                      [--template-deployment-options --tmplt-deploy-opt]
                                                      [--template-deployment-policy --tmplt-deploy-policy]
                                                      [--throttling-rule --throttling-rules --throttling-rules]
                                                      [--token-auth-config --token-auth-configuration]
+                                                     [--write-lock]
   examples:
   - summary: |-
       resource-type-registration create
@@ -143,6 +148,10 @@ directCommands:
   - name: --allowed-unauthorized-actions --aua
     summary: |-
       The allowed unauthorized actions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --allowed-unauthorized-actions-extensions --aua-extensions
+    summary: |-
+      The allowed unauthorized actions extensions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --api-profiles
     summary: |-
@@ -206,8 +215,12 @@ directCommands:
     summary: |-
       The default API version for the endpoint.
     groupName: Properties Arguments
+  - name: --deletion-policies --resource-deletion-policies
+    summary: |-
+      List of resource deletion policies added.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --deletion-policy --resource-deletion-policy
-    acceptedValues: CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified
+    acceptedValues: CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified, SoftDelete
     summary: |-
       The resource deletion policy.
     groupName: Properties Arguments
@@ -273,6 +286,10 @@ directCommands:
     summary: |-
       Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
+  - name: --lifecycle-info
+    summary: |-
+      Resource type lifecycle information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --linked-access-check --linked-access-checks --linked-access-checks
     summary: |-
       Enables additional Role Based Access Control (RBAC) checks on related resources.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--linked-access-check` `--linked-access-checks`.
@@ -306,7 +323,7 @@ directCommands:
       Marketplace options.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --marketplace-type
-    acceptedValues: AddOn, Bypass, NotSpecified, Store
+    acceptedValues: AddOn, Bypass, NotSpecified, ProviderHub, Store
     summary: |-
       The type of marketplace behavior for the resource type.
     groupName: Properties Arguments
@@ -433,6 +450,11 @@ directCommands:
     summary: |-
       The subscription state rules.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--sub-state-rule` `--sub-state-rules`.
     groupName: Properties Arguments
+  - name: --super-scale-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether super scale is enabled for this resource type.
+    groupName: Properties Arguments
   - name: --supports-tags
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -457,6 +479,10 @@ directCommands:
   - name: --token-auth-config --token-auth-configuration
     summary: |-
       The token auth configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --write-lock
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -687,6 +713,7 @@ directCommands:
                                                      [--allowed-resource-names]
                                                      [--allowed-templ-actions --allowed-template-deployment-reference-actions]
                                                      [--allowed-unauthorized-actions --aua]
+                                                     [--allowed-unauthorized-actions-extensions --aua-extensions]
                                                      [--api-profiles]
                                                      [--async-op-rt-name --async-operation-resource-type-name]
                                                      [--async-timeout-rules]
@@ -702,7 +729,8 @@ directCommands:
                                                      [--cross-tenant-token-validation --token-validation {EnsureSecureValidation, PassthroughInsecureToken}]
                                                      [--dav --disallowed-action-verbs]
                                                      [--default-api-version]
-                                                     [--deletion-policy --resource-deletion-policy {CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified}]
+                                                     [--deletion-policies --resource-deletion-policies]
+                                                     [--deletion-policy --resource-deletion-policy {CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified, SoftDelete}]
                                                      [--disallowed-end-user-operations --disallowed-ops]
                                                      [--dsts-configuration]
                                                      [--enable-3p-s2s --enable-third-party-s2-s {0, 1, f, false, n, no, t, true, y, yes}]
@@ -719,6 +747,7 @@ directCommands:
                                                      [--legacy-name]
                                                      [--legacy-names]
                                                      [--legacy-policy]
+                                                     [--lifecycle-info]
                                                      [--linked-access-check --linked-access-checks --linked-access-checks]
                                                      [--linked-notif-rules --linked-notification-rules]
                                                      [--linked-operation-rules]
@@ -727,7 +756,7 @@ directCommands:
                                                      [--management]
                                                      [--manifest-link]
                                                      [--marketplace-options]
-                                                     [--marketplace-type {AddOn, Bypass, NotSpecified, Store}]
+                                                     [--marketplace-type {AddOn, Bypass, NotSpecified, ProviderHub, Store}]
                                                      [--metadata]
                                                      [--name --resource-type]
                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -762,12 +791,14 @@ directCommands:
                                                      [--soft-delete-ttl]
                                                      [--sub-state-rule --sub-state-rules --sub-state-rules --subscription-state-rules]
                                                      [--subscription]
+                                                     [--super-scale-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                                      [--supports-tags {0, 1, f, false, n, no, t, true, y, yes}]
                                                      [--swagger-specification --swagger-specifications --swagger-specifications]
                                                      [--template-deployment-options --tmplt-deploy-opt]
                                                      [--template-deployment-policy --tmplt-deploy-policy]
                                                      [--throttling-rule --throttling-rules --throttling-rules]
                                                      [--token-auth-config --token-auth-configuration]
+                                                     [--write-lock]
   examples:
   - summary: |-
       resource-type-registration update
@@ -807,6 +838,10 @@ directCommands:
   - name: --allowed-unauthorized-actions --aua
     summary: |-
       The allowed unauthorized actions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --allowed-unauthorized-actions-extensions --aua-extensions
+    summary: |-
+      The allowed unauthorized actions extensions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --api-profiles
     summary: |-
@@ -870,8 +905,12 @@ directCommands:
     summary: |-
       The default API version for the endpoint.
     groupName: Properties Arguments
+  - name: --deletion-policies --resource-deletion-policies
+    summary: |-
+      List of resource deletion policies added.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --deletion-policy --resource-deletion-policy
-    acceptedValues: CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified
+    acceptedValues: CascadeDeleteAll, CascadeDeleteProxyOnlyChildren, NotSpecified, SoftDelete
     summary: |-
       The resource deletion policy.
     groupName: Properties Arguments
@@ -945,6 +984,10 @@ directCommands:
     summary: |-
       Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
+  - name: --lifecycle-info
+    summary: |-
+      Resource type lifecycle information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --linked-access-check --linked-access-checks --linked-access-checks
     summary: |-
       Enables additional Role Based Access Control (RBAC) checks on related resources.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--linked-access-check` `--linked-access-checks`.
@@ -978,7 +1021,7 @@ directCommands:
       Marketplace options.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --marketplace-type
-    acceptedValues: AddOn, Bypass, NotSpecified, Store
+    acceptedValues: AddOn, Bypass, NotSpecified, ProviderHub, Store
     summary: |-
       The type of marketplace behavior for the resource type.
     groupName: Properties Arguments
@@ -1125,6 +1168,11 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --super-scale-enabled
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates whether super scale is enabled for this resource type.
+    groupName: Properties Arguments
   - name: --supports-tags
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -1149,6 +1197,10 @@ directCommands:
   - name: --token-auth-config --token-auth-configuration
     summary: |-
       The token auth configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --write-lock
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug

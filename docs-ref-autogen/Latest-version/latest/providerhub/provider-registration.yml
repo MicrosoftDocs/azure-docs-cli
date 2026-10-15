@@ -26,9 +26,12 @@ directCommands:
                                                 [--custom-manifest-vers --custom-manifest-version]
                                                 [--dsts-configuration]
                                                 [--enable-linked-notif --enable-tenant-linked-notification {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--enable-preset-resource-types --enable-preset-types {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--error-response-message-options --message-options]
                                                 [--expedited-rollout-metadata --rollout-metadata]
                                                 [--expedited-rollout-submitters --rollout-submitters]
+                                                [--feature-approval-claims --feature-claims]
+                                                [--feature-management-owners --feature-owners]
                                                 [--global-notif-endpoints --global-notification-endpoints]
                                                 [--incident-contact-email]
                                                 [--incident-routing-service --incident-service]
@@ -36,6 +39,7 @@ directCommands:
                                                 [--kind {Direct, Hybrid, Managed}]
                                                 [--legacy-namespace]
                                                 [--legacy-registrations]
+                                                [--lifecycle-info]
                                                 [--linked-notif-rules --linked-notification-rules]
                                                 [--management-group-global-notification-endpoints --mg-notif-endpoints]
                                                 [--manifest-owner --manifest-owners]
@@ -45,6 +49,7 @@ directCommands:
                                                 [--notification-options {EmitSpendingLimit, None, NotSpecified}]
                                                 [--notification-settings]
                                                 [--notifications]
+                                                [--obo-subscription-id]
                                                 [--opt-in-headers {ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership}]
                                                 [--opt-out-headers {NotSpecified, SystemDataCreatedByLastModifiedBy}]
                                                 [--optional-features]
@@ -92,7 +97,7 @@ directCommands:
     groupName: Management Arguments
   - name: --canary-manifest-owners
     summary: |-
-      List of manifest owners for canary  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      List of manifest owners for canary.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Management Arguments
   - name: --capabilities --capabilities --capability
     summary: |-
@@ -120,6 +125,11 @@ directCommands:
     summary: |-
       The enable tenant linked notification.
     groupName: Properties Arguments
+  - name: --enable-preset-resource-types --enable-preset-types
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Preset resource types enabled?
+    groupName: Properties Arguments
   - name: --error-response-message-options --message-options
     summary: |-
       Options for error response messages.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -131,6 +141,14 @@ directCommands:
   - name: --expedited-rollout-submitters --rollout-submitters
     summary: |-
       List of expedited rollout submitters.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Management Arguments
+  - name: --feature-approval-claims --feature-claims
+    summary: |-
+      List of claims to approve or reject feature registration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Management Arguments
+  - name: --feature-management-owners --feature-owners
+    summary: |-
+      List of feature management owners.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Management Arguments
   - name: --global-notif-endpoints --global-notification-endpoints
     summary: |-
@@ -161,6 +179,10 @@ directCommands:
   - name: --legacy-registrations
     summary: |-
       Legacy registrations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --lifecycle-info
+    summary: |-
+      Resource provider lifecycle information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --linked-notif-rules --linked-notification-rules
     summary: |-
@@ -198,6 +220,10 @@ directCommands:
   - name: --notifications
     summary: |-
       The notifications object.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --obo-subscription-id
+    summary: |-
+      The on behalf of subscription id for the resource provider.
     groupName: Properties Arguments
   - name: --opt-in-headers
     acceptedValues: ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership
@@ -349,6 +375,7 @@ directCommands:
                                                 [--change-reference]
                                                 [--ids]
                                                 [--name --provider-namespace]
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--subscription]
                                                 [--yes]
   examples:
@@ -372,6 +399,10 @@ directCommands:
     summary: |-
       The name of the resource provider hosted within ProviderHub.
     groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -582,9 +613,12 @@ directCommands:
                                                 [--custom-manifest-vers --custom-manifest-version]
                                                 [--dsts-configuration]
                                                 [--enable-linked-notif --enable-tenant-linked-notification {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--enable-preset-resource-types --enable-preset-types {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--error-response-message-options --message-options]
                                                 [--expedited-rollout-metadata --rollout-metadata]
                                                 [--expedited-rollout-submitters --rollout-submitters]
+                                                [--feature-approval-claims --feature-claims]
+                                                [--feature-management-owners --feature-owners]
                                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--global-notif-endpoints --global-notification-endpoints]
                                                 [--ids]
@@ -594,6 +628,7 @@ directCommands:
                                                 [--kind {Direct, Hybrid, Managed}]
                                                 [--legacy-namespace]
                                                 [--legacy-registrations]
+                                                [--lifecycle-info]
                                                 [--linked-notif-rules --linked-notification-rules]
                                                 [--management-group-global-notification-endpoints --mg-notif-endpoints]
                                                 [--manifest-owner --manifest-owners]
@@ -604,6 +639,7 @@ directCommands:
                                                 [--notification-options {EmitSpendingLimit, None, NotSpecified}]
                                                 [--notification-settings]
                                                 [--notifications]
+                                                [--obo-subscription-id]
                                                 [--opt-in-headers {ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership}]
                                                 [--opt-out-headers {NotSpecified, SystemDataCreatedByLastModifiedBy}]
                                                 [--optional-features]
@@ -681,6 +717,11 @@ directCommands:
     summary: |-
       The enable tenant linked notification.
     groupName: Properties Arguments
+  - name: --enable-preset-resource-types --enable-preset-types
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Preset resource types enabled?
+    groupName: Properties Arguments
   - name: --error-response-message-options --message-options
     summary: |-
       Options for error response messages.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -692,6 +733,14 @@ directCommands:
   - name: --expedited-rollout-submitters --rollout-submitters
     summary: |-
       List of expedited rollout submitters.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Management Arguments
+  - name: --feature-approval-claims --feature-claims
+    summary: |-
+      List of claims to approve or reject feature registration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Management Arguments
+  - name: --feature-management-owners --feature-owners
+    summary: |-
+      List of feature management owners  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Management Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -730,6 +779,10 @@ directCommands:
   - name: --legacy-registrations
     summary: |-
       Legacy registrations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --lifecycle-info
+    summary: |-
+      Resource provider lifecycle information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --linked-notif-rules --linked-notification-rules
     summary: |-
@@ -771,6 +824,10 @@ directCommands:
   - name: --notifications
     summary: |-
       The notifications object.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --obo-subscription-id
+    summary: |-
+      The on behalf of subscription id for the resource provider.
     groupName: Properties Arguments
   - name: --opt-in-headers
     acceptedValues: ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership
