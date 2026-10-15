@@ -75,8 +75,93 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_arc-multicloud_generate-gcp-template
+  name: az arc-multicloud generate-gcp-template
+  summary: |-
+    Retrieve GCP Access Control template.
+  description: |-
+    For additional details, please visit the https://learn.microsoft.com/en-us/cli/azure/arc-multicloud?view=azure-cli-latest.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az arc-multicloud generate-gcp-template --connector-id
+                                            [--acquire-policy-token]
+                                            [--change-reference]
+                                            [--gcp-cloud-profile]
+                                            [--gcp-template-format {shellscript, terraform}]
+                                            [--output-directory]
+                                            [--solution-types]
+  examples:
+  - summary: |-
+      Generate a template for an existing connector. Solution types are read from the connector's solution configurations and must not be passed in the request.
+    syntax: az arc-multicloud generate-gcp-template --connector-id /subscriptions/{}/resourceGroups/{}/providers/Microsoft.HybridConnectivity/publicCloudConnectors/{} --output-directory example_folder/templates
+  - summary: |-
+      Generate a template before the connector exists, for an organization-scoped profile. projectProperties and organizationProperties are mutually exclusive; set exactly one.
+    syntax: az arc-multicloud generate-gcp-template --connector-id /subscriptions/{}/resourceGroups/{}/providers/Microsoft.HybridConnectivity/publicCloudConnectors/{} --gcp-template-format shellscript --solution-types "[{solution-type:Microsoft.AssetManagement,solution-settings:{periodicSync:true,periodicSyncTime:1,gcpServiceTypes:compute}}]" --gcp-cloud-profile "{organization-properties:{organization-id:123456789,management-project-number:1234567890,management-project-id:my-project}}"
+  - summary: |-
+      The same pre-provisioning request using the flat key=value form with a project-scoped profile.
+    syntax: az arc-multicloud generate-gcp-template --connector-id /subscriptions/{}/resourceGroups/{}/providers/Microsoft.HybridConnectivity/publicCloudConnectors/{} --gcp-template-format shellscript --solution-types "[0].solution-type=Microsoft.AssetManagement" "[0].solution-settings.periodicSync=true" "[0].solution-settings.periodicSyncTime=1" "[0].solution-settings.gcpServiceTypes=compute" --gcp-cloud-profile project-properties.project-number=1234567890 project-properties.project-id=my-project
+  requiredParameters:
+  - isRequired: true
+    name: --connector-id
+    summary: |-
+      The fully qualified Azure Resource manager identifier of the public cloud connector.
+    groupName: GenerateGcpTemplateRequest Arguments
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --gcp-cloud-profile
+    summary: |-
+      The GCP cloud profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: GenerateGcpTemplateRequest Arguments
+  - name: --gcp-template-format
+    acceptedValues: shellscript, terraform
+    summary: |-
+      Optional template output format. Defaults to 'terraform' if not provided.
+    groupName: GenerateGcpTemplateRequest Arguments
+  - name: --output-directory
+    summary: |-
+      Directory where the output GCP templated JSON file will be written. Defaults to './AzureArcMulticloudFolder/'.
+  - name: --solution-types
+    summary: |-
+      The list of solution types and their settings  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: GenerateGcpTemplateRequest Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
 - az_arc-multicloud_generate-aws-template
+- az_arc-multicloud_generate-gcp-template
 - az_arc-multicloud_public-cloud-connector
 - az_arc-multicloud_public-cloud-connector_create
 - az_arc-multicloud_public-cloud-connector_delete
