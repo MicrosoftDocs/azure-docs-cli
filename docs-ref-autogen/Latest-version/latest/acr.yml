@@ -356,6 +356,9 @@ directCommands:
   - summary: |-
       Create a managed container registry with writable cache repositories enabled.
     syntax: az acr create -n myregistry -g MyResourceGroup --sku Premium --writable-cache-repos enabled
+  - summary: |-
+      Create a Premium registry encrypted with a customer-managed key in Managed HSM.
+    syntax: az acr create --name myregistry --resource-group MyResourceGroup --sku Premium --identity myidentity --key-encryption-key https://myhsm.managedhsm.azure.net/keys/mykey
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -426,7 +429,7 @@ directCommands:
     groupName: Customer managed key Arguments
   - name: --key-encryption-key
     summary: |-
-      Key vault key uri. To enable automated rotation, provide a version-less key uri. For manual rotation, provide a versioned key uri.
+      Azure Key Vault or Managed HSM key URI. To enable automated rotation, provide a versionless key URI. For manual rotation, provide a versioned key URI.
     groupName: Customer managed key Arguments
   - name: --location -l
     summary: |-
@@ -594,9 +597,6 @@ directCommands:
   - summary: |-
       Import an image without waiting for successful completion. Failures during import will not be reflected. Run `az acr repository show-tags` to confirm that import succeeded.
     syntax: az acr import -n myregistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag --no-wait
-  - summary: |-
-      Import an image using a regional endpoint URI as the source.
-    syntax: az acr import -n myregistry --source sourceregistry.eastus.geo.azurecr.io/sourcerepository:sourcetag
   requiredParameters:
   - isRequired: true
     name: --name -n

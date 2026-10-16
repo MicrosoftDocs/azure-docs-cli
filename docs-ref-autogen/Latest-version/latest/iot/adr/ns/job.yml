@@ -1,0 +1,637 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_adr_ns_job
+name: az iot adr ns job
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns job** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Device Registry namespace jobs.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_adr_ns_job_create
+  name: az iot adr ns job create
+  summary: |-
+    Create a job in a Device Registry namespace.
+  description: |-
+    PUT is a long-running operation. SoftwareUpdate jobs require a target group.
+    OnboardingUpdate jobs target all compatible onboarding devices and do not
+    accept a target group. Job definition fields are immutable after creation.
+
+    The target group is specified by --target-group-name and must live in the
+    same namespace and resource group as the job (cross-namespace targets are
+    not supported in this preview release). The Software Update identity
+    (--update-id-provider, --update-id-name, --update-id-version) is passed
+    opaquely to the backend; no Software Updates preflight is performed.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns job create --jn --job-name --name
+                             --namespace --ns
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--description]
+                             [--display-name]
+                             [--location]
+                             [--no-wait]
+                             [--tags]
+                             [--target-group-name --tg]
+                             [--type {OnboardingUpdate, SoftwareUpdate}]
+                             [--un --update-id-name --update-name]
+                             [--up --update-id-provider --update-provider]
+                             [--update-id-version --update-version --uv]
+  examples:
+  - summary: |-
+      Create a SoftwareUpdate job targeting a group
+    syntax: >-
+      az iot adr ns job create -n myJob --ns myNamespace -g myResourceGroup \
+        --type SoftwareUpdate \
+        --target-group-name myGroup \
+        --update-id-provider Contoso --update-id-name gateway-firmware --update-id-version 1.2.3
+  - summary: |-
+      Create an OnboardingUpdate job
+    syntax: >-
+      az iot adr ns job create -n onboarding --ns myNamespace -g myResourceGroup \
+        --type OnboardingUpdate \
+        --update-id-provider Contoso --update-id-name gateway-firmware --update-id-version 1.2.3
+  requiredParameters:
+  - isRequired: true
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --description
+    summary: |-
+      Human-readable job description.
+  - name: --display-name
+    summary: |-
+      Human-readable display name for the job.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --target-group-name --tg
+    summary: |-
+      Name of the target group. The group must live in the same namespace and resource group as the job; cross-namespace targets are not supported in this preview release.
+  - name: --type
+    defaultValue: SoftwareUpdate
+    acceptedValues: OnboardingUpdate, SoftwareUpdate
+    summary: |-
+      Job type: SoftwareUpdate targets a group; OnboardingUpdate targets all compatible onboarding devices.
+  - name: --un --update-id-name --update-name
+    summary: |-
+      Software Update updateId.name (e.g. 'gateway-firmware'). This is the update identity's name, distinct from the job's --name.
+    groupName: Update Arguments
+  - name: --up --update-id-provider --update-provider
+    summary: |-
+      Software Update updateId.provider (e.g. 'Contoso'). The update identity is a {provider, name, version} triple.
+    groupName: Update Arguments
+  - name: --update-id-version --update-version --uv
+    summary: |-
+      Software Update updateId.version (e.g. '1.2.3').
+    groupName: Update Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_job_delete
+  name: az iot adr ns job delete
+  summary: |-
+    Delete a job from a Device Registry namespace.
+  description: |-
+    DELETE is a long-running operation. If any in-flight runs (status
+    'Scheduled' or 'Active') exist for this job, a warning is
+    surfaced before deletion; the backend cancels affected runs with reason
+    'CanceledByCustomer'.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns job delete --jn --job-name --name
+                             --namespace --ns
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--no-wait]
+                             [--yes {false, true}]
+  examples:
+  - summary: |-
+      Delete a job
+    syntax: az iot adr ns job delete -n myJob --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_job_list
+  name: az iot adr ns job list
+  summary: |-
+    List jobs in a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns job list --namespace --ns
+                           --resource-group
+  examples:
+  - summary: |-
+      List all jobs in a namespace
+    syntax: az iot adr ns job list --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_job_schedule
+  name: az iot adr ns job schedule
+  summary: |-
+    Schedule an execution of a Device Registry job.
+  description: |-
+    A job defines what to deploy and where; scheduling it creates a job run that
+    tracks one execution. Schedule the same job as many times as you need.
+
+    --scheduled-time is the only writable property on a run; every other property
+    is populated by the service. Omit it to start immediately.
+
+    --run-name is optional. When omitted, a UTC-timestamped name such as
+    'run-20251201080000' is generated and returned in the response. Use
+    'az iot adr ns job run' to show, cancel, or inspect the resulting run.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns job schedule --jn --job-name --name
+                               --namespace --ns
+                               --resource-group
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--no-wait]
+                               [--rn --run-name]
+                               [--scheduled-time --st]
+  examples:
+  - summary: |-
+      Schedule a job to run immediately
+    syntax: az iot adr ns job schedule -n myJob --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Schedule a job for a specific UTC time with an explicit run name
+    syntax: >-
+      az iot adr ns job schedule -n myJob --ns myNamespace -g myResourceGroup \
+        --run-name myRun --scheduled-time 2025-12-01T08:00:00Z
+  requiredParameters:
+  - isRequired: true
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --rn --run-name
+    summary: |-
+      Name of the job run to create. Defaults to a generated UTC-timestamped name such as 'run-20251201080000'.
+  - name: --scheduled-time --st
+    summary: |-
+      Optional ISO 8601 UTC timestamp at which the run should start (e.g. '2025-12-01T08:00:00Z'). Omit to start immediately.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_job_show
+  name: az iot adr ns job show
+  summary: |-
+    Show a job in a Device Registry namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns job show --jn --job-name --name
+                           --namespace --ns
+                           --resource-group
+  examples:
+  - summary: |-
+      Show job details
+    syntax: az iot adr ns job show -n myJob --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_job_update
+  name: az iot adr ns job update
+  summary: |-
+    Update tags on a job in a Device Registry namespace.
+  description: |-
+    PATCH is synchronous and tags-only by design. The job's --type, target
+    group, update identity, and scheduling fields are immutable after creation
+    because mutating them would have unintended effects on already-scheduled
+    runs. To change these, delete and recreate the job.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns job update --jn --job-name --name
+                             --namespace --ns
+                             --resource-group
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--tags]
+  examples:
+  - summary: |-
+      Update job tags
+    syntax: az iot adr ns job update -n myJob --ns myNamespace -g myResourceGroup --tags env=prod owner=platform
+  - summary: |-
+      Clear all job tags
+    syntax: az iot adr ns job update -n myJob --ns myNamespace -g myResourceGroup --tags ""
+  requiredParameters:
+  - isRequired: true
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_job_wait
+  name: az iot adr ns job wait
+  summary: |-
+    Wait for a Device Registry job to reach a desired state.
+  description: |-
+    Without an explicit wait predicate, waits for provisioningState Succeeded.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns job' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns job wait --jn --job-name --name
+                           --namespace --ns
+                           --resource-group
+                           [--acquire-policy-token]
+                           [--change-reference]
+                           [--created]
+                           [--custom]
+                           [--deleted]
+                           [--exists]
+                           [--interval]
+                           [--timeout]
+                           [--updated]
+  examples:
+  - summary: |-
+      Wait until job provisioning succeeds
+    syntax: az iot adr ns job wait -n myJob --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --jn --job-name --name -n
+    summary: |-
+      Name of the job.
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until a custom JMESPath expression evaluates to true.
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource is deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_adr_ns_job_create
+- az_iot_adr_ns_job_delete
+- az_iot_adr_ns_job_list
+- az_iot_adr_ns_job_run
+- az_iot_adr_ns_job_run_cancel
+- az_iot_adr_ns_job_run_delete
+- az_iot_adr_ns_job_run_list
+- az_iot_adr_ns_job_run_results
+- az_iot_adr_ns_job_run_show
+- az_iot_adr_ns_job_run_summary
+- az_iot_adr_ns_job_run_wait
+- az_iot_adr_ns_job_schedule
+- az_iot_adr_ns_job_show
+- az_iot_adr_ns_job_update
+- az_iot_adr_ns_job_wait
+metadata:
+  description: Manage Device Registry namespace jobs.

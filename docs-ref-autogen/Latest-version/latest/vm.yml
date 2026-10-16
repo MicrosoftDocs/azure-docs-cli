@@ -445,8 +445,9 @@ directCommands:
                  [--plan-publisher]
                  [--platform-fault-domain]
                  [--ppg]
-                 [--priority {Low, Regular, Spot}]
+                 [--priority {Low, Regular, Spot, SpotPlus}]
                  [--private-ip-address]
+                 [--processor-mode {Deterministic, Opportunistic}]
                  [--proxy-agent-mode {Audit, Enforce}]
                  [--public-ip-address]
                  [--public-ip-address-allocation {dynamic, static}]
@@ -482,6 +483,7 @@ directCommands:
                  [--vmss]
                  [--vnet-address-prefix]
                  [--vnet-name]
+                 [--wire-local-rules --wire-server-use-local-file-rules {false, true}]
                  [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                  [--wire-server-mode {Audit, Enforce}]
                  [--workspace]
@@ -896,13 +898,17 @@ directCommands:
     summary: |-
       The name or ID of the proximity placement group the VM should be associated with.
   - name: --priority
-    acceptedValues: Low, Regular, Spot
+    acceptedValues: Low, Regular, Spot, SpotPlus
     summary: |-
-      Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
+      Priority. Use 'Spot' or 'SpotPlus' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' or 'SpotPlus' to deploy Azure spot VM and/or VMSS. Default to Regular.
   - name: --private-ip-address
     summary: |-
       Static private IP address (e.g. 10.0.0.5).
     groupName: Network Arguments
+  - name: --processor-mode
+    acceptedValues: Deterministic, Opportunistic
+    summary: |-
+      Specifies the processor mode for the virtual machine or virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VM or VMSS without deallocation or reboot.
   - name: --proxy-agent-mode
     acceptedValues: Audit, Enforce
     summary: |-
@@ -1046,6 +1052,10 @@ directCommands:
     summary: |-
       Name of the virtual network when creating a new one or referencing an existing one.
     groupName: Network Arguments
+  - name: --wire-local-rules --wire-server-use-local-file-rules
+    acceptedValues: false, true
+    summary: |-
+      When set to true, instructs the GuestProxyAgent inside the VM to load additional access control rules defined in a local file on the VM.
   - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
     summary: |-
       Specify the access control profile version resource id of wire server.
@@ -2954,7 +2964,8 @@ directCommands:
                  [--no-wait]
                  [--os-disk]
                  [--ppg]
-                 [--priority {Low, Regular, Spot}]
+                 [--priority {Low, Regular, Spot, SpotPlus}]
+                 [--processor-mode {Deterministic, Opportunistic}]
                  [--proxy-agent-mode {Audit, Enforce}]
                  [--remove]
                  [--resource-group]
@@ -2967,6 +2978,7 @@ directCommands:
                  [--user-data]
                  [--v-cpus-available]
                  [--v-cpus-per-core]
+                 [--wire-local-rules --wire-server-use-local-file-rules {false, true}]
                  [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                  [--wire-server-mode {Audit, Enforce}]
                  [--workspace]
@@ -3134,9 +3146,13 @@ directCommands:
     summary: |-
       The name or ID of the proximity placement group the VM should be associated with.
   - name: --priority
-    acceptedValues: Low, Regular, Spot
+    acceptedValues: Low, Regular, Spot, SpotPlus
     summary: |-
-      Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
+      Priority. Use 'Spot' or 'SpotPlus' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' or 'SpotPlus' to deploy Azure spot VM and/or VMSS. Default to Regular.
+  - name: --processor-mode
+    acceptedValues: Deterministic, Opportunistic
+    summary: |-
+      Specifies the processor mode for the virtual machine or virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VM or VMSS without deallocation or reboot.
   - name: --proxy-agent-mode
     acceptedValues: Audit, Enforce
     summary: |-
@@ -3185,6 +3201,10 @@ directCommands:
   - name: --v-cpus-per-core
     summary: |-
       Specify the ratio of vCPU to physical core. Setting this property to 1 also means that hyper-threading is disabled.
+  - name: --wire-local-rules --wire-server-use-local-file-rules
+    acceptedValues: false, true
+    summary: |-
+      When set to true, instructs the GuestProxyAgent inside the VM to load additional access control rules defined in a local file on the VM.
   - name: --wire-server-access-control-profile-reference-id --wire-server-profile-id
     summary: |-
       Specify the access control profile version resource id of wire server.

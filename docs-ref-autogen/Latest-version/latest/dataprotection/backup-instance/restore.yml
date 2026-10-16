@@ -16,7 +16,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}
                                                                            --restore-location
                                                                            --source-datastore {ArchiveStore, OperationalStore, VaultStore}
                                                                            [--acquire-policy-token]
@@ -39,7 +39,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type.
   - isRequired: true
@@ -86,7 +86,7 @@ directCommands:
       Specify the rehydration priority for rehydrate restore.
   - name: --restore-configuration
     summary: |-
-      Restore configuration for restore. Use this parameter to restore with AzureKubernetesService.
+      Restore configuration for restore. Use this parameter to restore with AzureKubernetesService or AzureElasticSAN.
   - name: --secret-store-type
     acceptedValues: AzureKeyVault
     summary: |-
@@ -131,7 +131,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-data-recovery-as-files --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance restore initialize-for-data-recovery-as-files --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}
                                                                                     --restore-location
                                                                                     --source-datastore {ArchiveStore, OperationalStore, VaultStore}
                                                                                     --target-blob-container-url
@@ -152,7 +152,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type.
   - isRequired: true
@@ -239,7 +239,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}
                                                                            --restore-location
                                                                            --source-datastore {ArchiveStore, OperationalStore, VaultStore}
                                                                            [--acquire-policy-token]
@@ -269,10 +269,13 @@ directCommands:
         --recovery-point-id {recovery_point_id} \
         --target-resource-id {storage_account_id} \
         --vaulted-blob-prefix-pattern '{"containers":[{"name":"container1","prefixmatch":["a","b"],"renameto":"container1renamed"},{"name":"container2","renameto":"container2renamed"}]}'
+  - summary: |-
+      Initialize item-level restore request for an AzureElasticSAN volume group
+    syntax: az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type AzureElasticSAN --restore-location centraluseuap --source-datastore OperationalStore --recovery-point-id {recovery_point_id} --target-resource-id {target_volume_group_id} --restore-configuration {restore_configuration}
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type.
   - isRequired: true
@@ -317,7 +320,7 @@ directCommands:
       Specify the recovery point ID which will be used for restoring the data.
   - name: --restore-configuration
     summary: |-
-      Restore configuration for restore. Use this parameter to restore with AzureKubernetesService.
+      Restore configuration for restore. Use this parameter to restore with AzureKubernetesService or AzureElasticSAN.
   - name: --target-resource-id
     summary: |-
       Specify the resource ID to which the data will be restored.

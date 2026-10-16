@@ -10,6 +10,10 @@ directCommands:
   name: az acr connected-registry create
   summary: |-
     Create a connected registry for an Azure Container Registry.
+  description: |-
+    ManagedIdentity authentication requires --identity and cannot be combined with --parent, --sync-token, or --repository.
+    ManagedIdentity connected registries must be top-level and cannot have children.
+    If --auth-type is omitted, SyncToken authentication is used.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
@@ -17,10 +21,12 @@ directCommands:
     az acr connected-registry create --name
                                      --registry
                                      [--acquire-policy-token]
+                                     [--auth-type {ManagedIdentity, SyncToken}]
                                      [--change-reference]
                                      [--client-tokens]
                                      [--gc-enabled {false, true}]
                                      [--gc-schedule]
+                                     [--identity]
                                      [--log-level]
                                      [--mode {ReadOnly, ReadWrite}]
                                      [--notifications]
@@ -49,6 +55,12 @@ directCommands:
       az acr connected-registry create -r mycloudregistry -n myreadonlyacr -p myconnectedregistry \
           --repository "app/mycomponent" -m ReadOnly -s "0 12 * * *" -w PT4H \
           --client-tokens myTokenName1 myTokenName2
+  - summary: |-
+      Create a connected registry that authenticates with its parent using a user-assigned managed identity.
+    syntax: >-
+      az acr connected-registry create --registry mycloudregistry --name myconnectedregistry \
+          --auth-type ManagedIdentity \
+          --identity "/subscriptions/<SUBSCRIPTION ID>/resourceGroups/<RESOURCE GROUP>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -63,6 +75,10 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --auth-type
+    acceptedValues: ManagedIdentity, SyncToken
+    summary: |-
+      Authentication type used by the connected registry to sync with its parent. Defaults to SyncToken.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -79,6 +95,9 @@ directCommands:
     defaultValue: 0 0 * * *
     summary: |-
       Used to determine garbage collection schedule. Uses cron expression to determine the schedule. If not specified, garbage collection is set to run once a day.
+  - name: --identity
+    summary: |-
+      Resource ID of a user-assigned managed identity to authenticate the connected registry with its parent. Required when --auth-type is ManagedIdentity.
   - name: --log-level
     defaultValue: Information
     summary: |-
@@ -258,7 +277,7 @@ directCommands:
   - name: --cleanup
     defaultValue: "False"
     summary: |-
-      It will aslo delete the sync token and the scope map resources.
+      Delete the associated sync token and scope map for a connected registry configured with SyncToken authentication. This option has no effect for a connected registry configured with ManagedIdentity authentication. The connected registry is still deleted, but the managed identity and role assignments are retained.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -296,7 +315,9 @@ directCommands:
 - uid: az_acr_connected-registry_get-settings
   name: az acr connected-registry get-settings
   summary: |-
-    Retrieve information required to activate a connected registry, and creates or rotates the sync token credentials.
+    Retrieve information required to activate a connected registry, optionally generating SyncToken credentials.
+  description: |-
+    ManagedIdentity settings do not require a sync token password and do not support --generate-password.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
@@ -342,7 +363,7 @@ directCommands:
   - name: --generate-password
     acceptedValues: 1, 2
     summary: |-
-      Select which password you want to generate, and it is required to retrieve the password from the sync token.
+      Select which password you want to generate, and it is required to retrieve the password from the sync token. Not supported for a connected registry configured with ManagedIdentity authentication.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -635,6 +656,10 @@ directCommands:
   name: az acr connected-registry update
   summary: |-
     Update a connected registry for an Azure Container Registry.
+  description: |-
+    Only one-way migration from SyncToken to ManagedIdentity authentication is supported.
+    The connected registry must have an Offline connection state before migration. If it is Online, run `az acr connected-registry deactivate` and wait until it is Offline.
+    Changing the managed identity of a connected registry already using ManagedIdentity authentication is not supported.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
@@ -644,9 +669,11 @@ directCommands:
                                      [--acquire-policy-token]
                                      [--add-client-tokens]
                                      [--add-notifications]
+                                     [--auth-type {ManagedIdentity}]
                                      [--change-reference]
                                      [--gc-enabled {false, true}]
                                      [--gc-schedule]
+                                     [--identity]
                                      [--log-level]
                                      [--remove-client-tokens]
                                      [--remove-notifications]
@@ -665,6 +692,12 @@ directCommands:
     syntax: >-
       az acr connected-registry update --registry mycloudregistry --name myreadonlyacr \
           --sync-schedule "0 12 * * *" --sync-window PT4H
+  - summary: |-
+      Migrate an offline connected registry from SyncToken to ManagedIdentity authentication.
+    syntax: >-
+      az acr connected-registry update --registry mycloudregistry --name myconnectedregistry \
+          --auth-type ManagedIdentity \
+          --identity "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -685,6 +718,10 @@ directCommands:
   - name: --add-notifications
     summary: |-
       List of artifact pattern to be added to notifications list. Use the format "--add-notifications [PATTERN1 PATTERN2 ...]".
+  - name: --auth-type
+    acceptedValues: ManagedIdentity
+    summary: |-
+      Target authentication type. Only one-way migration from SyncToken to ManagedIdentity is supported.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -696,6 +733,9 @@ directCommands:
   - name: --gc-schedule
     summary: |-
       Used to determine garbage collection schedule. Uses cron expression to determine the schedule. If not specified, garbage collection is set to run once a day.
+  - name: --identity
+    summary: |-
+      Resource ID of a user-assigned managed identity. Requires --auth-type ManagedIdentity.
   - name: --log-level
     summary: |-
       Set the log level for logging on the instance. Accepted log levels are Debug, Information, Warning, Error, and None.
@@ -758,5 +798,5 @@ commands:
 - az_acr_connected-registry_show
 - az_acr_connected-registry_update
 metadata:
-  ms.date: 07/28/2026
+  ms.date: 09/25/2026
   description: Manage connected registry resources with Azure Container Registries.

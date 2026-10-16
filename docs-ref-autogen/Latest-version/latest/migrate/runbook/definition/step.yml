@@ -1,0 +1,332 @@
+### YamlMime:AzureCLIGroup
+uid: az_migrate_runbook_definition_step
+name: az migrate runbook definition step
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **migrate** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az migrate runbook definition step** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage individual steps in a runbook definition.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'migrate runbook definition' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_migrate_runbook_definition_step_add
+  name: az migrate runbook definition step add
+  summary: |-
+    Add a step to the runbook definition.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'migrate runbook definition step' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az migrate runbook definition step add --name --runbook-name
+                                           --project-name
+                                           --resource-group
+                                           --step-group-id
+                                           --step-name
+                                           --step-type {Approval, Manual}
+                                           [--acquire-policy-token]
+                                           [--change-reference]
+                                           [--depends-on-mapped-entities]
+                                           [--depends-on-per-entity]
+                                           [--depends-on-whole-step]
+                                           [--migration-entity-ids]
+                                           [--step-description]
+  examples:
+  - summary: |-
+      Add a manual step to a step group.
+    syntax: >-
+      az migrate runbook definition step add -g myRg \
+        --project-name myProject -n myRunbook \
+        --step-type Manual --step-name "Verify cutover" \
+        --step-group-id workstream-0
+  - summary: |-
+      Add an approval step that waits for a whole step.
+    syntax: >-
+      az migrate runbook definition step add -g myRg \
+        --project-name myProject -n myRunbook \
+        --step-type Approval --step-name "Change approval" \
+        --step-group-id workstream-0 --depends-on-whole-step step0
+  - summary: |-
+      Add an approval that waits per entity (same entity upstream).
+    syntax: >-
+      az migrate runbook definition step add -g myRg \
+        --project-name myProject -n myRunbook \
+        --step-type Approval --step-name "Approve cutover" \
+        --step-group-id workstream-0 --migration-entity-ids e1 e2 \
+        --depends-on-per-entity prepare-1
+  - summary: |-
+      Add an approval with mapped-entity dependencies.
+    syntax: >-
+      az migrate runbook definition step add -g myRg \
+        --project-name myProject -n myRunbook \
+        --step-type Approval --step-name "Approve" \
+        --step-group-id workstream-0 --migration-entity-ids e1 e2 \
+        --depends-on-mapped-entities "enable-1=e1:f1,e2:f2"
+  - summary: |-
+      Add a manual step scoped to specific migration entities.
+    syntax: >-
+      az migrate runbook definition step add -g myRg \
+        --project-name myProject -n myRunbook \
+        --step-type Manual --step-name "Post checks" \
+        --step-group-id workstream-0 \
+        --migration-entity-ids entity1 entity2
+  requiredParameters:
+  - isRequired: true
+    name: --name --runbook-name -n
+    summary: |-
+      Name of the runbook.
+  - isRequired: true
+    name: --project-name -p
+    summary: |-
+      Name of the Azure Migrate project. You can configure the default using `az configure --defaults migrate_project=<name>`.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --step-group-id
+    summary: |-
+      Id of the step group to add the step to.
+  - isRequired: true
+    name: --step-name
+    summary: |-
+      Display name for the step.
+  - isRequired: true
+    name: --step-type
+    acceptedValues: Approval, Manual
+    summary: |-
+      Kind of step to add.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --depends-on-mapped-entities
+    summary: |-
+      Mapped-entity dependencies, each as `<stepId>=<dependentEntity>:<waitsForEntity>,...`. Requires a step with entities.
+  - name: --depends-on-per-entity
+    summary: |-
+      Step ids this step waits for per entity (the same entity in the upstream step). Requires a step with entities.
+  - name: --depends-on-whole-step
+    summary: |-
+      Step ids this step waits for as a whole step (all entities).
+  - name: --migration-entity-ids
+    summary: |-
+      Space-separated migration entity GUIDs to associate with the step.
+  - name: --step-description
+    summary: |-
+      Optional description for the step.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_migrate_runbook_definition_step_remove
+  name: az migrate runbook definition step remove
+  summary: |-
+    Remove a step from the runbook definition.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'migrate runbook definition step' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az migrate runbook definition step remove --name --runbook-name
+                                              --project-name
+                                              --resource-group
+                                              --step-id
+                                              [--acquire-policy-token]
+                                              [--change-reference]
+                                              [--yes]
+  examples:
+  - summary: |-
+      Remove a step by id.
+    syntax: >-
+      az migrate runbook definition step remove -g myRg \
+        --project-name myProject -n myRunbook --step-id step1
+  requiredParameters:
+  - isRequired: true
+    name: --name --runbook-name -n
+    summary: |-
+      Name of the runbook.
+  - isRequired: true
+    name: --project-name -p
+    summary: |-
+      Name of the Azure Migrate project. You can configure the default using `az configure --defaults migrate_project=<name>`.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --step-id
+    summary: |-
+      Id of the step to remove.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_migrate_runbook_definition_step_update
+  name: az migrate runbook definition step update
+  summary: |-
+    Update a step in the runbook definition.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'migrate runbook definition step' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az migrate runbook definition step update --name --runbook-name
+                                              --project-name
+                                              --resource-group
+                                              --step-id
+                                              [--acquire-policy-token]
+                                              [--change-reference]
+                                              [--depends-on-mapped-entities]
+                                              [--depends-on-per-entity]
+                                              [--depends-on-whole-step]
+                                              [--step-description]
+                                              [--step-name]
+  examples:
+  - summary: |-
+      Rename a step and replace its dependencies.
+    syntax: >-
+      az migrate runbook definition step update -g myRg \
+        --project-name myProject -n myRunbook \
+        --step-id step1 --step-name "New name" \
+        --depends-on-whole-step step0
+  requiredParameters:
+  - isRequired: true
+    name: --name --runbook-name -n
+    summary: |-
+      Name of the runbook.
+  - isRequired: true
+    name: --project-name -p
+    summary: |-
+      Name of the Azure Migrate project. You can configure the default using `az configure --defaults migrate_project=<name>`.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --step-id
+    summary: |-
+      Id of the step to update.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --depends-on-mapped-entities
+    summary: |-
+      Replace dependencies: mapped-entity dependencies, each as `<stepId>=<dependentEntity>:<waitsForEntity>,...`. Requires a step with entities.
+  - name: --depends-on-per-entity
+    summary: |-
+      Replace dependencies: step ids this step waits for per entity. Requires a step with entities.
+  - name: --depends-on-whole-step
+    summary: |-
+      Replace dependencies: step ids this step waits for as a whole step. Omit all --depends-on-* flags to keep the existing dependencies unchanged.
+  - name: --step-description
+    summary: |-
+      Updated description for the step.
+  - name: --step-name
+    summary: |-
+      Updated display name for the step.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_migrate_runbook_definition_step_add
+- az_migrate_runbook_definition_step_remove
+- az_migrate_runbook_definition_step_update
+metadata:
+  description: Manage individual steps in a runbook definition.

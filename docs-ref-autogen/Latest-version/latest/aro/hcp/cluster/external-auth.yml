@@ -1,0 +1,616 @@
+### YamlMime:AzureCLIGroup
+uid: az_aro_hcp_cluster_external-auth
+name: az aro hcp cluster external-auth
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **aro** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az aro hcp cluster external-auth** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Azure Red Hat OpenShift with hosted control plane external authentication.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_aro_hcp_cluster_external-auth_create
+  name: az aro hcp cluster external-auth create
+  summary: |-
+    Create an Azure Red Hat OpenShift with hosted control plane external authentication instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az aro hcp cluster external-auth' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster external-auth create --cluster-name
+                                            --name
+                                            --resource-group
+                                            [--acquire-policy-token]
+                                            [--change-reference]
+                                            [--claim]
+                                            [--client --clients]
+                                            [--issuer-audience]
+                                            [--issuer-ca]
+                                            [--issuer-url]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--prefix]
+                                            [--username-claim]
+                                            [--username-prefix]
+                                            [--username-prefix-policy {NoPrefix, None, Prefix}]
+                                            [--validation-rules]
+  examples:
+  - summary: |-
+      Create an external authentication provider
+    syntax: az aro hcp cluster external-auth create --resource-group MyResourceGroup --cluster-name MyCluster --name MyExternalAuth --issuer-url https://login.microsoftonline.com/<tenant-id>/v2.0 --issuer-audience <audience> --username-claim email --client client-id=<client-id> component-name=console auth-client-namespace=openshift-console type=Confidential
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name -c
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the External Authentication.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --claim
+    summary: |-
+      Claim name of the external profile.
+    groupName: Groups Arguments
+  - name: --client --clients
+    summary: |-
+      External Auth OIDC clients. There must not be more than 20 entries and entries must have unique namespace/name pairs.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--client`.
+    groupName: Properties Arguments
+  - name: --issuer-audience
+    summary: |-
+      This configures the acceptable audiences for JWT tokens issued by the identity provider. At least one of the entries must match the 'aud' claim in the JWT token.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Issuer Arguments
+  - name: --issuer-ca
+    summary: |-
+      The issuer of the token. Certificate bundle to use to validate server certificates for the configured URL. It must be PEM encoded and when not specified, the system trust is used.
+    groupName: Issuer Arguments
+  - name: --issuer-url
+    summary: |-
+      This configures the URL used to issue tokens by the identity provider. The Kubernetes API server determines how authentication tokens should be handled by matching the 'iss' claim in the JWT to the issuerURL of configured identity providers.  issuerURL must use the 'https' scheme.
+    groupName: Issuer Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --prefix
+    summary: |-
+      Prefix for the claim external profile. If this is specified, prefixPolicy will be set to "Prefix" by default.
+    groupName: Groups Arguments
+  - name: --username-claim
+    summary: |-
+      Claim name of the external profile.
+    groupName: Username Arguments
+  - name: --username-prefix
+    summary: |-
+      Prefix for the claim external profile. Must be set when the prefixPolicy field is set to 'Prefix' and must be unset otherwise.
+    groupName: Username Arguments
+  - name: --username-prefix-policy
+    acceptedValues: NoPrefix, None, Prefix
+    summary: |-
+      Prefix policy is an optional field that configures how a prefix should be applied to the value of the JWT claim specified in the 'claim' field.  Allowed values are 'Prefix', 'NoPrefix', and 'None'. If not specified, the default policy is 'None'.  When set to 'Prefix', the value specified in the prefix field will be prepended to the value of the JWT claim. The prefix field must be set when prefixPolicy is 'Prefix'.  When set to 'NoPrefix', no prefix will be prepended to the value of the JWT claim.  When set to 'None', this means no opinion and the platform is left to choose any prefixes that are applied which is subject to change over time. Currently, the platform prepends `{issuerURL}#` to the value of the JWT claim when the claim is not 'email'. As an example, consider the following scenario: `prefix` is unset, `issuerURL` is set to `https://myoidc.tld`, the JWT claims include "username":"userA" and "email":"userA.
+    groupName: Username Arguments
+  - name: --validation-rules
+    summary: |-
+      The claim validation rules.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Claim Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_external-auth_delete
+  name: az aro hcp cluster external-auth delete
+  summary: |-
+    Delete an Azure Red Hat OpenShift with hosted control plane external authentication instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az aro hcp cluster external-auth' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster external-auth delete [--acquire-policy-token]
+                                            [--change-reference]
+                                            [--cluster-name]
+                                            [--ids]
+                                            [--name]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--resource-group]
+                                            [--subscription]
+                                            [--yes]
+  examples:
+  - summary: |-
+      Delete an external authentication provider
+    syntax: az aro hcp cluster external-auth delete --resource-group MyResourceGroup --cluster-name MyCluster --name MyExternalAuth --yes
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cluster-name -c
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the External Authentication.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_external-auth_list
+  name: az aro hcp cluster external-auth list
+  summary: |-
+    List Azure Red Hat OpenShift with hosted control plane external authentication instances.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az aro hcp cluster external-auth' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster external-auth list --cluster-name
+                                          --resource-group
+                                          [--max-items]
+                                          [--next-token]
+  examples:
+  - summary: |-
+      List external authentication providers of a cluster
+    syntax: az aro hcp cluster external-auth list --resource-group MyResourceGroup --cluster-name MyCluster
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name -c
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_external-auth_show
+  name: az aro hcp cluster external-auth show
+  summary: |-
+    Get an Azure Red Hat OpenShift with hosted control plane external authentication instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az aro hcp cluster external-auth' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster external-auth show [--cluster-name]
+                                          [--ids]
+                                          [--name]
+                                          [--resource-group]
+                                          [--subscription]
+  examples:
+  - summary: |-
+      Show an external authentication provider
+    syntax: az aro hcp cluster external-auth show --resource-group MyResourceGroup --cluster-name MyCluster --name MyExternalAuth
+  optionalParameters:
+  - name: --cluster-name -c
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the External Authentication.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_external-auth_update
+  name: az aro hcp cluster external-auth update
+  summary: |-
+    Update an Azure Red Hat OpenShift with hosted control plane external authentication instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az aro hcp cluster external-auth' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster external-auth update [--acquire-policy-token]
+                                            [--add]
+                                            [--change-reference]
+                                            [--claim]
+                                            [--client --clients]
+                                            [--cluster-name]
+                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--ids]
+                                            [--issuer-audience]
+                                            [--issuer-ca]
+                                            [--issuer-url]
+                                            [--name]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--prefix]
+                                            [--remove]
+                                            [--resource-group]
+                                            [--set]
+                                            [--subscription]
+                                            [--username-claim]
+                                            [--username-prefix]
+                                            [--username-prefix-policy {NoPrefix, None, Prefix}]
+                                            [--validation-rules]
+  examples:
+  - summary: |-
+      Update the username claim of an external authentication provider
+    syntax: az aro hcp cluster external-auth update --resource-group MyResourceGroup --cluster-name MyCluster --name MyExternalAuth --username-claim sub
+  - summary: |-
+      Update an external authentication provider to remove any existing clients
+    syntax: az aro hcp cluster external-auth update --resource-group MyResourceGroup --cluster-name MyCluster --name MyExternalAuth --clients "[]"
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --claim
+    summary: |-
+      Claim name of the external profile.
+    groupName: Groups Arguments
+  - name: --client --clients
+    summary: |-
+      External Auth OIDC clients. There must not be more than 20 entries and entries must have unique namespace/name pairs.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--client`.
+    groupName: Properties Arguments
+  - name: --cluster-name -c
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --issuer-audience
+    summary: |-
+      This configures the acceptable audiences for JWT tokens issued by the identity provider. At least one of the entries must match the 'aud' claim in the JWT token.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Issuer Arguments
+  - name: --issuer-ca
+    summary: |-
+      The issuer of the token. Certificate bundle to use to validate server certificates for the configured URL. It must be PEM encoded and when not specified, the system trust is used.
+    groupName: Issuer Arguments
+  - name: --issuer-url
+    summary: |-
+      This configures the URL used to issue tokens by the identity provider. The Kubernetes API server determines how authentication tokens should be handled by matching the 'iss' claim in the JWT to the issuerURL of configured identity providers.  issuerURL must use the 'https' scheme.
+    groupName: Issuer Arguments
+  - name: --name -n
+    summary: |-
+      The name of the External Authentication.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --prefix
+    summary: |-
+      Prefix for the claim external profile. If this is specified, prefixPolicy will be set to "Prefix" by default.
+    groupName: Groups Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --username-claim
+    summary: |-
+      Claim name of the external profile.
+    groupName: Username Arguments
+  - name: --username-prefix
+    summary: |-
+      Prefix for the claim external profile. Must be set when the prefixPolicy field is set to 'Prefix' and must be unset otherwise.
+    groupName: Username Arguments
+  - name: --username-prefix-policy
+    acceptedValues: NoPrefix, None, Prefix
+    summary: |-
+      Prefix policy is an optional field that configures how a prefix should be applied to the value of the JWT claim specified in the 'claim' field.  Allowed values are 'Prefix', 'NoPrefix', and 'None'. If not specified, the default policy is 'None'.  When set to 'Prefix', the value specified in the prefix field will be prepended to the value of the JWT claim. The prefix field must be set when prefixPolicy is 'Prefix'.  When set to 'NoPrefix', no prefix will be prepended to the value of the JWT claim.  When set to 'None', this means no opinion and the platform is left to choose any prefixes that are applied which is subject to change over time. Currently, the platform prepends `{issuerURL}#` to the value of the JWT claim when the claim is not 'email'. As an example, consider the following scenario: `prefix` is unset, `issuerURL` is set to `https://myoidc.tld`, the JWT claims include "username":"userA" and "email":"userA.
+    groupName: Username Arguments
+  - name: --validation-rules
+    summary: |-
+      The claim validation rules.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Claim Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_external-auth_wait
+  name: az aro hcp cluster external-auth wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az aro hcp cluster external-auth' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster external-auth wait [--acquire-policy-token]
+                                          [--change-reference]
+                                          [--cluster-name]
+                                          [--created]
+                                          [--custom]
+                                          [--deleted]
+                                          [--exists]
+                                          [--ids]
+                                          [--interval]
+                                          [--name]
+                                          [--resource-group]
+                                          [--subscription]
+                                          [--timeout]
+                                          [--updated]
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --cluster-name -c
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --name -n
+    summary: |-
+      The name of the External Authentication.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_aro_hcp_cluster_external-auth_create
+- az_aro_hcp_cluster_external-auth_delete
+- az_aro_hcp_cluster_external-auth_list
+- az_aro_hcp_cluster_external-auth_show
+- az_aro_hcp_cluster_external-auth_update
+- az_aro_hcp_cluster_external-auth_wait
+metadata:
+  description: Manage Azure Red Hat OpenShift with hosted control plane external authentication.

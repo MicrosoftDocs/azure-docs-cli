@@ -1,0 +1,369 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_adr_ns_link
+name: az iot adr ns link
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.73.0 or higher). The extension will automatically install the first time you run an **az iot adr ns link** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage links between a Device Registry namespace and downstream resources.
+description: |-
+  Link a DPS first, then link your IoT Hubs. Use update to change a link's inbound
+  identity or retry a Failed endpoint with its saved identity and settings.
+  Use show, list and wait to inspect linkingState. Links belong to the namespace.
+  To unlink, delete the linked resource first, then run link hub/dps/su remove to remove
+  its endpoint from the namespace. Remove does not delete or check the linked resource
+  and does not wait for unlink completion.
+  Add/update wait for the link to succeed (--timeout default 600 seconds, --interval 30).
+  After --no-wait, use link hub/dps/su wait to track completion.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_adr_ns_link_add
+  name: az iot adr ns link add
+  summary: |-
+    Link DPS first, then a Hub, to a Device Registry namespace.
+  description: |-
+    Validates both targets, endpoint names, identity selections, and required RBAC before
+    changing namespace endpoints. Submits a DPS-only namespace update and waits for the exact
+    DPS endpoint to reach linkingState Succeeded before submitting a separate Hub update.
+    --no-wait still waits for this DPS dependency; it skips waiting only for the final Hub operation.
+    Both waited stages recover only confirmed AdrMiNotAuthorized on the unchanged endpoint after
+    verifying required service-role assignments. Recovery uses endpoint update, never another add.
+    --timeout (600 seconds) is one shared mutation/recovery budget for both stages after initial RBAC
+    preflight, including RPCs, polling and bounded 30/60/120-second backoff. --interval defaults to 30
+    seconds. Both must be positive. No delay is added when authorization already works.
+    With --no-wait, use link hub wait to track the Hub stage.
+    Rejected if the namespace already has a linked DPS. A DPS failure or timeout prevents Hub submission.
+    Partial completion is not rolled back. Inspect failed endpoints with link dps show or link hub show
+    and repair persisted failures with the corresponding link update, preserving the existing identity.
+    After DPS succeeds, use link hub add only if the Hub endpoint is absent; use link hub wait if pending.
+    Do not rerun combined link add when the DPS endpoint already exists.
+    Required service-to-service roles:
+    namespace outbound MI -> Contributor on DPS; DPS selected inbound MI -> Contributor on namespace; namespace system-assigned MI -> Azure Device Registry Administrator on namespace; namespace outbound MI -> Contributor on HUB; namespace outbound MI -> IoT Hub Data Contributor on HUB; when an inbound identity is selected, HUB selected inbound MI -> Contributor on namespace.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link add --den --dps-endpoint-name
+                           --dps-id --dps-resource-id
+                           --hen --hub-endpoint-name
+                           --hub-id --hub-resource-id
+                           --namespace --ns
+                           --resource-group
+                           [--acquire-policy-token]
+                           [--change-reference]
+                           [--dps-mi-sa --dps-system-assigned-mi {false, true}]
+                           [--dps-mi-ua --dps-user-assigned-mi]
+                           [--hub-allocation-weight --hub-weight]
+                           [--hub-availability {Available, Disabled}]
+                           [--hub-mi-sa --hub-system-assigned-mi {false, true}]
+                           [--hub-mi-ua --hub-user-assigned-mi]
+                           [--interval]
+                           [--no-wait]
+                           [--timeout]
+  examples:
+  - summary: |-
+      Link both a Hub and a DPS using system-assigned identity for both inbound callers
+    syntax: >-
+      az iot adr ns link add --ns myNamespace -g myResourceGroup \
+        --hub-endpoint-name primary-hub --hub-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Devices/IotHubs/<hub> --hub-system-assigned-mi \
+        --dps-endpoint-name primary-dps --dps-id /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Devices/provisioningServices/<dps> --dps-system-assigned-mi
+  - summary: |-
+      Link both resources without configuring a Hub inbound caller identity
+    syntax: >-
+      az iot adr ns link add --ns myNamespace -g myResourceGroup \
+        --hub-endpoint-name primary-hub --hub-id <hub-id> \
+        --dps-endpoint-name primary-dps --dps-id <dps-id> --dps-system-assigned-mi
+  - summary: |-
+      Link both with custom Hub availability and weight
+    syntax: >-
+      az iot adr ns link add --ns myNamespace -g myResourceGroup \
+        --hub-endpoint-name primary-hub --hub-id <hub-id> --hub-system-assigned-mi \
+        --hub-availability Available --hub-allocation-weight 1 \
+        --dps-endpoint-name primary-dps --dps-id <dps-id> --dps-system-assigned-mi
+  - summary: |-
+      Wait for DPS, submit the Hub without waiting, then observe the Hub link
+    syntax: >-
+      az iot adr ns link add --ns myNamespace -g myResourceGroup \
+        --hub-endpoint-name primary-hub --hub-id <hub-id> \
+        --dps-endpoint-name primary-dps --dps-id <dps-id> --dps-system-assigned-mi --no-wait
+      az iot adr ns link hub wait -n primary-hub --ns myNamespace -g myResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --den --dps-endpoint-name
+    summary: |-
+      Logical name of the DPS provisioning endpoint entry on the namespace.
+    groupName: DPS Arguments
+  - isRequired: true
+    name: --dps-id --dps-resource-id
+    summary: |-
+      Azure resource ID of the Device Provisioning Service to link.
+    groupName: DPS Arguments
+  - isRequired: true
+    name: --hen --hub-endpoint-name
+    summary: |-
+      Logical name of the Hub messaging endpoint entry on the namespace.
+    groupName: Hub Arguments
+  - isRequired: true
+    name: --hub-id --hub-resource-id
+    summary: |-
+      Azure resource ID of the IoT Hub to link.
+    groupName: Hub Arguments
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that will own both new links.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --dps-mi-sa --dps-system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked DPS resource's system-assigned identity as its inbound caller identity.
+    groupName: DPS Arguments
+  - name: --dps-mi-ua --dps-user-assigned-mi
+    summary: |-
+      User-assigned identity resource ID attached to the linked DPS resource.
+    groupName: DPS Arguments
+  - name: --hub-allocation-weight --hub-weight
+    summary: |-
+      Hub messaging endpoint allocation weight.
+    groupName: Hub Arguments
+  - name: --hub-availability
+    acceptedValues: Available, Disabled
+    summary: |-
+      Hub messaging endpoint availability.
+    groupName: Hub Arguments
+  - name: --hub-mi-sa --hub-system-assigned-mi
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Use the linked IoT Hub's system-assigned identity as its inbound caller identity.
+    groupName: Hub Arguments
+  - name: --hub-mi-ua --hub-user-assigned-mi
+    summary: |-
+      User-assigned identity resource ID attached to the linked IoT Hub.
+    groupName: Hub Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds. Must be greater than zero.
+    groupName: Wait Condition Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Wait for DPS linking to succeed, then return without waiting for the final Hub operation.
+  - name: --timeout
+    defaultValue: "600"
+    summary: |-
+      Positive shared mutation/recovery budget in seconds for DPS and Hub after initial RBAC preflight. Default: 600.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_wait
+  name: az iot adr ns link wait
+  summary: |-
+    Wait for selected or all namespace links to succeed.
+  description: |-
+    Without an explicit wait predicate, waits until every selected endpoint has
+    linkingState Succeeded and fails immediately if any reaches Failed. Scope the
+    wait with --hub-endpoint-name, --dps-endpoint-name, and/or
+    --su-endpoint-name. If none is supplied, all currently configured Hub, DPS,
+    and Software Updates links are included. Explicit Azure CLI wait predicates
+    inspect the namespace resource and retain their standard behavior.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link wait --namespace --ns
+                            --resource-group
+                            [--acquire-policy-token]
+                            [--change-reference]
+                            [--created]
+                            [--custom]
+                            [--deleted]
+                            [--den --dps-endpoint-name]
+                            [--exists]
+                            [--hen --hub-endpoint-name]
+                            [--interval]
+                            [--sen --su-endpoint-name]
+                            [--timeout]
+                            [--updated]
+  examples:
+  - summary: |-
+      Wait until all configured namespace links succeed
+    syntax: az iot adr ns link wait --ns myNamespace -g myResourceGroup
+  - summary: |-
+      Wait for the Hub and DPS created by combined DPS-first link add
+    syntax: >-
+      az iot adr ns link wait --ns myNamespace -g myResourceGroup \
+        --hub-endpoint-name primary-hub --dps-endpoint-name primary-dps
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Name of the Device Registry namespace that owns the link.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until a custom JMESPath expression evaluates to true.
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource is deleted.
+    groupName: Wait Condition Arguments
+  - name: --den --dps-endpoint-name
+    summary: |-
+      DPS endpoint to include in the wait scope.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --hen --hub-endpoint-name
+    summary: |-
+      Hub endpoint to include in the wait scope.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --sen --su-endpoint-name
+    summary: |-
+      Software Updates endpoint to include in the wait scope. When no scoped endpoint name is supplied, all configured namespace links are included.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Polling budget in seconds, including GET time. An in-flight GET is bounded by transport timeouts and cannot be interrupted by this polling deadline.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until provisioningState is Succeeded.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_adr_ns_link_add
+- az_iot_adr_ns_link_dps
+- az_iot_adr_ns_link_dps_add
+- az_iot_adr_ns_link_dps_list
+- az_iot_adr_ns_link_dps_remove
+- az_iot_adr_ns_link_dps_show
+- az_iot_adr_ns_link_dps_update
+- az_iot_adr_ns_link_dps_wait
+- az_iot_adr_ns_link_hub
+- az_iot_adr_ns_link_hub_add
+- az_iot_adr_ns_link_hub_list
+- az_iot_adr_ns_link_hub_remove
+- az_iot_adr_ns_link_hub_show
+- az_iot_adr_ns_link_hub_update
+- az_iot_adr_ns_link_hub_wait
+- az_iot_adr_ns_link_su
+- az_iot_adr_ns_link_su_add
+- az_iot_adr_ns_link_su_list
+- az_iot_adr_ns_link_su_remove
+- az_iot_adr_ns_link_su_show
+- az_iot_adr_ns_link_su_update
+- az_iot_adr_ns_link_su_wait
+- az_iot_adr_ns_link_wait
+metadata:
+  description: >-
+    Link a DPS first, then link your IoT Hubs. Use update to change a link's inbound
+
+    identity or retry a Failed endpoint with its saved identity and settings.
+
+    Use show, list and wait to inspect linkingState. Links belong to the namespace.
+
+    To unlink, delete the linked resource first, then run link hub/dps/su remove to remove
+
+    its endpoint from the namespace. Remove does not delete or check the linked resource
+
+    and does not wait for unlink completion.
+
+    Add/update wait for the link to succeed (--timeout default 600 seconds, --interval 30).
+
+    After --no-wait, use link hub/dps/su wait to track completion.

@@ -534,6 +534,7 @@ directCommands:
                      [--async {false, true}]
                      [--change-reference]
                      [--clean {false, true}]
+                     [--deploymentTag]
                      [--enable-kudu-warmup {false, true}]
                      [--enriched-errors {false, true}]
                      [--ids]
@@ -541,6 +542,7 @@ directCommands:
                      [--name]
                      [--resource-group]
                      [--restart {false, true}]
+                     [--show-secure-build]
                      [--slot]
                      [--src-path]
                      [--src-url]
@@ -566,6 +568,9 @@ directCommands:
   - summary: |-
       Deploy a zip file with enriched error diagnostics on failure.
     syntax: az webapp deploy -g ResourceGroup -n AppName --src-path app.zip --enriched-errors true
+  - summary: |-
+      Deploy a Python app and show a Secure Build summary and full-report link.
+    syntax: az webapp deploy -g ResourceGroup -n AppName --src-path app.zip --show-secure-build
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -583,6 +588,9 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       If true, cleans the target directory prior to deploying the file(s). Default value is determined based on artifact type.
+  - name: --deploymentTag
+    summary: |-
+      Linux only. A friendly name used to identify the deployment.
   - name: --enable-kudu-warmup
     defaultValue: "True"
     acceptedValues: false, true
@@ -613,6 +621,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       If true, the web app will be restarted following the deployment. Set this to false if you are deploying multiple artifacts and do not want to restart the site on the earlier deployments.
+  - name: --show-secure-build
+    defaultValue: "False"
+    summary: |-
+      Show a Secure Build summary and full-report link after a local deployment, including when --async true is used. For URL deployments, show the command to run after deployment completes. Supported only for Linux web apps. Secure Build analysis can add several minutes to a local deployment.
   - name: --slot -s
     summary: |-
       The name of the slot. Default to the productions slot if not specified.
@@ -629,6 +641,8 @@ directCommands:
   - name: --tag
     summary: |-
       Linux only. A friendly name used to identify the deployment.
+    isDeprecated: true
+    deprecateInfo: Option '--tag' has been deprecated and will be removed in a future release. Use '--deploymentTag' instead.
   - name: --target-path
     summary: |-
       Absolute path that the artifact should be deployed to. Defaults to "home/site/wwwroot/" Ex: "/home/site/deployments/tools/", "/home/site/scripts/startup-script.sh".
@@ -1912,6 +1926,8 @@ commands:
 - az_webapp_scan_start
 - az_webapp_scan_stop
 - az_webapp_scan_track
+- az_webapp_secure-build
+- az_webapp_secure-build_show
 - az_webapp_show
 - az_webapp_sitecontainers
 - az_webapp_sitecontainers_convert
@@ -1932,6 +1948,8 @@ commands:
 - az_webapp_troubleshoot
 - az_webapp_troubleshoot_collect
 - az_webapp_troubleshoot_collect_network-capture
+- az_webapp_troubleshoot_config
+- az_webapp_troubleshoot_deployment
 - az_webapp_troubleshoot_status
 - az_webapp_up
 - az_webapp_update

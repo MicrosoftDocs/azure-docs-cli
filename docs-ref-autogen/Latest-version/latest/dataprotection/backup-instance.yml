@@ -260,7 +260,7 @@ directCommands:
   syntax: >-
     az dataprotection backup-instance initialize --datasource-id
                                                  --datasource-location
-                                                 --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+                                                 --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}
                                                  --policy-id
                                                  [--acquire-policy-token]
                                                  [--backup-configuration]
@@ -276,6 +276,9 @@ directCommands:
   - summary: |-
       Initialize backup instance request for Azure Disk
     syntax: az dataprotection backup-instance initialize --datasource-type AzureDisk -l southeastasia --policy-id {disk_policy_id} --datasource-id {disk_id}
+  - summary: |-
+      Initialize backup instance request for an AzureElasticSAN volume group
+    syntax: az dataprotection backup-instance initialize --datasource-type AzureElasticSAN -l southeastasia --policy-id {esan_policy_id} --datasource-id {volume_group_id} --friendly-name myEsanBackupInstance --backup-configuration {backup_configuration}
   requiredParameters:
   - isRequired: true
     name: --datasource-id
@@ -287,7 +290,7 @@ directCommands:
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type of the resource to be backed up.
   - isRequired: true
@@ -359,11 +362,11 @@ directCommands:
 - uid: az_dataprotection_backup-instance_initialize-backupconfig
   name: az dataprotection backup-instance initialize-backupconfig
   summary: |-
-    Initialize JSON request body for initializing and configuring backup for AzureKubernetesService or AzureBlobs (for vaulted backups) resources. The generated JSON is meant for use with other CLI commands, and may not work as an input for non-CLI scenarios without modification.
+    Initialize JSON request body for initializing and configuring backup for AzureKubernetesService, AzureElasticSAN or AzureBlobs (for vaulted backups) resources. The generated JSON is meant for use with other CLI commands, and may not work as an input for non-CLI scenarios without modification.
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}
                                                               [--acquire-policy-token]
                                                               [--auto-protection {false, true}]
                                                               [--auto-protection-exclusion-prefixes --exclusion-prefixes]
@@ -377,6 +380,7 @@ directCommands:
                                                               [--included-namespaces]
                                                               [--included-resource-type --included-resource-types]
                                                               [--label-selectors]
+                                                              [--resource-selectors]
                                                               [--snapshot-volumes {false, true}]
                                                               [--storage-account-name]
                                                               [--storage-account-resource-group --storage-account-rg]
@@ -396,10 +400,13 @@ directCommands:
   - summary: |-
       Initialize backup configuration for AzureDataLakeStorage with auto-protection and exclusion prefixes
     syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type AzureDataLakeStorage --auto-protection true --exclusion-prefixes "logs-" "temp-"
+  - summary: |-
+      Initialize backup configuration for AzureElasticSAN
+    syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type AzureElasticSAN --resource-selectors volume001
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type of the resource to be backed up.
   optionalParameters:
@@ -447,6 +454,9 @@ directCommands:
   - name: --label-selectors
     summary: |-
       List of labels for internal filtering for backup.
+  - name: --resource-selectors
+    summary: |-
+      List of source volume names (or selectors expected by the service) within the selected Elastic SAN volume group to be backed up. Use this parameter for DatasourceType AzureElasticSAN.
   - name: --snapshot-volumes
     acceptedValues: false, true
     summary: |-
@@ -487,11 +497,11 @@ directCommands:
 - uid: az_dataprotection_backup-instance_initialize-restoreconfig
   name: az dataprotection backup-instance initialize-restoreconfig
   summary: |-
-    Initialize JSON request body for initializing and configuring restore of an AzureKubernetesService resource. The generated JSON is meant for use with other CLI commands, and may not work as an input for non-CLI scenarios without modification.
+    Initialize JSON request body for initializing and configuring restore of an AzureKubernetesService or AzureElasticSAN resource. The generated JSON is meant for use with other CLI commands, and may not work as an input for non-CLI scenarios without modification.
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance initialize-restoreconfig --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance initialize-restoreconfig --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}
                                                                [--acquire-policy-token]
                                                                [--change-reference]
                                                                [--conflict-policy {Patch, Skip}]
@@ -501,8 +511,10 @@ directCommands:
                                                                [--included-namespaces]
                                                                [--included-resource-type --included-resource-types]
                                                                [--label-selectors]
+                                                               [--name-overrides --resource-name-overrides]
                                                                [--namespace-mappings]
                                                                [--persistent-restoremode --persistent-volume-restore-mode {RestoreWithVolumeData, RestoreWithoutVolumeData}]
+                                                               [--resource-identifiers]
                                                                [--resource-modifier --resource-modifier-reference]
                                                                [--restore-hook-references --restore-hook-refs]
                                                                [--staging-resource-group-id --staging-rg-id]
@@ -511,10 +523,13 @@ directCommands:
   - summary: |-
       Initialize restore configuration
     syntax: az dataprotection backup-instance initialize-restoreconfig --datasource-type AzureKubernetesService
+  - summary: |-
+      Initialize restore configuration for AzureElasticSAN
+    syntax: az dataprotection backup-instance initialize-restoreconfig --datasource-type AzureElasticSAN --resource-identifiers source-vol1 source-vol2 --resource-name-overrides '{"source-vol1":"restored-vol1","source-vol2":"restored-vol2"}'
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type of the resource to be backed up.
   optionalParameters:
@@ -549,6 +564,9 @@ directCommands:
   - name: --label-selectors
     summary: |-
       List of labels for internal filtering for restore.
+  - name: --name-overrides --resource-name-overrides
+    summary: |-
+      Map of source volume names to target volume names to restore into. Keys must match selected source volume names from --resource-identifiers. Any source not included will be restored with a default naming format. Use this parameter for DatasourceType AzureElasticSAN.
   - name: --namespace-mappings
     summary: |-
       Namespaces mapping from source namespaces to target namespaces to resolve namespace naming conflicts in the target cluster.
@@ -556,6 +574,9 @@ directCommands:
     acceptedValues: RestoreWithVolumeData, RestoreWithoutVolumeData
     summary: |-
       Restore mode for persistent volumes. Allowed values are RestoreWithVolumeData, RestoreWithoutVolumeData. Default value is RestoreWithVolumeData.
+  - name: --resource-identifiers
+    summary: |-
+      List of source volume identifiers (volume names or ARM IDs) to restore. Use this parameter for DatasourceType AzureElasticSAN.
   - name: --resource-modifier --resource-modifier-reference
     summary: |-
       Key value mapping for resource modifier reference.
@@ -667,7 +688,7 @@ directCommands:
                                                               [--backup-instance-name]
                                                               [--change-reference]
                                                               [--datasource-id]
-                                                              [--datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}]
+                                                              [--datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}]
                                                               [--protection-status {ProtectionConfigured, ProtectionError}]
                                                               [--resource-groups]
                                                               [--subscriptions]
@@ -698,7 +719,7 @@ directCommands:
     summary: |-
       Specify datasource id filter to apply.
   - name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type.
   - name: --protection-status
@@ -1145,7 +1166,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance update-msi-permissions --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
+    az dataprotection backup-instance update-msi-permissions --datasource-type {AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService}
                                                              --operation {Backup, Restore}
                                                              --permissions-scope {Resource, ResourceGroup, Subscription}
                                                              --resource-group
@@ -1166,10 +1187,16 @@ directCommands:
   - summary: |-
       Assign the required permissions needed to successfully enable restore for the datasource.
     syntax: az dataprotection backup-instance update-msi-permissions --datasource-type AzureKubernetesService --operation Restore --permissions-scope Resource --resource-group sampleRG --vault-name samplevault --restore-request-object aksrestore.json --snapshot-resource-group-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sampleRG
+  - summary: |-
+      Assign the required permissions needed to successfully enable backup for an AzureElasticSAN datasource.
+    syntax: az dataprotection backup-instance update-msi-permissions --backup-instance esan_backup_inst.json --resource-group sampleRG --vault-name samplevault --datasource-type AzureElasticSAN --operation Backup --permissions-scope Resource
+  - summary: |-
+      Assign the required permissions needed to successfully enable restore for an AzureElasticSAN datasource.
+    syntax: az dataprotection backup-instance update-msi-permissions --datasource-type AzureElasticSAN --operation Restore --permissions-scope Resource --resource-group sampleRG --vault-name samplevault --restore-request-object esan_restore_request.json --snapshot-resource-group-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/esanSnapshotRg
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService
+    acceptedValues: AzureBlob, AzureCosmosDB, AzureDataLakeStorage, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureElasticSAN, AzureKubernetesService
     summary: |-
       Specify the datasource type of the resource to be backed up.
   - isRequired: true
@@ -1210,7 +1237,7 @@ directCommands:
       Request body for operation "Restore" Expected value: json-string/@json-file. Required when --operation is Restore.
   - name: --snapshot-resource-group-id --snapshot-rg-id
     summary: |-
-      ARM id of the snapshot resource group. Required when assigning permissions over snapshot resource group and the --operation is Restore.
+      ARM id of the snapshot resource group. Required when assigning permissions over snapshot resource group and the --operation is Restore. For AzureElasticSAN restore permissions, pass the snapshot resource group used by the recovery point.
   - name: --target-storage-account-id
     summary: |-
       ARM id of the target storage account. Required when assigning permissions over target storage account and the --operation is Restore.

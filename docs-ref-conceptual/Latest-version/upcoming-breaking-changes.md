@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 08/27/2026
+ms.date: 09/25/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -83,6 +83,14 @@ The breaking changes listed in this section are planned for the next major relea
 - The default value of '--end-of-life-date' will be changed to '6 months from publish date' from 'None' in a future release.
 - The default value of '--block-deletion-before-end-of-life' will be changed to 'True' from 'None' in a future release.
 
+## azext_applicationinsights
+
+### `monitor app-insights query`
+
+[Link to monitor app-insights reference group](/cli/azure/monitor/app-insights)
+
+- The default value of '--offset' will be changed to 'not set' from '1h' in 3.0.0b1. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli-extensions/issues/10363.
+
 ## azext_blueprint
 
 ### `blueprint`
@@ -97,11 +105,53 @@ The breaking changes listed in this section are planned for the next major relea
 
 ## azext_managednetworkfabric
 
+### `networkfabric fabric commit-batch-status`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
 ### `networkfabric fabric commit-configuration`
 
 [Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
 
 - 'networkfabric fabric commit-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric commit-config' instead.
+
+### `networkfabric fabric discard-commit-batch`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric fabric lock-fabric`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric fabric resync-certificate`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric fabric resync-password`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric fabric rotate-certificate`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric fabric rotate-password`
+
+[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
+
+- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
 
 ### `networkfabric fabric validate-configuration`
 
@@ -126,6 +176,52 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to networkfabric device reference group](/cli/azure/networkfabric/device)
 
 - 'networkfabric device refresh-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric device refresh-config' instead.
+
+### `networkfabric networkmonitor create`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor delete`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor show`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor update`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric networkmonitor wait`
+
+[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
+
+- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric tap resync`
+
+[Link to networkfabric tap reference group](/cli/azure/networkfabric/tap)
+
+- '--network-tap-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
 
 ### `networkfabric bootstrapinterface list`
 

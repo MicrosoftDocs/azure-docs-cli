@@ -1,0 +1,913 @@
+### YamlMime:AzureCLIGroup
+uid: az_aro_hcp_cluster
+name: az aro hcp cluster
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **aro** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az aro hcp cluster** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Azure Red Hat OpenShift with hosted control plane clusters.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_aro_hcp_cluster_create
+  name: az aro hcp cluster create
+  summary: |-
+    Create an Azure Red Hat OpenShift with hosted control plane cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster create --assign-control-plane-operator-identity --control-plane-identity
+                              --assign-data-plane-operator-identity --data-plane-identity
+                              --assign-service-managed-identity --service-identity
+                              --name
+                              --resource-group
+                              [--acquire-policy-token]
+                              [--api-visibility {Private, Public}]
+                              [--authorized-cidrs]
+                              [--base-domain-prefix]
+                              [--change-reference]
+                              [--channel-group]
+                              [--crypto-restrictions {FIPS, None}]
+                              [--host-prefix]
+                              [--image-digest-mirrors]
+                              [--image-registry-state {Disabled, Enabled}]
+                              [--ingress-visibility {Disabled, Private, Public}]
+                              [--kms-active-key]
+                              [--kms-vault-name]
+                              [--location]
+                              [--machine-cidr]
+                              [--managed-resource-group-name --managed-rg-name]
+                              [--max-node-provision-time --node-provision-time]
+                              [--max-nodes-total]
+                              [--max-pod-grace-period]
+                              [--network-type {OVNKubernetes, Other}]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--node-drain-timeout]
+                              [--nsg]
+                              [--outbound-type {LoadBalancer}]
+                              [--pod-cidr]
+                              [--pod-priority-threshold]
+                              [--service-cidr]
+                              [--subnet-id]
+                              [--tags]
+                              [--vault-visibility {Private, Public}]
+                              [--version]
+                              [--vnet-int-subnet-id --vnet-integration-subnet-id]
+  examples:
+  - summary: |-
+      Create a cluster
+    syntax: az aro hcp cluster create --resource-group MyResourceGroup --name MyCluster --location eastus --version 4.19 --channel-group stable --network-type OVNKubernetes --subnet-id <subnet-id> --kms-vault-name MyKeyVault --kms-active-key "{name:MyKey,version:<key-version>}" --assign-service-managed-identity <service-identity-id> --assign-control-plane-operator-identity cluster-api-azure <cluster-api-azure-identity-id> --assign-control-plane-operator-identity control-plane <control-plane-identity-id> --assign-control-plane-operator-identity cloud-controller-manager <cloud-controller-manager-identity-id> --assign-control-plane-operator-identity ingress <ingress-identity-id> --assign-control-plane-operator-identity disk-csi-driver <control-plane-disk-csi-driver-identity-id> --assign-control-plane-operator-identity file-csi-driver <control-plane-file-csi-driver-identity-id> --assign-control-plane-operator-identity image-registry <control-plane-image-registry-identity-id> --assign-control-plane-operator-identity cloud-network-config <cloud-network-config-identity-id> --assign-control-plane-operator-identity kms <kms-identity-id> --assign-data-plane-operator-identity disk-csi-driver <data-plane-disk-csi-driver-identity-id> --assign-data-plane-operator-identity file-csi-driver <data-plane-file-csi-driver-identity-id> --assign-data-plane-operator-identity image-registry <data-plane-image-registry-identity-id>
+  requiredParameters:
+  - isRequired: true
+    name: --assign-control-plane-operator-identity --control-plane-identity
+    summary: |-
+      Assign a user-assigned identity to a control plane operator. Usage: --assign-control-plane-operator-identity OPERATOR_NAME IDENTITY. IDENTITY is a resource ID or the name of an identity in the cluster subnet's resource group. Repeat the argument to assign more identities.
+    groupName: Identity Arguments
+  - isRequired: true
+    name: --assign-data-plane-operator-identity --data-plane-identity
+    summary: |-
+      Assign a user-assigned identity to a data plane operator. Usage: --assign-data-plane-operator-identity OPERATOR_NAME IDENTITY. IDENTITY is a resource ID or the name of an identity in the cluster subnet's resource group. Repeat the argument to assign more identities.
+    groupName: Identity Arguments
+  - isRequired: true
+    name: --assign-service-managed-identity --service-identity
+    summary: |-
+      Assign the user-assigned identity used for service-level actions by resource ID or by name when it is in the cluster subnet's resource group.
+    groupName: Identity Arguments
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --api-visibility
+    defaultValue: Public
+    acceptedValues: Private, Public
+    summary: |-
+      The internet visibility of the OpenShift API server.
+    groupName: API Arguments
+  - name: --authorized-cidrs
+    summary: |-
+      The list of authorized IPv4 CIDR blocks allowed to access the API server. Maximum 500 entries.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: API Arguments
+  - name: --base-domain-prefix
+    summary: |-
+      BaseDomainPrefix is a prefix used in cluster endpoint DNS names and the names of related Azure resources.
+    groupName: DNS Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --channel-group
+    summary: |-
+      ChannelGroup is the name of the set to which this version belongs. Each version belongs to only a single set. If not specified, the default value is 'stable'.
+    groupName: Version Arguments
+  - name: --crypto-restrictions
+    defaultValue: None
+    acceptedValues: FIPS, None
+    summary: |-
+      Cryptographic restrictions for kernel and userspace libraries.
+    groupName: Properties Arguments
+  - name: --host-prefix
+    defaultValue: "23"
+    summary: |-
+      Network host prefix.
+    groupName: Network Arguments
+  - name: --image-digest-mirrors
+    summary: |-
+      ImageDigestMirrors is a set of rules to allow pulling images from a mirrored registry by using digest specifications.  WARNING: Updating this array will redeploy all node pools in the cluster.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --image-registry-state
+    defaultValue: Enabled
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      State indicates the desired ImageStream-backed cluster image registry installation mode. This can only be set during cluster creation and cannot be changed after cluster creation. Enabled means the ImageStream-backed image registry will be run as pods on worker nodes in the cluster. Disabled means the ImageStream-backed image registry will not be present in the cluster. The default is Enabled.
+    groupName: ClusterImageRegistry Arguments
+  - name: --ingress-visibility
+    defaultValue: Public
+    acceptedValues: Disabled, Private, Public
+    summary: |-
+      The visibility of the default OpenShift ingress controller.
+    groupName: Ingress Arguments
+  - name: --kms-active-key
+    summary: |-
+      The details of the active key.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Etcd Encryption Arguments
+  - name: --kms-vault-name
+    summary: |-
+      VaultName is the name of the keyvault that contains the secret.
+    groupName: Etcd Encryption Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --machine-cidr
+    defaultValue: 10.0.0.0/16
+    summary: |-
+      The CIDR block from which to assign machine IP addresses.
+    groupName: Network Arguments
+  - name: --managed-resource-group-name --managed-rg-name
+    summary: |-
+      The name of the resource group to put cluster resources in. If not specified then a unique name is generated from the following pattern  "aro-hcp-" + clusterName + "-" + UUID  where clusterName means the hcpOpenShiftClusters resource name (up to 45 characters) followed by a 16-byte universally unique identifier per RFC 4122.
+    groupName: Platform Arguments
+  - name: --max-node-provision-time --node-provision-time
+    summary: |-
+      MaxNodeProvisionTimeSeconds is the maximum time to wait for node provisioning before considering the provisioning to be unsuccessful. The default is 900 seconds, or 15 minutes.
+    groupName: Autoscaling Arguments
+  - name: --max-nodes-total
+    summary: |-
+      MaxNodesTotal is the maximum allowable number of nodes. The autoscaler will not grow the cluster beyond this number. If omitted, the autoscaler will not have a maximum limit.
+    groupName: Autoscaling Arguments
+  - name: --max-pod-grace-period
+    summary: |-
+      MaxPodGracePeriodSeconds is the maximum amount of time in seconds to wait for graceful pod termination before scaling down a NodePool.
+    groupName: Autoscaling Arguments
+  - name: --network-type
+    defaultValue: OVNKubernetes
+    acceptedValues: OVNKubernetes, Other
+    summary: |-
+      The main controller responsible for rendering the core networking components.
+    groupName: Network Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --node-drain-timeout
+    summary: |-
+      NodeDrainTimeoutMinutes is the grace period for how long Pod Disruption Budget-protected workloads will be respected during any node draining operation. After this grace period, any workloads protected by Pod Disruption Budgets that have not been successfully drained from a node will be forcibly evicted. This is especially relevant to cluster upgrades. Valid values are in minutes and from 0 to 10080 minutes (1 week). 0 means that the MachinePool can be drained without any time limitation. This value is used as a default for all NodePools. It can be overridden by specifying nodeDrainTimeoutMinutes for a given NodePool.
+    groupName: Properties Arguments
+  - name: --nsg
+    summary: |-
+      ResourceId for the NSG (network security group) attached to the cluster subnet  Note that NSGs cannot be reused for other ARO-HCP clusters.
+    groupName: Platform Arguments
+  - name: --outbound-type
+    defaultValue: LoadBalancer
+    acceptedValues: LoadBalancer
+    summary: |-
+      The core outgoing configuration.
+    groupName: Platform Arguments
+  - name: --pod-cidr
+    defaultValue: 10.128.0.0/14
+    summary: |-
+      The CIDR of the pod IP addresses.
+    groupName: Network Arguments
+  - name: --pod-priority-threshold
+    summary: |-
+      PodPriorityThreshold enables users to schedule "best-effort" pods, which shouldn't trigger autoscaler actions, but only run when there are spare resources available. The default is -10. See the following for more details: https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-does-cluster-autoscaler-work-with-pod-priority-and-preemption.
+    groupName: Autoscaling Arguments
+  - name: --service-cidr
+    defaultValue: 172.30.0.0/16
+    summary: |-
+      The CIDR block for assigned service IPs.
+    groupName: Network Arguments
+  - name: --subnet-id
+    summary: |-
+      The Azure resource ID of the worker subnet. Note that a subnet cannot be reused between ARO-HCP Clusters.
+    groupName: Platform Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --vault-visibility
+    acceptedValues: Private, Public
+    summary: |-
+      Visibility of the keyvault that contains the secret.
+    groupName: Etcd Encryption Arguments
+  - name: --version
+    summary: |-
+      The desired X.Y version of the cluster control plane.
+    groupName: Version Arguments
+  - name: --vnet-int-subnet-id --vnet-integration-subnet-id
+    summary: |-
+      The Azure resource ID of a subnet that enables direct, private network connectivity between the hosted control plane and your cluster's nodes. This subnet must be dedicated to ARO HCP and cannot be shared with the cluster subnet or any node pool subnets.
+    groupName: Platform Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_delete
+  name: az aro hcp cluster delete
+  summary: |-
+    Delete an Azure Red Hat OpenShift with hosted control plane cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster delete [--acquire-policy-token]
+                              [--change-reference]
+                              [--ids]
+                              [--name]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--resource-group]
+                              [--subscription]
+                              [--yes]
+  examples:
+  - summary: |-
+      Delete a cluster
+    syntax: az aro hcp cluster delete --resource-group MyResourceGroup --name MyCluster --yes
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_list
+  name: az aro hcp cluster list
+  summary: |-
+    List Azure Red Hat OpenShift with hosted control plane clusters.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster list [--max-items]
+                            [--next-token]
+                            [--resource-group]
+  examples:
+  - summary: |-
+      List clusters in a resource group
+    syntax: az aro hcp cluster list --resource-group MyResourceGroup
+  - summary: |-
+      List clusters in the subscription
+    syntax: az aro hcp cluster list
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_request-credential
+  name: az aro hcp cluster request-credential
+  summary: |-
+    Request a temporary credential for your Azure Red Hat OpenShift with hosted control plane cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster request-credential [--acquire-policy-token]
+                                          [--admin {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--change-reference]
+                                          [--context]
+                                          [--file]
+                                          [--ids]
+                                          [--name]
+                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--overwrite-existing {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--resource-group]
+                                          [--subscription]
+  examples:
+  - summary: |-
+      Request a temporary admin credential
+    syntax: az aro hcp cluster request-credential --resource-group MyResourceGroup --name MyCluster
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --admin -a
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Get cluster administrator credentials. Default: cluster user credentials.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      If specified, overwrite the default context name.
+  - name: --file -f
+    defaultValue: ~\.kube\config
+    summary: |-
+      Kubernetes configuration file to update. Use "-" to print the kubeconfig to stdout instead.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --overwrite-existing
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Overwrite any existing cluster entry with the same name.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_revoke-credential
+  name: az aro hcp cluster revoke-credential
+  summary: |-
+    Revoke all credentials for your Azure Red Hat OpenShift with hosted control plane cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster revoke-credential [--acquire-policy-token]
+                                         [--change-reference]
+                                         [--ids]
+                                         [--name]
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--resource-group]
+                                         [--subscription]
+  examples:
+  - summary: |-
+      Revoke all admin credentials
+    syntax: az aro hcp cluster revoke-credential --resource-group MyResourceGroup --name MyCluster
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_show
+  name: az aro hcp cluster show
+  summary: |-
+    Get an Azure Red Hat OpenShift with hosted control plane cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster show [--ids]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
+  examples:
+  - summary: |-
+      Show a cluster
+    syntax: az aro hcp cluster show --resource-group MyResourceGroup --name MyCluster
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_update
+  name: az aro hcp cluster update
+  summary: |-
+    Update an Azure Red Hat OpenShift with hosted control plane cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster update [--acquire-policy-token]
+                              [--add]
+                              [--assign-control-plane-operator-identity --control-plane-identity]
+                              [--assign-data-plane-operator-identity --data-plane-identity]
+                              [--assign-service-managed-identity --service-identity]
+                              [--change-reference]
+                              [--channel-group]
+                              [--etcd]
+                              [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--ids]
+                              [--image-digest-mirrors]
+                              [--max-node-provision-time --node-provision-time]
+                              [--max-nodes-total]
+                              [--max-pod-grace-period]
+                              [--name]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--node-drain-timeout]
+                              [--pod-priority-threshold]
+                              [--remove]
+                              [--resource-group]
+                              [--set]
+                              [--subscription]
+                              [--tags]
+                              [--version]
+  examples:
+  - summary: |-
+      Update cluster tags
+    syntax: az aro hcp cluster update --resource-group MyResourceGroup --name MyCluster --tags env=prod team=platform
+  - summary: |-
+      Update cluster operator identities
+    syntax: az aro hcp cluster update --resource-group MyResourceGroup --name MyCluster --assign-service-managed-identity <service-identity-id> --assign-control-plane-operator-identity cluster-api-azure <control-plane-identity-id> --assign-data-plane-operator-identity disk-csi-driver <data-plane-identity-id>
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --assign-control-plane-operator-identity --control-plane-identity
+    summary: |-
+      Assign user-assigned identities to control plane operators. Usage: --assign-control-plane-operator-identity OPERATOR_NAME IDENTITY. IDENTITY is a resource ID or the name of an identity in the cluster subnet's resource group. Repeat the argument to assign more identities.
+    groupName: Identity Arguments
+  - name: --assign-data-plane-operator-identity --data-plane-identity
+    summary: |-
+      Assign user-assigned identities to data plane operators. Usage: --assign-data-plane-operator-identity OPERATOR_NAME IDENTITY. IDENTITY is a resource ID or the name of an identity in the cluster subnet's resource group. Repeat the argument to assign more identities.
+    groupName: Identity Arguments
+  - name: --assign-service-managed-identity --service-identity
+    summary: |-
+      Assign the user-assigned identity used for service-level actions by resource ID or by name when it is in the cluster subnet's resource group.
+    groupName: Identity Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --channel-group
+    summary: |-
+      ChannelGroup is the name of the set to which this version belongs. Each version belongs to only a single set. If not specified, the default value is 'stable'.
+    groupName: Version Arguments
+  - name: --etcd
+    summary: |-
+      Configure ETCD.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --image-digest-mirrors
+    summary: |-
+      ImageDigestMirrors is a set of rules to allow pulling images from a mirrored registry by using digest specifications.  WARNING: Updating this array will redeploy all node pools in the cluster.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --max-node-provision-time --node-provision-time
+    summary: |-
+      MaxNodeProvisionTimeSeconds is the maximum time to wait for node provisioning before considering the provisioning to be unsuccessful. The default is 900 seconds, or 15 minutes.
+    groupName: Autoscaling Arguments
+  - name: --max-nodes-total
+    summary: |-
+      MaxNodesTotal is the maximum allowable number of nodes. The autoscaler will not grow the cluster beyond this number. If omitted, the autoscaler will not have a maximum limit.
+    groupName: Autoscaling Arguments
+  - name: --max-pod-grace-period
+    summary: |-
+      MaxPodGracePeriodSeconds is the maximum amount of time in seconds to wait for graceful pod termination before scaling down a NodePool.
+    groupName: Autoscaling Arguments
+  - name: --name -n
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --node-drain-timeout
+    summary: |-
+      NodeDrainTimeoutMinutes is the grace period for how long Pod Disruption Budget-protected workloads will be respected during any node draining operation. After this grace period, any workloads protected by Pod Disruption Budgets that have not been successfully drained from a node will be forcibly evicted. This is especially relevant to cluster upgrades. Valid values are in minutes and from 0 to 10080 minutes (1 week). 0 means that the MachinePool can be drained without any time limitation. This value is used as a default for all NodePools. It can be overridden by specifying nodeDrainTimeoutMinutes for a given NodePool.
+    groupName: Properties Arguments
+  - name: --pod-priority-threshold
+    summary: |-
+      PodPriorityThreshold enables users to schedule "best-effort" pods, which shouldn't trigger autoscaler actions, but only run when there are spare resources available. The default is -10. See the following for more details: https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-does-cluster-autoscaler-work-with-pod-priority-and-preemption.
+    groupName: Autoscaling Arguments
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --version
+    summary: |-
+      ID is the desired X.Y version of the cluster control plane.
+    groupName: Version Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_aro_hcp_cluster_wait
+  name: az aro hcp cluster wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'aro' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az aro hcp cluster wait [--acquire-policy-token]
+                            [--change-reference]
+                            [--created]
+                            [--custom]
+                            [--deleted]
+                            [--exists]
+                            [--ids]
+                            [--interval]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
+                            [--timeout]
+                            [--updated]
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --name -n
+    summary: |-
+      The name of the Azure Red Hat OpenShift with hosted control plane cluster.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_aro_hcp_cluster_create
+- az_aro_hcp_cluster_delete
+- az_aro_hcp_cluster_external-auth
+- az_aro_hcp_cluster_external-auth_create
+- az_aro_hcp_cluster_external-auth_delete
+- az_aro_hcp_cluster_external-auth_list
+- az_aro_hcp_cluster_external-auth_show
+- az_aro_hcp_cluster_external-auth_update
+- az_aro_hcp_cluster_external-auth_wait
+- az_aro_hcp_cluster_list
+- az_aro_hcp_cluster_nodepool
+- az_aro_hcp_cluster_nodepool_create
+- az_aro_hcp_cluster_nodepool_delete
+- az_aro_hcp_cluster_nodepool_list
+- az_aro_hcp_cluster_nodepool_show
+- az_aro_hcp_cluster_nodepool_update
+- az_aro_hcp_cluster_nodepool_wait
+- az_aro_hcp_cluster_request-credential
+- az_aro_hcp_cluster_revoke-credential
+- az_aro_hcp_cluster_show
+- az_aro_hcp_cluster_update
+- az_aro_hcp_cluster_wait
+metadata:
+  description: Manage Azure Red Hat OpenShift with hosted control plane clusters.

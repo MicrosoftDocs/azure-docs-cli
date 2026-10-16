@@ -349,6 +349,9 @@ directCommands:
   extensionSuffix: containerapp
   summary: |-
     Create or update a storage.
+  description: |-
+    AzureFile storage supports account key, Azure Key Vault secret, or managed identity authentication.
+    Before using Azure Files managed identity authentication with --azure-file-identity, assign the identity to the managed environment, enable Managed Identity for SMB on the storage account, and grant the identity the Storage File Data SMB MI Admin role (a235d3ee-5935-4cfb-8cc5-a3303ad5995e) at storage account scope.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -359,6 +362,9 @@ directCommands:
                                     [--account-name --azure-file-account-name]
                                     [--acquire-policy-token]
                                     [--azure-file-account-key --storage-account-key]
+                                    [--azure-file-identity]
+                                    [--azure-file-key-vault-identity --key-vault-identity]
+                                    [--azure-file-key-vault-secret-url --key-vault-secret-url]
                                     [--azure-file-share-name --file-share]
                                     [--change-reference]
                                     [--no-wait]
@@ -368,6 +374,15 @@ directCommands:
   - summary: |-
       Create a azure file storage.
     syntax: az containerapp env storage set -g MyResourceGroup -n MyEnv --storage-name MyStorageName --access-mode ReadOnly --azure-file-account-key MyAccountKey --azure-file-account-name MyAccountName --azure-file-share-name MyShareName
+  - summary: |-
+      Create an Azure Files storage using an account key stored in Azure Key Vault.
+    syntax: az containerapp env storage set -g MyResourceGroup -n MyEnv --storage-name MyStorageName --access-mode ReadOnly --azure-file-account-name MyAccountName --azure-file-share-name MyShareName --azure-file-key-vault-secret-url https://MyVault.vault.azure.net/secrets/MyStorageAccountKey --azure-file-key-vault-identity MyIdentityResourceId
+  - summary: |-
+      Create an Azure Files storage using a user-assigned managed identity.
+    syntax: az containerapp env storage set -g MyResourceGroup -n MyEnv --storage-name MyStorageName --access-mode ReadWrite --azure-file-account-name MyAccountName --azure-file-share-name MyShareName --azure-file-identity MyIdentityResourceId
+  - summary: |-
+      Create an Azure Files storage using the system-assigned managed identity.
+    syntax: az containerapp env storage set -g MyResourceGroup -n MyEnv --storage-name MyStorageName --access-mode ReadWrite --azure-file-account-name MyAccountName --azure-file-share-name MyShareName --azure-file-identity system
   - summary: |-
       Create a nfs azure file storage.
     syntax: az containerapp env storage set -g MyResourceGroup -n MyEnv --storage-name MyStorageName --storage-type NfsAzureFile --access-mode ReadOnly --server MyNfsServer.file.core.windows.net --file-share /MyNfsServer/MyShareName
@@ -399,6 +414,18 @@ directCommands:
   - name: --azure-file-account-key --storage-account-key -k
     summary: |-
       Key of the AzureFile storage account.
+  - name: --azure-file-identity
+    summary: |-
+      Managed identity to authenticate with Azure Files. Use 'system' or a user-assigned identity. The identity must be assigned to the managed environment and have the Storage File Data SMB MI Admin role on the storage account. Managed Identity for SMB must be enabled on the storage account.
+    isPreview: true
+  - name: --azure-file-key-vault-identity --key-vault-identity
+    summary: |-
+      Managed identity to authenticate with Azure Key Vault. Use 'system' or a user-assigned identity. Defaults to 'system'.
+    isPreview: true
+  - name: --azure-file-key-vault-secret-url --key-vault-secret-url
+    summary: |-
+      Azure Key Vault secret URL containing the Azure Files storage account key.
+    isPreview: true
   - name: --azure-file-share-name --file-share -f
     summary: |-
       Name of the share on the AzureFile or nfs AzureFile storage.

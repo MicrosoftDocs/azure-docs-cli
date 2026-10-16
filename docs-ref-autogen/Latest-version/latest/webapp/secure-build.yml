@@ -1,0 +1,83 @@
+### YamlMime:AzureCLIGroup
+uid: az_webapp_secure-build
+name: az webapp secure-build
+summary: |-
+  Review open source vulnerabilities in a web app's packages.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+sourceType: Core
+directCommands:
+- uid: az_webapp_secure-build_show
+  name: az webapp secure-build show
+  summary: |-
+    Show the Secure Build report for the active deployment of a Linux web app.
+  description: |-
+    The service uses a cached report when available. Use --rescan to request fresh dependency analysis, which can take several minutes. Output follows the Azure CLI output configuration and is JSON when no format is configured. Use --output table for a human-readable summary and up to 20 findings; when --query is supplied, standard query processing controls the resulting table shape. JSON output and the provided Kudu link contain the full report. Secure Build currently supports Python dependency information produced by supported platform builds.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'webapp secure-build' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  syntax: >-
+    az webapp secure-build show --name
+                                --resource-group
+                                [--rescan]
+                                [--slot]
+  examples:
+  - summary: |-
+      Show a human-readable Secure Build report for the active deployment.
+    syntax: az webapp secure-build show --resource-group ResourceGroup --name AppName --output table
+  - summary: |-
+      Show the complete Secure Build report as JSON.
+    syntax: az webapp secure-build show --resource-group ResourceGroup --name AppName --output json
+  - summary: |-
+      Run a fresh analysis for a deployment slot and show critical findings.
+    syntax: az webapp secure-build show --resource-group ResourceGroup --name AppName --slot staging --rescan --query "findings[?advisory.severity=='CRITICAL']" --output table
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --rescan
+    defaultValue: "False"
+    summary: |-
+      Run a fresh dependency analysis instead of using a cached report.
+  - name: --slot -s
+    summary: |-
+      Name of the web app slot. Defaults to the production slot.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_webapp_secure-build_show
+metadata:
+  description: Review open source vulnerabilities in a web app's packages.

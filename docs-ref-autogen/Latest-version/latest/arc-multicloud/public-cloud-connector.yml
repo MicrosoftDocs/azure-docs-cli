@@ -25,7 +25,8 @@ directCommands:
                                                     [--acquire-policy-token]
                                                     [--aws-cloud-profile]
                                                     [--change-reference]
-                                                    [--host-type {AWS}]
+                                                    [--gcp-cloud-profile]
+                                                    [--host-type {AWS, GCP}]
                                                     [--location]
                                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                     [--tags]
@@ -36,6 +37,12 @@ directCommands:
   - summary: |-
       PublicCloudConnectors_CreateOrUpdate
     syntax: az arc-multicloud public-cloud-connector create --resource-group multiCloudRG --name awsConnector --aws-cloud-profile account-id=123456789123 is-organizational-account=false --host-type AWS --tags a=b --location eastus
+  - summary: |-
+      Create a project-scoped GCP connector. projectProperties and organizationProperties are mutually exclusive; set exactly one.
+    syntax: az arc-multicloud public-cloud-connector create --resource-group multiCloudRG --name gcpConnector --gcp-cloud-profile "{project-properties:{project-number:123456789123,project-id:my-project}}" --host-type GCP --tags a=b --location eastus
+  - summary: |-
+      Create an organization-scoped GCP connector, using the flat key=value form.
+    syntax: az arc-multicloud public-cloud-connector create --resource-group multiCloudRG --name gcpConnector --gcp-cloud-profile organization-properties.organization-id=123456789123 organization-properties.management-project-number=123456789124 organization-properties.management-project-id=my-management-project --host-type GCP --tags a=b --location eastus
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -58,8 +65,12 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --gcp-cloud-profile
+    summary: |-
+      Cloud profile for GCP.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --host-type
-    acceptedValues: AWS
+    acceptedValues: AWS, GCP
     summary: |-
       Host cloud the public cloud connector.
     groupName: Properties Arguments
@@ -373,6 +384,7 @@ directCommands:
     az arc-multicloud public-cloud-connector update [--acquire-policy-token]
                                                     [--aws-cloud-profile]
                                                     [--change-reference]
+                                                    [--gcp-cloud-profile]
                                                     [--ids]
                                                     [--name]
                                                     [--resource-group]
@@ -382,6 +394,15 @@ directCommands:
   - summary: |-
       publicCloudConnectors_Update
     syntax: az arc-multicloud public-cloud-connector update --resource-group multiCloudRG --name awsConnector --aws-cloud-profile "{excluded-accounts:[123456789123,123456789124]}" --tags "{}"
+  - summary: |-
+      publicCloudConnectors_Update
+    syntax: az arc-multicloud public-cloud-connector update --resource-group multiCloudRG --name awsConnector --aws-cloud-profile excluded-accounts[0]=123456789123 excluded-accounts[1]=123456789124
+  - summary: |-
+      publicCloudConnectors_Update
+    syntax: az arc-multicloud public-cloud-connector update --resource-group multiCloudRG --name gcpConnector --gcp-cloud-profile "{organization-properties:{excluded-project-numbers:[123456789123,123456789124],excluded-folder-ids:[folders/555,folders/666]}}"
+  - summary: |-
+      publicCloudConnectors_Update
+    syntax: az arc-multicloud public-cloud-connector update --resource-group multiCloudRG --name gcpConnector --gcp-cloud-profile organization-properties.excluded-project-numbers[0]=123456789123 organization-properties.excluded-folder-ids[0]=folders/555
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -395,6 +416,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --gcp-cloud-profile
+    summary: |-
+      Cloud profile for GCP.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.

@@ -17,7 +17,6 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az dataprotection backup-vault create --resource-group
-                                          --storage-setting --storage-settings
                                           --vault-name
                                           [--acquire-policy-token]
                                           [--azure-monitor-alerts-for-job-failures --job-failure-alerts {Disabled, Enabled}]
@@ -27,6 +26,7 @@ directCommands:
                                           [--cmk-identity-type {SystemAssigned, UserAssigned}]
                                           [--cmk-infra-encryption --cmk-infrastructure-encryption {Disabled, Enabled}]
                                           [--cmk-uami --cmk-user-assigned-identity-id]
+                                          [--cost-granularity --cost-management-granularity {ProtectedItemLevel, ProtectedItemWithParentTag, VaultLevel}]
                                           [--cross-region-restore-state --crr-state {Disabled, Enabled}]
                                           [--cross-subscription-restore-state --csr-state {Disabled, Enabled, PermanentlyDisabled}]
                                           [--e-tag]
@@ -37,9 +37,11 @@ directCommands:
                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                           [--retention-duration-in-days --soft-delete-retention]
                                           [--soft-delete-state {AlwaysOn, Off, On}]
+                                          [--storage-setting --storage-settings]
                                           [--tags]
                                           [--type]
                                           [--uami --user-assigned-identities]
+                                          [--x-ms-deleted-vault-id]
   examples:
   - summary: |-
       Create BackupVault
@@ -55,11 +57,6 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --storage-setting --storage-settings
-    summary: |-
-      Storage Settings. Usage: --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]"  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--storage-settings`.
-    groupName: Properties Arguments
   - isRequired: true
     name: --vault-name -v
     summary: |-
@@ -101,6 +98,12 @@ directCommands:
     summary: |-
       This parameter is required if the identity type is UserAssigned. Add the user assigned managed identity id to be used which has access permissions to the Key Vault.
     groupName: EncryptionSettings Arguments
+  - name: --cost-granularity --cost-management-granularity
+    defaultValue: VaultLevel
+    acceptedValues: ProtectedItemLevel, ProtectedItemWithParentTag, VaultLevel
+    summary: |-
+      Settings for cost management granularity level for a vault.
+    groupName: CostManagementSettings Arguments
   - name: --cross-region-restore-state --crr-state
     acceptedValues: Disabled, Enabled
     summary: |-
@@ -148,6 +151,10 @@ directCommands:
     summary: |-
       State of soft delete.
     groupName: SoftDeleteSettings Arguments
+  - name: --storage-setting --storage-settings
+    summary: |-
+      Storage Settings. Usage: --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]"  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--storage-settings`.
+    groupName: Properties Arguments
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -160,6 +167,9 @@ directCommands:
     summary: |-
       Gets or sets the user assigned identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Identity Arguments
+  - name: --x-ms-deleted-vault-id
+    summary: |-
+      The ID of the deleted backup vault to restore from during undelete flow.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -458,6 +468,7 @@ directCommands:
                                           [--cmk-encryption-state {Disabled, Enabled, Inconsistent}]
                                           [--cmk-identity-type {SystemAssigned, UserAssigned}]
                                           [--cmk-uami --cmk-user-assigned-identity-id]
+                                          [--cost-granularity --cost-management-granularity {ProtectedItemLevel, ProtectedItemWithParentTag, VaultLevel}]
                                           [--cross-region-restore-state --crr-state {Disabled, Enabled}]
                                           [--cross-subscription-restore-state --csr-state {Disabled, Enabled, PermanentlyDisabled}]
                                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -476,6 +487,7 @@ directCommands:
                                           [--type]
                                           [--uami --user-assigned-identities]
                                           [--vault-name]
+                                          [--x-ms-deleted-vault-id]
   examples:
   - summary: |-
       Patch BackupVault
@@ -516,6 +528,11 @@ directCommands:
     summary: |-
       This parameter is required if the identity type is UserAssigned. Add the user assigned managed identity id to be used which has access permissions to the Key Vault.
     groupName: EncryptionSettings Arguments
+  - name: --cost-granularity --cost-management-granularity
+    acceptedValues: ProtectedItemLevel, ProtectedItemWithParentTag, VaultLevel
+    summary: |-
+      Settings for cost management granularity level.
+    groupName: CostManagementSettings Arguments
   - name: --cross-region-restore-state --crr-state
     acceptedValues: Disabled, Enabled
     summary: |-
@@ -592,6 +609,9 @@ directCommands:
     summary: |-
       The name of the backup vault.
     groupName: Resource Id Arguments
+  - name: --x-ms-deleted-vault-id
+    summary: |-
+      The ID of the deleted backup vault to restore from during undelete flow.
   globalParameters:
   - name: --debug
     defaultValue: "False"
