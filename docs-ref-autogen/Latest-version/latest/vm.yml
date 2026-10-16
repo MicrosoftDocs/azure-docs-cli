@@ -390,6 +390,7 @@ directCommands:
                  [--data-disk-caching]
                  [--data-disk-delete-option]
                  [--data-disk-encryption-sets]
+                 [--data-disk-fda --data-disk-storage-fd-alignment {Aligned, BestEffortAligned}]
                  [--data-disk-iops]
                  [--data-disk-mbps]
                  [--data-disk-sizes-gb]
@@ -433,6 +434,7 @@ directCommands:
                  [--os-disk-caching {None, ReadOnly, ReadWrite}]
                  [--os-disk-delete-option {Delete, Detach}]
                  [--os-disk-encryption-set]
+                 [--os-disk-fda --os-disk-storage-fd-alignment {Aligned, BestEffortAligned}]
                  [--os-disk-name]
                  [--os-disk-secure-vm-disk-encryption-set]
                  [--os-disk-security-encryption-type {DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly}]
@@ -533,6 +535,13 @@ directCommands:
       az vm create -n MyVm -g MyResourceGroup --public-ip-address-dns-name MyUniqueDnsName \
           --image Ubuntu2204 --data-disk-sizes-gb 10 20 --size Standard_DS2_v2 \
           --generate-ssh-keys
+  - summary: |-
+      Create a VM in a single-zone Flexible VMSS with aligned OS and data disks.
+    syntax: >-
+      az vm create -g MyResourceGroup -n MyVm --location eastus2 --vmss MyFlexibleVmss \
+          --platform-fault-domain 0 --image Ubuntu2204 --size Standard_D4s_v5 \
+          --data-disk-sizes-gb 10 --os-disk-storage-fd-alignment Aligned \
+          --data-disk-storage-fd-alignment BestEffortAligned
   - summary: |-
       Create a Debian11 VM using Key Vault secrets.
     syntax: >-
@@ -675,6 +684,12 @@ directCommands:
   - name: --data-disk-encryption-sets
     summary: |-
       Names or IDs (space delimited) of disk encryption sets for data disks.
+    groupName: Storage Arguments
+  - name: --data-disk-fda --data-disk-storage-fd-alignment
+    acceptedValues: Aligned, BestEffortAligned
+    summary: |-
+      Specifies the storage fault domain alignment type for data disks. This option is only valid when the VM joins a single-zone Flexible VMSS and is set at create time. Omit this option to leave data disks unaligned.
+    isPreview: true
     groupName: Storage Arguments
   - name: --data-disk-iops
     summary: |-
@@ -850,6 +865,12 @@ directCommands:
   - name: --os-disk-encryption-set
     summary: |-
       Name or ID of disk encryption set for OS disk.
+    groupName: Storage Arguments
+  - name: --os-disk-fda --os-disk-storage-fd-alignment
+    acceptedValues: Aligned, BestEffortAligned
+    summary: |-
+      Specifies the storage fault domain alignment type for the OS disk. This option is only valid when the VM joins a single-zone Flexible VMSS and is set at create time. Omit this option to leave the OS disk unaligned.
+    isPreview: true
     groupName: Storage Arguments
   - name: --os-disk-name
     summary: |-

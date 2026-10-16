@@ -46,6 +46,7 @@ directCommands:
                    [--data-disk-caching]
                    [--data-disk-delete-option {Delete, Detach}]
                    [--data-disk-encryption-sets]
+                   [--data-disk-fda --data-disk-storage-fd-alignment {Aligned, BestEffortAligned}]
                    [--data-disk-iops]
                    [--data-disk-mbps]
                    [--data-disk-sizes-gb]
@@ -109,6 +110,7 @@ directCommands:
                    [--os-disk-caching {None, ReadOnly, ReadWrite}]
                    [--os-disk-delete-option {Delete, Detach}]
                    [--os-disk-encryption-set]
+                   [--os-disk-fda --os-disk-storage-fd-alignment {Aligned, BestEffortAligned}]
                    [--os-disk-name]
                    [--os-disk-secure-vm-disk-encryption-set]
                    [--os-disk-security-encryption-type {DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly}]
@@ -168,6 +170,7 @@ directCommands:
                    [--wire-local-rules --wire-server-use-local-file-rules {false, true}]
                    [--wire-server-access-control-profile-reference-id --wire-server-profile-id]
                    [--wire-server-mode {Audit, Enforce}]
+                   [--zonal-fault-domain-align-mode --zonal-fda {Aligned, BestEffortAligned, Unaligned}]
                    [--zone-balance {false, true}]
                    [--zone-placement-policy {Auto}]
                    [--zones]
@@ -230,6 +233,15 @@ directCommands:
   - summary: |-
       Create a single zone VM scaleset in the current resource group's region
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image CentOS85Gen2 --zones 1
+  - summary: |-
+      Create a single-zone Flexible VMSS with aligned compute and storage fault domains.
+    syntax: >-
+      az vmss create -g MyResourceGroup -n MyVmss --location eastus2 --zones 1 \
+          --orchestration-mode Flexible --platform-fault-domain-count 3 \
+          --zonal-fault-domain-align-mode BestEffortAligned \
+          --os-disk-storage-fd-alignment Aligned --data-disk-sizes-gb 10 \
+          --data-disk-storage-fd-alignment BestEffortAligned \
+          --image Ubuntu2204 --vm-sku Standard_D4s_v5
   - summary: |-
       Create a VMSS that supports SpotRestore.
     syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image CentOS85Gen2 --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
@@ -372,6 +384,11 @@ directCommands:
     summary: |-
       Names or IDs (space delimited) of disk encryption sets for data disks.
     groupName: Storage Arguments
+  - name: --data-disk-fda --data-disk-storage-fd-alignment
+    acceptedValues: Aligned, BestEffortAligned
+    summary: |-
+      Specifies the storage fault domain alignment type for data disks. This option is only valid for a single-zone Flexible VMSS and is set at create time. Omit this option to leave data disks unaligned.
+    isPreview: true
   - name: --data-disk-iops
     summary: |-
       Specify the Read-Write IOPS (space delimited) for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB.
@@ -621,6 +638,11 @@ directCommands:
     summary: |-
       Name or ID of disk encryption set for OS disk.
     groupName: Storage Arguments
+  - name: --os-disk-fda --os-disk-storage-fd-alignment
+    acceptedValues: Aligned, BestEffortAligned
+    summary: |-
+      Specifies the storage fault domain alignment type for the OS disk. This option is only valid for a single-zone Flexible VMSS and is set at create time. Omit this option to leave the OS disk unaligned.
+    isPreview: true
   - name: --os-disk-name
     summary: |-
       The name of the new VM OS disk.
@@ -851,6 +873,11 @@ directCommands:
     acceptedValues: Audit, Enforce
     summary: |-
       Specify the mode that proxy agent will execute on if the feature is enabled.
+  - name: --zonal-fault-domain-align-mode --zonal-fda
+    acceptedValues: Aligned, BestEffortAligned, Unaligned
+    summary: |-
+      Specifies the alignment mode between Virtual Machine Scale Set compute and storage fault domains. This option is only valid for a single-zone Flexible VMSS.
+    isPreview: true
   - name: --zone-balance
     acceptedValues: false, true
     summary: |-
@@ -3195,5 +3222,5 @@ commands:
 - az_vmss_update-instances
 - az_vmss_wait
 metadata:
-  ms.date: 08/24/2026
+  ms.date: 10/06/2026
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

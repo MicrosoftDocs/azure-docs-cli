@@ -600,6 +600,7 @@ directCommands:
                   [--image-cleaner-interval-hours]
                   [--ip-families]
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
+                  [--kms-infrastructure-encryption {Enabled}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--kubelet-config]
@@ -669,6 +670,7 @@ directCommands:
                   [--skip-subnet-role-assignment]
                   [--sku {automatic, base}]
                   [--snapshot-id]
+                  [--ssh-access {disabled, entraid, localuser}]
                   [--ssh-key-value]
                   [--storage-pool-name]
                   [--storage-pool-option {NVMe, Temp}]
@@ -1308,6 +1310,12 @@ directCommands:
     acceptedValues: AKSLongTermSupport, KubernetesOfficial
     summary: |-
       Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
+  - name: --kms-infrastructure-encryption
+    acceptedValues: Enabled
+    summary: |-
+      Enable encryption at rest of Kubernetes resource objects using service-managed keys.
+    description: |-
+      Enable infrastructure encryption for Kubernetes resource objects. This feature provides encryption at rest for cluster secrets and configuration using service-managed keys. The only accepted value is "Enabled"; once enabled it cannot be disabled. For more information see https://aka.ms/aks/kubernetesResourceObjectEncryption.
   - name: --ksm-metric-annotations-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
@@ -1505,7 +1513,7 @@ directCommands:
   - name: --nodepool-name
     defaultValue: nodepool1
     summary: |-
-      Node pool name, up to 12 alphanumeric characters.
+      Node pool name, alphanumeric characters only. See https://aka.ms/aks-naming-rules for length limits.
   - name: --nodepool-tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -1606,6 +1614,11 @@ directCommands:
   - name: --snapshot-id
     summary: |-
       The source snapshot id used to create this cluster.
+  - name: --ssh-access
+    defaultValue: localuser
+    acceptedValues: disabled, entraid, localuser
+    summary: |-
+      Configure SSH access for the first system node pool.
   - name: --ssh-key-value
     defaultValue: ~\.ssh\id_rsa.pub
     summary: |-
@@ -5155,7 +5168,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --nodepool-name
     summary: |-
-      Node pool name, up to 12 alphanumeric characters.
+      Node pool name, alphanumeric characters only. See https://aka.ms/aks-naming-rules for length limits.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -5753,6 +5766,7 @@ directCommands:
                   [--image-cleaner-interval-hours]
                   [--ip-families]
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
+                  [--kms-infrastructure-encryption {Enabled}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--load-balancer-backend-pool-type {nodeIP, nodeIPConfiguration}]
@@ -6424,6 +6438,12 @@ directCommands:
     acceptedValues: AKSLongTermSupport, KubernetesOfficial
     summary: |-
       Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
+  - name: --kms-infrastructure-encryption
+    acceptedValues: Enabled
+    summary: |-
+      Enable encryption at rest of Kubernetes resource objects using service-managed keys.
+    description: |-
+      Enable infrastructure encryption for Kubernetes resource objects. This feature provides encryption at rest for cluster secrets and configuration using service-managed keys. The only accepted value is "Enabled"; once enabled it cannot be disabled. For more information see https://aka.ms/aks/kubernetesResourceObjectEncryption.
   - name: --ksm-metric-annotations-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
