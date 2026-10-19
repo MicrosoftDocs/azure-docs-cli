@@ -1,6 +1,7 @@
 ---
 title: Get started with Azure CLI (Preview)
 description: Learn the core concepts, supported environments, authentication model, current limitations, and coexistence guidance for Azure CLI during the preview.
+ms.date: 10/19/2026
 ---
 
 # Get started with Azure CLI (Preview)
@@ -20,7 +21,7 @@ while continuing to use the same Azure management APIs and authentication model.
 
 Azure CLI is designed around a few key concepts:
 
-- **Shared authentication** - Azure CLI and Azure PowerShell share a common sign-in experience.
+- **Profile-based authentication** - Save named sign-in contexts for different accounts and subscriptions.
 - **AI-assisted workflows** - AI helps explain errors, recommend next steps, and improve
   productivity.
 - **Cross-platform** - Runs on supported operating systems using modern shells.
@@ -29,10 +30,11 @@ Azure CLI is designed around a few key concepts:
 
 ## Authentication
 
-Azure CLI uses a shared authentication experience across Azure CLI and Azure PowerShell.
+Sign in to the Azure CLI preview with `az login`.
 
-After you sign in, your authenticated session is available to both products. You don't need to sign
-in separately when switching between Azure CLI and Azure PowerShell.
+Azure CLI and Azure PowerShell don't share authenticated sessions during the preview. If you use
+both tools, sign in separately to each: use `az login` for Azure CLI and `Connect-AzAccount` for
+Azure PowerShell.
 
 For the best experience, use interactive user authentication.
 
@@ -46,8 +48,6 @@ The following authentication methods are currently **not supported**:
 - Resource Owner Password Credentials (ROPC)
 - Service principals
 - Managed identities
-
-Additional authentication scenarios may be added in future releases.
 
 ## Coexistence with Azure CLI and Azure PowerShell
 

@@ -1,6 +1,7 @@
 ---
 title: Install Azure CLI preview extensions
 description: Learn how to install add-on extensions for the Azure CLI preview.
+ms.date: 10/19/2026
 ---
 
 # Install Azure CLI preview extensions
@@ -91,5 +92,5 @@ The extension you added should appear in the list. If the command it provides no
 | --- | --- |
 | `az` is not found | Install azcli first — see the [install guide](install-overview.md). |
 | A command says an extension is missing | Install the add-on from the extensions bundle with `az extension add --path <pkg>` (see above). |
-| `--path` package not found | Confirm the file name and version match your download, e.g. `azcli.extensions.compute.0.1.0.nupkg`. |
+| `--path` package not found | Confirm the file name and version match your download, for example `azcli.extensions.compute.<version>.nupkg`. |
 | Extension already installed | Use `az extension update --name <name>` or remove then re-add it. |

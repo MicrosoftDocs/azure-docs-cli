@@ -1,6 +1,7 @@
 ---
 title: Install the Azure CLI preview
 description: Learn how to install the Azure CLI preview.
+ms.date: 10/19/2026
 ---
 
 # Install the Azure CLI preview
@@ -118,4 +119,4 @@ Removes the install directory. Pass `--force` / `-Force` to remove a folder that
 | Linux with musl (Alpine Linux) | `linux-musl-x64` | `linux-musl-arm64` |
 | macOS | — (not supported) | `macos-arm64` |
 
-Throughout these guides, replace `<version>` with the version in your downloaded file name (for example `0.1.0`). Preview and beta builds may include a `-preview` suffix in the file name.
+Throughout these guides, replace `<version>` with the version in your downloaded file name. Preview and beta builds may include a `-preview` suffix in the file name.
