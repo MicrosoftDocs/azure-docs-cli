@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 09/25/2026
+ms.date: 10/20/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -30,6 +30,14 @@ The breaking changes listed in this section are planned for the next major relea
 - All Helm charts not stored as an OCI artifact was deleted from Azure Container Registry on March 30th, 2025.
 - Learn how to find all Helm charts stored in a Helm repository here: `az acr helm list`. If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 - For more information on managing and deploying applications for Kubernetes, see https://aka.ms/acr/helm.
+
+## cognitiveservices
+
+### `cognitiveservices agent`
+
+[Link to cognitiveservices agent reference group](/cli/azure/cognitiveservices/agent)
+
+- 'cognitiveservices agent' has been deprecated and will be removed in the first release after February 28, 2027.
 
 ## compute_recommender
 
@@ -105,6 +113,36 @@ The breaking changes listed in this section are planned for the next major relea
 
 ## azext_managednetworkfabric
 
+### `networkfabric bootstrapinterface list`
+
+[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
+
+- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
+
+### `networkfabric bootstrapinterface show`
+
+[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
+
+- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
+
+### `networkfabric bootstrapinterface wait`
+
+[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
+
+- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
+
+### `networkfabric device reboot`
+
+[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
+
+- '--network-device-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+
+### `networkfabric device refresh-configuration`
+
+[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
+
+- 'networkfabric device refresh-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric device refresh-config' instead.
+
 ### `networkfabric fabric commit-batch-status`
 
 [Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
@@ -165,18 +203,6 @@ The breaking changes listed in this section are planned for the next major relea
 
 - 'networkfabric fabric view-device-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric view-device-config' instead.
 
-### `networkfabric device reboot`
-
-[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
-
-- '--network-device-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric device refresh-configuration`
-
-[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
-
-- 'networkfabric device refresh-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric device refresh-config' instead.
-
 ### `networkfabric networkmonitor create`
 
 [Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
@@ -222,24 +248,6 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to networkfabric tap reference group](/cli/azure/networkfabric/tap)
 
 - '--network-tap-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric bootstrapinterface list`
-
-[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
-
-- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
-
-### `networkfabric bootstrapinterface show`
-
-[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
-
-- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
-
-### `networkfabric bootstrapinterface wait`
-
-[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
-
-- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
 
 ## azext_netappfiles_preview
 
