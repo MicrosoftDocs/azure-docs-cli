@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 09/25/2026
+ms.date: 10/21/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -30,6 +30,14 @@ The breaking changes listed in this section are planned for the next major relea
 - All Helm charts not stored as an OCI artifact was deleted from Azure Container Registry on March 30th, 2025.
 - Learn how to find all Helm charts stored in a Helm repository here: `az acr helm list`. If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 - For more information on managing and deploying applications for Kubernetes, see https://aka.ms/acr/helm.
+
+## cognitiveservices
+
+### `cognitiveservices agent`
+
+[Link to cognitiveservices agent reference group](/cli/azure/cognitiveservices/agent)
+
+- 'cognitiveservices agent' has been deprecated and will be removed in the first release after February 28, 2027.
 
 ## compute_recommender
 
