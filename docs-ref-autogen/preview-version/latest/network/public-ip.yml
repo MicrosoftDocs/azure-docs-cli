@@ -1,0 +1,336 @@
+### YamlMime:AzureCLIGroup
+uid: az_network_public-ip
+name: az network public-ip
+summary: |-
+  Manage public IP addresses.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_network_public-ip_create
+  name: az network public-ip create
+  summary: |-
+    Create a public IP address.
+  description: |-
+    Create a public IP address in a resource group. The SKU defaults to `Standard`, the IP version to `IPv4` and the idle timeout to 4 minutes. The allocation method defaults to `Static` for the Standard SKUs and `Dynamic` for the Basic SKU.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network public-ip create --location
+                                --name
+                                --resource-group
+                                [--allocation-method {Static, Dynamic}]
+                                [--ddos-custom-policy]
+                                [--ddos-protection-plan]
+                                [--dns-name]
+                                [--dns-name-scope {TenantReuse, SubscriptionReuse, ResourceGroupReuse, NoReuse}]
+                                [--edge-zone]
+                                [--idle-timeout]
+                                [--ip-address]
+                                [--ip-tags]
+                                [--profile]
+                                [--protection-mode {VirtualNetworkInherited, Enabled, Disabled}]
+                                [--public-ip-prefix]
+                                [--reverse-fqdn]
+                                [--sku {Basic, Standard, StandardV2}]
+                                [--subscription-id]
+                                [--tags]
+                                [--tier {Regional, Global}]
+                                [--version {IPv4, IPv6}]
+                                [--zone {1, 2, 3}]
+  examples:
+  - summary: |-
+      Create a public IP address
+    syntax: az network public-ip create --name mypip --resource-group myrg --location eastus
+  - summary: |-
+      Create a zone-redundant Standard address
+    syntax: >-
+      az network public-ip create --name mypip --resource-group myrg --location eastus \
+          --sku Standard --zone 1 2 3
+  - summary: |-
+      Create an address with a DNS name and tags
+    syntax: >-
+      az network public-ip create --name mypip --resource-group myrg --location eastus \
+          --dns-name mylabel --tags owner=team-a costCenter=42
+  - summary: |-
+      Create a Basic dynamic IPv6 address
+    syntax: >-
+      az network public-ip create --name mypip --resource-group myrg --location eastus \
+          --sku Basic --version IPv6 --allocation-method Dynamic
+  - summary: |-
+      Allocate from a public IP prefix
+    syntax: >-
+      az network public-ip create --name mypip --resource-group myrg --location eastus \
+          --public-ip-prefix myprefix
+  - summary: |-
+      Create an address with DDoS protection and an IP tag
+    syntax: >-
+      az network public-ip create --name mypip --resource-group myrg --location eastus \
+          --protection-mode Enabled --ddos-protection-plan myplan \
+          --ip-tags FirstPartyUsage=/Sql
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      Location for the public IP address.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the public IP address.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --allocation-method
+    acceptedValues: Static, Dynamic
+    summary: |-
+      IP address allocation method. Defaults to Dynamic for the Basic SKU and Static otherwise.
+  - name: --ddos-custom-policy
+    summary: |-
+      Name or resource id of a DDoS custom policy to associate.
+  - name: --ddos-protection-plan
+    summary: |-
+      Name or resource id of a DDoS protection plan. Can only be set when the protection mode is Enabled.
+  - name: --dns-name
+    summary: |-
+      Globally unique DNS entry (the domain name label).
+  - name: --dns-name-scope
+    acceptedValues: TenantReuse, SubscriptionReuse, ResourceGroupReuse, NoReuse
+    summary: |-
+      The domain name label scope, which selects the reuse policy hashed into the FQDN.
+  - name: --edge-zone
+    summary: |-
+      Name of the edge zone (extended location) to create the public IP address in.
+  - name: --idle-timeout
+    summary: |-
+      Idle timeout in minutes. Defaults to 4.
+  - name: --ip-address
+    summary: |-
+      The IP address to assign, for bring-your-own-IP addresses.
+  - name: --ip-tags
+    summary: |-
+      IP tags in TYPE=VALUE form (space-separated), e.g. FirstPartyUsage=/Sql.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --protection-mode
+    acceptedValues: VirtualNetworkInherited, Enabled, Disabled
+    summary: |-
+      The DDoS protection mode of the public IP address.
+  - name: --public-ip-prefix
+    summary: |-
+      Name or resource id of a public IP prefix to allocate the address from.
+  - name: --reverse-fqdn
+    summary: |-
+      Reverse FQDN (fully qualified domain name).
+  - name: --sku
+    acceptedValues: Basic, Standard, StandardV2
+    summary: |-
+      Name of the public IP address SKU. Defaults to Standard.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --tags
+    summary: |-
+      Resource tags in KEY=VALUE form (space-separated).
+  - name: --tier
+    acceptedValues: Regional, Global
+    summary: |-
+      Tier of the public IP address SKU. Global is only supported for Standard SKU addresses.
+  - name: --version
+    acceptedValues: IPv4, IPv6
+    summary: |-
+      IP address version. Defaults to IPv4.
+  - name: --zone
+    acceptedValues: 1, 2, 3
+    summary: |-
+      Availability zones to provision the address into.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_public-ip_delete
+  name: az network public-ip delete
+  summary: |-
+    Delete a public IP address.
+  description: |-
+    Delete the named public IP address. The delete fails while the address is still associated with another resource, so detach it from the network interface, load balancer or gateway first.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network public-ip delete --name
+                                --resource-group
+                                [--profile]
+                                [--subscription-id]
+  examples:
+  - summary: |-
+      Delete a public IP address
+    syntax: az network public-ip delete --name mypip --resource-group myrg
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the public IP address.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_public-ip_list
+  name: az network public-ip list
+  summary: |-
+    List public IP addresses.
+  description: |-
+    List public IP addresses in a resource group, or across the whole subscription when `--resource-group` is omitted.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network public-ip list [--profile]
+                              [--resource-group]
+                              [--subscription-id]
+  examples:
+  - summary: |-
+      List the public IP addresses in a resource group
+    syntax: az network public-ip list --resource-group myrg
+  - summary: |-
+      List every public IP address in the subscription
+    syntax: az network public-ip list --subscription-id $subId
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name. Omit to list every public IP address in the subscription.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_public-ip_show
+  name: az network public-ip show
+  summary: |-
+    Show details for a public IP address.
+  description: |-
+    Retrieve the full definition of a single public IP address, including its allocated IP address, SKU, DNS settings and provisioning state. Use `--expand` to inline referenced sub-resources.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network public-ip show --name
+                              --resource-group
+                              [--expand]
+                              [--profile]
+                              [--subscription-id]
+  examples:
+  - summary: |-
+      Show a public IP address
+    syntax: az network public-ip show --name mypip --resource-group myrg
+  - summary: |-
+      Show using shell variables
+    syntax: az network public-ip show --name $pipName --resource-group $rg --subscription-id $subId
+  - summary: |-
+      Show a public IP address with its IP configuration expanded
+    syntax: az network public-ip show --name mypip --resource-group myrg --expand ipConfiguration
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the public IP address.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --expand
+    summary: |-
+      Expand referenced resources, e.g. ipConfiguration.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_network_public-ip_create
+- az_network_public-ip_delete
+- az_network_public-ip_list
+- az_network_public-ip_show
+metadata:
+  ms.date: 10/20/2026
+  description: Manage public IP addresses.

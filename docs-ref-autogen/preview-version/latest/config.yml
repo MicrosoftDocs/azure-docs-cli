@@ -38,60 +38,66 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_config_get
   name: az config get
   summary: |-
     Retrieve a configuration value.
   description: |-
-    Get the current value of a configuration setting by key. Configuration keys use dot notation (e.g., output.format, core.debug). If the key is not found, an error is displayed.
+    Get the current value of a configuration setting by key. Configuration keys use dot notation (e.g., clients.cli.output.format, core.logging.level). If the key is not found, an error is displayed.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/config/index.md
-  syntax: >-
-    az config get --key
-                  [--json]
+  syntax: az config get --key
   examples:
   - summary: |-
       Get output format setting
-    syntax: az config get --key output.format
+    syntax: az config get --key clients.cli.output.format
   - summary: |-
       Get output as JSON
-    syntax: az config get --key output.format --json
+    syntax: az config get --key clients.cli.output.format --output json
+  - summary: |-
+      Get output as a table
+    syntax: az config get --key clients.cli.output.format --output table
+  - summary: |-
+      Query the configuration value
+    syntax: az config get --key clients.cli.output.format --query "value"
   requiredParameters:
   - isRequired: true
     name: --key
     summary: |-
       Configuration key in dot notation.
-  optionalParameters:
-  - name: --json
-    summary: |-
-      Output as JSON.
   globalParameters:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_config_info
   name: az config info
   summary: |-
@@ -109,6 +115,9 @@ directCommands:
   - summary: |-
       Display only valid configuration key names
     syntax: az config info --keys-only
+  - summary: |-
+      Display configuration schema as a table
+    syntax: az config info --output table
   optionalParameters:
   - name: --keys-only
     summary: |-
@@ -117,29 +126,30 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_config_list
   name: az config list
   summary: |-
     List all configuration settings.
   description: |-
-    Display all current configuration values. By default, only explicitly-set values are shown. Use --all to include default values. Output can be formatted as JSON for scripting.
+    Display all current configuration values. By default, only explicitly-set values are shown. Use --all to include default values. Standard output formats such as JSON, table, TSV, and YAML are supported.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/config/index.md
-  syntax: >-
-    az config list [--all]
-                   [--json]
+  syntax: az config list [--all]
   examples:
   - summary: |-
       List current configuration values
@@ -149,29 +159,32 @@ directCommands:
     syntax: az config list --all
   - summary: |-
       List configuration as JSON
-    syntax: az config list --json
+    syntax: az config list --output json
+  - summary: |-
+      List configuration as a table
+    syntax: az config list --output table
   optionalParameters:
   - name: --all
     summary: |-
       Include default values.
-  - name: --json
-    summary: |-
-      Output as JSON.
   globalParameters:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_config_set
   name: az config set
   summary: |-
@@ -188,7 +201,7 @@ directCommands:
   examples:
   - summary: |-
       Set output format to JSON
-    syntax: az config set --key output.format --value json
+    syntax: az config set --key clients.cli.output.format --value json
   - summary: |-
       Set a custom configuration key with force flag
     syntax: az config set --key custom.mykey --value myvalue --force
@@ -209,17 +222,20 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 commands:
 - az_config_delete
 - az_config_get
@@ -227,5 +243,5 @@ commands:
 - az_config_list
 - az_config_set
 metadata:
-  ms.date: 08/07/2026
+  ms.date: 10/06/2026
   description: Manage local Azure CLI configuration settings and preferences.

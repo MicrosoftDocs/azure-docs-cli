@@ -1,0 +1,303 @@
+### YamlMime:AzureCLIGroup
+uid: az_network_nic
+name: az network nic
+summary: |-
+  Manage network interfaces.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_network_nic_create
+  name: az network nic create
+  summary: |-
+    Create a network interface.
+  description: |-
+    Create a network interface with a single IP configuration in an existing subnet. Pass `--subnet` as a subnet resource id, or as a subnet name together with `--vnet-name`. The IP configuration is named `ipconfig1` and gets a dynamically allocated private IP address unless `--private-ip-address` is supplied, in which case the allocation is `Static`. `--public-ip-address` and `--network-security-group` accept a name in the same resource group or a full resource id.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network nic create --location
+                          --name
+                          --resource-group
+                          --subnet
+                          [--accelerated-networking]
+                          [--dns-servers]
+                          [--edge-zone]
+                          [--internal-dns-name]
+                          [--ip-forwarding]
+                          [--network-security-group]
+                          [--private-ip-address]
+                          [--private-ip-address-version {IPv4, IPv6}]
+                          [--profile]
+                          [--public-ip-address]
+                          [--subscription-id]
+                          [--tags]
+                          [--vnet-name]
+  examples:
+  - summary: |-
+      Create a network interface in a subnet
+    syntax: az network nic create --name mynic --resource-group myrg --location eastus --vnet-name myvnet --subnet default
+  - summary: |-
+      Create a network interface from a subnet resource id
+    syntax: az network nic create --name mynic --resource-group myrg --location eastus --subnet /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/default
+  - summary: |-
+      Create a network interface with a public IP address and a network security group
+    syntax: >-
+      az network nic create --name mynic --resource-group myrg --location eastus --vnet-name myvnet --subnet default \
+          --public-ip-address mypip --network-security-group mynsg
+  - summary: |-
+      Create a network interface with a static private IP address
+    syntax: >-
+      az network nic create --name mynic --resource-group myrg --location eastus --vnet-name myvnet --subnet default \
+          --private-ip-address 10.0.0.10
+  - summary: |-
+      Create a network interface with accelerated networking, custom DNS servers and tags
+    syntax: >-
+      az network nic create --name mynic --resource-group myrg --location eastus --vnet-name myvnet --subnet default \
+          --accelerated-networking --dns-servers 10.0.0.4 10.0.0.5 --tags owner=team-a costCenter=42
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      Location for the network interface.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the network interface.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  - isRequired: true
+    name: --subnet
+    summary: |-
+      Name or resource id of an existing subnet. A name requires --vnet-name.
+  optionalParameters:
+  - name: --accelerated-networking
+    summary: |-
+      Enable accelerated networking.
+  - name: --dns-servers
+    summary: |-
+      DNS server IP addresses for the network interface.
+  - name: --edge-zone
+    summary: |-
+      Name of the edge zone (extended location) to create the network interface in.
+  - name: --internal-dns-name
+    summary: |-
+      The internal DNS name label.
+  - name: --ip-forwarding
+    summary: |-
+      Enable IP forwarding.
+  - name: --network-security-group
+    summary: |-
+      Name or resource id of an existing network security group to associate.
+  - name: --private-ip-address
+    summary: |-
+      Static private IP address to use. A dynamic address is allocated when omitted.
+  - name: --private-ip-address-version
+    acceptedValues: IPv4, IPv6
+    summary: |-
+      Version of the private IP address. Defaults to IPv4.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --public-ip-address
+    summary: |-
+      Name or resource id of an existing public IP address to associate.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --tags
+    summary: |-
+      Resource tags in KEY[=VALUE] form (space-separated); a bare KEY sets an empty value.
+  - name: --vnet-name
+    summary: |-
+      Name of the virtual network that contains the subnet, when --subnet is a name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_nic_delete
+  name: az network nic delete
+  summary: |-
+    Delete a network interface.
+  description: |-
+    Delete the named network interface. The delete fails while the interface is still attached to a virtual machine, so detach it or delete the virtual machine first.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network nic delete --name
+                          --resource-group
+                          [--profile]
+                          [--subscription-id]
+  examples:
+  - summary: |-
+      Delete a network interface
+    syntax: az network nic delete --name mynic --resource-group myrg
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the network interface.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_nic_list
+  name: az network nic list
+  summary: |-
+    List network interfaces.
+  description: |-
+    List network interfaces in a resource group, or across the whole subscription when `--resource-group` is omitted.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network nic list [--profile]
+                        [--resource-group]
+                        [--subscription-id]
+  examples:
+  - summary: |-
+      List the network interfaces in a resource group
+    syntax: az network nic list --resource-group myrg
+  - summary: |-
+      List every network interface in the subscription
+    syntax: az network nic list --subscription-id $subId
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name. Omit to list every network interface in the subscription.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_nic_show
+  name: az network nic show
+  summary: |-
+    Show details for a network interface.
+  description: |-
+    Retrieve the full definition of a single network interface, including its IP configurations, DNS settings, MAC address and provisioning state. Use `--expand` to inline referenced sub-resources.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network nic show --name
+                        --resource-group
+                        [--expand]
+                        [--profile]
+                        [--subscription-id]
+  examples:
+  - summary: |-
+      Show a network interface
+    syntax: az network nic show --name mynic --resource-group myrg
+  - summary: |-
+      Show using shell variables
+    syntax: az network nic show --name $nicName --resource-group $rg --subscription-id $subId
+  - summary: |-
+      Show a network interface with its public IP address expanded
+    syntax: az network nic show --name mynic --resource-group myrg --expand ipConfigurations/publicIPAddress
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the network interface.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --expand
+    summary: |-
+      Expand referenced resources, e.g. ipConfigurations/publicIPAddress.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_network_nic_create
+- az_network_nic_delete
+- az_network_nic_list
+- az_network_nic_show
+metadata:
+  ms.date: 10/20/2026
+  description: Manage network interfaces.

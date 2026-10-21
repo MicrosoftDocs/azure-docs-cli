@@ -6,6 +6,61 @@ summary: |-
 status: GA
 sourceType: Core
 directCommands:
+- uid: az_deployment_group_cancel
+  name: az deployment group cancel
+  summary: |-
+    Cancel a running resource group deployment.
+  description: |-
+    Cancel a currently running Azure Resource Manager deployment scoped to a resource group. A deployment can only be cancelled while its provisioning state is `Accepted` or `Running`; once cancelled the state becomes `Canceled` and the resource group is left partially deployed, so any resources the deployment already created remain and must be cleaned up separately. Cancelling a deployment that has already reached a terminal state fails with `DeploymentCannotBeCancelled`. The command prints nothing on success; the subscription defaults to the active profile's subscription unless `--subscription-id` is given.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group cancel --name
+                               --resource-group
+                               [--profile]
+                               [--subscription-id]
+  examples:
+  - summary: |-
+      Cancel a running deployment
+    syntax: az deployment group cancel --resource-group myResourceGroup --name myDeployment
+  - summary: |-
+      Cancel a running deployment in a specific subscription
+    syntax: az deployment group cancel --resource-group myResourceGroup --name myDeployment --subscription-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment to cancel.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group that contains the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_deployment_group_create
   name: az deployment group create
   summary: |-
@@ -57,7 +112,7 @@ directCommands:
       The deployment mode. Incremental (default) or Complete.
   - name: --parameter
     summary: |-
-      Inline deployment parameter(s) in KEY=VALUE form (repeatable). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
   - name: --parameters-file
     summary: |-
       The path to a local parameters file to deploy inline.
@@ -69,7 +124,7 @@ directCommands:
       Use the named profile for this command (overrides the active profile).
   - name: --query-string
     summary: |-
-      The query string (such as a SAS token) to use with the template URI and/or the parameters URI.
+      The query string (such as a SAS token) to use with the template URI. Only valid together with a template URI.
   - name: --rollback-on-error
     summary: |-
       Roll the resource group back to the last successful deployment on error.
@@ -96,17 +151,345 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_group_delete
+  name: az deployment group delete
+  summary: |-
+    Delete a resource group deployment from the deployment history.
+  description: |-
+    Delete an Azure Resource Manager deployment scoped to a resource group. This removes the deployment record and its associated deployment operations from the deployment history; it does **not** delete the resources the deployment created, and it leaves the resource group itself untouched. A deployment that is currently running cannot be deleted -- cancel it with `az deployment group cancel` first, or wait for it to reach a terminal state. The delete is a long-running operation and the command waits for it to finish. Deleting a deployment name that does not exist succeeds silently, because ARM answers the same `204 No Content` in both cases. The command prints nothing on success; the subscription defaults to the active profile's subscription unless `--subscription-id` is given.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group delete --name
+                               --resource-group
+                               [--profile]
+                               [--subscription-id]
+  examples:
+  - summary: |-
+      Delete a deployment from the history
+    syntax: az deployment group delete --resource-group myResourceGroup --name myDeployment
+  - summary: |-
+      Delete a deployment in a specific subscription
+    syntax: az deployment group delete --resource-group myResourceGroup --name myDeployment --subscription-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment to delete.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group that contains the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_group_export
+  name: az deployment group export
+  summary: |-
+    Export the template used for a resource group deployment.
+  description: |-
+    Export the Azure Resource Manager template that a resource-group-scoped deployment was created from, and print it to stdout as JSON. The command is read-only: it never creates or modifies resources. Azure Resource Manager returns the template exactly as it was submitted, with parameters and variables left unresolved, so the output can be fed straight back into `az deployment group create --template-file`. Exporting a deployment that does not exist fails with `DeploymentNotFound`. The subscription defaults to the active profile's subscription unless `--subscription-id` is given.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group export --name
+                               --resource-group
+                               [--profile]
+                               [--subscription-id]
+  examples:
+  - summary: |-
+      Export a deployment's template
+    syntax: az deployment group export --resource-group myResourceGroup --name myDeployment
+  - summary: |-
+      Save the exported template to a file
+    syntax: az deployment group export --resource-group myResourceGroup --name myDeployment > myDeployment.json
+  - summary: |-
+      Export a deployment's template from a specific subscription
+    syntax: az deployment group export --resource-group myResourceGroup --name myDeployment --subscription-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment whose template to export.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group that contains the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_group_list
+  name: az deployment group list
+  summary: |-
+    List the deployments in a resource group.
+  description: |-
+    List every Azure Resource Manager deployment scoped to a resource group. Results are returned as a flat array of deployments with their provisioning state, mode, timestamp, and outputs; paged results are followed automatically. The subscription defaults to the active profile's subscription unless `--subscription-id` is given.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group list --resource-group
+                             [--filter]
+                             [--profile]
+                             [--subscription-id]
+  examples:
+  - summary: |-
+      List the deployments in a resource group
+    syntax: az deployment group list --resource-group myResourceGroup
+  - summary: |-
+      List deployments in a specific subscription
+    syntax: az deployment group list --resource-group myResourceGroup --subscription-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group whose deployments to list.
+  optionalParameters:
+  - name: --filter
+    summary: |-
+      Filter expression using OData notation, e.g. "provisioningState eq 'Failed'".
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_group_show
+  name: az deployment group show
+  summary: |-
+    Show details of a single resource group deployment.
+  description: |-
+    Display a single Azure Resource Manager deployment scoped to a resource group, including its provisioning state, mode, timestamp, duration, template hash, outputs, and the resources it provisioned. Specify the resource group and the deployment name; the subscription defaults to the active profile's subscription unless `--subscription-id` is given.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group show --name
+                             --resource-group
+                             [--profile]
+                             [--subscription-id]
+  examples:
+  - summary: |-
+      Show a deployment
+    syntax: az deployment group show --resource-group myResourceGroup --name myDeployment
+  - summary: |-
+      Show a deployment in a specific subscription
+    syntax: az deployment group show --resource-group myResourceGroup --name myDeployment --subscription-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group that contains the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_group_validate
+  name: az deployment group validate
+  summary: |-
+    Validate whether a resource group scoped deployment template would be accepted, without deploying it.
+  description: |-
+    Validate a resource group scoped deployment, mirroring `az deployment group validate`. Validate is read-only: it asks Azure Resource Manager whether a template is syntactically correct and would be accepted, without creating or modifying any resources. Unlike `az deployment group what-if`, it reports whether the template is valid rather than predicting the individual resource changes. The template is supplied with exactly one of `--template-file` (a local ARM or Bicep template evaluated inline), `--template-uri` (a remote template URL), or `--template-spec-id` (the resource id of a Template Spec). `--resource-group` (required) is the resource group to validate against and `--name` (required) is the deployment name; `--subscription-id` (optional) selects the subscription. Parameters can be supplied with `--parameters-file` (a local parameters file), `--parameters-uri` (a remote parameters file URL), and/or one or more repeatable inline `--parameter KEY=VALUE` pairs; inline parameter values are parsed as JSON when possible (for example `count=3` becomes a number and `flag=true` becomes a bool) and otherwise treated as strings, quote a value to force a string (for example `zip="01234"`). Inline parameters overlay same-named keys from a parameters file and cannot be combined with `--parameters-uri`. `--query-string` carries a SAS token or other query string to use with the template URI and/or the parameters URI. `--mode` selects the deployment mode, `Incremental` (default) or `Complete`. `--validation-level` sets the validation level, one of `Template`, `Provider`, or `ProviderNoRbac`. `--rollback-on-error` records that the resource group should roll back to the last successful deployment on error, and `--rollback-to-deployment-name` rolls back to a specific named deployment instead; the two are mutually exclusive. When the template is valid the command returns the validation result; when it is not, the command reports the validation errors and exits with a non-zero status.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment group validate --resource-group
+                                 [--mode {Incremental, Complete}]
+                                 [--name]
+                                 [--parameter]
+                                 [--parameters-file]
+                                 [--parameters-uri]
+                                 [--profile]
+                                 [--query-string]
+                                 [--rollback-on-error]
+                                 [--rollback-to-deployment-name]
+                                 [--subscription-id]
+                                 [--template-file]
+                                 [--template-spec-id]
+                                 [--template-uri]
+                                 [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Validate a local Bicep template with inline parameters
+    syntax: az deployment group validate --resource-group myResourceGroup --name myDeployment --template-file ./main.bicep --parameter location=eastus --parameter instanceCount=3
+  - summary: |-
+      Validate a remote ARM template with a remote parameters file
+    syntax: az deployment group validate --resource-group myResourceGroup --name myDeployment --template-uri https://example.com/azuredeploy.json --parameters-uri https://example.com/azuredeploy.parameters.json --mode Incremental --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Validate a Template Spec in Complete mode at the Template validation level
+    syntax: az deployment group validate --resource-group myResourceGroup --name myDeployment --template-spec-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Resources/templateSpecs/myTemplateSpec/versions/1.0 --mode Complete --validation-level Template
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The name of the resource group to validate the deployment against.
+  optionalParameters:
+  - name: --mode
+    acceptedValues: Incremental, Complete
+    summary: |-
+      The deployment mode. Incremental (default) or Complete.
+  - name: --name
+    summary: |-
+      The name of the deployment. Defaults to a generated GUID when omitted.
+  - name: --parameter
+    summary: |-
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local parameters file to evaluate inline.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a parameters file.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      The query string (such as a SAS token) to use with the template URI. Only valid together with a template URI.
+  - name: --rollback-on-error
+    summary: |-
+      Roll the resource group back to the last successful deployment on error.
+  - name: --rollback-to-deployment-name
+    summary: |-
+      Roll the resource group back to a specific named deployment on error. Mutually exclusive with rollback-on-error.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM template file to validate inline.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec to validate.
+  - name: --template-uri
+    summary: |-
+      The URI of the ARM template to validate.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level of the deployment.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_deployment_group_what-if
   name: az deployment group what-if
   summary: |-
@@ -157,7 +540,7 @@ directCommands:
       The deployment mode. Incremental (default) or Complete.
   - name: --parameter
     summary: |-
-      Inline deployment parameter(s) in KEY=VALUE form (repeatable). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
   - name: --parameters-file
     summary: |-
       The path to a local parameters file to evaluate inline.
@@ -169,7 +552,7 @@ directCommands:
       Use the named profile for this command (overrides the active profile).
   - name: --query-string
     summary: |-
-      The query string (such as a SAS token) to use with the template URI and/or the parameters URI.
+      The query string (such as a SAS token) to use with the template URI. Only valid together with a template URI.
   - name: --result-format
     acceptedValues: FullResourcePayloads, ResourceIdOnly
     summary: |-
@@ -194,19 +577,28 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 commands:
+- az_deployment_group_cancel
 - az_deployment_group_create
+- az_deployment_group_delete
+- az_deployment_group_export
+- az_deployment_group_list
+- az_deployment_group_show
+- az_deployment_group_validate
 - az_deployment_group_what-if
 metadata:
   ms.date: 06/24/2026

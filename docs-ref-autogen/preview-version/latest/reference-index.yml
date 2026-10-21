@@ -17,11 +17,13 @@ directCommands:
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/login/index.md
   syntax: >-
     az login [--client-id]
+             [--federated-token]
              [--identity]
              [--object-id]
              [--out-profile]
              [--profile]
              [--resource-id]
+             [--service-principal]
              [--subscription-id]
              [--tenant-id]
              [--use-device-code]
@@ -32,11 +34,23 @@ directCommands:
   - summary: |-
       Login with device code
     syntax: az login --subscription-id 00000000-0000-0000-0000-000000000000 --use-device-code
+  - summary: |-
+      Login with a managed identity
+    syntax: az login --identity
+  - summary: |-
+      Login with a user-assigned managed identity
+    syntax: az login --identity --client-id 11111111-1111-1111-1111-111111111111
+  - summary: |-
+      Login with a managed identity using short flags
+    syntax: az login -i
   optionalParameters:
   - name: --client-id
     summary: |-
-      Client ID of the user-assigned managed identity.
+      Client ID of the user-assigned managed identity, or the application ID when used with --service-principal.
     groupName: Managed Identity Arguments
+  - name: --federated-token
+    summary: |-
+      Federated token issued by a trusted external identity provider. The issuer and subject must be configured as a federated credential on the application.
   - name: --identity
     summary: |-
       Login using managed identity in the current environment.
@@ -55,6 +69,9 @@ directCommands:
     summary: |-
       Resource ID of the user-assigned managed identity.
     groupName: Managed Identity Arguments
+  - name: --service-principal
+    summary: |-
+      Login as a service principal using a federated (OIDC) token.
   - name: --subscription-id
     summary: |-
       Azure Subscription Id.
@@ -68,17 +85,20 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_logout
   name: az logout
   summary: |-
@@ -97,17 +117,20 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 - uid: az_rest
   name: az rest
   summary: |-
@@ -184,18 +207,51 @@ directCommands:
   - name: --debug
     summary: |-
       Increase logging verbosity to show all debug logs.
-  - name: --help -h
+  - name: --help -h -help -? --?
     summary: |-
       Show help for the command or group and exit.
   - name: --no-cache
     summary: |-
       Bypass the extension discovery cache and reload extensions from disk.
   - name: --output -o
-    defaultValue: plain
-    acceptedValues: json, plain
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
     summary: |-
       Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_survey
+  name: az survey
+  summary: |-
+    Open the feedback form in the default System Browser to provide feedback about Azure CLI.
+  status: GA
+  sourceType: Core
+  syntax: az survey
+  examples:
+  - summary: |-
+      Open the system browser to the feedback form
+    syntax: az survey
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
 commands:
+- az_account
 - az_agent
 - az_config
 - az_deployment
@@ -203,11 +259,15 @@ commands:
 - az_extension
 - az_group
 - az_identity
+- az_keyvault
 - az_login
 - az_logout
 - az_msgraph
+- az_network
 - az_profile
 - az_rest
+- az_role
+- az_survey
 - az_vm
 metadata:
   description: AzClips CLI.
