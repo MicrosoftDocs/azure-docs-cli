@@ -1,0 +1,135 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_connection_managed
+name: az logicapp connection managed
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp connection managed** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Create managed API connections for deployed Logic Apps Standard sites.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_connection_managed_create
+  name: az logicapp connection managed create
+  summary: |-
+    Create and wire a managed API connection using distinct connection and app names.
+  description: |-
+    --name always names the connection; --logic-app-name names the consuming site. Uses the same guarded managed API/OAuth/identity creation as legacy connection create --managed-api. That legacy mode is deprecated but retains its original --name meaning throughout this preview; removal requires an announced breaking change. Does not broaden identity ownership or cleanup. OAuth failures may retain connection/access-policy resources. Inspect the reported state before retrying; timeout does not promise resource removal.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection managed create --auth-mode {managed-identity, oauth, raw, service-principal}
+                                          --connector
+                                          --location
+                                          --logic-app-name
+                                          --name
+                                          --resource-group
+                                          [--acquire-policy-token]
+                                          [--change-reference]
+                                          [--consent-timeout]
+                                          [--display-name]
+                                          [--force]
+                                          [--no-browser]
+                                          [--parameter]
+                                          [--parameter-set]
+                                          [--secret-parameter]
+                                          [--user-assigned-identity]
+  examples:
+  - summary: |-
+      Create an Azure Blob connection for the site's managed identity.
+    syntax: az logicapp connection managed create -g my-rg --logic-app-name my-app -n blobProd --connector azureblob -l eastus --auth-mode managed-identity
+  - summary: |-
+      Create an Office 365 connection with browser consent.
+    syntax: az logicapp connection managed create -g my-rg --logic-app-name my-app -n outlook --connector office365 -l eastus --auth-mode oauth
+  requiredParameters:
+  - isRequired: true
+    name: --auth-mode
+    acceptedValues: managed-identity, oauth, raw, service-principal
+    summary: |-
+      Authentication used by the connection. OAuth requires browser consent; managed-identity uses an identity already assigned to the app.
+  - isRequired: true
+    name: --connector
+    summary: |-
+      Managed API connector name or ARM managedApis id.
+  - isRequired: true
+    name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - isRequired: true
+    name: --logic-app-name
+    summary: |-
+      Logic App Standard site that will use the connection.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Managed API connection name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --consent-timeout
+    summary: |-
+      OAuth consent timeout in seconds, default 300. On failure resources may be retained; inspect before retrying.
+  - name: --display-name
+    summary: |-
+      Display name. Defaults to --name.
+  - name: --force
+    defaultValue: "False"
+    summary: |-
+      Replace existing managed connection wiring with revision and ownership checks.
+  - name: --no-browser
+    defaultValue: "False"
+    summary: |-
+      Print the OAuth consent URL instead of opening a browser. Loopback callback still required.
+  - name: --parameter
+    summary: |-
+      Non-secret NAME=VALUE connection parameter, repeatable.
+  - name: --parameter-set
+    summary: |-
+      Connector parameter set name.
+  - name: --secret-parameter
+    summary: |-
+      Secret parameter name. The value is read from standard input, never the command line.
+  - name: --user-assigned-identity
+    summary: |-
+      Resource id of an identity already assigned to the app. Defaults to the system identity.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_connection_managed_create
+metadata:
+  description: Create managed API connections for deployed Logic Apps Standard sites.

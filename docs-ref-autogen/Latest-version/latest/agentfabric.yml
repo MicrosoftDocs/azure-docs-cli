@@ -1,0 +1,517 @@
+### YamlMime:AzureCLIGroup
+uid: az_agentfabric
+name: az agentfabric
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **agentfabric** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az agentfabric** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Agent Fabric and related Microsoft.NetworkSecurity resources. Root commands manage Agent Fabric resources.
+description: |-
+  Manage Agent Fabric and related Microsoft.NetworkSecurity resources. Root create, show, list, update, and delete commands manage Agent Fabric resources.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_agentfabric_create
+  name: az agentfabric create
+  summary: |-
+    Create or replace an Agent Fabric resource.
+  description: |-
+    Create an Agent Fabric, including its optional system-assigned identity and complete customer-owned content inspection endpoint/API-key pair. Omitting the inspection profile or supplying an empty object requests no connection change for an existing Fabric.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric create --name
+                          --resource-group
+                          [--acquire-policy-token]
+                          [--change-reference]
+                          [--content-inspection-profile --inspection-profile]
+                          [--default-policy-groups]
+                          [--identity]
+                          [--location]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--tags]
+                          [--trust-domain]
+  examples:
+  - summary: |-
+      Create an Agent Fabric with customer-owned content inspection
+    syntax: az agentfabric create --resource-group rgnetworksecurity --name testAIFabric --location westus3 --trust-domain contoso.agentfabric --identity "{type:SystemAssigned}" --inspection-profile "{endpoint:'https://contoso.cognitiveservices.azure.com/',api-key:<content-safety-api-key>}"
+  - summary: |-
+      Create an Agent Fabric without content inspection
+    syntax: az agentfabric create --resource-group rgnetworksecurity --name testAIFabric --location westus3 --trust-domain contoso.agentfabric
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      The name of the AgentFabric.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --content-inspection-profile --inspection-profile -p
+    summary: |-
+      The connection to the customer's Azure Content Safety account. For a new fabric created with API version `2026-10-07-preview` or later, omitting this profile or supplying {} requests no inspection capability and uses no platform-owned account or shared-key fallback.  For an existing fabric, omitting the profile from PUT, including requests from older clients, or supplying {} preserves its customer-owned connection, legacy regional connection, or absence of connection. The empty object is a request for no connection change, not a stored replacement profile. Neither omission nor {} removes, probes, or creates a connection or cancels a pending connection update. Other Fabric fields and policy compatibility rules still apply. A nonempty request profile requires both endpoint and apiKey, even at the unchanged endpoint. PUT can rotate the key or replace the endpoint by supplying the complete pair. Tags- or identity-only PATCH requests cannot change this profile.  Existing legacy fabrics without a profile retain their regional Content Safety endpoint and authentication path. Omission or {} triggers no connection probe, account-management call, key retrieval, or credential requirement. Supplying a complete profile explicitly configures a customer-owned connection; there is no automatic conversion or failed-connection fallback to regional credentials.  The customer owns, pays for, and operates the account. The service does not create, reserve, manage, or delete it. The service validates new or changed endpoint/credential configuration and the required Content Safety API before activation; configuration alone does not indicate readiness or active policy enforcement. Unchanged configuration, GET, and list do not trigger a new validation request. A failed replacement preserves the existing connection and credential, including a legacy regional connection.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --default-policy-groups
+    summary: |-
+      The default policy groups to apply to all members of this fabric. A fabric without a configured inspection connection cannot reference a group containing any ContentInspection policy, even when that policy's selectors currently match no traffic. For an existing fabric, compatibility uses the stored configuration when PUT omits contentInspectionProfile or supplies an empty object. Existing legacy fabrics retain their regional Content Safety connection, which satisfies the inspection prerequisite without new probes. A connection still being validated is not an absent connection. Removing a group reference remains allowed, subject to other validation.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --identity
+    summary: |-
+      The managed service identity assigned to this fabric. The service uses it to reach the clusters associated with the fabric on the customer's behalf.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  - name: --trust-domain
+    summary: |-
+      The trust domain that scopes this fabric's member identities. It is the leading component of each member's identity, which takes the form `<trustDomain>/<agentFabricName>/<memberName>`. Set at creation and immutable thereafter; when omitted, the shared default trust domain `microsoft.agentfabric` is used.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_delete
+  name: az agentfabric delete
+  summary: |-
+    Delete an Agent Fabric resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric delete [--acquire-policy-token]
+                          [--change-reference]
+                          [--ids]
+                          [--name]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--resource-group]
+                          [--subscription]
+                          [--yes]
+  examples:
+  - summary: |-
+      Delete an Agent Fabric
+    syntax: az agentfabric delete --resource-group rgnetworksecurity --name testAIFabric
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the AgentFabric.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_list
+  name: az agentfabric list
+  summary: |-
+    List Agent Fabric resources.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric list [--max-items]
+                        [--next-token]
+                        [--resource-group]
+  examples:
+  - summary: |-
+      List Agent Fabrics in a resource group
+    syntax: az agentfabric list --resource-group rgnetworksecurity
+  - summary: |-
+      List Agent Fabrics in a subscription
+    syntax: az agentfabric list
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_show
+  name: az agentfabric show
+  summary: |-
+    Show an Agent Fabric resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric show [--ids]
+                        [--name]
+                        [--resource-group]
+                        [--subscription]
+  examples:
+  - summary: |-
+      Show an Agent Fabric
+    syntax: az agentfabric show --resource-group rgnetworksecurity --name testAIFabric
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the AgentFabric.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_update
+  name: az agentfabric update
+  summary: |-
+    Update Agent Fabric tags or system-assigned identity.
+  description: |-
+    Patch only tags and the system-assigned identity. Content inspection, trust domain, and default Policy Groups are not PATCH inputs.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric update [--acquire-policy-token]
+                          [--change-reference]
+                          [--identity]
+                          [--ids]
+                          [--name]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--resource-group]
+                          [--subscription]
+                          [--tags]
+  examples:
+  - summary: |-
+      Update Agent Fabric tags and identity
+    syntax: az agentfabric update --resource-group rgnetworksecurity --name testAIFabric --tags "{env:prod}" --identity "{type:SystemAssigned}"
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --identity
+    summary: |-
+      The managed service identity assigned to this fabric.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      The name of the AgentFabric.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_wait
+  name: az agentfabric wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric wait [--acquire-policy-token]
+                        [--change-reference]
+                        [--created]
+                        [--custom]
+                        [--deleted]
+                        [--exists]
+                        [--ids]
+                        [--interval]
+                        [--name]
+                        [--resource-group]
+                        [--subscription]
+                        [--timeout]
+                        [--updated]
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --name -n
+    summary: |-
+      The name of the AgentFabric.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_agentfabric_aks
+- az_agentfabric_aks_attach
+- az_agentfabric_aks_detach
+- az_agentfabric_aks_list
+- az_agentfabric_aks_show
+- az_agentfabric_aks_update
+- az_agentfabric_aks_wait
+- az_agentfabric_create
+- az_agentfabric_delete
+- az_agentfabric_egress-trust-bundle
+- az_agentfabric_egress-trust-bundle_list
+- az_agentfabric_egress-trust-bundle_show
+- az_agentfabric_list
+- az_agentfabric_member
+- az_agentfabric_member_list
+- az_agentfabric_member_show
+- az_agentfabric_member_wait
+- az_agentfabric_policy-group
+- az_agentfabric_policy-group_create
+- az_agentfabric_policy-group_delete
+- az_agentfabric_policy-group_list
+- az_agentfabric_policy-group_show
+- az_agentfabric_policy-group_update
+- az_agentfabric_policy-group_wait
+- az_agentfabric_show
+- az_agentfabric_update
+- az_agentfabric_wait
+metadata:
+  description: Manage Agent Fabric and related Microsoft.NetworkSecurity resources. Root create, show, list, update, and delete commands manage Agent Fabric resources.

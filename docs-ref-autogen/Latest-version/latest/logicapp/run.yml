@@ -1,0 +1,611 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_run
+name: az logicapp run
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp run** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Logic Apps Standard workflow runs.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_run_cancel
+  name: az logicapp run cancel
+  summary: |-
+    Request cancellation of one Stateful workflow run.
+  description: |-
+    Requires confirmation or --yes. A POST acknowledgement is not cancellation:
+    without --wait a bounded readback reports cancelled, pending or an observation
+    failure. --wait requires observed Cancelled for exit 0; another terminal state
+    exits 4 and a wait deadline exits 2. Already-terminal runs are unchanged (exit
+    0) without POST. Cancellation does not roll back effects or guarantee in-flight
+    actions stop. No uncertain request is retried, and timeout never sends another
+    cancellation. Stateless workflows are rejected before mutation.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp run cancel --run-id
+                           --workflow
+                           [--acquire-policy-token]
+                           [--change-reference]
+                           [--context]
+                           [--host-key]
+                           [--interval]
+                           [--local]
+                           [--name]
+                           [--port]
+                           [--resource-group]
+                           [--timeout]
+                           [--wait]
+                           [--yes]
+  examples:
+  - summary: |-
+      Request cancellation and wait for an observed Cancelled status.
+    syntax: az logicapp run cancel --local --workflow hello --run-id RUN_ID --yes --wait --timeout 60 --interval 2
+  requiredParameters:
+  - isRequired: true
+    name: --run-id
+    summary: |-
+      Workflow run id.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --interval
+    defaultValue: "5"
+    summary: |-
+      Polling interval in seconds (1-300), no greater than timeout. Defaults to 5.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --timeout
+    defaultValue: "300"
+    summary: |-
+      Observation deadline in seconds (1-86400). Timeout never cancels a run. Defaults to 300.
+  - name: --wait
+    defaultValue: "False"
+    summary: |-
+      Wait for observed Cancelled status, not just POST acknowledgement.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Skip interactive confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_run_list
+  name: az logicapp run list
+  summary: |-
+    List workflow runs.
+  description: |-
+    Pages server-side. Each response carries nextContinuationToken; pass it back as --next-token to fetch the next page. Do not derive the token yourself: the platform's token is what keeps runs created between pages from being skipped.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp run list --workflow
+                         [--context]
+                         [--continuation-token --next-token]
+                         [--host-key]
+                         [--local]
+                         [--max-items]
+                         [--name]
+                         [--port]
+                         [--resource-group]
+                         [--status]
+  examples:
+  - summary: |-
+      List the most recent runs from a local runtime.
+    syntax: az logicapp run list --local --port 7071 --workflow process-order --max-items 20
+  - summary: |-
+      List only failed runs of a deployed app.
+    syntax: az logicapp run list --resource-group orders-rg --name orders-app --workflow process-order --status Failed
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --continuation-token --next-token
+    summary: |-
+      Server-side continuation token returned as nextContinuationToken by a previous run list call; sent to the service as native $skiptoken and treated as opaque by the CLI. Do not derive the token yourself.
+    groupName: Pagination Arguments
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --max-items
+    summary: |-
+      Maximum number of runs to return in this page.
+    groupName: Pagination Arguments
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --status
+    summary: |-
+      Filter by run status, for example Failed or Succeeded.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_run_resubmit
+  name: az logicapp run resubmit
+  summary: |-
+    Request a new Stateful execution starting from one eligible action of a completed run.
+  description: |-
+    Requires --workflow, --run-id and one --action, plus confirmation or --yes.
+    This is the run-resubmit API with actionsToResubmit, not trigger-history replay.
+    The runtime must advertise canResubmit=true for that executed action; missing,
+    false or malformed eligibility, skipped actions and active source runs refuse
+    before POST. The CLI never enables the feature or emulates graph eligibility.
+    Run/action identity and stable metadata are rechecked after confirmation.
+    The runtime uses the source workflow version and retained prior results.
+    Selected/dependent actions can repeat external effects with current connections
+    and settings. This is a new execution, not in-place resume or exactly-once recovery.
+    HTTP 202 reports accepted, not completed. newRunId comes only from the service;
+    a missing identity reports acceptedNewRunIdUnknown. No Location/latest-run fallback,
+    trigger-history substitution, configuration restore or automatic POST retry.
+    Use run wait separately when a new identity is returned. Preflight/submission
+    each use a 60-second deadline excluding interactive confirmation time.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp run resubmit --action
+                             --run-id
+                             --workflow
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--context]
+                             [--host-key]
+                             [--local]
+                             [--name]
+                             [--port]
+                             [--resource-group]
+                             [--yes]
+  examples:
+  - summary: |-
+      Resubmit one eligible action from a retained completed Stateful run.
+    syntax: az logicapp run resubmit --local --workflow hello --run-id RUN_ID --action Send_HTTP --yes
+  requiredParameters:
+  - isRequired: true
+    name: --action
+    summary: |-
+      One executed action in the completed source run; requires runtime canResubmit=true.
+  - isRequired: true
+    name: --run-id
+    summary: |-
+      Workflow run id.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Skip confirmation of a new execution and potentially repeated external effects.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_run_show
+  name: az logicapp run show
+  summary: |-
+    Show one workflow run.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp run show --run-id
+                         --workflow
+                         [--context]
+                         [--host-key]
+                         [--local]
+                         [--name]
+                         [--port]
+                         [--resource-group]
+                         [--show-content-urls]
+  examples:
+  - summary: |-
+      Show a run from a local runtime.
+    syntax: az logicapp run show --local --port 7071 --workflow process-order --run-id 08584129676611502966413873720CU00
+  requiredParameters:
+  - isRequired: true
+    name: --run-id
+    summary: |-
+      Workflow run id.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --show-content-urls
+    defaultValue: "False"
+    summary: |-
+      Emit SAS-bearing content-link URIs. Default redacts URI values.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_run_start
+  name: az logicapp run start
+  summary: |-
+    Start a workflow run by firing a trigger.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp run start --trigger
+                          --workflow
+                          [--acquire-policy-token]
+                          [--change-reference]
+                          [--context]
+                          [--host-key]
+                          [--local]
+                          [--name]
+                          [--payload-file]
+                          [--port]
+                          [--resource-group]
+  examples:
+  - summary: |-
+      Start a run against a local runtime.
+    syntax: az logicapp run start --local --port 7071 --workflow process-order --trigger manual --payload-file .\payload.json
+  requiredParameters:
+  - isRequired: true
+    name: --trigger
+    summary: |-
+      Trigger name.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --payload-file
+    summary: |-
+      JSON payload file.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_run_wait
+  name: az logicapp run wait
+  summary: |-
+    Wait for a Stateful run to reach a terminal status within a deadline.
+  description: |-
+    Supports running local and deployed Standard apps and saved targets. Exit 0
+    means observed Succeeded; 4 means a different terminal status; 2 means the CLI
+    wait deadline expired (not workflow TimedOut); 1 means an observation error.
+    Missing runs, authorization failures, malformed responses and unknown statuses
+    fail promptly. No missing-run grace period, implicit cancellation or retry.
+    JSON/table/query output is preserved before nonzero result exits. Responses
+    omit inputs, outputs, provider errors and signed URLs. Each network request is
+    bounded; an in-flight read may exceed the polling deadline by its 5-second
+    read timeout. OS DNS resolution and CLI token acquisition are not forcibly
+    interrupted by that network timeout.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp run wait --run-id
+                         --workflow
+                         [--acquire-policy-token]
+                         [--change-reference]
+                         [--context]
+                         [--host-key]
+                         [--interval]
+                         [--local]
+                         [--name]
+                         [--port]
+                         [--resource-group]
+                         [--timeout]
+  examples:
+  - summary: |-
+      Wait up to a minute for a local Stateful run.
+    syntax: az logicapp run wait --local --workflow hello --run-id RUN_ID --timeout 60 --interval 2
+  requiredParameters:
+  - isRequired: true
+    name: --run-id
+    summary: |-
+      Workflow run id.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --interval
+    defaultValue: "5"
+    summary: |-
+      Polling interval in seconds (1-300), no greater than timeout. Defaults to 5.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --timeout
+    defaultValue: "300"
+    summary: |-
+      Observation deadline in seconds (1-86400). Timeout never cancels a run. Defaults to 300.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_run_action
+- az_logicapp_run_action_list
+- az_logicapp_run_action_show
+- az_logicapp_run_action_show-content
+- az_logicapp_run_cancel
+- az_logicapp_run_list
+- az_logicapp_run_resubmit
+- az_logicapp_run_show
+- az_logicapp_run_start
+- az_logicapp_run_wait
+metadata:
+  description: Manage Logic Apps Standard workflow runs.

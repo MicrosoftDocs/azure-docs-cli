@@ -1,0 +1,491 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_connection
+name: az logicapp connection
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp connection** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Author local and inspect deployed Logic Apps Standard connections.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_connection_create
+  name: az logicapp connection create
+  summary: |-
+    Add a service provider connection to a local project, or a managed API connection to a deployed app.
+  description: |-
+    Two modes. By default this writes a service provider connection into a local project. With --managed-api it instead creates an Azure managed API connection for a deployed Logic App, and --name means the Logic App rather than the connection; name the connection with --connection-name.
+
+    Local mode: Writes the connection into connections.json and any secret value into local.settings.json, which deployment package excludes. A secret is never accepted on the command line: --secret names the app setting and the value is read from standard input. For identity-based connections omit --secret entirely and supply --parameter NAME=VALUE instead; dots nest values, so authProvider.Type becomes a nested object, which is what the runtime requires. Parameters sourced from app configuration need a matching --app-setting. local.settings.json is added to .gitignore unless --no-gitignore is given. Not idempotent: it fails if the connection or app setting already exists, so it is safe to retry only with --force.
+
+    Managed API mode (--managed-api): Creates three coupled things, because the first alone is unusable: the ARM Microsoft.Web/connections resource, an access policy naming the app's managed identity, and a managedApiConnections entry in the app's connections.json. The connection is always created with kind V2, since V1 connections reject access policies and the kind cannot be changed afterwards. The app must already have a managed identity; without one the command stops before creating anything. An existing valid connections.json with a strong VFS ETag is also required before ARM mutations. Missing files or unversioned/weak revisions fail closed; the CLI does not attempt unqualified create-only file writes. Publication and file-entry restoration use the exact fresh reread ETag, never a wildcard. Revision conflicts are not retried; file guards are not an ARM transaction. --auth-mode oauth opens a browser so you can approve the connection. The CLI listens on a loopback port for the redirect, which is how it learns consent finished; the consent service redeems the authorization code itself, so the callback usually carries no code and nothing further is confirmed. Use --no-browser on a headless machine to print the URL instead of launching one. If consent, access-policy creation, or connections.json wiring fails, ARM resources and access policies are retained for manual inspection. An unconditional PUT can update another writer's resource even after preflight absence; it does not authorize automatic deletion or policy restoration. Properties, credentials or granted access may have changed. Inspect and deliberately recover retained state before retrying; --force is not a concurrency guarantee. Only guarded file-entry restoration is attempted. Existing credentials cannot always be recovered from ARM readback. An unreadable or malformed existing connections.json is not replaced with an empty file.
+
+    On Windows PowerShell, an @appsetting('NAME') value has to reach az intact. PowerShell forwards the parentheses unquoted to cmd.exe, which ends the IF EXIST block inside az.cmd and fails with "--parameter was unexpected at this time". Insert the PowerShell stop-parsing token immediately before the first --parameter to pass the rest of the line through unparsed.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection create --connector
+                                  --name
+                                  [--acquire-policy-token]
+                                  [--app-setting]
+                                  [--auth-mode {managed-identity, oauth, raw, service-principal}]
+                                  [--change-reference]
+                                  [--connection-name]
+                                  [--consent-timeout]
+                                  [--context]
+                                  [--display-name]
+                                  [--force]
+                                  [--location]
+                                  [--managed-api]
+                                  [--no-browser]
+                                  [--no-gitignore]
+                                  [--parameter]
+                                  [--parameter-set]
+                                  [--path]
+                                  [--resource-group]
+                                  [--secret]
+                                  [--secret-parameter]
+                                  [--user-assigned-identity]
+  examples:
+  - summary: |-
+      Add a Service Bus connection, value piped in (PowerShell).
+    syntax: $env:SB_CONNECTION | az logicapp connection create --path .\orders --name serviceBus --connector serviceBus --secret serviceBus_connectionString
+  - summary: |-
+      Add a Service Bus connection, value piped in (bash).
+    syntax: printf '%s' "$SB_CONNECTION" | az logicapp connection create --path ./orders --name serviceBus --connector serviceBus --secret serviceBus_connectionString
+  - summary: |-
+      Add a Service Bus connection that uses managed identity, with no secret anywhere.
+    syntax: az logicapp connection create --path ./orders --name serviceBus --connector serviceBus --parameter-set ManagedServiceIdentity --parameter "fullyQualifiedNamespace=@appsetting('serviceBus_fullyQualifiedNamespace')" authProvider.Type=ManagedServiceIdentity --app-setting serviceBus_fullyQualifiedNamespace=contoso.servicebus.windows.net
+  - summary: |-
+      Create an Azure Blob managed API connection that authenticates as the app's identity.
+    syntax: az logicapp connection create --managed-api -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection-name blobProd --connector azureblob -l eastus --auth-mode managed-identity
+  - summary: |-
+      Create an Office 365 connection and approve it in a browser.
+    syntax: az logicapp connection create --managed-api -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection-name outlook --connector office365 -l eastus --auth-mode oauth
+  - summary: |-
+      Same, on a headless machine - print the consent URL instead of opening a browser.
+    syntax: az logicapp connection create --managed-api -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection-name outlook --connector office365 -l eastus --auth-mode oauth --no-browser
+  requiredParameters:
+  - isRequired: true
+    name: --connector
+    summary: |-
+      Service provider connector, for example 'serviceBus'.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Connection name as referenced by workflows. With --managed-api this is the Logic App name instead, and the connection is named by --connection-name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --app-setting
+    summary: |-
+      Non-secret app setting as NAME=VALUE, repeatable. Written to local.settings.json for parameters sourced from app configuration.
+  - name: --auth-mode
+    acceptedValues: managed-identity, oauth, raw, service-principal
+    summary: |-
+      Authentication the connection uses. oauth opens a browser for consent. Required with --managed-api.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --connection-name
+    summary: |-
+      Name of the managed API connection to create. Required with --managed-api.
+  - name: --consent-timeout
+    summary: |-
+      Seconds to wait for browser consent before failing. Default 300. Connection/access-policy resources may be retained; inspect them before retrying. Only with --auth-mode oauth.
+    groupName: OAuth consent Arguments
+  - name: --context
+    summary: |-
+      Named local project context. Cloud contexts are refused; unavailable in legacy --managed-api mode.
+  - name: --display-name
+    summary: |-
+      Display name for the connection. Defaults to --connection-name.
+  - name: --force
+    defaultValue: "False"
+    summary: |-
+      Replace an existing connection or app setting.
+  - name: --location -l
+    summary: |-
+      Azure location for the connection and its managed API. Required with --managed-api.
+  - name: --managed-api
+    defaultValue: "False"
+    summary: |-
+      Deprecated compatibility mode. Prefer connection managed create --name CONNECTION --logic-app-name APP. Legacy --name still means the app.
+  - name: --no-browser
+    defaultValue: "False"
+    summary: |-
+      Print the consent URL instead of launching a browser. The command still listens for the redirect, so the browser must be able to reach this machine on loopback. Only with --auth-mode oauth.
+    groupName: OAuth consent Arguments
+  - name: --no-gitignore
+    defaultValue: "False"
+    summary: |-
+      Do not add local.settings.json to .gitignore.
+  - name: --parameter
+    summary: |-
+      Connection parameter as NAME=VALUE, repeatable. Use dots to nest, for example authProvider.Type=ManagedServiceIdentity. Values must not be secrets.
+  - name: --parameter-set
+    summary: |-
+      Connector parameter set name. Defaults to connectionString.
+  - name: --path
+    summary: |-
+      Existing project root. Defaults to local context path or current directory.
+  - name: --resource-group -g
+    summary: |-
+      Resource group of the Logic App. Required with --managed-api.
+  - name: --secret
+    summary: |-
+      App setting NAME that will hold a secret. The value is read from standard input and never from the command line. Omit for identity-based connections.
+  - name: --secret-parameter
+    summary: |-
+      Parameter path the secret binds to. Defaults to connectionString.
+  - name: --user-assigned-identity
+    summary: |-
+      Resource id of a user-assigned identity already assigned to the app. Defaults to the system-assigned identity.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_connection_delete
+  name: az logicapp connection delete
+  summary: |-
+    Remove a connection from a deployed Logic App.
+  description: |-
+    Removes the connections.json entry. For a managed API connection, only access policies matching the entry's exclusively owned system-assigned identity can be removed, and the resource is deleted only when exclusive ownership is established. User-assigned identities can be shared by multiple apps, so their policies and connection resource are retained, with a reason reported. Identities merely assigned to this app are not evidence of connection ownership. Pass --keep-resource to keep the resource even for an exclusively owned policy; this flag does not revoke shared user-assigned identity access. App settings referenced by a service provider connection are never deleted, only reported, since other connections may still read them. Removal requires a strong ETag from the current connections.json reread and sends that exact revision. Missing/weak ETags or a revision conflict stop the command without ARM cleanup or an unconditional retry. VFS receipt/readback checks remain required; these are not a cross-resource transaction. The authored managed connection ID must be a canonical relative resource ID in the selected subscription and resource group. Absolute, malformed or cross-scope IDs refuse before connection-resource ARM access or unlink, including with --keep-resource. Manage cross-scope resources explicitly.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection delete --connection
+                                  --name
+                                  --resource-group
+                                  [--acquire-policy-token]
+                                  [--change-reference]
+                                  [--class {managedApiConnections, serviceProviderConnections}]
+                                  [--keep-resource]
+                                  [--yes]
+  examples:
+  - summary: |-
+      Remove a connection from an app, without prompting.
+    syntax: az logicapp connection delete -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection cliPilotBlob --yes
+  - summary: |-
+      Remove this app's entry and exclusively owned policies, keeping the resource.
+    syntax: az logicapp connection delete -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection sharedBlob --keep-resource --yes
+  - summary: |-
+      Disambiguate a name that exists in both connection classes.
+    syntax: az logicapp connection delete -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection blob --class managedApiConnections --yes
+  requiredParameters:
+  - isRequired: true
+    name: --connection
+    summary: |-
+      Connection name in connections.json.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --class
+    acceptedValues: managedApiConnections, serviceProviderConnections
+    summary: |-
+      Connection class to search. Required only when the same name exists in both classes.
+  - name: --keep-resource
+    defaultValue: "False"
+    summary: |-
+      Keep the ARM connection resource. Remove only access policies exclusively owned by this app; shared user-assigned identity policies are retained. Managed API connections only.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_connection_list
+  name: az logicapp connection list
+  summary: |-
+    List connections wired into a deployed Logic App Standard app.
+  description: |-
+    Reads only the app's connections.json file through the ARM VFS proxy. This is the file-plane wiring that workflows can use; it does not reconcile against ARM Microsoft.Web/connections resources, so ARM-created-but-unwired connections and dangling file references are not surfaced. parameterValues and runtime URLs are redacted by default.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection list --name
+                                --resource-group
+                                [--continuation-token --next-token]
+                                [--max-items]
+                                [--show-runtime-urls]
+  examples:
+  - summary: |-
+      List app-wired connections.
+    syntax: az logicapp connection list --resource-group rg-lacli-ri2bg8 --name la-cli-pilot-ri2bg8
+  - summary: |-
+      List app-wired connections including runtime URLs.
+    syntax: az logicapp connection list -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --show-runtime-urls
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  optionalParameters:
+  - name: --continuation-token --next-token
+    summary: |-
+      Token returned as nextContinuationToken by a previous call, to fetch the next page.
+    groupName: Pagination Arguments
+  - name: --max-items
+    summary: |-
+      Maximum number of connections to return in this page.
+    groupName: Pagination Arguments
+  - name: --show-runtime-urls
+    defaultValue: "False"
+    summary: |-
+      Show connection runtime URLs. Default redacts them.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_connection_show
+  name: az logicapp connection show
+  summary: |-
+    Show one connection wired into a deployed Logic App Standard app.
+  description: |-
+    Reads only connections.json through the ARM VFS proxy. This file-plane view can differ from ARM Microsoft.Web/connections inventory. parameterValues and runtime URLs are redacted by default; use --show-runtime-urls only when you need the runtime URL in your current shell.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection show --connection
+                                --name
+                                --resource-group
+                                [--class {managedApiConnections, serviceProviderConnections}]
+                                [--show-runtime-urls]
+  examples:
+  - summary: |-
+      Show one app-wired connection.
+    syntax: az logicapp connection show --resource-group rg-lacli-ri2bg8 --name la-cli-pilot-ri2bg8 --connection cliPilotBlob
+  - summary: |-
+      Show one managed API connection from the managed class.
+    syntax: az logicapp connection show -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection office365-prod --class managedApiConnections
+  requiredParameters:
+  - isRequired: true
+    name: --connection
+    summary: |-
+      Connection name in connections.json.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  optionalParameters:
+  - name: --class
+    acceptedValues: managedApiConnections, serviceProviderConnections
+    summary: |-
+      Connection class to search.
+  - name: --show-runtime-urls
+    defaultValue: "False"
+    summary: |-
+      Show connection runtime URLs. Default redacts them.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_connection_test
+  name: az logicapp connection test
+  summary: |-
+    Test a configured Logic Apps Standard connection.
+  description: |-
+    Tests an app-wired service-provider connection, an app-wired managed API connection, or an ARM Microsoft.Web/connections resource id. A connector with no advertised test endpoint is not treated as healthy: the command reports outcome noTestAvailable, says the connection was not verified, and exits 3. Returned 5xx responses are failures, and 429 responses are couldNotReach with retryAfter preserved when supplied.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection test --connection
+                                --name
+                                --resource-group
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--class {managedApiConnections, serviceProviderConnections}]
+  examples:
+  - summary: |-
+      Test an app-wired connection by name.
+    syntax: az logicapp connection test --resource-group rg-lacli-ri2bg8 --name la-cli-pilot-ri2bg8 --connection cliPilotBlob
+  - summary: |-
+      Test a managed ARM connection resource by id.
+    syntax: az logicapp connection test -g rg-lacli-ri2bg8 -n la-cli-pilot-ri2bg8 --connection /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-lacli-ri2bg8/providers/Microsoft.Web/connections/office365-prod
+  requiredParameters:
+  - isRequired: true
+    name: --connection
+    summary: |-
+      Connection name or ARM Microsoft.Web/connections id.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --class
+    acceptedValues: managedApiConnections, serviceProviderConnections
+    summary: |-
+      Connection class to search when --connection is a name.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_connection_acl
+- az_logicapp_connection_acl_add
+- az_logicapp_connection_acl_list
+- az_logicapp_connection_acl_remove
+- az_logicapp_connection_acl_show
+- az_logicapp_connection_create
+- az_logicapp_connection_delete
+- az_logicapp_connection_list
+- az_logicapp_connection_managed
+- az_logicapp_connection_managed_create
+- az_logicapp_connection_show
+- az_logicapp_connection_test
+metadata:
+  description: Author local and inspect deployed Logic Apps Standard connections.

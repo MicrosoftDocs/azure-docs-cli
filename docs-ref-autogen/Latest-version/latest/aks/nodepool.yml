@@ -397,6 +397,7 @@ directCommands:
                         [--batch-soak-duration]
                         [--change-reference]
                         [--crg-id]
+                        [--disable-upgrade-gate]
                         [--disable-windows-outbound-nat]
                         [--drain-batch-size]
                         [--drain-timeout]
@@ -412,6 +413,7 @@ directCommands:
                         [--enable-osdisk-fc --enable-osdisk-full-caching]
                         [--enable-secure-boot]
                         [--enable-ultra-ssd]
+                        [--enable-upgrade-gate]
                         [--enable-vtpm]
                         [--eviction-policy {Deallocate, Delete}]
                         [--final-soak-duration]
@@ -507,6 +509,9 @@ directCommands:
   - summary: |-
       Create a node pool with an ordered mixed MIG profile layout
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-managed-gpu --gpu-mig-strategy Mixed --gpu-mig-profiles MIG1g MIG2g MIG2g MIG2g
+  - summary: |-
+      Create a node pool with upgrade gate enabled
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-upgrade-gate
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -546,6 +551,13 @@ directCommands:
   - name: --crg-id
     summary: |-
       The crg-id used to associate the new nodepool with the existed Capacity Reservation Group resource. Must use VMSS agent pool type.
+    isPreview: true
+  - name: --disable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Disable upgrade gate for the node pool.
+    description: |-
+      Rejected by the service when the cluster-level upgrade gate is enabled, since a node pool cannot opt out of a cluster-wide opt-in.
     isPreview: true
   - name: --disable-windows-outbound-nat
     defaultValue: "False"
@@ -620,6 +632,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable UltraSSD on agent node pool. Must use VMSS agent pool type.
+  - name: --enable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Enable upgrade gate for the node pool. Upgrades of this node pool wait for health signal validation and abort if unhealthy signals are observed.
+    description: |-
+      When the cluster-level upgrade gate is enabled, a new node pool inherits it by default. Health signals are HealthSignal custom resources published by monitoring components running in the cluster. Force upgrade (--enable-force-upgrade) overrides the gate. For more information, see https://aka.ms/aks/upgrade-gate.
+    isPreview: true
   - name: --enable-vtpm
     defaultValue: "False"
     summary: |-
@@ -2043,7 +2062,7 @@ directCommands:
   - name: --use-patch-api
     defaultValue: "False"
     summary: |-
-      Scale a VMSS node pool using the preview PATCH agent pool API instead of the default PUT API.
+      Scale a node pool using the preview PATCH agent pool API instead of the default PUT API.
     isPreview: true
   globalParameters:
   - name: --debug
@@ -2724,6 +2743,7 @@ directCommands:
                            [--disable-cluster-autoscaler]
                            [--disable-fips-image]
                            [--disable-secure-boot]
+                           [--disable-upgrade-gate]
                            [--disable-vtpm]
                            [--drain-batch-size]
                            [--drain-timeout]
@@ -2734,6 +2754,7 @@ directCommands:
                            [--enable-managed-dranet]
                            [--enable-managed-gpu {false, true}]
                            [--enable-secure-boot]
+                           [--enable-upgrade-gate]
                            [--enable-vtpm]
                            [--final-soak-duration]
                            [--gpu-driver {Install, None}]
@@ -2769,6 +2790,9 @@ directCommands:
   - summary: |-
       Reconcile the nodepool back to its current state.
     syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: |-
+      Enable upgrade gate for a node pool.
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-upgrade-gate
   - summary: |-
       Enable cluster-autoscaler within node count range [1,5]
     syntax: az aks nodepool update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
@@ -2857,6 +2881,13 @@ directCommands:
     summary: |-
       Disable Secure Boot on on an existing Trusted Launch enabled agent node pool.
     isPreview: true
+  - name: --disable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Disable upgrade gate for the node pool.
+    description: |-
+      Rejected by the service when the cluster-level upgrade gate is enabled, since a node pool cannot opt out of a cluster-wide opt-in. Use 'az aks update --disable-upgrade-gate' instead.
+    isPreview: true
   - name: --disable-vtpm
     defaultValue: "False"
     summary: |-
@@ -2902,6 +2933,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Secure Boot on an existing Trusted Launch enabled agent node pool. Must use VMSS agent pool type.
+    isPreview: true
+  - name: --enable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Enable upgrade gate for the node pool. Upgrades of this node pool wait for health signal validation and abort if unhealthy signals are observed.
+    description: |-
+      Health signals are HealthSignal custom resources published by monitoring components running in the cluster. Force upgrade (--enable-force-upgrade) overrides the gate. For more information, see https://aka.ms/aks/upgrade-gate.
     isPreview: true
   - name: --enable-vtpm
     defaultValue: "False"
