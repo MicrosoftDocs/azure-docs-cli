@@ -1782,6 +1782,7 @@ directCommands:
                   [--disable-opentelemetry-logs]
                   [--disable-opentelemetry-logs-traces]
                   [--disable-opentelemetry-metrics]
+                  [--disable-prometheus-metrics-scraping]
                   [--disable-public-fqdn]
                   [--disable-rbac]
                   [--disable-run-command]
@@ -1840,6 +1841,7 @@ directCommands:
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
                   [--enable-private-cluster]
+                  [--enable-prometheus-metrics-scraping]
                   [--enable-secret-rotation]
                   [--enable-secure-boot]
                   [--enable-service-account-image-pull]
@@ -1847,6 +1849,7 @@ directCommands:
                   [--enable-static-egress-gateway]
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
+                  [--enable-upgrade-gate]
                   [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-vtpm]
@@ -1955,6 +1958,7 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--syslog-port]
                   [--system-node-subnet-id]
                   [--tags]
                   [--tier {free, premium, standard}]
@@ -1968,6 +1972,9 @@ directCommands:
                   [--yes]
                   [--zones]
   examples:
+  - summary: |-
+      Create a kubernetes cluster with upgrade gate enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-upgrade-gate
   - summary: |-
       Create a Kubernetes cluster with an existing SSH public key.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --ssh-key-value /path/to/publickey
@@ -2085,6 +2092,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with Azure Monitor logs enabled (shorthand)
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
+  - summary: |-
+      Create a kubernetes cluster with Azure Monitor logs, Prometheus scraping disabled and a custom syslog port
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs --disable-prometheus-metrics-scraping --syslog-port 28331
   - summary: |-
       Create a kubernetes cluster with OpenTelemetry metrics on custom port
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-opentelemetry-metrics --opentelemetry-metrics-port-http 8888 --enable-azure-monitor-metrics
@@ -2336,6 +2346,11 @@ directCommands:
     summary: |-
       Disable OpenTelemetry metrics collection.
     isPreview: true
+  - name: --disable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Disable Prometheus metrics scraping by the Azure Monitor agent. Applies to the Azure Monitor profile.
+    isPreview: true
   - name: --disable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -2441,7 +2456,8 @@ directCommands:
     summary: |-
       Enable Azure Monitor logs for the cluster.
     description: |-
-      This is equivalent to using "--enable-addons monitoring". Turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect.
+      Enables Log Analytics monitoring for the cluster through the Azure Monitor profile. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+      Requires the cluster to use a managed identity; clusters created with service principal authentication are not supported.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -2508,7 +2524,7 @@ directCommands:
       operating system, addons, and managed containerized components
       (https://aka.ms/aks/components/docs). See Enable cluster-wide FIPS
       (https://aka.ms/aks/fips) for more details.
-      Requires Kubernetes version 1.34 or later and the
+      Requires Kubernetes version 1.35 or later and the
       Microsoft.ContainerService/EnableFIPSPreview feature to be registered
       on the subscription. All node pools must be FIPS-enabled; this command
       enables FIPS on the default node pool during cluster creation. Some
@@ -2634,6 +2650,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable private cluster.
+  - name: --enable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Enable Prometheus metrics scraping by the Azure Monitor agent. Applies to the Azure Monitor profile.
+    isPreview: true
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -2666,6 +2687,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable UltraSSD on agent node pool.
+  - name: --enable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Enable upgrade gate for the cluster. Agent pool upgrades wait for health signal validation and abort if unhealthy signals are observed.
+    description: |-
+      This is a cluster-wide opt-in that applies to all agent pools in the cluster; an agent pool cannot opt out of it. Health signals are HealthSignal custom resources published by monitoring components running in the cluster. Force upgrade (--enable-force-upgrade) overrides the gate. For more information, see https://aka.ms/aks/upgrade-gate.
+    isPreview: true
   - name: --enable-upstream-kubescheduler-user-configuration
     defaultValue: "False"
     summary: |-
@@ -2976,7 +3004,7 @@ directCommands:
   - name: --nodepool-name
     defaultValue: nodepool1
     summary: |-
-      Node pool name, upto 12 alphanumeric characters.
+      Node pool name, alphanumeric characters only. See https://aka.ms/aks-naming-rules for length limits.
   - name: --nodepool-tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -3138,6 +3166,12 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --syslog-port
+    summary: |-
+      Host port used by the Azure Monitor agent to collect syslog. Defaults to 28330 when unset.
+    description: |-
+      Applies to the Azure Monitor profile, configured with --enable-azure-monitor-logs. Distinct from --enable-syslog, which toggles syslog collection itself.
+    isPreview: true
   - name: --system-node-subnet-id
     summary: |-
       (Automatic SKU) The ID of a subnet in an existing VNet to be used by the Managed System Pool in an Automatic cluster.
@@ -3482,6 +3516,7 @@ directCommands:
                           [--acquire-policy-token]
                           [--change-reference]
                           [--no-wait]
+                          [--yes]
   examples:
   - summary: |-
       Disable Kubernetes addons. (autogenerated)
@@ -3512,6 +3547,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -3826,7 +3865,9 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
+    isDeprecated: true
     isPreview: true
+    deprecateInfo: Argument '--enable-msi-auth-for-monitoring' has been deprecated and will be removed in a future release. Container Insights onboarding is moving to the Azure Monitor profile, which supports managed identity authentication only. Use 'az aks create' or 'az aks update' with '--enable-azure-monitor-logs' instead.
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -5230,7 +5271,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --nodepool-name
     summary: |-
-      Node pool name, upto 12 alphanumeric characters.
+      Node pool name, alphanumeric characters only. See https://aka.ms/aks-naming-rules for length limits.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -6764,12 +6805,14 @@ directCommands:
                   [--disable-optimized-addon-scaling]
                   [--disable-pod-identity]
                   [--disable-private-cluster]
+                  [--disable-prometheus-metrics-scraping]
                   [--disable-public-fqdn]
                   [--disable-run-command]
                   [--disable-secret-rotation]
                   [--disable-service-account-image-pull]
                   [--disable-snapshot-controller]
                   [--disable-static-egress-gateway]
+                  [--disable-upgrade-gate]
                   [--disable-upstream-kubescheduler-user-configuration]
                   [--disable-vpa]
                   [--disable-workload-identity]
@@ -6819,6 +6862,7 @@ directCommands:
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
                   [--enable-private-cluster]
+                  [--enable-prometheus-metrics-scraping]
                   [--enable-public-fqdn]
                   [--enable-run-command]
                   [--enable-secret-rotation]
@@ -6826,6 +6870,7 @@ directCommands:
                   [--enable-snapshot-controller]
                   [--enable-static-egress-gateway]
                   [--enable-syslog {false, true}]
+                  [--enable-upgrade-gate]
                   [--enable-upstream-kubescheduler-user-configuration]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
@@ -6897,6 +6942,7 @@ directCommands:
                   [--storage-pool-option {NVMe, Temp, all}]
                   [--storage-pool-size]
                   [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
+                  [--syslog-port]
                   [--system-node-subnet-id]
                   [--tags]
                   [--tier {free, premium, standard}]
@@ -6909,6 +6955,9 @@ directCommands:
   - summary: |-
       Reconcile the cluster back to its current state.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster
+  - summary: |-
+      Enable upgrade gate for a kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-upgrade-gate
   - summary: |-
       Enable cluster-autoscaler within node count range [1,5]
     syntax: az aks update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n MyManagedCluster
@@ -7005,6 +7054,9 @@ directCommands:
   - summary: |-
       Enable Azure Monitor logs for a kubernetes cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-logs
+  - summary: |-
+      Re-enable Prometheus scraping and change the syslog port on a cluster with Azure Monitor logs enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-prometheus-metrics-scraping --syslog-port 29000
   - summary: |-
       Enable Azure Backup for a kubernetes cluster (default Week strategy). Requires the 'dataprotection' extension.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-backup --yes
@@ -7241,7 +7293,8 @@ directCommands:
     summary: |-
       Disable Azure Monitor logs for the cluster.
     description: |-
-      This is equivalent to using "az aks disable-addons -a monitoring". Disables Log Analytics monitoring for the cluster.
+      Disables Log Analytics monitoring for the cluster, removes the data collection rule association, and resets the Container Insights settings (syslog port, Prometheus scraping and container network logs) back to their defaults. The workspace is left recorded on the profile but is unused while disabled, and is replaced on the next enable.
+      If OpenTelemetry logs and traces are enabled they are disabled as well, and confirmation is requested first unless "--yes" is specified.
   - name: --disable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -7373,6 +7426,11 @@ directCommands:
     summary: |-
       Disable private cluster for apiserver vnet integration cluster.
     isPreview: true
+  - name: --disable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Disable Prometheus metrics scraping by the Azure Monitor agent. Applies to the Azure Monitor profile.
+    isPreview: true
   - name: --disable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -7398,6 +7456,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Static Egress Gateway addon to the cluster.
+    isPreview: true
+  - name: --disable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Disable upgrade gate for the cluster.
+    description: |-
+      Agent pools that explicitly enabled upgrade gate keep their own setting and remain gated.
     isPreview: true
   - name: --disable-upstream-kubescheduler-user-configuration
     defaultValue: "False"
@@ -7465,7 +7530,9 @@ directCommands:
     summary: |-
       Enable Azure Monitor logs for the cluster.
     description: |-
-      This is equivalent to using "az aks enable-addons -a monitoring". Enables Log Analytics monitoring for the cluster. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect.
+      Enables Log Analytics monitoring for the cluster through the Azure Monitor profile. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+      Requires the cluster to use a managed identity; clusters using service principal authentication are not supported.
+      Fails if Azure Monitor logs is already enabled on the cluster, or if the cluster was onboarded with legacy (non-managed-identity) authentication. To change the configuration, run "az aks update --disable-azure-monitor-logs" first.
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
     summary: |-
@@ -7523,7 +7590,7 @@ directCommands:
       operating system, addons, and managed containerized components
       (https://aka.ms/aks/components/docs). See Enable cluster-wide FIPS
       (https://aka.ms/aks/fips) for more details.
-      Requires Kubernetes version 1.34 or later and the
+      Requires Kubernetes version 1.35 or later and the
       Microsoft.ContainerService/EnableFIPSPreview feature to be registered
       on the subscription. Existing node pools must already be FIPS-enabled
       before enabling this cluster-level setting, and future node pools must
@@ -7647,6 +7714,11 @@ directCommands:
     summary: |-
       Enable private cluster for apiserver vnet integration cluster.
     isPreview: true
+  - name: --enable-prometheus-metrics-scraping
+    defaultValue: "False"
+    summary: |-
+      Enable Prometheus metrics scraping by the Azure Monitor agent. Applies to the Azure Monitor profile.
+    isPreview: true
   - name: --enable-public-fqdn
     defaultValue: "False"
     summary: |-
@@ -7677,6 +7749,13 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Enable syslog data collection for Monitoring addon.
+    isPreview: true
+  - name: --enable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Enable upgrade gate for the cluster. Agent pool upgrades wait for health signal validation and abort if unhealthy signals are observed.
+    description: |-
+      This is a cluster-wide opt-in that applies to all agent pools in the cluster; an agent pool cannot opt out of it. Health signals are HealthSignal custom resources published by monitoring components running in the cluster. Force upgrade (--enable-force-upgrade) overrides the gate. For more information, see https://aka.ms/aks/upgrade-gate.
     isPreview: true
   - name: --enable-upstream-kubescheduler-user-configuration
     defaultValue: "False"
@@ -7995,6 +8074,12 @@ directCommands:
     acceptedValues: PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: |-
       Set azure disk type storage pool sku for azure container storage.
+  - name: --syslog-port
+    summary: |-
+      Host port used by the Azure Monitor agent to collect syslog. Defaults to 28330 when unset.
+    description: |-
+      Applies to the Azure Monitor profile, configured with --enable-azure-monitor-logs. Distinct from --enable-syslog, which toggles syslog collection itself.
+    isPreview: true
   - name: --system-node-subnet-id
     summary: |-
       (Automatic SKU) The ID of a subnet in an existing VNet to be used by the Managed System Pool.

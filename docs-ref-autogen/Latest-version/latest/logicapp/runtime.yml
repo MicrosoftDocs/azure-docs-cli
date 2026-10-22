@@ -1,0 +1,276 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_runtime
+name: az logicapp runtime
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp runtime** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage local Logic Apps Standard runtimes.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_runtime_doctor
+  name: az logicapp runtime doctor
+  summary: |-
+    Diagnose a local project's runtime prerequisites without changing them.
+  description: |-
+    Reads project files, selected child-environment tool versions, cached bundle evidence and literal loopback ports. Never installs, downloads, starts, stops, repairs, decrypts settings, changes context, or contacts cloud storage. Configuration and upstream values are not printed. A stopped host is an optional skipped live probe, not an offline preflight failure. Unknown tool and bundle compatibility is not healthy. This is not a workflow business test. Exit 0 means no required blockers or unknown checks, 1 means a required failure, and 2 means a required unknown (or optional failed/warning/unknown with --strict). JSON and table findings are printed before a diagnostic nonzero exit. Exact tool/bundle compatibility remains required unknown, so an otherwise responsive project normally exits 2; unknown is not failure or healthy certification.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp runtime doctor [--acquire-policy-token]
+                               [--change-reference]
+                               [--context]
+                               [--path]
+                               [--port]
+                               [--probe-timeout]
+                               [--strict]
+  examples:
+  - summary: |-
+      Diagnose a local project and preserve JSON findings for CI.
+    syntax: az logicapp runtime doctor --path .\orders --output json
+  - summary: |-
+      Inspect a saved local context in a human-readable table.
+    syntax: az logicapp runtime doctor --context orders-local --output table
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named local context. Cannot combine with --path or --port.
+  - name: --path
+    summary: |-
+      Local project root. Defaults to active local context or current directory.
+  - name: --port
+    summary: |-
+      Local host port. Defaults to saved context port or 7071.
+  - name: --probe-timeout
+    defaultValue: "2"
+    summary: |-
+      Per-probe timeout in seconds, 1 to 10. No downloads or service starts.
+  - name: --strict
+    defaultValue: "False"
+    summary: |-
+      Also exit 2 for optional failed, warning or unknown checks.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_runtime_show
+  name: az logicapp runtime show
+  summary: |-
+    Show local Logic Apps Standard runtime status.
+  status: GA
+  sourceType: Extension
+  syntax: az logicapp runtime show [--port]
+  examples:
+  - summary: |-
+      Show runtime status.
+    syntax: az logicapp runtime show --port 7071
+  optionalParameters:
+  - name: --port
+    summary: |-
+      Local runtime port to inspect. Defaults to the saved local context port, otherwise 7071.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_runtime_start
+  name: az logicapp runtime start
+  summary: |-
+    Start a local Logic Apps Standard runtime.
+  description: |-
+    When the project's local.settings.json sets AzureWebJobsStorage to UseDevelopmentStorage=true, the Azurite storage emulator is started automatically on ports 10000-10002 unless one is already serving there, in which case it is reused. Only an emulator this CLI started is ever stopped, and only once no CLI-started foreground or background runtime is still using it. Process ownership is checked using both PID and creation time on Windows, Linux, and macOS; an unverified or recycled PID is never stopped. Pass --no-azurite to manage the emulator yourself.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp runtime start [--acquire-policy-token]
+                              [--background]
+                              [--change-reference]
+                              [--no-azurite]
+                              [--path]
+                              [--port]
+                              [--ready-timeout]
+  examples:
+  - summary: |-
+      Start a project runtime in the background.
+    syntax: az logicapp runtime start --path .\orders --port 7071 --background
+  - summary: |-
+      Start a runtime without touching the storage emulator.
+    syntax: az logicapp runtime start --path .\orders --port 7071 --background --no-azurite
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --background
+    defaultValue: "False"
+    summary: |-
+      Detach and record process identity for stop.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-azurite
+    defaultValue: "False"
+    summary: |-
+      Do not start the Azurite storage emulator. By default it is started when the project uses development storage and nothing is already serving on port 10000.
+  - name: --path
+    summary: |-
+      Project root to run.
+  - name: --port
+    summary: |-
+      Listener port. Defaults to the saved local context port, otherwise 7071.
+  - name: --ready-timeout
+    defaultValue: "30"
+    summary: |-
+      Seconds to wait for the management endpoint to answer when running in the background. 0 returns immediately without waiting.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_runtime_stop
+  name: az logicapp runtime stop
+  summary: |-
+    Stop a local runtime started by this CLI.
+  description: |-
+    A retry can remove a cleanup-pending receipt once every recorded process and
+    launch consumer has exited and the port is idle. It never signals a recycled or
+    unverifiable PID. Confirmed exited Windows processes may still have open handles.
+    Recovered receipts report result already-exited rather than terminated.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp runtime stop [--acquire-policy-token]
+                             [--all]
+                             [--change-reference]
+                             [--port]
+  examples:
+  - summary: |-
+      Stop one CLI-started runtime.
+    syntax: az logicapp runtime stop --port 7071
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --all
+    defaultValue: "False"
+    summary: |-
+      Stop all runtimes previously started by this CLI.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --port
+    summary: |-
+      Stop CLI-started runtime on this port. Defaults to the saved local context port, otherwise 7071. Ignored with --all.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_runtime_doctor
+- az_logicapp_runtime_show
+- az_logicapp_runtime_start
+- az_logicapp_runtime_stop
+metadata:
+  description: Manage local Logic Apps Standard runtimes.

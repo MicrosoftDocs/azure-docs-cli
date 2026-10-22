@@ -1,0 +1,122 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_trigger_history
+name: az logicapp trigger history
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp trigger history** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Replay explicitly selected retained trigger histories.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_trigger_history_resubmit
+  name: az logicapp trigger history resubmit
+  summary: |-
+    Request a new Stateful execution from an explicit retained fired trigger history.
+  description: |-
+    Requires confirmation or --yes and may duplicate external side effects. This
+    is not resume or exactly-once recovery; no source run is selected or changed.
+    Requires --workflow, --trigger and --history-name. Reads the selected trigger
+    and fired history directly, rechecking after confirmation. It does not search
+    histories or require a readable associated source run.
+    Never substitutes a run id for a history id. Missing history, Stateless and
+    invalid metadata fail before POST. A 202 reports accepted, not completed, with
+    newRunId only if the response identifies it. Otherwise it reports
+    acceptedNewRunIdUnknown. No Location/nextLink URL is followed or printed and
+    no resubmit request is retried. Preflight and submission each use a 60-second
+    deadline; interactive confirmation time is excluded.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp trigger history resubmit --history-name
+                                         --trigger
+                                         --workflow
+                                         [--acquire-policy-token]
+                                         [--change-reference]
+                                         [--context]
+                                         [--host-key]
+                                         [--local]
+                                         [--name]
+                                         [--port]
+                                         [--resource-group]
+                                         [--yes]
+  examples:
+  - summary: |-
+      Replay an explicitly selected retained fired trigger history.
+    syntax: az logicapp trigger history resubmit -g my-rg -n my-app --workflow hello --trigger manual --history-name HISTORY_ID --yes
+  requiredParameters:
+  - isRequired: true
+    name: --history-name
+    summary: |-
+      Exact retained fired trigger history to replay. Does not require a readable associated run.
+  - isRequired: true
+    name: --trigger
+    summary: |-
+      Trigger name.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Skip confirmation of potentially duplicated external effects.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_trigger_history_resubmit
+metadata:
+  description: Replay explicitly selected retained trigger histories.
