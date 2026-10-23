@@ -1,0 +1,241 @@
+### YamlMime:AzureCLIGroup
+uid: az_role_assignment
+name: az role assignment
+summary: |-
+  Manage Azure role assignments.
+status: GA
+sourceType: Core
+directCommands:
+- uid: az_role_assignment_create
+  name: az role assignment create
+  summary: |-
+    Create a role assignment.
+  description: |-
+    Create an Azure RBAC role assignment, granting a principal a role at a scope. The scope is the grant target (the subscription, resource group, or resource the access applies to): it defaults to the subscription and can be narrowed with `--resource-group` or overridden with `--scope` (the two are mutually exclusive). `--role` takes a role definition GUID or a fully-qualified role definition ID, and the principal (`--assignee-object-id` or `--assignee`) takes a GUID; role name and principal name/UPN/service-principal resolution are not yet supported. The assignment name is generated when `--name` is omitted. With a generated name, re-running create for a principal, role, and scope that already has an assignment returns that existing assignment instead of failing. Supplying an explicit `--name` is stricter: the command then fails if a differently-named assignment already grants that access.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az role assignment create --role
+                              [--assignee]
+                              [--assignee-object-id]
+                              [--assignee-principal-type {User, Group, ServicePrincipal, ForeignGroup}]
+                              [--condition]
+                              [--condition-version]
+                              [--description]
+                              [--name]
+                              [--profile]
+                              [--resource-group]
+                              [--scope]
+                              [--subscription-id]
+  examples:
+  - summary: |-
+      Create a role assignment at a resource group scope
+    syntax: az role assignment create --resource-group my-rg --role b24988ac-6180-42a0-ab88-20f7382dd24c --assignee-object-id 11111111-2222-3333-4444-555555555555
+  - summary: |-
+      Create a role assignment at an explicit scope
+    syntax: az role assignment create --scope /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg/providers/Microsoft.Storage/storageAccounts/my-account --role b24988ac-6180-42a0-ab88-20f7382dd24c --assignee-object-id 11111111-2222-3333-4444-555555555555
+  - summary: |-
+      Create a role assignment with a principal type and description
+    syntax: az role assignment create --scope /subscriptions/00000000-0000-0000-0000-000000000000 --role b24988ac-6180-42a0-ab88-20f7382dd24c --assignee-object-id 11111111-2222-3333-4444-555555555555 --assignee-principal-type ServicePrincipal --description "grant CI access"
+  requiredParameters:
+  - isRequired: true
+    name: --role
+    summary: |-
+      The role to assign: a role definition ID (GUID) or a fully-qualified role definition ID. Role name resolution is not yet supported.
+  optionalParameters:
+  - name: --assignee
+    summary: |-
+      The principal to assign the role to. Accepts an object (principal) ID; name/UPN/service-principal resolution is not yet supported.
+  - name: --assignee-object-id
+    summary: |-
+      The principal's object (principal) ID (GUID) to assign the role to.
+  - name: --assignee-principal-type
+    acceptedValues: User, Group, ServicePrincipal, ForeignGroup
+    summary: |-
+      The principal type of the assignee (User, Group, ServicePrincipal, or ForeignGroup).
+  - name: --condition
+    summary: |-
+      Condition under which the principal is granted permission.
+  - name: --condition-version
+    summary: |-
+      Version of the condition syntax (currently only '2.0').
+  - name: --description
+    summary: |-
+      Description of the role assignment.
+  - name: --name
+    summary: |-
+      The role assignment name (a GUID). Generated when omitted.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      Create the role assignment scoped to this resource group under the subscription. Mutually exclusive with --scope.
+  - name: --scope
+    summary: |-
+      Fully qualified scope to create the role assignment at (the grant target), e.g. a subscription, resource group, or resource ID. Mutually exclusive with --resource-group. Defaults to the subscription scope.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_role_assignment_delete
+  name: az role assignment delete
+  summary: |-
+    Delete a role assignment.
+  description: |-
+    Delete an Azure RBAC role assignment by scope and name. The scope is the delete target: it defaults to the subscription and can be narrowed with `--resource-group` or overridden with `--scope` (the two are mutually exclusive). `--name` (the assignment's GUID) is required: this targets exactly one already-known assignment. Deleting by principal/role filter, or deleting every assignment at a scope, is not supported — use `az role assignment list` first to find the assignment's name.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az role assignment delete --name
+                              [--profile]
+                              [--resource-group]
+                              [--scope]
+                              [--subscription-id]
+  examples:
+  - summary: |-
+      Delete a role assignment by name at a resource group scope
+    syntax: az role assignment delete --resource-group my-rg --name aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+  - summary: |-
+      Delete a role assignment at an explicit scope
+    syntax: az role assignment delete --scope /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg --name aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The role assignment name (a GUID) to delete.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      Delete the role assignment scoped to this resource group under the subscription. Mutually exclusive with --scope.
+  - name: --scope
+    summary: |-
+      Fully qualified scope to delete the role assignment from. Mutually exclusive with --resource-group. Defaults to the subscription scope.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_role_assignment_list
+  name: az role assignment list
+  summary: |-
+    List role assignments.
+  description: |-
+    List Azure RBAC role assignments at a subscription, resource group, or resource scope. The scope defaults to the active subscription.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az role assignment list [--all]
+                            [--assignee]
+                            [--assignee-object-id]
+                            [--include-groups]
+                            [--include-inherited]
+                            [--profile]
+                            [--resource-group]
+                            [--role]
+                            [--scope]
+                            [--subscription-id]
+  examples:
+  - summary: |-
+      List role assignments at the subscription scope
+    syntax: az role assignment list
+  - summary: |-
+      List role assignments scoped to a resource group
+    syntax: az role assignment list --resource-group my-rg
+  - summary: |-
+      List role assignments at an explicit scope
+    syntax: az role assignment list --scope /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg
+  - summary: |-
+      List role assignments for a specific principal
+    syntax: az role assignment list --assignee-object-id 11111111-2222-3333-4444-555555555555
+  optionalParameters:
+  - name: --all
+    summary: |-
+      List role assignments across the whole subscription, including every nested scope. Cannot be combined with --scope or --resource-group.
+  - name: --assignee
+    summary: |-
+      Filter to role assignments for this principal. Accepts an object (principal) ID; name/UPN/service-principal resolution is not yet supported.
+  - name: --assignee-object-id
+    summary: |-
+      Filter to role assignments for this principal's object (principal) ID (GUID).
+  - name: --include-groups
+    summary: |-
+      When filtering by assignee, also include assignments granted through groups the principal belongs to (transitive).
+  - name: --include-inherited
+    summary: |-
+      Include role assignments inherited from ancestor scopes. By default only assignments at the exact scope are listed.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      List role assignments scoped to this resource group under the subscription.
+  - name: --role
+    summary: |-
+      Filter to role assignments for this role definition ID (GUID). Role name resolution is not yet supported.
+  - name: --scope
+    summary: |-
+      Fully qualified scope to list role assignments at. Mutually exclusive with --resource-group. Defaults to the subscription scope.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_role_assignment_create
+- az_role_assignment_delete
+- az_role_assignment_list
+metadata:
+  description: Manage Azure role assignments.
