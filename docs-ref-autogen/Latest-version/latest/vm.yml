@@ -390,6 +390,7 @@ directCommands:
                  [--data-disk-caching]
                  [--data-disk-delete-option]
                  [--data-disk-encryption-sets]
+                 [--data-disk-fda --data-disk-storage-fd-alignment {Aligned, BestEffortAligned}]
                  [--data-disk-iops]
                  [--data-disk-mbps]
                  [--data-disk-sizes-gb]
@@ -433,6 +434,7 @@ directCommands:
                  [--os-disk-caching {None, ReadOnly, ReadWrite}]
                  [--os-disk-delete-option {Delete, Detach}]
                  [--os-disk-encryption-set]
+                 [--os-disk-fda --os-disk-storage-fd-alignment {Aligned, BestEffortAligned}]
                  [--os-disk-name]
                  [--os-disk-secure-vm-disk-encryption-set]
                  [--os-disk-security-encryption-type {DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly}]
@@ -445,6 +447,7 @@ directCommands:
                  [--plan-publisher]
                  [--platform-fault-domain]
                  [--ppg]
+                 [--preferred-size]
                  [--priority {Low, Regular, Spot, SpotPlus}]
                  [--private-ip-address]
                  [--processor-mode {Deterministic, Opportunistic}]
@@ -495,6 +498,9 @@ directCommands:
       Create a default Ubuntu2204 VM with automatic SSH authentication.
     syntax: az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204
   - summary: |-
+      Create a Flow VM with a preferred size in a supported region.
+    syntax: az vm create -n MyVm -g MyResourceGroup --location eastus2 --image Ubuntu2204 --preferred-size Standard_D2s_v3 --generate-ssh-keys --nsg-rule NONE --public-ip-address ""
+  - summary: |-
       Create a default RedHat VM with automatic SSH authentication using an image URN.
     syntax: az vm create -n MyVm -g MyResourceGroup --image RedHat:RHEL:7-RAW:7.4.2018010506
   - summary: |-
@@ -533,6 +539,13 @@ directCommands:
       az vm create -n MyVm -g MyResourceGroup --public-ip-address-dns-name MyUniqueDnsName \
           --image Ubuntu2204 --data-disk-sizes-gb 10 20 --size Standard_DS2_v2 \
           --generate-ssh-keys
+  - summary: |-
+      Create a VM in a single-zone Flexible VMSS with aligned OS and data disks.
+    syntax: >-
+      az vm create -g MyResourceGroup -n MyVm --location eastus2 --vmss MyFlexibleVmss \
+          --platform-fault-domain 0 --image Ubuntu2204 --size Standard_D4s_v5 \
+          --data-disk-sizes-gb 10 --os-disk-storage-fd-alignment Aligned \
+          --data-disk-storage-fd-alignment BestEffortAligned
   - summary: |-
       Create a Debian11 VM using Key Vault secrets.
     syntax: >-
@@ -675,6 +688,12 @@ directCommands:
   - name: --data-disk-encryption-sets
     summary: |-
       Names or IDs (space delimited) of disk encryption sets for data disks.
+    groupName: Storage Arguments
+  - name: --data-disk-fda --data-disk-storage-fd-alignment
+    acceptedValues: Aligned, BestEffortAligned
+    summary: |-
+      Specifies the storage fault domain alignment type for data disks. This option is only valid when the VM joins a single-zone Flexible VMSS and is set at create time. Omit this option to leave data disks unaligned.
+    isPreview: true
     groupName: Storage Arguments
   - name: --data-disk-iops
     summary: |-
@@ -851,6 +870,12 @@ directCommands:
     summary: |-
       Name or ID of disk encryption set for OS disk.
     groupName: Storage Arguments
+  - name: --os-disk-fda --os-disk-storage-fd-alignment
+    acceptedValues: Aligned, BestEffortAligned
+    summary: |-
+      Specifies the storage fault domain alignment type for the OS disk. This option is only valid when the VM joins a single-zone Flexible VMSS and is set at create time. Omit this option to leave the OS disk unaligned.
+    isPreview: true
+    groupName: Storage Arguments
   - name: --os-disk-name
     summary: |-
       The name of the new VM OS disk.
@@ -897,6 +922,10 @@ directCommands:
   - name: --ppg
     summary: |-
       The name or ID of the proximity placement group the VM should be associated with.
+  - name: --preferred-size
+    summary: |-
+      Preferred VM size for Flow VMs. Azure may deploy a compatible alternative size. Cannot be used with --size.
+    isPreview: true
   - name: --priority
     acceptedValues: Low, Regular, Spot, SpotPlus
     summary: |-
@@ -951,7 +980,6 @@ directCommands:
     summary: |-
       Specify the security type of the virtual machine.
   - name: --size
-    defaultValue: Standard_D2s_v5
     summary: |-
       The VM size to be created. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     valueFrom: az vm list-sizes
@@ -2964,6 +2992,7 @@ directCommands:
                  [--no-wait]
                  [--os-disk]
                  [--ppg]
+                 [--preferred-size]
                  [--priority {Low, Regular, Spot, SpotPlus}]
                  [--processor-mode {Deterministic, Opportunistic}]
                  [--proxy-agent-mode {Audit, Enforce}]
@@ -2992,6 +3021,12 @@ directCommands:
   - summary: |-
       Remove a tag.
     syntax: az vm update -n name -g group --remove tags.tagName
+  - summary: |-
+      Opt in to Flow VMs or change the preferred size.
+    syntax: az vm update -n MyVm -g MyResourceGroup --preferred-size Standard_D2s_v3
+  - summary: |-
+      Opt out of Flow VMs and pin a fixed size.
+    syntax: az vm update -n MyVm -g MyResourceGroup --size Standard_D2s_v3 --remove flexProfile
   - summary: |-
       Set the primary NIC of a VM.
     syntax: az vm update -n name -g group --set networkProfile.networkInterfaces[1].primary=false networkProfile.networkInterfaces[0].primary=true
@@ -3145,6 +3180,10 @@ directCommands:
   - name: --ppg
     summary: |-
       The name or ID of the proximity placement group the VM should be associated with.
+  - name: --preferred-size
+    summary: |-
+      Preferred VM size for Flow VMs. Azure may deploy a compatible alternative size. Cannot be used with --size.
+    isPreview: true
   - name: --priority
     acceptedValues: Low, Regular, Spot, SpotPlus
     summary: |-

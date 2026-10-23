@@ -75,6 +75,7 @@ directCommands:
                         [--scale-down-mode {Deallocate, Delete}]
                         [--snapshot-id]
                         [--spot-max-price]
+                        [--ssh-access {disabled, entraid, localuser}]
                         [--tags]
                         [--undrainable-node-behavior]
                         [--vm-set-type]
@@ -173,6 +174,8 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Use FIPS-enabled OS on agent nodes.
+    description: |-
+      Automatically enabled for Windows2025 node pools because Windows2025 requires a FIPS-enabled OS image.
   - name: --enable-managed-dranet
     defaultValue: "False"
     summary: |-
@@ -326,6 +329,11 @@ directCommands:
     defaultValue: nan
     summary: |-
       It can only be set when --priority is Spot. Specify the maximum price you are willing to pay in US Dollars. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. It can only include up to 5 decimal places.
+  - name: --ssh-access
+    defaultValue: localuser
+    acceptedValues: disabled, entraid, localuser
+    summary: |-
+      Configure SSH access for the node pool.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -2536,11 +2544,13 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
-                           [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404}]
+                           [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2022, Windows2025}]
                            [--scale-down-mode {Deallocate, Delete}]
+                           [--ssh-access {disabled, entraid, localuser}]
                            [--tags]
                            [--undrainable-node-behavior]
                            [--update-cluster-autoscaler]
+                           [--yes]
   examples:
   - summary: |-
       Reconcile the nodepool back to its current state.
@@ -2554,6 +2564,12 @@ directCommands:
   - summary: |-
       Update min-count or max-count for cluster autoscaler.
     syntax: az aks nodepool update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: |-
+      Upgrade a Windows2022 node pool to Windows2025 with a FIPS-enabled OS image.
+    syntax: >-
+      az aks nodepool update --resource-group MyResourceGroup \
+          --cluster-name MyManagedCluster --name npwin \
+          --os-sku Windows2025 --enable-fips-image
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -2675,13 +2691,20 @@ directCommands:
     summary: |-
       The node taints for the node pool. You can update the existing node taint of a nodepool or create a new node taint for a nodepool. Pass the empty string `""` to remove all taints.
   - name: --os-sku
-    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404
+    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2022, Windows2025
     summary: |-
-      The os-sku of the agent node pool.
+      The OS SKU of the agent node pool.
+    description: |-
+      Windows2022 node pools can be upgraded to Windows2025. Specify --enable-fips-image when upgrading a non-FIPS node pool.
+      Downgrading from Windows2025 to Windows2022 is not supported.
   - name: --scale-down-mode
     acceptedValues: Deallocate, Delete
     summary: |-
       Describe how VMs are added to or removed from nodepools.
+  - name: --ssh-access
+    acceptedValues: disabled, entraid, localuser
+    summary: |-
+      Update SSH access for the node pool. For Kubernetes versions below 1.37, this change takes effect after the node pool is upgraded. For Kubernetes versions 1.37 and above, this change can trigger node pool reimaging.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -2692,6 +2715,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update min-count or max-count for cluster autoscaler. Not supported for VirtualMachines pools; use 'az aks nodepool auto-scale update' instead.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"

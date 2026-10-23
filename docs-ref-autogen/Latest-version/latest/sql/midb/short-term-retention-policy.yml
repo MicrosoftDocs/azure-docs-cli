@@ -10,6 +10,8 @@ directCommands:
   name: az sql midb short-term-retention-policy set
   summary: |-
     Update short term retention for automated backups on a single database.
+  description: |-
+    Locking backup immutability is irreversible and is supported only for live managed databases. Confirmation is required only when --lock-immutability is true; use --yes to skip it. Do not specify --lock-immutability with --deleted-time, even when false. Retention cannot be reduced on a dropped database whose backup immutability is locked.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -21,23 +23,28 @@ directCommands:
                                                 [--change-reference]
                                                 [--deleted-time]
                                                 [--ids]
+                                                [--lock-immutability {false, true}]
                                                 [--managed-instance --mi]
                                                 [--name]
                                                 [--no-wait]
                                                 [--resource-group]
                                                 [--subscription]
+                                                [--yes]
   examples:
   - summary: |-
       Set backup short term retention for live managed database.
-    syntax: az sql midb short-term-retention-policy set -g mygroup --mi myinstance -n mymanageddb --retention-days retentionindays
+    syntax: az sql midb short-term-retention-policy set -g mygroup --mi myinstance -n mymanageddb --retention-days 7
   - summary: |-
       Set backup short term retention for dropped managed database.
-    syntax: az sql midb short-term-retention-policy set -g mygroup --mi myinstance -n mymanageddb --deleted-time "2018-05-20T05:34:22" --retention-days retentionindays
+    syntax: az sql midb short-term-retention-policy set -g mygroup --mi myinstance -n mymanageddb --deleted-time "2018-05-20T05:34:22" --retention-days 7
+  - summary: |-
+      Lock backup immutability for a live managed database, skipping confirmation.
+    syntax: az sql midb short-term-retention-policy set --resource-group mygroup --mi myinstance --name mymanageddb --retention-days 7 --lock-immutability true --yes
   requiredParameters:
   - isRequired: true
     name: --retention-days
     summary: |-
-      New backup short term retention policy in days.Valid policy for live database is 7-35 days, valid policy for dropped databases is 0-35 days.
+      New backup short term retention policy in days. Valid policy for live database is 7-35 days, valid policy for dropped databases is 0-35 days.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -49,11 +56,15 @@ directCommands:
     groupName: Global Policy Arguments
   - name: --deleted-time
     summary: |-
-      If specified, updates retention days for a deleted database, instead of an existing database.Must match the deleted time of a deleted database on the source Managed Instance.
+      If specified, updates retention days for a deleted database, instead of an existing database. Must match the deleted time of a deleted database on the source Managed Instance.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --lock-immutability
+    acceptedValues: false, true
+    summary: |-
+      Whether to lock backup immutability for a live managed database. Locking is irreversible. Cannot be used with --deleted-time, even when false.
   - name: --managed-instance --mi
     summary: |-
       Name of the Azure SQL Managed Instance.
@@ -74,6 +85,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation when locking backup immutability.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -102,6 +117,8 @@ directCommands:
   name: az sql midb short-term-retention-policy show
   summary: |-
     Show short term retention for automated backups on a single database.
+  description: |-
+    The immutabilityStatus output property reports Disabled, Enabled or Locked for live and restorable dropped managed databases when returned by the service.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -173,5 +190,5 @@ commands:
 - az_sql_midb_short-term-retention-policy_set
 - az_sql_midb_short-term-retention-policy_show
 metadata:
-  ms.date: 08/19/2026
+  ms.date: 10/20/2026
   description: Manage SQL Managed Instance database backup short term retention policy.

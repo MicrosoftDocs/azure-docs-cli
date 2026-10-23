@@ -10,29 +10,31 @@ directCommands:
   name: az sql db str-policy set
   summary: |-
     Update short term retention settings for a live database.
+  description: |-
+    Locking backup immutability is irreversible. Confirmation is required only when --lock-immutability is true. Use --yes to skip confirmation. Include --retention-days when locking. To preserve retention, use the current value from str-policy show. When increasing retention on a locked policy, also specify --lock-immutability true. Use str-policy show to check the policy after a --no-wait update.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql db str-policy set --retention-days
-                             [--acquire-policy-token]
+    az sql db str-policy set [--acquire-policy-token]
                              [--change-reference]
                              [--diffbackup-hours]
                              [--ids]
+                             [--lock-immutability {false, true}]
                              [--name]
                              [--no-wait]
                              [--resource-group]
+                             [--retention-days]
                              [--server]
                              [--subscription]
+                             [--yes]
   examples:
   - summary: |-
       Set short term retention for a live database.
-    syntax: az sql db str-policy set -g mygroup -s myserver -n mydb --retention-days retentionindays --diffbackup-hours diffbackuphours
-  requiredParameters:
-  - isRequired: true
-    name: --retention-days
-    summary: |-
-      New backup short term retention policy retention in days.Valid retention days for live database of (DTU) Basic can be 1-7 days; Rest models can be 1-35 days.
+    syntax: az sql db str-policy set --resource-group mygroup --server myserver --name mydb --retention-days 7 --diffbackup-hours 24
+  - summary: |-
+      Lock backup immutability with seven-day retention, skipping confirmation.
+    syntax: az sql db str-policy set --resource-group mygroup --server myserver --name mydb --retention-days 7 --lock-immutability true --yes
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -49,6 +51,10 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --lock-immutability
+    acceptedValues: false, true
+    summary: |-
+      Whether to lock backup immutability. Locking is irreversible. Setting false does not unlock an already locked policy.
   - name: --name -n
     summary: |-
       Name of the Azure SQL Database.
@@ -61,6 +67,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --retention-days
+    summary: |-
+      New backup short term retention policy retention in days.Valid retention days for live database of (DTU) Basic can be 1-7 days; Rest models can be 1-35 days.
   - name: --server -s
     summary: |-
       Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
@@ -69,6 +78,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation when locking backup immutability.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -97,6 +110,8 @@ directCommands:
   name: az sql db str-policy show
   summary: |-
     Show the short term retention policy for a live database.
+  description: |-
+    The immutabilityStatus output property reports Disabled, Enabled or Locked when returned by the service.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
@@ -110,6 +125,9 @@ directCommands:
   - summary: |-
       Show short term retention policy for a live database.
     syntax: az sql db str-policy show -g mygroup -s myserver -n mydb
+  - summary: |-
+      Show the current backup immutability status.
+    syntax: az sql db str-policy show --resource-group mygroup --server myserver --name mydb --query immutabilityStatus
   optionalParameters:
   - name: --ids
     summary: |-
@@ -178,11 +196,18 @@ directCommands:
                               [--subscription]
                               [--timeout]
                               [--updated]
+  examples:
+  - summary: |-
+      Wait until the default short term retention policy exists.
+    syntax: az sql db str-policy wait --resource-group mygroup --server myserver --name mydb --policy-name default --exists
+  - summary: |-
+      Wait until backup immutability is locked.
+    syntax: az sql db str-policy wait --resource-group mygroup --server myserver --name mydb --policy-name default --custom "immutabilityStatus=='Locked'"
   requiredParameters:
   - isRequired: true
     name: --policy-name
     summary: |-
-      The policy name. Should always be "default". "default" Required.
+      The policy name. Should always be "default".
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -275,5 +300,5 @@ commands:
 - az_sql_db_str-policy_show
 - az_sql_db_str-policy_wait
 metadata:
-  ms.date: 08/19/2026
+  ms.date: 10/20/2026
   description: Manage SQL database short term retention policy.
