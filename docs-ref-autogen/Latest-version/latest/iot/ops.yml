@@ -285,10 +285,20 @@ directCommands:
     The result of the command nets an IoT Operations instance with
     a set of default resources configured for cohesive function.
 
-    To enable broker disk persistence at least a value for --persist-max-size
-    must be provided. When enabled the default configuration is constrained to
+    Use --use-preview to select the bundled preview runtime.
+    Creating an Azure IoT Operations preview instance is subject to the Supplemental Terms of Use for Microsoft Azure Previews at the following URL.
+    https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/
+    Using --use-preview constitutes acceptance of these terms.
+
+    On GA, broker disk persistence requires a value for --persist-max-size.
+    When enabled the default configuration is constrained to
     dynamic persistence across state store, retain messages and subscriber
     queues.
+
+    The bundled preview runtime enables disk persistence by default with a 3Gi
+    buffer and dynamic state store persistence. The --persist-* options do not
+    disable it. Use --broker-config-file to replace the generated broker
+    configuration when different persistence settings are required.
 
     To enable edge to cloud resource hydration please use the
     `az iot ops enable-rsync` command post instance creation.
@@ -326,9 +336,14 @@ directCommands:
                       [--persist-mode]
                       [--persist-pvc-sc]
                       [--skip-sr-ra {false, true}]
+                      [--sku {Essentials, Standard}]
                       [--tags]
                       [--trust-settings]
+                      [--use-preview {false, true}]
   examples:
+  - summary: |-
+      Create an Essentials SKU instance. Essentials is intended for single-node deployments and disables OPC UA.
+    syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID --sku Essentials
   - summary: |-
       Create the target instance with minimum input.
     syntax: az iot ops create --cluster mycluster -g myresourcegroup --name myinstance --sr-resource-id $SCHEMA_REGISTRY_RESOURCE_ID --ns-resource-id $NAMESPACE_RESOURCE_ID
@@ -466,7 +481,7 @@ directCommands:
     groupName: Extension Config Arguments
   - name: --persist-max-size
     summary: |-
-      The max size of the message buffer on disk. Setting a value will enable disk persistence. Kubernetes resource units must be used e.g. the following value suffixes are supported: E, P, T, G, M, K. You can also use the power-of-two equivalents: Ei, Pi, Ti, Gi, Mi, Ki.
+      The max size of the message buffer on disk. Setting a value enables disk persistence on GA. Preview enables a 3Gi buffer and dynamic state store persistence by default; use --broker-config-file to replace the generated broker configuration. Kubernetes resource units must be used e.g. the following value suffixes are supported: E, P, T, G, M, K. You can also use the power-of-two equivalents: Ei, Pi, Ti, Gi, Mi, Ki.
     groupName: Disk Persistence Arguments
   - name: --persist-mode
     summary: |-
@@ -481,6 +496,10 @@ directCommands:
     summary: |-
       When used the role assignment between the IoT Operations extension system-managed identity and schema registry will be skipped.
     groupName: Role Assignment Arguments
+  - name: --sku
+    acceptedValues: Essentials, Standard
+    summary: |-
+      Billing SKU for the IoT Operations instance. If omitted, Standard is used. Essentials supports single-node deployments, does not support OPC UA, and cannot be changed after creation. For Azure IoT Operations pricing and licensing terms, see https://www.microsoft.com/licensing/terms/productoffering/MicrosoftAzure/MOSA#clause-2792-h3-1.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -488,6 +507,10 @@ directCommands:
     summary: |-
       Settings for user provided trust bundle. Used for component TLS. Format is space-separated key=value pairs. The following keys are required: `issuerName`, `issuerKind`, `configMapName`, `configMapKey`. If not used, a system provided self-signed trust bundle is configured.
     groupName: Trust Arguments
+  - name: --use-preview
+    acceptedValues: false, true
+    summary: |-
+      Create using the bundled preview runtime profile instead of the GA profile. Creating an Azure IoT Operations preview instance is subject to the Supplemental Terms of Use for Microsoft Azure Previews at the following URL. https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/ Using --use-preview constitutes acceptance of these terms.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -706,6 +729,14 @@ directCommands:
   name: az iot ops get-versions
   summary: |-
     Opens the version guide located at https://aka.ms/aio-versions in the default browser.
+  description: |-
+    Use --inline to report local package versions and bundled runtime profiles
+    without authentication.
+    The extensions field retains the shared foundation and default create versions.
+    runtimeProfiles lists each bundled channel's target version, actual deployment
+    train and source provenance.
+    These are package inputs, not installed cluster versions or a list of qualified
+    upgrade paths.
   status: Experimental
   isExperimental: true
   previewOrExperimentalInfo: 'This command is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -718,6 +749,9 @@ directCommands:
   - summary: |-
       Route to the version guide in a new browser window.
     syntax: az iot ops get-versions
+  - summary: |-
+      Show bundled runtime profiles without contacting Azure.
+    syntax: az iot ops get-versions --inline --query runtimeProfiles
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -730,7 +764,7 @@ directCommands:
   - name: --inline
     acceptedValues: false, true
     summary: |-
-      Provides key version attributes in console output.
+      Reports bundled versions and runtime profiles without contacting a cluster. The extensions field describes shared dependencies and the default create profile.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -1209,6 +1243,8 @@ directCommands:
     deployed cluster side services that make up IoT Operations and compare them
     with the built-in deployment that would be executed with `az iot ops init`
     and `az iot ops create`.
+    Version-pinned upgrades and repairs require `autoUpgradeMinorVersion=false`.
+    Disable Arc automatic upgrades explicitly before proceeding.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -1363,6 +1399,7 @@ commands:
 - az_iot_ops_check
 - az_iot_ops_clone
 - az_iot_ops_connector
+- az_iot_ops_connector_list
 - az_iot_ops_connector_opcua
 - az_iot_ops_connector_opcua_client
 - az_iot_ops_connector_opcua_client_add
@@ -1376,6 +1413,7 @@ commands:
 - az_iot_ops_connector_opcua_trust_add
 - az_iot_ops_connector_opcua_trust_remove
 - az_iot_ops_connector_opcua_trust_show
+- az_iot_ops_connector_show
 - az_iot_ops_connector_template
 - az_iot_ops_connector_template_create
 - az_iot_ops_connector_template_delete
@@ -1437,6 +1475,10 @@ commands:
 - az_iot_ops_identity_show
 - az_iot_ops_init
 - az_iot_ops_list
+- az_iot_ops_live-data
+- az_iot_ops_live-data_disable
+- az_iot_ops_live-data_enable
+- az_iot_ops_live-data_show
 - az_iot_ops_mgmt-actions
 - az_iot_ops_mgmt-actions_disable
 - az_iot_ops_mgmt-actions_enable
