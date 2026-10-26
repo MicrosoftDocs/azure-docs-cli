@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 09/25/2026
+ms.date: 10/26/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -31,6 +31,14 @@ The breaking changes listed in this section are planned for the next major relea
 - Learn how to find all Helm charts stored in a Helm repository here: `az acr helm list`. If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 - For more information on managing and deploying applications for Kubernetes, see https://aka.ms/acr/helm.
 
+## cognitiveservices
+
+### `cognitiveservices agent`
+
+[Link to cognitiveservices agent reference group](/cli/azure/cognitiveservices/agent)
+
+- 'cognitiveservices agent' has been deprecated and will be removed in the first release after February 28, 2027.
+
 ## compute_recommender
 
 ### `compute-recommender spot-placement-recommender`
@@ -38,6 +46,14 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to compute-recommender reference group](/cli/azure/compute-recommender)
 
 - 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.92.0) scheduled for Nov 2026. Use 'az compute-recommender spot-placement-score' instead.
+
+## containerapp
+
+### `containerapp env create`
+
+[Link to containerapp env reference group](/cli/azure/containerapp/env)
+
+- The default value of '--logs-destination' will be changed to 'azure-monitor' from 'log-analytics' in 2.93.0. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli/pull/34228.
 
 ## netappfiles
 
@@ -102,6 +118,14 @@ The breaking changes listed in this section are planned for the next major relea
 - After retirement, the service API stops responding and these commands will stop functioning; they will be removed from the Azure CLI in a later release.
 - Migrate blueprint definitions to Template Specs and assignments to Azure Deployment Stacks (recommended).
 - Migration guidance: https://aka.ms/AzureBlueprintsRetirement
+
+## azext_containerapp
+
+### `containerapp env create`
+
+[Link to containerapp env reference group](/cli/azure/containerapp/env)
+
+- The default value of '--logs-destination' will be changed to 'azure-monitor' from 'log-analytics' in 2.93.0. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli/pull/34228.
 
 ## azext_managednetworkfabric
 
