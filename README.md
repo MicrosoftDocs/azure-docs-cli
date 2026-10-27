@@ -1,6 +1,6 @@
 # Azure CLI documentation
 
-This repository hosts the documentation source for the Azure CLI, published on [learn.microsoft.com](https://learn.microsoft.com/cli/azure/).
+This repository hosts the documentation source for the Azure CLI, published on [Microsoft Learn](https://learn.microsoft.com/cli/azure/).
 
 ## Public contributions
 
@@ -17,4 +17,3 @@ with different workflows:
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
