@@ -77,7 +77,7 @@ By default the installer does **not** modify your `PATH`, so azcli (`az`) instal
 - **Make it permanent** (optional) — add the same line to your shell profile (`~/.zshrc` / `~/.bashrc`, or your PowerShell `$PROFILE`). Note that putting the folder on `PATH` makes `az` resolve to azcli and **shadows** the classic `azure-cli`.
 
 > [!TIP]
-> Want to keep both installed and switch between the classic Azure CLI and the preview build in the same session? See [Switch between the classic Azure CLI and the preview build](./switch-cli-versions.md).
+> For more information about switching between the two installations in the same session, see [Switch between the classic Azure CLI and the preview build](switch-cli-versions.md).
 
 ## Uninstall
 

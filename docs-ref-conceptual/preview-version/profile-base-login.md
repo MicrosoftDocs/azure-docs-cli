@@ -1,12 +1,13 @@
 ---
-title: Manage sign-in profiles in Azure CLI (Preview)
-description: Learn how to use named profiles in Azure CLI to save sign-in context, switch between accounts and subscriptions, and run individual commands against a specific profile.
+title: Manage sign-in profiles in Azure CLI (preview)
+description: Learn how to use named profiles in the Azure CLI preview to save sign-in context, switch between accounts and subscriptions, and run individual commands against a specific profile.
 ms.topic: concept-article
+ms.date: 10/27/2026
 ---
 
-# Manage sign-in profiles in Azure CLI (Preview)
+# Manage sign-in profiles in Azure CLI (preview)
 
-A _profile_ is a named sign-in context that Azure CLI saves when you authenticate. Each profile remembers the tenant, subscription, cloud, and sign-in information needed to connect to Azure. Profiles let you switch between accounts, tenants, and subscriptions without signing in each time.
+A _profile_ is a named sign-in context that the Azure CLI preview saves when you authenticate. Each profile remembers the tenant, subscription, cloud, and sign-in information needed to connect to Azure. Profiles let you switch between accounts, tenants, and subscriptions without signing in each time.
 
 Profiles are useful when you regularly work across multiple contexts, such as personal and corporate subscriptions or separate development and production environments.
 
@@ -168,9 +169,9 @@ description = 'Name of the active Azure CLI profile'
 
 ## Next steps
 
-- To learn the core concepts and current limitations of the preview, see
-  [Get started with Azure CLI][01].
-- If you run into problems, see [Troubleshoot Azure CLI issues][02].
+- For more information about core concepts and current limitations, see
+  [Get started with Azure CLI (preview)][01].
+- For more information about resolving issues, see [Troubleshoot Azure CLI issues (preview)][02].
 
 <!-- link references -->
 

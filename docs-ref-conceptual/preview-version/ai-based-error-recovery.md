@@ -1,14 +1,15 @@
 ---
-title: AI-based error recovery in Azure CLI (Preview)
-description: Learn how AI-based error recovery in Azure CLI analyzes command failures, identifies likely root causes, and provides guided troubleshooting steps.
+title: AI-based error recovery in Azure CLI (preview)
+description: Learn how AI-based error recovery in the Azure CLI preview analyzes command failures, identifies likely root causes, and provides guided troubleshooting steps.
+ms.date: 10/27/2026
 ---
 
-# AI-based error recovery in Azure CLI (Preview)
+# AI-based error recovery in Azure CLI (preview)
 
-AI-based error recovery is a built-in capability in Azure CLI that helps you resolve command
+AI-based error recovery is a built-in capability in the Azure CLI preview that helps you resolve command
 failures more efficiently.
 
-When an `az` command fails, Azure CLI uses an integrated AI model to analyze the error and provide
+When an `az` command fails, the Azure CLI preview uses an integrated AI model to analyze the error and provide
 guided troubleshooting instead of displaying only raw or cryptic error messages.
 
 The AI model can:
@@ -201,7 +202,7 @@ az config set --key agent.trace.enabled --value true
 When tracing is enabled, each session writes a JSONL trace file to the location specified by
 `agent.trace.path`. The file contains the model input and output and remains on your local machine.
 
-For more information, see [Configuration Management][01].
+For more information, see [Configuration management][01].
 
 ### Can I rely completely on the AI suggestions?
 

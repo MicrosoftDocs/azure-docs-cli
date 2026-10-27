@@ -1,19 +1,20 @@
 ---
 title: Configuration management
 description: Learn how to manage Azure CLI preview configuration settings, including keys, environment variables, and file locations.
+ms.date: 10/27/2026
 ---
 
 # Configuration management
 
-Azure CLI preview stores user-scope configuration in a global JSON file.
+The Azure CLI preview stores user-scope configuration in a global JSON file.
 
 Configuration follows strict precedence: **command args > environment variables > global config > defaults**.
 
-## Valid Configuration Keys
+## Valid configuration keys
 
 | Key                                           | Type   | Default            | Notes                                                                                                                                                                                                                                                                                                                                                                                                       |
 | --------------------------------------------- | ------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `core.logging.level`                          | string | `warn`             | Log level: `debug`, `info`, `warn`, `error`. Diagnostics (`warn`/`info`/`verbose`/`debug`) are written to **stderr**; command results stay on stdout. See [CLI Usage](#cli-usage) below.                                                                                                                                                                                                                    |
+| `core.logging.level` | string | `warn` | Log level: `debug`, `info`, `warn`, `error`. The CLI writes diagnostics (`warn`/`info`/`verbose`/`debug`) to **stderr** and command results to **stdout**. For more information, see [CLI usage](#cli-usage). |                                                                                                                                                                                                                    |
 | `core.output.color`                           | string | `auto`             | CLI color rendering mode: `auto` (respect env vars and redirection), `always` (force color on), `never` (force color off). `NO_COLOR` and `FORCE_COLOR` env vars still take precedence over this setting. CLI-scoped; PowerShell coloring is controlled by the PS host.                                                                                                                                     |
 | `core.http.maxRetries`                        | int    | `3`                | Max HTTP request retries                                                                                                                                                                                                                                                                                                                                                                                    |
 | `core.http.maxRetriesFor429`                  | int    | `5`                | Max retries for 429 (rate limit) responses                                                                                                                                                                                                                                                                                                                                                                  |
@@ -38,7 +39,7 @@ Configuration follows strict precedence: **command args > environment variables 
 | `defaults.vmss`                               | string | (empty)            | Default VMSS name                                                                                                                                                                                                                                                                                                                                                                                           |
 | `defaults.acr`                                | string | (empty)            | Default ACR name                                                                                                                                                                                                                                                                                                                                                                                            |
 
-## CLI Usage
+## CLI usage
 
 `core.logging.level` controls runtime host logging verbosity in CLI sessions.
 Use `--debug` to force debug-level output for a single invocation; this
@@ -136,7 +137,7 @@ az config info
 az config info --keys-only
 ```
 
-## Environment Variable Mappings
+## Environment variable mappings
 
 You can override configuration using environment variables:
 
@@ -144,7 +145,7 @@ You can override configuration using environment variables:
 | -------------------- | -------------------- |
 | `AZCLIPS_LOG_LEVEL`  | `core.logging.level` |
 
-## Configuration File Location
+## Configuration file location
 
 Configuration is stored at:
 
