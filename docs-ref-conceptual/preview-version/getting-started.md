@@ -7,16 +7,13 @@ ai-usage: ai-assisted
 
 # Get started with Azure CLI (preview)
 
-This article introduces the Azure CLI preview and explains its core concepts, supported environments,
-and current limitations.
+This article introduces the Azure CLI preview and explains its core concepts, supported environments, and current limitations.
 
 ## What is Azure CLI?
 
-The Azure CLI preview is an AI-enhanced command-line experience for Azure that helps you work more efficiently
-by reducing the complexity of Azure CLI and Azure PowerShell commands.
+The Azure CLI preview is an AI-enhanced command-line experience for Azure that helps you work more efficiently by reducing the complexity of Azure CLI and Azure PowerShell commands.
 
-Rather than replacing existing tools, the Azure CLI preview builds on them by providing intelligent guidance
-while continuing to use the same Azure management APIs and authentication model.
+Rather than replacing existing tools, the Azure CLI preview builds on them by providing intelligent guidance while continuing to use the same Azure management APIs and authentication model.
 
 ## Core concepts
 
@@ -33,16 +30,13 @@ The Azure CLI preview uses the following core concepts:
 
 Sign in to the Azure CLI preview with `az login`.
 
-Azure CLI and Azure PowerShell don't share authenticated sessions during the preview. If you use
-both tools, sign in separately to each: use `az login` for Azure CLI and `Connect-AzAccount` for
-Azure PowerShell.
+Azure CLI and Azure PowerShell don't share authenticated sessions during the preview. If you use both tools, sign in separately to each: use `az login` for Azure CLI and `Connect-AzAccount` for Azure PowerShell.
 
 For the best experience, use interactive user authentication.
 
 ## Current limitations
 
-The preview primarily supports interactive command-line use. Some automation scenarios and
-noninteractive authentication methods aren't yet supported.
+The preview primarily supports interactive command-line use. Some automation scenarios and noninteractive authentication methods aren't yet supported.
 
 Authentication support is currently limited to interactive user sign-in.
 
@@ -60,12 +54,9 @@ Other preview limitations include:
 
 ## Coexistence with Azure CLI and Azure PowerShell
 
-Azure CLI preview is designed to coexist with existing Azure CLI and Azure PowerShell
-installations.
+Azure CLI preview is designed to coexist with existing Azure CLI and Azure PowerShell installations.
 
-Installing Azure CLI preview doesn't replace your existing installation. You can continue
-using Azure CLI and Azure PowerShell exactly as you do today while evaluating Azure CLI
-preview.
+Installing Azure CLI preview doesn't replace your existing installation. You can continue using Azure CLI and Azure PowerShell exactly as you do today while evaluating Azure CLI preview.
 
 This allows you to:
 
@@ -74,8 +65,7 @@ This allows you to:
 - Continue using existing scripts and automation
 - Roll back to your existing workflow at any time
 
-For more information, see
-[Switch between the classic Azure CLI and the preview build](./switch-cli-versions.md).
+For more information, see [Switch between the classic Azure CLI and the preview build](./switch-cli-versions.md).
 
 ## Supported environments
 

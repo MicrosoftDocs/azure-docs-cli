@@ -10,12 +10,9 @@ This article highlights new features and capabilities available in the Azure CLI
 
 ## Tab completion
 
-The Azure CLI preview provides shell-native Tab completion to help you construct commands and
-reduce errors during command entry.
+The Azure CLI preview provides shell-native Tab completion to help you construct commands and reduce errors during command entry.
 
-When you type part of a command and press <kbd>Tab</kbd>, the Azure CLI preview provides contextual
-suggestions based on the current command. Suggestions can include commands, subcommands, parameter
-names, and valid parameter values.
+When you type part of a command and press <kbd>Tab</kbd>, the Azure CLI preview provides contextual suggestions based on the current command. Suggestions can include commands, subcommands, parameter names, and valid parameter values.
 
 ### Examples
 
@@ -27,8 +24,7 @@ names, and valid parameter values.
 
 ### How it works
 
-Tab completion integrates with your existing terminal environment and uses the native completion
-mechanism of your shell.
+Tab completion integrates with your existing terminal environment and uses the native completion mechanism of your shell.
 
 The feature:
 
@@ -37,8 +33,7 @@ The feature:
 - Completes commands using local Azure CLI metadata
 - Works offline and doesn't require authentication for supported completion types
 
-The Azure CLI preview doesn't introduce a new interface or change existing shell behavior. Existing shell
-features, such as history-based suggestions, continue to work as expected.
+The Azure CLI preview doesn't introduce a new interface or change existing shell behavior. Existing shell features, such as history-based suggestions, continue to work as expected.
 
 ### Preview behavior
 
@@ -52,8 +47,6 @@ During the preview:
 
 ## Profile-based sign-in
 
-The Azure CLI preview supports _profiles_, which let you save named sign-in contexts for different accounts,
-tenants, and subscriptions. Profiles make it easy to switch between environments without signing in
-again.
+The Azure CLI preview supports _profiles_, which let you save named sign-in contexts for different accounts, tenants, and subscriptions. Profiles make it easy to switch between environments without signing in again.
 
 For more information, see [Manage sign-in profiles in Azure CLI (preview)](profile-base-login.md).

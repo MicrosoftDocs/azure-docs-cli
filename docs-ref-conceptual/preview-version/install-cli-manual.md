@@ -21,8 +21,7 @@ First choose a package type:
 
 Then choose the archive for your machine and package type:
 
-Use the `linux-musl` archives on musl-based distributions such as Alpine Linux. Use the standard
-`linux` archives on glibc-based distributions such as Ubuntu, Debian, Fedora, and Azure Linux.
+Use the `linux-musl` archives on musl-based distributions such as Alpine Linux. Use the standard `linux` archives on glibc-based distributions such as Ubuntu, Debian, Fedora, and Azure Linux.
 
 | Your machine | Lean package | Full package |
 | --- | --- | --- |

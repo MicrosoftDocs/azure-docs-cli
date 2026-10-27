@@ -41,9 +41,7 @@ Configuration follows strict precedence: **command args > environment variables 
 
 ## CLI usage
 
-`core.logging.level` controls runtime host logging verbosity in CLI sessions.
-Use `--debug` to force debug-level output for a single invocation; this
-override does not persist to config.
+`core.logging.level` controls runtime host logging verbosity in CLI sessions. Use `--debug` to force debug-level output for a single invocation; this override does not persist to config.
 
 ### Stream routing
 

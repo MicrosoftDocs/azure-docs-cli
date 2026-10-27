@@ -69,8 +69,7 @@ If the Azure CLI preview can't open links in your browser when running inside Wi
 
 ## Report an issue
 
-If you encounter a problem that you can't resolve, report it in [the AzCLIPS GitHub repository][01].
-Include:
+If you encounter a problem that you can't resolve, report it in [the AzCLIPS GitHub repository][01]. Include:
 
 - A description of the issue
 - The command you ran
