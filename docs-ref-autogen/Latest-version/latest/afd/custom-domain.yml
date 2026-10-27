@@ -30,6 +30,8 @@ directCommands:
                                 [--mtls-settings]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--secret]
+                                [--server-tls-group-policy --tls-group-policy {Custom, Enhanced, Standard}]
+                                [--server-tls-groups]
   examples:
   - summary: |-
       AFDCustomDomains_Create
@@ -95,6 +97,15 @@ directCommands:
     summary: |-
       Resource reference to the secret. ie. subs/rg/profile/secret.
     groupName: Secret Arguments
+  - name: --server-tls-group-policy --tls-group-policy
+    acceptedValues: Custom, Enhanced, Standard
+    summary: |-
+      Server TLS group policy that will be used for Https.
+    groupName: TlsSettings Arguments
+  - name: --server-tls-groups
+    summary: |-
+      Server TLS groups that will be used for Https when serverTlsGroupPolicy is Custom.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: TlsSettings Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -424,12 +435,17 @@ directCommands:
                                 [--remove]
                                 [--resource-group]
                                 [--secret]
+                                [--server-tls-group-policy --tls-group-policy {Custom, Enhanced, Standard}]
+                                [--server-tls-groups]
                                 [--set]
                                 [--subscription]
   examples:
   - summary: |-
       AFDCustomDomains_Create
     syntax: az afd custom-domain update --resource-group RG --profile-name profile1 --custom-domain-name domain1 --azure-dns-zone  --host-name www.someDomain.net --mtls-settings "{allowedFqdns:[foo.contoso.com],scenario:ClientCertificateRequiredAndValidated,secrets:[{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name1},{id:/subscriptions/subid/resourcegroups/RG/providers/Microsoft.Cdn/profiles/profile1/secrets/name2}]}" --certificate-type ManagedCertificate --cipher-suite-set-type Customized --customized-cipher-suite-set "{cipher-suite-set-for-tls12:[ECDHE_RSA_AES128_GCM_SHA256],cipher-suite-set-for-tls13:[TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384]}" --minimum-tls-version TLS12
+  - summary: |-
+      Configure custom TLS groups
+    syntax: az afd custom-domain update --resource-group MyResourceGroup --profile-name MyProfile --custom-domain-name MyDomain --server-tls-group-policy Custom --server-tls-groups X25519MLKEM768 X25519
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -503,6 +519,15 @@ directCommands:
     summary: |-
       Resource reference to the secret. ie. subs/rg/profile/secret.
     groupName: Secret Arguments
+  - name: --server-tls-group-policy --tls-group-policy
+    acceptedValues: Custom, Enhanced, Standard
+    summary: |-
+      Server TLS group policy that will be used for Https.
+    groupName: TlsSettings Arguments
+  - name: --server-tls-groups
+    summary: |-
+      Server TLS groups that will be used for Https when serverTlsGroupPolicy is Custom.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: TlsSettings Arguments
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
