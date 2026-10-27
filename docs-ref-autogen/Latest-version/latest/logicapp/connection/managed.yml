@@ -5,33 +5,35 @@ extensionInformation: |-
   > [!NOTE]
   > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp connection managed** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Create managed API connections for deployed Logic Apps Standard sites.
+  Create Azure managed API connections for local projects or deployed Standard sites.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_logicapp_connection_managed_create
   name: az logicapp connection managed create
   summary: |-
-    Create and wire a managed API connection using distinct connection and app names.
+    Create an Azure managed API connection and wire a local project or deployed app.
   description: |-
-    --name always names the connection; --logic-app-name names the consuming site. Uses the same guarded managed API/OAuth/identity creation as legacy connection create --managed-api. That legacy mode is deprecated but retains its original --name meaning throughout this preview; removal requires an announced breaking change. Does not broaden identity ownership or cleanup. OAuth failures may retain connection/access-policy resources. Inspect the reported state before retrying; timeout does not promise resource removal.
+    --name always names the connection. Choose --path or a local --context for local development; --logic-app-name or a cloud --context selects a deployed app. With no explicit target the active context is used. Local Azure scope comes from local.settings.json Values.WORKFLOWS_SUBSCRIPTION_ID, WORKFLOWS_RESOURCE_GROUP_NAME and WORKFLOWS_LOCATION_NAME; explicit --subscription, --resource-group and --location override those values without changing settings or the default account. Azure login is still required. Local projects use a seven-day development connection key stored only in local.settings.json and referenced from connections.json. No deployed app, managed identity or access-policy write is needed. Local auth-mode managed-identity and user-assigned identities are unsupported; raw, service-principal and oauth configure the connector's backend authentication, independently of the local runtime key. Local settings must be unencrypted and not tracked by Git; .gitignore protection is added. Force is required for existing Azure resources, local wiring or the key setting. Failures may retain Azure resources and partially updated local files; inspect before retrying. Deployed targets retain the guarded managed API/OAuth/identity creation of legacy connection create --managed-api. That legacy mode is deprecated but retains its original --name meaning throughout this preview; removal requires an announced breaking change and it remains deployed-only. OAuth failures may retain connection/access-policy resources. Inspect the reported state before retrying; timeout does not promise resource removal.
   status: GA
   sourceType: Extension
   syntax: >-
     az logicapp connection managed create --auth-mode {managed-identity, oauth, raw, service-principal}
                                           --connector
-                                          --location
-                                          --logic-app-name
                                           --name
-                                          --resource-group
                                           [--acquire-policy-token]
                                           [--change-reference]
                                           [--consent-timeout]
+                                          [--context]
                                           [--display-name]
                                           [--force]
+                                          [--location]
+                                          [--logic-app-name]
                                           [--no-browser]
                                           [--parameter]
                                           [--parameter-set]
+                                          [--path]
+                                          [--resource-group]
                                           [--secret-parameter]
                                           [--user-assigned-identity]
   examples:
@@ -41,32 +43,26 @@ directCommands:
   - summary: |-
       Create an Office 365 connection with browser consent.
     syntax: az logicapp connection managed create -g my-rg --logic-app-name my-app -n outlook --connector office365 -l eastus --auth-mode oauth
+  - summary: |-
+      Create a connection for a local project using its Azure settings.
+    syntax: az logicapp connection managed create --path .\orders -n outlook --connector office365 --auth-mode oauth
+  - summary: |-
+      Override Azure scope for a saved local project without changing its settings.
+    syntax: az logicapp connection managed create --context orders-local -n outlook --connector office365 --auth-mode oauth --subscription 11111111-1111-1111-1111-111111111111 -g dev-rg -l eastus
   requiredParameters:
   - isRequired: true
     name: --auth-mode
     acceptedValues: managed-identity, oauth, raw, service-principal
     summary: |-
-      Authentication used by the connection. OAuth requires browser consent; managed-identity uses an identity already assigned to the app.
+      Connector backend authentication. Local projects support raw, service-principal or oauth; runtime-to-connection authentication uses a separate development key.
   - isRequired: true
     name: --connector
     summary: |-
       Managed API connector name or ARM managedApis id.
   - isRequired: true
-    name: --location -l
-    summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - isRequired: true
-    name: --logic-app-name
-    summary: |-
-      Logic App Standard site that will use the connection.
-  - isRequired: true
     name: --name -n
     summary: |-
       Managed API connection name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -79,6 +75,9 @@ directCommands:
   - name: --consent-timeout
     summary: |-
       OAuth consent timeout in seconds, default 300. On failure resources may be retained; inspect before retrying.
+  - name: --context
+    summary: |-
+      Saved local project or deployed app. Defaults to the active context when no explicit target is supplied.
   - name: --display-name
     summary: |-
       Display name. Defaults to --name.
@@ -86,6 +85,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Replace existing managed connection wiring with revision and ownership checks.
+  - name: --location -l
+    summary: |-
+      Azure connection location. Required for a deployed target; overrides local WORKFLOWS_LOCATION_NAME.
+  - name: --logic-app-name
+    summary: |-
+      Deployed Logic App Standard site. Alternatively select a local --path or local/cloud --context.
   - name: --no-browser
     defaultValue: "False"
     summary: |-
@@ -96,6 +101,12 @@ directCommands:
   - name: --parameter-set
     summary: |-
       Connector parameter set name.
+  - name: --path
+    summary: |-
+      Existing local project to wire. Azure scope comes from command overrides or local.settings.json, not context metadata.
+  - name: --resource-group -g
+    summary: |-
+      Azure resource group for the connection. Required for a deployed target; overrides local WORKFLOWS_RESOURCE_GROUP_NAME.
   - name: --secret-parameter
     summary: |-
       Secret parameter name. The value is read from standard input, never the command line.
@@ -132,4 +143,4 @@ directCommands:
 commands:
 - az_logicapp_connection_managed_create
 metadata:
-  description: Create managed API connections for deployed Logic Apps Standard sites.
+  description: Create Azure managed API connections for local projects or deployed Standard sites.
