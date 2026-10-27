@@ -1,6 +1,7 @@
 ---
 title: Switch between the classic Azure CLI and the preview build
 description: Learn how to switch between the classic Azure CLI and the Azure CLI preview without reinstalling either version.
+ms.date: 10/27/2026
 ---
 
 # Switch between the classic Azure CLI and the preview build
@@ -116,5 +117,5 @@ function again) to return to your default.
 | You want to… | Guide |
 | --- | --- |
 | Install the Azure CLI preview build | [Install the Azure CLI preview](./install-overview.md) |
-| Install the Azure PowerShell preview modules | [Install the Azure PowerShell preview modules](/powershell/azure/install-powershell-modules?view=azps-100.0.0&preserve-view=true) |
+| Install the Azure PowerShell preview modules | [Install the Azure PowerShell preview modules](/powershell/azure/install-powershell-modules?view=azps-preview&preserve-view=true) |
 | Report a problem or share feedback | [Log an issue on GitHub](https://github.com/Azure/azclips/issues) |
