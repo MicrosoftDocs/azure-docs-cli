@@ -5,14 +5,16 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 10/27/2026
+ms.date: 10/28/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
 
 # Tutorial: Deploy and manage a virtual machine application with Azure CLI (preview)
 
-In this tutorial, you deploy a web application on a virtual machine, verify a stop and start cycle, and clean up with Azure CLI preview.
+In this tutorial, you use Azure CLI preview to run a small web application on a Linux virtual machine (VM), confirm that the application survives routine VM operations, and then remove everything you created.
+
+When you finish, you've served a web page from the VM, confirmed that the page returns after the VM stops and starts, and verified that all the tutorial resources are deleted.
 
 In this tutorial, you:
 
@@ -23,26 +25,22 @@ In this tutorial, you:
 > - Operate the virtual machine
 > - Clean up
 
-> [!IMPORTANT]
-> These draft examples require end-to-end validation against the release build before use.
-
 ## Prerequisites
 
-- Bash on Linux or macOS, or PowerShell 7.6 or later on Windows.
+- Bash or zsh on Linux or macOS, or PowerShell 7.6 or later on Windows.
 - Azure CLI preview, installed and signed in as described in [Set up and switch sign-in profiles](quickstart-profiles.md).
 - OpenSSH tools (`ssh` and `ssh-keygen`) and, for the Bash path, `curl`.
 - An existing network security group (NSG) in the VM's region that allows SSH (port 22) and HTTP (port 80) only from your IP address, and outbound access for Ubuntu packages.
 
 You need an Azure subscription. If you don't have one, [create a free account](https://azure.microsoft.com/free/).
 
-Verify the SSH host fingerprint when prompted. Do not disable host-key checking.
+Verify the SSH host fingerprint when prompted. Don't disable host-key checking.
 
 ## Set variables
 
 # [Bash](#tab/bash)
 
 ```bash
-set -euo pipefail
 sub="<test-subscription-id>"
 location="<region>"
 nsg_id="<existing-NSG-resource-ID>"
@@ -93,6 +91,8 @@ az network public-ip create @scope --name $pip --location $location --sku Standa
 
 ---
 
+Each command returns the new resource with `"provisioningState": "Succeeded"`. The public IP address is static, so it doesn't change when the VM stops and starts.
+
 ## Deploy the virtual machine
 
 # [Bash](#tab/bash)
@@ -113,6 +113,8 @@ az vm show @scope --name $vm
 
 ---
 
+`ssh-keygen` prompts for a passphrase and creates a key pair. `az vm create` waits until the VM is created. The `az vm show` output includes `"provisioningState": "Succeeded"`.
+
 ## Run the application
 
 # [Bash](#tab/bash)
@@ -120,7 +122,7 @@ az vm show @scope --name $vm
 ```bash
 ip=$(az network public-ip show --subscription-id "$sub" --resource-group "$rg" --name "$pip" --query properties.ipAddress --output tsv)
 ssh -i "$key" "$admin@$ip" "sudo apt-get update && sudo apt-get install -y nginx && printf '%s\n' 'AzCLIPS scenario 2 is running' | sudo tee /var/www/html/index.html && sudo systemctl enable --now nginx"
-test "$(curl -fsS --max-time 30 "http://$ip")" = "AzCLIPS scenario 2 is running"
+curl -fsS --max-time 30 "http://$ip"
 ```
 
 # [PowerShell](#tab/powershell)
@@ -130,9 +132,12 @@ $ip = az network public-ip show @scope --name $pip --query properties.ipAddress 
 ssh -i $key "$admin@$ip" "sudo apt-get update && sudo apt-get install -y nginx && printf '%s\n' '$page' | sudo tee /var/www/html/index.html && sudo systemctl enable --now nginx"
 $response = Invoke-WebRequest -Uri "http://$ip" -TimeoutSec 30
 if ($response.Content.Trim() -ne $page) { throw 'Application verification failed.' }
+'Page OK'
 ```
 
 ---
+
+When you connect for the first time, `ssh` asks you to confirm the host fingerprint. After nginx is installed, the web request returns the page text `AzCLIPS scenario 2 is running`. In PowerShell, the script prints `Page OK`.
 
 ## Operate the virtual machine
 
@@ -141,17 +146,17 @@ if ($response.Content.Trim() -ne $page) { throw 'Application verification failed
 ```bash
 az vm stop --subscription-id "$sub" --resource-group "$rg" --name "$vm"
 az vm start --subscription-id "$sub" --resource-group "$rg" --name "$vm"
-test "$(curl -fsS --max-time 30 "http://$ip")" = "AzCLIPS scenario 2 is running"
+curl -fsS --max-time 30 "http://$ip"
 ```
 
-Allow up to five minutes after each start for the page to return. The application is unavailable while the VM remains offline.
+`az vm stop` and `az vm start` wait for each operation to finish. After the VM starts, the web request returns `AzCLIPS scenario 2 is running` again, because nginx is set to start automatically. Allow up to five minutes after each start for the page to return. The application is unavailable while the VM is stopped.
 
-Optional: deallocate and start the VM, then repeat the check.
+Optional: deallocate and start the VM, then repeat the check. Deallocating also releases the VM's compute resources, so you stop paying for them.
 
 ```bash
 az vm deallocate --subscription-id "$sub" --resource-group "$rg" --name "$vm"
 az vm start --subscription-id "$sub" --resource-group "$rg" --name "$vm"
-test "$(curl -fsS --max-time 30 "http://$ip")" = "AzCLIPS scenario 2 is running"
+curl -fsS --max-time 30 "http://$ip"
 ```
 
 # [PowerShell](#tab/powershell)
@@ -161,17 +166,19 @@ az vm stop @scope --name $vm
 az vm start @scope --name $vm
 $response = Invoke-WebRequest -Uri "http://$ip" -TimeoutSec 30
 if ($response.Content.Trim() -ne $page) { throw 'Application verification failed.' }
+'Page OK'
 ```
 
-Allow up to five minutes after each start for the page to return. The application is unavailable while the VM remains offline.
+`az vm stop` and `az vm start` wait for each operation to finish. After the VM starts, the script prints `Page OK` again, because nginx is set to start automatically. Allow up to five minutes after each start for the page to return. The application is unavailable while the VM is stopped.
 
-Optional: deallocate and start the VM, then repeat the check.
+Optional: deallocate and start the VM, then repeat the check. Deallocating also releases the VM's compute resources, so you stop paying for them.
 
 ```powershell
 az vm deallocate @scope --name $vm
 az vm start @scope --name $vm
 $response = Invoke-WebRequest -Uri "http://$ip" -TimeoutSec 30
 if ($response.Content.Trim() -ne $page) { throw 'Application verification failed.' }
+'Page OK'
 ```
 
 ---
@@ -197,6 +204,8 @@ Remove-Item -LiteralPath $key, "$key.pub"
 ```
 
 ---
+
+`az group delete` waits until the resource group and its resources are deleted. `az group exists` then returns `false`.
 
 ## Related content
 

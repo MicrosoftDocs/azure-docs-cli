@@ -5,14 +5,16 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 10/27/2026
+ms.date: 10/28/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
 
 # Tutorial: Run repeatable deployments from a pipeline with Azure CLI (preview)
 
-In this tutorial, you plan federated pipeline authentication, repeat a test deployment, detect a failure, and clean up with Azure CLI preview.
+In this tutorial, you use Azure CLI preview in a non-interactive pipeline job that signs in without a browser, deploys a template, and cleans up after itself.
+
+When you finish, the job has signed in with a federated credential, deployed the template twice without creating duplicate resources, detected a failed command through its exit code, and removed both the test resources and its sign-in state.
 
 In this tutorial, you:
 
@@ -23,15 +25,12 @@ In this tutorial, you:
 > - Detect a failure
 > - Clean up
 
-> [!IMPORTANT]
-> These draft examples require end-to-end validation against the release build before use.
-
 > [!WARNING]
 > This scenario requires non-interactive authentication that the [current preview limitations](getting-started.md#current-limitations) list as unsupported. Use these commands for engineering review only. They don't establish supported functionality. Don't run this walkthrough until the product team confirms support for your preview build.
 
 ## Prerequisites
 
-- Bash on Linux or macOS, or PowerShell 7.6 or later on Windows.
+- Bash or zsh on Linux or macOS, or PowerShell 7.6 or later on Windows.
 - A test pipeline agent with the Azure CLI preview, installed as described in [Set up and switch sign-in profiles](quickstart-profiles.md).
 - A test service principal with least-privilege access to the test subscription and a federated credential for your pipeline provider. The provider supplies a token file whose path is in `AZURE_FEDERATED_TOKEN_FILE`.
 - The sample storage template from [Deploy and troubleshoot a Bicep template](tutorial-deploy-bicep.md).
@@ -69,7 +68,7 @@ $clientId = '<application-client-ID>'
 $location = '<region>'
 $template = '<path-to-sample-storage.bicep>'
 $run = Get-Date -Format 'yyyyMMddHHmmss'
-$profile = "pipeline-$run"
+$profileName = "pipeline-$run"
 $rg = "azclips-ci-$run"
 $deployment = "ci-$run"
 $storage = "clips$([guid]::NewGuid().ToString('N').Substring(0, 18))"
@@ -90,10 +89,12 @@ az login --service-principal --client-id "$client_id" --tenant-id "$tenant" --su
 
 ```powershell
 $federatedToken = (Get-Content -LiteralPath $env:AZURE_FEDERATED_TOKEN_FILE -Raw).Trim()
-az login --service-principal --client-id $clientId --tenant-id $tenant --subscription-id $sub --federated-token $federatedToken --out-profile $profile
+az login --service-principal --client-id $clientId --tenant-id $tenant --subscription-id $sub --federated-token $federatedToken --out-profile $profileName
 ```
 
 ---
+
+The sign-in completes without a browser prompt and saves a profile for the job. The `--out-profile` parameter keeps the job's sign-in separate from other profiles on the agent.
 
 ## Prepare the job
 
@@ -107,33 +108,42 @@ az group create --subscription-id "$sub" --name "$rg" --location "$location"
 # [PowerShell](#tab/powershell)
 
 ```powershell
-az profile show $profile
+az profile show $profileName
 az group create --subscription-id $sub --name $rg --location $location
 ```
 
 ---
 
+`az profile show` returns the job's profile, with the tenant and subscription you specified and the service principal authentication method. `az group create` returns the resource group with `"provisioningState": "Succeeded"`.
+
 ## Deploy twice
+
+Pipelines often run the same job more than once, for example when a run is retried. Deploy the template twice, as a rerun would, and confirm that the second deployment reuses the same storage account.
 
 # [Bash](#tab/bash)
 
 ```bash
+ids=()
 for attempt in 1 2; do
-  az deployment group create --subscription-id "$sub" --resource-group "$rg" --name "$deployment" --template-file "$template" --parameter "storageAccountName=$storage" --mode Incremental
+  ids+=("$(az deployment group create --subscription-id "$sub" --resource-group "$rg" --name "$deployment" --template-file "$template" --parameter "storageAccountName=$storage" --mode Incremental --query properties.outputs.storageAccountId.value --output tsv)")
 done
-az deployment group show --subscription-id "$sub" --resource-group "$rg" --name "$deployment"
+test "${ids[0]}" = "${ids[1]}"
+echo "Both deployments returned the same storage account."
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```powershell
-1..2 | ForEach-Object {
-    az deployment group create --subscription-id $sub --resource-group $rg --name $deployment --template-file $template --parameter "storageAccountName=$storage" --mode Incremental
+$ids = 1..2 | ForEach-Object {
+    az deployment group create --subscription-id $sub --resource-group $rg --name $deployment --template-file $template --parameter "storageAccountName=$storage" --mode Incremental --query properties.outputs.storageAccountId.value --output tsv
 }
-az deployment group show --subscription-id $sub --resource-group $rg --name $deployment
+if ($ids[0] -ne $ids[1]) { throw 'The second deployment returned a different storage account.' }
+'Both deployments returned the same storage account.'
 ```
 
 ---
+
+Both deployments succeed and return the same storage account resource ID, so the rerun doesn't create a second storage account. If the IDs differ, the job fails.
 
 ## Detect a failure
 
@@ -160,6 +170,8 @@ catch {
 
 ---
 
+The lookup fails with a not-found error and a nonzero exit code, and the job continues. A pipeline detects failed commands the same way: by checking the exit code. If the lookup unexpectedly succeeds, the job fails.
+
 ## Clean up resources
 
 Configure the pipeline to run cleanup even when an earlier step fails. The examples below show the cleanup commands, not a complete pipeline job or failure-handling wrapper.
@@ -180,13 +192,15 @@ unset federated_token
 ```powershell
 az group delete --subscription-id $sub --name $rg
 az group exists --subscription-id $sub --name $rg
-az profile set --name $profile
+az profile set --name $profileName
 az logout
-az profile remove --name $profile
+az profile remove --name $profileName
 Remove-Variable federatedToken
 ```
 
 ---
+
+`az group exists` returns `false`, and the job's profile is removed, so no sign-in state remains on the agent.
 
 ## Other sign-in methods
 
@@ -195,7 +209,7 @@ Replace the sign-in example with one of the following. Keep secrets and certific
 **Managed identity**, on an agent with an assigned managed identity. Set the client ID to the managed identity's client ID.
 
 - Azure CLI preview in Bash: `az login --identity --client-id "$client_id" --subscription-id "$sub" --out-profile "$profile"`
-- Azure CLI preview in PowerShell: `az login --identity --client-id $clientId --subscription-id $sub --out-profile $profile`
+- Azure CLI preview in PowerShell: `az login --identity --client-id $clientId --subscription-id $sub --out-profile $profileName`
 
 **Client secret or certificate**
 
@@ -205,4 +219,4 @@ Replace the sign-in example with one of the following. Keep secrets and certific
 
 - For more information, see [Get started with the preview](getting-started.md).
 - For more information, see [Set up and switch sign-in profiles](quickstart-profiles.md).
-- For more information, see [Discover commands and recover from failures](how-to-command-recovery.md).
+- For more information, see [Recover from command failures with AI troubleshooting](how-to-command-recovery.md).

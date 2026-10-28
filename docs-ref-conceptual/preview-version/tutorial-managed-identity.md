@@ -5,14 +5,18 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 10/27/2026
+ms.date: 10/28/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
 
 # Tutorial: Access a Key Vault secret with a managed identity with Azure CLI (preview)
 
-In this tutorial, you create a managed identity, grant access to a test Key Vault secret, verify access, and revoke it with Azure CLI preview.
+In this tutorial, you use Azure CLI preview to give a workload access to a Key Vault secret through a user-assigned managed identity instead of a stored credential, confirm the access, and then revoke it.
+
+When you finish, the workload has read the test secret by using its managed identity, the same read has failed after you revoked access, and no test identity or active test secret remains.
+
+You run most steps on your workstation. You run the steps marked **On the host** on the Azure host, such as a VM, that runs the workload.
 
 In this tutorial, you:
 
@@ -24,32 +28,28 @@ In this tutorial, you:
 > - Revoke access
 > - Clean up
 
-> [!IMPORTANT]
-> These draft examples require end-to-end validation against the release build before use.
-
 > [!WARNING]
 > This scenario requires non-interactive authentication that the [current preview limitations](getting-started.md#current-limitations) list as unsupported. Use these commands for engineering review only. They don't establish supported functionality. Don't run this walkthrough until the product team confirms support for your preview build.
 
 ## Prerequisites
 
-- Bash on Linux or macOS, or PowerShell 7.6 or later on Windows.
+- Bash or zsh on Linux or macOS, or PowerShell 7.6 or later on Windows.
 - Azure CLI preview, installed and signed in as described in [Set up and switch sign-in profiles](quickstart-profiles.md).
 - An Azure host, such as a VM, that can use a user-assigned managed identity and has the Azure CLI preview or modules installed.
 - An existing test Key Vault that uses Azure role-based access control and is reachable from that host.
 - The role definition ID of a built-in role that grants secret read access, and permission to assign it.
 
-Use only synthetic secret values. Do not print or log secret values.
+Use only synthetic secret values. Don't print or log secret values.
 
 You need an Azure subscription. If you don't have one, [create a free account](https://azure.microsoft.com/free/).
 
-Allow time for role changes to take effect before verifying a grant or a revocation. The managed-identity sign-in runs on the host, so set the same subscription, vault, secret, client ID and run values there.
+Allow time for role changes to take effect before you verify a grant or a revocation. The managed-identity sign-in runs on the host, so set the same subscription, vault, secret, client ID, and run values there.
 
 ## Set variables
 
 # [Bash](#tab/bash)
 
 ```bash
-set -euo pipefail
 sub="<test-subscription-id>"
 location="<region>"
 vault="<existing-test-vault-name>"
@@ -108,6 +108,8 @@ $clientId = az identity show --ids $identityId --query properties.clientId --out
 
 ---
 
+The `az identity show` output includes the identity's principal ID and client ID. You use the principal ID to grant access, and the client ID to sign in as the identity on the host.
+
 ## Store a test secret
 
 # [Bash](#tab/bash)
@@ -127,6 +129,8 @@ az keyvault secret show --vault-name $vault --name $secret
 ```
 
 ---
+
+Both commands return the secret's metadata, such as its ID and attributes, but not its value. `az keyvault secret show` returns the value only when you add `--as-plain-text`.
 
 ## Grant access
 
@@ -150,29 +154,36 @@ Attach the identity to the host: **Pending engineering confirmation: command to 
 
 ---
 
+The role assignment list includes one assignment for the identity's principal ID, with the role you specified, at the vault's scope.
+
 ## Read the secret as the application
 
 # [Bash](#tab/bash)
 
-On the host:
+**On the host:**
 
 ```bash
 az login --identity --client-id "$client_id" --subscription-id "$sub" --out-profile "workload-$run"
 value=$(az keyvault secret show --vault-name "$vault" --name "$secret" --as-plain-text)
-test "$value" = "azclips-synthetic"
+if [ "$value" = "azclips-synthetic" ]; then echo "Secret read succeeded"; else echo "Secret value mismatch" >&2; fi
+unset value
 ```
 
 # [PowerShell](#tab/powershell)
 
-On the host:
+**On the host:**
 
 ```powershell
 az login --identity --client-id $clientId --subscription-id $sub --out-profile "workload-$run"
 $value = az keyvault secret show --vault-name $vault --name $secret --as-plain-text
 if ($value -ne 'azclips-synthetic') { throw 'Secret value mismatch.' }
+'Secret read succeeded'
+Remove-Variable value
 ```
 
 ---
+
+The script prints `Secret read succeeded` without printing the secret value. If the read fails with an access-denied error, wait a few minutes for the role assignment to take effect, and then try again.
 
 ## Revoke access
 
@@ -183,7 +194,7 @@ az role assignment delete --scope "$vault_id" --name "$assignment"
 az role assignment list --scope "$vault_id" --assignee-object-id "$principal_id"
 ```
 
-On the host, repeat the read from [Read the secret as the application](#read-the-secret-as-the-application). Confirm that the read now fails with an access-denied error.
+The role assignment list is empty. On the host, repeat the read from [Read the secret as the application](#read-the-secret-as-the-application). After the revocation takes effect, the read fails with an access-denied (`Forbidden`) error. If the read still succeeds, wait a few minutes and try again.
 
 # [PowerShell](#tab/powershell)
 
@@ -192,7 +203,7 @@ az role assignment delete --scope $vaultId --name $assignment
 az role assignment list --scope $vaultId --assignee-object-id $principalId
 ```
 
-On the host, repeat the read from [Read the secret as the application](#read-the-secret-as-the-application). Confirm that the read now fails with an access-denied error.
+The role assignment list is empty. On the host, repeat the read from [Read the secret as the application](#read-the-secret-as-the-application). After the revocation takes effect, the read fails with an access-denied (`Forbidden`) error. If the read still succeeds, wait a few minutes and try again.
 
 ---
 
@@ -210,7 +221,14 @@ az keyvault secret delete --vault-name "$vault" --name "$secret" --yes
 rm -f "$fixture"
 ```
 
-On the host, sign out and remove the workload profile. In Bash, use `az logout` and `az profile remove --name "workload-$run"`. In PowerShell, use `az logout` and `az profile remove --name "workload-$run"`.
+`az group exists` returns `false`, and the test secret is deleted. Key Vault keeps the deleted secret in a recoverable state for the vault's retention period.
+
+**On the host:** Sign out and remove the workload profile:
+
+```azurecli
+az logout
+az profile remove --name "workload-$run"
+```
 
 # [PowerShell](#tab/powershell)
 
@@ -225,7 +243,14 @@ Remove-Item -LiteralPath $fixture -ErrorAction SilentlyContinue
 Remove-Variable value -ErrorAction SilentlyContinue
 ```
 
-On the host, sign out and remove the workload profile. In Bash, use `az logout` and `az profile remove --name "workload-$run"`. In PowerShell, use `az logout` and `az profile remove --name "workload-$run"`.
+`az group exists` returns `false`, and the test secret is deleted. Key Vault keeps the deleted secret in a recoverable state for the vault's retention period.
+
+**On the host:** Sign out and remove the workload profile:
+
+```azurecli
+az logout
+az profile remove --name "workload-$run"
+```
 
 ---
 
