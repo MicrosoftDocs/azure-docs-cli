@@ -1,12 +1,13 @@
 ---
-title: Manage sign-in profiles in Azure CLI (Preview)
-description: Learn how to use named profiles in Azure CLI to save sign-in context, switch between accounts and subscriptions, and run individual commands against a specific profile.
+title: Manage sign-in profiles in Azure CLI (preview)
+description: Learn how to use named profiles in the Azure CLI preview to save sign-in context, switch between accounts and subscriptions, and run individual commands against a specific profile.
 ms.topic: concept-article
+ms.date: 10/27/2026
 ---
 
-# Manage sign-in profiles in Azure CLI (Preview)
+# Manage sign-in profiles in Azure CLI (preview)
 
-A _profile_ is a named sign-in context that Azure CLI saves when you authenticate. Each profile remembers the tenant, subscription, cloud, and sign-in information needed to connect to Azure. Profiles let you switch between accounts, tenants, and subscriptions without signing in each time.
+A _profile_ is a named sign-in context that the Azure CLI preview saves when you authenticate. Each profile remembers the tenant, subscription, cloud, and sign-in information needed to connect to Azure. Profiles let you switch between accounts, tenants, and subscriptions without signing in each time.
 
 Profiles are useful when you regularly work across multiple contexts, such as personal and corporate subscriptions or separate development and production environments.
 
@@ -21,8 +22,7 @@ Profiles are useful when you:
 
 ## What a profile stores
 
-When you sign in and save a profile, Azure CLI records the connection context for that profile,
-including:
+When you sign in and save a profile, Azure CLI records the connection context for that profile, including:
 
 - The profile name
 - The Azure tenant (directory)
@@ -31,20 +31,17 @@ including:
 - The sign-in identity (the signed-in user, when available)
 - The authentication method used to sign in
 
-Profiles are stored locally on your machine. Switching profiles changes which of these saved
-contexts Azure CLI uses for subsequent commands.
+Profiles are stored locally on your machine. Switching profiles changes which of these saved contexts Azure CLI uses for subsequent commands.
 
 ## Sign in and save a profile
 
-Use `az login` with the `--out-profile` option to sign in and save the result as a named profile.
-Specify the tenant and subscription you want the profile to use:
+Use `az login` with the `--out-profile` option to sign in and save the result as a named profile. Specify the tenant and subscription you want the profile to use:
 
 ```bash
 az login --tenant-id <tenant-id> --subscription-id <subscription-id> --out-profile personal
 ```
 
-To create a second profile for a different account, tenant, or subscription, sign in again with a
-different profile name:
+To create a second profile for a different account, tenant, or subscription, sign in again with a different profile name:
 
 ```bash
 az login --tenant-id <tenant-id> --subscription-id <subscription-id> --out-profile corp
@@ -90,8 +87,7 @@ az profile show --active
 
 ## Switch the active profile
 
-Use `az profile set` to change which profile is active. After you switch, commands that don't
-specify a profile use the newly activated profile:
+Use `az profile set` to change which profile is active. After you switch, commands that don't specify a profile use the newly activated profile:
 
 ```bash
 az profile set --name personal
@@ -100,8 +96,7 @@ az group list
 
 ## Run a single command against a specific profile
 
-To run one command against a profile without changing the active profile, use the `--profile`
-option. This is useful when you mostly work in one profile but occasionally need another:
+To run one command against a profile without changing the active profile, use the `--profile` option. This is useful when you mostly work in one profile but occasionally need another:
 
 ```bash
 az group list --profile corp
@@ -111,15 +106,13 @@ The active profile is unchanged, so subsequent commands continue to use it.
 
 ## Re-authenticate an existing profile
 
-If a profile's sign-in has expired, sign in again and pass the existing profile name to `--profile`
-to refresh it in place:
+If a profile's sign-in has expired, sign in again and pass the existing profile name to `--profile` to refresh it in place:
 
 ```bash
 az login --profile personal
 ```
 
-The `--profile` and `--out-profile` options are mutually exclusive: use `--out-profile` to create or
-overwrite a profile, and `--profile` to re-authenticate an existing one.
+The `--profile` and `--out-profile` options are mutually exclusive: use `--out-profile` to create or overwrite a profile, and `--profile` to re-authenticate an existing one.
 
 ## Remove a profile
 
@@ -133,9 +126,7 @@ If you remove the active profile, no profile is active until you set one with `a
 
 ## Display the active profile in your prompt
 
-To keep track of which profile is active, you can display the active profile name in your shell
-prompt. Azure CLI writes the active profile name to an `active-profile` file in its local data
-directory.
+To keep track of which profile is active, you can display the active profile name in your shell prompt. Azure CLI writes the active profile name to an `active-profile` file in its local data directory.
 
 ### Bash
 
@@ -151,8 +142,7 @@ PS1='\u@\h \w $(azclips_profile)\$ '
 
 ### Zsh with Starship
 
-If you use [Starship](https://starship.rs/), add a custom module to your
-`~/.config/starship.toml`:
+If you use [Starship](https://starship.rs/), add a custom module to your `~/.config/starship.toml`:
 
 ```toml
 [custom.profile]
@@ -168,9 +158,9 @@ description = 'Name of the active Azure CLI profile'
 
 ## Next steps
 
-- To learn the core concepts and current limitations of the preview, see
-  [Get started with Azure CLI][01].
-- If you run into problems, see [Troubleshoot Azure CLI issues][02].
+- For more information about core concepts and current limitations, see
+  [Get started with Azure CLI (preview)][01].
+- For more information about resolving issues, see [Troubleshoot Azure CLI issues (preview)][02].
 
 <!-- link references -->
 
