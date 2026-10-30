@@ -1,0 +1,556 @@
+### YamlMime:AzureCLIGroup
+uid: az_storage_account
+name: az storage account
+summary: |-
+  Manage Azure Storage accounts.
+status: Preview
+isPreview: true
+sourceType: Core
+directCommands:
+- uid: az_storage_account_create
+  name: az storage account create
+  summary: |-
+    Create a storage account.
+  description: |-
+    Create an Azure Storage account in the specified resource group. The account name and resource group are required; location defaults to the resource group location, SKU defaults to Standard_RAGRS, and kind defaults to StorageV2. The account name must be 3-24 characters using lower-case letters and numbers only and must be globally unique. Optional settings cover access tiers, TLS and public access, hierarchical namespace, SFTP and NFS, network rules, customer-managed encryption keys, managed identities, Azure Files identity-based authentication, SAS and key policies, and account-level immutability. Options that are not supplied are omitted from the request so the service default applies. The command waits for the long-running create operation to finish and returns the created account.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage account create --name
+                              --resource-group
+                              [--access-tier {Hot, Cool, Premium, Cold, Smart}]
+                              [--account-type {User, Computer}]
+                              [--action {Allow}]
+                              [--allow-blob-public-access {true, false}]
+                              [--allow-cross-tenant-replication {true, false}]
+                              [--allow-protected-append-writes {true, false}]
+                              [--allow-shared-key-access {true, false}]
+                              [--allowed-copy-scope {PrivateLink, AAD, All}]
+                              [--azure-storage-sid]
+                              [--bypass]
+                              [--custom-domain]
+                              [--default-action {Allow, Deny}]
+                              [--default-share-permission {None, StorageFileDataSmbShareReader, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor}]
+                              [--default-to-oauth-authentication {true, false}]
+                              [--dns-endpoint-type {Standard, AzureDnsZone}]
+                              [--domain-guid]
+                              [--domain-name]
+                              [--domain-sid]
+                              [--edge-zone]
+                              [--enable-alw {true, false}]
+                              [--enable-blob-geo-priority-replication {true, false}]
+                              [--enable-extended-groups {true, false}]
+                              [--enable-files-aadds {true, false}]
+                              [--enable-files-aadkerb {true, false}]
+                              [--enable-files-adds {true, false}]
+                              [--enable-hierarchical-namespace {true, false}]
+                              [--enable-large-file-share]
+                              [--enable-local-user {true, false}]
+                              [--enable-nfs-v3 {true, false}]
+                              [--enable-sftp {true, false}]
+                              [--enable-smb-oauth {true, false}]
+                              [--encryption-key-name]
+                              [--encryption-key-source {Microsoft.Storage, Microsoft.Keyvault}]
+                              [--encryption-key-type-for-queue {Account, Service}]
+                              [--encryption-key-type-for-table {Account, Service}]
+                              [--encryption-key-vault]
+                              [--encryption-key-version]
+                              [--forest-name]
+                              [--https-only {true, false}]
+                              [--identity-type {None, SystemAssigned, UserAssigned, SystemAssigned,UserAssigned}]
+                              [--immutability-period-since-creation-in-days]
+                              [--immutability-policy-state {Unlocked, Locked, Disabled}]
+                              [--ip-address]
+                              [--ipv6-address]
+                              [--key-expiration-period-in-days]
+                              [--key-vault-federated-client-id]
+                              [--key-vault-user-identity-id]
+                              [--kind {Storage, StorageV2, BlobStorage, FileStorage, BlockBlobStorage}]
+                              [--large-file-shares-state {Disabled, Enabled}]
+                              [--location]
+                              [--min-tls-version {TLS1_0, TLS1_1, TLS1_2, TLS1_3}]
+                              [--net-bios-domain-name]
+                              [--profile]
+                              [--public-network-access {Enabled, Disabled, SecuredByPerimeter}]
+                              [--publish-internet-endpoints {true, false}]
+                              [--publish-ipv6-endpoint {true, false}]
+                              [--publish-microsoft-endpoints {true, false}]
+                              [--require-infrastructure-encryption {true, false}]
+                              [--routing-choice {MicrosoftRouting, InternetRouting}]
+                              [--sam-account-name]
+                              [--sas-expiration-action {Log, Block}]
+                              [--sas-expiration-period]
+                              [--sku {Standard_LRS, Standard_GRS, Standard_RAGRS, Standard_ZRS, Premium_LRS, Premium_ZRS, Standard_GZRS, Standard_RAGZRS, StandardV2_LRS, StandardV2_GRS, StandardV2_ZRS, StandardV2_GZRS, PremiumV2_LRS, PremiumV2_ZRS}]
+                              [--subnet]
+                              [--subscription-id]
+                              [--tags]
+                              [--user-identity-id]
+                              [--vnet-name]
+                              [--zone-placement-policy {Any, None}]
+                              [--zones]
+  examples:
+  - summary: |-
+      Create a general-purpose v2 account
+    syntax: az storage account create --resource-group myResourceGroup --name mystorageaccount --location eastus --sku Standard_LRS --kind StorageV2
+  - summary: |-
+      Create a hardened account
+    syntax: az storage account create --resource-group myResourceGroup --name mystorageaccount --location eastus --sku Standard_LRS --kind StorageV2 --min-tls-version TLS1_2 --allow-blob-public-access false --allow-shared-key-access false --https-only true
+  - summary: |-
+      Create an account restricted to specific networks
+    syntax: az storage account create --resource-group myResourceGroup --name mystorageaccount --location eastus --sku Standard_LRS --kind StorageV2 --default-action Deny --bypass AzureServices --ip-address 13.64.0.0/16 --subnet mySubnet --vnet-name myVnet
+  - summary: |-
+      Create a Data Lake Storage Gen2 account with SFTP
+    syntax: az storage account create --resource-group myResourceGroup --name mystorageaccount --location eastus --sku Standard_LRS --kind StorageV2 --enable-hierarchical-namespace true --enable-sftp true
+  - summary: |-
+      Create an account with a customer-managed key
+    syntax: az storage account create --resource-group myResourceGroup --name mystorageaccount --location eastus --sku Standard_LRS --kind StorageV2 --identity-type SystemAssigned --encryption-key-vault https://myvault.vault.azure.net/ --encryption-key-name mykey
+  - summary: |-
+      Create an account with tags
+    syntax: az storage account create --resource-group myResourceGroup --name mystorageaccount --location eastus --sku Standard_LRS --kind StorageV2 --tags env=dev owner=platform
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the storage account. Must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --access-tier
+    acceptedValues: Hot, Cool, Premium, Cold, Smart
+    summary: |-
+      The access tier used for billing. Required when kind is BlobStorage.
+  - name: --account-type
+    acceptedValues: User, Computer
+    summary: |-
+      The Active Directory account type for Azure Storage.
+  - name: --action
+    acceptedValues: Allow
+    summary: |-
+      The action applied to the subnet and IP rules. Defaults to Allow.
+  - name: --allow-blob-public-access
+    acceptedValues: true, false
+    summary: |-
+      Allow or disallow public access to all blobs or containers. The service default is false.
+  - name: --allow-cross-tenant-replication
+    acceptedValues: true, false
+    summary: |-
+      Allow or disallow cross AAD tenant object replication. The service default is false.
+  - name: --allow-protected-append-writes
+    acceptedValues: true, false
+    summary: |-
+      Allow new blocks to be written to an append blob while maintaining immutability protection. Requires --enable-alw true.
+  - name: --allow-shared-key-access
+    acceptedValues: true, false
+    summary: |-
+      Whether the account permits requests authorized with the account access key. The service default is true.
+  - name: --allowed-copy-scope
+    acceptedValues: PrivateLink, AAD, All
+    summary: |-
+      Restrict copy to and from storage accounts within an AAD tenant or with private links to the same VNet.
+  - name: --azure-storage-sid
+    summary: |-
+      The security identifier (SID) for Azure Storage.
+  - name: --bypass
+    summary: |-
+      Traffic to bypass the network rules (space-separated): None, Logging, Metrics, AzureServices. Requires --default-action.
+  - name: --custom-domain
+    summary: |-
+      The custom domain name assigned to the account. Name is the CNAME source.
+  - name: --default-action
+    acceptedValues: Allow, Deny
+    summary: |-
+      The action to apply when no network rule matches. Required when any other network rule flag is used.
+  - name: --default-share-permission
+    acceptedValues: None, StorageFileDataSmbShareReader, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor
+    summary: |-
+      The default share permission for users using Kerberos authentication when no RBAC role is assigned.
+  - name: --default-to-oauth-authentication
+    acceptedValues: true, false
+    summary: |-
+      Whether the default authentication is OAuth. The service default is false.
+  - name: --dns-endpoint-type
+    acceptedValues: Standard, AzureDnsZone
+    summary: |-
+      The type of endpoint. AzureDnsZone allows creating a large number of accounts in a single subscription.
+  - name: --domain-guid
+    summary: |-
+      The domain GUID.
+  - name: --domain-name
+    summary: |-
+      The primary domain the AD DNS server is authoritative for.
+  - name: --domain-sid
+    summary: |-
+      The security identifier (SID) of the AD domain.
+  - name: --edge-zone
+    summary: |-
+      The name of the edge zone to create the account in.
+  - name: --enable-alw
+    acceptedValues: true, false
+    summary: |-
+      Enable account-level immutability. Can only be set at creation time.
+  - name: --enable-blob-geo-priority-replication
+    acceptedValues: true, false
+    summary: |-
+      Whether Blob Geo Priority Replication is enabled for the account.
+  - name: --enable-extended-groups
+    acceptedValues: true, false
+    summary: |-
+      Enable extended group support with the local users feature.
+  - name: --enable-files-aadds
+    acceptedValues: true, false
+    summary: |-
+      Enable Microsoft Entra Domain Services authentication for Azure Files.
+  - name: --enable-files-aadkerb
+    acceptedValues: true, false
+    summary: |-
+      Enable Microsoft Entra Kerberos authentication for Azure Files.
+  - name: --enable-files-adds
+    acceptedValues: true, false
+    summary: |-
+      Enable Active Directory Domain Services authentication for Azure Files. Requires all Active Directory properties.
+  - name: --enable-hierarchical-namespace
+    acceptedValues: true, false
+    summary: |-
+      Enable a hierarchical namespace (Azure Data Lake Storage Gen2).
+  - name: --enable-large-file-share
+    summary: |-
+      Enable large file shares. Cannot be disabled once enabled.
+  - name: --enable-local-user
+    acceptedValues: true, false
+    summary: |-
+      Enable the local users feature.
+  - name: --enable-nfs-v3
+    acceptedValues: true, false
+    summary: |-
+      Enable NFS 3.0 protocol support.
+  - name: --enable-sftp
+    acceptedValues: true, false
+    summary: |-
+      Enable Secure File Transfer Protocol.
+  - name: --enable-smb-oauth
+    acceptedValues: true, false
+    summary: |-
+      Whether managed identities can access SMB shares using OAuth.
+  - name: --encryption-key-name
+    summary: |-
+      The name of the key vault key. Must be given together with --encryption-key-vault.
+  - name: --encryption-key-source
+    acceptedValues: Microsoft.Storage, Microsoft.Keyvault
+    summary: |-
+      The encryption key source. Inferred as Microsoft.Keyvault when key vault options are supplied.
+  - name: --encryption-key-type-for-queue
+    acceptedValues: Account, Service
+    summary: |-
+      The encryption key type for the Queue service.
+  - name: --encryption-key-type-for-table
+    acceptedValues: Account, Service
+    summary: |-
+      The encryption key type for the Table service.
+  - name: --encryption-key-vault
+    summary: |-
+      The URI of the key vault. Must be given together with --encryption-key-name.
+  - name: --encryption-key-version
+    summary: |-
+      The version of the key vault key. Opts out of implicit key rotation.
+  - name: --forest-name
+    summary: |-
+      The Active Directory forest to get.
+  - name: --https-only
+    acceptedValues: true, false
+    summary: |-
+      Allow https traffic only to the storage service. The service default is true.
+  - name: --identity-type
+    acceptedValues: None, SystemAssigned, UserAssigned, SystemAssigned,UserAssigned
+    summary: |-
+      The managed identity type for the account.
+  - name: --immutability-period-since-creation-in-days
+    summary: |-
+      The immutability period for blobs since policy creation, in days (1-146000). Requires --enable-alw true.
+  - name: --immutability-policy-state
+    acceptedValues: Unlocked, Locked, Disabled
+    summary: |-
+      The mode of the account-level immutability policy. Requires --enable-alw true.
+  - name: --ip-address
+    summary: |-
+      IPv4 addresses or CIDR ranges to allow (space-separated). Requires --default-action.
+  - name: --ipv6-address
+    summary: |-
+      IPv6 addresses or CIDR ranges to allow (space-separated). Requires --default-action.
+  - name: --key-expiration-period-in-days
+    summary: |-
+      Expiration period in days of the key policy assigned to the account.
+  - name: --key-vault-federated-client-id
+    summary: |-
+      Client id of the multi-tenant application used for cross-tenant customer-managed-key encryption.
+  - name: --key-vault-user-identity-id
+    summary: |-
+      Resource id of the user-assigned identity used for server-side encryption.
+  - name: --kind
+    acceptedValues: Storage, StorageV2, BlobStorage, FileStorage, BlockBlobStorage
+    summary: |-
+      The type of storage account. Defaults to StorageV2.
+  - name: --large-file-shares-state
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Allow large file shares. Cannot be disabled once enabled.
+  - name: --location
+    summary: |-
+      The Azure region in which to create the storage account. Defaults to the resource group location.
+  - name: --min-tls-version
+    acceptedValues: TLS1_0, TLS1_1, TLS1_2, TLS1_3
+    summary: |-
+      The minimum TLS version permitted on requests to storage. The service default is TLS1_0.
+  - name: --net-bios-domain-name
+    summary: |-
+      The NetBIOS domain name.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --public-network-access
+    acceptedValues: Enabled, Disabled, SecuredByPerimeter
+    summary: |-
+      Allow, disallow, or let Network Security Perimeter configuration evaluate public network access.
+  - name: --publish-internet-endpoints
+    acceptedValues: true, false
+    summary: |-
+      Whether internet routing storage endpoints are published.
+  - name: --publish-ipv6-endpoint
+    acceptedValues: true, false
+    summary: |-
+      Whether IPv6 storage endpoints are published.
+  - name: --publish-microsoft-endpoints
+    acceptedValues: true, false
+    summary: |-
+      Whether Microsoft routing storage endpoints are published.
+  - name: --require-infrastructure-encryption
+    acceptedValues: true, false
+    summary: |-
+      Whether the service applies a secondary layer of encryption with platform managed keys.
+  - name: --routing-choice
+    acceptedValues: MicrosoftRouting, InternetRouting
+    summary: |-
+      The kind of network routing used to deliver user data.
+  - name: --sam-account-name
+    summary: |-
+      The Active Directory SAMAccountName for Azure Storage.
+  - name: --sas-expiration-action
+    acceptedValues: Log, Block
+    summary: |-
+      The action performed when the SAS expiration period is violated. Requires --sas-expiration-period. Defaults to Log.
+  - name: --sas-expiration-period
+    summary: |-
+      Expiration period of the SAS policy assigned to the account, in DD.HH:MM:SS form.
+  - name: --sku
+    acceptedValues: Standard_LRS, Standard_GRS, Standard_RAGRS, Standard_ZRS, Premium_LRS, Premium_ZRS, Standard_GZRS, Standard_RAGZRS, StandardV2_LRS, StandardV2_GRS, StandardV2_ZRS, StandardV2_GZRS, PremiumV2_LRS, PremiumV2_ZRS
+    summary: |-
+      The SKU name of the storage account. Defaults to Standard_RAGRS.
+  - name: --subnet
+    summary: |-
+      Name or resource id of a subnet. If a name is given, --vnet-name is required.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the subscription of the active profile.
+  - name: --tags
+    summary: |-
+      Resource tags in KEY=VALUE form (space-separated).
+  - name: --user-identity-id
+    summary: |-
+      The ARM resource identifier of the user-assigned identity. Only one is permitted.
+  - name: --vnet-name
+    summary: |-
+      Name of the virtual network containing --subnet.
+  - name: --zone-placement-policy
+    acceptedValues: Any, None
+    summary: |-
+      The availability zone pinning policy for the account.
+  - name: --zones
+    summary: |-
+      The availability zones to pin the account to (space-separated).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_account_delete
+  name: az storage account delete
+  summary: |-
+    Delete a storage account.
+  description: |-
+    Delete an Azure Storage account and all of the data it contains. This cannot be undone. The command deletes immediately without prompting for confirmation, so there is no `--yes` option. The command returns no output on success.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage account delete --name
+                              --resource-group
+                              [--profile]
+                              [--subscription-id]
+  examples:
+  - summary: |-
+      Delete a storage account
+    syntax: az storage account delete --resource-group myResourceGroup --name mystorageaccount
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the storage account.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the subscription of the active profile.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_account_list
+  name: az storage account list
+  summary: |-
+    List storage accounts.
+  description: |-
+    List Azure Storage accounts. Supply `--resource-group` to list the accounts in one resource group, or omit it to list every storage account in the subscription. Results are returned as a flat array; paged responses from the service are followed automatically.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage account list [--profile]
+                            [--resource-group]
+                            [--subscription-id]
+  examples:
+  - summary: |-
+      List every storage account in the subscription
+    syntax: az storage account list
+  - summary: |-
+      List the storage accounts in a resource group
+    syntax: az storage account list --resource-group myResourceGroup
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name. Omit to list every storage account in the subscription.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the subscription of the active profile.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_account_show
+  name: az storage account show
+  summary: |-
+    Show the properties of a storage account.
+  description: |-
+    Get the properties of an Azure Storage account, including its SKU, kind, location, endpoints, network rules, encryption settings, and provisioning state. Use `--expand geoReplicationStats` to include geo-replication status, which reports the replication state and whether the account can fail over.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage account show --name
+                            --resource-group
+                            [--expand {geoReplicationStats}]
+                            [--profile]
+                            [--subscription-id]
+  examples:
+  - summary: |-
+      Show a storage account
+    syntax: az storage account show --resource-group myResourceGroup --name mystorageaccount
+  - summary: |-
+      Show a storage account with geo-replication statistics
+    syntax: az storage account show --resource-group myResourceGroup --name mystorageaccount --expand geoReplicationStats
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the storage account.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --expand
+    acceptedValues: geoReplicationStats
+    summary: |-
+      Additional properties to include in the response.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the subscription of the active profile.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_storage_account_create
+- az_storage_account_delete
+- az_storage_account_list
+- az_storage_account_show
+metadata:
+  description: Manage Azure Storage accounts.

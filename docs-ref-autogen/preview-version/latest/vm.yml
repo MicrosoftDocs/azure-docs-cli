@@ -1,0 +1,619 @@
+### YamlMime:AzureCLIGroup
+uid: az_vm
+name: az vm
+summary: |-
+  Manage Azure virtual machines.
+status: Preview
+isPreview: true
+sourceType: Core
+directCommands:
+- uid: az_vm_create
+  name: az vm create
+  summary: |-
+    Create a virtual machine and its supporting network resources.
+  description: |-
+    Provision an Azure virtual machine in the specified resource group along with the supporting virtual network, subnet, network security group, network interface, and public IP address in a single orchestrated call. The VM size, administrator credentials, and target location must all be provided. Resource names supplied for `--virtual-network-name` and `--network-interface-name` are created if they do not already exist in the resource group. By default a network security group named `{vm}NSG` is created, or updated if it already exists. A network security group the command creates has one inbound rule for the image's operating system, allowing traffic from any source: `rdp` (TCP port 3389) for Windows or `default-allow-ssh` (TCP port 22) for Linux. Pass `--nsg` a name to reuse the network security group of that name, unchanged, when it exists and create it when it does not, a resource ID to attach an existing network security group, or `""` to create none. By default a Standard, static public IP address named `{vm}PublicIP` is created, or updated if it already exists. Pass `--public-ip-address` a name to reuse the public IP address of that name when it exists and create it when it does not, a resource ID to attach an existing public IP address, or `""` to create none. Pass `--tags` to tag the virtual machine and every network resource the command creates; resources the command only attaches keep their own tags, such as network interfaces passed to `--nics`, the virtual network of an existing subnet selected with `--subnet`, or an existing network security group or public IP address. The command returns the new virtual machine with the power state and the public and private IP addresses that `az vm show -d` reports.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  syntax: >-
+    az vm create --admin-username
+                 --location
+                 --name
+                 --resource-group
+                 --size
+                 [--accelerated-networking]
+                 [--address-prefixes]
+                 [--admin-password]
+                 [--enable-secure-boot]
+                 [--enable-vtpm]
+                 [--image]
+                 [--network-interface-name]
+                 [--nic-delete-option]
+                 [--nics]
+                 [--nsg]
+                 [--os-disk-secure-vm-disk-encryption-set]
+                 [--os-disk-security-encryption-type {VMGuestStateOnly, DiskWithVMGuestState, NonPersistedTPM}]
+                 [--profile]
+                 [--public-ip-address]
+                 [--security-type {TrustedLaunch, ConfidentialVM, Standard}]
+                 [--ssh-key-values]
+                 [--subnet]
+                 [--subnet-address-prefixes]
+                 [--subnet-names]
+                 [--subscription-id]
+                 [--tags]
+                 [--virtual-network-name]
+  examples:
+  - summary: |-
+      Create a VM from a marketplace image URN
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --image MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Create using shell variables for credentials
+    syntax: az vm create --name $vmName --resource-group $rg --location eastus --size Standard_D2s_v5 --admin-username $adminUser --admin-password $adminPwd --network-interface-name $vmName-nic --virtual-network-name $vmName-vnet --subscription-id $subId
+  - summary: |-
+      Create a VM that uses an existing network security group
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --nsg mynsg
+  - summary: |-
+      Create with an SSH public key
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest --admin-username azureuser --admin-password 'P@ssw0rd123!' --ssh-key-values ~/.ssh/id_rsa.pub --network-interface-name myvm-nic --virtual-network-name myvm-vnet --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Create with a different image URN
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Create a VM with Standard security type
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --image MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest --security-type Standard --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --nsg myvm-nsg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Create a Confidential VM
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_DC2as_v5 --image MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest --security-type ConfidentialVM --os-disk-security-encryption-type VMGuestStateOnly --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --nsg myvm-nsg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Create a Trusted Launch VM with secure boot disabled
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --image MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest --security-type TrustedLaunch --enable-secure-boot false --enable-vtpm true --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet
+  - summary: |-
+      Create a VM with a named public IP address
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --public-ip-address myvm-ip
+  - summary: |-
+      Create a VM without a public IP address
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --public-ip-address ""
+  - summary: |-
+      Create a VM with tags
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --tags env=prod owner=team-a
+  requiredParameters:
+  - isRequired: true
+    name: --admin-username
+    summary: |-
+      The administrator username.
+    groupName: Authentication Arguments
+  - isRequired: true
+    name: --location
+    summary: |-
+      Location for all resources.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the virtual machine.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+    valueFrom: az group list
+  - isRequired: true
+    name: --size
+    summary: |-
+      The size of the virtual machine.
+  optionalParameters:
+  - name: --accelerated-networking
+    summary: |-
+      Whether the network interface enables accelerated networking. Off unless set.
+    groupName: Network Arguments
+  - name: --address-prefixes
+    summary: |-
+      Address prefixes for the virtual network.
+    groupName: Network Arguments
+  - name: --admin-password
+    summary: |-
+      The administrator password.
+    groupName: Authentication Arguments
+  - name: --enable-secure-boot
+    summary: |-
+      Enable or disable secure boot in the VM UEFI settings.
+    groupName: Security Arguments
+  - name: --enable-vtpm
+    summary: |-
+      Enable or disable vTPM in the VM UEFI settings.
+    groupName: Security Arguments
+  - name: --image
+    summary: |-
+      The marketplace image URN to use.
+  - name: --network-interface-name
+    summary: |-
+      The network interface name to create. Do not specify with --nics.
+    groupName: Network Arguments
+  - name: --nic-delete-option
+    summary: |-
+      What happens to network interfaces when the VM is deleted. Use Delete or Detach for all NICs, or NAME=VALUE for individual NICs.
+    groupName: Network Arguments
+  - name: --nics
+    summary: |-
+      Names or resource IDs of existing network interfaces to attach. The first NIC is primary.
+    groupName: Network Arguments
+  - name: --nsg
+    summary: |-
+      Name of the network security group to create (default: '{vm}NSG') or of an existing one to attach. Can also reference an existing NSG by resource ID, or specify "" for none.
+    groupName: Network Arguments
+  - name: --os-disk-secure-vm-disk-encryption-set
+    summary: |-
+      Disk Encryption Set name or resource ID for customer-managed ConfidentialVM OS disk encryption.
+    groupName: Security Arguments
+  - name: --os-disk-security-encryption-type
+    acceptedValues: VMGuestStateOnly, DiskWithVMGuestState, NonPersistedTPM
+    summary: |-
+      Security encryption type for the OS managed disk. Required for ConfidentialVM.
+    groupName: Security Arguments
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --public-ip-address
+    summary: |-
+      Name of the public IP address to create (default: '{vm}PublicIP') or of an existing one to attach. Can also reference an existing public IP by resource ID, or specify "" for none.
+    groupName: Network Arguments
+  - name: --security-type
+    acceptedValues: TrustedLaunch, ConfidentialVM, Standard
+    summary: |-
+      Security type for the virtual machine.
+    groupName: Security Arguments
+  - name: --ssh-key-values
+    summary: |-
+      Space-separated SSH public key values or public key file paths.
+    groupName: Authentication Arguments
+  - name: --subnet
+    summary: |-
+      Name or resource ID of the subnet for the new network interface.
+    groupName: Network Arguments
+  - name: --subnet-address-prefixes
+    summary: |-
+      Address prefixes for each subnet.
+    groupName: Network Arguments
+  - name: --subnet-names
+    summary: |-
+      Names of the subnets.
+    groupName: Network Arguments
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --tags
+    summary: |-
+      Space-separated tags in KEY=VALUE format, or a JSON object. Applied to the virtual machine and to every resource the command creates.
+  - name: --virtual-network-name
+    summary: |-
+      The virtual network name to create or use for a named subnet. Do not specify with --nics.
+    groupName: Network Arguments
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_vm_deallocate
+  name: az vm deallocate
+  summary: |-
+    Deallocate a virtual machine and release its compute resources.
+  description: |-
+    Shut down a virtual machine and release its compute resources, so you are no longer billed for compute. Use `az vm stop` instead to power the machine off while keeping it allocated. Target a single VM with `--name` and `--resource-group`, or pass one or more full resource IDs to `--ids` to deallocate several VMs in one invocation. When `--ids` is used it supplies the subscription, resource group, and VM name for each target, so `--name`, `--resource-group`, and `--subscription-id` are ignored. Pass `--hibernate` to preserve the machine's memory state, or `--force-deallocate` to force the operation. The command waits for the long-running operation to finish and returns no output on success.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  syntax: >-
+    az vm deallocate [--force-deallocate]
+                     [--hibernate]
+                     [--ids]
+                     [--name]
+                     [--profile]
+                     [--resource-group]
+                     [--subscription-id]
+  examples:
+  - summary: |-
+      Deallocate a virtual machine
+    syntax: az vm deallocate --name myvm --resource-group myrg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Hibernate a virtual machine while deallocating it
+    syntax: az vm deallocate --name myvm --resource-group myrg --hibernate
+  - summary: |-
+      Force deallocate a virtual machine
+    syntax: az vm deallocate --name myvm --resource-group myrg --force-deallocate
+  - summary: |-
+      Deallocate several virtual machines by resource ID
+    syntax: az vm deallocate --ids /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachines/myvm /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachines/myothervm
+  optionalParameters:
+  - name: --force-deallocate
+    summary: |-
+      Force deallocate the virtual machine. Default is false.
+  - name: --hibernate
+    summary: |-
+      Hibernate the virtual machine.
+  - name: --ids
+    summary: |-
+      One or more virtual machine resource IDs. Provide either --ids or --name and --resource-group.
+  - name: --name
+    summary: |-
+      The name of the virtual machine.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_vm_delete
+  name: az vm delete
+  summary: |-
+    Delete a virtual machine.
+  description: |-
+    Remove the specified virtual machine from its resource group. The command deletes only the VM resource — attached disks, network interfaces, and the resource group itself are preserved and must be cleaned up separately if no longer required.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  syntax: >-
+    az vm delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
+                 [--ids]
+                 [--name]
+                 [--profile]
+                 [--resource-group]
+                 [--subscription-id]
+  examples:
+  - summary: |-
+      Delete a virtual machine
+    syntax: az vm delete --name myvm --resource-group myrg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Delete using shell variables
+    syntax: az vm delete --name $vmName --resource-group $rg --subscription-id $subId
+  optionalParameters:
+  - name: --force-deletion
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Optional parameter to force delete virtual machines.
+  - name: --ids
+    summary: |-
+      One or more virtual machine resource IDs. Provide either --ids or --name and --resource-group.
+  - name: --name
+    summary: |-
+      The name of the virtual machine.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_vm_list
+  name: az vm list
+  summary: |-
+    List virtual machines.
+  description: |-
+    Return a list of virtual machines, including each machine's name, size, location, and provisioning state. Omit `--resource-group` to list every virtual machine in the subscription. `--show-details` runs one extra request per virtual machine, so it is slow, and fetches details for at most 100 virtual machines. Use this command for inventory, audits, or before bulk operations such as start, stop, or delete.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  syntax: >-
+    az vm list [--profile]
+               [--resource-group]
+               [--show-details]
+               [--subscription-id]
+               [--vmss]
+  examples:
+  - summary: |-
+      List all VMs in the subscription
+    syntax: az vm list --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      List VMs in a resource group
+    syntax: az vm list --resource-group myrg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      List VM instances in a scale set by name
+    syntax: az vm list --resource-group myrg --vmss myvmss
+  - summary: |-
+      List VM instances in a scale set by resource id
+    syntax: az vm list --vmss /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachineScaleSets/myvmss
+  - summary: |-
+      List VMs with public IP addresses, FQDNs and power states
+    syntax: az vm list --resource-group myrg -d
+  - summary: |-
+      List using shell variables
+    syntax: az vm list --resource-group $rg --subscription-id $subId
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name. Omit to list every virtual machine in the subscription.
+  - name: --show-details
+    summary: |-
+      Show public ip address, FQDN, and power states. Command will run slow.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --vmss
+    summary: |-
+      List VM instances in a specific VMSS. Please specify the VMSS id or VMSS name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_vm_show
+  name: az vm show
+  summary: |-
+    Show details for a virtual machine.
+  description: |-
+    Retrieve the full property bag for the specified virtual machine, including hardware profile, OS profile, network interfaces, and provisioning state. Use this command to confirm a VM was created correctly or to inspect its current configuration.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  syntax: >-
+    az vm show [--ids]
+               [--include-user-data]
+               [--name]
+               [--profile]
+               [--resource-group]
+               [--show-details]
+               [--subscription-id]
+  examples:
+  - summary: |-
+      Show a virtual machine by name
+    syntax: az vm show --name myvm --resource-group myrg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Show using shell variables
+    syntax: az vm show --name $vmName --resource-group $rg --subscription-id $subId
+  - summary: |-
+      Show several virtual machines by resource ID
+    syntax: az vm show --ids /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachines/myvm
+  - summary: |-
+      Include the user data
+    syntax: az vm show --name myvm --resource-group myrg --include-user-data
+  - summary: |-
+      Show public IPs, FQDNs and power state
+    syntax: az vm show --name myvm --resource-group myrg --show-details
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more virtual machine resource IDs. Provide either --ids or --name and --resource-group.
+  - name: --include-user-data
+    summary: |-
+      Include the user data properties in the query result.
+  - name: --name
+    summary: |-
+      The name of the virtual machine. Provide either --ids or --name and --resource-group.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name. Provide either --ids or --name and --resource-group.
+  - name: --show-details
+    summary: |-
+      Show public ip address, FQDN, and power states. Command will run slow.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_vm_start
+  name: az vm start
+  summary: |-
+    Start a stopped virtual machine.
+  description: |-
+    Power on a stopped or deallocated virtual machine. Target a single VM with `--name` and `--resource-group`, or pass one or more full resource IDs to `--ids` to start several VMs in one invocation. When `--ids` is used it supplies the subscription, resource group, and VM name for each target, so `--name`, `--resource-group`, and `--subscription-id` are ignored. The command waits for the long-running start operation to finish and returns no output on success.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  syntax: >-
+    az vm start [--ids]
+                [--name]
+                [--profile]
+                [--resource-group]
+                [--subscription-id]
+  examples:
+  - summary: |-
+      Start a virtual machine
+    syntax: az vm start --name myvm --resource-group myrg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Start using shell variables
+    syntax: az vm start --name $vmName --resource-group $rg --subscription-id $subId
+  - summary: |-
+      Start several virtual machines by resource ID
+    syntax: az vm start --ids /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachines/myvm /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachines/myothervm
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more virtual machine resource IDs. Provide either --ids or --name and --resource-group.
+  - name: --name
+    summary: |-
+      The name of the virtual machine.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_vm_stop
+  name: az vm stop
+  summary: |-
+    Power off (stop) a running virtual machine.
+  description: |-
+    Power off a running virtual machine while leaving its compute resources allocated. The virtual machine continues to be billed; use `az vm deallocate` to release the compute resources and stop compute charges. Target a single VM with `--name` and `--resource-group`, or pass one or more full resource IDs to `--ids` to power off several VMs in one invocation. When `--ids` is used it supplies the subscription, resource group, and VM name for each target, so `--name`, `--resource-group`, and `--subscription-id` are ignored. Pass `--skip-shutdown` to power the machine off immediately instead of requesting a graceful guest shutdown. The command waits for the long-running operation to finish and returns no output on success.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  syntax: >-
+    az vm stop [--ids]
+               [--name]
+               [--profile]
+               [--resource-group]
+               [--skip-shutdown]
+               [--subscription-id]
+  examples:
+  - summary: |-
+      Power off a running virtual machine
+    syntax: az vm stop --name myvm --resource-group myrg --subscription-id 00000000-0000-0000-0000-000000000000
+  - summary: |-
+      Power off a virtual machine without shutting down
+    syntax: az vm stop --name myvm --resource-group myrg --skip-shutdown
+  - summary: |-
+      Power off several virtual machines by resource ID
+    syntax: az vm stop --ids /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachines/myvm /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myrg/providers/Microsoft.Compute/virtualMachines/myothervm
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more virtual machine resource IDs. Provide either --ids or --name and --resource-group.
+  - name: --name
+    summary: |-
+      The name of the virtual machine.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name.
+  - name: --skip-shutdown
+    summary: |-
+      Skip shutdown and power off immediately.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_vm_create
+- az_vm_deallocate
+- az_vm_delete
+- az_vm_list
+- az_vm_show
+- az_vm_start
+- az_vm_stop
+metadata:
+  ms.date: 09/16/2026
+  description: Manage Azure virtual machines.

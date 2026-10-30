@@ -1,0 +1,346 @@
+### YamlMime:AzureCLIGroup
+uid: az_network_vnet
+name: az network vnet
+summary: |-
+  Manage Azure virtual networks.
+status: Preview
+isPreview: true
+sourceType: Core
+directCommands:
+- uid: az_network_vnet_create
+  name: az network vnet create
+  summary: |-
+    Create a virtual network.
+  description: |-
+    Provision an Azure virtual network in the specified resource group. Supply the VNet address space with `--address-prefixes`; when omitted it defaults to `10.0.0.0/16` unless `--ipam-allocations` is used. Subnets can be declared either with the compound `--subnets` argument (repeat it once per subnet, passing `KEY=VALUE` tokens) or with the positional `--subnet-names` / `--subnet-address-prefixes` pair, which are matched positionally: the first prefix list belongs to the first subnet name, and so on.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network vnet create --location
+                           --name
+                           --resource-group
+                           [--address-prefixes]
+                           [--bgp-community]
+                           [--ddos-protection]
+                           [--ddos-protection-plan]
+                           [--dns-servers]
+                           [--enable-encryption]
+                           [--encryption-policy {DropUnencrypted, AllowUnencrypted}]
+                           [--extended-location]
+                           [--flowtimeout]
+                           [--ip-allocations]
+                           [--ipam-allocations]
+                           [--pe-vnet-policies {Disabled, Basic}]
+                           [--profile]
+                           [--sgp]
+                           [--subnet-address-prefixes]
+                           [--subnet-names]
+                           [--subnets]
+                           [--subscription-id]
+                           [--tags]
+                           [--vm-protection]
+  examples:
+  - summary: |-
+      Create a virtual network with a single subnet
+    syntax: az network vnet create --name myvnet --resource-group myrg --location eastus --address-prefixes 10.0.0.0/16 --subnet-names default --subnet-address-prefixes 10.0.0.0/24
+  - summary: |-
+      Create a virtual network without subnets
+    syntax: az network vnet create --name myvnet --resource-group myrg --location eastus --address-prefixes 10.0.0.0/16
+  - summary: |-
+      Create several subnets with per-subnet settings
+    syntax: >-
+      az network vnet create --name myvnet --resource-group myrg --location eastus --address-prefixes 10.0.0.0/16 \
+        --subnets name=web address-prefixes=10.0.1.0/24 default-outbound-access=false \
+        --subnets name=data address-prefixes=10.0.2.0/24 service-endpoints=Microsoft.Storage,Microsoft.Sql
+  - summary: |-
+      Delegate a subnet to a service
+    syntax: >-
+      az network vnet create --name myvnet --resource-group myrg --location eastus --address-prefixes 10.0.0.0/16 \
+        --subnets name=apps address-prefixes=10.0.3.0/24 delegations=Microsoft.Web/serverFarms
+  - summary: |-
+      Set DNS servers, tags, and a flow timeout
+    syntax: >-
+      az network vnet create --name myvnet --resource-group myrg --location eastus --address-prefixes 10.0.0.0/16 \
+        --dns-servers 10.0.0.4 10.0.0.5 --tags owner=team-a env=prod --flowtimeout 10
+  - summary: |-
+      Enable virtual network encryption
+    syntax: >-
+      az network vnet create --name myvnet --resource-group myrg --location eastus --address-prefixes 10.0.0.0/16 \
+        --enable-encryption --encryption-policy AllowUnencrypted
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      Location for the virtual network.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the virtual network.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --address-prefixes
+    summary: |-
+      Address prefixes for the virtual network, e.g. 10.0.0.0/16. Defaults to 10.0.0.0/16 unless IPAM pool allocations are supplied.
+  - name: --bgp-community
+    summary: |-
+      The BGP community associated with the virtual network.
+  - name: --ddos-protection
+    summary: |-
+      Enable DDoS protection for the virtual network.
+  - name: --ddos-protection-plan
+    summary: |-
+      Resource id of the DDoS protection plan to associate.
+  - name: --dns-servers
+    summary: |-
+      DNS server IP addresses for the virtual network.
+  - name: --enable-encryption
+    summary: |-
+      Enable virtual network encryption.
+  - name: --encryption-policy
+    acceptedValues: DropUnencrypted, AllowUnencrypted
+    summary: |-
+      Behaviour when a VM without encryption joins an encrypted virtual network.
+  - name: --extended-location
+    summary: |-
+      Name of the edge zone (extended location) to create the virtual network in.
+  - name: --flowtimeout
+    summary: |-
+      Flow timeout in minutes for the virtual network, between 4 and 30.
+  - name: --ip-allocations
+    summary: |-
+      Resource ids of the IP allocations to reference.
+  - name: --ipam-allocations
+    summary: |-
+      Resource ids of the IPAM pools to allocate address prefixes from.
+  - name: --pe-vnet-policies
+    acceptedValues: Disabled, Basic
+    summary: |-
+      Private endpoint VNet policies.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --sgp
+    summary: |-
+      Summarized gateway prefixes advertised for the virtual network.
+  - name: --subnet-address-prefixes
+    summary: |-
+      Address prefixes for each subnet, positionally matched to the subnet names.
+  - name: --subnet-names
+    summary: |-
+      Names of the subnets to create. Simple alternative to the compound subnet argument.
+  - name: --subnets
+    summary: |-
+      Subnets to create, one occurrence per subnet, each a space-separated list of KEY=VALUE pairs. Supported keys: name, address-prefix, address-prefixes, nsg, route-table, nat-gateway, default-outbound-access, service-endpoints, service-endpoint-policy, delegations, ipam-pool-prefix-allocations, disable-private-endpoint-network-policies, disable-private-link-service-network-policies. Multi-valued keys take a comma-separated value.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  - name: --tags
+    summary: |-
+      Resource tags in KEY[=VALUE] form (space-separated); a bare KEY sets an empty value and a repeated KEY keeps its last value.
+  - name: --vm-protection
+    summary: |-
+      Enable VM protection for every subnet in the virtual network.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_vnet_delete
+  name: az network vnet delete
+  summary: |-
+    Delete a virtual network.
+  description: |-
+    Remove the specified virtual network from its resource group. The delete fails while the virtual network is still in use — detach or delete dependent resources such as network interfaces, private endpoints, and gateways first.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network vnet delete --name
+                           --resource-group
+                           [--profile]
+                           [--subscription-id]
+  examples:
+  - summary: |-
+      Delete a virtual network
+    syntax: az network vnet delete --name myvnet --resource-group myrg
+  - summary: |-
+      Delete using shell variables
+    syntax: az network vnet delete --name $vnetName --resource-group $rg --subscription-id $subId
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the virtual network.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_vnet_list
+  name: az network vnet list
+  summary: |-
+    List virtual networks.
+  description: |-
+    List virtual networks in a resource group, or across the whole subscription when `--resource-group` is omitted. Results are paginated transparently: every page is followed and the combined set is returned as a single array.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network vnet list [--profile]
+                         [--resource-group]
+                         [--subscription-id]
+  examples:
+  - summary: |-
+      List virtual networks in a resource group
+    syntax: az network vnet list --resource-group myrg
+  - summary: |-
+      List every virtual network in the subscription
+    syntax: az network vnet list --subscription-id 00000000-0000-0000-0000-000000000000
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --resource-group
+    summary: |-
+      The resource group name. Omit to list every virtual network in the subscription.
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_network_vnet_show
+  name: az network vnet show
+  summary: |-
+    Show details for a virtual network.
+  description: |-
+    Retrieve the full definition of a single virtual network, including its address space, subnets, and provisioning state. Use `--expand` to inline referenced sub-resources.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/network/index.md
+  syntax: >-
+    az network vnet show --name
+                         --resource-group
+                         [--expand]
+                         [--profile]
+                         [--subscription-id]
+  examples:
+  - summary: |-
+      Show a virtual network
+    syntax: az network vnet show --name myvnet --resource-group myrg
+  - summary: |-
+      Show using shell variables
+    syntax: az network vnet show --name $vnetName --resource-group $rg --subscription-id $subId
+  - summary: |-
+      Show a virtual network with its subnet IP configurations expanded
+    syntax: az network vnet show --name myvnet --resource-group myrg --expand subnets/ipConfigurations
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the virtual network.
+  - isRequired: true
+    name: --resource-group
+    summary: |-
+      The resource group name.
+  optionalParameters:
+  - name: --expand
+    summary: |-
+      Expand referenced resources, e.g. subnets/ipConfigurations.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --subscription-id
+    summary: |-
+      Azure Subscription Id. Defaults to the active profile's subscription.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_network_vnet_create
+- az_network_vnet_delete
+- az_network_vnet_list
+- az_network_vnet_show
+- az_network_vnet_subnet
+- az_network_vnet_subnet_create
+- az_network_vnet_subnet_delete
+- az_network_vnet_subnet_list
+- az_network_vnet_subnet_show
+metadata:
+  ms.date: 10/26/2026
+  description: Manage Azure virtual networks.
