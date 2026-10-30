@@ -1,0 +1,554 @@
+### YamlMime:AzureCLIGroup
+uid: az_deployment_mg
+name: az deployment mg
+summary: |-
+  Manage ARM deployments at management-group scope.
+status: Preview
+isPreview: true
+sourceType: Core
+directCommands:
+- uid: az_deployment_mg_cancel
+  name: az deployment mg cancel
+  summary: |-
+    Cancel a running management-group deployment.
+  description: |-
+    Cancels a management-group deployment whose provisioning state is Accepted or Running.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg cancel --management-group-id
+                            --name
+                            [--profile]
+  examples:
+  - summary: |-
+      Cancel a running deployment
+    syntax: az deployment mg cancel --management-group-id myManagementGroup --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The deployment name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_mg_create
+  name: az deployment mg create
+  summary: |-
+    Create a management-group deployment.
+  description: |-
+    Create a management group scoped deployment. The deployment is validated first using `Incremental` mode, then submitted using the selected deployment mode. Supply one template source: `--template-file` (a local ARM JSON or Bicep template), `--template-uri` (a remote ARM JSON template URL), or `--template-spec-id` (the resource id of a Template Spec version). A `.bicepparam` file supplied with `--parameters-file` can provide its own template reference instead. Bicep templates and `.bicepparam` files require the Bicep CLI for local compilation. `--management-group-id` (required) is the management group to deploy to, `--location` (required) is where the deployment metadata is stored, and `--name` (required) is the deployment name. Parameters can be supplied with `--parameters-file`, `--parameters-uri`, or repeatable inline `--parameter` values (KEY=VALUE, a JSON object, or a JSON parameters file path, optionally prefixed with `@`). Inline values override matching keys from a local parameters file. `--parameters-uri` cannot be combined with `--parameters-file` or `--parameter`. `--query-string` requires `--template-uri` and applies only to that template link; include any required SAS token directly in `--parameters-uri`. `--mode` selects the actual deployment mode, `Incremental` (default) or `Complete`; ARM determines whether the mode is supported at this scope. Validation before deployment always uses `Incremental` and does not validate `Complete` mode. `--validation-level` accepts `Template`, `Provider`, or `ProviderNoRbac`; when omitted, ARM applies its default. The command waits for the deployment to finish and returns the final deployment result.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg create --location
+                            --management-group-id
+                            --name
+                            [--mode {Incremental, Complete}]
+                            [--parameter]
+                            [--parameters-file]
+                            [--parameters-uri]
+                            [--profile]
+                            [--query-string]
+                            [--template-file]
+                            [--template-spec-id]
+                            [--template-uri]
+                            [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Deploy a local Bicep template with inline parameters
+    syntax: az deployment mg create --management-group-id myManagementGroup --location eastus --name myDeployment --template-file ./main.bicep --parameter environment=prod
+  - summary: |-
+      Deploy a remote ARM template with a remote parameters file
+    syntax: az deployment mg create --management-group-id myManagementGroup --location eastus --name myDeployment --template-uri https://example.com/azuredeploy.json --parameters-uri https://example.com/azuredeploy.parameters.json
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      The location to store the deployment data.
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  optionalParameters:
+  - name: --mode
+    acceptedValues: Incremental, Complete
+    summary: |-
+      The mode sent to ARM for the actual deployment: Incremental (default) or Complete. Validation before deployment always uses Incremental.
+  - name: --parameter
+    summary: |-
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local ARM JSON or .bicepparam parameters file. A .bicepparam file can supply its own template and requires the Bicep CLI. Cannot be combined with --parameters-uri.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a remote ARM JSON parameters file, including any required SAS token. Cannot be combined with --parameters-file or --parameter.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      A query string or SAS token for --template-uri only. Requires --template-uri; does not modify --parameters-uri. A leading '?' or '&' is removed.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM JSON or Bicep template. Bicep files require the Bicep CLI for local compilation.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec version. Use instead of another template source.
+  - name: --template-uri
+    summary: |-
+      The URI of a remote ARM JSON template. Supply one template source unless --parameters-file is a .bicepparam file that supplies its own template.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level sent to ARM. When omitted, ARM applies its default.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_mg_delete
+  name: az deployment mg delete
+  summary: |-
+    Delete a management-group deployment from deployment history.
+  description: |-
+    Deletes a management-group deployment and its operations from deployment history.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg delete --management-group-id
+                            --name
+                            [--profile]
+  examples:
+  - summary: |-
+      Delete deployment history
+    syntax: az deployment mg delete --management-group-id myManagementGroup --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The deployment name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_mg_export
+  name: az deployment mg export
+  summary: |-
+    Export the template from a management-group deployment.
+  description: |-
+    Exports the ARM template used by a management-group deployment.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg export --management-group-id
+                            --name
+                            [--profile]
+  examples:
+  - summary: |-
+      Export a deployment template
+    syntax: az deployment mg export --management-group-id myManagementGroup --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The deployment name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_mg_list
+  name: az deployment mg list
+  summary: |-
+    List management-group deployments.
+  description: |-
+    Lists deployments recorded at the specified management-group scope. Use `--filter` to restrict results by provisioning state.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg list --management-group-id
+                          [--filter]
+                          [--profile]
+  examples:
+  - summary: |-
+      List succeeded deployments
+    syntax: az deployment mg list --management-group-id myManagementGroup --filter "provisioningState eq 'Succeeded'"
+  requiredParameters:
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  optionalParameters:
+  - name: --filter
+    summary: |-
+      An OData filter sent to the management-group deployment list API, for example "provisioningState eq 'Succeeded'".
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_mg_show
+  name: az deployment mg show
+  summary: |-
+    Show a management-group deployment.
+  description: |-
+    Gets one management-group deployment by management group ID and deployment name.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg show --management-group-id
+                          --name
+                          [--profile]
+  examples:
+  - summary: |-
+      Show a deployment
+    syntax: az deployment mg show --management-group-id myManagementGroup --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The deployment name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_mg_validate
+  name: az deployment mg validate
+  summary: |-
+    Validate a management-group deployment.
+  description: |-
+    Validate whether a template would be accepted for a management group scoped deployment, without creating any resources. Takes the same template, parameter, and `--validation-level` inputs as `az deployment mg create`. Validation always uses `Incremental` mode, even if `--mode Complete` is supplied. `--name` is optional and defaults to a new GUID. Returns the validation result on success; on failure the command reports the validation errors and exits non-zero.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg validate --location
+                              --management-group-id
+                              [--mode {Incremental, Complete}]
+                              [--name]
+                              [--parameter]
+                              [--parameters-file]
+                              [--parameters-uri]
+                              [--profile]
+                              [--query-string]
+                              [--template-file]
+                              [--template-spec-id]
+                              [--template-uri]
+                              [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Validate a Bicep template
+    syntax: az deployment mg validate --management-group-id myManagementGroup --location eastus --template-file ./main.bicep
+  - summary: |-
+      Validate a remote template with a parameters file
+    syntax: az deployment mg validate --management-group-id myManagementGroup --location eastus --name myDeployment --template-uri https://example.com/azuredeploy.json --parameters-file ./azuredeploy.parameters.json --validation-level Template
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      The location to store the deployment data.
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  optionalParameters:
+  - name: --mode
+    acceptedValues: Incremental, Complete
+    summary: |-
+      Accepted for compatibility with create. Does not change validation mode: validation always uses Incremental, even when Complete is supplied.
+  - name: --name
+    summary: |-
+      The name of the deployment. Defaults to a generated GUID when omitted.
+  - name: --parameter
+    summary: |-
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local ARM JSON or .bicepparam parameters file. A .bicepparam file can supply its own template and requires the Bicep CLI. Cannot be combined with --parameters-uri.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a remote ARM JSON parameters file, including any required SAS token. Cannot be combined with --parameters-file or --parameter.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      A query string or SAS token for --template-uri only. Requires --template-uri; does not modify --parameters-uri. A leading '?' or '&' is removed.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM JSON or Bicep template. Bicep files require the Bicep CLI for local compilation.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec version. Use instead of another template source.
+  - name: --template-uri
+    summary: |-
+      The URI of a remote ARM JSON template. Supply one template source unless --parameters-file is a .bicepparam file that supplies its own template.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level sent to ARM. When omitted, ARM applies its default.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_mg_what-if
+  name: az deployment mg what-if
+  summary: |-
+    Preview changes from a management-group deployment.
+  description: |-
+    Run a management group scoped what-if operation. What-if is read-only: it predicts the set of changes (Create, Modify, Delete, Deploy, NoChange, Ignore) a template would make without creating or modifying any resources. Takes the same template, parameter, and `--validation-level` inputs as `az deployment mg create`. What-if always uses `Incremental` mode, even if `--mode Complete` is supplied. `--result-format` selects how much detail the predicted changes carry, `FullResourcePayloads` (default) or `ResourceIdOnly`. The command waits for the what-if operation to finish and returns the what-if result; if the operation fails, the command reports the error and exits non-zero.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment mg what-if --location
+                             --management-group-id
+                             --name
+                             [--mode {Incremental, Complete}]
+                             [--parameter]
+                             [--parameters-file]
+                             [--parameters-uri]
+                             [--profile]
+                             [--query-string]
+                             [--result-format {FullResourcePayloads, ResourceIdOnly}]
+                             [--template-file]
+                             [--template-spec-id]
+                             [--template-uri]
+                             [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Preview a local Bicep template
+    syntax: az deployment mg what-if --management-group-id myManagementGroup --location eastus --name myDeployment --template-file ./main.bicep --parameter environment=prod
+  - summary: |-
+      Preview resource IDs only
+    syntax: az deployment mg what-if --management-group-id myManagementGroup --location eastus --name myDeployment --template-file ./main.bicep --result-format ResourceIdOnly
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      The location to store the deployment data.
+  - isRequired: true
+    name: --management-group-id
+    summary: |-
+      The management group id.
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  optionalParameters:
+  - name: --mode
+    acceptedValues: Incremental, Complete
+    summary: |-
+      Accepted for compatibility with create. Does not change what-if mode: what-if always uses Incremental, even when Complete is supplied.
+  - name: --parameter
+    summary: |-
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local ARM JSON or .bicepparam parameters file. A .bicepparam file can supply its own template and requires the Bicep CLI. Cannot be combined with --parameters-uri.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a remote ARM JSON parameters file, including any required SAS token. Cannot be combined with --parameters-file or --parameter.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      A query string or SAS token for --template-uri only. Requires --template-uri; does not modify --parameters-uri. A leading '?' or '&' is removed.
+  - name: --result-format
+    acceptedValues: FullResourcePayloads, ResourceIdOnly
+    summary: |-
+      The format of the what-if results. FullResourcePayloads (default) or ResourceIdOnly.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM JSON or Bicep template. Bicep files require the Bicep CLI for local compilation.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec version. Use instead of another template source.
+  - name: --template-uri
+    summary: |-
+      The URI of a remote ARM JSON template. Supply one template source unless --parameters-file is a .bicepparam file that supplies its own template.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level sent to ARM. When omitted, ARM applies its default.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_deployment_mg_cancel
+- az_deployment_mg_create
+- az_deployment_mg_delete
+- az_deployment_mg_export
+- az_deployment_mg_list
+- az_deployment_mg_show
+- az_deployment_mg_validate
+- az_deployment_mg_what-if
+metadata:
+  ms.date: 10/21/2026
+  description: Manage ARM deployments at management-group scope.

@@ -3,7 +3,8 @@ uid: az_deployment_group
 name: az deployment group
 summary: |-
   Manage Azure Resource Manager deployments scoped to a resource group.
-status: GA
+status: Preview
+isPreview: true
 sourceType: Core
 directCommands:
 - uid: az_deployment_group_cancel
@@ -12,7 +13,8 @@ directCommands:
     Cancel a running resource group deployment.
   description: |-
     Cancel a currently running Azure Resource Manager deployment scoped to a resource group. A deployment can only be cancelled while its provisioning state is `Accepted` or `Running`; once cancelled the state becomes `Canceled` and the resource group is left partially deployed, so any resources the deployment already created remain and must be cleaned up separately. Cancelling a deployment that has already reached a terminal state fails with `DeploymentCannotBeCancelled`. The command prints nothing on success; the subscription defaults to the active profile's subscription unless `--subscription-id` is given.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -67,7 +69,8 @@ directCommands:
     Create a resource group scoped deployment from an ARM or Bicep template.
   description: |-
     Create (start) a resource group scoped deployment, mirroring `az deployment group create`. The template is supplied with exactly one of `--template-file` (a local ARM or Bicep template deployed inline), `--template-uri` (a remote template URL), or `--template-spec-id` (the resource id of a Template Spec). `--resource-group` (required) is the resource group to deploy into and `--name` (required) is the deployment name; `--subscription-id` (optional) selects the subscription. Parameters can be supplied with `--parameters-file` (a local parameters file), `--parameters-uri` (a remote parameters file URL), and/or one or more repeatable inline `--parameter KEY=VALUE` pairs; inline parameter values are parsed as JSON when possible (for example `count=3` becomes a number and `flag=true` becomes a bool) and otherwise treated as strings, quote a value to force a string (for example `zip="01234"`). Inline parameters overlay same-named keys from a parameters file and cannot be combined with `--parameters-uri`. `--query-string` carries a SAS token or other query string to use with the template URI and/or the parameters URI. `--mode` selects the deployment mode, `Incremental` (default) or `Complete`. `--validation-level` sets the validation level, one of `Template`, `Provider`, or `ProviderNoRbac`. On failure the deployment can roll back with either `--rollback-on-error` (roll the resource group back to the last successful deployment) or `--rollback-to-deployment-name <name>` (roll back to a specific named deployment); the two rollback options are mutually exclusive. The command waits for the deployment long-running operation to finish and returns the final deployment result.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -171,7 +174,8 @@ directCommands:
     Delete a resource group deployment from the deployment history.
   description: |-
     Delete an Azure Resource Manager deployment scoped to a resource group. This removes the deployment record and its associated deployment operations from the deployment history; it does **not** delete the resources the deployment created, and it leaves the resource group itself untouched. A deployment that is currently running cannot be deleted -- cancel it with `az deployment group cancel` first, or wait for it to reach a terminal state. The delete is a long-running operation and the command waits for it to finish. Deleting a deployment name that does not exist succeeds silently, because ARM answers the same `204 No Content` in both cases. The command prints nothing on success; the subscription defaults to the active profile's subscription unless `--subscription-id` is given.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -226,7 +230,8 @@ directCommands:
     Export the template used for a resource group deployment.
   description: |-
     Export the Azure Resource Manager template that a resource-group-scoped deployment was created from, and print it to stdout as JSON. The command is read-only: it never creates or modifies resources. Azure Resource Manager returns the template exactly as it was submitted, with parameters and variables left unresolved, so the output can be fed straight back into `az deployment group create --template-file`. Exporting a deployment that does not exist fails with `DeploymentNotFound`. The subscription defaults to the active profile's subscription unless `--subscription-id` is given.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -284,7 +289,8 @@ directCommands:
     List the deployments in a resource group.
   description: |-
     List every Azure Resource Manager deployment scoped to a resource group. Results are returned as a flat array of deployments with their provisioning state, mode, timestamp, and outputs; paged results are followed automatically. The subscription defaults to the active profile's subscription unless `--subscription-id` is given.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -338,7 +344,8 @@ directCommands:
     Show details of a single resource group deployment.
   description: |-
     Display a single Azure Resource Manager deployment scoped to a resource group, including its provisioning state, mode, timestamp, duration, template hash, outputs, and the resources it provisioned. Specify the resource group and the deployment name; the subscription defaults to the active profile's subscription unless `--subscription-id` is given.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -393,7 +400,8 @@ directCommands:
     Validate whether a resource group scoped deployment template would be accepted, without deploying it.
   description: |-
     Validate a resource group scoped deployment, mirroring `az deployment group validate`. Validate is read-only: it asks Azure Resource Manager whether a template is syntactically correct and would be accepted, without creating or modifying any resources. Unlike `az deployment group what-if`, it reports whether the template is valid rather than predicting the individual resource changes. The template is supplied with exactly one of `--template-file` (a local ARM or Bicep template evaluated inline), `--template-uri` (a remote template URL), or `--template-spec-id` (the resource id of a Template Spec). `--resource-group` (required) is the resource group to validate against and `--name` (required) is the deployment name; `--subscription-id` (optional) selects the subscription. Parameters can be supplied with `--parameters-file` (a local parameters file), `--parameters-uri` (a remote parameters file URL), and/or one or more repeatable inline `--parameter KEY=VALUE` pairs; inline parameter values are parsed as JSON when possible (for example `count=3` becomes a number and `flag=true` becomes a bool) and otherwise treated as strings, quote a value to force a string (for example `zip="01234"`). Inline parameters overlay same-named keys from a parameters file and cannot be combined with `--parameters-uri`. `--query-string` carries a SAS token or other query string to use with the template URI and/or the parameters URI. `--mode` selects the deployment mode, `Incremental` (default) or `Complete`. `--validation-level` sets the validation level, one of `Template`, `Provider`, or `ProviderNoRbac`. `--rollback-on-error` records that the resource group should roll back to the last successful deployment on error, and `--rollback-to-deployment-name` rolls back to a specific named deployment instead; the two are mutually exclusive. When the template is valid the command returns the validation result; when it is not, the command reports the validation errors and exits with a non-zero status.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -496,7 +504,8 @@ directCommands:
     Preview the changes a resource group scoped deployment would make, without applying them.
   description: |-
     Run a resource group scoped what-if operation, mirroring `az deployment group what-if`. What-if is read-only: it predicts the set of changes (Create, Modify, Delete, Deploy, NoChange, Ignore) an ARM or Bicep template would make without creating or modifying any resources. The template is supplied with exactly one of `--template-file` (a local ARM or Bicep template evaluated inline), `--template-uri` (a remote template URL), or `--template-spec-id` (the resource id of a Template Spec). `--resource-group` (required) is the resource group to evaluate against and `--name` (required) is the deployment name; `--subscription-id` (optional) selects the subscription. Parameters can be supplied with `--parameters-file` (a local parameters file), `--parameters-uri` (a remote parameters file URL), and/or one or more repeatable inline `--parameter KEY=VALUE` pairs; inline parameter values are parsed as JSON when possible (for example `count=3` becomes a number and `flag=true` becomes a bool) and otherwise treated as strings, quote a value to force a string (for example `zip="01234"`). Inline parameters overlay same-named keys from a parameters file and cannot be combined with `--parameters-uri`. `--query-string` carries a SAS token or other query string to use with the template URI and/or the parameters URI. `--mode` selects the deployment mode, `Incremental` (default) or `Complete`. `--validation-level` sets the validation level, one of `Template`, `Provider`, or `ProviderNoRbac`. `--result-format` selects how much detail the predicted changes carry, `FullResourcePayloads` (default, full before/after resource snapshots) or `ResourceIdOnly` (resource ids only). The command waits for the what-if long-running operation to finish and returns the predicted change list.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
   syntax: >-
@@ -601,5 +610,5 @@ commands:
 - az_deployment_group_validate
 - az_deployment_group_what-if
 metadata:
-  ms.date: 06/24/2026
+  ms.date: 10/21/2026
   description: Manage Azure Resource Manager deployments scoped to a resource group.
