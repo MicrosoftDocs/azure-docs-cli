@@ -457,12 +457,19 @@ directCommands:
                                                    --resource-group
                                                    --storage-account
                                                    --vault-name
+                                                   [--access-type {IdentityBased, KeyBased}]
                                                    [--acquire-policy-token]
                                                    [--change-reference]
+                                                   [--mi-system-assigned]
+                                                   [--mi-user-assigned]
+                                                   [--yes]
   examples:
   - summary: |-
       Start protecting a previously unprotected Azure File share within an Azure Storage account as per the specified policy to a Recovery services vault. Provide the Azure File share name and the parent storage account name.
     syntax: az backup protection enable-for-azurefileshare --policy-name MyPolicy --resource-group MyResourceGroup --vault-name MyVault --storage-account MyStorageAccount --azure-file-share MyAzureFileShare
+  - summary: |-
+      Protect an Azure file share using a user-assigned managed identity.
+    syntax: az backup protection enable-for-azurefileshare --policy-name MyPolicy --resource-group MyResourceGroup --vault-name MyVault --storage-account MyStorageAccount --azure-file-share MyAzureFileShare --access-type IdentityBased --mi-user-assigned MyIdentityResourceId
   requiredParameters:
   - isRequired: true
     name: --azure-file-share
@@ -485,6 +492,10 @@ directCommands:
     summary: |-
       Name of the Recovery services vault.
   optionalParameters:
+  - name: --access-type
+    acceptedValues: IdentityBased, KeyBased
+    summary: |-
+      Authentication type used to access the storage account.
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
@@ -493,6 +504,16 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --mi-system-assigned
+    summary: |-
+      Use the Recovery Services vault's system-assigned managed identity.
+  - name: --mi-user-assigned
+    summary: |-
+      ARM ID of a user-assigned managed identity associated with the Recovery Services vault.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation when re-registering the storage account.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -1135,5 +1156,5 @@ commands:
 - az_backup_protection_undelete
 - az_backup_protection_update-for-vm
 metadata:
-  ms.date: 09/29/2026
+  ms.date: 10/20/2026
   description: Manage protection of items in a Recovery Services vault.
