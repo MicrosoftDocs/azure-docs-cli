@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: how-to
-ms.date: 10/28/2026
+ms.date: 10/30/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -90,56 +90,60 @@ The `az group show` command fails with an error that reports the resource group 
 
 ## Recover on request
 
-Ask AI troubleshooting to explain the most recent failure:
+Ask AI troubleshooting to analyze the most recent failure. Without `--id`, `az troubleshoot analyze` selects the latest saved failure in the current terminal.
 
 # [Bash](#tab/bash)
 
 ```bash
-az troubleshoot recover
+az troubleshoot analyze
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```powershell
-az troubleshoot recover
+az troubleshoot analyze
 ```
 
 ---
 
 The output explains the cause of the failure, in this case that the resource group doesn't exist, and suggests a fix, such as checking the name or creating the group. Review the suggestion, and apply it only if it's appropriate.
 
-To troubleshoot an earlier failure instead, list the saved failures and recover from one by ID:
+To troubleshoot an earlier failure instead, list the saved failures, read the complete error for one, and analyze it by ID. The `list` and `show` commands run locally and don't use AI.
 
 # [Bash](#tab/bash)
 
 ```bash
 az troubleshoot list --output table
-az troubleshoot recover --id "<failure-id>"
+az troubleshoot show --id "<failure-id>" --output table
+az troubleshoot analyze --id "<failure-id>"
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```powershell
 az troubleshoot list --output table
-az troubleshoot recover --id "<failure-id>"
+az troubleshoot show --id "<failure-id>" --output table
+az troubleshoot analyze --id "<failure-id>"
 ```
 
 ---
 
+`az troubleshoot list` returns the `id`, `command`, and `errorDetail` of each saved failure, with the error shortened to 200 characters. `az troubleshoot show` returns the same fields with the complete command and error.
+
 ## Recover interactively (optional)
 
-In an interactive session, AI troubleshooting proposes a plan and can run commands for you.
+In an interactive session, AI troubleshooting proposes a plan and can run commands for you. The `--style` parameter applies to this analysis only and doesn't change the `agent.recovery.style` setting.
 
 # [Bash](#tab/bash)
 
 ```bash
-az troubleshoot recover --style interactive
+az troubleshoot analyze --style interactive
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```powershell
-az troubleshoot recover --style interactive
+az troubleshoot analyze --style interactive
 ```
 
 ---
