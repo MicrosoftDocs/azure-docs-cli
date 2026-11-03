@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: quickstart
-ms.date: 10/28/2026
+ms.date: 11/03/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -109,7 +109,25 @@ Switch-Az
 
 ---
 
-Each call prints the path of the `az` executable that's now active. The first call switches to the classic Azure CLI, and the second call switches back to the preview. The two tools keep separate sign-in state, so signing in with one doesn't sign you in to the other.
+Each call prints the path of the `az` executable that's now active. The first call switches to the classic Azure CLI, and the second call switches back to the preview. The output looks similar to the following example. The classic Azure CLI path depends on how you installed it.
+
+# [Bash](#tab/bash)
+
+```output
+/usr/bin/az
+/home/<user>/.local/share/azcli/az
+```
+
+# [PowerShell](#tab/powershell)
+
+```output
+C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd
+C:\Users\<user>\AppData\Local\Programs\azcli\az.exe
+```
+
+---
+
+The second line confirms that the preview is active again. The two tools keep separate sign-in state, so signing in with one doesn't sign you in to the other.
 
 Make sure the preview is active before you continue.
 

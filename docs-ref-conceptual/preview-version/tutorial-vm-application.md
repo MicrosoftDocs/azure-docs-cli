@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 10/28/2026
+ms.date: 11/03/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -116,6 +116,8 @@ az vm show @scope --name $vm
 `ssh-keygen` prompts for a passphrase and creates a key pair. `az vm create` waits until the VM is created. The `az vm show` output includes `"provisioningState": "Succeeded"`.
 
 ## Run the application
+
+To confirm that the VM works end to end, install the nginx web server and serve a one-line page. A successful web request proves that the VM is running, that its public IP address and network security group let traffic through, and that the application starts on its own after a restart. Any workload that listens on port 80 works the same way.
 
 # [Bash](#tab/bash)
 
