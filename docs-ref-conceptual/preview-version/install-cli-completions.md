@@ -1,6 +1,7 @@
 ---
 title: Enable Azure CLI preview tab completion
 description: Learn how to enable shell tab completion for the Azure CLI preview in bash, zsh, and PowerShell.
+ms.date: 11/03/2026
 ---
 
 # Enable Azure CLI preview tab completion
@@ -74,6 +75,41 @@ Completion is enabled by default. You can toggle it through config without un-so
 az config set --key completion.enabled --value false   # disable
 az config set --key completion.enabled --value true    # enable
 ```
+
+## Remove tab completion from your shell
+
+To stop loading the completion script, remove the line that you added to your shell profile, and then open a new shell. To only stop suggestions without editing your profile, set `completion.enabled` to `false` instead, as described in the previous section.
+
+### bash
+
+Delete the `source` line from `~/.bashrc`:
+
+```bash
+sed -i.bak '\|azcli/completions/az.completions.bash|d' ~/.bashrc
+```
+
+The command saves a backup of the original file as `~/.bashrc.bak`.
+
+### zsh
+
+Delete the `source` line from `~/.zshrc`:
+
+```zsh
+sed -i.bak '\|azcli/completions/az.completions.zsh|d' ~/.zshrc
+```
+
+Keep the `autoload -U compinit && compinit` line if other tools rely on zsh completion. Otherwise, you can remove it too.
+
+### PowerShell
+
+Remove the line that dot-sources the script from your PowerShell profile:
+
+```powershell
+$lines = Get-Content -LiteralPath $PROFILE | Where-Object { $_ -notmatch 'azcli\\completions\\az\.completions\.ps1' }
+Set-Content -LiteralPath $PROFILE -Value $lines
+```
+
+You can also open the profile in an editor with `code $PROFILE` or `notepad $PROFILE` and delete the line manually.
 
 ## Refresh and troubleshoot
 

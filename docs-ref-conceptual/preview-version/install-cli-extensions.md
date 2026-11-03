@@ -1,7 +1,7 @@
 ---
 title: Install Azure CLI preview extensions
 description: Learn how to install add-on extensions for the Azure CLI preview.
-ms.date: 10/27/2026
+ms.date: 11/03/2026
 ---
 
 # Install Azure CLI preview extensions
@@ -34,13 +34,16 @@ Download the bundle from the latest release using your authenticated GitHub CLI 
 gh release download --repo Azure/azclips --pattern 'azcli-extensions-*.tar.gz' --dir . --clobber
 ```
 
-The bundle unpacks as loose `.nupkg` files, so extract it into a folder and install from there. Extension package versions are independent of the release version, so the commands below don't hardcode a version — follow the set for your shell.
+The bundle unpacks as loose `.nupkg` files, so extract it into a folder and install from there. The bundle is the list of available add-on extensions: each `azcli.extensions.<name>.<version>.nupkg` file is one extension. To see what's available before you install, list the extracted files, as shown in the next section. Extension package versions are independent of the release version, so the commands below don't hardcode a version — follow the set for your shell.
 
 ### Linux / macOS (bash)
 
 ```bash
 mkdir -p azcli-extensions
 tar -xzf ./azcli-extensions-*.tar.gz -C azcli-extensions
+
+# See which extensions are available
+ls azcli-extensions/azcli.extensions.*.nupkg
 
 # Install one extension (e.g. compute)
 az extension add --path ./azcli-extensions/azcli.extensions.compute.*.nupkg
@@ -61,6 +64,9 @@ PowerShell doesn't expand `*` for external commands, so resolve the paths explic
 New-Item -ItemType Directory -Force -Path azcli-extensions | Out-Null
 $bundle = Get-ChildItem azcli-extensions-*.tar.gz | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 tar -xzf $bundle.FullName -C azcli-extensions
+
+# See which extensions are available
+Get-ChildItem azcli-extensions/azcli.extensions.*.nupkg | Select-Object -ExpandProperty Name
 
 # Install one extension (e.g. compute)
 $compute = Get-ChildItem azcli-extensions/azcli.extensions.compute.*.nupkg | Select-Object -First 1
@@ -84,7 +90,11 @@ The extension you added should appear in the list. If the command it provides no
 
 | Task | Command |
 | --- | --- |
+| List available extensions | List the `azcli.extensions.*.nupkg` files in the extracted bundle |
 | List installed extensions | `az extension list` |
+| Show details for an installed extension | `az extension show --name <name>` |
+| Update an extension | `az extension update --name <name>` |
+| Remove an extension | `az extension remove --name <name>` |
 
 ## Troubleshooting
 

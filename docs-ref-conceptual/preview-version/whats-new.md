@@ -1,18 +1,18 @@
 ---
-title: What's new in Azure CLI (preview)
-description: Discover the latest Azure CLI features available in the preview, including shell-native Tab completion for Azure CLI commands, parameters, and valid values.
+title: What's new in the next-generation Azure CLI (preview)
+description: Discover the latest features in the next-generation Azure CLI, available in preview, including shell-native Tab completion for Azure CLI commands, parameters, and valid values.
 ms.date: 10/27/2026
 ---
 
-# What's new in Azure CLI (preview)
+# What's new in the next-generation Azure CLI (preview)
 
-This article highlights new features and capabilities available in the Azure CLI preview.
+This article highlights new features and capabilities available in the next-generation Azure CLI, now in preview.
 
 ## Tab completion
 
-The Azure CLI preview provides shell-native Tab completion to help you construct commands and reduce errors during command entry.
+The next-generation Azure CLI provides shell-native Tab completion to help you construct commands and reduce errors during command entry.
 
-When you type part of a command and press <kbd>Tab</kbd>, the Azure CLI preview provides contextual suggestions based on the current command. Suggestions can include commands, subcommands, parameter names, and valid parameter values.
+When you type part of a command and press <kbd>Tab</kbd>, the next-generation Azure CLI provides contextual suggestions based on the current command. Suggestions can include commands, subcommands, parameter names, and valid parameter values.
 
 ### Examples
 
@@ -33,7 +33,7 @@ The feature:
 - Completes commands using local Azure CLI metadata
 - Works offline and doesn't require authentication for supported completion types
 
-The Azure CLI preview doesn't introduce a new interface or change existing shell behavior. Existing shell features, such as history-based suggestions, continue to work as expected.
+The next-generation Azure CLI doesn't introduce a new interface or change existing shell behavior. Existing shell features, such as history-based suggestions, continue to work as expected.
 
 ### Preview behavior
 
@@ -41,12 +41,12 @@ During the preview:
 
 - Tab completion isn't enabled by default.
 - Enable the feature by following the post-installation setup instructions.
-- The Azure CLI preview doesn't change your shell profile automatically.
+- The next-generation Azure CLI doesn't change your shell profile automatically.
 - The feature is available only in interactive terminal sessions.
 - Scripts, pipelines, and command output in non-interactive scenarios aren't affected.
 
 ## Profile-based sign-in
 
-The Azure CLI preview supports _profiles_, which let you save named sign-in contexts for different accounts, tenants, and subscriptions. Profiles make it easy to switch between environments without signing in again.
+The next-generation Azure CLI supports _profiles_, which let you save named sign-in contexts for different accounts, tenants, and subscriptions. Profiles make it easy to switch between environments without signing in again.
 
 For more information, see [Manage sign-in profiles in Azure CLI (preview)](profile-base-login.md).
