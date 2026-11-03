@@ -1,6 +1,7 @@
 ---
 title: Install the Azure CLI preview manually or offline
 description: Learn how to install the Azure CLI preview manually or offline when the one-command installer isn't available.
+ms.date: 10/27/2026
 ---
 
 # Install the Azure CLI preview manually or offline
@@ -20,8 +21,7 @@ First choose a package type:
 
 Then choose the archive for your machine and package type:
 
-Use the `linux-musl` archives on musl-based distributions such as Alpine Linux. Use the standard
-`linux` archives on glibc-based distributions such as Ubuntu, Debian, Fedora, and Azure Linux.
+Use the `linux-musl` archives on musl-based distributions such as Alpine Linux. Use the standard `linux` archives on glibc-based distributions such as Ubuntu, Debian, Fedora, and Azure Linux.
 
 | Your machine | Lean package | Full package |
 | --- | --- | --- |
@@ -84,8 +84,8 @@ Commands that contact Azure require sign-in and a subscription. If `az` is found
 
 | Symptom | Fix |
 | --- | --- |
-| `az` is not found | Run `az` by its full path, or add its folder to `PATH` (see [Adding `az` to PATH](#adding-az-to-path-optional-manual)). |
+| `az` is not found | Run `az` by its full path, or add its folder to `PATH`. For more information, see [Adding `az` to PATH](#adding-az-to-path-optional-manual). |
 | Permission denied (Linux/macOS) | Run `chmod +x <install-root>/az`. |
 | macOS blocks the binary | Validate the source, then `xattr -dr com.apple.quarantine <install-root>`. |
 | File name doesn't match examples | Use the platform suffix from your downloaded file (e.g. `linux-arm64`, `win-arm64`). |
-| A command says an extension is missing | On lean installs, add it from the extensions bundle (see [Install Azure CLI preview extensions](./install-cli-extensions.md)) or use the full package. |
+| A command says an extension is missing | On lean installs, add the extension from the extensions bundle or use the full package. For more information, see [Install Azure CLI preview extensions](install-cli-extensions.md). |
