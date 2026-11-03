@@ -21,6 +21,8 @@ directCommands:
                                          [--container-name]
                                          [--ids]
                                          [--item-name]
+                                         [--mi-system-assigned]
+                                         [--mi-user-assigned]
                                          [--resource-group]
                                          [--rp-name]
                                          [--source-file-path]
@@ -28,13 +30,18 @@ directCommands:
                                          [--subscription]
                                          [--target-file-share]
                                          [--target-folder]
+                                         [--target-resource-group-name --target-rg-name]
                                          [--target-storage-account]
+                                         [--target-subscription-id]
                                          [--tenant-id]
                                          [--vault-name]
   examples:
   - summary: |-
       Restore backed up Azure files within a file-share to the same file-share or another file-share in registered storage accounts.
     syntax: az backup restore restore-azurefiles --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode OriginalLocation --source-file-type File --source-file-path Filepath1 Filepath2
+  - summary: |-
+      Restore selected Azure files using a user-assigned managed identity.
+    syntax: az backup restore restore-azurefiles --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode AlternateLocation --target-storage-account MyTargetStorageAccount --target-file-share MyTargetFileShare --source-file-type File --source-file-path Filepath1 --mi-user-assigned MyIdentityResourceId
   requiredParameters:
   - isRequired: true
     name: --resolve-conflict
@@ -67,6 +74,12 @@ directCommands:
     summary: |-
       Name of the backed up item.
     groupName: Resource Id Arguments
+  - name: --mi-system-assigned
+    summary: |-
+      Use the Recovery Services vault's system-assigned managed identity for restore.
+  - name: --mi-user-assigned
+    summary: |-
+      ARM ID of the user-assigned managed identity to use for restore.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -92,9 +105,15 @@ directCommands:
   - name: --target-folder
     summary: |-
       Destination folder to which content will be restored. To restore content to root , leave the folder name empty.
+  - name: --target-resource-group-name --target-rg-name
+    summary: |-
+      Resource group of the destination storage account to which the content will be restored, needed if it is different from the vault resource group.
   - name: --target-storage-account
     summary: |-
       Destination storage account to which content will be restored.
+  - name: --target-subscription-id
+    summary: |-
+      Subscription ID of the destination storage account for cross-subscription restore.
   - name: --tenant-id
     summary: |-
       ID of the tenant if the Resource Guard protecting the vault exists in a different tenant.
@@ -141,6 +160,8 @@ directCommands:
                                              [--container-name]
                                              [--ids]
                                              [--item-name]
+                                             [--mi-system-assigned]
+                                             [--mi-user-assigned]
                                              [--resource-group]
                                              [--rp-name]
                                              [--subscription]
@@ -148,6 +169,7 @@ directCommands:
                                              [--target-folder]
                                              [--target-resource-group-name --target-rg-name]
                                              [--target-storage-account]
+                                             [--target-subscription-id]
                                              [--tenant-id]
                                              [--use-secondary-region]
                                              [--vault-name]
@@ -155,6 +177,12 @@ directCommands:
   - summary: |-
       Restore backed up Azure file shares to the same file-share or another file-share in registered storage accounts.
     syntax: az backup restore restore-azurefileshare --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode OriginalLocation
+  - summary: |-
+      Restore an Azure file share to an alternate location using the vault's system-assigned managed identity.
+    syntax: az backup restore restore-azurefileshare --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode AlternateLocation --target-storage-account MyTargetStorageAccount --target-file-share MyTargetFileShare --mi-system-assigned
+  - summary: |-
+      Restore an Azure file share across both region and subscription.
+    syntax: az backup restore restore-azurefileshare --resource-group MyResourceGroup --vault-name MyVault --container-name MySecondaryRegionContainer --item-name MySecondaryRegionItem --rp-name MySecondaryRegionRecoveryPoint --resolve-conflict Overwrite --restore-mode AlternateLocation --target-subscription-id MyTargetSubscription --target-resource-group-name MyTargetResourceGroup --target-storage-account MyTargetStorageAccount --target-file-share MyTargetFileShare --use-secondary-region
   requiredParameters:
   - isRequired: true
     name: --resolve-conflict
@@ -187,6 +215,12 @@ directCommands:
     summary: |-
       Name of the backed up item.
     groupName: Resource Id Arguments
+  - name: --mi-system-assigned
+    summary: |-
+      Use the Recovery Services vault's system-assigned managed identity for restore.
+  - name: --mi-user-assigned
+    summary: |-
+      ARM ID of the user-assigned managed identity to use for restore.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -211,6 +245,9 @@ directCommands:
   - name: --target-storage-account
     summary: |-
       Destination storage account to which content will be restored.
+  - name: --target-subscription-id
+    summary: |-
+      Subscription ID of the destination storage account for cross-subscription restore.
   - name: --tenant-id
     summary: |-
       ID of the tenant if the Resource Guard protecting the vault exists in a different tenant.
@@ -546,5 +583,5 @@ commands:
 - az_backup_restore_restore-azurewl
 - az_backup_restore_restore-disks
 metadata:
-  ms.date: 09/29/2026
+  ms.date: 10/20/2026
   description: Restore backed up items from recovery points in a Recovery Services vault.
