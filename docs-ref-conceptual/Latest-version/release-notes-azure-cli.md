@@ -1,13 +1,99 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 10/06/2026
+ms.date: 11/03/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## November 03, 2026
+
+Version 2.92.0
+
+### AKS
+
+* `az aks nodepool update`: Allow upgrading Windows2022 node pools to Windows2025 with `--os-sku`
+* `az aks nodepool add`: Automatically enable FIPS images for Windows2025 node pools
+* `az aks create`: Add `--ssh-access` with `localuser`, `disabled` and `entraid` options to configure SSH access for the node pools
+* `az aks nodepool add/update`: Add `--ssh-access` with `localuser`, `disabled` and `entraid` options to configure SSH access for the node pool
+* `az aks create/update`: Add `--kms-infrastructure-encryption` to support KMS platform-managed keys (PMK)
+* `az aks`: Allow longer node pool names; the service enforces the actual limit
+* `az aks nodepool add`: Make `--enable-managed-gpu` generally available
+
+### App Service
+
+* `az webapp show/list`: Restore `appServicePlanId` and remove `serverFarmId` from output
+* `az functionapp show/list`: Add `appServicePlanId` to output while retaining `serverFarmId`
+* `az logicapp show/list`: Add `appServicePlanId` to output while retaining `serverFarmId`
+* `az functionapp list`: Handle apps without an App Service Plan ID when using `--output table`
+
+### ARM
+
+* `az stack-whatif`: Fix resource properties not rendering for resource creates and deletes
+
+### Backup
+
+* `az backup container register`: Add managed identity support for Azure Files backup
+
+### Cloud
+
+* `az cloud show`: Add missing `synapseAnalyticsResourceId` for `AzureBleuCloud`
+* `az cloud set`: Add `AzureDelosCloud` (Germany sovereign cloud) to the known clouds list
+
+### Cognitive Services
+
+* `az cognitiveservices agent`: Announce hosted agent command deprecation
+* `az cognitiveservices account adapter-deployment`: Add new command group (preview)
+
+### Compute
+
+* `az vm create`: Support Aligned Zonal Fault Domains with `--data-disk-storage-fault-domain-alignment` and `--os-disk-storage-fault-domain-alignment`
+* `az vmss create`: Support Aligned Zonal Fault Domains with `--data-disk-storage-fault-domain-alignment`, `--os-disk-storage-fault-domain-alignment` and `--zonal-platform-fault-domain-align-mode`
+* `az vm create/update`: Support FlexProfile with `--preferred-size`
+
+### Compute Fleet
+
+* `az compute-fleet`: Support API version 2026-08-01
+* `az compute-fleet identity`: Add `assign`, `remove`, `show`, and `wait` commands for managed identities
+
+### Container app
+
+* `az containerapp job execution list`: Follow ARM pagination to return all executions
+* `az containerapp env create`: Pre-announce the future change of the `--logs-destination` default from `log-analytics` to `azure-monitor`; the current default remains unchanged
+
+### Key Vault
+
+* `az keyvault`: Add API version 2026-02-01 retirement notice to group help
+* `az keyvault purge/recover/show-deleted`: Fix error message to reference `--name/-n` instead of the non-existent `--vault-name`
+
+### MySQL
+
+* `az mysql`: Fix Windows executable-search hijacking
+
+### Network
+
+* `az network application-gateway advanced-routing-set/advanced-routing-map`: Add new command groups to support advanced routing
+* `az network application-gateway rule create/update`: Add `--advanced-routing-map` and `--auth-configs` parameters
+* `az network application-gateway update`: Add `--reserved-capacity` parameter
+
+### Packaging
+
+* `az version`: Detect Homebrew casks with symlinked prefixes
+
+### SQL
+
+* `az sql db str-policy`: Add short-term backup immutability locking with confirmation and expose immutability status
+* `az sql midb short-term-retention-policy`: Add immutability locking for live databases and expose status for live and dropped databases
+
+### Storage
+
+* Fix #34155: `az storage blob list`: Honor the configured storage service endpoint
+* `az storage copy`, `az storage fs directory upload/download`: Validate configured account endpoints before attaching SAS credentials
+* Fix #32284: `az storage blob sync`: Fix using azcopy with `--sas-token` without login into azcli
+* Fix #32147: `az storage file upload-batch`: Fix infinite loop/crash when `--destination-path` is an absolute path
 
 ## October 06, 2026
 
