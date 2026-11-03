@@ -64,6 +64,11 @@ Version 2.92.0
 * `az containerapp job execution list`: Follow ARM pagination to return all executions
 * `az containerapp env create`: Pre-announce the future change of the `--logs-destination` default from `log-analytics` to `azure-monitor`; the current default remains unchanged
 
+### Core
+
+* `az`: Add `core.output_newline` and default to LF line endings when run from WSL or Git Bash on Windows
+*  Add `get_safe_executable_path` to prevent binary planting when spawning subprocess
+
 ### Key Vault
 
 * `az keyvault`: Add API version 2026-02-01 retirement notice to group help
