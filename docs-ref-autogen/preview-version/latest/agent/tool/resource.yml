@@ -12,7 +12,7 @@ directCommands:
   summary: |-
     Search the local ARM resource cache by name pattern, returning matching resources as JSON.
   description: |-
-    `az agent tool resource find` wraps the agent's `find_resources` tool: exact match preferred, falls back to substring, then Levenshtein typo correction. Results include the resource id, name, type, resource group, and location. External AI tools use this to resolve a user-supplied name to a concrete resource id before performing further operations. Backed by the on-disk ARM cache under `~/.azclips/arm-cache/`, so it is orders of magnitude faster than an ARM roundtrip.
+    `az agent tool resource find` wraps the agent's `find_resources` tool: exact match preferred, falls back to substring, then Levenshtein typo correction. Results include the resource id, name, type, resource group, and location. External AI tools use this to resolve a user-supplied name to a concrete resource id before performing further operations. Backed by the on-disk ARM cache under `~/.azclips/agent/arm/`, so it is orders of magnitude faster than an ARM roundtrip.
   status: Preview
   isPreview: true
   sourceType: Core
@@ -77,7 +77,7 @@ directCommands:
   summary: |-
     Synchronously refresh the on-disk ARM cache used by agent tool resource find/tree/show.
   description: |-
-    `az agent tool resource refresh` rebuilds the on-disk cache under `.azclips/agent/arm/<tenantId>/` in the local application data folder (`%LOCALAPPDATA%` on Windows) and waits for it to finish before returning. The other resource commands (`find`, `tree`, `show`) kick a background refresh and answer from whatever is on disk — on a cold machine that's empty. Use this command once at setup, then again whenever the cache looks stale (e.g. you just created resources and they are missing from `find` results).
+    `az agent tool resource refresh` rebuilds the on-disk cache under `~/.azclips/agent/arm/<tenantId>/` and waits for it to finish before returning. The other resource commands (`find`, `tree`, `show`) kick a background refresh and answer from whatever is on disk — on a cold machine that's empty. Use this command once at setup, then again whenever the cache looks stale (e.g. you just created resources and they are missing from `find` results).
   status: Preview
   isPreview: true
   sourceType: Core
@@ -230,7 +230,7 @@ directCommands:
   summary: |-
     Return the resource hierarchy under a node (tenant, subscription, resource group, or resource) from the local ARM cache.
   description: |-
-    `az agent tool resource tree` wraps the agent's `get_resource_tree` tool. Given a node identifier and its kind (`tenant`, `subscription`, `resourceGroup`, or `resource`), returns the subtree beneath it as JSON — subscriptions under a tenant, resource groups under a subscription, resources under a group. `--max-depth` (default 2) caps the traversal so the JSON does not balloon on large scopes. Backed by the on-disk ARM cache under `~/.azclips/arm-cache/`.
+    `az agent tool resource tree` wraps the agent's `get_resource_tree` tool. Given a node identifier and its kind (`tenant`, `subscription`, `resourceGroup`, or `resource`), returns the subtree beneath it as JSON — subscriptions under a tenant, resource groups under a subscription, resources under a group. `--max-depth` (default 2) caps the traversal so the JSON does not balloon on large scopes. Backed by the on-disk ARM cache under `~/.azclips/agent/arm/`.
   status: Preview
   isPreview: true
   sourceType: Core

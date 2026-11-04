@@ -12,7 +12,7 @@ directCommands:
   summary: |-
     Create a virtual machine and its supporting network resources.
   description: |-
-    Provision an Azure virtual machine in the specified resource group along with the supporting virtual network, subnet, network security group, network interface, and public IP address in a single orchestrated call. The VM size, administrator credentials, and target location must all be provided. Resource names supplied for `--virtual-network-name` and `--network-interface-name` are created if they do not already exist in the resource group. By default a network security group named `{vm}NSG` is created, or updated if it already exists. A network security group the command creates has one inbound rule for the image's operating system, allowing traffic from any source: `rdp` (TCP port 3389) for Windows or `default-allow-ssh` (TCP port 22) for Linux. Pass `--nsg` a name to reuse the network security group of that name, unchanged, when it exists and create it when it does not, a resource ID to attach an existing network security group, or `""` to create none. By default a Standard, static public IP address named `{vm}PublicIP` is created, or updated if it already exists. Pass `--public-ip-address` a name to reuse the public IP address of that name when it exists and create it when it does not, a resource ID to attach an existing public IP address, or `""` to create none. Pass `--tags` to tag the virtual machine and every network resource the command creates; resources the command only attaches keep their own tags, such as network interfaces passed to `--nics`, the virtual network of an existing subnet selected with `--subnet`, or an existing network security group or public IP address. The command returns the new virtual machine with the power state and the public and private IP addresses that `az vm show -d` reports.
+    Provision an Azure virtual machine in the specified resource group along with the supporting virtual network, subnet, network security group, network interface, and public IP address in a single orchestrated call. The VM size, administrator credentials, and target location must all be provided. Resource names supplied for `--virtual-network-name` and `--network-interface-name` are created if they do not already exist in the resource group. By default a network security group named `{vm}NSG` is created, or updated if it already exists. A network security group the command creates has one inbound rule for the image's operating system, allowing traffic from any source: `rdp` (TCP port 3389) for Windows or `default-allow-ssh` (TCP port 22) for Linux. Pass `--nsg` a name to reuse the network security group of that name, unchanged, when it exists and create it when it does not, a resource ID to attach an existing network security group, or `""` to create none. By default a Standard, static public IP address named `{vm}PublicIP` is created, or updated if it already exists. Pass `--public-ip-address` a name to reuse the public IP address of that name when it exists and create it when it does not, a resource ID to attach an existing public IP address, or `""` to create none. Use `--zone` to place the virtual machine in a single availability zone. Use `--storage-sku` to choose the storage SKU of the managed OS disk, such as `Premium_LRS`, `StandardSSD_LRS`, `Standard_LRS`, `Premium_ZRS`, or `StandardSSD_ZRS`; when omitted, the service default applies. Pass `--tags` to tag the virtual machine and every network resource the command creates; resources the command only attaches keep their own tags, such as network interfaces passed to `--nics`, the virtual network of an existing subnet selected with `--subnet`, or an existing network security group or public IP address. The command returns the new virtual machine with the power state and the public and private IP addresses that `az vm show -d` reports.
   status: Preview
   isPreview: true
   sourceType: Core
@@ -39,12 +39,14 @@ directCommands:
                  [--public-ip-address]
                  [--security-type {TrustedLaunch, ConfidentialVM, Standard}]
                  [--ssh-key-values]
+                 [--storage-sku]
                  [--subnet]
                  [--subnet-address-prefixes]
                  [--subnet-names]
                  [--subscription-id]
                  [--tags]
                  [--virtual-network-name]
+                 [--zone]
   examples:
   - summary: |-
       Create a VM from a marketplace image URN
@@ -79,6 +81,12 @@ directCommands:
   - summary: |-
       Create a VM with tags
     syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet --tags env=prod owner=team-a
+  - summary: |-
+      Create a VM in availability zone 1
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --zone 1 --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet
+  - summary: |-
+      Create a VM with a Premium SSD OS disk
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --storage-sku Premium_LRS --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet
   requiredParameters:
   - isRequired: true
     name: --admin-username
@@ -167,6 +175,9 @@ directCommands:
     summary: |-
       Space-separated SSH public key values or public key file paths.
     groupName: Authentication Arguments
+  - name: --storage-sku
+    summary: |-
+      The storage SKU for the virtual machine's managed OS disk, such as Premium_LRS or StandardSSD_LRS.
   - name: --subnet
     summary: |-
       Name or resource ID of the subnet for the new network interface.
@@ -189,6 +200,9 @@ directCommands:
     summary: |-
       The virtual network name to create or use for a named subnet. Do not specify with --nics.
     groupName: Network Arguments
+  - name: --zone
+    summary: |-
+      Availability zone for the virtual machine.
   globalParameters:
   - name: --debug
     summary: |-
@@ -415,7 +429,8 @@ directCommands:
     Show details for a virtual machine.
   description: |-
     Retrieve the full property bag for the specified virtual machine, including hardware profile, OS profile, network interfaces, and provisioning state. Use this command to confirm a VM was created correctly or to inspect its current configuration.
-  status: GA
+  status: Preview
+  isPreview: true
   sourceType: Core
   editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
   syntax: >-
