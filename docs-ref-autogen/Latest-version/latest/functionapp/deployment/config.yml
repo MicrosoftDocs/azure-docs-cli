@@ -10,12 +10,19 @@ directCommands:
   name: az functionapp deployment config set
   summary: |-
     Update an existing function app's deployment configuration.
+  description: |-
+    Use --deployment-storage-* for a blob container, or --deployment-image and its authentication arguments for a container image on Flex Consumption. Image deployment is separate from `az functionapp config container`. For an existing image deployment, you can update the image or authentication separately. Use a new tag or digest when deploying a newer image.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp deployment config set [--acquire-policy-token]
                                          [--change-reference]
+                                         [--deployment-image]
+                                         [--deployment-image-auth-type --diat {Anonymous, Basic, SystemAssignedIdentity, UserAssignedIdentity}]
+                                         [--deployment-image-identity --dii]
+                                         [--deployment-image-password-setting --dips]
+                                         [--deployment-image-username-setting --dius]
                                          [--deployment-storage-auth-type --dsat {StorageAccountConnectionString, SystemAssignedIdentity, UserAssignedIdentity}]
                                          [--deployment-storage-auth-value --dsav]
                                          [--deployment-storage-container-name --dscn]
@@ -31,6 +38,18 @@ directCommands:
   - summary: |-
       Set the function app's deployment storage authentication method.
     syntax: az functionapp deployment config set --name MyFunctionApp --resource-group MyResourceGroup --deployment-storage-auth-type userAssignedIdentity --deployment-storage-auth-value myAssignedId
+  - summary: |-
+      Run a public container image (Anonymous authentication).
+    syntax: az functionapp deployment config set --name MyFunctionApp --resource-group MyResourceGroup --deployment-image mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated8.0 --deployment-image-auth-type Anonymous
+  - summary: |-
+      Pull a container image by digest with the app's system-assigned identity.
+    syntax: az functionapp deployment config set --name MyFunctionApp --resource-group MyResourceGroup --deployment-image myregistry.azurecr.io/myimage@sha256:<digest> --deployment-image-auth-type SystemAssignedIdentity
+  - summary: |-
+      Pull the container image with a user-assigned identity.
+    syntax: az functionapp deployment config set --name MyFunctionApp --resource-group MyResourceGroup --deployment-image myregistry.azurecr.io/myimage:v1 --deployment-image-auth-type UserAssignedIdentity --deployment-image-identity /subscriptions/<subscription-id>/resourceGroups/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity
+  - summary: |-
+      Pull the container image with a username and password stored in app settings (Basic authentication).
+    syntax: az functionapp deployment config set --name MyFunctionApp --resource-group MyResourceGroup --deployment-image myregistry.azurecr.io/myimage:v1 --deployment-image-auth-type Basic --deployment-image-username-setting REGISTRY_USERNAME --deployment-image-password-setting REGISTRY_PASSWORD
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -40,6 +59,32 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --deployment-image
+    summary: |-
+      Container image for a Flex Consumption app, specified by tag or digest, e.g. `myregistry.azurecr.io/myimage:v1` or `myregistry.azurecr.io/myimage@sha256:<digest>`.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-auth-type --diat
+    acceptedValues: Anonymous, Basic, SystemAssignedIdentity, UserAssignedIdentity
+    summary: |-
+      How the platform authenticates to the registry: Anonymous (public image), SystemAssignedIdentity, UserAssignedIdentity (requires --deployment-image-identity), or Basic (requires --deployment-image-username-setting and --deployment-image-password-setting). The CLI doesn't assign identities or grant registry access.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-identity --dii
+    summary: |-
+      Resource ID of the user-assigned managed identity used to pull the image. Only valid with UserAssignedIdentity. Saved as provided; the CLI doesn't create, look up, or assign it.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-password-setting --dips
+    summary: |-
+      Name of the app setting that stores the registry password. Only valid with Basic. Pass the app setting name, not the password.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-username-setting --dius
+    summary: |-
+      Name of the app setting that stores the registry username. Only valid with Basic.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
   - name: --deployment-storage-auth-type --dsat
     acceptedValues: StorageAccountConnectionString, SystemAssignedIdentity, UserAssignedIdentity
     summary: |-
@@ -97,6 +142,8 @@ directCommands:
   name: az functionapp deployment config show
   summary: |-
     Get the details of a function app's deployment configuration.
+  description: |-
+    For Registry deployment storage, shows the image reference and authentication type, with the user-assigned identity resource ID or the names of the app settings that hold Basic credentials. Credential values aren't retrieved or shown.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
@@ -154,5 +201,5 @@ commands:
 - az_functionapp_deployment_config_set
 - az_functionapp_deployment_config_show
 metadata:
-  ms.date: 09/29/2026
+  ms.date: 10/29/2026
   description: Manage a function app's deployment configuration.
