@@ -9,6 +9,8 @@ ai-usage: ai-assisted
 
 This article introduces the Azure CLI preview and explains its core concepts, supported environments, and current limitations.
 
+This is a test.
+
 ## What is Azure CLI?
 
 The Azure CLI preview is an AI-enhanced command-line experience for Azure that helps you work more efficiently by reducing the complexity of Azure CLI and Azure PowerShell commands.
