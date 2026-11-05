@@ -1,0 +1,852 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_workflow
+name: az logicapp workflow
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp workflow** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Logic Apps Standard workflows.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_workflow_create
+  name: az logicapp workflow create
+  summary: |-
+    Add a workflow to an existing local Logic Apps Standard project.
+  description: |-
+    Authors locally only and makes no network call. Writes just the workflow's workflow.json, leaving host.json and local.settings.json untouched, so adding a second workflow is non-destructive. Not idempotent: it fails if the workflow already exists, so it is safe to retry only with --force.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow create --workflow
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--context]
+                                [--file]
+                                [--force]
+                                [--kind {Stateful, Stateless}]
+                                [--path]
+  examples:
+  - summary: |-
+      Add a workflow using the starter template.
+    syntax: az logicapp workflow create --path .\orders --workflow process-order
+  - summary: |-
+      Add a workflow from an authored definition.
+    syntax: az logicapp workflow create --path .\orders --workflow send-message --file .\send.json
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Name of the workflow to add.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named local project context. Cloud contexts are refused, not replaced by another local target.
+  - name: --file
+    summary: |-
+      Existing workflow.json or bare definition to use instead of the starter template.
+  - name: --force
+    defaultValue: "False"
+    summary: |-
+      Replace the workflow if it already exists. Not safe to retry without it.
+  - name: --kind
+    acceptedValues: Stateful, Stateless
+    summary: |-
+      Workflow kind. Defaults to Stateful, or the kind in --file.
+  - name: --path
+    summary: |-
+      Existing project root. Defaults to local context path or current directory.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_delete
+  name: az logicapp workflow delete
+  summary: |-
+    Remove one workflow.json while retaining shared and sibling files.
+  description: |-
+    Requires --allow-non-atomic to acknowledge the runtime's non-transactional VFS behavior. Reads and checks the existing supported workflow and exact revision, prompts unless --yes is supplied, rechecks after confirmation, and conditionally deletes only workflow.json. Verifies absence with a file-plane 404; unknown outcomes or a recreated file are errors, never silently retried. --if-match optionally binds deletion to an earlier show/export revision.
+
+    Other workflow files and the workflow directory are retained, as are shared app settings, connections, artifacts and identities. Runtime removal is asynchronous; this does not cancel active runs, purge run history or delete the app resource. Export first for recovery. No wildcard/force revision bypass is supported.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow delete --workflow
+                                [--acquire-policy-token]
+                                [--allow-non-atomic]
+                                [--change-reference]
+                                [--context]
+                                [--host-key]
+                                [--if-match]
+                                [--local]
+                                [--name]
+                                [--port]
+                                [--resource-group]
+                                [--yes]
+  examples:
+  - summary: |-
+      Delete a workflow on a running local host.
+    syntax: az logicapp workflow delete --local --workflow hello --allow-non-atomic --yes
+  - summary: |-
+      Delete one workflow using a saved target and confirmation.
+    syntax: az logicapp workflow delete --context dev --workflow hello --allow-non-atomic
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --allow-non-atomic
+    defaultValue: "False"
+    summary: |-
+      Required acknowledgement that VFS mutations are not transactional and cannot guarantee rollback or prevent every race.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --if-match
+    summary: |-
+      Exact ETag from workflow show/export. Refuse a stale edit. Wildcards and weak ETags are rejected; ETags are always checked even when omitted.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation. Does not bypass revision checks or non-atomic acknowledgement.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_disable
+  name: az logicapp workflow disable
+  summary: |-
+    Configure one deployed Standard workflow as Disabled and observe runtime state.
+  description: |-
+    Supports deployed Stateful/Stateless workflows using -g/-n or a cloud context. Local runtime targets are rejected without requests, file edits or host restarts. Disabling stops new ordinary workflow instances/triggers after propagation; existing in-progress/pending runs continue. This does not cancel runs, purge history, reset triggers or stop the app resource. Requires --allow-non-atomic and confirmation unless --yes is supplied. App Service replaces the entire settings map; values are retained from a snapshot, but unrelated concurrent changes can be lost. There is no settings ETag/transaction guarantee. Settings updates can have hosting/reload effects. configuredState is verified by settings readback; runtimeState is a separate single observation. Pending/unknown results warn instead of claiming trigger quiescence. Already configured requests do not write or prompt. No automatic retry/rollback is attempted, and uncertain writes/readbacks return errors. Neither settings values nor raw provider errors appear in command results or this operation's REST debug logs.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow disable --workflow
+                                 [--acquire-policy-token]
+                                 [--allow-non-atomic]
+                                 [--change-reference]
+                                 [--context]
+                                 [--host-key]
+                                 [--local]
+                                 [--name]
+                                 [--port]
+                                 [--resource-group]
+                                 [--yes]
+  examples:
+  - summary: |-
+      Disable only hello, without stopping its app or cancelling runs.
+    syntax: az logicapp workflow disable -g my-rg -n my-app --workflow hello --allow-non-atomic
+  - summary: |-
+      Disable a workflow through a saved deployed target.
+    syntax: az logicapp workflow disable --context production --workflow hello --allow-non-atomic --yes
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --allow-non-atomic
+    defaultValue: "False"
+    summary: |-
+      Required acknowledgement that App Service replaces the complete app settings map. Concurrent unrelated changes can be lost despite preflight/readback.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation. Does not bypass snapshot checks or non-atomic acknowledgement.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_enable
+  name: az logicapp workflow enable
+  summary: |-
+    Configure one deployed Standard workflow as Enabled and observe runtime state.
+  description: |-
+    Supports deployed Stateful/Stateless workflows using -g/-n or a cloud context. Local runtime targets are rejected without editing files or restarting hosts. Requires --allow-non-atomic because App Service replaces the entire app settings map when setting `Workflows.<name>.FlowState`. Other settings are preserved from the snapshot, but concurrent unrelated updates can be lost despite preflight and readback. Coordinate all settings writers. Requires confirmation unless --yes is supplied; enabling may process accumulated trigger backlog. Reports verified configuredState separately from runtimeState after one runtime observation. Converged means matching metadata, not drained runs or proof that all dispatchers are quiescent. Pending/unknown states produce warnings without automatic retries or rollback. This does not start/stop the app, edit definitions, cancel runs or purge history. App settings and provider error bodies are not exposed, including by this operation's REST debug logs.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow enable --workflow
+                                [--acquire-policy-token]
+                                [--allow-non-atomic]
+                                [--change-reference]
+                                [--context]
+                                [--host-key]
+                                [--local]
+                                [--name]
+                                [--port]
+                                [--resource-group]
+                                [--yes]
+  examples:
+  - summary: |-
+      Enable one deployed workflow after coordinating settings writers.
+    syntax: az logicapp workflow enable -g my-rg -n my-app --workflow hello --allow-non-atomic
+  - summary: |-
+      Use a saved deployed target without prompting.
+    syntax: az logicapp workflow enable --context production --workflow hello --allow-non-atomic --yes
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --allow-non-atomic
+    defaultValue: "False"
+    summary: |-
+      Required acknowledgement that App Service replaces the complete app settings map. Concurrent unrelated changes can be lost despite preflight/readback.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation. Does not bypass snapshot checks or non-atomic acknowledgement.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_export
+  name: az logicapp workflow export
+  summary: |-
+    Export one authored workflow.json without changing the app.
+  description: |-
+    Preserves the actual Stateful or Stateless kind and the complete authored workflow file, including expressions and runtime configuration. Requires a .json destination outside the filesystem root and --force to replace a file. Publishes the complete file atomically; directories and symbolic links are rejected. No full app download, connections or app credentials are included. Definitions can contain authored sensitive literals: protect the output file. The result includes the source file etag for a later --if-match guard.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow export --output-path
+                                --workflow
+                                [--acquire-policy-token]
+                                [--change-reference]
+                                [--context]
+                                [--force]
+                                [--host-key]
+                                [--local]
+                                [--name]
+                                [--port]
+                                [--resource-group]
+  examples:
+  - summary: |-
+      Export one local workflow.
+    syntax: az logicapp workflow export --local --workflow hello --output-path .\download\hello\workflow.json
+  - summary: |-
+      Export one deployed workflow.
+    syntax: az logicapp workflow export -g my-rg -n my-app --workflow hello --output-path .\hello.json
+  requiredParameters:
+  - isRequired: true
+    name: --output-path
+    summary: |-
+      Destination .json file for one workflow. Not a full app export. Definitions can contain authored secrets.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --force
+    defaultValue: "False"
+    summary: |-
+      Atomically replace an existing regular output file.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_list
+  name: az logicapp workflow list
+  summary: |-
+    List workflows in a running local or deployed Logic Apps Standard app.
+  description: |-
+    Returns value and nextContinuationToken. Each item has name, kind, state and health. Fetches the entire service inventory before client-side paging, sorted by name. Tokens are offsets, not snapshots; inventory changes between calls can shift page boundaries. Unknown state or health is reported as null. Inventory traversal allows at most 100 service pages and 10000 accumulated entries, failing explicitly without partial results when either limit is exceeded.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow list [--context]
+                              [--continuation-token --next-token]
+                              [--host-key]
+                              [--local]
+                              [--max-items]
+                              [--name]
+                              [--port]
+                              [--resource-group]
+  examples:
+  - summary: |-
+      Discover workflows in a local runtime.
+    syntax: az logicapp workflow list --local --port 7071 --output table
+  - summary: |-
+      Discover workflows in a deployed app.
+    syntax: az logicapp workflow list --resource-group my-rg --name my-app
+  optionalParameters:
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --continuation-token --next-token
+    summary: |-
+      Client-side offset token from nextContinuationToken. Inventory is read completely on each call before paging.
+    groupName: Pagination Arguments
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --max-items
+    summary: |-
+      Maximum number of workflows to return in this page.
+    groupName: Pagination Arguments
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_set
+  name: az logicapp workflow set
+  summary: |-
+    Replace one existing workflow.json with revision checks and runtime preflight.
+  description: |-
+    Requires a complete --file with the same Stateful/Stateless kind. Performs static checks and target-runtime definition validation before writing. Reads the current file revision, confirms the target, rechecks after confirmation, writes with an exact If-Match, and verifies the write receipt and file bytes. --if-match can also bind the update to the revision from a previous show/export. No --force bypass is available. Identical input is validated but not written.
+
+    Requires --allow-non-atomic: VFS is not transactional. ETag checks cannot prevent every race or partial upload, and a concurrently deleted file can be recreated. Export first and coordinate with other writers. Unexpected creation, ambiguous failures and unverified results fail explicitly. A mismatched owned revision is conditionally restored only when ownership can be verified; newer or missing files are not blindly overwritten. Guaranteed rollback is not available.
+
+    Verification covers the authored file, not execution or completed runtime reload. This does not create a new workflow intentionally, convert its kind, change shared settings/connections, or cancel runs. Read-only/run-from-package targets may reject writes; use documented deployment commands instead.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow set --file
+                             --workflow
+                             [--acquire-policy-token]
+                             [--allow-non-atomic]
+                             [--change-reference]
+                             [--context]
+                             [--host-key]
+                             [--if-match]
+                             [--local]
+                             [--name]
+                             [--port]
+                             [--resource-group]
+                             [--yes]
+  examples:
+  - summary: |-
+      Update a workflow on a running local host after retaining an export.
+    syntax: az logicapp workflow set --local --workflow hello --file .\edited\workflow.json --allow-non-atomic --yes
+  - summary: |-
+      Guard a deployed update using the ETag obtained during export.
+    syntax: az logicapp workflow set -g my-rg -n my-app --workflow hello --file .\edited\workflow.json --if-match saved-etag --allow-non-atomic
+  requiredParameters:
+  - isRequired: true
+    name: --file
+    summary: |-
+      Complete authored workflow.json replacing the existing workflow, with the same Stateful/Stateless kind. Not a bare definition or partial patch.
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --allow-non-atomic
+    defaultValue: "False"
+    summary: |-
+      Required acknowledgement that VFS mutations are not transactional and cannot guarantee rollback or prevent every race.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --if-match
+    summary: |-
+      Exact ETag from workflow show/export. Refuse a stale edit. Wildcards and weak ETags are rejected; ETags are always checked even when omitted.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation. Does not bypass revision checks or non-atomic acknowledgement.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_show
+  name: az logicapp workflow show
+  summary: |-
+    Read a workflow's metadata and authored workflow.json.
+  description: |-
+    Returns name, kind, state, health, etag, and workflow (the complete workflow.json object). Reads the runtime metadata and file plane with the same target and authentication. Does not resolve app settings or download connections, credentials, or other app files. Authored definitions can themselves contain sensitive literals. JSON output contains the definition; table output shows only name, kind, state and health. The etag can be passed to set/delete --if-match to guard an editing session.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow show --workflow
+                              [--context]
+                              [--host-key]
+                              [--local]
+                              [--name]
+                              [--port]
+                              [--resource-group]
+  examples:
+  - summary: |-
+      Read one local workflow.
+    syntax: az logicapp workflow show --local --workflow hello
+  - summary: |-
+      Read a workflow using a saved context.
+    syntax: az logicapp workflow show --context dev --workflow hello
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      Workflow name.
+  optionalParameters:
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_workflow_validate
+  name: az logicapp workflow validate
+  summary: |-
+    Validate workflow definitions offline by default.
+  description: |-
+    Invalid workflow shapes, including non-object triggers, are returned as structured validation findings rather than unexpected exceptions. Static validation continues checking actions and references when triggers are invalid.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp workflow validate [--acquire-policy-token]
+                                  [--all]
+                                  [--change-reference]
+                                  [--context]
+                                  [--fail-on-warning]
+                                  [--host-key]
+                                  [--local]
+                                  [--name]
+                                  [--path]
+                                  [--port]
+                                  [--resource-group]
+                                  [--with-runtime]
+                                  [--workflow]
+  examples:
+  - summary: |-
+      Validate one workflow in a local project.
+    syntax: az logicapp workflow validate --path .\orders --workflow process-order
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --all
+    defaultValue: "False"
+    summary: |-
+      Validate every workflow.
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --fail-on-warning
+    defaultValue: "False"
+    summary: |-
+      Warnings cause a non-zero exit.
+  - name: --host-key
+    summary: |-
+      Master key for a local host that requires one. Sent as an x-functions-key header.
+  - name: --local
+    defaultValue: "False"
+    summary: |-
+      Target a local Logic Apps runtime instead of a deployed app.
+  - name: --name -n
+    summary: |-
+      Name of the Logic App Standard site.
+  - name: --path
+    summary: |-
+      Project root. Defaults to local context path or current directory.
+  - name: --port
+    summary: |-
+      Local runtime port. Requires --local when supplied on the command line.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group containing the Logic App Standard site.
+  - name: --with-runtime
+    defaultValue: "False"
+    summary: |-
+      Also run runtime-backed validation.
+  - name: --workflow
+    summary: |-
+      Validate one workflow.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_workflow_create
+- az_logicapp_workflow_delete
+- az_logicapp_workflow_disable
+- az_logicapp_workflow_enable
+- az_logicapp_workflow_export
+- az_logicapp_workflow_list
+- az_logicapp_workflow_set
+- az_logicapp_workflow_show
+- az_logicapp_workflow_validate
+metadata:
+  description: Manage Logic Apps Standard workflows.

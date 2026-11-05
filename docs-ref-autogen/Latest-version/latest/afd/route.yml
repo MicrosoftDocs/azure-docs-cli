@@ -27,6 +27,7 @@ directCommands:
                         [--formatted-custom-domains]
                         [--formatted-rule-sets]
                         [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                        [--grpc-state {Disabled, Enabled}]
                         [--https-redirect {Disabled, Enabled}]
                         [--link-to-default-domain {Disabled, Enabled}]
                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -86,6 +87,11 @@ directCommands:
     acceptedValues: HttpOnly, HttpsOnly, MatchRequest
     summary: |-
       Protocol this rule will use when forwarding traffic to backends.
+    groupName: Properties Arguments
+  - name: --grpc-state
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'.
     groupName: Properties Arguments
   - name: --https-redirect
     defaultValue: Disabled
@@ -381,6 +387,7 @@ directCommands:
                         [--formatted-custom-domains]
                         [--formatted-rule-sets]
                         [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                        [--grpc-state {Disabled, Enabled}]
                         [--https-redirect {Disabled, Enabled}]
                         [--ids]
                         [--link-to-default-domain {Disabled, Enabled}]
@@ -399,6 +406,9 @@ directCommands:
   - summary: |-
       Routes_Create
     syntax: az afd route update --resource-group RG --profile-name profile1 --endpoint-name endpoint1 --route-name route1 --cache-configuration "{compression-settings:{content-types-to-compress:[text/html,application/octet-stream],is-compression-enabled:True},query-parameters:querystring=test,query-string-caching-behavior:IgnoreSpecifiedQueryStrings}" --formatted-custom-domains "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/customDomains/domain1}]" --enabled-state Enabled --forwarding-protocol MatchRequest --https-redirect Enabled --link-to-default-domain Enabled --origin-group /subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/originGroups/originGroup1 --origin-path None --patterns-to-match "[/*]" --formatted-rule-sets "[{id:/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/ruleSets/ruleSet1}]" --supported-protocols "[Https,Http]"
+  - summary: |-
+      Enable gRPC on a route
+    syntax: az afd route update --resource-group MyResourceGroup --profile-name MyProfile --endpoint-name MyEndpoint --route-name MyRoute --grpc-state Enabled
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -442,6 +452,11 @@ directCommands:
     acceptedValues: HttpOnly, HttpsOnly, MatchRequest
     summary: |-
       Protocol this rule will use when forwarding traffic to backends.
+    groupName: Properties Arguments
+  - name: --grpc-state
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'.
     groupName: Properties Arguments
   - name: --https-redirect
     acceptedValues: Disabled, Enabled

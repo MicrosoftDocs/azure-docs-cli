@@ -8,7 +8,150 @@ summary: |-
   Connector management.
 status: GA
 sourceType: Extension
+directCommands:
+- uid: az_iot_ops_connector_list
+  name: az iot ops connector list
+  summary: |-
+    List first-party and purchased Marketplace connectors for a preview instance.
+  description: |-
+    Requires a supported preview runtime and read access to application definitions.
+    Returns names, discovery sources and fully qualified metadata references.
+    First-party versions are discovered from the registry. Metadata is checked
+    newest-first to select the latest version compatible with the installed CLI's
+    bundled preview runtime. Connectors with no compatible version are omitted.
+    The instance is checked for preview eligibility and readiness, not for a
+    matching runtime version. Verify compatibility with an older installed runtime
+    before deploying a listed connector.
+    Versioned prerelease tags participate in semantic version ordering.
+    Compatibility requires aioMinVersion. Missing required metadata fields or
+    invalid compatibility information is an error. Registry errors are not hidden.
+    Purchased Marketplace connector references are returned unchanged without
+    downloading their metadata. Other application definitions are not included.
+    No purchased connectors is a successful result containing compatible
+    first-party entries.
+    Purchase additional connectors in Azure Marketplace:
+    https://marketplace.microsoft.com/en-us/search/products?search=iot%20operations
+    Purchase and terms acceptance remain in Marketplace. After purchase or
+    installation, rerun this command; immediate visibility is not guaranteed.
+    The link does not carry the selected instance or cluster context.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az iot ops connector list --instance
+                              --resource-group
+  examples:
+  - summary: |-
+      List available connectors for a preview instance.
+    syntax: az iot ops connector list -i myinstance -g myresourcegroup -o table
+  - summary: |-
+      Return purchased connector metadata references.
+    syntax: az iot ops connector list -i myinstance -g myresourcegroup --query "[?source=='Marketplace'].metadataRef" -o tsv
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Instance resource group.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_connector_show
+  name: az iot ops connector show
+  summary: |-
+    Inspect a connector metadata artifact from its fully qualified reference.
+  description: |-
+    Requires a preview instance and its resource group. Validates the instance's
+    preview eligibility and readiness before returning the supplied reference and
+    complete parsed metadata. Running connector list first is not required.
+    This does not check whether the connector is purchased, compatible with the
+    instance or deployed and healthy. Use JSON or YAML output for nested metadata;
+    table output shows name, version and metadata reference.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az iot ops connector show --connector-metadata-ref --ref
+                              --instance
+                              --resource-group
+  examples:
+  - summary: |-
+      Inspect a first-party connector metadata artifact.
+    syntax: az iot ops connector show -i myinstance -g myresourcegroup --ref mcr.microsoft.com/azureiotoperations/akri-connectors/rest-metadata:1.3.2
+  - summary: |-
+      Show endpoint details from a purchased connector metadata reference.
+    syntax: az iot ops connector show -i myinstance -g myresourcegroup --ref $METADATA_REF --query metadata.inboundEndpoints
+  requiredParameters:
+  - isRequired: true
+    name: --connector-metadata-ref --ref
+    summary: |-
+      Fully qualified connector metadata artifact reference from a container registry.
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Instance resource group.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 commands:
+- az_iot_ops_connector_list
 - az_iot_ops_connector_opcua
 - az_iot_ops_connector_opcua_client
 - az_iot_ops_connector_opcua_client_add
@@ -22,6 +165,7 @@ commands:
 - az_iot_ops_connector_opcua_trust_add
 - az_iot_ops_connector_opcua_trust_remove
 - az_iot_ops_connector_opcua_trust_show
+- az_iot_ops_connector_show
 - az_iot_ops_connector_template
 - az_iot_ops_connector_template_create
 - az_iot_ops_connector_template_delete

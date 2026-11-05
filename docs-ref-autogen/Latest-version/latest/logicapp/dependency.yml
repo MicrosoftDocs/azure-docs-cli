@@ -1,0 +1,249 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_dependency
+name: az logicapp dependency
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp dependency** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Inspect and install Logic Apps Standard local dependencies.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_dependency_check
+  name: az logicapp dependency check
+  summary: |-
+    Check local dependencies required by Logic Apps Standard tooling.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp dependency check [--acquire-policy-token]
+                                 [--change-reference]
+                                 [--context]
+                                 [--kind {azurite, bundle, core-tools, dotnet, node}]
+                                 [--path]
+  examples:
+  - summary: |-
+      Check selected dependencies.
+    syntax: az logicapp dependency check --kind core-tools --kind azurite
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named Logic Apps CLI context used to resolve target coordinates.
+  - name: --kind
+    acceptedValues: azurite, bundle, core-tools, dotnet, node
+    summary: |-
+      Limit dependencies checked. Repeat for multiple kinds.
+  - name: --path
+    summary: |-
+      Project root whose local.settings.json decides whether Azurite is required. Defaults to the active context.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_dependency_install
+  name: az logicapp dependency install
+  summary: |-
+    Download and install local dependencies required by Logic Apps Standard tooling.
+  description: |-
+    Installs Azure Functions Core Tools, Node.js, Azurite, and the Logic Apps extension bundle from their publishers into a folder shared with Visual Studio Code's Azure Logic Apps extension (~/.azurelogicapps/dependencies by default, or LA_DEPENDENCIES_PATH), so a machine already set up for VS Code is not made to download them twice.
+
+    Archives are verified against the publisher's published SHA256 where one exists -- Node.js through SHASUMS256.txt and Core Tools through their .sha2 sidecar -- and every install records a .logicapps-integrity.json manifest, which is what lets 'az logicapp dependency uninstall' remove only what this CLI put there.
+
+    Azurite is published only through npm and needs its dependency tree resolved, so it is installed with the npm that ships alongside Node.js, confined to the managed folder. It is fetched from the public npm registry rather than whatever registry your npm is configured for; pass --source-url to use another. Install Node.js first if you do not already have it.
+
+    Managed tool folders are added only to child-process environments for npm, Azurite, and local runtimes. Your global PATH is not modified.
+
+    The .NET SDK is deliberately not installed. Its only vendor-supported route is a remote install script, and this command will not run one on your machine. 'az logicapp dependency check' still reports it.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp dependency install [--acquire-policy-token]
+                                   [--change-reference]
+                                   [--force]
+                                   [--gh-token]
+                                   [--kind {azurite, bundle, core-tools, dotnet, node}]
+                                   [--source-url]
+                                   [--target-dir]
+                                   [--version]
+                                   [--yes]
+  examples:
+  - summary: |-
+      Install everything this CLI can install.
+    syntax: az logicapp dependency install --yes
+  - summary: |-
+      Install just Functions Core Tools.
+    syntax: az logicapp dependency install --kind core-tools --yes
+  - summary: |-
+      Install the Azurite storage emulator for local runs.
+    syntax: az logicapp dependency install --kind azurite --yes
+  - summary: |-
+      Pin a specific Core Tools version.
+    syntax: az logicapp dependency install --kind core-tools --version 4.0.7030 --yes
+  - summary: |-
+      Install into a different directory.
+    syntax: az logicapp dependency install --kind node --target-dir /opt/logicapps-deps --yes
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --force
+    defaultValue: "False"
+    summary: |-
+      Reinstall even when the requested version is already present and intact.
+  - name: --gh-token
+    summary: |-
+      GitHub token used when resolving the latest Functions Core Tools release, to survive anonymous rate limits.
+  - name: --kind
+    acceptedValues: azurite, bundle, core-tools, dotnet, node
+    summary: |-
+      Limit dependencies installed. Repeat for multiple kinds. Defaults to all installable kinds. dotnet is accepted but refused with guidance.
+  - name: --source-url
+    summary: |-
+      Download the archive from this URL instead of the publisher default, or for azurite, the npm registry to install from instead of registry.npmjs.org. Requires exactly one --kind. Publisher checksums are not verified for a custom source.
+  - name: --target-dir
+    summary: |-
+      Directory to install into. Defaults to LA_DEPENDENCIES_PATH, or ~/.azurelogicapps/dependencies.
+  - name: --version
+    summary: |-
+      Install a specific version instead of the latest published. Requires exactly one --kind.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_dependency_uninstall
+  name: az logicapp dependency uninstall
+  summary: |-
+    Remove local dependencies that this CLI installed.
+  description: |-
+    Removes only material recorded in a .logicapps-integrity.json manifest written by 'az logicapp dependency install'. A dependency folder without that manifest is left untouched, because the dependency root is shared with Visual Studio Code and may hold tools this CLI never installed.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp dependency uninstall [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--kind {azurite, bundle, core-tools, dotnet, node}]
+                                     [--target-dir]
+                                     [--yes]
+  examples:
+  - summary: |-
+      Remove everything this CLI installed.
+    syntax: az logicapp dependency uninstall --yes
+  - summary: |-
+      Remove only Node.js.
+    syntax: az logicapp dependency uninstall --kind node --yes
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --kind
+    acceptedValues: azurite, bundle, core-tools, dotnet, node
+    summary: |-
+      Limit dependencies removed. Repeat for multiple kinds. Defaults to all installable kinds. dotnet is accepted but refused with guidance.
+  - name: --target-dir
+    summary: |-
+      Directory to remove from. Defaults to LA_DEPENDENCIES_PATH, or ~/.azurelogicapps/dependencies.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_dependency_check
+- az_logicapp_dependency_install
+- az_logicapp_dependency_uninstall
+metadata:
+  description: Inspect and install Logic Apps Standard local dependencies.

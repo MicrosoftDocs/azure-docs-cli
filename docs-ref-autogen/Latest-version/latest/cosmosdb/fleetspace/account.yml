@@ -104,6 +104,10 @@ directCommands:
   extensionSuffix: cosmosdb-preview
   summary: |-
     Register an existing Cosmos DB database account to a Fleetspace.
+  description: |-
+    The attachment name must match the database account name in resourceId, ignoring case; aliases are not supported.
+    resourceId must identify a Microsoft.DocumentDB/databaseAccounts resource, not a child resource.
+    armLocation is mandatory and nonblank; the service derives the authoritative location from the account.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'cosmosdb fleetspace account' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -122,18 +126,18 @@ directCommands:
     syntax: >-
       az cosmosdb fleetspace account create \
         --resource-group MyResourceGroup \
-        --fleet-name MyFleet \
-        --fleetspace-name MyFleetspace \
-        --fleetspace-account-name MyAccount \
+        --fleet-name myfleet \
+        --fleetspace-name myspace \
+        --fleetspace-account-name myaccount \
         --body @fleetspaceAccount.json
   requiredParameters:
   - isRequired: true
     name: --body -b
     summary: |-
-      Fleetspace Account body with properties.globalDatabaseAccountProperties (fields: armLocation, resourceId). You can enter it as a string or as a file, e.g., --body @fleetspaceAccount.json or --body "{
+      Fleetspace Account JSON body with properties.globalDatabaseAccountProperties: resourceId must identify a Cosmos DB database account; armLocation is required and nonblank, but the service derives the authoritative account location. Use inline JSON or --body @fleetspaceAccount.json. Example: --body "{
           \"properties\": {
               \"globalDatabaseAccountProperties\": {
-                  \"resourceId\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg/providers/Microsoft.DocumentDB/databaseAccounts/example-account\",
+                  \"resourceId\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg/providers/Microsoft.DocumentDB/databaseAccounts/myaccount\",
                   \"armLocation\": \"East US\"
               }
           }
@@ -145,7 +149,7 @@ directCommands:
   - isRequired: true
     name: --fleetspace-account-name -n
     summary: |-
-      Name of the Fleetspace Account resource.
+      Database account name from resourceId (case-insensitive match), not an association alias.
   - isRequired: true
     name: --fleetspace-name
     summary: |-
@@ -287,7 +291,7 @@ directCommands:
   - isRequired: true
     name: --fleetspace-account-name -n
     summary: |-
-      Name of the Fleetspace Account resource.
+      Database account name from resourceId (case-insensitive match), not an association alias.
   - isRequired: true
     name: --fleetspace-name
     summary: |-
@@ -518,7 +522,7 @@ directCommands:
   - isRequired: true
     name: --fleetspace-account-name -n
     summary: |-
-      Name of the Fleetspace Account resource.
+      Database account name from resourceId (case-insensitive match), not an association alias.
   - isRequired: true
     name: --fleetspace-name
     summary: |-

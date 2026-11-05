@@ -38,6 +38,9 @@ directCommands:
                               [--out-signed-fragment]
                               [--output-filename]
                               [--outraw]
+                              [--platform {linux/amd64, windows/amd64}]
+                              [--prerelease-policy-api]
+                              [--skip-win-ver-check]
                               [--svn]
                               [--tar]
                               [--upload-fragment]
@@ -138,6 +141,19 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Output policy in clear text compact JSON instead of default pretty print format.
+  - name: --platform
+    defaultValue: linux/amd64
+    acceptedValues: linux/amd64, windows/amd64
+    summary: |-
+      Target platform for policy generation. Defaults to linux/amd64. Note: Docker Desktop must be running in the matching container mode (Linux containers for linux/amd64, Windows containers for windows/amd64) to produce correct layer hashes.
+  - name: --prerelease-policy-api
+    defaultValue: "False"
+    summary: |-
+      Generate a policy using the latest bundled prerelease policy API, framework version, and fragments.
+  - name: --skip-win-ver-check
+    defaultValue: "False"
+    summary: |-
+      When enabled, skips the host Windows version check in dmverity-vhd while hashing Windows images. Only affects windows/amd64 and is intended for debugging on hosts that do not produce deterministic layer hashes.
   - name: --svn
     summary: |-
       Minimum Allowed Software Version Number for the generated policy fragment. This should be a monotonically increasing integer.
@@ -209,6 +225,7 @@ directCommands:
                             [--print-existing-policy]
                             [--print-policy]
                             [--save-to-file]
+                            [--skip-win-ver-check]
                             [--tar]
                             [--template-file]
                             [--validate-sidecar]
@@ -311,7 +328,7 @@ directCommands:
   - name: --prerelease-policy-api
     defaultValue: "False"
     summary: |-
-      Generate a Linux policy using the latest bundled prerelease policy API and framework. Windows policies always use the latest bundled policy versions.
+      Generate a policy using the latest bundled prerelease policy API, framework version, and fragments.
   - name: --print-existing-policy
     defaultValue: "False"
     summary: |-
@@ -323,6 +340,10 @@ directCommands:
   - name: --save-to-file -s
     summary: |-
       Save output policy to given file path.
+  - name: --skip-win-ver-check
+    defaultValue: "False"
+    summary: |-
+      When enabled, skips the host Windows version check in dmverity-vhd while hashing Windows images. Only affects windows/amd64 and is intended for debugging on hosts that do not produce deterministic layer hashes.
   - name: --tar
     summary: |-
       Path to either a tarball containing image layers or a JSON file containing paths to tarballs of image layers.

@@ -23,6 +23,8 @@ directCommands:
                                                --resource-group
                                                [--acquire-policy-token]
                                                [--address-pool]
+                                               [--advanced-routing-map]
+                                               [--auth-configs]
                                                [--change-reference]
                                                [--entra-jwt-config --entra-jwt-validation-config]
                                                [--http-listener]
@@ -31,12 +33,15 @@ directCommands:
                                                [--priority]
                                                [--redirect-config]
                                                [--rewrite-rule-set]
-                                               [--rule-type {Basic, PathBasedRouting}]
+                                               [--rule-type {AdvancedRouting, Basic, PathBasedRouting}]
                                                [--url-path-map]
   examples:
   - summary: |-
       Create a basic rule.
     syntax: az network application-gateway rule create -g MyResourceGroup --gateway-name MyAppGateway -n MyRule --http-listener MyBackendListener --rule-type Basic --address-pool MyAddressPool --http-settings MyHttpSettings
+  - summary: |-
+      Create a rule that routes requests by an advanced routing map.
+    syntax: az network application-gateway rule create -g MyResourceGroup --gateway-name MyAppGateway -n MyRule --http-listener MyListener --rule-type AdvancedRouting --advanced-routing-map MyAdvancedRoutingMap --priority 200
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -58,6 +63,14 @@ directCommands:
   - name: --address-pool
     summary: |-
       Name or ID of the backend address pool. If only one exists, omit to use as default.
+    groupName: Properties Arguments
+  - name: --advanced-routing-map
+    summary: |-
+      Name or ID of the advanced routing map.
+    groupName: Properties Arguments
+  - name: --auth-configs
+    summary: |-
+      Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --change-reference
     summary: |-
@@ -92,7 +105,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --rule-type
     defaultValue: Basic
-    acceptedValues: Basic, PathBasedRouting
+    acceptedValues: AdvancedRouting, Basic, PathBasedRouting
     summary: |-
       Type of the request routing rule.
   - name: --url-path-map
@@ -152,7 +165,7 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the request routing rule.
+      Name of the request routing rule that is unique within an Application Gateway.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -270,7 +283,7 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the request routing rule.
+      Name of the request routing rule that is unique within an Application Gateway.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -316,6 +329,8 @@ directCommands:
                                                [--acquire-policy-token]
                                                [--add]
                                                [--address-pool]
+                                               [--advanced-routing-map]
+                                               [--auth-configs]
                                                [--change-reference]
                                                [--entra-jwt-config --entra-jwt-validation-config]
                                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -326,7 +341,7 @@ directCommands:
                                                [--redirect-config]
                                                [--remove]
                                                [--rewrite-rule-set]
-                                               [--rule-type {Basic, PathBasedRouting}]
+                                               [--rule-type {AdvancedRouting, Basic, PathBasedRouting}]
                                                [--set]
                                                [--url-path-map]
   examples:
@@ -358,6 +373,14 @@ directCommands:
   - name: --address-pool
     summary: |-
       Name or ID of the backend address pool. If only one exists, omit to use as default.
+    groupName: Properties Arguments
+  - name: --advanced-routing-map
+    summary: |-
+      Name or ID of the advanced routing map.
+    groupName: Properties Arguments
+  - name: --auth-configs
+    summary: |-
+      Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --change-reference
     summary: |-
@@ -400,7 +423,7 @@ directCommands:
       Name or ID of the rewrite rule set.
     groupName: Properties Arguments
   - name: --rule-type
-    acceptedValues: Basic, PathBasedRouting
+    acceptedValues: AdvancedRouting, Basic, PathBasedRouting
     summary: |-
       Type of the request routing rule.
   - name: --set
@@ -550,5 +573,5 @@ commands:
 - az_network_application-gateway_rule_update
 - az_network_application-gateway_rule_wait
 metadata:
-  ms.date: 09/21/2026
+  ms.date: 10/14/2026
   description: For more information, visit https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-customize-waf-rules-cli.

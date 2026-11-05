@@ -1,0 +1,274 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_connection_acl
+name: az logicapp connection acl
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp connection acl** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage access policies on a managed API connection.
+description: |-
+  An access policy names the Entra identity allowed to use a managed API connection. A Logic App reaches a managed API connection through its own managed identity, so without a matching policy the connection exists but the app cannot call it. Only V2 connections accept access policies.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_connection_acl_add
+  name: az logicapp connection acl add
+  summary: |-
+    Grant an Entra identity access to a managed API connection.
+  description: |-
+    Takes the object id of the principal, normally the principalId reported by az logicapp identity show. Refuses on V1 connections, which cannot hold access policies and cannot be converted.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection acl add --connection
+                                   --object-id
+                                   --resource-group
+                                   [--acquire-policy-token]
+                                   [--change-reference]
+                                   [--location]
+                                   [--policy]
+                                   [--tenant-id]
+  examples:
+  - summary: |-
+      Grant a Logic App's system-assigned identity access to a connection.
+    syntax: az logicapp connection acl add -g rg-lacli-ri2bg8 --connection blobProd --object-id 00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --connection
+    summary: |-
+      Managed API connection name. Must be a V2 connection; V1 connections cannot accept access policies.
+  - isRequired: true
+    name: --object-id
+    summary: |-
+      Entra object id (principal id) of the identity being granted access.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Resource group containing the connection.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --location -l
+    summary: |-
+      Access policy location. Defaults to the connection location.
+  - name: --policy
+    summary: |-
+      Access policy name. Defaults to the object id.
+  - name: --tenant-id
+    summary: |-
+      Tenant of the principal. Defaults to the signed-in tenant.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_connection_acl_list
+  name: az logicapp connection acl list
+  summary: |-
+    List access policies on a managed API connection.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection acl list --connection
+                                    --resource-group
+  examples:
+  - summary: |-
+      List the identities allowed to use a connection.
+    syntax: az logicapp connection acl list -g rg-lacli-ri2bg8 --connection blobProd
+  requiredParameters:
+  - isRequired: true
+    name: --connection
+    summary: |-
+      Managed API connection name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Resource group containing the connection.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_connection_acl_remove
+  name: az logicapp connection acl remove
+  summary: |-
+    Remove an access policy from a managed API connection.
+  description: |-
+    The principal named by the policy immediately loses access to the connection, so workflows relying on it begin to fail. Prompts unless --yes is given.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection acl remove --connection
+                                      --policy
+                                      --resource-group
+                                      [--acquire-policy-token]
+                                      [--change-reference]
+                                      [--yes]
+  examples:
+  - summary: |-
+      Remove an access policy without prompting.
+    syntax: az logicapp connection acl remove -g rg-lacli-ri2bg8 --connection blobProd --policy la-cli-pilot-ri2bg8-00000000-0000-0000-0000-000000000000 --yes
+  requiredParameters:
+  - isRequired: true
+    name: --connection
+    summary: |-
+      Managed API connection name.
+  - isRequired: true
+    name: --policy
+    summary: |-
+      Access policy name to remove.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Resource group containing the connection.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_connection_acl_show
+  name: az logicapp connection acl show
+  summary: |-
+    Show one access policy on a managed API connection.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp connection acl show --connection
+                                    --policy
+                                    --resource-group
+  examples:
+  - summary: |-
+      Show a single access policy.
+    syntax: az logicapp connection acl show -g rg-lacli-ri2bg8 --connection blobProd --policy la-cli-pilot-ri2bg8-00000000-0000-0000-0000-000000000000
+  requiredParameters:
+  - isRequired: true
+    name: --connection
+    summary: |-
+      Managed API connection name.
+  - isRequired: true
+    name: --policy
+    summary: |-
+      Access policy name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Resource group containing the connection.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_connection_acl_add
+- az_logicapp_connection_acl_list
+- az_logicapp_connection_acl_remove
+- az_logicapp_connection_acl_show
+metadata:
+  description: An access policy names the Entra identity allowed to use a managed API connection. A Logic App reaches a managed API connection through its own managed identity, so without a matching policy the connection exists but the app cannot call it. Only V2 connections accept access policies.
