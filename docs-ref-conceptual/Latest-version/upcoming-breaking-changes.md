@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 11/02/2026
+ms.date: 11/05/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -54,26 +54,6 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to containerapp env reference group](/cli/azure/containerapp/env)
 
 - The default value of '--logs-destination' will be changed to 'azure-monitor' from 'log-analytics' in 2.93.0. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli/pull/34228.
-
-## netappfiles
-
-### `netappfiles volume create`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
-
-### `netappfiles volume update`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
-
-### `netappfiles subvolume`
-
-[Link to netappfiles subvolume reference group](/cli/azure/netappfiles/subvolume)
-
-- netappfiles subvolume command group is being deprecated and will be removed in a future release.
 
 ## servicefabric
 
@@ -265,20 +245,6 @@ The breaking changes listed in this section are planned for the next major relea
 - '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
 - '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
 - '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-## azext_netappfiles_preview
-
-### `netappfiles volume create`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
-
-### `netappfiles volume update`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
 
 ## azext_redisenterprise
 
