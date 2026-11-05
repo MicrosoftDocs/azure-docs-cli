@@ -14,8 +14,8 @@ keywords: azure cli microsoft copilot, copilot for azure, azure command line
 unifies knowledge and data across hundreds of Azure services to increase productivity, reduce costs,
 and provide deep insights. Copilot in Azure helps you learn about Azure by answering questions, and
 it provides information tailored to your own Azure resources and environment. By letting you express
-your goals in natural language, Copilot simplifies your Azure management experience. This benefits
-Azure CLI users because the knowledge of Azure CLI is built into Copilot.
+your goals in natural language, Copilot simplifies your Azure management experience. Azure CLI users benefit
+because the knowledge of Azure CLI is built into Copilot.
 
 Here are some benefits of using Copilot in Azure:
 
