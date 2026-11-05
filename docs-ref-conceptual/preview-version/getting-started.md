@@ -34,6 +34,7 @@ Sign in to the next-generation Azure CLI with `az login`. It supports these sign
 - **Device code**: `az login --use-device-code`, for environments without a browser.
 - **Managed identity**: `az login --identity` for a system-assigned identity. For a user-assigned identity, add `--client-id`, `--object-id`, or `--resource-id`.
 - **Service principal with a federated token**: `az login --service-principal --client-id <app-id> --tenant-id <tenant-id> --federated-token <token>`, for workload identity federation (OIDC) in pipelines.
+- **Service principal with a client secret**: `az login --service-principal --client-id <app-id> --tenant-id <tenant-id> --client-secret <secret>`.
 
 For all parameters, see [az login](/cli/azure/reference-index#az-login).
 
@@ -46,7 +47,7 @@ The preview is designed primarily for interactive command-line use. Support for 
 The following authentication methods are currently **not supported**:
 
 - Resource Owner Password Credentials (ROPC), or signing in with a username and password
-- Service principals that use a client secret or certificate
+- Service principals that use a certificate
 
 Other preview limitations include:
 
