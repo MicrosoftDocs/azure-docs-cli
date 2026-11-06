@@ -21,6 +21,7 @@ directCommands:
                                          [--detection-mode]
                                          [--detection-rule-name]
                                          [--location]
+                                         [--mitigation-rules]
                                          [--no-wait]
                                          [--packets-per-second]
                                          [--tags]
@@ -32,6 +33,11 @@ directCommands:
       az network ddos-custom-policy create --resource-group rg1 --ddos-custom-policy-name test-ddos-custom-policy \
           --location centraluseuap --detection-rule-name detectionRuleTcp \
           --detection-mode TrafficThreshold --traffic-type Tcp --packets-per-second 1000000
+  - summary: |-
+      Create DDoS custom policy with a TCP mitigation rule that denies traffic from a prefix or country
+    syntax: >-
+      az network ddos-custom-policy create --resource-group rg1 --ddos-custom-policy-name test-ddos-custom-policy \
+          --location centraluseuap --mitigation-rules "[{name:mitigationRuleTcp,traffic-scope:Tcp,tcp-default-mitigations:{per-source-rate-limiting:{packets-per-second:100000},per-source-connection-rate-limiting:{connections-per-second:1000}},source-policy-overrides:[{policy-action:{action-type:Deny},conditions:{ip-prefixes:[198.51.100.0/24],geo-matches:[{country-code:CA}]}}]}]"
   requiredParameters:
   - isRequired: true
     name: --ddos-custom-policy-name --name -n
@@ -62,6 +68,10 @@ directCommands:
     summary: |-
       Resource location.
     groupName: Parameters Arguments
+  - name: --mitigation-rules
+    summary: |-
+      The list of DDoS mitigation rules associated with the custom policy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Mitigation Rules Arguments
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -190,14 +200,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
-    az network ddos-custom-policy list --resource-group
-                                       [--max-items]
+    az network ddos-custom-policy list [--max-items]
                                        [--next-token]
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+                                       [--resource-group]
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -207,6 +212,9 @@ directCommands:
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
     groupName: Pagination Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -307,6 +315,7 @@ directCommands:
                                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--ids]
                                          [--location]
+                                         [--mitigation-rules]
                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--remove]
                                          [--resource-group]
@@ -351,6 +360,10 @@ directCommands:
     summary: |-
       Resource location.
     groupName: Parameters Arguments
+  - name: --mitigation-rules
+    summary: |-
+      The list of DDoS mitigation rules associated with the custom policy.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -511,5 +524,5 @@ commands:
 - az_network_ddos-custom-policy_update
 - az_network_ddos-custom-policy_wait
 metadata:
-  ms.date: 09/21/2026
+  ms.date: 10/14/2026
   description: Manage Ddos Custom Policy.

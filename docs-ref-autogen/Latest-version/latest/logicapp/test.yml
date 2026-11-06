@@ -1,0 +1,292 @@
+### YamlMime:AzureCLIGroup
+uid: az_logicapp_test
+name: az logicapp test
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **logicapp** extension for the Azure CLI (version 2.67.0 or higher). The extension will automatically install the first time you run an **az logicapp test** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Scaffold, inspect and explicitly run local native SDK test projects.
+description: |-
+  Create writes source-only native MSTest scaffolding; plan remains read-only. run requires explicit SDK terms and project-trust acknowledgements, with restore separately opt-in. Native test code and build/restore targets can execute arbitrary code and contact services. No sandbox or network isolation is provided. Named/active local contexts supply project defaults, never a cloud runtime target or login.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_logicapp_test_create
+  name: az logicapp test create
+  summary: |-
+    Scaffold a native SDK test project without restoring packages or running code.
+  description: |-
+    Writes a new Tests/WORKFLOW directory with a net8.0 MSTest project, exact SDK 1.0.3/engine 1.165.50/MSTest 4.0.2 references, .NET 8 selection, reviewed-source NuGet configuration and an empty trigger fixture. Existing directories are refused. Relative --output-path uses the selected local project. No SDK binaries, credentials or project settings are copied. The starter is ignored and guarded as inconclusive until its author reviews fixtures, mocks external operations and writes real business assertions.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp test create --workflow
+                            [--acquire-policy-token]
+                            [--change-reference]
+                            [--context]
+                            [--output-path]
+                            [--path]
+                            [--trigger]
+  examples:
+  - summary: |-
+      Scaffold tests for a workflow in the active local project.
+    syntax: az logicapp test create --workflow Orders
+  - summary: |-
+      Scaffold in a new project-relative directory without restoring packages.
+    syntax: az logicapp test create --path .\App --workflow Orders --output-path .\Tests\Orders
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      One explicit local workflow directory name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named local project context. Cloud contexts cannot supply a local test project.
+  - name: --output-path
+    summary: |-
+      New test directory. Relative paths use the selected project; default Tests/WORKFLOW. Existing directories are refused, not overwritten. No restore or execution.
+  - name: --path
+    summary: |-
+      Existing local Standard project. Defaults to the named/active local context, then current directory. An explicit path bypasses the implicit active context.
+  - name: --trigger
+    summary: |-
+      Existing workflow trigger to mock. Required only when more than one trigger exists.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_test_plan
+  name: az logicapp test plan
+  summary: |-
+    Produce a bounded, versioned local preflight report; never run tests.
+  description: |-
+    Inspects Standard workflow bytes, limited top-level structure and literal configuration declarations. Explicit test project, or the default test create project when present, is XML metadata only. Outputs notExecuted markers even for valid authoring. Exit 0 means successful planning, never tests passed. --strict exits 4 for blocked execution gates. Other exits: 1 authoring, 3 input, 5 changed inputs, 6 publication error. --path overrides the project path from a named or active local context; otherwise the current directory is used. Cloud contexts cannot supply a local project. An explicit --path bypasses the active context; a named cloud --context is refused even with --path. CLI argument and context resolution errors occur before a report is available. Default stdout only; --report-path writes a sanitized report to an existing directory. Relative report paths use the selected project, not the shell's current directory; absolute report paths are unchanged. Global output/query flags work before diagnostic nonzero exits.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp test plan --workflow
+                          [--acquire-policy-token]
+                          [--change-reference]
+                          [--context]
+                          [--force]
+                          [--path]
+                          [--report-path]
+                          [--strict]
+                          [--test-project]
+  examples:
+  - summary: |-
+      Inspect one workflow without changing files.
+    syntax: az logicapp test plan --path .\App --workflow Orders --output json
+  - summary: |-
+      Inspect one workflow in the active local context without changing files.
+    syntax: az logicapp test plan --workflow Orders --output json
+  - summary: |-
+      Save a report under a named local project's existing Reports directory.
+    syntax: az logicapp test plan --context development --workflow Orders --report-path .\Reports\plan.json
+  - summary: |-
+      Inspect declared test metadata and save the preflight report.
+    syntax: az logicapp test plan --path .\App --workflow Orders --test-project .\Tests\App.csproj --report-path .\Reports\plan.json
+  - summary: |-
+      Generate a preflight report and fail the invocation if execution gates remain blocked.
+    syntax: az logicapp test plan --path .\App --workflow Orders --strict --output json
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      One explicit local workflow directory name.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named local project context. Defaults to the active context when --path is omitted. No runtime or cloud operation is performed.
+  - name: --force
+    defaultValue: "False"
+    summary: |-
+      Replace an existing regular report only. Requires --report-path; cannot authorize SDK restore or execution.
+  - name: --path
+    summary: |-
+      Existing local Standard project. Overrides the local context path; defaults to the named/active local context, then current directory. Cloud contexts cannot supply a local project.
+  - name: --report-path
+    summary: |-
+      Optional .json report. Relative paths use the selected local project; absolute paths are unchanged. Parent must exist. Default stdout only; no directories are created.
+  - name: --strict
+    defaultValue: "False"
+    summary: |-
+      Exit 4 for blocked execution gates after successful planning. Default exit 0 means plan generated, not tests passed; SDK execution stays blocked.
+  - name: --test-project
+    summary: |-
+      Optional existing .csproj to inspect as XML only; otherwise inspect the default test create project when present. No MSBuild/import evaluation or test discovery.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_logicapp_test_run
+  name: az logicapp test run
+  summary: |-
+    Explicitly build and run reviewed native SDK/MSTest tests with a deadline.
+  description: |-
+    Requires --accept-sdk-terms and --trust-project every time. Review https://www.nuget.org/packages/Microsoft.Azure.Workflows.WebJobs.Tests.Extension/1.0.3/License including use, redistribution, data collection and update restrictions. CLI telemetry opt-out does not establish that SDK telemetry is disabled. Uses a .NET 8 SDK, a reviewed explicit NuGet configuration and project-private home/cache/config directories. No global tools or dependencies are installed. Restore is allowed only with --restore; an existing lockfile uses locked mode. Both build and test otherwise use --no-restore. Imports/targets/test code can still perform arbitrary operations: these controls are not a security sandbox. Default project is Tests/WORKFLOW/Workflow.Tests.csproj under the selected local project. Explicit --test-project and --nuget-config inputs use shell CWD. Relative report destinations use the selected local project. Existing reports are refused. Raw native stdout/stderr is discarded, and sensitive raw TRX stays in the test project's .logicapp-test-state/runs/INVOCATION_ID/native.trx. Only bounded, consistent completed TRX counts can produce nativeTestsPassed. Empty/entirely skipped suites exit 7, deadline expiry 8, cleanup pending 9. Other exits: 1 native test failure, 2 runner/dependency error, 3 local input, 4 missing acknowledgement, 5 observed input drift, 6 publication, 130 interruption. Counts do not attest that arbitrary test code called the SDK or covered the selected workflow. Mocking is not denied-egress execution or connector certification.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az logicapp test run --workflow
+                         [--accept-sdk-terms]
+                         [--acquire-policy-token]
+                         [--change-reference]
+                         [--context]
+                         [--nuget-config]
+                         [--path]
+                         [--report-path]
+                         [--restore]
+                         [--test-project]
+                         [--timeout]
+                         [--trust-project]
+  examples:
+  - summary: |-
+      Restore and run an authored, reviewed synthetic test project after reviewing SDK terms.
+    syntax: az logicapp test run --path .\App --workflow Orders --accept-sdk-terms --trust-project --restore
+  - summary: |-
+      Run a previously restored project and save a new sanitized report.
+    syntax: az logicapp test run --workflow Orders --accept-sdk-terms --trust-project --report-path .\Reports\native.json
+  requiredParameters:
+  - isRequired: true
+    name: --workflow
+    summary: |-
+      One explicit local workflow directory name.
+  optionalParameters:
+  - name: --accept-sdk-terms
+    defaultValue: "False"
+    summary: |-
+      Acknowledge the Microsoft Logic Apps Tests SDK 1.0.3 use, data collection and update terms for this invocation. Does not authorize redistribution.
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --context
+    summary: |-
+      Named local project context. Cloud contexts cannot supply a local test project.
+  - name: --nuget-config
+    summary: |-
+      Reviewed NuGet configuration used only with --restore. Explicit relative inputs use shell CWD; default NuGet.Config next to the test project. No inherited user feed/credential configuration is selected by the CLI.
+  - name: --path
+    summary: |-
+      Existing local Standard project. Defaults to the named/active local context, then current directory. An explicit path bypasses the implicit active context.
+  - name: --report-path
+    summary: |-
+      Optional new sanitized .json report; relative paths use the selected local project. Parent must exist. Existing destinations are refused. Raw local TRX is not exported.
+  - name: --restore
+    defaultValue: "False"
+    summary: |-
+      Explicitly allow native NuGet restore into project-private caches. Existing lockfiles use locked mode. Without this flag build/test use --no-restore.
+  - name: --test-project
+    summary: |-
+      Existing native MSTest .csproj. Explicit relative inputs use shell CWD. Defaults to the selected project Tests/WORKFLOW/Workflow.Tests.csproj.
+  - name: --timeout
+    defaultValue: "300"
+    summary: |-
+      Total native toolchain/restore/build/test deadline, 1-3600 seconds. Identity-checked cleanup can take additional time.
+  - name: --trust-project
+    defaultValue: "False"
+    summary: |-
+      Acknowledge that the reviewed project, restore/build targets and test code can execute arbitrary code and contact services. Mocking and private caches are not a sandbox.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_logicapp_test_create
+- az_logicapp_test_plan
+- az_logicapp_test_results
+- az_logicapp_test_results_show
+- az_logicapp_test_run
+metadata:
+  description: Create writes source-only native MSTest scaffolding; plan remains read-only. run requires explicit SDK terms and project-trust acknowledgements, with restore separately opt-in. Native test code and build/restore targets can execute arbitrary code and contact services. No sandbox or network isolation is provided. Named/active local contexts supply project defaults, never a cloud runtime target or login.

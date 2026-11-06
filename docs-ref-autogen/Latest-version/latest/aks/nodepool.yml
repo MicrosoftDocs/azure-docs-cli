@@ -34,6 +34,7 @@ directCommands:
                         [--enable-encryption-at-host]
                         [--enable-fips-image]
                         [--enable-managed-dranet]
+                        [--enable-managed-gpu]
                         [--enable-node-public-ip]
                         [--enable-secure-boot]
                         [--enable-ultra-ssd]
@@ -75,6 +76,7 @@ directCommands:
                         [--scale-down-mode {Deallocate, Delete}]
                         [--snapshot-id]
                         [--spot-max-price]
+                        [--ssh-access {disabled, entraid, localuser}]
                         [--tags]
                         [--undrainable-node-behavior]
                         [--vm-set-type]
@@ -116,6 +118,9 @@ directCommands:
   - summary: |-
       Create a nodepool with KataVmIsolation enabled.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --os-sku AzureLinux --vm-size Standard_D4s_v3 --workload-runtime KataVmIsolation --node-count 1
+  - summary: |-
+      Create a GPU node pool with the Managed GPU experience enabled.
+    syntax: az aks nodepool add -g MyResourceGroup -n gpunp --cluster-name MyManagedCluster --node-vm-size Standard_NC6s_v3 --enable-managed-gpu
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -173,10 +178,18 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Use FIPS-enabled OS on agent nodes.
+    description: |-
+      Automatically enabled for Windows2025 node pools because Windows2025 requires a FIPS-enabled OS image.
   - name: --enable-managed-dranet
     defaultValue: "False"
     summary: |-
       Enable Managed DRANET on the node pool.
+  - name: --enable-managed-gpu
+    defaultValue: "False"
+    summary: |-
+      Enable the Managed GPU experience, which installs additional components like DCGM metrics for monitoring on top of the GPU driver.
+    description: |-
+      Installs the GPU driver even if --gpu-driver is set to None. For more details, visit https://aka.ms/aks/managed-gpu.
   - name: --enable-node-public-ip
     defaultValue: "False"
     summary: |-
@@ -326,6 +339,11 @@ directCommands:
     defaultValue: nan
     summary: |-
       It can only be set when --priority is Spot. Specify the maximum price you are willing to pay in US Dollars. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. It can only include up to 5 decimal places.
+  - name: --ssh-access
+    defaultValue: localuser
+    acceptedValues: disabled, entraid, localuser
+    summary: |-
+      Configure SSH access for the node pool.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -397,6 +415,7 @@ directCommands:
                         [--batch-soak-duration]
                         [--change-reference]
                         [--crg-id]
+                        [--disable-upgrade-gate]
                         [--disable-windows-outbound-nat]
                         [--drain-batch-size]
                         [--drain-timeout]
@@ -412,6 +431,7 @@ directCommands:
                         [--enable-osdisk-fc --enable-osdisk-full-caching]
                         [--enable-secure-boot]
                         [--enable-ultra-ssd]
+                        [--enable-upgrade-gate]
                         [--enable-vtpm]
                         [--eviction-policy {Deallocate, Delete}]
                         [--final-soak-duration]
@@ -507,6 +527,9 @@ directCommands:
   - summary: |-
       Create a node pool with an ordered mixed MIG profile layout
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-managed-gpu --gpu-mig-strategy Mixed --gpu-mig-profiles MIG1g MIG2g MIG2g MIG2g
+  - summary: |-
+      Create a node pool with upgrade gate enabled
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-upgrade-gate
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -546,6 +569,13 @@ directCommands:
   - name: --crg-id
     summary: |-
       The crg-id used to associate the new nodepool with the existed Capacity Reservation Group resource. Must use VMSS agent pool type.
+    isPreview: true
+  - name: --disable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Disable upgrade gate for the node pool.
+    description: |-
+      Rejected by the service when the cluster-level upgrade gate is enabled, since a node pool cannot opt out of a cluster-wide opt-in.
     isPreview: true
   - name: --disable-windows-outbound-nat
     defaultValue: "False"
@@ -620,6 +650,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable UltraSSD on agent node pool. Must use VMSS agent pool type.
+  - name: --enable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Enable upgrade gate for the node pool. Upgrades of this node pool wait for health signal validation and abort if unhealthy signals are observed.
+    description: |-
+      When the cluster-level upgrade gate is enabled, a new node pool inherits it by default. Health signals are HealthSignal custom resources published by monitoring components running in the cluster. Force upgrade (--enable-force-upgrade) overrides the gate. For more information, see https://aka.ms/aks/upgrade-gate.
+    isPreview: true
   - name: --enable-vtpm
     defaultValue: "False"
     summary: |-
@@ -2043,7 +2080,7 @@ directCommands:
   - name: --use-patch-api
     defaultValue: "False"
     summary: |-
-      Scale a VMSS node pool using the preview PATCH agent pool API instead of the default PUT API.
+      Scale a node pool using the preview PATCH agent pool API instead of the default PUT API.
     isPreview: true
   globalParameters:
   - name: --debug
@@ -2517,11 +2554,13 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
-                           [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404}]
+                           [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2022, Windows2025}]
                            [--scale-down-mode {Deallocate, Delete}]
+                           [--ssh-access {disabled, entraid, localuser}]
                            [--tags]
                            [--undrainable-node-behavior]
                            [--update-cluster-autoscaler]
+                           [--yes]
   examples:
   - summary: |-
       Reconcile the nodepool back to its current state.
@@ -2535,6 +2574,12 @@ directCommands:
   - summary: |-
       Update min-count or max-count for cluster autoscaler.
     syntax: az aks nodepool update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: |-
+      Upgrade a Windows2022 node pool to Windows2025 with a FIPS-enabled OS image.
+    syntax: >-
+      az aks nodepool update --resource-group MyResourceGroup \
+          --cluster-name MyManagedCluster --name npwin \
+          --os-sku Windows2025 --enable-fips-image
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -2656,13 +2701,20 @@ directCommands:
     summary: |-
       The node taints for the node pool. You can update the existing node taint of a nodepool or create a new node taint for a nodepool. Pass the empty string `""` to remove all taints.
   - name: --os-sku
-    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404
+    acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2022, Windows2025
     summary: |-
-      The os-sku of the agent node pool.
+      The OS SKU of the agent node pool.
+    description: |-
+      Windows2022 node pools can be upgraded to Windows2025. Specify --enable-fips-image when upgrading a non-FIPS node pool.
+      Downgrading from Windows2025 to Windows2022 is not supported.
   - name: --scale-down-mode
     acceptedValues: Deallocate, Delete
     summary: |-
       Describe how VMs are added to or removed from nodepools.
+  - name: --ssh-access
+    acceptedValues: disabled, entraid, localuser
+    summary: |-
+      Update SSH access for the node pool. For Kubernetes versions below 1.37, this change takes effect after the node pool is upgraded. For Kubernetes versions 1.37 and above, this change can trigger node pool reimaging.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -2673,6 +2725,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update min-count or max-count for cluster autoscaler. Not supported for VirtualMachines pools; use 'az aks nodepool auto-scale update' instead.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -2724,6 +2780,7 @@ directCommands:
                            [--disable-cluster-autoscaler]
                            [--disable-fips-image]
                            [--disable-secure-boot]
+                           [--disable-upgrade-gate]
                            [--disable-vtpm]
                            [--drain-batch-size]
                            [--drain-timeout]
@@ -2734,6 +2791,7 @@ directCommands:
                            [--enable-managed-dranet]
                            [--enable-managed-gpu {false, true}]
                            [--enable-secure-boot]
+                           [--enable-upgrade-gate]
                            [--enable-vtpm]
                            [--final-soak-duration]
                            [--gpu-driver {Install, None}]
@@ -2769,6 +2827,9 @@ directCommands:
   - summary: |-
       Reconcile the nodepool back to its current state.
     syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: |-
+      Enable upgrade gate for a node pool.
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-upgrade-gate
   - summary: |-
       Enable cluster-autoscaler within node count range [1,5]
     syntax: az aks nodepool update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
@@ -2857,6 +2918,13 @@ directCommands:
     summary: |-
       Disable Secure Boot on on an existing Trusted Launch enabled agent node pool.
     isPreview: true
+  - name: --disable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Disable upgrade gate for the node pool.
+    description: |-
+      Rejected by the service when the cluster-level upgrade gate is enabled, since a node pool cannot opt out of a cluster-wide opt-in. Use 'az aks update --disable-upgrade-gate' instead.
+    isPreview: true
   - name: --disable-vtpm
     defaultValue: "False"
     summary: |-
@@ -2902,6 +2970,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Secure Boot on an existing Trusted Launch enabled agent node pool. Must use VMSS agent pool type.
+    isPreview: true
+  - name: --enable-upgrade-gate
+    defaultValue: "False"
+    summary: |-
+      Enable upgrade gate for the node pool. Upgrades of this node pool wait for health signal validation and abort if unhealthy signals are observed.
+    description: |-
+      Health signals are HealthSignal custom resources published by monitoring components running in the cluster. Force upgrade (--enable-force-upgrade) overrides the gate. For more information, see https://aka.ms/aks/upgrade-gate.
     isPreview: true
   - name: --enable-vtpm
     defaultValue: "False"

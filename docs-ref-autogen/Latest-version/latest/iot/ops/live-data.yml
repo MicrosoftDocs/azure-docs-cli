@@ -1,0 +1,333 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_live-data
+name: az iot ops live-data
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.70.0 or higher). The extension will automatically install the first time you run an **az iot ops live-data** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Live Data infrastructure configuration for an IoT Operations instance.
+description: |-
+  Requires a preview runtime. Enable requires a ready runtime; show and disable
+  remain available for diagnosis and cleanup of unhealthy preview runtimes.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_live-data_disable
+  name: az iot ops live-data disable
+  summary: |-
+    Disable Live Data for an IoT Operations instance.
+  description: |-
+    Tears down the dedicated dataflow profile, the EG dataflow endpoint, and the
+    observability topic space, then removes this instance's observability endpoint
+    entry from the Device Registry namespace last so an interrupted disable can be
+    safely re-run. Preserves the namespace-wide observability enabled flag and endpoint
+    entries belonging to other instances, even when this instance's entry is the last one removed.
+    Custom-location resource IDs are matched case-insensitively.
+
+    Cleanup continues for instance-owned resources if the ADR reference or namespace
+    is missing. If the Event Grid namespace cannot be located, a warning identifies
+    the topic space that may require manual cleanup.
+
+    Event Grid namespace-scoped managed-identity role assignments are preserved;
+    topic-space-scoped managed-identity assignments are removed together with the topic
+    space. Reader assignments created for --user-object-ids are always scoped to the Device
+    Registry namespace, are unaffected by --ra-scope, and are preserved. Use the assignment
+    IDs returned by enable if explicit cleanup is required.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops live-data' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops live-data disable --instance
+                                 --resource-group
+                                 [--acquire-policy-token]
+                                 [--change-reference]
+                                 [--no-progress {false, true}]
+                                 [--yes {false, true}]
+  examples:
+  - summary: |-
+      Disable Live Data for an instance.
+    syntax: az iot ops live-data disable --instance myinstance -g myresourcegroup
+  - summary: |-
+      Disable Live Data without a confirmation prompt.
+    syntax: az iot ops live-data disable --instance myinstance -g myresourcegroup --yes
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-progress
+    acceptedValues: false, true
+    summary: |-
+      Disable visual representation of work.
+  - name: --yes -y
+    acceptedValues: false, true
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_live-data_enable
+  name: az iot ops live-data enable
+  summary: |-
+    Enable Live Data for an IoT Operations instance.
+  description: |-
+    Provisions and configures the shared, instance-level infrastructure required for
+    Live Data across three domains:
+    - Event Grid Namespace: an observability topic space.
+    - IoT Operations Instance: a dedicated dataflow profile and an EG MQTT dataflow endpoint.
+    - Device Registry Namespace: the outbound identity and the per-instance observability
+      endpoint entry (keyed by the instance's custom location).
+
+    The command is idempotent. Re-running converges to the desired state without
+    overwriting unrelated entries. Sets namespace observability enabled to true and adds
+    the instance's observability endpoint entry. Per-instance enablement is determined
+    by that entry and supporting resource configuration, not the namespace-wide flag.
+    ADR prerequisites are validated before resources are created. Existing Live Data
+    topic templates and dataflow profile settings are reconciled on re-enable.
+    The ADR outbound identity is namespace-wide. If other observability or management
+    endpoints share the namespace, reuse its existing identity; changing it is rejected
+    to avoid disrupting those endpoints.
+
+    By default, role assignments (Event Grid TopicSpaces Publisher for the instance identity
+    and Subscriber for the ADR namespace identity) are created at the Event Grid namespace
+    scope. Use --ra-scope topic-space for least-privilege assignments scoped to the topic
+    space, or --skip-ra to skip role assignment creation.
+
+    Use --user-object-ids to grant Reader directly to one or more Microsoft Entra users from
+    the resource tenant at the Device Registry namespace scope. These assignments are
+    additive, idempotent, unaffected by --ra-scope, and preserved on disable. The command
+    returns their assignment IDs for explicit cleanup. --skip-ra takes precedence and skips
+    these assignments. Individual user assignments are required during Public Preview when
+    group-based authorization is unavailable.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops live-data' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops live-data enable --eg-resource-id
+                                --instance
+                                --resource-group
+                                [--acquire-policy-token]
+                                [--adr-role-ids]
+                                [--change-reference]
+                                [--mi-user-assigned]
+                                [--no-progress {false, true}]
+                                [--ops-role-ids]
+                                [--ra-scope {namespace, topic-space}]
+                                [--skip-ra {false, true}]
+                                [--user-object-ids]
+  examples:
+  - summary: |-
+      Enable Live Data using a system-assigned managed identity and default roles.
+    syntax: az iot ops live-data enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID
+  - summary: |-
+      Enable Live Data using a user-assigned managed identity for outbound auth.
+    syntax: az iot ops live-data enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID --mi-user-assigned $UA_MI_RESOURCE_ID
+  - summary: |-
+      Enable Live Data with least-privilege, topic-space-scoped role assignments.
+    syntax: az iot ops live-data enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID --ra-scope topic-space
+  - summary: |-
+      Enable Live Data and grant Reader directly to Microsoft Entra users.
+    syntax: az iot ops live-data enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID --user-object-ids $USER_OBJECT_ID_1 $USER_OBJECT_ID_2
+  - summary: |-
+      Enable Live Data and skip role assignments.
+    syntax: az iot ops live-data enable --instance myinstance -g myresourcegroup --eg-resource-id $EG_NAMESPACE_RESOURCE_ID --skip-ra
+  requiredParameters:
+  - isRequired: true
+    name: --eg-resource-id
+    summary: |-
+      Event Grid Namespace ARM resource Id.
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --adr-role-ids
+    summary: |-
+      Custom role Ids for the ADR namespace identity (Subscriber) against the EG namespace. Default: 'Event Grid TopicSpaces Subscriber'.
+    groupName: Role Assignment Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --mi-user-assigned
+    summary: |-
+      User-assigned managed identity resource Id for the EG dataflow endpoint and ADR namespace outbound identity. Default: system-assigned managed identity.
+  - name: --no-progress
+    acceptedValues: false, true
+    summary: |-
+      Disable visual representation of work.
+  - name: --ops-role-ids
+    summary: |-
+      Custom role Ids for the AIO instance identity (Publisher) against the EG namespace. Default: 'Event Grid TopicSpaces Publisher'.
+    groupName: Role Assignment Arguments
+  - name: --ra-scope
+    acceptedValues: namespace, topic-space
+    summary: |-
+      Scope for Event Grid role assignments. 'namespace' (default) assigns at the EG namespace and is preserved on disable; 'topic-space' assigns at the topic-space resource (least privilege) and is removed with the topic space on disable.
+    groupName: Role Assignment Arguments
+  - name: --skip-ra
+    acceptedValues: false, true
+    summary: |-
+      When used the role assignment step of the operation will be skipped.
+    groupName: Role Assignment Arguments
+  - name: --user-object-ids
+    summary: |-
+      Microsoft Entra user object IDs from the resource tenant to grant Reader on the Device Registry namespace. Assignments are additive and preserved on disable. Ignored when --skip-ra is used.
+    groupName: Role Assignment Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_ops_live-data_show
+  name: az iot ops live-data show
+  summary: |-
+    Show Live Data configuration for an IoT Operations instance.
+  description: |-
+    Reports the Live Data configuration and resource status across the Device Registry
+    namespace, Event Grid, and IoT Operations dataflow resources. The top-level enabled
+    flag is true only when this instance's observability endpoint entry is present
+    and all supporting resources are present. The namespace-wide observability enabled
+    flag is reported for information and does not determine per-instance enablement. The topic
+    templates, dedicated profile settings, and endpoint type, host, authentication,
+    client-ID prefix and TLS mode must also match the Live Data configuration.
+    Endpoint status includes a configured flag. For user-assigned authentication,
+    verification also reads the referenced managed identity's client and tenant IDs.
+    Device Registry namespace status includes userReaderAssignments with principal and
+    assignment IDs for direct user Reader assignments at the namespace scope, including
+    assignments created outside Live Data enable. Inherited and group assignments are
+    excluded. Reading this list requires Microsoft.Authorization/roleAssignments/read;
+    authorization or service errors are surfaced rather than reported as an empty list.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops live-data' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops live-data show --instance
+                              --resource-group
+                              [--no-progress {false, true}]
+  examples:
+  - summary: |-
+      Show Live Data configuration for an instance.
+    syntax: az iot ops live-data show --instance myinstance -g myresourcegroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i -n
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --no-progress
+    acceptedValues: false, true
+    summary: |-
+      Disable visual representation of work.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_iot_ops_live-data_disable
+- az_iot_ops_live-data_enable
+- az_iot_ops_live-data_show
+metadata:
+  description: >-
+    Requires a preview runtime. Enable requires a ready runtime; show and disable
+
+    remain available for diagnosis and cleanup of unhealthy preview runtimes.

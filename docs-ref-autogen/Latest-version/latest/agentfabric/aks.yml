@@ -1,0 +1,544 @@
+### YamlMime:AzureCLIGroup
+uid: az_agentfabric_aks
+name: az agentfabric aks
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **agentfabric** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az agentfabric aks** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Agent Fabric compute enrollment.
+description: |-
+  Manage compute-resource enrollment through ClusterAssociation resources under an Agent Fabric. This AKS-oriented command surface also preserves the REST API's support for ACI SandboxGroup resource IDs. Association names are independent from target resource names; --cluster-name is retained as a compatibility alias for the association name.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_agentfabric_aks_attach
+  name: az agentfabric aks attach
+  summary: |-
+    Attach a compute resource to an Agent Fabric.
+  description: |-
+    AKS targets require managed Microsoft Entra ID authentication. Create the
+    cluster with `az aks create --enable-aad`, or enable it on an existing
+    cluster with `az aks update --enable-aad`, before attaching. Managed
+    identity alone does not enable Microsoft Entra ID authentication.
+    The association name is independent of the target resource name.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric aks attach --cluster-resource-id
+                              [--acquire-policy-token]
+                              [--association-name --cluster-name --name]
+                              [--change-reference]
+                              [--fabric-name]
+                              [--ids]
+                              [--location]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--resource-group]
+                              [--sku {Premium, Standard}]
+                              [--subscription]
+                              [--tags]
+  examples:
+  - summary: |-
+      Attach a Microsoft Entra ID-enabled AKS cluster
+    syntax: >-
+      az agentfabric aks attach -g myResourceGroup --fabric-name myFabric -n myEnrollment
+
+      --location centraluseuap --cluster-resource-id <aks-resource-id>
+
+      --sku Standard
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-resource-id
+    summary: |-
+      The AKS managed cluster or ACI SandboxGroup to enroll. The resource must be in the same subscription as the AgentFabric; a different resource group is allowed. Set at creation and immutable thereafter; to enroll a different resource, delete and recreate the association. AF rejects the request if the resource is already associated with another fabric.
+    groupName: Properties Arguments
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --association-name --cluster-name --name -n
+    summary: |-
+      Name of the ClusterAssociation child resource. --cluster-name is retained as a compatibility alias.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --fabric-name
+    summary: |-
+      Name of the parent Agent Fabric.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    groupName: Resource Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --sku
+    acceptedValues: Premium, Standard
+    summary: |-
+      Determines which AgentFabric components are deployed to the cluster. Defaults to Standard when omitted at creation. An update may upgrade Standard to Premium but cannot downgrade Premium to Standard. The SKU remains unchanged when omitted during an update.
+    groupName: Properties Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Resource Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_aks_detach
+  name: az agentfabric aks detach
+  summary: |-
+    Delete an Agent Fabric compute association.
+  description: |-
+    Manage compute-resource enrollment through ClusterAssociation resources under an Agent Fabric. This AKS-oriented command surface also preserves the REST API's support for ACI SandboxGroup resource IDs. Association names are independent from target resource names; --cluster-name is retained as a compatibility alias for the association name.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric aks detach [--acquire-policy-token]
+                              [--association-name --cluster-name --name]
+                              [--change-reference]
+                              [--fabric-name]
+                              [--ids]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--resource-group]
+                              [--subscription]
+                              [--yes]
+  examples:
+  - summary: |-
+      Detach a compute association
+    syntax: az agentfabric aks detach --resource-group rgnetworksecurity --fabric-name testAIFabric --association-name testAssociation
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --association-name --cluster-name --name -n
+    summary: |-
+      Name of the ClusterAssociation child resource. --cluster-name is retained as a compatibility alias.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --fabric-name
+    summary: |-
+      Name of the parent Agent Fabric.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_aks_list
+  name: az agentfabric aks list
+  summary: |-
+    List compute associations under an Agent Fabric.
+  description: |-
+    Manage compute-resource enrollment through ClusterAssociation resources under an Agent Fabric. This AKS-oriented command surface also preserves the REST API's support for ACI SandboxGroup resource IDs. Association names are independent from target resource names; --cluster-name is retained as a compatibility alias for the association name.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric aks list --fabric-name
+                            --resource-group
+                            [--max-items]
+                            [--next-token]
+  examples:
+  - summary: |-
+      List compute associations
+    syntax: az agentfabric aks list --resource-group rgnetworksecurity --fabric-name testAIFabric
+  requiredParameters:
+  - isRequired: true
+    name: --fabric-name
+    summary: |-
+      Name of the parent Agent Fabric.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_aks_show
+  name: az agentfabric aks show
+  summary: |-
+    Show an Agent Fabric compute association.
+  description: |-
+    Manage compute-resource enrollment through ClusterAssociation resources under an Agent Fabric. This AKS-oriented command surface also preserves the REST API's support for ACI SandboxGroup resource IDs. Association names are independent from target resource names; --cluster-name is retained as a compatibility alias for the association name.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric aks show [--association-name --cluster-name --name]
+                            [--fabric-name]
+                            [--ids]
+                            [--resource-group]
+                            [--subscription]
+  examples:
+  - summary: |-
+      Show a compute association
+    syntax: az agentfabric aks show --resource-group rgnetworksecurity --fabric-name testAIFabric --association-name testAssociation
+  optionalParameters:
+  - name: --association-name --cluster-name --name -n
+    summary: |-
+      Name of the ClusterAssociation child resource. --cluster-name is retained as a compatibility alias.
+    groupName: Resource Id Arguments
+  - name: --fabric-name
+    summary: |-
+      Name of the parent Agent Fabric.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_aks_update
+  name: az agentfabric aks update
+  summary: |-
+    Patch enrollment tags, SKU, or gateway IP.
+  description: |-
+    Reads the existing target resource ID for ARM linked authorization before
+    sending PATCH. Standard-to-Premium upgrades are supported; Premium-to-Standard
+    downgrades are rejected by the service.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric aks update [--acquire-policy-token]
+                              [--association-name --cluster-name --name]
+                              [--change-reference]
+                              [--fabric-name]
+                              [--gateway-ip --workload-cluster-gateway-ip]
+                              [--ids]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--resource-group]
+                              [--sku {Premium, Standard}]
+                              [--subscription]
+                              [--tags]
+  examples:
+  - summary: |-
+      Upgrade an enrollment SKU
+    syntax: az agentfabric aks update -g myResourceGroup --fabric-name myFabric -n myAssociation --sku Premium
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --association-name --cluster-name --name -n
+    summary: |-
+      Name of the ClusterAssociation child resource. --cluster-name is retained as a compatibility alias.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --fabric-name
+    summary: |-
+      Name of the parent Agent Fabric.
+    groupName: Resource Id Arguments
+  - name: --gateway-ip --workload-cluster-gateway-ip -i
+    summary: |-
+      The IPv4 or IPv6 address of the workload cluster gateway used for internal Agent Fabric routing. The resource provider validates the value.
+    groupName: Properties Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --sku
+    acceptedValues: Premium, Standard
+    summary: |-
+      Determines which AgentFabric components are deployed to the cluster. Only an upgrade from Standard to Premium is supported; Premium cannot be downgraded to Standard. When omitted, the PATCH request is an authorized no-op and the existing SKU remains unchanged.
+    groupName: Properties Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_agentfabric_aks_wait
+  name: az agentfabric aks wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az agentfabric aks wait [--acquire-policy-token]
+                            [--association-name --cluster-name --name]
+                            [--change-reference]
+                            [--created]
+                            [--custom]
+                            [--deleted]
+                            [--exists]
+                            [--fabric-name]
+                            [--ids]
+                            [--interval]
+                            [--resource-group]
+                            [--subscription]
+                            [--timeout]
+                            [--updated]
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --association-name --cluster-name --name -n
+    summary: |-
+      Name of the ClusterAssociation child resource. --cluster-name is retained as a compatibility alias.
+    groupName: Resource Id Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --fabric-name
+    summary: |-
+      Name of the parent Agent Fabric.
+    groupName: Resource Id Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_agentfabric_aks_attach
+- az_agentfabric_aks_detach
+- az_agentfabric_aks_list
+- az_agentfabric_aks_show
+- az_agentfabric_aks_update
+- az_agentfabric_aks_wait
+metadata:
+  description: Manage compute-resource enrollment through ClusterAssociation resources under an Agent Fabric. This AKS-oriented command surface also preserves the REST API's support for ACI SandboxGroup resource IDs. Association names are independent from target resource names; --cluster-name is retained as a compatibility alias for the association name.
