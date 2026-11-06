@@ -1,7 +1,7 @@
 ---
 title: Configuration management
 description: Learn how to manage Azure CLI preview configuration settings, including keys, environment variables, and file locations.
-ms.date: 10/27/2026
+ms.date: 11/03/2026
 ---
 
 # Configuration management
@@ -133,6 +133,28 @@ az config info
 
 # Output only key names (JSON array)
 az config info --keys-only
+```
+
+## Telemetry
+
+The Azure CLI preview sends usage telemetry by default. Telemetry is controlled by the `telemetry.enabled` key. AI-based error recovery records its own usage telemetry, which this key also controls. For more information about what AI-based error recovery collects, see [What data is used and collected?](ai-based-error-recovery.md#what-data-is-used-and-collected).
+
+Check the current setting:
+
+```bash
+az config get --key telemetry.enabled
+```
+
+Turn telemetry off:
+
+```bash
+az config set --key telemetry.enabled --value false
+```
+
+Turn telemetry back on:
+
+```bash
+az config set --key telemetry.enabled --value true
 ```
 
 ## Environment variable mappings
