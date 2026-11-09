@@ -9,6 +9,8 @@ keywords: command line interface, azure cli, azure command line, azure command l
 
 # What is the Azure CLI?
 
+**TEST VERSION=LATEST**
+
 The Azure Command-Line Interface (CLI) is a cross-platform command-line tool to connect to Azure and
 execute administrative commands on Azure resources. It allows the execution of commands through a
 terminal using interactive command-line prompts or a script.
