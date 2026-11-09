@@ -12,11 +12,11 @@ directCommands:
   summary: |-
     Create a virtual machine and its supporting network resources.
   description: |-
-    Provision an Azure virtual machine in the specified resource group along with the supporting virtual network, subnet, network security group, network interface, and public IP address in a single orchestrated call. The VM size, administrator credentials, and target location must all be provided. Resource names supplied for `--virtual-network-name` and `--network-interface-name` are created if they do not already exist in the resource group. By default a network security group named `{vm}NSG` is created, or updated if it already exists. A network security group the command creates has one inbound rule for the image's operating system, allowing traffic from any source: `rdp` (TCP port 3389) for Windows or `default-allow-ssh` (TCP port 22) for Linux. Pass `--nsg` a name to reuse the network security group of that name, unchanged, when it exists and create it when it does not, a resource ID to attach an existing network security group, or `""` to create none. By default a Standard, static public IP address named `{vm}PublicIP` is created, or updated if it already exists. Pass `--public-ip-address` a name to reuse the public IP address of that name when it exists and create it when it does not, a resource ID to attach an existing public IP address, or `""` to create none. Use `--zone` to place the virtual machine in a single availability zone. Use `--storage-sku` to choose the storage SKU of the managed OS disk, such as `Premium_LRS`, `StandardSSD_LRS`, `Standard_LRS`, `Premium_ZRS`, or `StandardSSD_ZRS`; when omitted, the service default applies. Pass `--tags` to tag the virtual machine and every network resource the command creates; resources the command only attaches keep their own tags, such as network interfaces passed to `--nics`, the virtual network of an existing subnet selected with `--subnet`, or an existing network security group or public IP address. The command returns the new virtual machine with the power state and the public and private IP addresses that `az vm show -d` reports.
+    Provision an Azure virtual machine in the specified resource group along with the supporting virtual network, subnet, network security group, network interface, and public IP address in a single orchestrated call. The VM size, administrator credentials, and target location must all be provided. Resource names supplied for `--virtual-network-name` and `--network-interface-name` are created if they do not already exist in the resource group. By default a network security group named `{vm}NSG` is created, or updated if it already exists. A network security group the command creates has one inbound rule for the image's operating system, allowing traffic from any source: `rdp` (TCP port 3389) for Windows or `default-allow-ssh` (TCP port 22) for Linux. Pass `--nsg` a name to reuse the network security group of that name, unchanged, when it exists and create it when it does not, a resource ID to attach an existing network security group, or `""` to create none. By default a Standard, static public IP address named `{vm}PublicIP` is created, or updated if it already exists. Pass `--public-ip-address` a name to reuse the public IP address of that name when it exists and create it when it does not, a resource ID to attach an existing public IP address, or `""` to create none. Use `--zone` to place the virtual machine in a single availability zone. Use `--storage-sku` to choose the storage SKU of the managed OS disk, such as `Premium_LRS`, `StandardSSD_LRS`, `Standard_LRS`, `Premium_ZRS`, or `StandardSSD_ZRS`; when omitted, the service default applies. Use `--os-disk-delete-option` with `Delete` to delete the OS disk when the virtual machine is deleted, or `Detach` to keep it; when omitted, the service default (`Detach`) applies. Pass `--tags` to tag the virtual machine and every network resource the command creates; resources the command only attaches keep their own tags, such as network interfaces passed to `--nics`, the virtual network of an existing subnet selected with `--subnet`, or an existing network security group or public IP address. The command returns the new virtual machine with the power state and the public and private IP addresses that `az vm show -d` reports.
   status: Preview
   isPreview: true
   sourceType: Core
-  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  editLink: https://github.com/Azure/azclips/blob/agent-command-restructure/src/CLI/Help/Docs/vm/index.md
   syntax: >-
     az vm create --admin-username
                  --location
@@ -33,6 +33,7 @@ directCommands:
                  [--nic-delete-option]
                  [--nics]
                  [--nsg]
+                 [--os-disk-delete-option]
                  [--os-disk-secure-vm-disk-encryption-set]
                  [--os-disk-security-encryption-type {VMGuestStateOnly, DiskWithVMGuestState, NonPersistedTPM}]
                  [--profile]
@@ -87,6 +88,9 @@ directCommands:
   - summary: |-
       Create a VM with a Premium SSD OS disk
     syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --storage-sku Premium_LRS --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet
+  - summary: |-
+      Create a VM whose OS disk is deleted with the VM
+    syntax: az vm create --name myvm --resource-group myrg --location eastus --size Standard_D2s_v5 --os-disk-delete-option Delete --admin-username azureuser --admin-password 'P@ssw0rd123!' --network-interface-name myvm-nic --virtual-network-name myvm-vnet
   requiredParameters:
   - isRequired: true
     name: --admin-username
@@ -150,6 +154,9 @@ directCommands:
     summary: |-
       Name of the network security group to create (default: '{vm}NSG') or of an existing one to attach. Can also reference an existing NSG by resource ID, or specify "" for none.
     groupName: Network Arguments
+  - name: --os-disk-delete-option
+    summary: |-
+      Whether the OS disk is deleted or detached when the virtual machine is deleted.
   - name: --os-disk-secure-vm-disk-encryption-set
     summary: |-
       Disk Encryption Set name or resource ID for customer-managed ConfidentialVM OS disk encryption.
@@ -230,7 +237,7 @@ directCommands:
   status: Preview
   isPreview: true
   sourceType: Core
-  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  editLink: https://github.com/Azure/azclips/blob/agent-command-restructure/src/CLI/Help/Docs/vm/index.md
   syntax: >-
     az vm deallocate [--force-deallocate]
                      [--hibernate]
@@ -301,7 +308,7 @@ directCommands:
   status: Preview
   isPreview: true
   sourceType: Core
-  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  editLink: https://github.com/Azure/azclips/blob/agent-command-restructure/src/CLI/Help/Docs/vm/index.md
   syntax: >-
     az vm delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
                  [--ids]
@@ -363,7 +370,7 @@ directCommands:
   status: Preview
   isPreview: true
   sourceType: Core
-  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  editLink: https://github.com/Azure/azclips/blob/agent-command-restructure/src/CLI/Help/Docs/vm/index.md
   syntax: >-
     az vm list [--profile]
                [--resource-group]
@@ -432,7 +439,7 @@ directCommands:
   status: Preview
   isPreview: true
   sourceType: Core
-  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  editLink: https://github.com/Azure/azclips/blob/agent-command-restructure/src/CLI/Help/Docs/vm/index.md
   syntax: >-
     az vm show [--ids]
                [--include-user-data]
@@ -506,7 +513,7 @@ directCommands:
   status: Preview
   isPreview: true
   sourceType: Core
-  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  editLink: https://github.com/Azure/azclips/blob/agent-command-restructure/src/CLI/Help/Docs/vm/index.md
   syntax: >-
     az vm start [--ids]
                 [--name]
@@ -566,7 +573,7 @@ directCommands:
   status: Preview
   isPreview: true
   sourceType: Core
-  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/vm/index.md
+  editLink: https://github.com/Azure/azclips/blob/agent-command-restructure/src/CLI/Help/Docs/vm/index.md
   syntax: >-
     az vm stop [--ids]
                [--name --vm-name]
