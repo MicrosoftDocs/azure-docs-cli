@@ -8,8 +8,8 @@ summary: |-
   Manage DPS links (provisioning endpoints) on a Device Registry namespace.
 description: |-
   Only one DPS may be linked per namespace today. Links live on the namespace, not on the
-  DPS resource. After deleting the DPS resource, run link dps remove to remove its
-  namespace endpoint.
+  DPS resource. Run link dps remove to remove its namespace endpoint. For a Succeeded
+  link, delete the DPS resource first; Failed links do not require deleting it.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -23,10 +23,11 @@ directCommands:
     Adds a DPS provisioning endpoint entry under the namespace's properties.provisioning.endpoints.
     Rejected if the namespace already has a linked DPS (one DPS per namespace).
     Exactly one of --system-assigned-mi or --user-assigned-mi must be provided.
-    Required service-to-service roles: namespace outbound MI -> Contributor on DPS; DPS selected inbound MI -> Contributor on namespace; namespace system-assigned MI -> Azure Device Registry Administrator on namespace.
-    The namespace must also have a system-assigned identity. It receives Azure Device Registry
-    Administrator on its own namespace for registry-device provisioning, even when the
-    namespace outbound identity is user-assigned. No role is granted to the signed-in caller;
+    Required service-to-service roles: namespace outbound MI -> Contributor on DPS; DPS selected inbound MI -> Azure Device Registry Contributor on namespace; DPS selected inbound MI -> Reader on namespace; namespace outbound MI -> Azure Device Registry Administrator on namespace; namespace outbound MI -> Reader on namespace resource group; namespace outbound MI -> Reader on DPS resource group; DPS selected MI -> IoT Hub Data Contributor on linked IoT Hubs.
+    The namespace must also have a system-assigned identity enabled. Azure Device Registry
+    Administrator on the namespace is granted to the selected outbound identity: SAMI when
+    system-assigned outbound is selected, or the selected UAMI otherwise.
+    No role is granted to the signed-in caller;
     DPS enrollment management with --auth-type login requires separate DPS data-plane access.
     The command reuses inherited assignments and creates only missing assignments when run by
     a caller who can create role assignments (for example Owner, User Access Administrator,
@@ -200,12 +201,22 @@ directCommands:
   summary: |-
     Remove a DPS endpoint from a Device Registry namespace.
   description: |-
-    Delete the linked DPS first; this command removes only the namespace endpoint.
-    The namespace outbound identity needs Reader on the linked resource's resource group.
-    A missing grant is created when you can create role assignments; it is kept after unlinking.
-    Keep that resource group until the unlink completes.
-    The command does not wait. Confirm removal with 'az iot adr ns show'.
-    Avoid concurrent namespace updates while this command runs.
+    This command removes only the namespace endpoint, not the linked DPS.
+    For a Succeeded link, delete the linked DPS first.
+    Failed links do not require the linked resource to be deleted.
+    For Succeeded links, the namespace outbound identity needs read access to the linked resource's
+    resource group, or subscription if that group was deleted. Checks are advisory by default:
+    uncertain access warns and continues without changing role assignments; ADR validates removal.
+    --no-rbac-check skips only the advisory check, not ADR authorization. --yes skips only confirmation.
+    For Succeeded links, --grant-reader requests missing Reader access at the linked resource's
+    resource group, never its subscription. Reader covers all resources in that group.
+    It requires role-assignment permission and cannot be combined with --no-rbac-check.
+    Reader setup failures stop removal. Requested assignments are retained even if removal fails
+    and can take several minutes to take effect; retry after propagation if ADR rejects removal.
+    The command waits up to 600 seconds. --no-wait returns after submission but does not skip Reader setup.
+    After --no-wait or a timeout, inspect completion with 'az iot adr ns show' before retrying.
+    For permission-check limitations, deleted resource groups and concurrent updates, see:
+    https://github.com/Azure/azure-iot-cli-extension/blob/release/1.1.0-preview/README.md#adr-link-troubleshooting.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -216,11 +227,23 @@ directCommands:
                                   --resource-group
                                   [--acquire-policy-token]
                                   [--change-reference]
+                                  [--grant-reader]
+                                  [--no-rbac-check]
+                                  [--no-wait]
                                   [--yes {false, true}]
   examples:
   - summary: |-
       Remove an endpoint after its linked DPS has been deleted
     syntax: az iot adr ns link dps remove -n primary --ns myNamespace -g myResourceGroup --yes
+  - summary: |-
+      Submit endpoint removal without waiting for completion
+    syntax: az iot adr ns link dps remove -n primary --ns myNamespace -g myResourceGroup --yes --no-wait
+  - summary: |-
+      Remove an endpoint without the advisory permission check
+    syntax: az iot adr ns link dps remove -n primary --ns myNamespace -g myResourceGroup --yes --no-rbac-check
+  - summary: |-
+      Grant missing resource-group Reader access before removing a Succeeded endpoint
+    syntax: az iot adr ns link dps remove -n primary --ns myNamespace -g myResourceGroup --yes --grant-reader
   requiredParameters:
   - isRequired: true
     name: --en --endpoint-name --name -n
@@ -243,6 +266,18 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --grant-reader
+    defaultValue: "False"
+    summary: |-
+      For Succeeded links, assign missing Reader access to the namespace outbound identity on the linked resource's resource group. Requires permission to assign roles; never grants at subscription scope. Setup failures stop removal. Assignments are retained even if removal fails and can take several minutes to take effect. Cannot be combined with --no-rbac-check.
+  - name: --no-rbac-check
+    defaultValue: "False"
+    summary: |-
+      Skip the advisory outbound-identity read-permission check. Does not bypass confirmation, ETag validation or ADR service validation. Cannot be combined with --grant-reader.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --yes -y
     acceptedValues: false, true
     summary: |-
@@ -279,7 +314,7 @@ directCommands:
   summary: |-
     Show a single DPS provisioning endpoint on a Device Registry namespace.
   description: |-
-    Inspect the named endpoint and decide which existing DPS Hubs to link to the namespace.
+    Inspect classic DPS Hub registrations to plan combined linking or dependent Failed-link recovery.
     When the DPS read succeeds, brownfieldHubs contains its properties.iotHubs[] list and
     brownfieldHubsAvailable is true. An empty list then means no Hubs are registered.
     If access or a service failure prevents that read, brownfieldHubs is null,
@@ -351,8 +386,8 @@ directCommands:
     Update checks target existence, region,
     provisioning-state, selected identity attachment, namespace outbound principal,
     automatic RBAC, and assignment-visibility preflight.
-    DPS preflight also ensures the namespace system-assigned identity has Azure Device Registry
-    Administrator on its own namespace, independently of the namespace outbound identity.
+    DPS preflight retains the namespace system-assigned identity prerequisite, but grants
+    Azure Device Registry Administrator on the namespace to its selected outbound identity.
     ARM assignment visibility does not guarantee that the linked service already honors access.
     Waited add/update commands recover only confirmed AdrMiNotAuthorized on the unchanged endpoint,
     rechecking required assignments and preserving identity and settings. --timeout (600 seconds) bounds
@@ -456,7 +491,8 @@ directCommands:
     Wait for a DPS endpoint to link successfully.
   description: |-
     The endpoint name is required. Without an explicit wait predicate, this command
-    polls that endpoint's linkingState and fails immediately if it reaches Failed.
+    waits for both namespace provisioningState and endpoint linkingState to succeed.
+    A Failed or Canceled namespace, or a Failed endpoint, is reported immediately.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns link dps' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -572,6 +608,6 @@ metadata:
   description: >-
     Only one DPS may be linked per namespace today. Links live on the namespace, not on the
 
-    DPS resource. After deleting the DPS resource, run link dps remove to remove its
+    DPS resource. Run link dps remove to remove its namespace endpoint. For a Succeeded
 
-    namespace endpoint.
+    link, delete the DPS resource first; Failed links do not require deleting it.
