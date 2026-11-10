@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 11/02/2026
+ms.date: 11/10/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -45,7 +45,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to compute-recommender reference group](/cli/azure/compute-recommender)
 
-- 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.93.0) scheduled for Nov 2026. Use 'az compute-recommender spot-placement-score' instead.
+- 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.100.0) scheduled for Jun 2027. Use 'az compute-recommender spot-placement-score' instead.
 
 ## containerapp
 
@@ -54,26 +54,6 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to containerapp env reference group](/cli/azure/containerapp/env)
 
 - The default value of '--logs-destination' will be changed to 'azure-monitor' from 'log-analytics' in 2.93.0. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli/pull/34228.
-
-## netappfiles
-
-### `netappfiles volume create`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
-
-### `netappfiles volume update`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
-
-### `netappfiles subvolume`
-
-[Link to netappfiles subvolume reference group](/cli/azure/netappfiles/subvolume)
-
-- netappfiles subvolume command group is being deprecated and will be removed in a future release.
 
 ## servicefabric
 
@@ -113,7 +93,7 @@ The breaking changes listed in this section are planned for the next major relea
 
 [Link to blueprint reference group](/cli/azure/blueprint)
 
-- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.93.0) scheduled for Nov 2026.
+- 'az blueprint' has been deprecated and will be removed in next breaking change release(2.100.0) scheduled for Jun 2027.
 - Azure Blueprints is retiring on 31 January 2027, with phased restrictions starting 31 July 2026.
 - After retirement, the service API stops responding and these commands will stop functioning; they will be removed from the Azure CLI in a later release.
 - Migrate blueprint definitions to Template Specs and assignments to Azure Deployment Stacks (recommended).
@@ -266,28 +246,14 @@ The breaking changes listed in this section are planned for the next major relea
 - '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
 - '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
 
-## azext_netappfiles_preview
-
-### `netappfiles volume create`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
-
-### `netappfiles volume update`
-
-[Link to netappfiles volume reference group](/cli/azure/netappfiles/volume)
-
-- --enable-subvolumes is being deprecated and will be removed in a future release.
-
 ## azext_redisenterprise
 
 ### `redisenterprise create`
 
 [Link to redisenterprise reference group](/cli/azure/redisenterprise)
 
-- The argument '--public-network-access' will become required in next breaking change release(2.93.0) scheduled for Nov 2026.
-- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.93.0) scheduled for Nov 2026.
+- The argument '--public-network-access' will become required in next breaking change release(2.100.0) scheduled for Jun 2027.
+- The default value of '--access-keys-auth' will be changed to 'Disabled' from 'Enabled' in next breaking change release(2.100.0) scheduled for Jun 2027.
 
 ## azext_spring
 
