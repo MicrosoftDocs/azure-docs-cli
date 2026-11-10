@@ -27,6 +27,7 @@ directCommands:
                                     [--acquire-policy-token]
                                     [--change-reference]
                                     [--condition]
+                                    [--data-schema-ref]
                                     [--enabled {false, true}]
                                     [--resource-group]
   examples:
@@ -36,6 +37,9 @@ directCommands:
   - summary: |-
       Create a route for an IoT Hub with the built-in endpoint and source type "DeviceMessages".
     syntax: az iot hub message-route create -n {iothub_name} --route-name {route_name} --endpoint-name events --source DeviceMessages
+  - summary: |-
+      Create a route with a Semantic Model data schema reference.
+    syntax: az iot hub message-route create -n {iothub_name} --route-name {route_name} --endpoint-name events --source DeviceMessages --data-schema-ref aio-sr://example/schema:1
   - summary: |-
       Create a disabled route for an IoT Hub with the given endpoint, source type "DigitalTwinChangeEvents" and custom condition.
     syntax: az iot hub message-route create -n {iothub_name} --route-name {route_name} --endpoint-name {endpoint_name} --source DigitalTwinChangeEvents --condition {condition} --enabled false
@@ -70,6 +74,9 @@ directCommands:
     defaultValue: "true"
     summary: |-
       Condition that is evaluated to apply the routing rule.
+  - name: --data-schema-ref
+    summary: |-
+      Data schema reference used for Semantic Model integration. Non-empty values are passed through as-is.
   - name: --enabled -e
     defaultValue: "True"
     acceptedValues: false, true
@@ -425,7 +432,7 @@ directCommands:
   summary: |-
     Update a route for an IoT Hub.
   description: |-
-    You can change the source, endpoint, condition, or enabled state on the route.
+    You can change the source, endpoint, condition, enabled state, or Semantic Model data schema reference on the route.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot hub message-route' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -435,10 +442,12 @@ directCommands:
                                     [--acquire-policy-token]
                                     [--change-reference]
                                     [--condition]
+                                    [--data-schema-ref]
                                     [--en --endpoint --endpoint-name]
                                     [--enabled {false, true}]
                                     [--hub-name]
                                     [--ids]
+                                    [--remove-data-schema-ref]
                                     [--resource-group]
                                     [--source-type --type {deviceconnectionstateevents, devicejoblifecycleevents, devicelifecycleevents, devicemessages, digitaltwinchangeevents, invalid, twinchangeevents}]
                                     [--subscription]
@@ -452,6 +461,12 @@ directCommands:
   - summary: |-
       Change a route's condition.
     syntax: az iot hub message-route update -n {iothub_name} --route-name {route_name} --condition {condition}
+  - summary: |-
+      Replace a route's Semantic Model data schema reference.
+    syntax: az iot hub message-route update -n {iothub_name} --route-name {route_name} --data-schema-ref aio-sr://example/schema:2
+  - summary: |-
+      Remove a route's Semantic Model data schema reference.
+    syntax: az iot hub message-route update -n {iothub_name} --route-name {route_name} --remove-data-schema-ref
   requiredParameters:
   - isRequired: true
     name: --rn --route --route-name
@@ -469,6 +484,9 @@ directCommands:
   - name: --condition -c
     summary: |-
       Condition that is evaluated to apply the routing rule.
+  - name: --data-schema-ref
+    summary: |-
+      Data schema reference used for Semantic Model integration. Non-empty values are passed through as-is.
   - name: --en --endpoint --endpoint-name
     summary: |-
       Name of the routing endpoint. For the built-in endpoint, use endpoint name 'events'.
@@ -484,6 +502,10 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --remove-data-schema-ref
+    defaultValue: "False"
+    summary: |-
+      Remove the Semantic Model data schema reference from the route.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.

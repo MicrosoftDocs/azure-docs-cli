@@ -5,7 +5,7 @@ extensionInformation: |-
   > [!NOTE]
   > This reference is part of the **relationship** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az relationship dependency-of** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Dependency Of.
+  Manage dependencyOf relationships at an Azure resource scope.
 status: GA
 sourceType: Extension
 directCommands:
@@ -147,6 +147,57 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_relationship_dependency-of_list
+  name: az relationship dependency-of list
+  summary: |-
+    List DependencyOfRelationship resources by parent.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az relationship dependency-of list --resource-uri
+                                       [--max-items]
+                                       [--next-token]
+  requiredParameters:
+  - isRequired: true
+    name: --resource-uri
+    summary: |-
+      The fully qualified Azure Resource manager identifier of the resource.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_relationship_dependency-of_show
   name: az relationship dependency-of show
   summary: |-
@@ -165,6 +216,102 @@ directCommands:
     name: --resource-uri
     summary: |-
       The fully qualified Azure Resource manager identifier of the resource.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_relationship_dependency-of_update
+  name: az relationship dependency-of update
+  summary: |-
+    Update a DependencyOfRelationship.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az relationship dependency-of update --name
+                                         --resource-uri
+                                         [--acquire-policy-token]
+                                         [--add]
+                                         [--change-reference]
+                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--remove]
+                                         [--set]
+                                         [--target-id]
+                                         [--target-tenant]
+  examples:
+  - summary: |-
+      Update the target of a resource-scoped dependency
+    syntax: az relationship dependency-of update --resource-uri "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}" --name myDependency --target-id "/providers/Microsoft.Management/serviceGroups/targetSG"
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      Name of dependencyOf relationship.
+  - isRequired: true
+    name: --resource-uri
+    summary: |-
+      The fully qualified Azure Resource manager identifier of the resource.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+    groupName: Generic Update Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --force-string
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    groupName: Generic Update Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    groupName: Generic Update Arguments
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+    groupName: Generic Update Arguments
+  - name: --target-id
+    summary: |-
+      The relationship target resource id.
+    groupName: Properties Arguments
+  - name: --target-tenant
+    summary: |-
+      The relationship target tenant id.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -292,7 +439,9 @@ directCommands:
 commands:
 - az_relationship_dependency-of_create
 - az_relationship_dependency-of_delete
+- az_relationship_dependency-of_list
 - az_relationship_dependency-of_show
+- az_relationship_dependency-of_update
 - az_relationship_dependency-of_wait
 metadata:
-  description: Manage Dependency Of.
+  description: Manage dependencyOf relationships at an Azure resource scope.

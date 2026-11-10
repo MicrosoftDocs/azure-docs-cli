@@ -7,14 +7,20 @@ extensionInformation: |-
 summary: |-
   Manage links between a Device Registry namespace and downstream resources.
 description: |-
-  Link a DPS first, then link your IoT Hubs. Use update to change a link's inbound
+  Link an empty DPS first, then link your IoT Hubs. If the DPS already lists Hubs,
+  use link add with every required Hub in the same request. Use update to change a link's inbound
   identity or retry a Failed endpoint with its saved identity and settings.
   Use show, list and wait to inspect linkingState. Links belong to the namespace.
-  To unlink, delete the linked resource first, then run link hub/dps/su remove to remove
-  its endpoint from the namespace. Remove does not delete or check the linked resource
-  and does not wait for unlink completion.
+  For a Succeeded link, delete the linked resource before running link hub/dps/su remove.
+  Failed links do not require deleting the linked resource. Hub endpoints in any state
+  also require clearing Registry Device IoT Hub capability references; see link hub remove --help.
+  Remove does not delete or check the linked resource; it removes only the namespace endpoint
+  and waits for the namespace update to complete unless --no-wait is specified.
+  Remove performs a state-aware advisory permission check without changing role assignments by default.
+  Use --grant-reader to explicitly request missing Reader access at the linked resource's resource group.
   Add/update wait for the link to succeed (--timeout default 600 seconds, --interval 30).
-  After --no-wait, use link hub/dps/su wait to track completion.
+  After add/update --no-wait, use link hub/dps/su wait to track completion.
+  After remove --no-wait, inspect the namespace with 'az iot adr ns show'.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot adr ns' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -23,13 +29,18 @@ directCommands:
 - uid: az_iot_adr_ns_link_add
   name: az iot adr ns link add
   summary: |-
-    Link DPS first, then a Hub, to a Device Registry namespace.
+    Link a DPS and its Hubs to a Device Registry namespace.
   description: |-
     Validates both targets, endpoint names, identity selections, and required RBAC before
-    changing namespace endpoints. Submits a DPS-only namespace update and waits for the exact
+    changing namespace endpoints. If the DPS already lists Hubs, all unlinked Hubs must
+    be included. Use --hub-endpoints JSON/file for additional Hubs with per-Hub identities/settings.
+    Brownfield and multi-Hub plans submit one PATCH; --no-wait returns after that submission.
+    Batch requests do not retry automatically. If role propagation causes a failure, inspect the
+    endpoint states and retry the Failed selections together with link update after propagation.
+    Otherwise submits a DPS-only namespace update and waits for the exact
     DPS endpoint to reach linkingState Succeeded before submitting a separate Hub update.
     --no-wait still waits for this DPS dependency; it skips waiting only for the final Hub operation.
-    Both waited stages recover only confirmed AdrMiNotAuthorized on the unchanged endpoint after
+    For greenfield single-Hub plans, both waited stages recover only confirmed AdrMiNotAuthorized after
     verifying required service-role assignments. Recovery uses endpoint update, never another add.
     --timeout (600 seconds) is one shared mutation/recovery budget for both stages after initial RBAC
     preflight, including RPCs, polling and bounded 30/60/120-second backoff. --interval defaults to 30
@@ -41,7 +52,7 @@ directCommands:
     After DPS succeeds, use link hub add only if the Hub endpoint is absent; use link hub wait if pending.
     Do not rerun combined link add when the DPS endpoint already exists.
     Required service-to-service roles:
-    namespace outbound MI -> Contributor on DPS; DPS selected inbound MI -> Contributor on namespace; namespace system-assigned MI -> Azure Device Registry Administrator on namespace; namespace outbound MI -> Contributor on HUB; namespace outbound MI -> IoT Hub Data Contributor on HUB; when an inbound identity is selected, HUB selected inbound MI -> Contributor on namespace.
+    namespace outbound MI -> Contributor on DPS; DPS selected inbound MI -> Azure Device Registry Contributor on namespace; DPS selected inbound MI -> Reader on namespace; namespace outbound MI -> Azure Device Registry Administrator on namespace; namespace outbound MI -> Reader on namespace resource group; namespace outbound MI -> Reader on DPS resource group; DPS selected MI -> IoT Hub Data Contributor on linked IoT Hubs; namespace outbound MI -> Contributor on HUB; namespace outbound MI -> IoT Hub Data Contributor on HUB; when an inbound identity is selected, HUB selected inbound MI -> Azure Device Registry Contributor on namespace; when an inbound identity is selected, HUB selected inbound MI -> Reader on namespace; namespace outbound MI -> Azure Device Registry Administrator on namespace; namespace outbound MI -> Reader on namespace resource group; namespace outbound MI -> Reader on HUB resource group; DPS selected MI -> IoT Hub Data Contributor on linked IoT Hubs.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -59,12 +70,20 @@ directCommands:
                            [--dps-mi-ua --dps-user-assigned-mi]
                            [--hub-allocation-weight --hub-weight]
                            [--hub-availability {Available, Disabled}]
+                           [--hub-endpoints]
                            [--hub-mi-sa --hub-system-assigned-mi {false, true}]
                            [--hub-mi-ua --hub-user-assigned-mi]
                            [--interval]
                            [--no-wait]
                            [--timeout]
   examples:
+  - summary: |-
+      Include an additional Hub in a brownfield DPS link plan
+    syntax: >-
+      az iot adr ns link add --ns myNamespace -g myResourceGroup \
+        --dps-endpoint-name primary-dps --dps-id <dps-id> --dps-system-assigned-mi \
+        --hub-endpoint-name hub-a --hub-id <hub-a-id> --hub-system-assigned-mi \
+        --hub-endpoints '{"hub-b":{"resourceId":"<hub-b-id>","inboundCallerIdentity":{"type":"SystemAssigned"}}}'
   - summary: |-
       Link both a Hub and a DPS using system-assigned identity for both inbound callers
     syntax: >-
@@ -148,6 +167,10 @@ directCommands:
     summary: |-
       Hub messaging endpoint availability.
     groupName: Hub Arguments
+  - name: --hub-endpoints
+    summary: |-
+      JSON object or file of additional Hub endpoints, keyed by endpoint name. Each value contains resourceId and optional inboundCallerIdentity and provisioning settings.
+    groupName: Hub Arguments
   - name: --hub-mi-sa --hub-system-assigned-mi
     defaultValue: "False"
     acceptedValues: false, true
@@ -166,12 +189,105 @@ directCommands:
   - name: --no-wait
     defaultValue: "False"
     summary: |-
-      Wait for DPS linking to succeed, then return without waiting for the final Hub operation.
+      For a batch plan, return after submission. Otherwise wait for DPS, then submit the Hub without waiting.
   - name: --timeout
     defaultValue: "600"
     summary: |-
       Positive shared mutation/recovery budget in seconds for DPS and Hub after initial RBAC preflight. Default: 600.
     groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_iot_adr_ns_link_update
+  name: az iot adr ns link update
+  summary: |-
+    Retry selected Failed DPS and Hub links together.
+  description: |-
+    Select a Failed DPS and every required Failed Hub from its brownfieldHubs list,
+    shown by link dps show. Saved identities and provisioning settings are preserved.
+    Only selected endpoints are resubmitted; other endpoints are not retried.
+    All selected targets and required roles are checked before a single namespace PATCH.
+    The command waits for the namespace and every selected endpoint to succeed.
+    --no-wait returns after submission; use link wait to observe completion.
+    To change a healthy link's identity or allocation settings, use link hub/dps update instead.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot adr ns link' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot adr ns link update --namespace --ns
+                              --resource-group
+                              [--acquire-policy-token]
+                              [--change-reference]
+                              [--den --dps-endpoint-name]
+                              [--hen --hub-endpoint-name]
+                              [--interval]
+                              [--no-wait]
+                              [--timeout]
+  examples:
+  - summary: |-
+      Retry a Failed DPS and its two Failed Hubs in one request
+    syntax: >-
+      az iot adr ns link update --ns myNamespace -g myResourceGroup \
+        --dps-endpoint-name primary-dps --hub-endpoint-name hub-a hub-b
+  requiredParameters:
+  - isRequired: true
+    name: --namespace --ns
+    summary: |-
+      Namespace containing the links.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --den --dps-endpoint-name
+    summary: |-
+      Failed DPS endpoint to retry with its required Failed Hubs.
+  - name: --hen --hub-endpoint-name
+    summary: |-
+      Names of Failed Hub endpoints to include. Unselected endpoints are not resubmitted.
+  - name: --interval
+    summary: |-
+      Positive polling interval in seconds.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --timeout
+    summary: |-
+      Positive wait budget in seconds.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -349,21 +465,34 @@ commands:
 - az_iot_adr_ns_link_su_show
 - az_iot_adr_ns_link_su_update
 - az_iot_adr_ns_link_su_wait
+- az_iot_adr_ns_link_update
 - az_iot_adr_ns_link_wait
 metadata:
   description: >-
-    Link a DPS first, then link your IoT Hubs. Use update to change a link's inbound
+    Link an empty DPS first, then link your IoT Hubs. If the DPS already lists Hubs,
+
+    use link add with every required Hub in the same request. Use update to change a link's inbound
 
     identity or retry a Failed endpoint with its saved identity and settings.
 
     Use show, list and wait to inspect linkingState. Links belong to the namespace.
 
-    To unlink, delete the linked resource first, then run link hub/dps/su remove to remove
+    For a Succeeded link, delete the linked resource before running link hub/dps/su remove.
 
-    its endpoint from the namespace. Remove does not delete or check the linked resource
+    Failed links do not require deleting the linked resource. Hub endpoints in any state
 
-    and does not wait for unlink completion.
+    also require clearing Registry Device IoT Hub capability references; see link hub remove --help.
+
+    Remove does not delete or check the linked resource; it removes only the namespace endpoint
+
+    and waits for the namespace update to complete unless --no-wait is specified.
+
+    Remove performs a state-aware advisory permission check without changing role assignments by default.
+
+    Use --grant-reader to explicitly request missing Reader access at the linked resource's resource group.
 
     Add/update wait for the link to succeed (--timeout default 600 seconds, --interval 30).
 
-    After --no-wait, use link hub/dps/su wait to track completion.
+    After add/update --no-wait, use link hub/dps/su wait to track completion.
+
+    After remove --no-wait, inspect the namespace with 'az iot adr ns show'.
