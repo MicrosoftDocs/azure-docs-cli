@@ -23,7 +23,7 @@ used from a browser through the [Azure Cloud Shell][12] or run from inside a Doc
 
 ## Azure CLI preview
 
-A next-generation Azure CLI is available in preview, with named sign-in profiles, shell-native tab completion, and optional AI-based error recovery. Install it alongside your existing Azure CLI installation to evaluate the new experience. For preview-specific guidance and limitations, see [What is the Azure CLI (preview)?](/cli/azure/what-is-azure-cli?view=azure-cli-preview&preserve-view=true).
+The next-generation Azure CLI is available in preview, with named sign-in profiles, shell-native tab completion, and optional AI-based error recovery. Install it alongside your existing Azure CLI installation to evaluate the new experience. For preview-specific guidance and limitations, see [What is the Azure CLI (preview)?](/cli/azure/what-is-azure-cli?view=azure-cli-preview&preserve-view=true).
 
 ## Current Version
 
