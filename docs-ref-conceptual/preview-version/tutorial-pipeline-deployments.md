@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 10/28/2026
+ms.date: 11/10/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -25,8 +25,8 @@ In this tutorial, you:
 > - Detect a failure
 > - Clean up
 
-> [!WARNING]
-> This scenario requires non-interactive authentication that the [current preview limitations](getting-started.md#current-limitations) list as unsupported. Use these commands for engineering review only. They don't establish supported functionality. Don't run this walkthrough until the product team confirms support for your preview build.
+> [!NOTE]
+> The preview supports managed identity and service principal authentication, but might not cover every automation scenario. Validate this walkthrough with your pipeline provider and preview build before using it. For more information, see [Current limitations](getting-started.md#current-limitations).
 
 ## Prerequisites
 
@@ -211,9 +211,9 @@ Replace the sign-in example with one of the following. Keep secrets and certific
 - Azure CLI preview in Bash: `az login --identity --client-id "$client_id" --subscription-id "$sub" --out-profile "$profile"`
 - Azure CLI preview in PowerShell: `az login --identity --client-id $clientId --subscription-id $sub --out-profile $profileName`
 
-**Client secret or certificate**
+**Client secret**
 
-- Azure CLI preview: **Pending engineering confirmation: client-secret or certificate sign-in command.**
+For client-secret sign-in, see [Authentication](getting-started.md#authentication). Store the secret in your pipeline's secret store. Service principal certificate sign-in isn't supported in this preview.
 
 ## Related content
 

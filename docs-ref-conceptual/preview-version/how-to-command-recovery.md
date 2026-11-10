@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: how-to
-ms.date: 10/30/2026
+ms.date: 11/10/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -90,18 +90,18 @@ The `az group show` command fails with an error that reports the resource group 
 
 ## Recover on request
 
-Ask AI troubleshooting to analyze the most recent failure. Without `--id`, `az troubleshoot analyze` selects the latest saved failure in the current terminal.
+Ask AI troubleshooting to analyze the most recent failure. Without `--id`, `az troubleshoot recover` selects the latest saved failure in the current terminal, falling back to the latest saved failure across terminals.
 
 # [Bash](#tab/bash)
 
 ```bash
-az troubleshoot analyze
+az troubleshoot recover
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```powershell
-az troubleshoot analyze
+az troubleshoot recover
 ```
 
 ---
@@ -115,7 +115,7 @@ To troubleshoot an earlier failure instead, list the saved failures, read the co
 ```bash
 az troubleshoot list --output table
 az troubleshoot show --id "<failure-id>" --output table
-az troubleshoot analyze --id "<failure-id>"
+az troubleshoot recover --id "<failure-id>"
 ```
 
 # [PowerShell](#tab/powershell)
@@ -123,7 +123,7 @@ az troubleshoot analyze --id "<failure-id>"
 ```powershell
 az troubleshoot list --output table
 az troubleshoot show --id "<failure-id>" --output table
-az troubleshoot analyze --id "<failure-id>"
+az troubleshoot recover --id "<failure-id>"
 ```
 
 ---
@@ -137,13 +137,13 @@ In an interactive session, AI troubleshooting proposes a plan and can run comman
 # [Bash](#tab/bash)
 
 ```bash
-az troubleshoot analyze --style interactive
+az troubleshoot recover --style interactive
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```powershell
-az troubleshoot analyze --style interactive
+az troubleshoot recover --style interactive
 ```
 
 ---

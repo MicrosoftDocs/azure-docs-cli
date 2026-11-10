@@ -1,20 +1,20 @@
 ---
 title: "Discover commands and call Azure REST APIs with Azure CLI (preview)"
-description: "Find Azure CLI preview commands, create a resource with an authenticated REST request when no command exists, and check installed extensions."
+description: "Find Azure CLI preview commands, create a resource with an authenticated REST request, and check installed extensions."
 author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: how-to
-ms.date: 10/28/2026
+ms.date: 11/10/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
 
 # Discover commands and call Azure REST APIs with Azure CLI (preview)
 
-In this article, you find the Azure CLI preview command for a task, and when the preview doesn't include a command for a resource type yet, you manage that resource with an authenticated Azure Resource Manager REST request instead.
+In this article, you find the Azure CLI preview command for a task and manage a resource with an authenticated Azure Resource Manager REST request. You can use this REST approach when a resource type or operation doesn't have a dedicated preview command.
 
-When you finish, you've used built-in help to find and run a command, created and inspected a storage account through `az rest` without a dedicated command, confirmed which extensions are installed, and removed everything you created.
+When you finish, you've used built-in help to find and run a command, created and inspected a storage account through `az rest`, confirmed which extensions are installed, and removed everything you created.
 
 ## Prerequisites
 
@@ -74,7 +74,7 @@ az group create --subscription-id $sub --name $rg --location $location
 
 ## Create a resource with authenticated REST
 
-The preview doesn't include `az storage account` commands. When the preview doesn't have a command for a resource type, use `az rest` to send the Azure Resource Manager REST request yourself. `az rest` signs the request with your current sign-in and returns the raw response.
+Use `az rest` to send an Azure Resource Manager REST request directly. `az rest` signs the request with your current sign-in and returns the raw response. This example creates a storage account through REST; the preview also provides `az storage account create` for that task.
 
 Create a storage account with a `PUT` request:
 
