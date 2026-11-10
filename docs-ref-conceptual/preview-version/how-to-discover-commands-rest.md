@@ -168,4 +168,4 @@ az group exists --subscription-id $sub --name $rg
 
 - For more information, see [Recover from command failures with AI troubleshooting](how-to-command-recovery.md).
 - For more information, see [Install Azure CLI preview extensions](install-cli-extensions.md).
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).

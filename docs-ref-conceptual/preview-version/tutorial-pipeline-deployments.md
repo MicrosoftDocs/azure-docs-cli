@@ -26,7 +26,7 @@ In this tutorial, you:
 > - Clean up
 
 > [!NOTE]
-> The preview supports managed identity and service principal authentication, but might not cover every automation scenario. Validate this walkthrough with your pipeline provider and preview build before using it. For more information, see [Current limitations](getting-started.md#current-limitations).
+> The preview supports managed identity and service principal authentication, but might not cover every automation scenario. Validate this walkthrough with your pipeline provider and preview build before using it. For more information, see [Current limitations](get-started-with-azure-cli.md#current-limitations).
 
 ## Prerequisites
 
@@ -213,10 +213,10 @@ Replace the sign-in example with one of the following. Keep secrets and certific
 
 **Client secret**
 
-For client-secret sign-in, see [Authentication](getting-started.md#authentication). Store the secret in your pipeline's secret store. Service principal certificate sign-in isn't supported in this preview.
+For client-secret sign-in, see [Authentication](get-started-with-azure-cli.md#authentication). Store the secret in your pipeline's secret store. Service principal certificate sign-in isn't supported in this preview.
 
 ## Related content
 
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).
 - For more information, see [Set up and switch sign-in profiles](quickstart-profiles.md).
 - For more information, see [Recover from command failures with AI troubleshooting](how-to-command-recovery.md).

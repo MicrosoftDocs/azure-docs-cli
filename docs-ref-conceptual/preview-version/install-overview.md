@@ -12,7 +12,7 @@ The Azure CLI preview ships as **azcli** — the `az` command-line tool (self-co
 - **lean** — built-in extensions only.
 
 > [!NOTE]
-> For more information about installing the Az PowerShell modules, see the [Azure PowerShell preview install overview](/powershell/azure/install-overview?view=azps-preview&preserve-view=true).
+> For more information about installing the Az PowerShell modules, see the [Azure PowerShell preview install overview](/powershell/azure/install-azure-powershell?view=azps-preview&preserve-view=true).
 
 ## Install azcli (one command)
 
