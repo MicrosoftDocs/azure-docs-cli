@@ -27,8 +27,8 @@ directCommands:
     linked, use 'link su update' to modify the existing endpoint.
     Exactly one of --system-assigned-mi or --user-assigned-mi must be provided to set the
     inbound caller identity that the update instance will use to call back into the namespace.
-    Required service-to-service roles: namespace outbound MI -> Contributor on SU; namespace outbound MI -> Device Update Administrator on SU; SU selected inbound MI -> Azure Device Registry Contributor on namespace.
-    These are exactly three service-to-service grants. Device Update Administrator enables
+    Required service-to-service roles: namespace outbound MI -> Contributor on SU; namespace outbound MI -> Device Update Administrator on SU; SU selected inbound MI -> Azure Device Registry Contributor on namespace; SU selected inbound MI -> Reader on namespace; namespace outbound MI -> Azure Device Registry Administrator on namespace; namespace outbound MI -> Reader on namespace resource group; namespace outbound MI -> Reader on SU resource group.
+    Identical resource-group Reader grants are deduplicated. Device Update Administrator enables
     namespace-initiated ADU data-plane operations, including report generation; ARM Contributor
     alone does not grant data-plane access. The configured namespace outbound identity
     and the selected Update Instance inbound identity each support SAMI or an attached UAMI.
@@ -205,12 +205,22 @@ directCommands:
   summary: |-
     Remove a Software Updates instance endpoint from a Device Registry namespace.
   description: |-
-    Delete the linked Software Updates instance first; this command removes only the namespace endpoint.
-    The namespace outbound identity needs Reader on the linked resource's resource group.
-    A missing grant is created when you can create role assignments; it is kept after unlinking.
-    Keep that resource group until the unlink completes.
-    The command does not wait. Confirm removal with 'az iot adr ns show'.
-    Avoid concurrent namespace updates while this command runs.
+    This command removes only the namespace endpoint, not the linked Software Updates instance.
+    For a Succeeded link, delete the linked Software Updates instance first.
+    Failed links do not require the linked resource to be deleted.
+    For Succeeded links, the namespace outbound identity needs read access to the linked resource's
+    resource group, or subscription if that group was deleted. Checks are advisory by default:
+    uncertain access warns and continues without changing role assignments; ADR validates removal.
+    --no-rbac-check skips only the advisory check, not ADR authorization. --yes skips only confirmation.
+    For Succeeded links, --grant-reader requests missing Reader access at the linked resource's
+    resource group, never its subscription. Reader covers all resources in that group.
+    It requires role-assignment permission and cannot be combined with --no-rbac-check.
+    Reader setup failures stop removal. Requested assignments are retained even if removal fails
+    and can take several minutes to take effect; retry after propagation if ADR rejects removal.
+    The command waits up to 600 seconds. --no-wait returns after submission but does not skip Reader setup.
+    After --no-wait or a timeout, inspect completion with 'az iot adr ns show' before retrying.
+    For permission-check limitations, deleted resource groups and concurrent updates, see:
+    https://github.com/Azure/azure-iot-cli-extension/blob/release/1.1.0-preview/README.md#adr-link-troubleshooting.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot adr ns link su' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -221,11 +231,23 @@ directCommands:
                                  --resource-group
                                  [--acquire-policy-token]
                                  [--change-reference]
+                                 [--grant-reader]
+                                 [--no-rbac-check]
+                                 [--no-wait]
                                  [--yes {false, true}]
   examples:
   - summary: |-
       Remove an endpoint after its linked Software Updates instance has been deleted
     syntax: az iot adr ns link su remove -n primary --ns myNamespace -g myResourceGroup --yes
+  - summary: |-
+      Submit endpoint removal without waiting for completion
+    syntax: az iot adr ns link su remove -n primary --ns myNamespace -g myResourceGroup --yes --no-wait
+  - summary: |-
+      Remove an endpoint without the advisory permission check
+    syntax: az iot adr ns link su remove -n primary --ns myNamespace -g myResourceGroup --yes --no-rbac-check
+  - summary: |-
+      Grant missing resource-group Reader access before removing a Succeeded endpoint
+    syntax: az iot adr ns link su remove -n primary --ns myNamespace -g myResourceGroup --yes --grant-reader
   requiredParameters:
   - isRequired: true
     name: --en --endpoint-name --name -n
@@ -248,6 +270,18 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --grant-reader
+    defaultValue: "False"
+    summary: |-
+      For Succeeded links, assign missing Reader access to the namespace outbound identity on the linked resource's resource group. Requires permission to assign roles; never grants at subscription scope. Setup failures stop removal. Assignments are retained even if removal fails and can take several minutes to take effect. Cannot be combined with --no-rbac-check.
+  - name: --no-rbac-check
+    defaultValue: "False"
+    summary: |-
+      Skip the advisory outbound-identity read-permission check. Does not bypass confirmation, ETag validation or ADR service validation. Cannot be combined with --grant-reader.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --yes -y
     acceptedValues: false, true
     summary: |-

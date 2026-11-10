@@ -384,20 +384,27 @@ directCommands:
   summary: |-
     Generate a verification code for a certificate in an Azure IoT Hub Device Provisioning Service instance.
   description: |-
-    This verification code is used to complete the proof of possession step for a certificate. Use this verification code as the CN of a new certificate signed with the root certificates private key.
+    Use the verification code as the CN of a new certificate signed with the root certificate's private key.
+    If --etag is omitted, the current certificate ETag is fetched automatically. This requires certificate read permission.
+    Supply --etag to skip the read and operate only on that version. A concurrent change still causes the operation to fail.
+    To read an ETag explicitly, use 'az iot dps certificate show --dps-name MyDps -g MyResourceGroup
+    --name MyCertificate --query etag -o tsv'.
   status: GA
   sourceType: Extension
   syntax: >-
     az iot dps certificate generate-verification-code --certificate-name --name
                                                       --dps-name
-                                                      --etag
                                                       [--acquire-policy-token]
                                                       [--change-reference]
+                                                      [--etag]
                                                       [--resource-group]
   examples:
   - summary: |-
-      Generate a verification code for MyCertificate
-    syntax: az iot dps certificate generate-verification-code --dps-name MyDps --resource-group MyResourceGroup --name MyCertificate --etag AAAAAAAAAAA=
+      Generate a verification code using the automatically fetched ETag.
+    syntax: az iot dps certificate generate-verification-code --dps-name MyDps -g MyResourceGroup --name MyCertificate
+  - summary: |-
+      Generate a verification code using an explicitly supplied ETag.
+    syntax: az iot dps certificate generate-verification-code --dps-name MyDps -g MyResourceGroup --name MyCertificate --etag AAAAAAAAAAA=
   requiredParameters:
   - isRequired: true
     name: --certificate-name --name -n
@@ -407,10 +414,6 @@ directCommands:
     name: --dps-name
     summary: |-
       IoT Hub Device Provisioning Service name.
-  - isRequired: true
-    name: --etag -e
-    summary: |-
-      Entity Tag (etag) of the object.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -420,6 +423,9 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --etag -e
+    summary: |-
+      Current certificate ETag. If omitted, it is fetched automatically, requiring certificate read permission. Supply an ETag to skip that read and require the specified certificate version.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -919,21 +925,27 @@ directCommands:
   summary: |-
     Verify a certificate in an Azure IoT Hub Device Provisioning Service instance.
   description: |-
-    Verify a certificate by uploading a verification certificate containing the verification code obtained by calling generate-verification-code. This is the last step in the proof of possession process.
+    Upload a verification certificate containing the code returned by generate-verification-code to prove possession.
+    If --etag is omitted, the current certificate ETag is fetched automatically. This requires certificate read permission.
+    Supply --etag to skip the read and operate only on that version. Use the ETag returned after generating the verification
+    code, or read the current ETag with certificate show; an earlier ETag may be stale.
   status: GA
   sourceType: Extension
   syntax: >-
     az iot dps certificate verify --certificate-name --name
                                   --dps-name
-                                  --etag
                                   --path
                                   [--acquire-policy-token]
                                   [--change-reference]
+                                  [--etag]
                                   [--resource-group]
   examples:
   - summary: |-
-      Verify ownership of the MyCertificate private key.
-    syntax: az iot dps certificate verify --dps-name MyDps --resource-group MyResourceGroup --name MyCertificate --path /certificates/Verification.pem --etag AAAAAAAAAAA=
+      Verify a certificate using the automatically fetched ETag.
+    syntax: az iot dps certificate verify --dps-name MyDps -g MyResourceGroup --name MyCertificate --path /certificates/Verification.pem
+  - summary: |-
+      Verify a certificate using the ETag returned after generating its verification code.
+    syntax: az iot dps certificate verify --dps-name MyDps -g MyResourceGroup --name MyCertificate --path /certificates/Verification.pem --etag AAAAAAAAAAA=
   requiredParameters:
   - isRequired: true
     name: --certificate-name --name -n
@@ -943,10 +955,6 @@ directCommands:
     name: --dps-name
     summary: |-
       IoT Hub Device Provisioning Service name.
-  - isRequired: true
-    name: --etag -e
-    summary: |-
-      Entity Tag (etag) of the object.
   - isRequired: true
     name: --path -p
     summary: |-
@@ -960,6 +968,9 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --etag -e
+    summary: |-
+      Current certificate ETag. If omitted, it is fetched automatically, requiring certificate read permission. Supply an ETag to skip that read and require the specified certificate version.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.

@@ -87,9 +87,12 @@ directCommands:
                         [--acquire-policy-token]
                         [--allowed-subnets]
                         [--change-reference]
+                        [--encryption]
                         [--encryption-in-transit --encryption-in-transit-required {Disabled, Enabled}]
                         [--location]
-                        [--media-tier {SSD}]
+                        [--media-tier {HDD, SSD}]
+                        [--mi-system-assigned --system-assigned]
+                        [--mi-user-assigned --user-assigned]
                         [--mount-name]
                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                         [--protocol {NFS}]
@@ -99,6 +102,7 @@ directCommands:
                         [--public-network-access {Disabled, Enabled}]
                         [--redundancy {Local, Zone}]
                         [--root-squash {AllSquash, NoRootSquash, RootSquash}]
+                        [--scale-mode {Compatibility, Scale}]
                         [--tags]
   examples:
   - summary: |-
@@ -129,6 +133,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --encryption
+    summary: |-
+      Encryption settings for the file share.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --encryption-in-transit --encryption-in-transit-required
     acceptedValues: Disabled, Enabled
     summary: |-
@@ -139,10 +147,18 @@ directCommands:
       The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     groupName: Resource Arguments
   - name: --media-tier
-    acceptedValues: SSD
+    acceptedValues: HDD, SSD
     summary: |-
       The storage media tier of the file share.
     groupName: Properties Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
   - name: --mount-name
     summary: |-
       The name of the file share as seen by the end user when mounting the share, such as in a URI or UNC format in their operating system.
@@ -183,6 +199,11 @@ directCommands:
     summary: |-
       Root squash defines how root users on clients are mapped to the NFS share.
     groupName: NfsProtocolProperties Arguments
+  - name: --scale-mode
+    acceptedValues: Compatibility, Scale
+    summary: |-
+      The scale mode selected when the file share is created.
+    groupName: Properties Arguments
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -302,6 +323,9 @@ directCommands:
                                                  [--change-reference]
                                                  [--ids]
                                                  [--location]
+                                                 [--media-tier {HDD, SSD}]
+                                                 [--protocol {NFS}]
+                                                 [--scale-mode {Compatibility, Scale}]
                                                  [--subscription]
   examples:
   - summary: |-
@@ -329,6 +353,87 @@ directCommands:
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+    groupName: Resource Id Arguments
+  - name: --media-tier
+    acceptedValues: HDD, SSD
+    summary: |-
+      The storage media tier. Defaults to SSD.
+    groupName: Properties Arguments
+  - name: --protocol
+    acceptedValues: NFS
+    summary: |-
+      The file sharing protocol. Defaults to NFS.
+    groupName: Properties Arguments
+  - name: --scale-mode
+    acceptedValues: Compatibility, Scale
+    summary: |-
+      The scale mode. Defaults to Compatibility.
+    groupName: Properties Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_fileshare_get-redundancy-conversion-status
+  name: az fileshare get-redundancy-conversion-status
+  summary: |-
+    Gets the status and details of the current or most recent redundancy conversion for the file share.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az fileshare get-redundancy-conversion-status [--acquire-policy-token]
+                                                  [--change-reference]
+                                                  [--ids]
+                                                  [--name --resource-name]
+                                                  [--resource-group]
+                                                  [--subscription]
+  examples:
+  - summary: |-
+      Get the status of the current or most recent redundancy conversion
+    syntax: az fileshare get-redundancy-conversion-status --name MyFileShare --resource-group MyRG
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --resource-name -n
+    summary: |-
+      The resource name of the file share, as seen by the administrator through Azure Resource Manager.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --subscription
     summary: |-
@@ -369,6 +474,9 @@ directCommands:
                              [--change-reference]
                              [--ids]
                              [--location]
+                             [--media-tier {HDD, SSD}]
+                             [--protocol {NFS}]
+                             [--scale-mode {Compatibility, Scale}]
                              [--subscription]
   examples:
   - summary: |-
@@ -391,6 +499,21 @@ directCommands:
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
     groupName: Resource Id Arguments
+  - name: --media-tier
+    acceptedValues: HDD, SSD
+    summary: |-
+      The storage media tier. Defaults to SSD.
+    groupName: Properties Arguments
+  - name: --protocol
+    acceptedValues: NFS
+    summary: |-
+      The file sharing protocol. Defaults to NFS.
+    groupName: Properties Arguments
+  - name: --scale-mode
+    acceptedValues: Compatibility, Scale
+    summary: |-
+      The scale mode. Defaults to Compatibility.
+    groupName: Properties Arguments
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -528,6 +651,80 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_fileshare_start-redundancy-conversion
+  name: az fileshare start-redundancy-conversion
+  summary: |-
+    Starts a redundancy conversion for the file share.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az fileshare start-redundancy-conversion --target-redundancy {Local, Zone}
+                                             [--acquire-policy-token]
+                                             [--change-reference]
+                                             [--ids]
+                                             [--name --resource-name]
+                                             [--resource-group]
+                                             [--subscription]
+  examples:
+  - summary: |-
+      Start a redundancy conversion to zone-redundant storage
+    syntax: az fileshare start-redundancy-conversion --name MyFileShare --resource-group MyRG --target-redundancy Zone
+  requiredParameters:
+  - isRequired: true
+    name: --target-redundancy
+    acceptedValues: Local, Zone
+    summary: |-
+      The requested target redundancy for the conversion.
+    groupName: Properties Arguments
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name --resource-name -n
+    summary: |-
+      The resource name of the file share, as seen by the administrator through Azure Resource Manager.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_fileshare_update
   name: az fileshare update
   summary: |-
@@ -538,6 +735,7 @@ directCommands:
     az fileshare update [--acquire-policy-token]
                         [--allowed-subnets]
                         [--change-reference]
+                        [--encryption]
                         [--encryption-in-transit --encryption-in-transit-required {Disabled, Enabled}]
                         [--ids]
                         [--name --resource-name]
@@ -570,6 +768,10 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --encryption
+    summary: |-
+      Encryption settings for the file share.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --encryption-in-transit --encryption-in-transit-required
     acceptedValues: Disabled, Enabled
     summary: |-
@@ -814,6 +1016,12 @@ commands:
 - az_fileshare_create
 - az_fileshare_delete
 - az_fileshare_get-provisioning-recommendation
+- az_fileshare_get-redundancy-conversion-status
+- az_fileshare_identity
+- az_fileshare_identity_assign
+- az_fileshare_identity_remove
+- az_fileshare_identity_show
+- az_fileshare_identity_wait
 - az_fileshare_limits-show
 - az_fileshare_list
 - az_fileshare_private-endpoint-connection
@@ -835,6 +1043,7 @@ commands:
 - az_fileshare_snapshot_list
 - az_fileshare_snapshot_show
 - az_fileshare_snapshot_update
+- az_fileshare_start-redundancy-conversion
 - az_fileshare_update
 - az_fileshare_usage-show
 - az_fileshare_wait
