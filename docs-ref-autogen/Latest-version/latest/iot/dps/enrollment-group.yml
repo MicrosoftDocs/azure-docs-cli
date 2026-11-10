@@ -120,6 +120,7 @@ directCommands:
                                        [--ca-name --cn --root-ca-name]
                                        [--certificate-path --cp]
                                        [--change-reference]
+                                       [--device-type-ref]
                                        [--dps-name]
                                        [--edge-enabled --ee {false, true}]
                                        [--ih --iot-hubs]
@@ -155,8 +156,11 @@ directCommands:
       Create an enrollment group '{enrollment_id}' with custom allocation policy,
     syntax: az iot dps enrollment-group create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --allocation-policy custom --webhook-url {webhook_url} --api-version {api_version}
   - summary: |-
-      Create an enrollment group with a custom Device Registry Namespace Certificate Policy specified.
-    syntax: az iot dps enrollment-group create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --allocation-policy hashed --adr-namespace {namespace_name} --adr-ca-name {ca_name} --adr-cert-policy-name {policy_name}
+      Create an enrollment group with an ADR certificate policy and selected hubs, inheriting the DPS allocation policy.
+    syntax: az iot dps enrollment-group create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --iot-hubs {iot_hub_host_name} --adr-namespace {namespace_name} --adr-ca-name {ca_name} --adr-cert-policy-name {policy_name}
+  - summary: |-
+      Create an enrollment group with a device type reference.
+    syntax: az iot dps enrollment-group create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --device-type-ref "urn:example:thing-model:temperature-sensor:1"
   requiredParameters:
   - isRequired: true
     name: --eid --enrollment-id --gid --group-id
@@ -182,7 +186,7 @@ directCommands:
   - name: --allocation-policy --ap
     acceptedValues: custom, geoLatency, hashed, static
     summary: |-
-      Type of allocation policy to determine how a device is assigned to an IoT Hub. If not provided, the allocation policy will be the current allocation policy default set for the Device Provisioning Service instance.
+      Type of allocation policy to determine how a device is assigned to an IoT Hub. If not provided, the allocation policy will be the current allocation policy default set for the Device Provisioning Service instance, including when --iot-hubs is specified. This is independent of the ADR certificate policy.
     groupName: Allocation Policy Arguments
   - name: --api-version --av
     summary: |-
@@ -206,6 +210,11 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --device-type-ref
+    summary: |-
+      Device type reference stored by DPS. The CLI passes the value as provided without resolving it or validating its format.
+    isPreview: true
+    groupName: Semantic Model Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
@@ -525,6 +534,7 @@ directCommands:
                                        [--ca-name --cn --root-ca-name]
                                        [--certificate-path --cp]
                                        [--change-reference]
+                                       [--device-type-ref]
                                        [--dps-name]
                                        [--edge-enabled --ee {false, true}]
                                        [--etag]
@@ -536,6 +546,7 @@ directCommands:
                                        [--pk --primary-key]
                                        [--provisioning-status --ps {disabled, enabled}]
                                        [--rc --remove-certificate {false, true}]
+                                       [--remove-device-type-ref {false, true}]
                                        [--remove-secondary-certificate --rsc {false, true}]
                                        [--reprovision-policy --rp {never, reprovisionandmigratedata, reprovisionandresetdata}]
                                        [--resource-group]
@@ -559,6 +570,12 @@ directCommands:
   - summary: |-
       Update enrollment group '{enrollment_id}' in the Azure IoT Device Provisioning Service '{dps_name}' to use a custom ADR Namespace Certificate Policy.
     syntax: az iot dps enrollment-group update -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --adr-namespace {namespace_name} --adr-ca-name {ca_name} --adr-cert-policy-name {my_policy}
+  - summary: |-
+      Replace an enrollment group's device type reference.
+    syntax: az iot dps enrollment-group update -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --device-type-ref "urn:example:thing-model:temperature-sensor:2"
+  - summary: |-
+      Remove an enrollment group's device type reference.
+    syntax: az iot dps enrollment-group update -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --remove-device-type-ref
   requiredParameters:
   - isRequired: true
     name: --eid --enrollment-id --gid --group-id
@@ -584,7 +601,7 @@ directCommands:
   - name: --allocation-policy --ap
     acceptedValues: custom, geoLatency, hashed, static
     summary: |-
-      Type of allocation policy to determine how a device is assigned to an IoT Hub. If not provided, the allocation policy will be the current allocation policy default set for the Device Provisioning Service instance.
+      Type of allocation policy to determine how a device is assigned to an IoT Hub. If not provided, the allocation policy will be the current allocation policy default set for the Device Provisioning Service instance, including when --iot-hubs is specified. This is independent of the ADR certificate policy.
     groupName: Allocation Policy Arguments
   - name: --api-version --av
     summary: |-
@@ -608,6 +625,11 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --device-type-ref
+    summary: |-
+      Device type reference stored by DPS. The CLI passes the value as provided without resolving it or validating its format.
+    isPreview: true
+    groupName: Semantic Model Arguments
   - name: --dps-name -n
     summary: |-
       Name or hostname of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
@@ -651,6 +673,12 @@ directCommands:
     summary: |-
       Flag to remove current primary certificate.
     groupName: Authentication Arguments
+  - name: --remove-device-type-ref
+    acceptedValues: false, true
+    summary: |-
+      Remove the device type reference stored by DPS.
+    isPreview: true
+    groupName: Semantic Model Arguments
   - name: --remove-secondary-certificate --rsc
     acceptedValues: false, true
     summary: |-

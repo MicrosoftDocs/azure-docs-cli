@@ -244,6 +244,7 @@ directCommands:
                       [--c2d-max-delivery-count --cdd]
                       [--c2d-ttl --ct]
                       [--change-reference]
+                      [--connection-profile {Classic, MqttV5}]
                       [--dds --disable-device-sas {false, true}]
                       [--disable-local-auth --dla {false, true}]
                       [--disable-module-sas --dms {false, true}]
@@ -272,6 +273,7 @@ directCommands:
                       [--tags]
                       [--unit]
                       [--user-assigned-mi]
+                      [--yes {false, true}]
   examples:
   - summary: |-
       Create an IoT Hub with the free pricing tier F1, in the region of the resource group.
@@ -291,6 +293,9 @@ directCommands:
   - summary: |-
       Create a Standard IoT Hub with a system-assigned identity for later namespace linking.
     syntax: az iot hub create --resource-group MyResourceGroup --name MyHub --sku S1 --system-assigned-mi
+  - summary: |-
+      Create an IoT Hub with the MQTT 5 connection profile.
+    syntax: az iot hub create --resource-group MyResourceGroup --name MyHub --sku S1 --unit 1 --connection-profile MqttV5 --yes
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -315,6 +320,11 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --connection-profile
+    acceptedValues: Classic, MqttV5
+    summary: |-
+      Connection profile for the IoT Hub. The MqttV5 profile cannot be changed after the hub is created.
+    isPreview: true
   - name: --dds --disable-device-sas
     acceptedValues: false, true
     summary: |-
@@ -408,6 +418,11 @@ directCommands:
   - name: --user-assigned-mi
     summary: |-
       Enable user-assigned managed identities for this hub. Accept space-separated list of identity resource IDs.
+  - name: --yes -y
+    defaultValue: "False"
+    acceptedValues: false, true
+    summary: |-
+      Do not prompt for confirmation when creating an IoT Hub with the MqttV5 connection profile.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -658,7 +673,7 @@ directCommands:
     defaultValue: auto
     acceptedValues: auto, classic, device, service
     summary: |-
-      Type of hostname to use as the SAS token audience. 'auto' uses the device hostname for device/module-scoped tokens and the service hostname for hub-scoped tokens. 'classic' always uses the default hostname. 'device' uses the device hostname (errors on non-GWv2 hubs). 'service' uses the service hostname (errors on non-GWv2 hubs). This option cannot be combined with --connection-string; when --connection-string is supplied, the SAS audience is derived from its HostName.
+      Type of hostname to use as the SAS token audience. 'auto' (default) uses the device hostname for device/module-scoped tokens and the service hostname for hub-scoped tokens. 'classic' always uses the default hostname. 'device' uses the device hostname (errors on non-GWv2 hubs). 'service' uses the service hostname (errors on non-GWv2 hubs). Only 'auto' can be used with --connection-string; when --connection-string is supplied, the SAS audience is derived from its HostName.
     isPreview: true
   - name: --hub-name -n
     summary: |-
@@ -2699,6 +2714,12 @@ commands:
 - az_iot_hub_state_export
 - az_iot_hub_state_import
 - az_iot_hub_state_migrate
+- az_iot_hub_topic-group
+- az_iot_hub_topic-group_create
+- az_iot_hub_topic-group_delete
+- az_iot_hub_topic-group_list
+- az_iot_hub_topic-group_show
+- az_iot_hub_topic-group_update
 - az_iot_hub_update
 - az_iot_hub_update(azure-iot)
 - az_iot_hub_wait
