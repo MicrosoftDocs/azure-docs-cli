@@ -211,6 +211,6 @@ Remove-Item -LiteralPath $key, "$key.pub"
 
 ## Related content
 
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).
 - For more information, see [Set up and switch sign-in profiles](quickstart-profiles.md).
 - For more information, see [Access a Key Vault secret with a managed identity](tutorial-managed-identity.md).

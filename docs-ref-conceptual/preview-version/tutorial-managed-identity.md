@@ -29,7 +29,7 @@ In this tutorial, you:
 > - Clean up
 
 > [!WARNING]
-> This walkthrough still requires engineering confirmation of the commands to attach and detach the identity on the host. Use these commands for engineering review only until those steps are supplied and validated. For more information about authentication support, see [Get started with the preview](getting-started.md#authentication).
+> This walkthrough still requires engineering confirmation of the commands to attach and detach the identity on the host. Use these commands for engineering review only until those steps are supplied and validated. For more information about authentication support, see [Get started with the preview](get-started-with-azure-cli.md#authentication).
 
 ## Prerequisites
 
@@ -256,6 +256,6 @@ az profile remove --name "workload-$run"
 
 ## Related content
 
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).
 - For more information, see [Set up and switch sign-in profiles](quickstart-profiles.md).
 - For more information, see [Deploy and troubleshoot a Bicep template](tutorial-deploy-bicep.md).
