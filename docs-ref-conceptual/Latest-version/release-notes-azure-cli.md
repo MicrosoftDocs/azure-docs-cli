@@ -1,13 +1,167 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 11/03/2026
+ms.date: 11/17/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## November 17, 2026
+
+Version 2.93.0
+
+### ACR
+
+* `az acr pack`: Deprecate command group
+* `az acr`: Validate the token endpoint before sending credentials
+* `az acr check-health`: Correctly handle Helm version checks with newer versions
+
+### AKS
+
+* `az aks create`: Fix an issue where monitoring DCR associations are not created for Automatic SKU clusters
+* `az aks check-acr`: Validate `--acr` is a valid host name and mount host paths read-only in the check pod
+* `az aks nodepool update`: Add `--node-vm-size` to resize VirtualMachineScaleSets node pools
+* `az aks install-desktop`: Report missing Linux tarball libraries before launch and prefer an ARM64 DEB when available
+* `az aks nodepool add/update`: Support [true|false] values for `--enable-managed-dranet`
+
+### App Config
+
+* `az appconfig enhanced-feature-flag`: Add command group for enhanced feature flags
+
+### App Service
+
+* [BREAKING CHANGE] `az webapp up`: Deprecate the command
+* [BREAKING CHANGE] `az webapp list-runtimes`: Change the config field separator from pipe to colon for Linux and Windows across JSON, table, and TSV output
+* `az functionapp deployment source config-zip`: Use the default hostname and disable redirects for Flex Consumption post-deployment health checks
+* `az functionapp create`: Add `--deployment-image` and related arguments to create Flex Consumption apps that run a container image
+* `az functionapp deployment config set`: Add `--deployment-image` and related arguments to configure container image deployment for Flex Consumption apps
+* `az functionapp show`, `az functionapp deployment config show`: Return the container image deployment configuration of Flex Consumption apps
+* `az functionapp scale config set`, `az functionapp scale config always-ready set`, `az functionapp scale config always-ready delete`, `az functionapp update-strategy config set`: Preserve Registry authentication in Flex configuration updates
+* `az functionapp identity assign`, `az functionapp identity remove`: Preserve Registry authentication through identity changes
+* `az functionapp runtime config set`: Explain that Registry-based Flex apps have no runtime to update
+* `az webapp create/list-runtimes`: Support legacy dotnet runtime identifier input
+* `az webapp troubleshoot status/config`: Fix troubleshoot report rendering on Windows
+* `az webapp config egress`: Add enabled-state updates and configuration queries for web apps and deployment slots
+* `az webapp config egress connection`: Add named connection add/show/remove with setting references and managed identity options
+* `az webapp silo`, `az appservice plan silo`: Add preview command groups to manage site and serverfarm silos and their VNet integration
+* `az webapp managed-traffic`, `az webapp last-known-good`: Add preview command groups
+* `az webapp create`, `az webapp config set`: Add improved unsupported Linux runtime error guidance
+* `az appservice plan create`: Fix Windows defaults for App Service managed instance plans
+
+### ARM
+
+* `az stack-whatif`: Fix pretty-printer crash when array-item paths use a leading underscore (`_0`)
+
+### ARO
+
+* `az aro hcp`: Add new command group for managing Azure Red Hat OpenShift clusters with hosted control planes
+
+### Backup
+
+* `az backup`: Add SQL instance snapshot backup and restore support with the `SQLInstance` workload type
+* `az backup container register`: Add `--container-subscription-id` (`--container-sub-id`) to select the source VM subscription independently of the vault subscription
+* `az backup protection enable-for-azurewl`: Add `--child-database-names` to select databases for SQL instance snapshot protection
+* `az backup policy create/set`: Add SQL instance `SnapshotV2` policy support
+* `az backup protection backup-now`: Add `SnapshotFull` support for `--backup-type` with SQL instance workloads
+* `az backup recoverypoint list`: Add `--restore-point-query-type` (`--rp-query-type`) to filter recovery points by backup type and `--get-latest-recovery-point-only` (`--latest-rp-only`) to return only the latest matching recovery point
+* `az backup recoverypoint show-log-chain`: Add `--recovery-mode SnapshotAttachAndRecover`, `--base-snapshot-recovery-point-id` (`--base-snapshot-rp-id`) and `--base-recovery-point-datasource-id` (`--base-datasource-id`) to query database log ranges based on an instance snapshot
+* `az backup recoveryconfig show`: Add `--recovery-mode` with `SnapshotAttachAndRecover` and `SnapshotAttach`, and `--no-recovery-mode` for SQL snapshot restores; extend existing `--identity-arm-id` and `--snapshot-rg` parameters to SQL snapshot restores
+* `az backup restore restore-azurewl`: Add SQL snapshot restore support, including alternate-location restore, point-in-time recovery and cross-region restore
+
+### Batch
+
+* [BREAKING CHANGE] `az batch pool create`: Remove deprecated argument `--resource-tags`, which 2.80.0 listed as removed but still accepted
+
+### Cognitive Services
+
+* `az cognitiveservices account create`: Add BYO AKS agent hosting support
+* `az cognitiveservices account deployment create`: Add `--organization-name`, `--industry` and `--country` arguments for Anthropic deployments
+* `az cognitiveservices account costcontrol`: Add new command group
+* `az cognitiveservices account project costcontrol`: Add new command group
+
+### Container app
+
+* [BREAKING CHANGE] `az containerapp compose create`: Require secret files and environment files to use relative paths within the Compose file's directory
+* `az containerapp update`: Fix `--yaml` dropping `identity.userAssignedIdentities`, which caused `IdentityDoesNotExist` errors
+* `az containerapp up`: Validate registry server before getting ACR credentials
+* `az containerapp up`: Validate image registry before inferring credentials
+
+### Cosmos DB
+
+* `az cosmosdb sql container update`: Fix loss of existing computed properties during container updates
+* `az cosmosdb fleetspace create`: Support non-pooled creation with omitted, null, or empty throughput pool configuration
+* `az cosmosdb fleetspace`: Fix throughput-bound and database account attachment input validation
+
+### Key Vault
+
+* `az keyvault create`: Support new Managed HSM SKUs `Standard_B1v2`, `Standard_B5v2`, `Standard_B10v2`, `Standard_B15v2`, `Standard_B20v2`
+
+### Lab
+
+* Fix #34353: `az lab vm create`: Handle omitted formula password when using `--formula`
+
+### Monitor
+
+* `az monitor trace-association`: Add preview command group to route distributed traces from an Application Insights component, resource group or subscription to an Azure Monitor workspace
+* `az monitor account trace-container`: Add preview command group to manage the trace container of an Azure Monitor workspace
+
+### MySQL
+
+* `az mysql flexible-server deploy setup`: Fix GitHub Actions setup input and error handling
+
+### NetAppFiles
+
+* [BREAKING CHANGE] `az netappfiles subvolume`: Remove subvolume commands
+* [BREAKING CHANGE] `az netappfiles volume create`: Remove `--enable-subvolumes` parameter
+* [BREAKING CHANGE] `az netappfiles volume update`: Remove `--enable-subvolumes` parameter
+* `az netappfiles account refresh-ldap-bind-password`: Add command to refresh LDAP Bind DN password by fetching the latest password from Azure Key Vault
+* `az netappfiles account ldap-configuration create/update/show/delete`: Add support for LDAP configuration
+
+### Network
+
+* `az network private-endpoint`: Add `--approval-reference-id` to inherit approval from an approved private endpoint
+* `az network express-route`: Add MultiCloud circuit support
+* Fix #34345: `az network application-gateway waf-policy create`: Fix an issue where `--managed-rules` is silently ignored
+* `az network virtual-network-appliance`: Add support for `--capacity-provider`
+
+### PostgreSQL
+
+* `az postgres flexible-server upgrade`: Add support for Elastic Clusters
+* `az postgres flexible-server create`: Add immutable backup support
+* `az postgres flexible-server migration update`: Fix online cutover request construction
+* `az postgres flexible-server create/update`: Add `--fips-mode` to enable or disable FIPS mode
+* `az postgres flexible-server deploy`: Fix external tool invocation on Windows
+* `az postgres flexible-server deploy`: Resolve deployment tool paths consistently
+* `az postgres flexible-server create/update`: Add support for storage autogrow with Premium SSD v2
+* `az postgres flexible-server deploy setup`: Fix GitHub Actions setup input and error handling
+
+### Relay
+
+* `az relay`: Bump API version to 2026-07-01-preview
+
+### Service Fabric
+
+* `az sf cluster create`, `az sf application certificate add`: Fix Key Vault creation failures caused by a missing SKU family
+
+### SQL
+
+* `az sql`: Upgrade azure-mgmt-sql from 4.0.0b22 to 5.0.0b2
+
+### Storage
+
+* `az storage account create/update`: Add per-service Shared Key, Blob Access Point enablement, delegation SAS, Turbo Tier, and extended-group controls
+* `az storage account blob-access-point-configuration`: Add management and connection-testing commands
+* `az storage context-cache`: Add cache, container, managed identity, and name-availability commands
+* `az storage container-rm create`: Support Blob Access Point configuration attachment
+* `az storage account file-service-usage`: Include file-service usage guardrails
+* `az storage account network-security-perimeter-configuration show/list`: Include service tags
+
+### Synapse
+
+* `az synapse workspace create/update`: Fix repository argument validation and warning message formatting
 
 ## November 03, 2026
 
