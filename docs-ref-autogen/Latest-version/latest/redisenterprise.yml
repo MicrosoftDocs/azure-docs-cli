@@ -27,6 +27,7 @@ directCommands:
                               [--client-protocol {Encrypted, Plaintext}]
                               [--clustering-policy {EnterpriseCluster, NoCluster, OSSCluster}]
                               [--eviction-policy {AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL}]
+                              [--firewall-rules]
                               [--group-nickname]
                               [--high-availability {Disabled, Enabled}]
                               [--identity-resource-id --user-assigned-identity-resource-id]
@@ -96,6 +97,9 @@ directCommands:
     acceptedValues: AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL
     summary: |-
       Redis eviction policy - default is VolatileLRU.
+  - name: --firewall-rules
+    summary: |-
+      Complete set of Azure Managed Redis firewall rules as a JSON array or JSON file path. Example: '[{"name":"office","source-address-prefix":"203.0.113.0/24"}]'. Non-empty rules require public network access Enabled. Omitting rules on create or specifying [] clears them; an empty set allows all public traffic.
   - name: --group-nickname
     summary: |-
       Name for the group of linked database resources.
@@ -195,7 +199,9 @@ directCommands:
   name: az redisenterprise delete
   summary: |-
     Delete a RedisEnterprise cache cluster.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az redisenterprise delete [--acquire-policy-token]
@@ -305,7 +311,9 @@ directCommands:
   name: az redisenterprise list-skus-for-scaling
   summary: |-
     Lists the available SKUs for scaling the Redis Enterprise cluster.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az redisenterprise list-skus-for-scaling [--acquire-policy-token]
@@ -507,7 +515,9 @@ directCommands:
   name: az redisenterprise unlink-migrated-endpoint
   summary: |-
     Unlinks the migrated endpoint from an Azure Managed Redis cluster that was migrated from Azure Cache for Redis Enterprise, removing the source cache endpoint that was redirected to this cluster during migration.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az redisenterprise unlink-migrated-endpoint [--acquire-policy-token]
@@ -578,7 +588,9 @@ directCommands:
   name: az redisenterprise update
   summary: |-
     Update an existing (overwrite/recreate, with potential downtime) cache cluster.
-  status: GA
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az redisenterprise update [--acquire-policy-token]
@@ -587,6 +599,7 @@ directCommands:
                               [--capacity]
                               [--change-reference]
                               [--cluster-name --name]
+                              [--firewall-rules]
                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                               [--high-availability {Disabled, Enabled}]
                               [--identity-resource-id --user-assigned-identity-resource-id]
@@ -630,6 +643,10 @@ directCommands:
     summary: |-
       The name of the RedisEnterprise cluster.
     groupName: Resource Id Arguments
+  - name: --firewall-rules
+    summary: |-
+      The complete set of firewall rules for an Azure Managed Redis cluster. At most 250 rules are supported. Omitting --firewall-rules preserves existing rules while public network access remains enabled. A supplied array replaces all rules; [] or null clears them. Non-empty rules require --public-network-access Enabled. Disabling public network access clears existing rules automatically. With public access enabled, an empty rule set allows all public traffic. On existing clusters, firewall rule changes cannot be combined with scaling or encryption changes in the same update.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --force-string
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
