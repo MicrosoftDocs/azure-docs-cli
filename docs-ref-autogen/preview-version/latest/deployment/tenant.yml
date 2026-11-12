@@ -1,0 +1,582 @@
+### YamlMime:AzureCLIGroup
+uid: az_deployment_tenant
+name: az deployment tenant
+summary: |-
+  Manage ARM deployments at tenant scope.
+status: Preview
+isPreview: true
+sourceType: Core
+directCommands:
+- uid: az_deployment_tenant_cancel
+  name: az deployment tenant cancel
+  summary: |-
+    Cancel a running tenant deployment.
+  description: |-
+    Cancels a tenant deployment whose provisioning state is `Accepted` or `Running`. Resources the deployment already created are left in place. Azure Resource Manager rejects the request, and the command fails, when the deployment is no longer running.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant cancel --name
+                                [--profile]
+  examples:
+  - summary: |-
+      Cancel a running deployment
+    syntax: az deployment tenant cancel --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_create
+  name: az deployment tenant create
+  summary: |-
+    Create a tenant deployment.
+  description: |-
+    Create a tenant scoped deployment. The deployment is validated first, then submitted; both requests use `Incremental` mode, the only mode at tenant scope. Supply one template source: `--template-file` (a local ARM JSON or Bicep template), `--template-uri` (a remote ARM JSON template URL), or `--template-spec-id` (the resource id of a Template Spec version). A `.bicepparam` file supplied with `--parameters-file` can provide its own template reference instead. Bicep templates and `.bicepparam` files require the Bicep CLI for local compilation. `--location` (required) is where the deployment metadata is stored, and `--name` is the deployment name; when omitted, a generated GUID is used. Parameters can be supplied with `--parameters-file`, `--parameters-uri`, or repeatable inline `--parameter` values (KEY=VALUE, a JSON object, or a JSON parameters file path, optionally prefixed with `@`). Inline values override matching keys from a local parameters file. `--parameters-uri` cannot be combined with `--parameters-file` or `--parameter`. `--query-string` requires `--template-uri` and applies only to that template link. `--validation-level` accepts `Template`, `Provider`, or `ProviderNoRbac`; when omitted, ARM applies its default. A validation error stops the command before anything is deployed. By default the command waits for the deployment to finish and returns the final deployment result. With `--no-wait`, it returns the deployment's initial state as soon as the deployment is submitted; use `az deployment tenant show` or `az deployment tenant wait` to follow it.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant create --location
+                                [--name]
+                                [--no-wait]
+                                [--parameter]
+                                [--parameters-file]
+                                [--parameters-uri]
+                                [--profile]
+                                [--query-string]
+                                [--template-file]
+                                [--template-spec-id]
+                                [--template-uri]
+                                [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Deploy a local Bicep template with inline parameters
+    syntax: az deployment tenant create --location eastus --name myDeployment --template-file ./main.bicep --parameter environment=prod
+  - summary: |-
+      Deploy a remote ARM template with a remote parameters file
+    syntax: az deployment tenant create --location eastus --name myDeployment --template-uri https://example.com/azuredeploy.json --parameters-uri https://example.com/azuredeploy.parameters.json
+  - summary: |-
+      Submit a deployment without waiting for it to finish
+    syntax: az deployment tenant create --location eastus --name myDeployment --template-file ./main.bicep --no-wait
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      The location to store the deployment data.
+  optionalParameters:
+  - name: --name
+    summary: |-
+      The name of the deployment. Defaults to a generated GUID when omitted.
+  - name: --no-wait
+    summary: |-
+      Return once the deployment is submitted and output its initial state, instead of waiting for it to finish. Validation still runs first.
+  - name: --parameter
+    summary: |-
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local ARM JSON or .bicepparam parameters file. A .bicepparam file can supply its own template and requires the Bicep CLI. Cannot be combined with --parameters-uri.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a remote ARM JSON parameters file, including any required SAS token. Cannot be combined with --parameters-file or --parameter.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      A query string or SAS token for --template-uri only. Requires --template-uri; does not modify --parameters-uri. A leading '?' or '&' is removed.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM JSON or Bicep template. Bicep files require the Bicep CLI for local compilation.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec version. Use instead of another template source.
+  - name: --template-uri
+    summary: |-
+      The URI of a remote ARM JSON template. Supply one template source unless --parameters-file is a .bicepparam file that supplies its own template.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level sent to ARM. When omitted, ARM applies its default.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_delete
+  name: az deployment tenant delete
+  summary: |-
+    Delete a tenant deployment from the deployment history.
+  description: |-
+    Deletes a deployment and its deployment operations from the tenant deployment history and waits for the deletion to finish. Resources the deployment created are not deleted. A deployment that is still running cannot be deleted.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant delete --name
+                                [--profile]
+  examples:
+  - summary: |-
+      Delete a deployment
+    syntax: az deployment tenant delete --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_export
+  name: az deployment tenant export
+  summary: |-
+    Export the template used by a tenant deployment.
+  description: |-
+    Exports the template used by a tenant deployment and returns only the template itself, without the `template` wrapper. The command fails if the service response contains no template.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant export --name
+                                [--profile]
+  examples:
+  - summary: |-
+      Export a deployment template
+    syntax: az deployment tenant export --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_list
+  name: az deployment tenant list
+  summary: |-
+    List tenant deployments.
+  description: |-
+    Lists deployments recorded at tenant scope, following every page of results. Use `--filter` to pass an OData filter to the service, for example to restrict results by provisioning state.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant list [--filter]
+                              [--profile]
+  examples:
+  - summary: |-
+      List all tenant deployments
+    syntax: az deployment tenant list
+  - summary: |-
+      List succeeded deployments
+    syntax: az deployment tenant list --filter "provisioningState eq 'Succeeded'"
+  optionalParameters:
+  - name: --filter
+    summary: |-
+      An OData filter sent to the tenant deployment list API, for example "provisioningState eq 'Succeeded'".
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_show
+  name: az deployment tenant show
+  summary: |-
+    Show a tenant deployment.
+  description: |-
+    Gets a deployment at tenant scope by name. The command fails if the deployment does not exist.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant show --name
+                              [--profile]
+  examples:
+  - summary: |-
+      Show a tenant deployment
+    syntax: az deployment tenant show --name myDeployment
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_validate
+  name: az deployment tenant validate
+  summary: |-
+    Validate a tenant deployment.
+  description: |-
+    Validate whether a template is syntactically correct and would be accepted by Azure Resource Manager at tenant scope, without deploying it. Takes the same template, parameter, `--location`, and `--validation-level` inputs as `az deployment tenant create`; `--name` defaults to a generated GUID. Validation uses `Incremental` mode. If the template fails validation, the command reports each error and exits non-zero; otherwise it returns the validation result.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant validate --location
+                                  [--name]
+                                  [--parameter]
+                                  [--parameters-file]
+                                  [--parameters-uri]
+                                  [--profile]
+                                  [--query-string]
+                                  [--template-file]
+                                  [--template-spec-id]
+                                  [--template-uri]
+                                  [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Validate a local Bicep template
+    syntax: az deployment tenant validate --location eastus --name myDeployment --template-file ./main.bicep --parameter environment=prod
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      The location to store the deployment data.
+  optionalParameters:
+  - name: --name
+    summary: |-
+      The name of the deployment. Defaults to a generated GUID when omitted.
+  - name: --parameter
+    summary: |-
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local ARM JSON or .bicepparam parameters file. A .bicepparam file can supply its own template and requires the Bicep CLI. Cannot be combined with --parameters-uri.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a remote ARM JSON parameters file, including any required SAS token. Cannot be combined with --parameters-file or --parameter.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      A query string or SAS token for --template-uri only. Requires --template-uri; does not modify --parameters-uri. A leading '?' or '&' is removed.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM JSON or Bicep template. Bicep files require the Bicep CLI for local compilation.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec version. Use instead of another template source.
+  - name: --template-uri
+    summary: |-
+      The URI of a remote ARM JSON template. Supply one template source unless --parameters-file is a .bicepparam file that supplies its own template.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level sent to ARM. When omitted, ARM applies its default.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_wait
+  name: az deployment tenant wait
+  summary: |-
+    Wait until a tenant deployment reaches a condition.
+  description: |-
+    Gets the tenant deployment every `--interval` seconds (default 30) until the requested condition holds, then returns without output. Supply at least one condition. `--created` and `--updated` wait for the provisioning state `Succeeded`; a missing deployment keeps `--created` waiting but fails `--updated`. `--deleted` waits until the deployment no longer exists. `--exists` waits until the deployment can be read, whatever its provisioning state. `--custom` waits until a JMESPath expression evaluated against the deployment's ARM JSON is true, for example `properties.provisioningState=='Canceled'`. Except with `--exists`, the command fails as soon as the deployment's provisioning state is `Failed`. If the condition does not hold within `--timeout` seconds (default 3600), the command fails.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant wait --name
+                              [--created]
+                              [--custom]
+                              [--deleted]
+                              [--exists]
+                              [--interval]
+                              [--profile]
+                              [--timeout]
+                              [--updated]
+  examples:
+  - summary: |-
+      Wait for a deployment to succeed
+    syntax: az deployment tenant wait --name myDeployment --created
+  - summary: |-
+      Wait for a canceled deployment, polling every 10 seconds
+    syntax: az deployment tenant wait --name myDeployment --custom "properties.provisioningState=='Canceled'" --interval 10
+  - summary: |-
+      Wait for a deployment to be deleted
+    syntax: az deployment tenant wait --name myDeployment --deleted --timeout 600
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      The name of the deployment.
+  optionalParameters:
+  - name: --created
+    summary: |-
+      Wait until the deployment's provisioningState is Succeeded. A missing deployment keeps waiting.
+  - name: --custom
+    summary: |-
+      Wait until this JMESPath condition is true for the deployment's ARM JSON, for example "properties.provisioningState=='Canceled'".
+  - name: --deleted
+    summary: |-
+      Wait until the deployment is deleted.
+  - name: --exists
+    summary: |-
+      Wait until the deployment exists, whatever its provisioningState.
+  - name: --interval
+    summary: |-
+      Polling interval in seconds. Default: 30.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --timeout
+    summary: |-
+      Maximum wait in seconds. Default: 3600.
+  - name: --updated
+    summary: |-
+      Wait until the deployment's provisioningState is Succeeded. A missing deployment is an error.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_deployment_tenant_what-if
+  name: az deployment tenant what-if
+  summary: |-
+    Preview changes from a tenant deployment.
+  description: |-
+    Run a tenant scoped what-if operation. What-if is read-only: it predicts the set of changes (Create, Modify, Delete, Deploy, NoChange, Ignore) a template would make without creating or modifying any resources. Takes the same template, parameter, `--location`, and `--validation-level` inputs as `az deployment tenant create`, and always uses `Incremental` mode. `--result-format` selects how much detail the predicted changes carry, `FullResourcePayloads` (default) or `ResourceIdOnly`. The command waits for the what-if operation to finish and returns the what-if result; if the operation fails, the command reports the error and exits non-zero.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/deployment/index.md
+  syntax: >-
+    az deployment tenant what-if --location
+                                 [--name]
+                                 [--parameter]
+                                 [--parameters-file]
+                                 [--parameters-uri]
+                                 [--profile]
+                                 [--query-string]
+                                 [--result-format {FullResourcePayloads, ResourceIdOnly}]
+                                 [--template-file]
+                                 [--template-spec-id]
+                                 [--template-uri]
+                                 [--validation-level {Template, Provider, ProviderNoRbac}]
+  examples:
+  - summary: |-
+      Preview a local Bicep template
+    syntax: az deployment tenant what-if --location eastus --name myDeployment --template-file ./main.bicep --parameter environment=prod
+  - summary: |-
+      Preview resource IDs only
+    syntax: az deployment tenant what-if --location eastus --name myDeployment --template-file ./main.bicep --result-format ResourceIdOnly
+  requiredParameters:
+  - isRequired: true
+    name: --location
+    summary: |-
+      The location to store the deployment data.
+  optionalParameters:
+  - name: --name
+    summary: |-
+      The name of the deployment. Defaults to a generated GUID when omitted.
+  - name: --parameter
+    summary: |-
+      Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
+  - name: --parameters-file
+    summary: |-
+      The path to a local ARM JSON or .bicepparam parameters file. A .bicepparam file can supply its own template and requires the Bicep CLI. Cannot be combined with --parameters-uri.
+  - name: --parameters-uri
+    summary: |-
+      The URI of a remote ARM JSON parameters file, including any required SAS token. Cannot be combined with --parameters-file or --parameter.
+  - name: --profile
+    summary: |-
+      Use the named profile for this command (overrides the active profile).
+  - name: --query-string
+    summary: |-
+      A query string or SAS token for --template-uri only. Requires --template-uri; does not modify --parameters-uri. A leading '?' or '&' is removed.
+  - name: --result-format
+    acceptedValues: FullResourcePayloads, ResourceIdOnly
+    summary: |-
+      The format of the what-if results. FullResourcePayloads (default) or ResourceIdOnly.
+  - name: --template-file
+    summary: |-
+      The path to a local ARM JSON or Bicep template. Bicep files require the Bicep CLI for local compilation.
+  - name: --template-spec-id
+    summary: |-
+      The resource id of a Template Spec version. Use instead of another template source.
+  - name: --template-uri
+    summary: |-
+      The URI of a remote ARM JSON template. Supply one template source unless --parameters-file is a .bicepparam file that supplies its own template.
+  - name: --validation-level
+    acceptedValues: Template, Provider, ProviderNoRbac
+    summary: |-
+      The validation level sent to ARM. When omitted, ARM applies its default.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_deployment_tenant_cancel
+- az_deployment_tenant_create
+- az_deployment_tenant_delete
+- az_deployment_tenant_export
+- az_deployment_tenant_list
+- az_deployment_tenant_show
+- az_deployment_tenant_validate
+- az_deployment_tenant_wait
+- az_deployment_tenant_what-if
+metadata:
+  ms.date: 11/12/2026
+  description: Manage ARM deployments at tenant scope.
