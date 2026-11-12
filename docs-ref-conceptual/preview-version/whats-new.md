@@ -58,18 +58,25 @@ The next-generation Azure CLI is in preview and installs alongside your existing
 
 ### Identify the active version
 
+Run the commands for your shell to see which `az` runs first on `PATH` and which version it is.
+
+# [Bash](#tab/bash)
+
 ```bash
 which az
 az --version
 ```
+
+# [PowerShell](#tab/powershell)
 
 ```powershell
 Get-Command az
 az --version
 ```
 
-For the next-generation Azure CLI, the first command returns the path of the preview `az` executable: `~/.local/share/azcli/az` on Linux or macOS, or `%LOCALAPPDATA%\Programs\azcli\az.exe` on Windows, if you installed to the default location. `az --version` prints the preview version, which matches the version in the file name you downloaded.
+---
 
+For the next-generation Azure CLI, `which az` or `Get-Command az` returns the path of the preview `az` executable: `~/.local/share/azcli/az` on Linux or macOS, or `%LOCALAPPDATA%\Programs\azcli\az.exe` on Windows, if you installed to the default location. `az --version` prints the preview version, which matches the version in the file name you downloaded.
 ### Differences from the existing Azure CLI
 
 - **Coverage:** Not all Azure CLI and Azure PowerShell scenarios are available.
@@ -85,4 +92,4 @@ For more information, see [Release notes & updates – Azure CLI](/cli/azure/rel
 
 New capabilities are added frequently. Between preview releases, commands, output, and behavior might change, including changes that might break existing scripts. If something doesn't work as documented, [open an issue in the GitHub repository](https://github.com/Azure/azclips/issues).
 
-To use both in the same session, see [Switch between the classic Azure CLI and the preview build](switch-cli-versions.md).
+To use the existing Azure CLI and the next-generation Azure CLI in the same session, see [Switch between the classic Azure CLI and the preview build](switch-cli-versions.md).
