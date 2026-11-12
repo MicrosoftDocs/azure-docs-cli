@@ -1,7 +1,8 @@
 ---
 title: What's new in the next-generation Azure CLI (preview)
 description: Discover the latest features in the next-generation Azure CLI, available in preview, including shell-native Tab completion for Azure CLI commands, parameters, and valid values.
-ms.date: 10/27/2026
+ms.date: 11/12/2026
+ai-usage: ai-assisted
 ---
 
 # What's new in the next-generation Azure CLI (preview)
@@ -50,3 +51,38 @@ During the preview:
 The next-generation Azure CLI supports _profiles_, which let you save named sign-in contexts for different accounts, tenants, and subscriptions. Profiles make it easy to switch between environments without signing in again.
 
 For more information, see [Manage sign-in profiles in Azure CLI (preview)](profile-base-login.md).
+
+## Existing and next-generation Azure CLI
+
+The next-generation Azure CLI is in preview and installs alongside your existing Azure CLI. Both use the `az` command, and the first `az` that your shell finds on `PATH` runs.
+
+### Identify the active version
+
+```bash
+which az
+az --version
+```
+
+```powershell
+Get-Command az
+az --version
+```
+
+For the next-generation Azure CLI, the first command returns the path of the preview `az` executable: `~/.local/share/azcli/az` on Linux or macOS, or `%LOCALAPPDATA%\Programs\azcli\az.exe` on Windows, if you installed to the default location. `az --version` prints the preview version, which matches the version in the file name you downloaded.
+
+### Differences from the existing Azure CLI
+
+- **Coverage:** Not all Azure CLI and Azure PowerShell scenarios are available.
+- **Commands and output:** The next-generation Azure CLI aims to keep commands close to the existing Azure CLI, but they aren't guaranteed to be identical. Use the [Azure CLI preview command reference](../../docs-ref-autogen/preview-version/latest/reference-index.yml), and compare your results with the expected output in each article.
+- **Sign-in:** The next-generation Azure CLI doesn't share sign-in context or tokens with the existing Azure CLI, so you sign in again. It uses [profiles](profile-base-login.md) and opens a browser by default. These sign-in methods aren't available yet:
+  - Broker sign-in, such as Web Account Manager on Windows
+  - Resource Owner Password Credentials (ROPC), such as `az login --username --password`
+  - Service principals that use a certificate. Use a client secret or a federated token instead.
+
+For more information, see [Release notes & updates – Azure CLI](/cli/azure/release-notes-azure-cli?view=azure-cli-latest&preserve-view=true).
+
+### Preview expectations
+
+New capabilities are added frequently. Between preview releases, commands, output, and behavior might change, including changes that might break existing scripts. If something doesn't work as documented, [open an issue in the GitHub repository](https://github.com/Azure/azclips/issues).
+
+To use both in the same session, see [Switch between the classic Azure CLI and the preview build](switch-cli-versions.md).
