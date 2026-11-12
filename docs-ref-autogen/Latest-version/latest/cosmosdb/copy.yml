@@ -33,7 +33,7 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      Azure Cosmos DB account name where the job is created. Use --dest-account value from create job command.
+      Azure Cosmos DB account hosting the job. Use the source account by default, or the destination for destination-hosted jobs.
   - isRequired: true
     name: --job-name -n
     summary: |-
@@ -100,7 +100,7 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      Azure Cosmos DB account name where the job is created. Use --dest-account value from create job command.
+      Azure Cosmos DB account hosting the job. Use the source account by default, or the destination for destination-hosted jobs.
   - isRequired: true
     name: --job-name -n
     summary: |-
@@ -148,7 +148,14 @@ directCommands:
 - uid: az_cosmosdb_copy_create
   name: az cosmosdb copy create
   summary: |-
-    Creates a container copy job.
+    Creates a container copy job on the source account by default.
+  description: |-
+    Use the hosting account's subscription and resource group. Jobs are hosted on the source by
+    default; set --host-copy-on-src false to host on the destination instead. For cross-account
+    source-hosted copies, configure the source account's default managed identity with read-write
+    access to the destination. For destination-hosted copies, configure the destination account's
+    default managed identity with read access to the source. Manage jobs using the hosting account.
+    MongoDB RU-to-vCore jobs are always hosted on the source account.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'cosmosdb copy' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -163,6 +170,7 @@ directCommands:
                             [--dest-mongo]
                             [--dest-mongo-vcore]
                             [--dest-nosql]
+                            [--host-copy-on-src {false, true}]
                             [--job-name]
                             [--mode]
                             [--src-cassandra]
@@ -173,8 +181,11 @@ directCommands:
       Copy Azure Cosmos DB API for NoSQL container in same account
     syntax: az cosmosdb copy create -g "rg1" --job-name "j1" --src-account "acc1" --dest-account "acc1" --src-nosql database=db1 container=c1 --dest-nosql database=db2 container=c2
   - summary: |-
-      Copy Azure Cosmos DB API for NoSQL container in different account
+      Copy Azure Cosmos DB API for NoSQL container to a different account, hosting the job on acc1 in rg1
     syntax: az cosmosdb copy create -g "rg1" --job-name "j1" --src-account "acc1" --dest-account "acc2" --src-nosql database=db1 container=c1 --dest-nosql database=db2 container=c2
+  - summary: |-
+      Copy Azure Cosmos DB API for NoSQL container, hosting the job on destination acc2 in rg2
+    syntax: az cosmosdb copy create -g "rg2" --job-name "j1" --src-account "acc1" --dest-account "acc2" --host-copy-on-src false --src-nosql database=db1 container=c1 --dest-nosql database=db2 container=c2
   - summary: |-
       Copy Azure Cosmos DB API for Apache Cassandra table
     syntax: az cosmosdb copy create -g "rg1" --job-name "j1" --src-account "acc1" --dest-account "acc1" --src-cassandra keyspace=k1 table=t1 --dest-cassandra keyspace=k2 table=t2
@@ -188,11 +199,11 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Name of the resource group containing the hosting account: source by default, or destination with --host-copy-on-src false.
   - isRequired: true
     name: --src-account
     summary: |-
-      Name of the Azure Cosmos DB source database account.
+      Name of the Azure Cosmos DB source database account. Hosts the copy job by default.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -238,6 +249,11 @@ directCommands:
       database: Database name.
       container: Container name.
     groupName: Azure Cosmos DB API for NoSQL container copy Arguments
+  - name: --host-copy-on-src
+    defaultValue: "True"
+    acceptedValues: false, true
+    summary: |-
+      Host the copy job on the source account. Set false to host on the destination instead. MongoDB RU-to-vCore jobs always use the source.
   - name: --job-name -n
     summary: |-
       Name of the Data Transfer Job. A random job name will be generated if not passed.
@@ -315,7 +331,7 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      Azure Cosmos DB account name where the job is created. Use --dest-account value from create job command.
+      Azure Cosmos DB account hosting the job. Use the source account by default, or the destination for destination-hosted jobs.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -369,7 +385,7 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      Azure Cosmos DB account name where the job is created. Use --dest-account value from create job command.
+      Azure Cosmos DB account hosting the job. Use the source account by default, or the destination for destination-hosted jobs.
   - isRequired: true
     name: --job-name -n
     summary: |-
@@ -436,7 +452,7 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      Azure Cosmos DB account name where the job is created. Use --dest-account value from create job command.
+      Azure Cosmos DB account hosting the job. Use the source account by default, or the destination for destination-hosted jobs.
   - isRequired: true
     name: --job-name -n
     summary: |-
@@ -501,7 +517,7 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      Azure Cosmos DB account name where the job is created. Use --dest-account value from create job command.
+      Azure Cosmos DB account hosting the job. Use the source account by default, or the destination for destination-hosted jobs.
   - isRequired: true
     name: --job-name -n
     summary: |-

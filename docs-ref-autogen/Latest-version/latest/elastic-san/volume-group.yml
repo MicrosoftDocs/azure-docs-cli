@@ -22,12 +22,17 @@ directCommands:
                                        [--acquire-policy-token]
                                        [--change-reference]
                                        [--data-integrity-check --enforce-data-integrity-check-for-iscsi {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--delete-retention-policy]
                                        [--encryption {EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey}]
+                                       [--encryption-in-transit {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--encryption-properties]
                                        [--identity]
                                        [--network-acls]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                       [--protocol-type {Iscsi, None}]
+                                       [--protocol-type {DirectAttach, Iscsi, None}]
+                                       [--quality-of-service {GeneralPurpose, PerformanceCritical}]
+                                       [--reserved-iops]
+                                       [--reserved-mbps]
   examples:
   - summary: |-
       Create a Volume Group with PlaformManagedkey and SystemAssignedIdentity
@@ -37,7 +42,7 @@ directCommands:
     syntax: az elastic-san volume-group create -e "san_name" -n "vg_name" -g "rg" --encryption EncryptionAtRestWithCustomerManagedKey --protocol-type Iscsi --identity '{type:UserAssigned,user-assigned-identity:"uai_id"}' --encryption-properties '{key-vault-properties:{key-name:"key_name",key-vault-uri:"vault_uri"},identity:{user-assigned-identity:"uai_id"}}'
   - summary: |-
       Create a volume group with delete retention policy params
-    syntax: az elastic-san volume-group create -e san_name -n volume_group_name -g rg_name --encryption EncryptionAtRestWithPlatformKey --protocol-type Iscsi --network-acls '{virtual-network-rules:[{id:{subnet_id},action:Allow}]}' --delete-retention-policy-state Enabled --delete-retention-period-days 7
+    syntax: az elastic-san volume-group create --resource-group rg --elastic-san-name esanname --volume-group-name vgname --identity "{type:None,user-assigned-identities:{key2350:{}}}" --delete-retention-policy "{policy-state:Enabled,retention-period-days:14}" --encryption EncryptionAtRestWithPlatformKey --encryption-properties "{identity:{user-assigned-identity:identityname},key-vault-properties:{key-name:keyvaultname,key-vault-uri:'https://microsoft.com/at',key-version:keyver}}" --enforce-data-integrity-check-for-iscsi True --encryption-in-transit True --network-acls "{virtual-network-rules:[{action:Allow,id:fhhawhc}]}" --protocol-type Iscsi
   requiredParameters:
   - isRequired: true
     name: --elastic-san --elastic-san-name -e
@@ -65,10 +70,19 @@ directCommands:
     summary: |-
       A boolean indicating whether or not Data Integrity Check is enabled.
     groupName: Properties Arguments
+  - name: --delete-retention-policy -d
+    summary: |-
+      The retention policy for the soft deleted volume group and its associated resources.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --encryption
     acceptedValues: EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey
     summary: |-
       Type of encryption.
+    groupName: Properties Arguments
+  - name: --encryption-in-transit
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol.
     groupName: Properties Arguments
   - name: --encryption-properties
     summary: |-
@@ -87,9 +101,22 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protocol-type
-    acceptedValues: Iscsi, None
+    acceptedValues: DirectAttach, Iscsi, None
     summary: |-
       Type of storage target.
+    groupName: Properties Arguments
+  - name: --quality-of-service
+    acceptedValues: GeneralPurpose, PerformanceCritical
+    summary: |-
+      Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only.
+    groupName: Properties Arguments
+  - name: --reserved-iops
+    summary: |-
+      Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only.
+    groupName: Properties Arguments
+  - name: --reserved-mbps
+    summary: |-
+      Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only.
     groupName: Properties Arguments
   globalParameters:
   - name: --debug
@@ -208,6 +235,7 @@ directCommands:
   syntax: >-
     az elastic-san volume-group list --elastic-san --elastic-san-name
                                      --resource-group
+                                     [--access-soft-deleted-resources --x-ms-access-soft-deleted-resources {false, true}]
                                      [--max-items]
                                      [--next-token]
   examples:
@@ -227,6 +255,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --access-soft-deleted-resources --x-ms-access-soft-deleted-resources -a
+    acceptedValues: false, true
+    summary: |-
+      Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups.
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
@@ -500,17 +532,22 @@ directCommands:
                                        [--add]
                                        [--change-reference]
                                        [--data-integrity-check --enforce-data-integrity-check-for-iscsi {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--delete-retention-policy]
                                        [--elastic-san --elastic-san-name]
                                        [--encryption {EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey}]
                                        [--encryption-properties]
                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--identity]
                                        [--ids]
+                                       [--mi-system-assigned --system-assigned]
+                                       [--mi-user-assigned --user-assigned --user-assigned-identity]
                                        [--name --volume-group-name]
                                        [--network-acls]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                       [--protocol-type {Iscsi, None}]
+                                       [--protocol-type {DirectAttach, Iscsi, None}]
                                        [--remove]
+                                       [--reserved-iops]
+                                       [--reserved-mbps]
                                        [--resource-group]
                                        [--set]
                                        [--subscription]
@@ -527,6 +564,9 @@ directCommands:
   - summary: |-
       Update volume group back to PlatformManagedKey
     syntax: az elastic-san volume-group update -e "san_name" -n "vg_name" -g "rg" --encryption EncryptionAtRestWithPlatformKey
+  - summary: |-
+      Update Volume Group with Network ACLs
+    syntax: az elastic-san volume-group update --resource-group resourcegroupname --elastic-san-name elasticsanname --volume-group-name volumegroupname --network-acls "{virtual-network-rules:[{action:Allow,id:fhhawhc}]}"
   - summary: |-
       Update volume group back to SystemAssignedIdentity
     syntax: az elastic-san volume-group update -e "san_name" -n "vg_name" -g "rg" --identity '{type:SystemAssigned}'
@@ -548,6 +588,10 @@ directCommands:
     summary: |-
       A boolean indicating whether or not Data Integrity Check is enabled.
     groupName: Properties Arguments
+  - name: --delete-retention-policy -d
+    summary: |-
+      The retention policy for the soft deleted volume group and its associated resources  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
   - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
@@ -568,12 +612,20 @@ directCommands:
     groupName: Generic Update Arguments
   - name: --identity
     summary: |-
-      The identity of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    groupName: Parameters Arguments
+      Identity configuration (legacy syntax).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned --user-assigned-identity
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Parameters.identity Arguments
   - name: --name --volume-group-name -n
     summary: |-
       The name of the VolumeGroup.
@@ -587,7 +639,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --protocol-type
-    acceptedValues: Iscsi, None
+    acceptedValues: DirectAttach, Iscsi, None
     summary: |-
       Type of storage target.
     groupName: Properties Arguments
@@ -595,6 +647,14 @@ directCommands:
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
     groupName: Generic Update Arguments
+  - name: --reserved-iops
+    summary: |-
+      Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only.
+    groupName: Properties Arguments
+  - name: --reserved-mbps
+    summary: |-
+      Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only.
+    groupName: Properties Arguments
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.

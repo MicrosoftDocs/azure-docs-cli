@@ -63,28 +63,32 @@ directCommands:
 - uid: az_managedcleanroom_frontend_analytics_skr-policy
   name: az managedcleanroom frontend analytics skr-policy
   summary: |-
-    Get SKR policy for a dataset.
+    Get the SKR (Secure Key Release) policy for the analytics workload.
+  description: |-
+    Without --dataset-id, returns the collaboration-level CGS SKR policy. Use it to create
+    KEKs for datasets published with --kek-authority-type CGS.
+    With --dataset-id, returns the dataset-scoped policy based on the dataset KEK's
+    authority. This form is deprecated by the service and is retained for MAA-backed datasets.
   status: GA
   sourceType: Extension
   syntax: >-
     az managedcleanroom frontend analytics skr-policy --collaboration-id
-                                                      --dataset-id
                                                       [--acquire-policy-token]
                                                       [--api-version {2026-03-01-preview}]
                                                       [--change-reference]
+                                                      [--dataset-id]
   examples:
   - summary: |-
-      Get SKR policy for a specific dataset
+      Get the collaboration-level CGS SKR policy
+    syntax: az managedcleanroom frontend analytics skr-policy -c <collaboration-id>
+  - summary: |-
+      Get the SKR policy for a specific (MAA-backed) dataset
     syntax: az managedcleanroom frontend analytics skr-policy -c <collaboration-id> -d <dataset-id>
   requiredParameters:
   - isRequired: true
     name: --collaboration-id -c
     summary: |-
       Collaboration identifier.
-  - isRequired: true
-    name: --dataset-id -d
-    summary: |-
-      Dataset identifier for which to retrieve SKR policy.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -99,6 +103,9 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --dataset-id -d
+    summary: |-
+      Optional dataset identifier. When provided, returns the dataset-scoped SKR policy based on the dataset KEK authority (use for MAA-backed datasets). When omitted, returns the collaboration-level CGS SKR policy.
   globalParameters:
   - name: --debug
     defaultValue: "False"

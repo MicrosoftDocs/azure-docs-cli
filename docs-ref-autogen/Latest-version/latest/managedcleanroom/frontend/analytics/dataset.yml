@@ -67,13 +67,15 @@ directCommands:
   description: |-
     Publish a dataset configuration with storage, schema, access policy, and identity information.
     Supports both SSE (Server-Side Encryption) and CPK (Customer-Provided Key) encryption modes.
-    You can use either individual parameters or a JSON body file for configuration.
+    Use either individual parameters or a JSON body (--body); the two cannot be combined.
+    The dataset identity's OIDC issuer is configured through governance
+    (az managedcleanroom frontend oidc set-issuer-url), not on the dataset.
   status: GA
   sourceType: Extension
   syntax: >-
     az managedcleanroom frontend analytics dataset publish --collaboration-id
                                                            --document-id
-                                                           [--access-mode]
+                                                           [--access-mode {read, write}]
                                                            [--acquire-policy-token]
                                                            [--allowed-fields]
                                                            [--api-version {2026-03-01-preview}]
@@ -84,11 +86,11 @@ directCommands:
                                                            [--dek-secret-id]
                                                            [--encryption-mode]
                                                            [--identity-client-id]
-                                                           [--identity-issuer-url]
                                                            [--identity-name]
                                                            [--identity-tenant-id]
+                                                           [--kek-authority-endpoint]
+                                                           [--kek-authority-type {CGS, MAA}]
                                                            [--kek-keyvault-url]
-                                                           [--kek-maa-url]
                                                            [--kek-secret-id]
                                                            [--schema-file]
                                                            [--schema-format]
@@ -98,16 +100,19 @@ directCommands:
   examples:
   - summary: |-
       Publish a dataset using SSE encryption with individual parameters
-    syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --storage-account-url https://mystorageaccount.blob.core.windows.net               --container-name datasets               --storage-account-type AzureStorageAccount               --encryption-mode SSE               --schema-file @schema.json               --access-mode ReadWrite               --allowed-fields "customer_id,revenue,date"               --identity-name northwind-identity               --identity-client-id fb907136-1234-5678-9abc-def012345678               --identity-tenant-id 72f988bf-1234-5678-9abc-def012345678               --identity-issuer-url https://oidc.example.com/issuer
+    syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --storage-account-url https://mystorageaccount.blob.core.windows.net               --container-name datasets               --storage-account-type Azure_BlobStorage               --encryption-mode SSE               --schema-file @schema.json               --access-mode read               --allowed-fields "customer_id,revenue,date"               --identity-name northwind-identity               --identity-client-id fb907136-1234-5678-9abc-def012345678               --identity-tenant-id 72f988bf-1234-5678-9abc-def012345678
   - summary: |-
-      Publish a dataset using CPK encryption with individual parameters
-    syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --storage-account-url https://mystorageaccount.blob.core.windows.net               --container-name datasets               --storage-account-type AzureStorageAccount               --encryption-mode CPK               --schema-file @schema.json               --access-mode ReadWrite               --identity-name northwind-identity               --identity-client-id fb907136-1234-5678-9abc-def012345678               --identity-tenant-id 72f988bf-1234-5678-9abc-def012345678               --identity-issuer-url https://oidc.example.com/issuer               --dek-keyvault-url https://mykeyvault.vault.azure.net               --dek-secret-id dek-secret-123               --kek-keyvault-url https://mykeyvault.vault.azure.net               --kek-secret-id kek-secret-123               --kek-maa-url https://sharedeus.eus.attest.azure.net
+      Publish a dataset using CPK encryption with CGS as the KEK authority
+    syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --storage-account-url https://mystorageaccount.blob.core.windows.net               --container-name datasets               --storage-account-type Azure_BlobStorage               --encryption-mode CPK               --schema-file @schema.json               --access-mode read               --allowed-fields "customer_id,revenue,date"               --identity-name northwind-identity               --identity-client-id fb907136-1234-5678-9abc-def012345678               --identity-tenant-id 72f988bf-1234-5678-9abc-def012345678               --dek-keyvault-url https://mykeyvault.vault.azure.net               --dek-secret-id dek-secret-123               --kek-keyvault-url https://mykeyvault.vault.azure.net               --kek-secret-id kek-secret-123               --kek-authority-type CGS
+  - summary: |-
+      Publish a dataset using CPK encryption with MAA as the KEK authority
+    syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --storage-account-url https://mystorageaccount.blob.core.windows.net               --container-name datasets               --storage-account-type Azure_BlobStorage               --encryption-mode CPK               --schema-file @schema.json               --access-mode read               --allowed-fields "customer_id,revenue,date"               --identity-name northwind-identity               --identity-client-id fb907136-1234-5678-9abc-def012345678               --identity-tenant-id 72f988bf-1234-5678-9abc-def012345678               --dek-keyvault-url https://mykeyvault.vault.azure.net               --dek-secret-id dek-secret-123               --kek-keyvault-url https://mykeyvault.vault.azure.net               --kek-secret-id kek-secret-123               --kek-authority-type MAA               --kek-authority-endpoint https://sharedeus.eus.attest.azure.net
   - summary: |-
       Publish a dataset using a JSON body file (legacy mode)
     syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --body @dataset-config.json
   - summary: |-
       Publish a dataset mounted at a subdirectory
-    syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --storage-account-url https://mystorageaccount.blob.core.windows.net               --container-name datasets               --storage-account-type AzureStorageAccount               --encryption-mode SSE               --schema-file @schema.json               --access-mode ReadWrite               --identity-name northwind-identity               --identity-client-id fb907136-1234-5678-9abc-def012345678               --identity-tenant-id 72f988bf-1234-5678-9abc-def012345678               --identity-issuer-url https://oidc.example.com/issuer               --subdirectory year=2026/month=05
+    syntax: az managedcleanroom frontend analytics dataset publish               --collaboration-id my-collab-123               --document-id my-dataset               --storage-account-url https://mystorageaccount.blob.core.windows.net               --container-name datasets               --storage-account-type Azure_BlobStorage               --encryption-mode SSE               --schema-file @schema.json               --access-mode read               --allowed-fields "customer_id,revenue,date"               --identity-name northwind-identity               --identity-client-id fb907136-1234-5678-9abc-def012345678               --identity-tenant-id 72f988bf-1234-5678-9abc-def012345678               --subdirectory year=2026/month=05
   requiredParameters:
   - isRequired: true
     name: --collaboration-id -c
@@ -119,15 +124,16 @@ directCommands:
       Dataset document identifier.
   optionalParameters:
   - name: --access-mode
+    acceptedValues: read, write
     summary: |-
-      Access mode (e.g., ReadWrite).
+      Access mode (read or write).
   - name: --acquire-policy-token
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
   - name: --allowed-fields
     summary: |-
-      Comma-separated list of allowed field names.
+      Comma-separated list of allowed field names (required).
   - name: --api-version
     defaultValue: 2026-03-01-preview
     acceptedValues: 2026-03-01-preview
@@ -155,21 +161,22 @@ directCommands:
   - name: --identity-client-id
     summary: |-
       Managed identity client ID (GUID).
-  - name: --identity-issuer-url
-    summary: |-
-      OIDC issuer URL (HTTPS).
   - name: --identity-name
     summary: |-
       Managed identity name.
   - name: --identity-tenant-id
     summary: |-
       Tenant ID (GUID).
+  - name: --kek-authority-endpoint
+    summary: |-
+      Attestation authority endpoint for the KEK. Required for MAA, not allowed for CGS (CPK mode only).
+  - name: --kek-authority-type
+    acceptedValues: CGS, MAA
+    summary: |-
+      Attestation authority for KEK secure key release, CGS or MAA (CPK mode only).
   - name: --kek-keyvault-url
     summary: |-
       Key Vault URL for KEK (CPK mode only).
-  - name: --kek-maa-url
-    summary: |-
-      MAA URL for KEK (CPK mode only).
   - name: --kek-secret-id
     summary: |-
       KEK secret ID (CPK mode only).
@@ -178,10 +185,10 @@ directCommands:
       Path to schema file (@path/to/schema.json) containing field definitions.
   - name: --schema-format
     summary: |-
-      Schema format (default is Delta).
+      Schema format (csv, json, or parquet). Overrides the format in the schema file.
   - name: --storage-account-type
     summary: |-
-      Storage account type (e.g., AzureStorageAccount).
+      Storage account type (Azure_BlobStorage, Azure_BlobStorage_DataLakeGen2, Azure_OneLake, or Aws_S3).
   - name: --storage-account-url
     summary: |-
       Azure Storage account URL.

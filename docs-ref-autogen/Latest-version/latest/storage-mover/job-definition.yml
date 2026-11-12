@@ -27,12 +27,17 @@ directCommands:
                                            [--agent-name]
                                            [--change-reference]
                                            [--connections]
+                                           [--cross-tenant-endpoint-resource-id --cross-tenant-ep-id]
+                                           [--cross-tenant-endpoint-tenant-id --cross-tenant-tid]
                                            [--data-integrity-validation --data-validation {None, SaveFileMD5, SaveVerifyFileMD5}]
                                            [--description]
-                                           [--job-type {CloudToCloud, OnPremToCloud}]
+                                           [--is-cross-tenant-job {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--job-type {CloudToCloud, OnPremToCloud, OnPremToCloudAgentLess}]
+                                           [--mover-synced-until]
                                            [--preserve-permissions {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--schedule]
                                            [--source-subpath]
+                                           [--sync-mode]
                                            [--target-subpath]
   requiredParameters:
   - isRequired: true
@@ -84,6 +89,14 @@ directCommands:
     summary: |-
       List of connections associated to this job  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
+  - name: --cross-tenant-endpoint-resource-id --cross-tenant-ep-id
+    summary: |-
+      Full ARM resource ID of the cross-tenant (foreign) endpoint. On the source-tenant copy this is the TARGET endpoint; on the target-tenant copy this is the SOURCE endpoint.
+    groupName: Properties Arguments
+  - name: --cross-tenant-endpoint-tenant-id --cross-tenant-tid
+    summary: |-
+      The Azure AD tenant ID of the cross-tenant source endpoint. Required when `isCrossTenantJob` is true. Cannot be modified after the Job Definition is created.
+    groupName: Properties Arguments
   - name: --data-integrity-validation --data-validation
     defaultValue: None
     acceptedValues: None, SaveFileMD5, SaveVerifyFileMD5
@@ -94,11 +107,21 @@ directCommands:
     summary: |-
       A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for migrating data between cloud to cloud.
     groupName: Properties Arguments
+  - name: --is-cross-tenant-job
+    defaultValue: "False"
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Indicates that this Job Definition is a cross-tenant job where the counterpart endpoint resides in a different Azure AD tenant. When true, `crossTenantEndpointTenantId` and `crossTenantEndpointResourceId` must be provided. Defaults to false. Cannot be modified after the Job Definition is created.
+    groupName: Properties Arguments
   - name: --job-type
     defaultValue: OnPremToCloud
-    acceptedValues: CloudToCloud, OnPremToCloud
+    acceptedValues: CloudToCloud, OnPremToCloud, OnPremToCloudAgentLess
     summary: |-
       The type of the Job.
+    groupName: Properties Arguments
+  - name: --mover-synced-until
+    summary: |-
+      The last time the mover was synchronized.
     groupName: Properties Arguments
   - name: --preserve-permissions
     defaultValue: "True"
@@ -113,6 +136,10 @@ directCommands:
   - name: --source-subpath
     summary: |-
       The subpath to use when reading from the source Endpoint.
+    groupName: Properties Arguments
+  - name: --sync-mode
+    summary: |-
+      The synchronization mode for the Job Definition.
     groupName: Properties Arguments
   - name: --target-subpath
     summary: |-
@@ -284,6 +311,82 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_storage-mover_job-definition_reconcile-job
+  name: az storage-mover job-definition reconcile-job
+  summary: |-
+    Reconcile the running job.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az storage-mover job-definition reconcile-job [--acquire-policy-token]
+                                                  [--change-reference]
+                                                  [--ids]
+                                                  [--job-definition-name]
+                                                  [--project-name]
+                                                  [--resource-group]
+                                                  [--storage-mover-name]
+                                                  [--subscription]
+  examples:
+  - summary: |-
+      JobDefinitions_ReconcileJob
+    syntax: az storage-mover job-definition reconcile-job --resource-group examples-rg --storage-mover-name examples-storageMoverName --project-name examples-projectName --job-definition-name examples-jobDefinitionName
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --job-definition-name
+    summary: |-
+      The name of the Job Definition resource.
+    groupName: Resource Id Arguments
+  - name: --project-name
+    summary: |-
+      The name of the Project resource.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --storage-mover-name
+    summary: |-
+      The name of the Storage Mover resource.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
   - name: --verbose
     defaultValue: "False"
     summary: |-
@@ -512,7 +615,8 @@ directCommands:
                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--ids]
                                            [--job-definition-name --name]
-                                           [--job-type {CloudToCloud, OnPremToCloud}]
+                                           [--job-type {CloudToCloud, OnPremToCloud, OnPremToCloudAgentLess}]
+                                           [--mover-synced-until]
                                            [--preserve-permissions {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--project-name]
                                            [--remove]
@@ -521,6 +625,7 @@ directCommands:
                                            [--set]
                                            [--storage-mover-name]
                                            [--subscription]
+                                           [--sync-mode]
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -570,9 +675,13 @@ directCommands:
       The name of the Job Definition resource.
     groupName: Resource Id Arguments
   - name: --job-type
-    acceptedValues: CloudToCloud, OnPremToCloud
+    acceptedValues: CloudToCloud, OnPremToCloud, OnPremToCloudAgentLess
     summary: |-
       The type of the Job.
+    groupName: Properties Arguments
+  - name: --mover-synced-until
+    summary: |-
+      The last time the mover was synchronized.
     groupName: Properties Arguments
   - name: --preserve-permissions
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -607,6 +716,10 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     groupName: Resource Id Arguments
+  - name: --sync-mode
+    summary: |-
+      The synchronization mode for the Job Definition.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -748,6 +861,7 @@ commands:
 - az_storage-mover_job-definition_create
 - az_storage-mover_job-definition_delete
 - az_storage-mover_job-definition_list
+- az_storage-mover_job-definition_reconcile-job
 - az_storage-mover_job-definition_show
 - az_storage-mover_job-definition_start-job
 - az_storage-mover_job-definition_stop-job

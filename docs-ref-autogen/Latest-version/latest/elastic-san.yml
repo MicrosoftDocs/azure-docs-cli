@@ -31,14 +31,18 @@ directCommands:
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--public-network-access {Disabled, Enabled}]
                           [--tags]
+                          [--total-iops]
+                          [--total-mbps]
+                          [--total-size-tib]
                           [--unused-size-tib]
+                          [--version {V1, V2}]
   examples:
   - summary: |-
       Create an Elastic SAN.
     syntax: az elastic-san create -n "san_name" -g "rg" --tags '{key1810:aaaa}' -l southcentralusstg --base-size-tib 23 --extended-capacity-size-tib 14 --sku '{name:Premium_LRS,tier:Premium}' --public-network-access Enabled --auto-scale-policy-enforcement Enabled --capacity-unit-scale-up-limit-tib 17 --increase-capacity-unit-by-tib 4 --unused-size-tib 24
   - summary: |-
       Create an ElasticSAN with auto scale params
-    syntax: az elastic-san create -n san_name -g rg_name -l eastus2euap --base-size-tib 23 --extended-capacity-size-tib 14 --sku '{name:Premium_LRS,tier:Premium}' --availability-zones 1 --auto-scale-policy-enforcement Enabled --capacity-unit-scale-up-limit-tib 40 --increase-capacity-unit-by-tib 4 --unused-size-tib 24 --availability-zones 1
+    syntax: az elastic-san create -n san_name -g rg_name -l eastus2 --base-size-tib 23 --extended-capacity-size-tib 14 --sku '{name:Premium_LRS,tier:Premium}' --availability-zones 1 --auto-scale-policy-enforcement Enabled --capacity-unit-scale-up-limit-tib 40 --increase-capacity-unit-by-tib 4 --unused-size-tib 24 --availability-zones 1
   requiredParameters:
   - isRequired: true
     name: --elastic-san-name --name -n
@@ -61,7 +65,7 @@ directCommands:
   - name: --auto-scale-policy --auto-scale-policy-enforcement
     acceptedValues: Disabled, Enabled, None
     summary: |-
-      Enable or Disable scale up setting on Elastic San Appliance.
+      Enable or disable scale up. For V2 creation, defaults to Enabled; None and Disabled are unsupported.
     groupName: AutoScaleProperties Arguments
   - name: --availability-zones
     summary: |-
@@ -74,7 +78,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --capacity-unit-scale-up --capacity-unit-scale-up-limit-tib
     summary: |-
-      Maximum scale up size on Elastic San appliance in TiB.
+      Maximum scale up size in TiB. For V2 creation, defaults to the smaller of five times the total size and the regional SKU maximum, which requires an additional SKU lookup.
     groupName: AutoScaleProperties Arguments
   - name: --change-reference
     summary: |-
@@ -87,7 +91,7 @@ directCommands:
     groupName: Properties Arguments
   - name: --increase-capacity-unit --increase-capacity-unit-by-tib
     summary: |-
-      Unit to increase Capacity Unit on Elastic San appliance in TiB.
+      Unit to increase capacity in TiB. Defaults to 1 for V2 creation.
     groupName: AutoScaleProperties Arguments
   - name: --location -l
     summary: |-
@@ -106,10 +110,27 @@ directCommands:
     summary: |-
       Azure resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Parameters Arguments
+  - name: --total-iops
+    summary: |-
+      Total Provisioned IOPS of the Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1.
+    groupName: Properties Arguments
+  - name: --total-mbps
+    summary: |-
+      Total Provisioned MBps Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1.
+    groupName: Properties Arguments
+  - name: --total-size-tib
+    summary: |-
+      Total size of the Elastic San appliance in TiB. Settable only for ElasticSanVersion V2, where it is required; read-only for V1.
+    groupName: Properties Arguments
   - name: --unused-size-tib
     summary: |-
-      Unused size on Elastic San appliance in TiB.
+      Unused capacity threshold in TiB. Defaults to 1 for V2 creation.
     groupName: AutoScaleProperties Arguments
+  - name: --version
+    acceptedValues: V1, V2
+    summary: |-
+      Elastic San appliance version. Defaults to V1 if not specified.
+    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -402,6 +423,9 @@ directCommands:
                           [--sku]
                           [--subscription]
                           [--tags]
+                          [--total-iops]
+                          [--total-mbps]
+                          [--total-size-tib]
                           [--unused-size-tib]
   examples:
   - summary: |-
@@ -465,7 +489,7 @@ directCommands:
   - name: --public-network-access
     acceptedValues: Disabled, Enabled
     summary: |-
-      Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
+      Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
     groupName: Properties Arguments
   - name: --remove
     summary: |-
@@ -481,7 +505,7 @@ directCommands:
     groupName: Generic Update Arguments
   - name: --sku
     summary: |-
-      Resource sku  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource SKU.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
   - name: --subscription
     summary: |-
@@ -489,8 +513,20 @@ directCommands:
     groupName: Resource Id Arguments
   - name: --tags
     summary: |-
-      Azure resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Update tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Parameters Arguments
+  - name: --total-iops
+    summary: |-
+      Total Provisioned IOPS of the Elastic San appliance. Supported only for ElasticSanVersion V2.
+    groupName: Properties Arguments
+  - name: --total-mbps
+    summary: |-
+      Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2.
+    groupName: Properties Arguments
+  - name: --total-size-tib
+    summary: |-
+      Total size of the Elastic San appliance in TiB. Settable only for ElasticSanVersion V2, where it is required; read-only for V1.
+    groupName: Properties Arguments
   - name: --unused-size-tib
     summary: |-
       Unused size on Elastic San appliance in TiB.
