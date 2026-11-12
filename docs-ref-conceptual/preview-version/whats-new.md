@@ -77,6 +77,7 @@ az --version
 ---
 
 For the next-generation Azure CLI, `which az` or `Get-Command az` returns the path of the preview `az` executable: `~/.local/share/azcli/az` on Linux or macOS, or `%LOCALAPPDATA%\Programs\azcli\az.exe` on Windows, if you installed to the default location. `az --version` prints the preview version, which matches the version in the file name you downloaded.
+
 ### Differences from the existing Azure CLI
 
 - **Coverage:** Not all Azure CLI and Azure PowerShell scenarios are available.
