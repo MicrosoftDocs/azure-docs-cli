@@ -24,6 +24,7 @@ directCommands:
                                  [--acquire-policy-token]
                                  [--change-reference]
                                  [--creation-data]
+                                 [--managed-by]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
@@ -32,6 +33,9 @@ directCommands:
   - summary: |-
       Create a Volume from snapshot.
     syntax: az elastic-san volume create -g "rg" -e "san_name" -v "vg_name" -n "volume_name_2" --size-gib 2 --creation-data '{source-id:"snapshot_id",create-source:VolumeSnapshot}'
+  - summary: |-
+      Create a volume with Resource Ids.
+    syntax: az elastic-san volume create --resource-group resourcegroupname --elastic-san-name elasticsanname --volume-group-name volumegroupname --volume-name volumename --creation-data "{create-source:None,source-id:mdonegivjquite}" --managed-by "[{client-id:pclpkrpkpmvcsegcubrakcoodrubo,version:1,resource-ids:[/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.SomeProvider/someResource/myResource]}]" --size-gib 23
   requiredParameters:
   - isRequired: true
     name: --elastic-san --elastic-san-name -e
@@ -66,6 +70,10 @@ directCommands:
   - name: --creation-data
     summary: |-
       State of the operation on the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --managed-by
+    summary: |-
+      Managed-by information. Accepts the current array format or the legacy single-resource object.  Support shorthand-syntax(full value only), json-file and yaml-file.
     groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
@@ -108,6 +116,7 @@ directCommands:
     az elastic-san volume delete [--acquire-policy-token]
                                  [--change-reference]
                                  [--delete-snapshots --x-ms-delete-snapshots {false, true}]
+                                 [--delete-type {permanent}]
                                  [--elastic-san --elastic-san-name]
                                  [--force-delete --x-ms-force-delete {false, true}]
                                  [--ids]
@@ -122,11 +131,14 @@ directCommands:
       Delete a Volume.
     syntax: az elastic-san volume delete -g "rg" -e "san_name" -v "vg_name" -n "volume_name"
   - summary: |-
-      Delete a volume with its snapshot
+      Delete a Volume with its snapshot(s)
     syntax: az elastic-san volume delete -g "rg" -e "san_name" -v "vg_name" -n "volume_name" -y --x-ms-delete-snapshots true --x-ms-force-delete true
   - summary: |-
       Delete a deleted volume permanently
     syntax: az elastic-san volume delete -g rg_name -e san_name -v volume_group_name -n deleted_volume_name -y --delete-type permanent
+  - summary: |-
+      Delete a deleted volume permanently and forcefully with its snapshot(s)
+    syntax: az elastic-san volume delete --resource-group resourcegroupname --elastic-san-name elasticsanname --volume-group-name volumegroupname --volume-name volumename --x-ms-delete-snapshots true --x-ms-force-delete true --delete-type permanent
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -140,6 +152,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false.
+  - name: --delete-type
+    acceptedValues: permanent
+    summary: |-
+      Optional. Specifies that the delete operation should be a permanent delete for the soft deleted volume. The value of deleteType can only be 'permanent'.
   - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
@@ -210,6 +226,7 @@ directCommands:
     az elastic-san volume list --elastic-san --elastic-san-name
                                --resource-group
                                --volume-group --volume-group-name
+                               [--access-soft-deleted-resources --x-ms-access-soft-deleted-resources {false, true}]
                                [--max-items]
                                [--next-token]
   examples:
@@ -233,6 +250,10 @@ directCommands:
     summary: |-
       The name of the VolumeGroup.
   optionalParameters:
+  - name: --access-soft-deleted-resources --x-ms-access-soft-deleted-resources -a
+    acceptedValues: false, true
+    summary: |-
+      Optional, returns only soft-deleted volumes if set to true. If set to false or not specified, returns only active volumes.
   - name: --max-items
     summary: |-
       Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
@@ -431,6 +452,7 @@ directCommands:
                                  [--elastic-san --elastic-san-name]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
+                                 [--managed-by]
                                  [--name --volume-name]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--remove]
@@ -473,6 +495,10 @@ directCommands:
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     groupName: Resource Id Arguments
+  - name: --managed-by
+    summary: |-
+      Managed-by information. Accepts the current array format or the legacy single-resource object.  Support shorthand-syntax(full value only), json-file and yaml-file.
+    groupName: Properties Arguments
   - name: --name --volume-name -n
     summary: |-
       The name of the Volume.

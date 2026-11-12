@@ -109,7 +109,8 @@ directCommands:
                                              [--change-reference]
                                              [--description]
                                              [--endpoint-kind {Source, Target}]
-                                             [--nfs-version {NFSauto, NFSv3, NFSv4}]
+                                             [--nfs-version {NFSauto, NFSv3, NFSv4, NFSv4_1}]
+                                             [--source-type {FSX-EFS, NfsMount}]
   examples:
   - summary: |-
       endpoint create-for-nfs
@@ -152,9 +153,13 @@ directCommands:
     summary: |-
       The Endpoint resource kind, source or target.
   - name: --nfs-version
-    acceptedValues: NFSauto, NFSv3, NFSv4
+    acceptedValues: NFSauto, NFSv3, NFSv4, NFSv4_1
     summary: |-
       The NFS protocol version.
+  - name: --source-type
+    acceptedValues: FSX-EFS, NfsMount
+    summary: |-
+      The NFS mount source type.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -298,6 +303,7 @@ directCommands:
                                              [--description]
                                              [--endpoint-kind {Source, Target}]
                                              [--password-uri]
+                                             [--source-type {FSX-SMB, SmbMount}]
                                              [--username-uri]
   examples:
   - summary: |-
@@ -343,6 +349,10 @@ directCommands:
   - name: --password-uri
     summary: |-
       The Azure Key Vault secret URI which stores the password. Use empty string to clean-up existing value.
+  - name: --source-type
+    acceptedValues: FSX-SMB, SmbMount
+    summary: |-
+      The SMB mount source type.
   - name: --username-uri
     summary: |-
       The Azure Key Vault secret URI which stores the username. Use empty string to clean-up existing value.
@@ -386,8 +396,10 @@ directCommands:
                                                            --storage-account-id
                                                            --storage-mover-name
                                                            [--acquire-policy-token]
+                                                           [--allowed-accounts --allowed-storage-accounts]
                                                            [--change-reference]
                                                            [--description]
+                                                           [--enable-cross-tenant --enable-cross-tenant-transfer {false, true}]
                                                            [--endpoint-kind {Source, Target}]
   examples:
   - summary: |-
@@ -419,6 +431,9 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --allowed-accounts --allowed-storage-accounts
+    summary: |-
+      Space-separated ARM resource IDs of allowed partner-tenant storage accounts. Replaces the entire list. Use this option without values to clear the list.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -426,6 +441,10 @@ directCommands:
   - name: --description
     summary: |-
       A description for the Endpoint.
+  - name: --enable-cross-tenant --enable-cross-tenant-transfer
+    acceptedValues: false, true
+    summary: |-
+      Enable this endpoint for cross-tenant data transfers.
   - name: --endpoint-kind
     acceptedValues: Source, Target
     summary: |-
@@ -554,8 +573,10 @@ directCommands:
                                                                 --storage-account-id
                                                                 --storage-mover-name
                                                                 [--acquire-policy-token]
+                                                                [--allowed-accounts --allowed-storage-accounts]
                                                                 [--change-reference]
                                                                 [--description]
+                                                                [--enable-cross-tenant --enable-cross-tenant-transfer {false, true}]
                                                                 [--endpoint-kind {Source, Target}]
   examples:
   - summary: |-
@@ -587,6 +608,9 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --allowed-accounts --allowed-storage-accounts
+    summary: |-
+      Space-separated ARM resource IDs of allowed partner-tenant storage accounts. Replaces the entire list. Use this option without values to clear the list.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -594,6 +618,10 @@ directCommands:
   - name: --description
     summary: |-
       A description for the Endpoint.
+  - name: --enable-cross-tenant --enable-cross-tenant-transfer
+    acceptedValues: false, true
+    summary: |-
+      Enable this endpoint for cross-tenant data transfers.
   - name: --endpoint-kind
     acceptedValues: Source, Target
     summary: |-
@@ -897,6 +925,7 @@ directCommands:
                                              [--acquire-policy-token]
                                              [--change-reference]
                                              [--description]
+                                             [--source-type {FSX-EFS, NfsMount}]
   examples:
   - summary: |-
       endpoint update-for-nfs
@@ -926,6 +955,10 @@ directCommands:
   - name: --description
     summary: |-
       A description for the Endpoint.
+  - name: --source-type
+    acceptedValues: FSX-EFS, NfsMount
+    summary: |-
+      The NFS mount source type.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -1044,6 +1077,7 @@ directCommands:
                                              [--change-reference]
                                              [--description]
                                              [--password-uri]
+                                             [--source-type {FSX-SMB, SmbMount}]
                                              [--username-uri]
   examples:
   - summary: |-
@@ -1077,6 +1111,10 @@ directCommands:
   - name: --password-uri
     summary: |-
       The Azure Key Vault secret URI which stores the password. Use empty string to clean-up existing value.
+  - name: --source-type
+    acceptedValues: FSX-SMB, SmbMount
+    summary: |-
+      The SMB mount source type.
   - name: --username-uri
     summary: |-
       The Azure Key Vault secret URI which stores the username. Use empty string to clean-up existing value.
@@ -1118,8 +1156,10 @@ directCommands:
                                                            --resource-group
                                                            --storage-mover-name
                                                            [--acquire-policy-token]
+                                                           [--allowed-accounts --allowed-storage-accounts]
                                                            [--change-reference]
                                                            [--description]
+                                                           [--enable-cross-tenant --enable-cross-tenant-transfer {false, true}]
   examples:
   - summary: |-
       endpoint update-for-storage-container
@@ -1142,6 +1182,9 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --allowed-accounts --allowed-storage-accounts
+    summary: |-
+      Space-separated ARM resource IDs of allowed partner-tenant storage accounts. Replaces the entire list. Use this option without values to clear the list.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -1149,6 +1192,10 @@ directCommands:
   - name: --description
     summary: |-
       A description for the Endpoint.
+  - name: --enable-cross-tenant --enable-cross-tenant-transfer
+    acceptedValues: false, true
+    summary: |-
+      Enable this endpoint for cross-tenant data transfers.
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -1256,8 +1303,10 @@ directCommands:
                                                                 --resource-group
                                                                 --storage-mover-name
                                                                 [--acquire-policy-token]
+                                                                [--allowed-accounts --allowed-storage-accounts]
                                                                 [--change-reference]
                                                                 [--description]
+                                                                [--enable-cross-tenant --enable-cross-tenant-transfer {false, true}]
   examples:
   - summary: |-
       endpoint update-for-storage-smb-file-share
@@ -1280,6 +1329,9 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --allowed-accounts --allowed-storage-accounts
+    summary: |-
+      Space-separated ARM resource IDs of allowed partner-tenant storage accounts. Replaces the entire list. Use this option without values to clear the list.
   - name: --change-reference
     summary: |-
       The related change reference ID for this resource operation.
@@ -1287,6 +1339,10 @@ directCommands:
   - name: --description
     summary: |-
       A description for the Endpoint.
+  - name: --enable-cross-tenant --enable-cross-tenant-transfer
+    acceptedValues: false, true
+    summary: |-
+      Enable this endpoint for cross-tenant data transfers.
   globalParameters:
   - name: --debug
     defaultValue: "False"
