@@ -85,7 +85,7 @@ For the next-generation Azure CLI, `which az` or `Get-Command az` returns the pa
 - **Sign-in:** The next-generation Azure CLI doesn't share sign-in context or tokens with the existing Azure CLI, so you sign in again. It uses [profiles](profile-base-login.md) and opens a browser by default. These sign-in methods aren't available yet:
   - Broker sign-in, such as Web Account Manager on Windows
   - Resource Owner Password Credentials (ROPC), such as `az login --username --password`
-  - Service principals that use a certificate. Use a client secret or a federated token instead.
+  - Certificate-based service principal authentication. Use a client secret or workload identity federation with a federated token instead.
 
 For more information, see [Release notes & updates – Azure CLI](/cli/azure/release-notes-azure-cli?view=azure-cli-latest&preserve-view=true).
 
