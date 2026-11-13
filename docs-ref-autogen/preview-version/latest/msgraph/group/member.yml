@@ -58,11 +58,19 @@ directCommands:
   summary: |-
     List the members of a Microsoft Entra group.
   description: |-
-    List every user, group, service principal, or device that is a direct member of the specified group. The group can be identified by object ID or display name prefix (single match required).
+    List every user, group, service principal, or device that is a direct member of the specified group. The group can be identified by object ID, display name prefix (single match required), or exact display name.
   status: Preview
   isPreview: true
   sourceType: Core
-  syntax: az msgraph group member list --group
+  syntax: >-
+    az msgraph group member list [--consistency-level]
+                                 [--display-name]
+                                 [--expand]
+                                 [--filter]
+                                 [--group]
+                                 [--orderby]
+                                 [--search]
+                                 [--select]
   examples:
   - summary: |-
       List members of a group by object ID
@@ -70,11 +78,40 @@ directCommands:
   - summary: |-
       List members of a group by display name
     syntax: az msgraph group member list --group Sales
-  requiredParameters:
-  - isRequired: true
-    name: --group -g
+  - summary: |-
+      List members of a group by exact display name
+    syntax: az msgraph group member list --display-name "Sales Team"
+  - summary: |-
+      List members with a custom filter and projection
+    syntax: az msgraph group member list --group Sales --filter "startswith(displayName,'A')" --select id displayName
+  - summary: |-
+      Search members in a group
+    syntax: az msgraph group member list --group Sales --search "\"displayName:ada\"" --consistency-level eventual
+  optionalParameters:
+  - name: --consistency-level
+    summary: |-
+      Set to 'eventual' to enable advanced query features such as $search, $count, or $orderby on non-indexed properties.
+  - name: --display-name
+    summary: |-
+      The exact display name of the target group.
+  - name: --expand
+    summary: |-
+      Related properties to include in the response.
+  - name: --filter
+    summary: |-
+      OData $filter expression.
+  - name: --group -g
     summary: |-
       The group's object ID or display name (prefix works if there is a unique match).
+  - name: --orderby
+    summary: |-
+      OData $orderby values.
+  - name: --search
+    summary: |-
+      OData $search expression. Requires ConsistencyLevel eventual.
+  - name: --select
+    summary: |-
+      Properties to return.
   globalParameters:
   - name: --debug
     summary: |-

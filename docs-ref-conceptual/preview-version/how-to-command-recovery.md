@@ -228,4 +228,4 @@ az config set --key agent.recovery.trigger --value off
 
 - For more information, see [AI-based error recovery in Azure CLI](ai-based-error-recovery.md).
 - For more information, see [Discover commands and call Azure REST APIs](how-to-discover-commands-rest.md).
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).

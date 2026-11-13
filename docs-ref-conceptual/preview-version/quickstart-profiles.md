@@ -227,5 +227,5 @@ The final list no longer includes the test profiles. If you had an active profil
 ## Related content
 
 - For more information, see [Switch between the classic Azure CLI and the preview build](switch-cli-versions.md).
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).
 - For more information, see [Deploy and manage a virtual machine application](tutorial-vm-application.md).

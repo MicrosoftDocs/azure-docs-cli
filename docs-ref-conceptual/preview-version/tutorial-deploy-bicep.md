@@ -256,6 +256,6 @@ Repeat the preview, deploy, inspect and clean-up steps at a broader scope, using
 
 ## Related content
 
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).
 - For more information, see [Set up and switch sign-in profiles](quickstart-profiles.md).
 - For more information, see [Run repeatable deployments from a pipeline](tutorial-pipeline-deployments.md).

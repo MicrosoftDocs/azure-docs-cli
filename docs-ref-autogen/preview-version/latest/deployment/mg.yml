@@ -61,7 +61,7 @@ directCommands:
   summary: |-
     Create a management-group deployment.
   description: |-
-    Create a management group scoped deployment. The deployment is validated first using `Incremental` mode, then submitted using the selected deployment mode. Supply one template source: `--template-file` (a local ARM JSON or Bicep template), `--template-uri` (a remote ARM JSON template URL), or `--template-spec-id` (the resource id of a Template Spec version). A `.bicepparam` file supplied with `--parameters-file` can provide its own template reference instead. Bicep templates and `.bicepparam` files require the Bicep CLI for local compilation. `--management-group-id` (required) is the management group to deploy to, `--location` (required) is where the deployment metadata is stored, and `--name` (required) is the deployment name. Parameters can be supplied with `--parameters-file`, `--parameters-uri`, or repeatable inline `--parameter` values (KEY=VALUE, a JSON object, or a JSON parameters file path, optionally prefixed with `@`). Inline values override matching keys from a local parameters file. `--parameters-uri` cannot be combined with `--parameters-file` or `--parameter`. `--query-string` requires `--template-uri` and applies only to that template link; include any required SAS token directly in `--parameters-uri`. `--mode` selects the actual deployment mode, `Incremental` (default) or `Complete`; ARM determines whether the mode is supported at this scope. Validation before deployment always uses `Incremental` and does not validate `Complete` mode. `--validation-level` accepts `Template`, `Provider`, or `ProviderNoRbac`; when omitted, ARM applies its default. The command waits for the deployment to finish and returns the final deployment result.
+    Create a management group scoped deployment. The deployment is validated first using `Incremental` mode, then submitted using the selected deployment mode. Supply one template source: `--template-file` (a local ARM JSON or Bicep template), `--template-uri` (a remote ARM JSON template URL), or `--template-spec-id` (the resource id of a Template Spec version). A `.bicepparam` file supplied with `--parameters-file` can provide its own template reference instead. Bicep templates and `.bicepparam` files require the Bicep CLI for local compilation. `--management-group-id` (required) is the management group to deploy to, `--location` (required) is where the deployment metadata is stored, and `--name` (optional) is the deployment name, derived from the template file or URI name when omitted, or generated if no valid name can be derived. Parameters can be supplied with `--parameters-file`, `--parameters-uri`, or repeatable inline `--parameter` values (KEY=VALUE, a JSON object, or a JSON parameters file path, optionally prefixed with `@`). Inline values override matching keys from a local parameters file. `--parameters-uri` cannot be combined with `--parameters-file` or `--parameter`. `--query-string` requires `--template-uri` and applies only to that template link; include any required SAS token directly in `--parameters-uri`. `--mode` selects the actual deployment mode, `Incremental` (default) or `Complete`; ARM determines whether the mode is supported at this scope. Validation before deployment always uses `Incremental` and does not validate `Complete` mode. `--validation-level` accepts `Template`, `Provider`, or `ProviderNoRbac`; when omitted, ARM applies its default. The command waits for the deployment to finish and returns the final deployment result.
   status: Preview
   isPreview: true
   sourceType: Core
@@ -69,8 +69,8 @@ directCommands:
   syntax: >-
     az deployment mg create --location
                             --management-group-id
-                            --name
                             [--mode {Incremental, Complete}]
+                            [--name]
                             [--parameter]
                             [--parameters-file]
                             [--parameters-uri]
@@ -96,15 +96,14 @@ directCommands:
     name: --management-group-id
     summary: |-
       The management group id.
-  - isRequired: true
-    name: --name
-    summary: |-
-      The name of the deployment.
   optionalParameters:
   - name: --mode
     acceptedValues: Incremental, Complete
     summary: |-
       The mode sent to ARM for the actual deployment: Incremental (default) or Complete. Validation before deployment always uses Incremental.
+  - name: --name
+    summary: |-
+      The name of the deployment.
   - name: --parameter
     summary: |-
       Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
@@ -351,7 +350,7 @@ directCommands:
   summary: |-
     Validate a management-group deployment.
   description: |-
-    Validate whether a template would be accepted for a management group scoped deployment, without creating any resources. Takes the same template, parameter, and `--validation-level` inputs as `az deployment mg create`. Validation always uses `Incremental` mode, even if `--mode Complete` is supplied. `--name` is optional and defaults to a new GUID. Returns the validation result on success; on failure the command reports the validation errors and exits non-zero.
+    Validate whether a template would be accepted for a management group scoped deployment, without creating any resources. Takes the same template, parameter, and `--validation-level` inputs as `az deployment mg create`. Validation always uses `Incremental` mode, even if `--mode Complete` is supplied. `--name` is optional and defaults to the template file or URI name without its extension, or a generated GUID when no valid name can be derived. Returns the validation result on success; on failure the command reports the validation errors and exits non-zero.
   status: Preview
   isPreview: true
   sourceType: Core
@@ -393,7 +392,7 @@ directCommands:
       Accepted for compatibility with create. Does not change validation mode: validation always uses Incremental, even when Complete is supplied.
   - name: --name
     summary: |-
-      The name of the deployment. Defaults to a generated GUID when omitted.
+      The name of the deployment. Defaults to the template file or URI name without its extension, or a generated GUID when no valid name can be derived.
   - name: --parameter
     summary: |-
       Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
@@ -453,8 +452,8 @@ directCommands:
   syntax: >-
     az deployment mg what-if --location
                              --management-group-id
-                             --name
                              [--mode {Incremental, Complete}]
+                             [--name]
                              [--parameter]
                              [--parameters-file]
                              [--parameters-uri]
@@ -481,15 +480,14 @@ directCommands:
     name: --management-group-id
     summary: |-
       The management group id.
-  - isRequired: true
-    name: --name
-    summary: |-
-      The name of the deployment.
   optionalParameters:
   - name: --mode
     acceptedValues: Incremental, Complete
     summary: |-
       Accepted for compatibility with create. Does not change what-if mode: what-if always uses Incremental, even when Complete is supplied.
+  - name: --name
+    summary: |-
+      The name of the deployment.
   - name: --parameter
     summary: |-
       Deployment parameter(s) (repeatable): KEY=VALUE, a raw JSON object, or a path to a JSON parameters file (optionally prefixed with '@'). Values are parsed as JSON when possible (count=3 a number, flag=true a bool), else treated as strings; quote to force a string (e.g. zip="01234"). Overlay same-named keys from a parameters file. Cannot be combined with parameters-uri.
@@ -550,5 +548,5 @@ commands:
 - az_deployment_mg_validate
 - az_deployment_mg_what-if
 metadata:
-  ms.date: 10/21/2026
+  ms.date: 11/12/2026
   description: Manage ARM deployments at management-group scope.

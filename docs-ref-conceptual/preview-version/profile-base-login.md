@@ -170,5 +170,5 @@ description = 'Name of the active Azure CLI profile'
 
 <!-- link references -->
 
-[01]: ./getting-started.md
+[01]: ./get-started-with-azure-cli.md
 [02]: ./troubleshooting.md

@@ -170,6 +170,6 @@ The list query returns `0`. If it still returns `1`, wait a minute and run it ag
 
 ## Related content
 
-- For more information, see [Get started with the preview](getting-started.md).
+- For more information, see [Get started with the preview](get-started-with-azure-cli.md).
 - For more information, see [Set up and switch sign-in profiles](quickstart-profiles.md).
 - For more information, see [Run repeatable deployments from a pipeline](tutorial-pipeline-deployments.md).
