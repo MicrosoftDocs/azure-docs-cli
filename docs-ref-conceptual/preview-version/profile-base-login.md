@@ -11,6 +11,12 @@ A _profile_ is a named sign-in context that the Azure CLI preview saves when you
 
 Profiles are useful when you regularly work across multiple contexts, such as personal and corporate subscriptions or separate development and production environments.
 
+## Watch a profiles demo
+
+Watch this demo to learn how to create named profiles, switch between tenants and subscriptions, and run a command against another profile without changing your active profile.
+
+> [!VIDEO https://learn-video.azurefd.net/vod/player?id=12be8dd0-98ce-4ceb-b509-1c3ea74151d4]
+
 ## When to use profiles
 
 Profiles are useful when you:

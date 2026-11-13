@@ -15,6 +15,14 @@ The next-generation Azure CLI is an AI-enhanced command-line experience for Azur
 
 Rather than replacing existing tools, the next-generation Azure CLI builds on them by providing intelligent guidance while continuing to use the same Azure management APIs and authentication model.
 
+## Watch an end-to-end demo
+
+Watch this walkthrough to see the next-generation Azure CLI in action.
+
+This end-to-end demo shows how profiles let you switch between subscriptions and tenants without signing in again. It shows how tab completion and the redesigned help lead you to the right command and parameters. It also shows how AI-based error recovery explains a failed command and suggests a corrected one that runs successfully.
+
+> [!VIDEO https://learn-video.azurefd.net/vod/player?id=36ffb31f-fa06-45ef-80d8-debf9a297b41]
+
 ## Core concepts
 
 The next-generation Azure CLI uses the following core concepts:
