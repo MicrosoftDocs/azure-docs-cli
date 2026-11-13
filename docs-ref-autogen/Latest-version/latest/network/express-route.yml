@@ -19,22 +19,31 @@ directCommands:
     az network express-route create --name
                                     --resource-group
                                     [--acquire-policy-token]
-                                    [--allow-classic-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--activation-key]
+                                    [--allow-classic-operations --allow-classic-ops {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--allow-global-reach {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--bandwidth]
                                     [--change-reference]
+                                    [--enable-direct-port-rate-limit --enable-port-rate-limit {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--express-route-port]
                                     [--location]
                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--partner-account-id]
                                     [--peering-location]
                                     [--provider]
                                     [--sku-family {MeteredData, UnlimitedData}]
-                                    [--sku-tier {Basic, Local, Premium, Standard}]
+                                    [--sku-tier {Basic, Local, MultiCloud, Premium, Standard}]
                                     [--tags]
   examples:
   - summary: |-
       Create an ExpressRoute circuit.
     syntax: az network express-route create --bandwidth 200 -n MyCircuit --peering-location "SiliconValley" -g MyResourceGroup --provider "Equinix" -l "West US" --sku-family MeteredData --sku-tier Standard
+  - summary: |-
+      Create an ExpressRoute MultiCloud circuit using a partner cloud account ID.
+    syntax: az network express-route create --bandwidth 200 -n MyCircuit --peering-location uswest2 -g MyResourceGroup --provider AWS -l eastus2 --sku-family MeteredData --sku-tier MultiCloud --partner-account-id 123456789
+  - summary: |-
+      Create an ExpressRoute MultiCloud circuit using an activation key from the partner cloud provider.
+    syntax: az network express-route create --bandwidth 200 -n MyCircuit --peering-location uswest2 -g MyResourceGroup --provider AWS -l eastus2 --sku-family MeteredData --sku-tier MultiCloud --activation-key MyActivationKey
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -49,7 +58,11 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
-  - name: --allow-classic-operations
+  - name: --activation-key
+    summary: |-
+      Activation Key from partner cloud provider.
+    groupName: Properties Arguments
+  - name: --allow-classic-operations --allow-classic-ops
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Allow classic operations. Allowed values: false, true.
@@ -64,6 +77,11 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --enable-direct-port-rate-limit --enable-port-rate-limit
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Flag denoting rate-limiting status of the ExpressRoute direct-port circuit.
+    groupName: Properties Arguments
   - name: --express-route-port
     summary: |-
       Name or ID of an ExpressRoute port.
@@ -74,6 +92,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --partner-account-id
+    summary: |-
+      Account ID of customer account on partner cloud provider.
+    groupName: Properties Arguments
   - name: --peering-location
     summary: |-
       Name of the peering location.  Values from: az network express-route list-service-providers.
@@ -87,7 +109,7 @@ directCommands:
       Chosen SKU family of ExpressRoute circuit.  Allowed values: MeteredData, UnlimitedData.  Default: MeteredData.
   - name: --sku-tier
     defaultValue: Standard
-    acceptedValues: Basic, Local, Premium, Standard
+    acceptedValues: Basic, Local, MultiCloud, Premium, Standard
     summary: |-
       SKU Tier of ExpressRoute circuit.  Allowed values: Basic, Local, Premium, Standard.  Default: Standard.
   - name: --tags
@@ -1053,23 +1075,26 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
     az network express-route update [--acquire-policy-token]
+                                    [--activation-key]
                                     [--add]
-                                    [--allow-classic-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--allow-classic-operations --allow-classic-ops {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--allow-global-reach {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--bandwidth]
                                     [--change-reference]
+                                    [--enable-direct-port-rate-limit --enable-port-rate-limit {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--express-route-port]
                                     [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--ids]
                                     [--name]
                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--partner-account-id]
                                     [--peering-location]
                                     [--provider]
                                     [--remove]
                                     [--resource-group]
                                     [--set]
                                     [--sku-family {MeteredData, UnlimitedData}]
-                                    [--sku-tier {Basic, Local, Premium, Standard}]
+                                    [--sku-tier {Basic, Local, MultiCloud, Premium, Standard}]
                                     [--subscription]
                                     [--tags]
   examples:
@@ -1081,14 +1106,18 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --activation-key
+    summary: |-
+      Activation Key from partner cloud provider.
+    groupName: Properties Arguments
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
-  - name: --allow-classic-operations
+  - name: --allow-classic-operations --allow-classic-ops
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
-      Allow classic operations.
+      Allow classic operations. Allowed values: false, true.
   - name: --allow-global-reach
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
@@ -1100,6 +1129,11 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --enable-direct-port-rate-limit --enable-port-rate-limit
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Flag denoting rate-limiting status of the ExpressRoute direct-port circuit.
+    groupName: Properties Arguments
   - name: --express-route-port
     summary: |-
       Name or ID of an ExpressRoute port.
@@ -1120,6 +1154,10 @@ directCommands:
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --partner-account-id
+    summary: |-
+      Account ID of customer account on partner cloud provider.
+    groupName: Properties Arguments
   - name: --peering-location
     summary: |-
       Name of the peering location.
@@ -1143,7 +1181,7 @@ directCommands:
     summary: |-
       Chosen SKU family of ExpressRoute circuit.  Allowed values: MeteredData, UnlimitedData.
   - name: --sku-tier
-    acceptedValues: Basic, Local, Premium, Standard
+    acceptedValues: Basic, Local, MultiCloud, Premium, Standard
     summary: |-
       SKU Tier of ExpressRoute circuit.  Allowed values: Basic, Local, Premium, Standard.
   - name: --subscription
@@ -1373,5 +1411,5 @@ commands:
 - az_network_express-route_update
 - az_network_express-route_wait
 metadata:
-  ms.date: 10/14/2026
+  ms.date: 11/09/2026
   description: To learn more about ExpressRoute circuits visit https://learn.microsoft.com/azure/expressroute/howto-circuit-cli.

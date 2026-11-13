@@ -78,10 +78,16 @@ directCommands:
                               [--account-type {Computer, User}]
                               [--acquire-policy-token]
                               [--action]
+                              [--allow-access-points --allow-blob-access-points {false, true}]
                               [--allow-append --allow-protected-append-writes {false, true}]
                               [--allow-blob-public-access {false, true}]
+                              [--allow-cross-tenant-delegation-sas --cross-tenant-sas {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
+                              [--allow-shared-key-access-for-blob --blob-shared-key {false, true}]
+                              [--allow-shared-key-access-for-file --file-shared-key {false, true}]
+                              [--allow-shared-key-access-for-queue --queue-shared-key {false, true}]
+                              [--allow-shared-key-access-for-table --table-shared-key {false, true}]
                               [--allowed-copy-scope {AAD, All, PrivateLink}]
                               [--assign-identity]
                               [--azure-storage-sid]
@@ -97,6 +103,7 @@ directCommands:
                               [--domain-sid]
                               [--edge-zone]
                               [--enable-alw {false, true}]
+                              [--enable-extended-groups {false, true}]
                               [--enable-files-aadds {false, true}]
                               [--enable-files-aadkerb {false, true}]
                               [--enable-files-adds {false, true}]
@@ -130,6 +137,8 @@ directCommands:
                               [--publish-ipv6-endpoint {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--require-infrastructure-encryption {false, true}]
+                              [--require-user-bound-user-delegation-sas --user-bound-sas {false, true}]
+                              [--require-user-bound-user-delegation-sas-action --user-bound-action {Block, Log, None}]
                               [--routing-choice {InternetRouting, MicrosoftRouting}]
                               [--sam-account-name]
                               [--sas-exp --sas-expiration-period]
@@ -137,6 +146,8 @@ directCommands:
                               [--sku {PremiumV2_LRS, PremiumV2_ZRS, Premium_LRS, Premium_ZRS, StandardV2_GRS, StandardV2_GZRS, StandardV2_LRS, StandardV2_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS}]
                               [--subnet]
                               [--tags]
+                              [--turbo-tier-status {Disabled, Enabled}]
+                              [--turbo-tier-target --turbo-tier-target-percent]
                               [--user-identity-id]
                               [--vnet-name]
                               [--zone-placement-policy {Any, None}]
@@ -148,6 +159,12 @@ directCommands:
   - summary: |-
       Create a storage account 'mystorageaccount' in resource group 'MyResourceGroup' in the eastus2euap region with account-scoped encryption key enabled for Table Service.
     syntax: az storage account create -n mystorageaccount -g MyResourceGroup --kind StorageV2 -l eastus2euap -t Account
+  - summary: |-
+      Create a storage account with per-service Shared Key settings and Blob Access Point configurations enabled.
+    syntax: az storage account create -n mystorageaccount -g MyResourceGroup -l westus --kind StorageV2 --sku Standard_LRS --allow-shared-key-access-for-blob false --allow-shared-key-access-for-file true --allow-blob-access-points true
+  - summary: |-
+      Require user-bound delegation SAS tokens and block tokens that violate the policy.
+    syntax: az storage account create -n mystorageaccount -g MyResourceGroup -l westus --kind StorageV2 --sku Standard_LRS --sas-expiration-period 1.00:00:00 --require-user-bound-user-delegation-sas true --require-user-bound-user-delegation-sas-action Block
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -176,6 +193,11 @@ directCommands:
     summary: |-
       The action of virtual network rule. Possible value is Allow.
     groupName: Network Rule Arguments
+  - name: --allow-access-points --allow-blob-access-points
+    acceptedValues: false, true
+    summary: |-
+      Allow Blob Access Point configurations to be created or managed on the storage account.
+    groupName: Data Collaboration Arguments
   - name: --allow-append --allow-protected-append-writes -w
     acceptedValues: false, true
     summary: |-
@@ -185,6 +207,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Allow or disallow public access to all blobs or containers in the storage account. If not specified, the default value is false for new accounts to follow best security practices. When true, containers in the account may be configured for public access. Note that setting this property to true does not enable anonymous access to any data in the account. The additional step of configuring the public access setting for a container is required to enable anonymous access.
+  - name: --allow-cross-tenant-delegation-sas --cross-tenant-sas
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow cross-tenant user delegation SAS.
   - name: --allow-cross-tenant-replication -r
     acceptedValues: false, true
     summary: |-
@@ -193,6 +219,26 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
+  - name: --allow-shared-key-access-for-blob --blob-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the blob service.
+    groupName: Shared Key Access Arguments
+  - name: --allow-shared-key-access-for-file --file-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the file service.
+    groupName: Shared Key Access Arguments
+  - name: --allow-shared-key-access-for-queue --queue-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the queue service.
+    groupName: Shared Key Access Arguments
+  - name: --allow-shared-key-access-for-table --table-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the table service.
+    groupName: Shared Key Access Arguments
   - name: --allowed-copy-scope
     acceptedValues: AAD, All, PrivateLink
     summary: |-
@@ -255,6 +301,11 @@ directCommands:
     summary: |-
       The account level immutability property. The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default.
     groupName: Account Level Immutability Arguments
+  - name: --enable-extended-groups
+    acceptedValues: false, true
+    summary: |-
+      Enable extended group support with local users feature, if set to true.
+    isPreview: true
   - name: --enable-files-aadds
     acceptedValues: false, true
     summary: |-
@@ -397,6 +448,14 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest.
+  - name: --require-user-bound-user-delegation-sas --user-bound-sas
+    acceptedValues: false, true
+    summary: |-
+      Require user delegation SAS tokens to be bound to a specific user.
+  - name: --require-user-bound-user-delegation-sas-action --user-bound-action
+    acceptedValues: Block, Log, None
+    summary: |-
+      The action to perform when a user delegation SAS token is not bound to a user as required.
   - name: --routing-choice
     acceptedValues: InternetRouting, MicrosoftRouting
     summary: |-
@@ -425,6 +484,15 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --turbo-tier-status
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable Turbo Tier.
+    groupName: Turbo Tier Arguments
+  - name: --turbo-tier-target --turbo-tier-target-percent
+    summary: |-
+      Target fill percentage for Turbo Tier, from 10 to 100. When enabling Turbo Tier, the service defaults to 20 if no target percentage is supplied.
+    groupName: Turbo Tier Arguments
   - name: --user-identity-id
     summary: |-
       The key is the ARM resource identifier of the identity. Only 1 User Assigned identity is permitted here.
@@ -1028,8 +1096,8 @@ directCommands:
                                           [--subscription]
   examples:
   - summary: |-
-      Get file service usage for the storage account, only works for provisioned v2
-    syntax: az storage account file-service-usage --account-name sa1 -g rg1
+      GetFileServiceUsage
+    syntax: az storage account file-service-usage --resource-group res4410 --account-name sto8607
   optionalParameters:
   - name: --account-name
     summary: |-
@@ -1556,10 +1624,16 @@ directCommands:
                               [--account-type {Computer, User}]
                               [--acquire-policy-token]
                               [--add]
+                              [--allow-access-points --allow-blob-access-points {false, true}]
                               [--allow-append --allow-protected-append-writes {false, true}]
                               [--allow-blob-public-access {false, true}]
+                              [--allow-cross-tenant-delegation-sas --cross-tenant-sas {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
+                              [--allow-shared-key-access-for-blob --blob-shared-key {false, true}]
+                              [--allow-shared-key-access-for-file --file-shared-key {false, true}]
+                              [--allow-shared-key-access-for-queue --queue-shared-key {false, true}]
+                              [--allow-shared-key-access-for-table --table-shared-key {false, true}]
                               [--allowed-copy-scope {AAD, All, PrivateLink}]
                               [--assign-identity]
                               [--azure-storage-sid]
@@ -1572,6 +1646,7 @@ directCommands:
                               [--domain-guid]
                               [--domain-name]
                               [--domain-sid]
+                              [--enable-extended-groups {false, true}]
                               [--enable-files-aadds {false, true}]
                               [--enable-files-aadkerb {false, true}]
                               [--enable-files-adds {false, true}]
@@ -1602,6 +1677,8 @@ directCommands:
                               [--publish-ipv6-endpoint {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--remove]
+                              [--require-user-bound-user-delegation-sas --user-bound-sas {false, true}]
+                              [--require-user-bound-user-delegation-sas-action --user-bound-action {Block, Log, None}]
                               [--resource-group]
                               [--routing-choice {InternetRouting, MicrosoftRouting}]
                               [--sam-account-name]
@@ -1611,6 +1688,8 @@ directCommands:
                               [--sku {PremiumV2_LRS, PremiumV2_ZRS, Premium_LRS, Premium_ZRS, StandardV2_GRS, StandardV2_GZRS, StandardV2_LRS, StandardV2_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS}]
                               [--subscription]
                               [--tags]
+                              [--turbo-tier-status {Disabled, Enabled}]
+                              [--turbo-tier-target --turbo-tier-target-percent]
                               [--upgrade-to-storagev2 {false, true}]
                               [--use-subdomain {false, true}]
                               [--user-identity-id]
@@ -1618,6 +1697,15 @@ directCommands:
                               [--zone-placement-policy {Any, None}]
                               [--zones]
   examples:
+  - summary: |-
+      Enable Turbo Tier with a target fill percentage of 20.
+    syntax: az storage account update -n mystorageaccount -g MyResourceGroup --turbo-tier-status Enabled --turbo-tier-target-percent 20
+  - summary: |-
+      Enable Blob Access Points without changing other data collaboration settings.
+    syntax: az storage account update -n mystorageaccount -g MyResourceGroup --allow-blob-access-points true
+  - summary: |-
+      Enable extended groups for local users.
+    syntax: az storage account update -n mystorageaccount -g MyResourceGroup --enable-extended-groups true
   - summary: |-
       Update the properties of a storage account. (autogenerated)
     syntax: az storage account update --default-action Allow --name MyStorageAccount --resource-group MyResourceGroup
@@ -1643,6 +1731,11 @@ directCommands:
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
+  - name: --allow-access-points --allow-blob-access-points
+    acceptedValues: false, true
+    summary: |-
+      Allow Blob Access Point configurations to be created or managed on the storage account.
+    groupName: Data Collaboration Arguments
   - name: --allow-append --allow-protected-append-writes -w
     acceptedValues: false, true
     summary: |-
@@ -1652,6 +1745,10 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Allow or disallow public access to all blobs or containers in the storage account. If not specified, the default value is false for new account to follow best security practices. When true, containers in the account may be configured for public access. Note that setting this property to true does not enable anonymous access to any data in the account. The additional step of configuring the public access setting for a container is required to enable anonymous access.
+  - name: --allow-cross-tenant-delegation-sas --cross-tenant-sas
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow cross-tenant user delegation SAS.
   - name: --allow-cross-tenant-replication -r
     acceptedValues: false, true
     summary: |-
@@ -1660,6 +1757,26 @@ directCommands:
     acceptedValues: false, true
     summary: |-
       Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
+  - name: --allow-shared-key-access-for-blob --blob-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the blob service.
+    groupName: Shared Key Access Arguments
+  - name: --allow-shared-key-access-for-file --file-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the file service.
+    groupName: Shared Key Access Arguments
+  - name: --allow-shared-key-access-for-queue --queue-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the queue service.
+    groupName: Shared Key Access Arguments
+  - name: --allow-shared-key-access-for-table --table-shared-key
+    acceptedValues: false, true
+    summary: |-
+      Allow or disallow Shared Key authorization for the table service.
+    groupName: Shared Key Access Arguments
   - name: --allowed-copy-scope
     acceptedValues: AAD, All, PrivateLink
     summary: |-
@@ -1710,6 +1827,11 @@ directCommands:
     summary: |-
       Specify the security identifier (SID). Required when --enable-files-adds is set to True.
     groupName: Azure Active Directory Properties Arguments
+  - name: --enable-extended-groups
+    acceptedValues: false, true
+    summary: |-
+      Enable extended group support with local users feature, if set to true.
+    isPreview: true
   - name: --enable-files-aadds
     acceptedValues: false, true
     summary: |-
@@ -1842,6 +1964,14 @@ directCommands:
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
     groupName: Generic Update Arguments
+  - name: --require-user-bound-user-delegation-sas --user-bound-sas
+    acceptedValues: false, true
+    summary: |-
+      Require user delegation SAS tokens to be bound to a specific user.
+  - name: --require-user-bound-user-delegation-sas-action --user-bound-action
+    acceptedValues: Block, Log, None
+    summary: |-
+      The action to perform when a user delegation SAS token is not bound to a user as required.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -1878,6 +2008,15 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --turbo-tier-status
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable Turbo Tier.
+    groupName: Turbo Tier Arguments
+  - name: --turbo-tier-target --turbo-tier-target-percent
+    summary: |-
+      Target fill percentage for Turbo Tier, from 10 to 100. When enabling Turbo Tier, the service defaults to 20 if no target percentage is supplied.
+    groupName: Turbo Tier Arguments
   - name: --upgrade-to-storagev2
     acceptedValues: false, true
     summary: |-
@@ -2263,6 +2402,15 @@ directCommands:
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
 commands:
+- az_storage_account_blob-access-point-configuration
+- az_storage_account_blob-access-point-configuration_create
+- az_storage_account_blob-access-point-configuration_delete
+- az_storage_account_blob-access-point-configuration_list
+- az_storage_account_blob-access-point-configuration_show
+- az_storage_account_blob-access-point-configuration_test-existing-connection
+- az_storage_account_blob-access-point-configuration_test-proposed-connection
+- az_storage_account_blob-access-point-configuration_update
+- az_storage_account_blob-access-point-configuration_wait
 - az_storage_account_blob-inventory-policy
 - az_storage_account_blob-inventory-policy_create
 - az_storage_account_blob-inventory-policy_delete

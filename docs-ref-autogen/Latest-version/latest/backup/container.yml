@@ -75,7 +75,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
   syntax: >-
-    az backup container re-register --workload-type {MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase}
+    az backup container re-register --workload-type {MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase, SQLInstance}
                                     [--acquire-policy-token]
                                     [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
                                     [--change-reference]
@@ -92,9 +92,9 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --workload-type
-    acceptedValues: MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase
+    acceptedValues: MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase, SQLInstance
     summary: |-
-      Specify the type of applications within the Resource which should be discovered and protected by Azure Backup. 'MSSQL' and 'SQLDataBase' can be used interchangeably for SQL in Azure VM, as can 'SAPHANA' and 'SAPHanaDatabase' for SAP HANA in Azure VM.
+      Specify the type of applications within the Resource which should be discovered and protected by Azure Backup. 'MSSQL' and 'SQLDataBase' can be used interchangeably for SQL databases in Azure VM. Use 'SQLInstance' for SQL instance snapshot protection. 'SAPHANA' and 'SAPHanaDatabase' are interchangeable for SAP HANA in Azure VM.
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -167,11 +167,12 @@ directCommands:
   syntax: >-
     az backup container register --resource-group
                                  --vault-name
-                                 --workload-type {AzureFileShare, MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase}
+                                 --workload-type {AzureFileShare, MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase, SQLInstance}
                                  [--access-type {IdentityBased, KeyBased}]
                                  [--acquire-policy-token]
                                  [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
                                  [--change-reference]
+                                 [--container-sub-id --container-subscription-id]
                                  [--mi-system-assigned]
                                  [--mi-user-assigned]
                                  [--resource-id]
@@ -198,9 +199,9 @@ directCommands:
       Name of the Recovery services vault.
   - isRequired: true
     name: --workload-type
-    acceptedValues: AzureFileShare, MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase
+    acceptedValues: AzureFileShare, MSSQL, SAPASE, SAPAseDatabase, SAPHANA, SAPHanaDBInstance, SAPHanaDatabase, SQLDataBase, SQLInstance
     summary: |-
-      Specify the type of applications within the Resource which should be discovered and protected by Azure Backup. 'MSSQL' and 'SQLDataBase' can be used interchangeably for SQL in Azure VM, as can 'SAPHANA' and 'SAPHanaDatabase' for SAP HANA in Azure VM.
+      Specify the type of applications within the Resource which should be discovered and protected by Azure Backup. 'MSSQL' and 'SQLDataBase' can be used interchangeably for SQL databases in Azure VM. Use 'SQLInstance' for SQL instance snapshot protection. 'SAPHANA' and 'SAPHanaDatabase' are interchangeable for SAP HANA in Azure VM.
   optionalParameters:
   - name: --access-type
     acceptedValues: IdentityBased, KeyBased
@@ -219,6 +220,9 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --container-sub-id --container-subscription-id
+    summary: |-
+      Subscription containing the VM to discover. The vault remains in the subscription selected by --subscription.
   - name: --mi-system-assigned
     summary: |-
       Use the Recovery Services vault's system-assigned managed identity.
@@ -422,5 +426,5 @@ commands:
 - az_backup_container_show
 - az_backup_container_unregister
 metadata:
-  ms.date: 10/20/2026
+  ms.date: 11/06/2026
   description: Resource which houses items or applications to be protected.

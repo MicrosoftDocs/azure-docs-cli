@@ -113,8 +113,10 @@ directCommands:
                                        [--change-reference]
                                        [--database-name]
                                        [--federated-client-id]
+                                       [--fips-mode {Disabled, Enabled}]
                                        [--geo-redundant-backup {Disabled, Enabled}]
                                        [--identity]
+                                       [--immutable-backup {Disabled, Enabled}]
                                        [--iops]
                                        [--key]
                                        [--location]
@@ -126,6 +128,8 @@ directCommands:
                                        [--private-dns-zone]
                                        [--public-access]
                                        [--resource-group]
+                                       [--sag-increment-percent --storage-auto-grow-increment-percent]
+                                       [--sag-max-threshold --storage-auto-grow-max-threshold-mb]
                                        [--sku-name]
                                        [--standby-zone]
                                        [--storage-auto-grow {Disabled, Enabled}]
@@ -149,6 +153,12 @@ directCommands:
         --sku-name Standard_D2s_v3 --tier GeneralPurpose --public-access 153.24.26.117 --storage-size 128 \
         --tags "key=value" --version 19 --zonal-resiliency Enabled --zone 1 \
         --standby-zone 3
+  - summary: |-
+      Create a PostgreSQL flexible server with immutable backups retained for 25 days.
+    syntax: >-
+      az postgres flexible-server create --resource-group testgroup --name testserver --location testlocation \
+        --sku-name Standard_D2s_v3 --tier GeneralPurpose --storage-size 64 --version 16 \
+        --backup-retention 25 --immutable-backup Enabled
   - summary: |-
       Create server with high availability feature enabled that allows primary and standby in the same zone when multi-zone capacity is unavailable.
     syntax: az postgres flexible-server create -g testgroup -n testserver --location testlocation --zonal-resiliency Enabled --allow-same-zone
@@ -338,11 +348,22 @@ directCommands:
       Create flexible server with storage auto-grow as Enabled. Accepted values Enabled / Disabled. Default value for storage auto-grow is "Disabled".
     syntax: az postgres flexible-server create -g testgroup -n testserver --location testlocation --storage-auto-grow Enabled
   - summary: |-
+      Create a Premium SSD v2 server with autogrow capped at 262144 MB and a 10 percent storage increment.
+    syntax: >-
+      az postgres flexible-server create -g testgroup -n testserver --location testlocation
+        --tier GeneralPurpose --sku-name Standard_D2ds_v4 --version 16
+        --storage-type PremiumV2_LRS --storage-size 128 --iops 3000 --throughput 125
+        --storage-auto-grow Enabled --storage-auto-grow-max-threshold-mb 262144
+        --storage-auto-grow-increment-percent 10
+  - summary: |-
       Create elastic cluster with node count of 5.
     syntax: az postgres flexible-server create -g testgroup -n testcluster --location testlocation --node-count 5
   - summary: |-
       Create elastic cluster with node count of 3 and custom database name.
     syntax: az postgres flexible-server create -g testgroup -n testcluster --location testlocation --node-count 3 --database-name testdatabase
+  - summary: |-
+      Create a flexible server with FIPS mode enabled.
+    syntax: az postgres flexible-server create --resource-group testgroup --name testserver --location eastus2 --fips-mode Enabled
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -363,7 +384,7 @@ directCommands:
     summary: |-
       Type of the Microsoft Entra administrator.
   - name: --admin-user -u
-    defaultValue: maleopossum0
+    defaultValue: contenthound4
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
@@ -394,6 +415,10 @@ directCommands:
   - name: --federated-client-id
     summary: |-
       The client ID of the federated identity.
+  - name: --fips-mode
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable FIPS (Federal Information Processing Standards) mode. The service default is Disabled on creation. If omitted on update, the current value is preserved.
   - name: --geo-redundant-backup
     defaultValue: Disabled
     acceptedValues: Disabled, Enabled
@@ -402,6 +427,10 @@ directCommands:
   - name: --identity
     summary: |-
       The name or resource identifier of the user assigned identity for data encryption.
+  - name: --immutable-backup
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable immutable backups at server creation. When enabled, backups cannot be changed or deleted during the retention period.
   - name: --iops
     summary: |-
       Value of IOPS in (operations/sec) to be allocated for this server. This value can only be updated if flexible server is using Premium SSD v2 Disks.
@@ -439,6 +468,12 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --sag-increment-percent --storage-auto-grow-increment-percent
+    summary: |-
+      Storage autogrow increment as a positive percentage of the current allocated storage size, not an absolute size increment or a utilization threshold. Requires PremiumV2_LRS storage with autogrow enabled; for update, autogrow must already be enabled.
+  - name: --sag-max-threshold --storage-auto-grow-max-threshold-mb
+    summary: |-
+      Maximum allocated storage size autogrow may reach, in MB, not a disk-utilization trigger threshold. Must be at least the current or requested storage size (1 GB = 1,024 MB). Requires PremiumV2_LRS storage with autogrow enabled; for update, autogrow must already be enabled.
   - name: --sku-name
     summary: |-
       The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.
@@ -770,7 +805,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-11-12T11:15:18+00:00
+    defaultValue: 2026-11-12T23:13:46+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
   - name: --subnet
@@ -1179,7 +1214,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-11-12T11:15:18+00:00
+    defaultValue: 2026-11-12T23:13:46+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2026-03-22T18:20:22+00:00 The default value is set to current time.
   - name: --sku-name
@@ -1378,6 +1413,9 @@ directCommands:
   - summary: |-
       Get the details of a flexible server
     syntax: az postgres flexible-server show --resource-group testgroup --name testserver
+  - summary: |-
+      Show the FIPS mode of a flexible server.
+    syntax: az postgres flexible-server show --resource-group testgroup --name testserver --query fipsMode
   optionalParameters:
   - name: --ids
     summary: |-
@@ -1666,6 +1704,7 @@ directCommands:
                                        [--backup-retention]
                                        [--change-reference]
                                        [--federated-client-id]
+                                       [--fips-mode {Disabled, Enabled}]
                                        [--force-string]
                                        [--identity]
                                        [--ids]
@@ -1681,6 +1720,8 @@ directCommands:
                                        [--public-access {Disabled, Enabled}]
                                        [--remove]
                                        [--resource-group]
+                                       [--sag-increment-percent --storage-auto-grow-increment-percent]
+                                       [--sag-max-threshold --storage-auto-grow-max-threshold-mb]
                                        [--set]
                                        [--sku-name]
                                        [--standby-zone]
@@ -1728,6 +1769,11 @@ directCommands:
       Update a flexible server's storage to enable / disable storage auto-grow.
     syntax: az postgres flexible-server update --resource-group testgroup --name testserver --storage-auto-grow Enabled
   - summary: |-
+      Set an autogrow maximum of 524288 MB and a 20 percent increment on a Premium SSD v2 server with autogrow already enabled.
+    syntax: >-
+      az postgres flexible-server update --resource-group testgroup --name testserver
+        --storage-auto-grow-max-threshold-mb 524288 --storage-auto-grow-increment-percent 20
+  - summary: |-
       Update a flexible server's storage to set custom storage performance tier.
     syntax: az postgres flexible-server update --resource-group testgroup --name testserver --performance-tier P15
   - summary: |-
@@ -1739,6 +1785,12 @@ directCommands:
   - summary: |-
       Update a flexible server's cluster size by scaling up node count. Must be an elastic cluster.
     syntax: az postgres flexible-server update --resource-group testGroup --name testcluster --node-count 6
+  - summary: |-
+      Enable FIPS mode on a flexible server.
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --fips-mode Enabled
+  - summary: |-
+      Disable FIPS mode on a flexible server.
+    syntax: az postgres flexible-server update --resource-group testgroup --name testserver --fips-mode Disabled
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -1776,6 +1828,10 @@ directCommands:
   - name: --federated-client-id
     summary: |-
       The client ID of the federated identity.
+  - name: --fips-mode
+    acceptedValues: Disabled, Enabled
+    summary: |-
+      Enable or disable FIPS (Federal Information Processing Standards) mode. The service default is Disabled on creation. If omitted on update, the current value is preserved.
   - name: --force-string
     defaultValue: "False"
     summary: |-
@@ -1831,6 +1887,12 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
+  - name: --sag-increment-percent --storage-auto-grow-increment-percent
+    summary: |-
+      Storage autogrow increment as a positive percentage of the current allocated storage size, not an absolute size increment or a utilization threshold. Requires PremiumV2_LRS storage with autogrow enabled; for update, autogrow must already be enabled.
+  - name: --sag-max-threshold --storage-auto-grow-max-threshold-mb
+    summary: |-
+      Maximum allocated storage size autogrow may reach, in MB, not a disk-utilization trigger threshold. Must be at least the current or requested storage size (1 GB = 1,024 MB). Requires PremiumV2_LRS storage with autogrow enabled; for update, autogrow must already be enabled.
   - name: --set
     defaultValue: '[]'
     summary: |-
@@ -1898,6 +1960,8 @@ directCommands:
   name: az postgres flexible-server upgrade
   summary: |-
     Upgrade the major version of a flexible server.
+  description: |-
+    Supports flexible servers, including elastic clusters. The --validate-only parameter is not supported for elastic clusters.
   status: GA
   sourceType: Core
   syntax: >-

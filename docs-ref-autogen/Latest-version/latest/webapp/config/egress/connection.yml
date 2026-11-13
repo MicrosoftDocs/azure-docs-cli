@@ -1,0 +1,325 @@
+### YamlMime:AzureCLIGroup
+uid: az_webapp_config_egress_connection
+name: az webapp config egress connection
+summary: |-
+  Manage named connections in a web app's egress configuration.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'webapp config egress' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Core
+directCommands:
+- uid: az_webapp_config_egress_connection_add
+  name: az webapp config egress connection add
+  summary: |-
+    Add or replace a named egress connection.
+  description: |-
+    Preserve other connections and the enabled state. An existing connection with the same name
+    is replaced, regardless of casing. Only the supplied connection is returned.
+    If the enabled state is missing, initialize it to Disabled. Use "az webapp config egress set
+    --enabled true" to enable virtual connections after adding a connection.
+    Setting arguments accept existing setting names, not their values. The platform validates
+    protocol and authentication combinations. Managed identities must already be assigned to the app.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'webapp config egress connection' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  syntax: >-
+    az webapp config egress connection add --auth {Credential, ManagedIdentity}
+                                           --connection-name
+                                           --protocol {Http, Postgres, Redis, Tds}
+                                           [--acquire-policy-token]
+                                           [--change-reference]
+                                           [--credential-format]
+                                           [--credential-header]
+                                           [--credential-setting]
+                                           [--host-setting]
+                                           [--identity-resource-id]
+                                           [--identity-scope]
+                                           [--ids]
+                                           [--name]
+                                           [--resource-group]
+                                           [--slot]
+                                           [--source {AppSettings, ConnectionStrings}]
+                                           [--subscription]
+                                           [--username-setting]
+                                           [--value-setting]
+  examples:
+  - summary: |-
+      Add a SQL connection that uses managed identity and an existing connection string.
+    syntax: az webapp config egress connection add --resource-group MyRG --name MyApp --connection-name orders-db --source ConnectionStrings --protocol Tds --auth ManagedIdentity --value-setting OrdersDb
+  - summary: |-
+      Add a PostgreSQL connection composed of separate app settings.
+    syntax: az webapp config egress connection add --resource-group MyRG --name MyApp --connection-name postgres --source AppSettings --protocol Postgres --auth Credential --host-setting PG_HOST --username-setting PG_USER --credential-setting PG_PASSWORD
+  - summary: |-
+      Use a user-assigned identity with a custom token scope for a deployment slot.
+    syntax: az webapp config egress connection add --resource-group MyRG --name MyApp --slot staging --connection-name api --protocol Http --auth ManagedIdentity --host-setting API_HOST --identity-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity --identity-scope https://storage.azure.com/.default
+  - summary: |-
+      Inject an HTTP credential using a header format.
+    syntax: az webapp config egress connection add --resource-group MyRG --name MyApp --connection-name api --protocol Http --auth Credential --host-setting API_HOST --credential-setting API_TOKEN --credential-header Authorization --credential-format "Bearer {value}"
+  requiredParameters:
+  - isRequired: true
+    name: --auth
+    acceptedValues: Credential, ManagedIdentity
+    summary: |-
+      Backend authentication strategy.
+  - isRequired: true
+    name: --connection-name
+    summary: |-
+      Name of the egress connection. Names are case-insensitive.
+  - isRequired: true
+    name: --protocol
+    acceptedValues: Http, Postgres, Redis, Tds
+    summary: |-
+      Backend protocol.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --credential-format
+    summary: |-
+      HTTP credential header format, for example "Bearer {value}". Requires --credential-header.
+  - name: --credential-header
+    summary: |-
+      HTTP header used to inject a standalone credential, for example Authorization.
+  - name: --credential-setting
+    summary: |-
+      Name of the setting containing the credential, not the credential value.
+  - name: --host-setting
+    summary: |-
+      Name of the setting containing the backend host, not the host value.
+  - name: --identity-resource-id
+    summary: |-
+      Resource ID of a user-assigned identity already assigned to the app. By default, use the system-assigned identity.
+  - name: --identity-scope
+    summary: |-
+      Scope used to acquire a managed identity token for the backend connection.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --slot -s
+    summary: |-
+      The name of the slot. Default to the productions slot if not specified.
+  - name: --source
+    defaultValue: AppSettings
+    acceptedValues: AppSettings, ConnectionStrings
+    summary: |-
+      Source of the referenced settings. Defaults to AppSettings.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --username-setting
+    summary: |-
+      Name of the setting containing the username, not the username value.
+  - name: --value-setting
+    summary: |-
+      Name of the setting containing the complete connection string or URL.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_webapp_config_egress_connection_remove
+  name: az webapp config egress connection remove
+  summary: |-
+    Remove a named egress connection.
+  description: |-
+    Preserve other connections and the enabled state unless the last connection is removed.
+    Removing the last connection clears the entire egress configuration, including its enabled state.
+    A warning is shown and confirmation is required only when removing the last connection.
+    Use --yes or -y to skip confirmation for automation; the warning is still shown.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'webapp config egress connection' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  syntax: >-
+    az webapp config egress connection remove --connection-name
+                                              [--acquire-policy-token]
+                                              [--change-reference]
+                                              [--ids]
+                                              [--name]
+                                              [--resource-group]
+                                              [--slot]
+                                              [--subscription]
+                                              [--yes]
+  examples:
+  - summary: |-
+      Remove the orders database connection.
+    syntax: az webapp config egress connection remove --resource-group MyRG --name MyApp --connection-name orders-db
+  - summary: |-
+      Remove a connection from a deployment slot.
+    syntax: az webapp config egress connection remove --resource-group MyRG --name MyApp --slot staging --connection-name cache
+  - summary: |-
+      Remove the last connection without prompting for confirmation.
+    syntax: az webapp config egress connection remove --resource-group MyRG --name MyApp --connection-name cache --yes
+  requiredParameters:
+  - isRequired: true
+    name: --connection-name
+    summary: |-
+      Name of the egress connection. Names are case-insensitive.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --slot -s
+    summary: |-
+      The name of the slot. Default to the productions slot if not specified.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation when removing the last connection.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_webapp_config_egress_connection_show
+  name: az webapp config egress connection show
+  summary: |-
+    Show a named egress connection.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'webapp config egress connection' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  syntax: >-
+    az webapp config egress connection show --connection-name
+                                            [--ids]
+                                            [--name]
+                                            [--resource-group]
+                                            [--slot]
+                                            [--subscription]
+  examples:
+  - summary: |-
+      Show the orders database connection.
+    syntax: az webapp config egress connection show --resource-group MyRG --name MyApp --connection-name orders-db
+  - summary: |-
+      Show the setting roles for a connection in a deployment slot.
+    syntax: az webapp config egress connection show --resource-group MyRG --name MyApp --slot staging --connection-name cache --query settings
+  requiredParameters:
+  - isRequired: true
+    name: --connection-name
+    summary: |-
+      Name of the egress connection. Names are case-insensitive.
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
+    groupName: Resource Id Arguments
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --slot -s
+    summary: |-
+      The name of the slot. Default to the productions slot if not specified.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_webapp_config_egress_connection_add
+- az_webapp_config_egress_connection_remove
+- az_webapp_config_egress_connection_show
+metadata:
+  description: Manage named connections in a web app's egress configuration.
