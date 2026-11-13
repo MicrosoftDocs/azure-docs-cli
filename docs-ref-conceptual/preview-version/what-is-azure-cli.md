@@ -1,6 +1,6 @@
 ---
 title: Azure CLI overview and features (preview)
-description: Explore the Azure CLI preview, its key capabilities, and how it relates to the latest and LTS versions. Find guidance to get started.
+description: Explore the Azure CLI preview and its key capabilities. Find guidance to get started.
 ms.topic: overview
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -12,18 +12,14 @@ ai-usage: ai-generated
 
 The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that connects to Azure and runs administrative commands on Azure resources. Use it interactively at a shell prompt or run commands in a script.
 
-The next-generation Azure CLI, available in preview, builds on this experience with named sign-in profiles, shell-native tab completion, and optional AI-based error recovery. This article introduces the next-generation preview and explains how it differs from the generally available Azure CLI.
+The next-generation Azure CLI, available in preview, builds on this experience with profile-based authentication, shell-native tab completion, and optional AI-based error recovery. This article introduces the next-generation preview and explains how it differs from the generally available Azure CLI.
 
 > [!NOTE]
 > The next-generation Azure CLI is in preview. Not all Azure CLI and Azure PowerShell scenarios are available, and features might change between releases. For supported environments and current limitations, see [Get started with the next-generation Azure CLI (preview)][01].
 
 ## Azure CLI versions
 
-The Azure CLI documentation provides separate views for these versions:
-
-- **[Latest][02]**: Documentation for the latest generally available Azure CLI.
-- **[LTS][03]**: Documentation for the long-term support version of the Azure CLI.
-- **Preview**: Documentation for the next-generation Azure CLI, including preview-specific installation, authentication, and configuration guidance.
+The Azure CLI preview documentation covers the next-generation Azure CLI, including preview-specific installation, authentication, and configuration guidance.
 
 The next-generation Azure CLI preview can coexist with your existing Azure CLI installation, so you can evaluate it without replacing your current tools. For coexistence guidance, see [Switch between the classic Azure CLI and the preview build][04].
 
@@ -31,7 +27,7 @@ The next-generation Azure CLI preview can coexist with your existing Azure CLI i
 
 The next-generation Azure CLI preview includes these capabilities:
 
-- **Named sign-in profiles** save authentication contexts for different accounts, tenants, and subscriptions. For details, see [Manage sign-in profiles in Azure CLI (preview)][07].
+- **Profile-based authentication** saves authentication contexts for different accounts, tenants, and subscriptions. For details, see [Manage sign-in profiles in Azure CLI (preview)][07].
 - **Shell-native tab completion** suggests commands, parameters, and values as you type. For setup instructions, see [Enable Azure CLI preview tab completion][09].
 - **Optional AI-based error recovery** analyzes failed commands and suggests corrective actions. AI-generated suggestions might be inaccurate and require review before use. For details, see [AI-based error recovery in Azure CLI (preview)][11].
 - **Structured output** uses JSON by default, with other formats available for readability and scripting. For available commands and output options, see the [Azure CLI preview command reference][08].
@@ -54,8 +50,6 @@ The next-generation Azure CLI preview sends usage telemetry by default. For tele
 <!-- link references -->
 
 [01]: ./get-started-with-azure-cli.md
-[02]: /cli/azure/what-is-azure-cli?view=azure-cli-latest&preserve-view=true
-[03]: /cli/azure/what-is-azure-cli?view=azure-cli-lts&preserve-view=true
 [04]: ./switch-cli-versions.md
 [05]: ./install-overview.md
 [06]: ./whats-new.md
