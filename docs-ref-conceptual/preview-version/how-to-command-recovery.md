@@ -18,6 +18,12 @@ When you finish, you've received an explanation and a suggested fix for a failed
 
 For more information about how AI troubleshooting works, the AI provider it uses, and the data it collects, see [AI-based error recovery in Azure CLI](ai-based-error-recovery.md).
 
+## Watch an AI troubleshooting demo
+
+Watch this demo to see how to use automatic and manual error recovery to diagnose failed commands, then turn the feature off. Review AI suggestions before you run them.
+
+> [!VIDEO https://learn-video.azurefd.net/vod/player?id=d57d5383-3ffa-4d39-8628-43668a0f6849]
+
 ## Prerequisites
 
 - Bash or zsh on Linux or macOS, or PowerShell 7.6 or later on Windows.
