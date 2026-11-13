@@ -37,9 +37,8 @@ Or explicitly install the cask:
 brew update && brew install --cask azure-cli
 ```
 
-Beginning with Azure CLI version [2.85.0][09] (preview), Azure CLI also supports installation
-through Homebrew Cask. Homebrew Cask installation was introduced to provide a more secure
-installation method and to support broker-based authentication on macOS.
+Azure CLI supports installation through Homebrew Cask on macOS. This installation method
+provides a secure way to install Azure CLI and supports broker-based authentication on macOS.
 
 ## Troubleshooting
 
