@@ -272,6 +272,124 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_workload-manager_workload-space_up
+  name: az workload-manager workload-space up
+  summary: |-
+    Provision a workload space with runtime bindings, a runtime link, and capabilities.
+  description: |-
+    Deploy a workload space, managed AKS and ACI runtime bindings, a runtime link,
+    and AgentSandbox and PodSnapshotRestore capabilities. Use an existing resource
+    group with the required provider registrations and service permissions configured.
+
+    Location defaults to your configured location, or the resource group's location
+    if no default is configured. Use --location to select another supported location.
+
+    Supply --managed-cluster-resource-id, --workload-execution-subnet-id and
+    --runtime-link-subnet-id together to use an existing AKS cluster. The cluster
+    must be in the selected subscription and location. Both subnets must be in
+    that subscription and the cluster's VNet; the runtime-link subnet must be empty
+    and separate from the AKS and ACI subnets. The service validates cluster topology.
+
+    Child names are aks, aci, link, agent-sandbox and pod-snapshot-restore.
+    Reruns update the same resources and reapply the supplied configuration.
+    Existing bindings must retain their managed or referenced mode. Unrelated
+    resources are preserved. If deployment fails, resources already created remain
+    available; review deployment errors before retrying.
+
+    Return the ARM deployment result, with the workload-space ID in its outputs.
+    --no-wait returns after submission; ARM continues the entire deployment.
+    Use az deployment group show to inspect deployment progress or failures.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az workload-manager workload-space up --name --space-name
+                                          --resource-group
+                                          [--acquire-policy-token]
+                                          [--change-reference]
+                                          [--deployment-name]
+                                          [--execution-subnet-id --workload-execution-subnet-id]
+                                          [--location]
+                                          [--managed-cluster-id --managed-cluster-resource-id]
+                                          [--no-wait]
+                                          [--runtime-link-subnet-id]
+                                          [--tags]
+  examples:
+  - summary: |-
+      Provision a managed runtime composition using the default location.
+    syntax: az workload-manager workload-space up --resource-group MyResourceGroup --name MySpace
+  - summary: |-
+      Use an existing AKS cluster with separate ACI and runtime-link subnets.
+    syntax: az workload-manager workload-space up --resource-group MyResourceGroup --name MySpace --location eastus2 --managed-cluster-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ClusterRG/providers/Microsoft.ContainerService/managedClusters/MyCluster --workload-execution-subnet-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/NetworkRG/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/aci --runtime-link-subnet-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/NetworkRG/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/link
+  - summary: |-
+      Submit a named deployment without waiting for completion.
+    syntax: az workload-manager workload-space up -g MyResourceGroup -n MySpace -l eastus2 --deployment-name MyDeployment --tags environment=dev --no-wait
+  requiredParameters:
+  - isRequired: true
+    name: --name --space-name -n
+    summary: |-
+      Name of the workload space.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --deployment-name
+    summary: |-
+      ARM deployment name. Defaults to the workload-space name.
+  - name: --execution-subnet-id --workload-execution-subnet-id
+    summary: |-
+      ACI execution subnet resource ID. Requires --managed-cluster-resource-id and --runtime-link-subnet-id.
+  - name: --location -l
+    summary: |-
+      Deployment location. Defaults to the configured location or the resource group location.
+  - name: --managed-cluster-id --managed-cluster-resource-id
+    summary: |-
+      Resource ID of an existing AKS cluster in the selected subscription and location. Requires both subnet IDs.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --runtime-link-subnet-id
+    summary: |-
+      Empty subnet resource ID for the runtime link. Must be distinct from the execution subnet, in the same VNet. Requires --managed-cluster-resource-id and --workload-execution-subnet-id.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_workload-manager_workload-space_update
   name: az workload-manager workload-space update
   summary: |-
@@ -477,6 +595,7 @@ commands:
 - az_workload-manager_workload-space_runtime-link_update
 - az_workload-manager_workload-space_runtime-link_wait
 - az_workload-manager_workload-space_show
+- az_workload-manager_workload-space_up
 - az_workload-manager_workload-space_update
 - az_workload-manager_workload-space_wait
 metadata:
