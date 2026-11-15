@@ -1,16 +1,18 @@
 ---
-title: Install the Azure CLI preview manually or offline
-description: Learn how to install the Azure CLI preview manually or offline when the one-command installer isn't available.
-ms.date: 10/27/2026
+title: Install the Azure CLI public preview manually or offline
+description: Learn how to install the Azure CLI public preview manually or offline when the one-command installer isn't available.
+ms.date: 11/13/2026
 ---
 
-# Install the Azure CLI preview manually or offline
+# Install the Azure CLI public preview manually or offline
 
-> **Most users should use the [one-command installer](install-overview.md).** Use this guide for offline installs, as a fallback when `gh` isn't available, when you already have the archive, or to understand the steps the installer performs.
+> **Most users should use the [one-command installer](install-overview.md).** Use this guide for offline installs, as a fallback when the installer or its download fails, when you already have the archive, or to understand the steps the installer performs. Neither method requires the GitHub CLI or GitHub sign-in.
 
 Get from a downloaded azcli archive to a working `az` command: pick the file for your OS and CPU, extract it, and run `az` from that folder. Adding it to `PATH` is optional and manual.
 
 ## Pick your download
+
+Download the archive from the public [GitHub Releases](https://github.com/Azure/azclips/releases) page. For an offline machine, download it on a connected machine and transfer the archive.
 
 First choose a package type:
 
@@ -31,6 +33,7 @@ Use the `linux-musl` archives on musl-based distributions such as Alpine Linux. 
 | Linux with glibc on Arm64 | `azcli-lean-<version>-linux-arm64.tar.gz` | `azcli-<version>-linux-arm64.tar.gz` |
 | Linux with musl on Intel/AMD 64-bit | `azcli-lean-<version>-linux-musl-x64.tar.gz` | `azcli-<version>-linux-musl-x64.tar.gz` |
 | Linux with musl on Arm64 | `azcli-lean-<version>-linux-musl-arm64.tar.gz` | `azcli-<version>-linux-musl-arm64.tar.gz` |
+| macOS on Intel | `azcli-lean-<version>-macos-x86_64.tar.gz` | `azcli-<version>-macos-x86_64.tar.gz` |
 | macOS on Apple Silicon | `azcli-lean-<version>-macos-arm64.tar.gz` | `azcli-<version>-macos-arm64.tar.gz` |
 
 Both packages are self-contained — you do not need the .NET SDK to run them.
@@ -39,7 +42,7 @@ Both packages are self-contained — you do not need the .NET SDK to run them.
 
 Extract the archive anywhere you like, then run `az` straight from that folder — the CLI is self-contained. Replace `<version>` and the platform suffix with your downloaded file.
 
-**Linux / macOS** (`.tar.gz`):
+**Linux / macOS / WSL** (`.tar.gz`):
 
 ```bash
 mkdir -p ~/.local/share/azcli
@@ -62,7 +65,7 @@ On macOS, if the binary is blocked after download, validate the source, then run
 The archive is not registered on your `PATH`, so `az` isn't found automatically — run it by full path, or add its folder to `PATH` yourself. For the current shell only:
 
 ```bash
-export PATH="$HOME/.local/share/azcli:$PATH"               # Linux / macOS
+export PATH="$HOME/.local/share/azcli:$PATH"               # Linux / macOS / WSL
 ```
 
 ```powershell
@@ -84,6 +87,7 @@ Commands that contact Azure require sign-in and a subscription. If `az` is found
 
 | Symptom | Fix |
 | --- | --- |
+| Installer release lookup returns HTTP 403 or 429 | Check GitHub's response and retry after the API rate limit resets, or download the archive from [GitHub Releases](https://github.com/Azure/azclips/releases) and extract it using this guide. |
 | `az` is not found | Run `az` by its full path, or add its folder to `PATH`. For more information, see [Adding `az` to PATH](#adding-az-to-path-optional-manual). |
 | Permission denied (Linux/macOS) | Run `chmod +x <install-root>/az`. |
 | macOS blocks the binary | Validate the source, then `xattr -dr com.apple.quarantine <install-root>`. |
