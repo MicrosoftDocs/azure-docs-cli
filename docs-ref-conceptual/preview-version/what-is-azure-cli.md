@@ -53,7 +53,7 @@ The next-generation Azure CLI preview sends usage telemetry by default. For tele
 [04]: ./switch-cli-versions.md
 [05]: ./install-azure-cli.md
 [06]: ./whats-new-overview.md
-[07]: ./authenticate-azure-cli.md
+[07]: ./profile-base-login.md
 [08]: ../../docs-ref-autogen/preview-version/latest/reference-index.yml
 [09]: ./install-cli-completions.md
 [10]: ./azure-cli-configuration.md
