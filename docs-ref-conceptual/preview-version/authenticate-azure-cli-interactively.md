@@ -80,7 +80,7 @@ az logout
 
 ## Related content
 
-- For more information, see [Manage sign-in profiles](authenticate-azure-cli.md).
+- For more information, see [Manage sign-in profiles](profile-base-login.md).
 - For more information, see [Quickstart: Set up and switch sign-in profiles](quickstart-profiles.md).
 - For more information, see [Manage Azure subscriptions with the Azure CLI (preview)](manage-azure-subscriptions-azure-cli.md).
 - For more information, see [Get started with the preview](get-started-with-azure-cli.md).

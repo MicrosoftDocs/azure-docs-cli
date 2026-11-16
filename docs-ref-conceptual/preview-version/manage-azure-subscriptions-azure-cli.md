@@ -81,6 +81,6 @@ The response body contains a `value` array with one entry for each subscription 
 ## Related content
 
 - For more information, see [Sign in interactively with the Azure CLI (preview)](authenticate-azure-cli-interactively.md).
-- For more information, see [Manage sign-in profiles](authenticate-azure-cli.md).
+- For more information, see [Manage sign-in profiles](profile-base-login.md).
 - For more information, see [Quickstart: Set up and switch sign-in profiles](quickstart-profiles.md).
 - For more information, see [Discover commands and call Azure REST APIs](how-to-discover-commands-rest.md).
