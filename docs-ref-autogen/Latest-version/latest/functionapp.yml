@@ -15,7 +15,7 @@ directCommands:
   summary: |-
     Create a function app.
   description: |-
-    The function app's name must be able to produce a unique FQDN as AppName.azurewebsites.net.
+    The function app's name must be able to produce a unique FQDN as AppName.azurewebsites.net. Flex Consumption apps created with --deployment-image use the Recreate site update strategy by default.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
@@ -39,6 +39,11 @@ directCommands:
                           [--dapr-http-read-buffer-size --dhrbs]
                           [--dapr-log-level {debug, error, info, warn}]
                           [--deployment-container-image-name]
+                          [--deployment-image]
+                          [--deployment-image-auth-type --diat {Anonymous, Basic, SystemAssignedIdentity, UserAssignedIdentity}]
+                          [--deployment-image-identity --dii]
+                          [--deployment-image-password-setting --dips]
+                          [--deployment-image-username-setting --dius]
                           [--deployment-local-git]
                           [--deployment-source-branch]
                           [--deployment-source-url]
@@ -89,6 +94,9 @@ directCommands:
   - summary: |-
       Create a flex consumption function app. See https://aka.ms/flex-http-concurrency for more information on default http concurrency values.
     syntax: az functionapp create -g MyResourceGroup --name MyUniqueAppName -s MyStorageAccount --flexconsumption-location northeurope --runtime java --instance-memory 2048
+  - summary: |-
+      Create a flex consumption function app from an Azure Container Registry image using a system-assigned identity.
+    syntax: az functionapp create -g MyResourceGroup --name MyUniqueAppName -s MyStorageAccount --flexconsumption-location northeurope --deployment-image myregistry.azurecr.io/myimage:v1 --deployment-image-auth-type SystemAssignedIdentity --assign-identity [system] --role AcrPull --scope /subscriptions/<subscription-id>/resourceGroups/MyResourceGroup/providers/Microsoft.ContainerRegistry/registries/myregistry
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -160,6 +168,32 @@ directCommands:
       Container image, e.g. publisher/image-name:tag.
     isDeprecated: true
     deprecateInfo: Option '--deployment-container-image-name' has been deprecated and will be removed in a future release. Use '--image' instead.
+  - name: --deployment-image
+    summary: |-
+      Container image for a Flex Consumption app, specified by tag or digest, e.g. `myregistry.azurecr.io/myimage:v1` or `myregistry.azurecr.io/myimage@sha256:<digest>`.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-auth-type --diat
+    acceptedValues: Anonymous, Basic, SystemAssignedIdentity, UserAssignedIdentity
+    summary: |-
+      How the platform authenticates to the registry: Anonymous (public image), SystemAssignedIdentity, UserAssignedIdentity (requires --deployment-image-identity), or Basic (requires --deployment-image-username-setting and --deployment-image-password-setting). The CLI doesn't assign identities or grant registry access.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-identity --dii
+    summary: |-
+      Resource ID of the user-assigned managed identity used to pull the image. Only valid with UserAssignedIdentity. Saved as provided; the CLI doesn't create, look up, or assign it.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-password-setting --dips
+    summary: |-
+      Name of the app setting that stores the registry password. Only valid with Basic. Pass the app setting name, not the password.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
+  - name: --deployment-image-username-setting --dius
+    summary: |-
+      Name of the app setting that stores the registry username. Only valid with Basic.
+    isPreview: true
+    groupName: Flex Registry Deployment Arguments
   - name: --deployment-local-git -l
     summary: |-
       Enable local git.

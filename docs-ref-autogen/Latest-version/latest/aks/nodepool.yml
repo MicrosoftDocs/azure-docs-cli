@@ -33,7 +33,7 @@ directCommands:
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
                         [--enable-fips-image]
-                        [--enable-managed-dranet]
+                        [--enable-managed-dranet {false, true}]
                         [--enable-managed-gpu]
                         [--enable-node-public-ip]
                         [--enable-secure-boot]
@@ -181,9 +181,9 @@ directCommands:
     description: |-
       Automatically enabled for Windows2025 node pools because Windows2025 requires a FIPS-enabled OS image.
   - name: --enable-managed-dranet
-    defaultValue: "False"
+    acceptedValues: false, true
     summary: |-
-      Enable Managed DRANET on the node pool.
+      Enable or disable Managed DRANET on the node pool.
   - name: --enable-managed-gpu
     defaultValue: "False"
     summary: |-
@@ -2538,7 +2538,7 @@ directCommands:
                            [--enable-artifact-streaming]
                            [--enable-cluster-autoscaler]
                            [--enable-fips-image]
-                           [--enable-managed-dranet]
+                           [--enable-managed-dranet {false, true}]
                            [--enable-secure-boot]
                            [--enable-vtpm]
                            [--gpu-driver {Install, None}]
@@ -2554,6 +2554,7 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
+                           [--node-vm-size]
                            [--os-sku {AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2022, Windows2025}]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--ssh-access {disabled, entraid, localuser}]
@@ -2580,6 +2581,9 @@ directCommands:
       az aks nodepool update --resource-group MyResourceGroup \
           --cluster-name MyManagedCluster --name npwin \
           --os-sku Windows2025 --enable-fips-image
+  - summary: |-
+      Resize the VMs of a VirtualMachineScaleSets node pool to Standard_D4s_v5.
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-vm-size Standard_D4s_v5
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -2647,9 +2651,9 @@ directCommands:
     summary: |-
       Switch to use FIPS-enabled OS on agent nodes.
   - name: --enable-managed-dranet
-    defaultValue: "False"
+    acceptedValues: false, true
     summary: |-
-      Enable Managed DRANET on the node pool.
+      Enable or disable Managed DRANET on the node pool.
   - name: --enable-secure-boot
     defaultValue: "False"
     summary: |-
@@ -2700,6 +2704,11 @@ directCommands:
   - name: --node-taints
     summary: |-
       The node taints for the node pool. You can update the existing node taint of a nodepool or create a new node taint for a nodepool. Pass the empty string `""` to remove all taints.
+  - name: --node-vm-size -s
+    summary: |-
+      Resize the VMs of a VirtualMachineScaleSets node pool.
+    description: |-
+      AKS replaces every node in the node pool with a node of the new size. It adds surge nodes of the new size, then cordons, drains and deletes the old nodes, following the node pool's upgrade settings (--max-surge, --max-unavailable, --drain-timeout, --node-soak-duration). The target size must be compatible with the current node pool configuration. Can be combined with --update-cluster-autoscaler, or with --enable-cluster-autoscaler/--disable-cluster-autoscaler when they change the autoscaler state. Not supported for VirtualMachines node pools; use "az aks nodepool manual-scale update" or "az aks nodepool auto-scale update" to change their VM sizes.
   - name: --os-sku
     acceptedValues: AzureContainerLinux, AzureLinux, AzureLinux3, Ubuntu, Ubuntu2204, Ubuntu2404, Windows2022, Windows2025
     summary: |-
