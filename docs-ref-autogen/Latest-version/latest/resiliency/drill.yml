@@ -1,0 +1,952 @@
+### YamlMime:AzureCLIGroup
+uid: az_resiliency_drill
+name: az resiliency drill
+extensionInformation: |-
+  > [!NOTE]
+  > This reference is part of the **resiliency** extension for the Azure CLI (version 2.75.0 or higher). The extension will automatically install the first time you run an **az resiliency drill** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Drill.
+status: GA
+sourceType: Extension
+directCommands:
+- uid: az_resiliency_drill_add-or-update-resource
+  name: az resiliency drill add-or-update-resource
+  summary: |-
+    This enables the user to include, exclude or update resources from their Drill.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill add-or-update-resource --drill-name
+                                               --fault-duration-in-min
+                                               --operation-id
+                                               --service-group-name
+                                               [--acquire-policy-token]
+                                               [--change-reference]
+                                               [--force-inclusion-and-update --force-update {Disable, Enable}]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--resource-lists]
+  examples:
+  - summary: |-
+      Add a virtual machine to a drill
+    syntax: az resiliency drill add-or-update-resource --service-group-name sampleServiceGroupName --drill-name drill1 --operation-id 3f1c2a4b-5d6e-4f70-8a9b-0c1d2e3f4a5b --fault-duration-in-min 10 --resource-lists "{include-resources:[{id:/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1}]}"
+  - summary: |-
+      Set the default fault of a resource in a drill
+    syntax: az resiliency drill add-or-update-resource --service-group-name sampleServiceGroupName --drill-name drill1 --operation-id 3f1c2a4b-5d6e-4f70-8a9b-0c1d2e3f4a5b --fault-duration-in-min 10 --resource-lists "{update-resources:[{id:/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1,fault-properties:{default-fault:{fault-name:VMShutdown,fault-urn:'urn:csci:microsoft:virtualMachine:shutdown/1.0',target-resource-id:/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1}}}]}"
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --fault-duration-in-min
+    summary: |-
+      Duration of faults.
+    groupName: Body Arguments
+  - isRequired: true
+    name: --operation-id
+    summary: |-
+      A GUID that represents the Long Running OperationId.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --force-inclusion-and-update --force-update
+    acceptedValues: Disable, Enable
+    summary: |-
+      Whether to allow inclusion and update despite attention reasons.
+    groupName: Body Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-lists
+    summary: |-
+      Add, Update, Delete resource lists  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Body Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_create
+  name: az resiliency drill create
+  summary: |-
+    Create a Drill.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill create --drill-name
+                               --service-group-name
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--chaos-properties --chaos-resource-properties]
+                               [--drill-asset-properties]
+                               [--goal-assignment-properties --goal-properties]
+                               [--health-model-monitoring-properties --health-properties]
+                               [--mi-system-assigned --system-assigned]
+                               [--mi-user-assigned --user-assigned]
+                               [--monitoring-properties]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--rbac-setup-mode {AutomatedBuiltinRoles, AutomatedCustomRole, Manual}]
+                               [--recovery-plan-properties --recovery-properties]
+                               [--regional]
+                               [--sli-monitoring-properties --sli-properties]
+                               [--zonal]
+  examples:
+  - summary: |-
+      Drills_Create_MaximumSet
+    syntax: az resiliency drill create --service-group-name sampleServiceGroupName --drill-name drill1 --rbac-setup-mode AutomatedCustomRole --recovery-plan-properties "{identity:{type:UserAssigned,userAssignedIdentity:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourcegroups/resourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1}}" --monitoring-properties "{identity:{type:UserAssigned,userAssignedIdentity:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourcegroups/resourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1}}" --drill-asset-properties "{subscription:4e88bed3-114f-443d-9975-28f64122ec5e,region:eastus,resource-group:customDrillResourceGroup}" --chaos-resource-properties "{identity:{type:UserAssigned,userAssignedIdentity:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourcegroups/resourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1},chaos-resource-identity-for-faults:{type:UserAssigned,userAssignedIdentity:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourcegroups/resourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1}}" --health-model-monitoring-properties "{identity:{type:UserAssigned,userAssignedIdentity:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourcegroups/resourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1},health-model-id:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourceGroups/contoso-health/providers/Microsoft.CloudHealth/healthmodels/contoso-payments-hm}" --sli-monitoring-properties "{identity:{type:UserAssigned,userAssignedIdentity:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourcegroups/resourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1},slis:[{sli-id:/providers/Microsoft.Management/serviceGroups/sampleServiceGroupName/providers/Microsoft.Monitor/slis/checkout-availability,type:Availability},{sli-id:/providers/Microsoft.Management/serviceGroups/sampleServiceGroupName/providers/Microsoft.Monitor/slis/checkout-latency,type:Latency}]}" --goal-assignment-properties "{identity:{type:UserAssigned,userAssignedIdentity:/subscriptions/4e88bed3-114f-443d-9975-28f64122ec5e/resourcegroups/resourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1}}"
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --chaos-properties --chaos-resource-properties
+    summary: |-
+      Chaos Resource properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --drill-asset-properties
+    summary: |-
+      Properties for internal resources that are created for the Drill.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --goal-assignment-properties --goal-properties
+    summary: |-
+      Goal Assignment properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --health-model-monitoring-properties --health-properties
+    summary: |-
+      Azure Health Model monitoring properties of the Drill.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --mi-system-assigned --system-assigned
+    summary: |-
+      Set the system managed identity.
+    groupName: Identity Arguments
+  - name: --mi-user-assigned --user-assigned
+    summary: |-
+      Set the user managed identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Identity Arguments
+  - name: --monitoring-properties
+    summary: |-
+      Monitoring properties of the Drill.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --rbac-setup-mode
+    acceptedValues: AutomatedBuiltinRoles, AutomatedCustomRole, Manual
+    summary: |-
+      RBAC setup mode.
+    groupName: Properties Arguments
+  - name: --recovery-plan-properties --recovery-properties
+    summary: |-
+      ROPlan properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --regional
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --sli-monitoring-properties --sli-properties
+    summary: |-
+      SLI monitoring properties of the Drill.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --zonal
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_delete
+  name: az resiliency drill delete
+  summary: |-
+    Delete a Drill.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill delete --drill-name
+                               --service-group-name
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--yes]
+  examples:
+  - summary: |-
+      Drills_Delete_MaximumSet
+    syntax: az resiliency drill delete --service-group-name sampleServiceGroupName --drill-name drill1
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_end
+  name: az resiliency drill end
+  summary: |-
+    This ends the currently running instance of the Drill.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill end --attestation {Failed, Success}
+                            --attestation-notes
+                            --drill-name
+                            --operation-id
+                            --service-group-name
+                            [--acquire-policy-token]
+                            [--change-reference]
+                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+  examples:
+  - summary: |-
+      Drills_End_MaximumSet
+    syntax: az resiliency drill end --service-group-name sampleServiceGroupName --operation-id qmn --drill-name drill1 --attestation Success --attestation-notes ycnqvrgduotohgycsapckhixwqwgp
+  requiredParameters:
+  - isRequired: true
+    name: --attestation
+    acceptedValues: Failed, Success
+    summary: |-
+      Attestation Status.
+    groupName: Body Arguments
+  - isRequired: true
+    name: --attestation-notes
+    summary: |-
+      Notes.
+    groupName: Body Arguments
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --operation-id
+    summary: |-
+      A GUID that represents the Long Running OperationId.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_list
+  name: az resiliency drill list
+  summary: |-
+    List Drill resources by tenant.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill list --service-group-name
+                             [--max-items]
+                             [--next-token]
+                             [--skip-token]
+                             [--top]
+  examples:
+  - summary: |-
+      Drills_List_MaximumSet
+    syntax: az resiliency drill list --service-group-name sampleServiceGroupName --skip-token xntbyoswztnmvitj --top 69
+  requiredParameters:
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    groupName: Pagination Arguments
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
+    groupName: Pagination Arguments
+  - name: --skip-token
+    summary: |-
+      Skip over when retrieving results.
+  - name: --top
+    summary: |-
+      Number of elements to return when retrieving results.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_resync-readiness-check
+  name: az resiliency drill resync-readiness-check
+  summary: |-
+    This triggers detection of any drifts from the desired state of Resources and RBAC.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill resync-readiness-check --drill-name
+                                               --operation-id
+                                               --service-group-name
+                                               [--acquire-policy-token]
+                                               [--change-reference]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+  examples:
+  - summary: |-
+      Drills_ResyncReadinessCheck_MaximumSet
+    syntax: az resiliency drill resync-readiness-check --service-group-name sampleServiceGroupName --operation-id qmn --drill-name drill1
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --operation-id
+    summary: |-
+      A GUID that represents the Long Running OperationId.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_show
+  name: az resiliency drill show
+  summary: |-
+    Get a Drill.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill show --drill-name
+                             --service-group-name
+  examples:
+  - summary: |-
+      Drills_Get_MaximumSet
+    syntax: az resiliency drill show --service-group-name sampleServiceGroupName --drill-name drill1
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_start
+  name: az resiliency drill start
+  summary: |-
+    This starts a new running instance of the Drill.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill start --drill-name
+                              --mode {Failover}
+                              --operation-id
+                              --service-group-name
+                              [--acquire-policy-token]
+                              [--change-reference]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+  examples:
+  - summary: |-
+      Drills_Start_MaximumSet
+    syntax: az resiliency drill start --service-group-name sampleServiceGroupName --operation-id qmn --drill-name drill1 --mode Failover
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --mode
+    acceptedValues: Failover
+    summary: |-
+      Mode of starting the Drill.
+    groupName: Body Arguments
+  - isRequired: true
+    name: --operation-id
+    summary: |-
+      A GUID that represents the Long Running OperationId.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_update
+  name: az resiliency drill update
+  summary: |-
+    Update a Drill.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill update --drill-name
+                               --service-group-name
+                               [--acquire-policy-token]
+                               [--change-reference]
+                               [--chaos-properties --chaos-resource-properties]
+                               [--drill-asset-properties]
+                               [--goal-assignment-properties --goal-properties]
+                               [--health-model-monitoring-properties --health-properties]
+                               [--monitoring-properties]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--rbac-setup-mode {AutomatedBuiltinRoles, AutomatedCustomRole, Manual}]
+                               [--recovery-plan-properties --recovery-properties]
+                               [--sli-monitoring-properties --sli-properties]
+  examples:
+  - summary: |-
+      Update the RBAC setup mode of a drill
+    syntax: az resiliency drill update --service-group-name sampleServiceGroupName --drill-name drill1 --rbac-setup-mode Manual
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --chaos-properties --chaos-resource-properties
+    summary: |-
+      Chaos Resource properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --drill-asset-properties
+    summary: |-
+      Properties for internal resources that are created for the Drill.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --goal-assignment-properties --goal-properties
+    summary: |-
+      Goal Assignment properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --health-model-monitoring-properties --health-properties
+    summary: |-
+      Azure Health Model monitoring properties of the Drill. Send null to clear the selection.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --monitoring-properties
+    summary: |-
+      Monitoring properties of the Drill.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --rbac-setup-mode
+    acceptedValues: AutomatedBuiltinRoles, AutomatedCustomRole, Manual
+    summary: |-
+      RBAC setup mode.
+    groupName: Properties Arguments
+  - name: --recovery-plan-properties --recovery-properties
+    summary: |-
+      Recovery Plan properties.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  - name: --sli-monitoring-properties --sli-properties
+    summary: |-
+      SLI monitoring properties of the Drill. Send null to clear the selection; the submitted slis array is the new desired state.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Properties Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_validate-for-execution
+  name: az resiliency drill validate-for-execution
+  summary: |-
+    This returns eligible resource to be faulted or failed over.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill validate-for-execution --drill-name
+                                               --operation-id
+                                               --service-group-name
+                                               [--acquire-policy-token]
+                                               [--change-reference]
+                                               [--execution-properties --validate-for-execution-properties]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+  examples:
+  - summary: |-
+      Drills_ValidateForExecution_MaximumSet
+    syntax: az resiliency drill validate-for-execution --service-group-name sampleServiceGroupName --operation-id qmn --drill-name drill1 --validate-for-execution-properties "{source-locations:[eastus2-az1]}"
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --operation-id
+    summary: |-
+      A GUID that represents the Long Running OperationId.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --execution-properties --validate-for-execution-properties
+    summary: |-
+      Additional properties for Validate for execute.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    groupName: Body Arguments
+  - name: --no-wait
+    acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_resiliency_drill_wait
+  name: az resiliency drill wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az resiliency drill wait --drill-name
+                             --service-group-name
+                             [--acquire-policy-token]
+                             [--change-reference]
+                             [--created]
+                             [--custom]
+                             [--deleted]
+                             [--exists]
+                             [--interval]
+                             [--timeout]
+                             [--updated]
+  requiredParameters:
+  - isRequired: true
+    name: --drill-name
+    summary: |-
+      The name of the Drill.
+  - isRequired: true
+    name: --service-group-name
+    summary: |-
+      The name of the service group.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    groupName: Wait Condition Arguments
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+    groupName: Wait Condition Arguments
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+    groupName: Wait Condition Arguments
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+    groupName: Wait Condition Arguments
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+    groupName: Wait Condition Arguments
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+    groupName: Wait Condition Arguments
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
+commands:
+- az_resiliency_drill_add-or-update-resource
+- az_resiliency_drill_create
+- az_resiliency_drill_delete
+- az_resiliency_drill_drill-resource
+- az_resiliency_drill_drill-resource_list
+- az_resiliency_drill_drill-resource_show
+- az_resiliency_drill_drill-run
+- az_resiliency_drill_drill-run_add-note
+- az_resiliency_drill_drill-run_drill-run-resource
+- az_resiliency_drill_drill-run_drill-run-resource_list
+- az_resiliency_drill_drill-run_drill-run-resource_show
+- az_resiliency_drill_drill-run_fail-over
+- az_resiliency_drill_drill-run_generate-report
+- az_resiliency_drill_drill-run_list
+- az_resiliency_drill_drill-run_list-report-download-url
+- az_resiliency_drill_drill-run_mark-as-complete
+- az_resiliency_drill_drill-run_reprotect
+- az_resiliency_drill_drill-run_resume
+- az_resiliency_drill_drill-run_show
+- az_resiliency_drill_end
+- az_resiliency_drill_identity
+- az_resiliency_drill_identity_assign
+- az_resiliency_drill_identity_remove
+- az_resiliency_drill_identity_show
+- az_resiliency_drill_identity_wait
+- az_resiliency_drill_list
+- az_resiliency_drill_resync-readiness-check
+- az_resiliency_drill_show
+- az_resiliency_drill_start
+- az_resiliency_drill_update
+- az_resiliency_drill_validate-for-execution
+- az_resiliency_drill_wait
+metadata:
+  description: Manage Drill.
