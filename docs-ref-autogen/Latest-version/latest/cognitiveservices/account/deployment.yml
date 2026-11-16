@@ -11,7 +11,11 @@ directCommands:
   summary: |-
     Create a deployment for Azure Cognitive Services account.
   description: |-
-    This article lists the Azure CLI commands for Azure Cognitive Services account and subscription management only. Refer to the documentation at https://learn.microsoft.com/azure/cognitive-services/ for individual services to learn how to use the APIs and supported SDKs.
+    To deploy an Anthropic model, use an eligible Foundry account and supply --organization-name, --industry,
+    and --country for every Anthropic deployment. Use values for the real organization using
+    the model. Supply a two-letter ISO 3166-1 alpha-2 country code, such as US, rather than a country name.
+    These arguments are not required for other model formats. Model availability, Marketplace eligibility,
+    terms, and quota requirements still apply.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cognitiveservices/_help.py
@@ -24,8 +28,11 @@ directCommands:
                                                    [--acquire-policy-token]
                                                    [--capacity --sku-capacity]
                                                    [--change-reference]
+                                                   [--country --country-code]
                                                    [--deployment-name]
+                                                   [--industry]
                                                    [--model-source]
+                                                   [--organization-name]
                                                    [--scale-capacity --scale-settings-capacity]
                                                    [--scale-settings-scale-type --scale-type {Manual, Standard}]
                                                    [--sku --sku-name]
@@ -34,6 +41,9 @@ directCommands:
   - summary: |-
       Create a deployment for Azure Cognitive Services account.
     syntax: az cognitiveservices account deployment create -g yuanyang-test-sdk -n yytest-oai --deployment-name dpy --model-name ada --model-version "1" --model-format OpenAI --sku-capacity 1 --sku-name "Standard"
+  - summary: |-
+      Create an Anthropic Claude deployment with organization information.
+    syntax: az cognitiveservices account deployment create -g myResourceGroup -n myFoundryAccount --deployment-name my-haiku --model-name claude-haiku-4-5 --model-version "2" --model-format Anthropic --sku-capacity 1 --sku-name GlobalStandard --organization-name "Contoso" --industry "Law" --country "US"
   requiredParameters:
   - isRequired: true
     name: --model-format
@@ -70,13 +80,25 @@ directCommands:
     summary: |-
       The related change reference ID for this resource operation.
     groupName: Global Policy Arguments
+  - name: --country --country-code
+    summary: |-
+      Two-letter ISO 3166-1 alpha-2 country code of the organization, such as US. Required for Anthropic deployments. Specify together with --organization-name and --industry.
+    groupName: Model provider Arguments
   - name: --deployment-name
     summary: |-
       Cognitive Services account deployment name.
+  - name: --industry
+    summary: |-
+      Industry of the organization using the Anthropic model, such as Law. Required for Anthropic deployments. Specify together with --organization-name and --country.
+    groupName: Model provider Arguments
   - name: --model-source
     summary: |-
       Cognitive Services account deployment model source.
     groupName: DeploymentModel Arguments
+  - name: --organization-name
+    summary: |-
+      Name of the organization using the Anthropic model. Required for Anthropic deployments. Specify together with --industry and --country.
+    groupName: Model provider Arguments
   - name: --scale-capacity --scale-settings-capacity
     summary: |-
       Cognitive Services account deployment scale settings capacity.
@@ -301,5 +323,5 @@ commands:
 - az_cognitiveservices_account_deployment_list
 - az_cognitiveservices_account_deployment_show
 metadata:
-  ms.date: 10/21/2026
+  ms.date: 11/09/2026
   description: Manage deployments for Azure Cognitive Services accounts.

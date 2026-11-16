@@ -21,6 +21,7 @@ directCommands:
                                        --subnet
                                        [--acquire-policy-token]
                                        [--app-gateway-ip-configs --application-gateway-ip-configurations]
+                                       [--approval-reference-id]
                                        [--asg --asgs]
                                        [--billing-sku {Fixed, PayAsYouGo}]
                                        [--change-reference]
@@ -49,6 +50,9 @@ directCommands:
   - summary: |-
       Create a private endpoint with ip-configs.
     syntax: az network private-endpoint create -n MyPE -g MyResourceGroup --vnet-name MyVnetName --subnet MySubnet --connection-name MyConnectionName --group-id MyGroupId --private-connection-resource-id MyResourceId --ip-configs [{name:Myipconfig1,group-id:MyGroupId ,member-name:MyMemberName,private-ip-address:10.0.0.4},{name:Myipconfig2,private-ip-address:10.0.0.6}]
+  - summary: |-
+      Create a private endpoint and inherit approval from an approved private endpoint.
+    syntax: az network private-endpoint create -g MyResourceGroup -n PE-B --vnet-name MyVnet --subnet MySubnet --private-connection-resource-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Network/privateLinkServices/MyPLS" --connection-name conn --manual-request true --approval-reference-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Network/privateEndpoints/PE-A"
   requiredParameters:
   - isRequired: true
     name: --connection-name
@@ -79,6 +83,9 @@ directCommands:
     summary: |-
       Application gateway IP configurations of virtual network resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     groupName: Properties Arguments
+  - name: --approval-reference-id
+    summary: |-
+      The ARM resource ID of an existing approved private endpoint whose approval state is inherited by this manual connection. Only valid with --manual-request.
   - name: --asg --asgs
     summary: |-
       The private endpoint application security groups.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--asg`.
@@ -441,6 +448,7 @@ directCommands:
   syntax: >-
     az network private-endpoint update [--acquire-policy-token]
                                        [--add]
+                                       [--approval-reference-id]
                                        [--billing-sku {Fixed, PayAsYouGo}]
                                        [--change-reference]
                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -461,6 +469,9 @@ directCommands:
   - summary: |-
       Update a private endpoint.
     syntax: az network private-endpoint update --name MyPE --resource-group MyResourceGroup --set useRemoteGateways=true
+  - summary: |-
+      Update a private endpoint with an approval reference.
+    syntax: az network private-endpoint update -g MyResourceGroup -n PE-B --approval-reference-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Network/privateEndpoints/PE-A
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -470,6 +481,9 @@ directCommands:
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
     groupName: Generic Update Arguments
+  - name: --approval-reference-id
+    summary: |-
+      The ARM resource ID of an existing approved private endpoint whose approval state is inherited by this manual connection.
   - name: --billing-sku
     acceptedValues: Fixed, PayAsYouGo
     summary: |-
@@ -682,5 +696,5 @@ commands:
 - az_network_private-endpoint_update
 - az_network_private-endpoint_wait
 metadata:
-  ms.date: 10/14/2026
+  ms.date: 11/09/2026
   description: Manage private endpoints.

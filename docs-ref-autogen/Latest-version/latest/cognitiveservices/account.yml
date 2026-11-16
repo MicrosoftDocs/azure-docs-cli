@@ -2,9 +2,7 @@
 uid: az_cognitiveservices_account
 name: az cognitiveservices account
 summary: |-
-  Manage Azure Cognitive Services accounts.
-description: |-
-  This article lists the Azure CLI commands for Azure Cognitive Services account and subscription management only. Refer to the documentation at https://learn.microsoft.com/azure/cognitive-services/ for individual services to learn how to use the APIs and supported SDKs.
+  Manage Account.
 status: GA
 sourceType: Core
 directCommands:
@@ -24,6 +22,10 @@ directCommands:
                                         --resource-group
                                         --sku --sku-name
                                         [--acquire-policy-token]
+                                        [--agent-hosting-cluster]
+                                        [--agent-hosting-management-identity --agent-hosting-mi]
+                                        [--agent-hosting-storage]
+                                        [--agent-hosting-wi --agent-hosting-workload-identity]
                                         [--allow-project-management --manage-projects {false, true}]
                                         [--api-properties]
                                         [--assign-identity]
@@ -61,6 +63,15 @@ directCommands:
               "keyVaultUri": "https://issue23056kv.vault.azure.net/"
             }
           }'
+  - summary: |-
+      Create an AI Services account with customer-owned AKS, automatically creating Storage and managed identities.
+    syntax: >-
+      az cognitiveservices account create \
+          --name foundryByocAccount \
+          --resource-group myResourceGroup \
+          --kind AIServices --sku S0 --location westus \
+          --custom-domain foundrybyocaccount \
+          --agent-hosting-cluster "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerService/managedClusters/cluster1"
   requiredParameters:
   - isRequired: true
     name: --kind
@@ -89,6 +100,26 @@ directCommands:
     summary: |-
       Acquiring an Azure Policy token automatically for this resource operation.
     groupName: Global Policy Arguments
+  - name: --agent-hosting-cluster
+    summary: |-
+      ARM resource ID of the customer-owned AKS cluster. Run preflight, prepare missing Storage and managed identities, and create the account with agent hosting.
+    isPreview: true
+    groupName: Agent Hosting Arguments
+  - name: --agent-hosting-management-identity --agent-hosting-mi
+    summary: |-
+      ARM resource ID of the hosting-management user-assigned identity. Validate and reuse when supplied; create when omitted. Automatically assigned to the account. Requires --agent-hosting-cluster.
+    isPreview: true
+    groupName: Agent Hosting Arguments
+  - name: --agent-hosting-storage
+    summary: |-
+      ARM resource ID of existing Storage to validate and reuse. Create Storage when omitted. Requires --agent-hosting-cluster.
+    isPreview: true
+    groupName: Agent Hosting Arguments
+  - name: --agent-hosting-wi --agent-hosting-workload-identity
+    summary: |-
+      ARM resource ID of the workload user-assigned identity. Validate and reuse when supplied; create when omitted. Not assigned to the account. Requires --agent-hosting-cluster.
+    isPreview: true
+    groupName: Agent Hosting Arguments
   - name: --allow-project-management --manage-projects
     acceptedValues: false, true
     summary: |-
@@ -926,6 +957,13 @@ commands:
 - az_cognitiveservices_account_connection_list
 - az_cognitiveservices_account_connection_show
 - az_cognitiveservices_account_connection_update
+- az_cognitiveservices_account_costcontrol
+- az_cognitiveservices_account_costcontrol_create
+- az_cognitiveservices_account_costcontrol_delete
+- az_cognitiveservices_account_costcontrol_head
+- az_cognitiveservices_account_costcontrol_list
+- az_cognitiveservices_account_costcontrol_show
+- az_cognitiveservices_account_costcontrol_update
 - az_cognitiveservices_account_create
 - az_cognitiveservices_account_delete
 - az_cognitiveservices_account_deployment
@@ -974,6 +1012,13 @@ commands:
 - az_cognitiveservices_account_project_connection_list
 - az_cognitiveservices_account_project_connection_show
 - az_cognitiveservices_account_project_connection_update
+- az_cognitiveservices_account_project_costcontrol
+- az_cognitiveservices_account_project_costcontrol_create
+- az_cognitiveservices_account_project_costcontrol_delete
+- az_cognitiveservices_account_project_costcontrol_head
+- az_cognitiveservices_account_project_costcontrol_list
+- az_cognitiveservices_account_project_costcontrol_show
+- az_cognitiveservices_account_project_costcontrol_update
 - az_cognitiveservices_account_project_create
 - az_cognitiveservices_account_project_delete
 - az_cognitiveservices_account_project_list
@@ -985,5 +1030,5 @@ commands:
 - az_cognitiveservices_account_show-deleted
 - az_cognitiveservices_account_update
 metadata:
-  ms.date: 10/21/2026
-  description: This article lists the Azure CLI commands for Azure Cognitive Services account and subscription management only. Refer to the documentation at https://learn.microsoft.com/azure/cognitive-services/ for individual services to learn how to use the APIs and supported SDKs.
+  ms.date: 11/09/2026
+  description: Manage Account.

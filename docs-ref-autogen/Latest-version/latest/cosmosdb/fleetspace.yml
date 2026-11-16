@@ -14,6 +14,11 @@ directCommands:
   name: az cosmosdb fleetspace create
   summary: |-
     Create a new Fleetspace under a Cosmos DB Fleet.
+  description: |-
+    Creates a NoSQL fleetspace. serviceTier and nonempty dataRegions are required creation settings.
+    Omit throughputPoolConfiguration, or set it to null or {}, for non-pooled creation.
+    Pooling requires both positive integer throughput bounds with maxThroughput >= minThroughput.
+    Additional throughput constraints and supported tiers and regions are service-configured.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
@@ -30,14 +35,22 @@ directCommands:
     syntax: >-
       az cosmosdb fleetspace create \
         --resource-group MyResourceGroup \
-        --fleet-name MyFleet \
-        --fleetspace-name MyFleetspace \
+        --fleet-name myfleet \
+        --fleetspace-name myspace \
         --body @fleetspace.json
+  - summary: |-
+      Create a non-pooled fleetspace
+    syntax: >-
+      az cosmosdb fleetspace create \
+        --resource-group MyResourceGroup \
+        --fleet-name myfleet \
+        --fleetspace-name myspace \
+        --body '{"properties":{"serviceTier":"GeneralPurpose","dataRegions":["West US 2"]}}'
   requiredParameters:
   - isRequired: true
     name: --body -b
     summary: |-
-      Fleetspace body with properties.serviceTier (required), properties.dataRegions (required), and properties.throughputPoolConfiguration (fields: minThroughput, maxThroughput). You can enter it as a string or as a file, e.g., --body @fleetspace.json or --body "{
+      NoSQL fleetspace JSON body with required properties.serviceTier and nonempty properties.dataRegions. Omit throughputPoolConfiguration, or use null or {}, for non-pooled creation. Pooled creation requires positive integer minThroughput and maxThroughput, with max >= min; additional limits are service-configured. Use inline JSON or --body @fleetspace.json. Example: --body "{
           \"properties\": {
               \"serviceTier\": \"GeneralPurpose\",
               \"dataRegions\": [\"West US 2\"],
@@ -533,6 +546,13 @@ directCommands:
   name: az cosmosdb fleetspace update
   summary: |-
     Update an existing Cosmos DB Fleetspace.
+  description: |-
+    Both positive integer minThroughput and maxThroughput are required in throughputPoolConfiguration,
+    with maxThroughput >= minThroughput. Additional constraints are service-configured.
+    Partial updates and omitted, null or empty configurations are not supported by this CLI.
+    serviceTier and dataRegions are creation settings; supplied update values cannot change them.
+    Do not omit configuration in a raw service request to preserve pooling: omission can disable pooling.
+    Fleetspaces use the NoSQL API; this command does not change the API kind.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
@@ -549,17 +569,15 @@ directCommands:
     syntax: >-
       az cosmosdb fleetspace update \
         --resource-group MyResourceGroup \
-        --fleet-name MyFleet \
-        --fleetspace-name MyFleetspace \
-        --body @fleetspace.json
+        --fleet-name myfleet \
+        --fleetspace-name myspace \
+        --body '{"properties":{"throughputPoolConfiguration":{"minThroughput":100000,"maxThroughput":300000}}}'
   requiredParameters:
   - isRequired: true
     name: --body -b
     summary: |-
-      Fleetspace body with properties.serviceTier (optional), properties.dataRegions (optional), and properties.throughputPoolConfiguration (fields: minThroughput, maxThroughput). You can enter it as a string or as a file, e.g., --body @fleetspace.json or --body "{
+      Fleetspace JSON body requiring properties.throughputPoolConfiguration with both positive integer minThroughput and maxThroughput, with max >= min. Additional limits are service-configured. Partial updates and omitted/null/empty configurations are not supported. serviceTier and dataRegions are creation settings and cannot change existing settings. Use inline JSON or --body @fleetspace.json. Example: --body "{
           \"properties\": {
-              \"serviceTier\": \"GeneralPurpose\",
-              \"dataRegions\": [\"West US 2\"],
               \"throughputPoolConfiguration\": {
                   \"minThroughput\": 100000,
                   \"maxThroughput\": 300000
