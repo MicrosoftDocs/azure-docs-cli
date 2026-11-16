@@ -1,7 +1,7 @@
 ---
 title: What's new in the next-generation Azure CLI (preview)
 description: Discover the latest features in the next-generation Azure CLI, available in preview, including shell-native Tab completion for Azure CLI commands, parameters, and valid values.
-ms.date: 11/12/2026
+ms.date: 11/16/2026
 ai-usage: ai-assisted
 ---
 

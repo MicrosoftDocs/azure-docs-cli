@@ -1,12 +1,12 @@
 ---
 title: Install the Azure CLI public preview manually or offline
 description: Learn how to install the Azure CLI public preview manually or offline when the one-command installer isn't available.
-ms.date: 11/13/2026
+ms.date: 11/16/2026
 ---
 
 # Install the Azure CLI public preview manually or offline
 
-> **Most users should use the [one-command installer](install-overview.md).** Use this guide for offline installs, as a fallback when the installer or its download fails, when you already have the archive, or to understand the steps the installer performs. Neither method requires the GitHub CLI or GitHub sign-in.
+> **Most users should use the [one-command installer](install-azure-cli.md).** Use this guide for offline installs, as a fallback when the installer or its download fails, when you already have the archive, or to understand the steps the installer performs. Neither method requires the GitHub CLI or GitHub sign-in.
 
 Get from a downloaded azcli archive to a working `az` command: pick the file for your OS and CPU, extract it, and run `az` from that folder. Adding it to `PATH` is optional and manual.
 
@@ -92,4 +92,4 @@ Commands that contact Azure require sign-in and a subscription. If `az` is found
 | Permission denied (Linux/macOS) | Run `chmod +x <install-root>/az`. |
 | macOS blocks the binary | Validate the source, then `xattr -dr com.apple.quarantine <install-root>`. |
 | File name doesn't match examples | Use the platform suffix from your downloaded file (e.g. `linux-arm64`, `win-arm64`). |
-| A command says an extension is missing | On lean installs, add the extension from the extensions bundle or use the full package. For more information, see [Install Azure CLI preview extensions](install-cli-extensions.md). |
+| A command says an extension is missing | On lean installs, add the extension from the extensions bundle or use the full package. For more information, see [Install Azure CLI preview extensions](azure-cli-extensions-overview.md). |
