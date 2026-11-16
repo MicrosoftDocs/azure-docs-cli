@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 10/28/2026
+ms.date: 11/16/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -224,7 +224,23 @@ az deployment group show @scope --name '<failed-deployment-name>' --query proper
 
 ---
 
-The error object contains the error code and message that Azure Resource Manager returned. To inspect the individual deployment operations: **Pending engineering confirmation: deployment operations command.**
+The error object contains the error code and message that Azure Resource Manager returned. To find the resource that failed, list the deployment's individual operations:
+
+# [Bash](#tab/bash)
+
+```bash
+az deployment operation group list --subscription-id "$sub" --resource-group "$rg" --name "<failed-deployment-name>"
+```
+
+# [PowerShell](#tab/powershell)
+
+```powershell
+az deployment operation group list @scope --name '<failed-deployment-name>'
+```
+
+---
+
+Each operation in the output includes its provisioning state, target resource, and status code and message. The failed operation identifies the resource and the error that stopped the deployment.
 
 ## Clean up resources
 
@@ -250,9 +266,33 @@ az group exists --subscription-id $sub --name $rg
 
 Repeat the preview, deploy, inspect and clean-up steps at a broader scope, using a template written for that scope. Use test scopes and uniquely named resources. Deleting the resource group doesn't remove resources deployed at a higher scope, so remove those resources individually.
 
-- Subscription scope: **Pending engineering confirmation: subscription deployment commands.**
-- Management group scope: **Pending engineering confirmation: management group deployment commands.**
-- Tenant scope: **Pending engineering confirmation: tenant deployment commands.**
+Each scope has its own command group. Unlike resource group deployments, these commands require `--location`, which is where Azure Resource Manager stores the deployment data.
+
+| Scope | Command group | Scope parameter |
+| --- | --- | --- |
+| Subscription | `az deployment sub` | `--subscription-id` (defaults to the active profile's subscription) |
+| Management group | `az deployment mg` | `--management-group-id` |
+| Tenant | `az deployment tenant` | None |
+
+Each group provides `what-if`, `create`, `show`, and `list` commands, and `az deployment operation sub`, `mg`, and `tenant` list the operations at each scope. For example, to preview and deploy a subscription-scoped template:
+
+# [Bash](#tab/bash)
+
+```bash
+az deployment sub what-if --subscription-id "$sub" --location "$location" --name "sub-$run" --template-file "<path-to-subscription-template.bicep>"
+az deployment sub create --subscription-id "$sub" --location "$location" --name "sub-$run" --template-file "<path-to-subscription-template.bicep>"
+```
+
+# [PowerShell](#tab/powershell)
+
+```powershell
+az deployment sub what-if --subscription-id $sub --location $location --name "sub-$run" --template-file '<path-to-subscription-template.bicep>'
+az deployment sub create --subscription-id $sub --location $location --name "sub-$run" --template-file '<path-to-subscription-template.bicep>'
+```
+
+---
+
+Tenant-scoped deployments always use Incremental mode.
 
 ## Related content
 
