@@ -6,9 +6,7 @@ extensionInformation: |-
   > This reference is part of the **azure-devops** extension for the Azure CLI (version 2.30.0 or higher). The extension will automatically install the first time you run an **az devops migrations cutover** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage migration cutover.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: "Command group 'devops migrations' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+status: GA
 sourceType: Extension
 directCommands:
 - uid: az_devops_migrations_cutover_approve
@@ -17,9 +15,7 @@ directCommands:
     Approve cutover by accepting unprocessed items and/or verifying rewired pipelines.
   description: |-
     Provide --accept-failures when cutover review surfaces unprocessed items, and/or --pipelines-verified when cutover review reports requiresPipelineVerificationAcknowledgment: true. At least one of the two must be supplied; both may be sent together in a single call.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'devops migrations cutover' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az devops migrations cutover approve [--accept-failures]
@@ -96,9 +92,7 @@ directCommands:
   name: az devops migrations cutover cancel
   summary: |-
     Cancel a scheduled cutover.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'devops migrations cutover' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az devops migrations cutover cancel [--acquire-policy-token]
@@ -152,15 +146,77 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_devops_migrations_cutover_now
+  name: az devops migrations cutover now
+  summary: |-
+    Start migration cutover immediately and review issues requiring approval.
+  description: |-
+    Schedules cutover immediately, then retrieves cutover review information. If unprocessed items or pipeline verification require approval, the review is returned with guidance to run cutover approve. Otherwise, the updated migration is returned.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az devops migrations cutover now [--acquire-policy-token]
+                                     [--change-reference]
+                                     [--detect {false, true}]
+                                     [--org --organization]
+                                     [--repository-id]
+  examples:
+  - summary: |-
+      Start cutover immediately.
+    syntax: az devops migrations cutover now --org https://dev.azure.com/myorg --repository-id 00000000-0000-0000-0000-000000000000
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --detect
+    acceptedValues: false, true
+    summary: |-
+      Automatically detect organization.
+  - name: --org --organization
+    summary: |-
+      Azure DevOps organization URL. You can configure the default organization using az devops configure -d organization=ORG_URL. Required if not configured as default or picked up via git config. Example: `https://dev.azure.com/MyOrganizationName/`.
+  - name: --repository-id
+    summary: |-
+      ID of the Azure Repos repository (GUID).
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_devops_migrations_cutover_review
   name: az devops migrations cutover review
   summary: |-
     Review unprocessed migration items before cutover.
   description: |-
     The response includes requiresPipelineVerificationAcknowledgment. When true, cutover approve must be re-run with --pipelines-verified before the migration can proceed.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'devops migrations cutover' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az devops migrations cutover review [--acquire-policy-token]
@@ -222,9 +278,7 @@ directCommands:
   name: az devops migrations cutover set
   summary: |-
     Schedule cutover for a migration.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'devops migrations cutover' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az devops migrations cutover set [--acquire-policy-token]
@@ -289,6 +343,7 @@ directCommands:
 commands:
 - az_devops_migrations_cutover_approve
 - az_devops_migrations_cutover_cancel
+- az_devops_migrations_cutover_now
 - az_devops_migrations_cutover_review
 - az_devops_migrations_cutover_set
 metadata:

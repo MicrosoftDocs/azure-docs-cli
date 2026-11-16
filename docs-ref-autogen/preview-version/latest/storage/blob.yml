@@ -1,0 +1,660 @@
+### YamlMime:AzureCLIGroup
+uid: az_storage_blob
+name: az storage blob
+summary: |-
+  Manage blobs in Azure Blob Storage.
+status: Preview
+isPreview: true
+sourceType: Core
+directCommands:
+- uid: az_storage_blob_delete
+  name: az storage blob delete
+  summary: |-
+    Delete a blob.
+  description: |-
+    Delete a blob. If the blob has snapshots, pass `--delete-snapshots include` to delete the blob with its snapshots, or `--delete-snapshots only` to delete only the snapshots.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage blob delete [--account-key]
+                           [--account-name]
+                           [--client-request-id]
+                           [--container-name]
+                           [--delete-snapshots {include, only}]
+                           [--delete-type {Permanent}]
+                           [--if-match]
+                           [--if-modified-since]
+                           [--if-none-match]
+                           [--if-unmodified-since]
+                           [--lease-id]
+                           [--name]
+                           [--sas-token]
+                           [--snapshot]
+                           [--tags-condition]
+                           [--timeout]
+                           [--url]
+                           [--version-id]
+  examples:
+  - summary: |-
+      Delete a blob
+    syntax: az storage blob delete --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --name myblob.txt
+  - summary: |-
+      Delete a blob and its snapshots
+    syntax: az storage blob delete --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --name myblob.txt --delete-snapshots include
+  optionalParameters:
+  - name: --account-key
+    summary: |-
+      Storage account key.
+  - name: --account-name
+    summary: |-
+      Storage account name. Used with the container and blob name when --url is not given.
+  - name: --client-request-id
+    summary: |-
+      An opaque, globally-unique, client-generated string identifier for the request.
+  - name: --container-name
+    summary: |-
+      The container name.
+  - name: --delete-snapshots
+    acceptedValues: include, only
+    summary: |-
+      Required if the blob has snapshots. 'include' deletes the blob and its snapshots; 'only' deletes just the snapshots.
+  - name: --delete-type
+    acceptedValues: Permanent
+    summary: |-
+      'Permanent' permanently deletes a soft-deleted snapshot or version, if permanent delete is enabled on the account.
+  - name: --if-match
+    summary: |-
+      Delete only if the blob's ETag matches this value.
+  - name: --if-modified-since
+    summary: |-
+      Delete only if the blob has been modified since the specified date-time.
+  - name: --if-none-match
+    summary: |-
+      Delete only if the blob's ETag does not match this value.
+  - name: --if-unmodified-since
+    summary: |-
+      Delete only if the blob has not been modified since the specified date-time.
+  - name: --lease-id
+    summary: |-
+      If specified, the operation only succeeds if the blob's lease is active and matches this ID.
+  - name: --name
+    summary: |-
+      The blob name.
+  - name: --sas-token
+    summary: |-
+      A shared access signature. Alternative to --account-key.
+  - name: --snapshot
+    summary: |-
+      The snapshot of the blob to delete.
+  - name: --tags-condition
+    summary: |-
+      A SQL where clause on blob tags; delete only if it matches.
+  - name: --timeout
+    summary: |-
+      The timeout parameter is expressed in seconds.
+  - name: --url
+    summary: |-
+      The blob URL. Alternative to --account-name, --container-name and --name.
+  - name: --version-id
+    summary: |-
+      The version ID of the blob to delete.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_blob_download
+  name: az storage blob download
+  summary: |-
+    Download a blob to a local file.
+  description: |-
+    Download the content of a blob to a local file. Use `--snapshot` or `--version-id` to download a specific snapshot or version.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage blob download --file
+                             [--account-key]
+                             [--account-name]
+                             [--client-request-id]
+                             [--container-name]
+                             [--encryption-algorithm {AES256}]
+                             [--encryption-key]
+                             [--encryption-key-sha256]
+                             [--if-match]
+                             [--if-modified-since]
+                             [--if-none-match]
+                             [--if-unmodified-since]
+                             [--lease-id]
+                             [--name]
+                             [--sas-token]
+                             [--snapshot]
+                             [--tags-condition]
+                             [--timeout]
+                             [--url]
+                             [--version-id]
+  examples:
+  - summary: |-
+      Download a blob
+    syntax: az storage blob download --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --name myblob.txt --file ./downloaded.txt
+  requiredParameters:
+  - isRequired: true
+    name: --file
+    summary: |-
+      Path of the local file to create. An existing file is not overwritten.
+  optionalParameters:
+  - name: --account-key
+    summary: |-
+      Storage account key.
+  - name: --account-name
+    summary: |-
+      Storage account name. Used with the container and blob name when --url is not given.
+  - name: --client-request-id
+    summary: |-
+      An opaque, globally-unique, client-generated string identifier for the request.
+  - name: --container-name
+    summary: |-
+      The container name.
+  - name: --encryption-algorithm
+    acceptedValues: AES256
+    summary: |-
+      The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided.
+  - name: --encryption-key
+    summary: |-
+      The customer-provided key the blob was encrypted with.
+  - name: --encryption-key-sha256
+    summary: |-
+      The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided.
+  - name: --if-match
+    summary: |-
+      Download only if the blob's ETag matches this value.
+  - name: --if-modified-since
+    summary: |-
+      Download only if the blob has been modified since the specified date-time.
+  - name: --if-none-match
+    summary: |-
+      Download only if the blob's ETag does not match this value.
+  - name: --if-unmodified-since
+    summary: |-
+      Download only if the blob has not been modified since the specified date-time.
+  - name: --lease-id
+    summary: |-
+      If specified, the operation only succeeds if the blob's lease is active and matches this ID.
+  - name: --name
+    summary: |-
+      The blob name.
+  - name: --sas-token
+    summary: |-
+      A shared access signature. Alternative to --account-key.
+  - name: --snapshot
+    summary: |-
+      The snapshot of the blob to download.
+  - name: --tags-condition
+    summary: |-
+      A SQL where clause on blob tags; download only if it matches.
+  - name: --timeout
+    summary: |-
+      The timeout parameter is expressed in seconds.
+  - name: --url
+    summary: |-
+      The blob URL. Alternative to --account-name, --container-name and --name.
+  - name: --version-id
+    summary: |-
+      The version ID of the blob to download.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_blob_list
+  name: az storage blob list
+  summary: |-
+    List blobs in a container.
+  description: |-
+    List the blobs in a container, following continuation markers until all pages are returned. Use `--prefix` to filter by name.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage blob list [--account-key]
+                         [--account-name]
+                         [--client-request-id]
+                         [--container-name]
+                         [--marker]
+                         [--maxresults]
+                         [--prefix]
+                         [--sas-token]
+                         [--start-from]
+                         [--timeout]
+                         [--url]
+  examples:
+  - summary: |-
+      List blobs in a container
+    syntax: az storage blob list --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer
+  - summary: |-
+      List blobs with a name prefix
+    syntax: az storage blob list --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --prefix logs/
+  optionalParameters:
+  - name: --account-key
+    summary: |-
+      Storage account key.
+  - name: --account-name
+    summary: |-
+      Storage account name. Used with the container (and blob) name when --url is not given.
+  - name: --client-request-id
+    summary: |-
+      An opaque, globally-unique, client-generated string identifier for the request.
+  - name: --container-name
+    summary: |-
+      The container name.
+  - name: --marker
+    summary: |-
+      An opaque string value that identifies the portion of the result set to return with this operation.
+  - name: --maxresults
+    summary: |-
+      Specifies the maximum number of resources to return.
+  - name: --prefix
+    summary: |-
+      Filters the results to return only resources whose name begins with the specified prefix.
+  - name: --sas-token
+    summary: |-
+      A shared access signature. Alternative to --account-key.
+  - name: --start-from
+    summary: |-
+      Specifies the relative path to list paths from.
+  - name: --timeout
+    summary: |-
+      The timeout parameter is expressed in seconds.
+  - name: --url
+    summary: |-
+      The container URL. Alternative to --account-name and --container-name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_blob_show
+  name: az storage blob show
+  summary: |-
+    Show the properties of a blob.
+  description: |-
+    Get the system properties and user-defined metadata of a blob without downloading its content. Use `--snapshot` or `--version-id` to read a specific snapshot or version.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage blob show [--account-key]
+                         [--account-name]
+                         [--client-request-id]
+                         [--container-name]
+                         [--encryption-algorithm {AES256}]
+                         [--encryption-key]
+                         [--encryption-key-sha256]
+                         [--if-match]
+                         [--if-modified-since]
+                         [--if-none-match]
+                         [--if-tags]
+                         [--if-unmodified-since]
+                         [--lease-id]
+                         [--name]
+                         [--sas-token]
+                         [--snapshot]
+                         [--timeout]
+                         [--url]
+                         [--version-id]
+  examples:
+  - summary: |-
+      Show a blob
+    syntax: az storage blob show --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --name myblob.txt
+  - summary: |-
+      Show a blob by URL with a SAS token
+    syntax: az storage blob show --url https://mystorageaccount.blob.core.windows.net/mycontainer/myblob.txt --sas-token $SAS_TOKEN
+  optionalParameters:
+  - name: --account-key
+    summary: |-
+      Storage account key.
+  - name: --account-name
+    summary: |-
+      Storage account name. Used with the container (and blob) name when --url is not given.
+  - name: --client-request-id
+    summary: |-
+      An opaque, globally-unique, client-generated string identifier for the request.
+  - name: --container-name
+    summary: |-
+      The container name.
+  - name: --encryption-algorithm
+    acceptedValues: AES256
+    summary: |-
+      The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided.
+  - name: --encryption-key
+    summary: |-
+      Specifies the encryption key to use to encrypt the data provided in the request.
+  - name: --encryption-key-sha256
+    summary: |-
+      The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided.
+  - name: --if-match
+    summary: |-
+      Specify this value to operate only on a blob with a matching Etag value.
+  - name: --if-modified-since
+    summary: |-
+      Specify this value to operate only on a blob if it has been modified since the specified date-time.
+  - name: --if-none-match
+    summary: |-
+      Specify this value to operate only on a blob with a non-matching Etag value.
+  - name: --if-tags
+    summary: |-
+      Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags.
+  - name: --if-unmodified-since
+    summary: |-
+      Specify this value to operate only on a blob if it has not been modified since the specified date-time.
+  - name: --lease-id
+    summary: |-
+      If specified, the operation only succeeds if the resource's lease is active and matches this ID.
+  - name: --name
+    summary: |-
+      The blob name.
+  - name: --sas-token
+    summary: |-
+      A shared access signature. Alternative to --account-key.
+  - name: --snapshot
+    summary: |-
+      Specifies the snapshot of the blob.
+  - name: --timeout
+    summary: |-
+      The timeout parameter is expressed in seconds.
+  - name: --url
+    summary: |-
+      The blob URL. Alternative to --account-name, --container-name and --name.
+  - name: --version-id
+    summary: |-
+      Specifies the version ID of the blob.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_blob_upload
+  name: az storage blob upload
+  summary: |-
+    Upload a local file as a block blob.
+  description: |-
+    Upload a local file to a container as a block blob. An existing blob with the same name is not overwritten. Set content headers, metadata, tags, and the access tier on the new blob.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage blob upload --file
+                           [--account-key]
+                           [--account-name]
+                           [--client-request-id]
+                           [--container-name]
+                           [--content-cache-control]
+                           [--content-disposition]
+                           [--content-encoding]
+                           [--content-language]
+                           [--content-type]
+                           [--encryption-scope]
+                           [--metadata]
+                           [--name]
+                           [--sas-token]
+                           [--tags]
+                           [--tier]
+                           [--timeout]
+                           [--url]
+  examples:
+  - summary: |-
+      Upload a file
+    syntax: az storage blob upload --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --name myblob.txt --file ./myfile.txt
+  - summary: |-
+      Upload a file with a content type and metadata
+    syntax: az storage blob upload --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --name report.json --file ./report.json --content-type application/json --metadata team=storage env=test
+  requiredParameters:
+  - isRequired: true
+    name: --file
+    summary: |-
+      Path of the local file to upload. An existing blob is not overwritten.
+  optionalParameters:
+  - name: --account-key
+    summary: |-
+      Storage account key.
+  - name: --account-name
+    summary: |-
+      Storage account name. Used with the container and blob name when --url is not given.
+  - name: --client-request-id
+    summary: |-
+      An opaque, globally-unique, client-generated string identifier for the request.
+  - name: --container-name
+    summary: |-
+      The container name.
+  - name: --content-cache-control
+    summary: |-
+      The blob's cache control.
+  - name: --content-disposition
+    summary: |-
+      The blob's content disposition.
+  - name: --content-encoding
+    summary: |-
+      The blob's content encoding.
+  - name: --content-language
+    summary: |-
+      The blob's content language.
+  - name: --content-type
+    summary: |-
+      The blob's content type.
+  - name: --encryption-scope
+    summary: |-
+      The encryption scope used to encrypt the blob.
+  - name: --metadata
+    summary: |-
+      Metadata in space-separated key=value pairs.
+  - name: --name
+    summary: |-
+      The blob name.
+  - name: --sas-token
+    summary: |-
+      A shared access signature. Alternative to --account-key.
+  - name: --tags
+    summary: |-
+      Tags in space-separated key=value pairs.
+  - name: --tier
+    summary: |-
+      The tier to be set on the blob.
+  - name: --timeout
+    summary: |-
+      The timeout parameter is expressed in seconds.
+  - name: --url
+    summary: |-
+      The blob URL. Alternative to --account-name, --container-name and --name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_storage_blob_upload-from-url
+  name: az storage blob upload-from-url
+  summary: |-
+    Create a block blob from the content of a source URL.
+  description: |-
+    Create a block blob whose content is read synchronously from a source URL. The source must be publicly readable or carry its own SAS token. Use `blob copy start` for an asynchronous, server-side copy instead.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  syntax: >-
+    az storage blob upload-from-url --source-uri
+                                    [--account-key]
+                                    [--account-name]
+                                    [--client-request-id]
+                                    [--container-name]
+                                    [--content-cache-control]
+                                    [--content-disposition]
+                                    [--content-encoding]
+                                    [--content-language]
+                                    [--content-type]
+                                    [--copy-source-blob-properties]
+                                    [--encryption-scope]
+                                    [--metadata]
+                                    [--name]
+                                    [--sas-token]
+                                    [--tags]
+                                    [--tier]
+                                    [--timeout]
+                                    [--url]
+  examples:
+  - summary: |-
+      Create a blob from a public URL
+    syntax: az storage blob upload-from-url --account-name mystorageaccount --account-key $ACCOUNT_KEY --container-name mycontainer --name readme.md --source-uri https://raw.githubusercontent.com/Azure/azure-rest-api-specs/refs/heads/main/specification/storage/data-plane/BlobStorage/readme.md
+  requiredParameters:
+  - isRequired: true
+    name: --source-uri
+    summary: |-
+      The source blob URL. It must be public, in the destination account, or carry a SAS. An existing destination blob is not overwritten.
+  optionalParameters:
+  - name: --account-key
+    summary: |-
+      Storage account key.
+  - name: --account-name
+    summary: |-
+      Storage account name. Used with the container and blob name when --url is not given.
+  - name: --client-request-id
+    summary: |-
+      An opaque, globally-unique, client-generated string identifier for the request.
+  - name: --container-name
+    summary: |-
+      The container name.
+  - name: --content-cache-control
+    summary: |-
+      The blob's cache control.
+  - name: --content-disposition
+    summary: |-
+      The blob's content disposition.
+  - name: --content-encoding
+    summary: |-
+      The blob's content encoding.
+  - name: --content-language
+    summary: |-
+      The blob's content language.
+  - name: --content-type
+    summary: |-
+      The blob's content type.
+  - name: --copy-source-blob-properties
+    summary: |-
+      Whether the source blob's properties are copied. Defaults to true.
+  - name: --encryption-scope
+    summary: |-
+      The encryption scope used to encrypt the blob.
+  - name: --metadata
+    summary: |-
+      Metadata in space-separated key=value pairs.
+  - name: --name
+    summary: |-
+      The blob name.
+  - name: --sas-token
+    summary: |-
+      A shared access signature for the destination. Alternative to --account-key; a source SAS goes in --source-uri.
+  - name: --tags
+    summary: |-
+      Tags in space-separated key=value pairs.
+  - name: --tier
+    summary: |-
+      The tier to be set on the blob.
+  - name: --timeout
+    summary: |-
+      The timeout parameter is expressed in seconds.
+  - name: --url
+    summary: |-
+      The blob URL. Alternative to --account-name, --container-name and --name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_storage_blob_copy
+- az_storage_blob_copy_start
+- az_storage_blob_delete
+- az_storage_blob_download
+- az_storage_blob_list
+- az_storage_blob_show
+- az_storage_blob_upload
+- az_storage_blob_upload-from-url
+metadata:
+  description: Manage blobs in Azure Blob Storage.

@@ -1,0 +1,567 @@
+### YamlMime:AzureCLIGroup
+uid: az_keyvault_certificate
+name: az keyvault certificate
+summary: |-
+  Manage Key Vault certificates.
+status: Preview
+isPreview: true
+sourceType: Core
+directCommands:
+- uid: az_keyvault_certificate_create
+  name: az keyvault certificate create
+  summary: |-
+    Create a certificate version from an explicit policy.
+  description: |-
+    Start issuance using exactly one of `--policy` (classic CLI or REST policy JSON, including `@file`) or `--policy-file` (UTF-8 JSON). Requires certificates/create and certificates/get when waiting. Known issuers are polled at the named pending endpoint. Default timeout is 300 seconds; `--timeout` accepts 1-3600 seconds. `--no-wait` and issuer `Unknown` return pending immediately. Returns a certificate operation with classic CLI field names, not a certificate bundle. Local timeout or cancellation does not cancel server issuance. External signing/CSR merge requires another tool.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate create --name
+                                   [--enabled]
+                                   [--expires]
+                                   [--no-wait]
+                                   [--not-before]
+                                   [--policy]
+                                   [--policy-file]
+                                   [--profile]
+                                   [--tags]
+                                   [--timeout]
+                                   [--vault-name]
+                                   [--vault-url]
+  examples:
+  - summary: |-
+      Create a self-signed certificate
+    syntax: az keyvault certificate create --vault-name myvault --name app-tls --policy '{"issuer_parameters":{"name":"Self"},"key_properties":{"key_type":"RSA","key_size":2048,"exportable":false},"secret_properties":{"content_type":"application/x-pkcs12"},"x509_certificate_properties":{"subject":"CN=app.example","validity_in_months":12}}'
+  - summary: |-
+      Start issuance without waiting
+    syntax: az keyvault certificate create --vault-name myvault --name app-tls --policy-file ./policy.json --no-wait
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      certificate name.
+  optionalParameters:
+  - name: --enabled
+    summary: |-
+      Whether the certificate is enabled: true or false.
+  - name: --expires
+    summary: |-
+      Expiration timestamp in UTC.
+  - name: --no-wait
+    summary: |-
+      Return the creation operation without polling.
+  - name: --not-before
+    summary: |-
+      Not-before timestamp in UTC.
+  - name: --policy
+    summary: |-
+      Certificate policy JSON using classic CLI or REST field names; @file is supported.
+  - name: --policy-file
+    summary: |-
+      UTF-8 JSON policy file. Use instead of policy JSON.
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --tags
+    summary: |-
+      Tags in NAME=VALUE form.
+  - name: --timeout
+    summary: |-
+      Creation timeout in seconds, from 1 to 3600. Default: 300.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_keyvault_certificate_delete
+  name: az keyvault certificate delete
+  summary: |-
+    Soft-delete all versions of a certificate.
+  description: |-
+    Delete the name, all versions and associated policy. Requires certificates/delete and explicit `--yes`. Returns service recovery metadata without deleted-state polling. Never purges or alters vault retention settings. Recovery is not exposed in the CLI.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate delete --name
+                                   [--profile]
+                                   [--vault-name]
+                                   [--vault-url]
+                                   [--yes]
+  examples:
+  - summary: |-
+      Confirm deletion
+    syntax: az keyvault certificate delete --vault-name myvault --name app-tls --yes
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      certificate name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  - name: --yes
+    summary: |-
+      Confirm deletion of all certificate versions.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_keyvault_certificate_download
+  name: az keyvault certificate download
+  summary: |-
+    Download a public certificate as PEM or DER.
+  description: |-
+    Write the latest or specified version's public X509 certificate to a new file. Requires certificates/get. `--encoding` accepts PEM (default) or DER. Existing destinations are never overwritten. Validates the certificate before file creation. Never reads a backing secret or exports a private key.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate download --file
+                                     --name
+                                     [--encoding]
+                                     [--profile]
+                                     [--vault-name]
+                                     [--vault-url]
+                                     [--version]
+  examples:
+  - summary: |-
+      Download DER
+    syntax: az keyvault certificate download --vault-name myvault --name app-tls --file ./app.cer --encoding DER
+  requiredParameters:
+  - isRequired: true
+    name: --file
+    summary: |-
+      New destination for the public certificate.
+  - isRequired: true
+    name: --name
+    summary: |-
+      certificate name.
+  optionalParameters:
+  - name: --encoding
+    summary: |-
+      Public certificate encoding: PEM (default) or DER.
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  - name: --version
+    summary: |-
+      certificate version. Omit for latest.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_keyvault_certificate_import
+  name: az keyvault certificate import
+  summary: |-
+    Import a PFX or PEM certificate with its private key.
+  description: |-
+    Import a PFX/PKCS#12 file or PEM containing a certificate and PKCS#8 private key. Requires certificates/import. Files are limited to 1 MiB. Use either `--password` or `--password-file`, not both. Prefer `--password-file` to avoid shell history and process-argument exposure; the file must contain the exact UTF-8 password with no extra newline. Protect and remove input files according to local policy. Request payloads/passwords are excluded from diagnostics. Optional policy content type must match the file. Public-only imports and pending-CSR merge are not supported. Output never contains the private key or password.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate import --file
+                                   --name
+                                   [--enabled]
+                                   [--expires]
+                                   [--not-before]
+                                   [--password]
+                                   [--password-file]
+                                   [--policy]
+                                   [--policy-file]
+                                   [--profile]
+                                   [--tags]
+                                   [--vault-name]
+                                   [--vault-url]
+  examples:
+  - summary: |-
+      Import encrypted PFX
+    syntax: az keyvault certificate import --vault-name myvault --name app-tls --file ./app.pfx --password-file ./password.txt
+  requiredParameters:
+  - isRequired: true
+    name: --file
+    summary: |-
+      PFX or PEM file containing a private key.
+  - isRequired: true
+    name: --name
+    summary: |-
+      certificate name.
+  optionalParameters:
+  - name: --enabled
+    summary: |-
+      Whether the certificate is enabled: true or false.
+  - name: --expires
+    summary: |-
+      Expiration timestamp in UTC.
+  - name: --not-before
+    summary: |-
+      Not-before timestamp in UTC.
+  - name: --password
+    summary: |-
+      Certificate password. Prefer --password-file to avoid exposing it in shell history.
+  - name: --password-file
+    summary: |-
+      UTF-8 password file. Contents, including newlines, are preserved.
+  - name: --policy
+    summary: |-
+      Certificate policy JSON using classic CLI or REST field names; @file is supported.
+  - name: --policy-file
+    summary: |-
+      UTF-8 JSON policy file. Use instead of policy JSON.
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --tags
+    summary: |-
+      Tags in NAME=VALUE form.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_keyvault_certificate_list
+  name: az keyvault certificate list
+  summary: |-
+    List certificate metadata across all pages.
+  description: |-
+    Requires certificates/list. `--maxresults` is page size from 1 to 25, not total count. Omit it for the service default. `--include-pending true` includes incomplete certificates; explicit false is preserved. Cross-vault continuation links are rejected.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate list [--include-pending]
+                                 [--maxresults]
+                                 [--profile]
+                                 [--vault-name]
+                                 [--vault-url]
+  examples:
+  - summary: |-
+      List certificates
+    syntax: az keyvault certificate list --vault-name myvault --maxresults 25 --include-pending true
+  optionalParameters:
+  - name: --include-pending
+    summary: |-
+      Include certificates that are not completely provisioned.
+  - name: --maxresults
+    summary: |-
+      Page size from 1 to 25. All pages are returned.
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_keyvault_certificate_list-versions
+  name: az keyvault certificate list-versions
+  summary: |-
+    List all versions of a certificate.
+  description: |-
+    Enumerate version metadata across all pages. Requires certificates/list. `--maxresults` is page size from 1 to 25, not total limit. No private key or backing secret is retrieved.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate list-versions --name
+                                          [--maxresults]
+                                          [--profile]
+                                          [--vault-name]
+                                          [--vault-url]
+  examples:
+  - summary: |-
+      List versions
+    syntax: az keyvault certificate list-versions --vault-name myvault --name app-tls --maxresults 1
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      certificate name.
+  optionalParameters:
+  - name: --maxresults
+    summary: |-
+      Page size from 1 to 25. All pages are returned.
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_keyvault_certificate_set-attributes
+  name: az keyvault certificate set-attributes
+  summary: |-
+    Update supplied certificate attributes, tags or policy.
+  description: |-
+    Preserve omitted attributes and explicit false. At least one change is required. `--policy`/`--policy-file` accepts classic CLI or REST field names and updates the name-wide policy; `--version` applies only to attribute changes. Policy is sent before attributes; the requests are not transactional. Policy-only update reads the latest certificate afterward. Requires certificates/update and certificates/get for that follow-up read. Dates are supported through January 2038.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate set-attributes --name
+                                           [--enabled]
+                                           [--expires]
+                                           [--not-before]
+                                           [--policy]
+                                           [--policy-file]
+                                           [--profile]
+                                           [--tags]
+                                           [--vault-name]
+                                           [--vault-url]
+                                           [--version]
+  examples:
+  - summary: |-
+      Disable a certificate
+    syntax: az keyvault certificate set-attributes --vault-name myvault --name app-tls --enabled false
+  - summary: |-
+      Update policy
+    syntax: az keyvault certificate set-attributes --vault-name myvault --name app-tls --policy '{"x509_certificate_properties":{"validity_in_months":12}}'
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      certificate name.
+  optionalParameters:
+  - name: --enabled
+    summary: |-
+      Whether the certificate is enabled: true or false.
+  - name: --expires
+    summary: |-
+      Expiration timestamp in UTC.
+  - name: --not-before
+    summary: |-
+      Not-before timestamp in UTC.
+  - name: --policy
+    summary: |-
+      Certificate policy JSON using classic CLI or REST field names; @file is supported.
+  - name: --policy-file
+    summary: |-
+      UTF-8 JSON policy file. Use instead of policy JSON.
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --tags
+    summary: |-
+      Tags in NAME=VALUE form.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  - name: --version
+    summary: |-
+      certificate version. Omit for latest.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+- uid: az_keyvault_certificate_show
+  name: az keyvault certificate show
+  summary: |-
+    Read a public certificate and metadata.
+  description: |-
+    Get the latest certificate or an explicit `--version`. Requires certificates/get. Returns public bytes, policy, attributes and references. Does not follow backing secret/key references or export a private key.
+  status: Preview
+  isPreview: true
+  sourceType: Core
+  editLink: https://github.com/Azure/azclips/blob/main/src/CLI/Help/Docs/keyvault/index.md
+  syntax: >-
+    az keyvault certificate show --name
+                                 [--profile]
+                                 [--vault-name]
+                                 [--vault-url]
+                                 [--version]
+  examples:
+  - summary: |-
+      Show latest
+    syntax: az keyvault certificate show --vault-name myvault --name app-tls
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: |-
+      certificate name.
+  optionalParameters:
+  - name: --profile
+    summary: |-
+      Use the named connection profile.
+  - name: --vault-name
+    summary: |-
+      Azure public-cloud vault name.
+  - name: --vault-url
+    summary: |-
+      Root HTTPS vault URL. Use instead of vault name.
+  - name: --version
+    summary: |-
+      certificate version. Omit for latest.
+  globalParameters:
+  - name: --debug
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h -help -? --?
+    summary: |-
+      Show help for the command or group and exit.
+  - name: --no-cache
+    summary: |-
+      Bypass the extension discovery cache and reload extensions from disk.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string to filter/project the command result before rendering.
+commands:
+- az_keyvault_certificate_create
+- az_keyvault_certificate_delete
+- az_keyvault_certificate_download
+- az_keyvault_certificate_import
+- az_keyvault_certificate_list
+- az_keyvault_certificate_list-versions
+- az_keyvault_certificate_set-attributes
+- az_keyvault_certificate_show
+metadata:
+  ms.date: 10/20/2026
+  description: Manage Key Vault certificates.
