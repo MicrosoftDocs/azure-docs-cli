@@ -1,7 +1,7 @@
 ---
 title: Install the Azure CLI public preview
 description: Learn how to install the Azure CLI public preview.
-ms.date: 11/13/2026
+ms.date: 11/16/2026
 ---
 
 # Install the Azure CLI public preview
@@ -102,7 +102,7 @@ Piped Bash execution may not report the downloader's exit status. If the bootstr
 | You want to… | Guide |
 | --- | --- |
 | Install azcli manually / offline (you already have the archive, or prefer not to use the installer) | [Install the Azure CLI preview manually or offline](./install-cli-manual.md) |
-| Add an add-on azcli extension (lean installs, or a specific version) | [Install Azure CLI preview extensions](./install-cli-extensions.md) |
+| Add an add-on azcli extension (lean installs, or a specific version) | [Install Azure CLI preview extensions](./azure-cli-extensions-overview.md) |
 | Enable `az` tab completion (bash / zsh / PowerShell) | [Enable Azure CLI preview tab completion](./install-cli-completions.md) |
 | Enable AI-based error recovery in Azure CLI | [AI-based error recovery in Azure CLI](./how-to-command-recovery.md) |
 

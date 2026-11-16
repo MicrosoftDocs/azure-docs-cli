@@ -1,14 +1,14 @@
 ---
 title: Install Azure CLI public preview extensions
 description: Learn how to install add-on extensions for the Azure CLI public preview.
-ms.date: 11/13/2026
+ms.date: 11/16/2026
 ---
 
 # Install Azure CLI public preview extensions
 
-> **Most users should start with the [install guide](install-overview.md).** This page covers add-on extensions, which you only need on **lean** installs or to pin a specific extension version.
+> **Most users should start with the [install guide](install-azure-cli.md).** This page covers add-on extensions, which you only need on **lean** installs or to pin a specific extension version.
 
-Add-on extensions ship as NuGet packages named `azcli.extensions.<name>.<version>.nupkg`. You need a working azcli before you can add extensions — follow the [install guide](install-overview.md) to install the **lean** or **full** package first, then use the steps below.
+Add-on extensions ship as NuGet packages named `azcli.extensions.<name>.<version>.nupkg`. You need a working azcli before you can add extensions — follow the [install guide](install-azure-cli.md) to install the **lean** or **full** package first, then use the steps below.
 
 > The **full** azcli package already bundles the add-on extensions — you only need this guide if you installed the **lean** package or want a specific extension version from a package file.
 
@@ -126,7 +126,7 @@ The extension you added should appear in the list. If the command it provides no
 | Release lookup returns HTTP 403 or 429 | Check GitHub's response and retry after the API rate limit resets, or download the matching bundle manually from [GitHub Releases](https://github.com/Azure/azclips/releases). |
 | Bootstrap download fails | Check the download error before extracting or installing. Piped Bash execution may not report the downloader's exit status. Download the bundle manually if needed. |
 | Pinned release isn't found | Confirm `<release-tag>` matches a tag on the [GitHub Releases](https://github.com/Azure/azclips/releases) page, rather than an extension package version. |
-| `az` is not found | Install the Azure CLI preview first. For more information, see the [install guide](install-overview.md). |
+| `az` is not found | Install the Azure CLI preview first. For more information, see the [install guide](install-azure-cli.md). |
 | A command says an extension is missing | Install the add-on from the extensions bundle with `az extension add --path <pkg>` (see above). |
 | `--path` package not found | Confirm the file name and version match your download, for example `azcli.extensions.compute.<version>.nupkg`. |
 | Extension already installed | Use `az extension update --name <name>` or remove then re-add it. |

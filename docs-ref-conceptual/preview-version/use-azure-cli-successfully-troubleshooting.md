@@ -2,7 +2,7 @@
 title: Troubleshoot Azure CLI issues (preview)
 description: Learn what to do if you encounter issues while using Azure CLI during the preview and how to report problems to the development team.
 ms.topic: troubleshooting
-ms.date: 10/27/2026
+ms.date: 11/16/2026
 ai-usage: ai-assisted
 ---
 
