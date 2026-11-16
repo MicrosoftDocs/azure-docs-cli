@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: quickstart
-ms.date: 11/03/2026
+ms.date: 11/16/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -23,7 +23,7 @@ By the end of this quickstart, you:
 
 ## Prerequisites
 
-- Azure CLI preview, installed by following [Install Azure CLI preview](install-overview.md).
+- Azure CLI preview, installed by following [Install Azure CLI preview](install-azure-cli.md).
 - Bash or zsh on Linux or macOS, or PowerShell 7.6 or later on Windows.
 - Two Azure subscriptions you can sign in to. The subscriptions can be in the same tenant or in different tenants. If you don't have a subscription, [create a free account](https://azure.microsoft.com/free/).
 
@@ -87,7 +87,7 @@ az --help
 
 The first command returns the path of the preview `az` executable, `~/.local/share/azcli/az` on Linux or macOS or `%LOCALAPPDATA%\Programs\azcli\az.exe` on Windows, if you installed to the default location. `az --version` prints the preview version, which matches the version in the file name you downloaded. `az --help` lists the available command groups, including `profile`.
 
-If the first command returns a different path or nothing, add the preview to `PATH` as described in [Install Azure CLI preview](install-overview.md).
+If the first command returns a different path or nothing, add the preview to `PATH` as described in [Install Azure CLI preview](install-azure-cli.md).
 
 ## Switch between the classic Azure CLI and the preview
 

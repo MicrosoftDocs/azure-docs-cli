@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: how-to
-ms.date: 11/10/2026
+ms.date: 11/16/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -140,7 +140,7 @@ az extension show --name compute
 
 ---
 
-`az extension list` shows each extension that the CLI can load, with its selected version and location. `az extension show` returns the details of the `compute` extension, including the command groups it contributes. If `compute` isn't listed, install it from the extensions bundle for your installed preview version, as described in [Install Azure CLI preview extensions](install-cli-extensions.md).
+`az extension list` shows each extension that the CLI can load, with its selected version and location. `az extension show` returns the details of the `compute` extension, including the command groups it contributes. If `compute` isn't listed, install it from the extensions bundle for your installed preview version, as described in [Install Azure CLI preview extensions](azure-cli-extensions-overview.md).
 
 ## Clean up resources
 
@@ -167,5 +167,5 @@ az group exists --subscription-id $sub --name $rg
 ## Related content
 
 - For more information, see [Recover from command failures with AI troubleshooting](how-to-command-recovery.md).
-- For more information, see [Install Azure CLI preview extensions](install-cli-extensions.md).
+- For more information, see [Install Azure CLI preview extensions](azure-cli-extensions-overview.md).
 - For more information, see [Get started with the preview](get-started-with-azure-cli.md).

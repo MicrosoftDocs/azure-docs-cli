@@ -4,7 +4,7 @@ description: Explore the Azure CLI preview and its key capabilities. Find guidan
 ms.topic: overview
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
-ms.date: 11/10/2026
+ms.date: 11/16/2026
 ai-usage: ai-generated
 ---
 
@@ -51,12 +51,12 @@ The next-generation Azure CLI preview sends usage telemetry by default. For tele
 
 [01]: ./get-started-with-azure-cli.md
 [04]: ./switch-cli-versions.md
-[05]: ./install-overview.md
-[06]: ./whats-new.md
-[07]: ./profile-base-login.md
+[05]: ./install-azure-cli.md
+[06]: ./whats-new-overview.md
+[07]: ./authenticate-azure-cli.md
 [08]: ../../docs-ref-autogen/preview-version/latest/reference-index.yml
 [09]: ./install-cli-completions.md
 [10]: ./azure-cli-configuration.md
 [11]: ./ai-based-error-recovery.md
 [12]: https://privacy.microsoft.com/privacystatement
-[13]: ./troubleshooting.md
+[13]: ./use-azure-cli-successfully-troubleshooting.md
