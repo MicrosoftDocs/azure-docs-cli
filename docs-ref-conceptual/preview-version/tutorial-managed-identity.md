@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 11/10/2026
+ms.date: 11/16/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -16,7 +16,7 @@ In this tutorial, you use Azure CLI preview to give a workload access to a Key V
 
 When you finish, the workload has read the test secret by using its managed identity, the same read has failed after you revoked access, and no test identity or active test secret remains.
 
-You run most steps on your workstation. You run the steps marked **On the host** on the Azure host, such as a VM, that runs the workload.
+You run most steps on your workstation. You run the steps marked **On the host** on the Azure VM that runs the workload.
 
 In this tutorial, you:
 
@@ -24,18 +24,16 @@ In this tutorial, you:
 > - Create the application's identity
 > - Store a test secret
 > - Grant access
+> - Attach the identity to the VM
 > - Read the secret as the application
 > - Revoke access
 > - Clean up
-
-> [!WARNING]
-> This walkthrough still requires engineering confirmation of the commands to attach and detach the identity on the host. Use these commands for engineering review only until those steps are supplied and validated. For more information about authentication support, see [Get started with the preview](get-started-with-azure-cli.md#authentication).
 
 ## Prerequisites
 
 - Bash or zsh on Linux or macOS, or PowerShell 7.6 or later on Windows.
 - Azure CLI preview, installed and signed in as described in [Set up and switch sign-in profiles](quickstart-profiles.md).
-- An Azure host, such as a VM, that can use a user-assigned managed identity and has the Azure CLI preview or modules installed.
+- A test Azure VM to run the workload, with the Azure CLI preview installed and no managed identities assigned. You need permission to update the VM, such as the Virtual Machine Contributor role.
 - An existing test Key Vault that uses Azure role-based access control and is reachable from that host.
 - The role definition ID of a built-in role that grants secret read access, and permission to assign it.
 
@@ -61,6 +59,7 @@ identity="app-identity-$run"
 secret="app-secret-$run"
 assignment=$(uuidgen)
 identity_id="/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$identity"
+vm_id="<test-VM-resource-ID>"
 fixture="/tmp/$secret.txt"
 ```
 
@@ -79,6 +78,7 @@ $identity = "app-identity-$run"
 $secret = "app-secret-$run"
 $assignment = [guid]::NewGuid().ToString()
 $identityId = "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$identity"
+$vmId = '<test-VM-resource-ID>'
 $fixture = Join-Path ([IO.Path]::GetTempPath()) "$secret.txt"
 ```
 
@@ -141,8 +141,6 @@ az role assignment create --scope "$vault_id" --assignee-object-id "$principal_i
 az role assignment list --scope "$vault_id" --assignee-object-id "$principal_id"
 ```
 
-Attach the identity to the host: **Pending engineering confirmation: command to attach the identity to the host.**
-
 # [PowerShell](#tab/powershell)
 
 ```powershell
@@ -150,11 +148,33 @@ az role assignment create --scope $vaultId --assignee-object-id $principalId --a
 az role assignment list --scope $vaultId --assignee-object-id $principalId
 ```
 
-Attach the identity to the host: **Pending engineering confirmation: command to attach the identity to the host.**
-
 ---
 
 The role assignment list includes one assignment for the identity's principal ID, with the role you specified, at the vault's scope.
+
+## Attach the identity to the VM
+
+> [!NOTE]
+> The Azure CLI preview doesn't include commands to attach a managed identity to a VM or detach it. This step, and the matching step in [Clean up resources](#clean-up-resources), use `az rest` to send the Azure Resource Manager request directly. All other steps use preview commands.
+
+Assign the user-assigned identity to the VM with a `PATCH` request to the [Virtual Machines - Update](/rest/api/compute/virtual-machines/update) API:
+
+# [Bash](#tab/bash)
+
+```bash
+az rest --method PATCH --uri "$vm_id?api-version=2026-04-01" --headers Content-Type=application/json --body "{\"identity\": {\"type\": \"UserAssigned\", \"userAssignedIdentities\": {\"$identity_id\": {}}}}"
+```
+
+# [PowerShell](#tab/powershell)
+
+```powershell
+$body = @{ identity = @{ type = 'UserAssigned'; userAssignedIdentities = @{ $identityId = @{} } } } | ConvertTo-Json -Depth 4 -Compress
+az rest --method PATCH --uri "${vmId}?api-version=2026-04-01" --headers Content-Type=application/json --body $body
+```
+
+---
+
+The response is the updated VM. Its `identity` section lists the identity's resource ID under `userAssignedIdentities`. `az rest` doesn't wait for long-running operations, so if the response shows a `provisioningState` of `Updating`, wait a minute before you continue. This request sets the VM's identity type to `UserAssigned`, which replaces any other identity configuration, so use a test VM that has no other managed identities.
 
 ## Read the secret as the application
 
@@ -211,7 +231,13 @@ The role assignment list is empty. On the host, repeat the read from [Read the s
 
 # [Bash](#tab/bash)
 
-Detach the identity from the host: **Pending engineering confirmation: command to detach the identity from the host.**
+Detach the identity from the VM. Like the attach step, this step uses `az rest` because the preview has no command for it. Setting the identity type to `None` removes all managed identities from the VM.
+
+```bash
+az rest --method PATCH --uri "$vm_id?api-version=2026-04-01" --headers Content-Type=application/json --body '{"identity": {"type": "None"}}'
+```
+
+Then delete the test resources:
 
 ```bash
 az identity delete --ids "$identity_id"
@@ -232,7 +258,13 @@ az profile remove --name "workload-$run"
 
 # [PowerShell](#tab/powershell)
 
-Detach the identity from the host: **Pending engineering confirmation: command to detach the identity from the host.**
+Detach the identity from the VM. Like the attach step, this step uses `az rest` because the preview has no command for it. Setting the identity type to `None` removes all managed identities from the VM.
+
+```powershell
+az rest --method PATCH --uri "${vmId}?api-version=2026-04-01" --headers Content-Type=application/json --body '{"identity": {"type": "None"}}'
+```
+
+Then delete the test resources:
 
 ```powershell
 az identity delete --ids $identityId
