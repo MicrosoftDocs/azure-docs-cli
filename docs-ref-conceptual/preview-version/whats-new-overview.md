@@ -50,7 +50,7 @@ During the preview:
 
 The next-generation Azure CLI supports _profiles_, which let you save named sign-in contexts for different accounts, tenants, and subscriptions. Profiles make it easy to switch between environments without signing in again.
 
-For more information, see [Manage sign-in profiles in Azure CLI (preview)](authenticate-azure-cli.md).
+For more information, see [Manage sign-in profiles in Azure CLI (preview)](profile-base-login.md).
 
 ## Existing and next-generation Azure CLI
 
@@ -82,7 +82,7 @@ For the next-generation Azure CLI, `which az` or `Get-Command az` returns the pa
 
 - **Coverage:** Not all Azure CLI and Azure PowerShell scenarios are available.
 - **Commands and output:** The next-generation Azure CLI aims to keep commands close to the existing Azure CLI, but they aren't guaranteed to be identical. Use the [Azure CLI preview command reference](../../docs-ref-autogen/preview-version/latest/reference-index.yml), and compare your results with the expected output in each article.
-- **Sign-in:** The next-generation Azure CLI doesn't share sign-in context or tokens with the existing Azure CLI, so you sign in again. It uses [profiles](authenticate-azure-cli.md) and opens a browser by default. These sign-in methods aren't available yet:
+- **Sign-in:** The next-generation Azure CLI doesn't share sign-in context or tokens with the existing Azure CLI, so you sign in again. It uses [profiles](profile-base-login.md) and opens a browser by default. These sign-in methods aren't available yet:
   - Broker sign-in, such as Web Account Manager on Windows
   - Resource Owner Password Credentials (ROPC), such as `az login --username --password`
   - Certificate-based service principal authentication. Use a client secret or workload identity federation with a federated token instead.
