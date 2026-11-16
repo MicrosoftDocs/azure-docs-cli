@@ -34,25 +34,6 @@ Azure Stack Hub compatibility.
 
 [!INCLUDE [MFA](includes/multifactor-authentication.md)]
 
-## Ignite 2024
-
-There are several new Azure CLI features being released for Ignite 2024.
-
-- Improved credential protection
-- New end-to-end scenarios in Azure Copilot
-- Support for Azure CLI on Azure Linux 3.0
-- Refined Azure CLI extension management
-
-For details on the new features, see
-[Azure CLI and Azure PowerShell Ignite 2024 Announcement][19].
-
-## AI Shell
-
-AI Shell introduces a seamless way to obtain assistance from Copilot in Azure directly within your
-command-line interface (CLI). Generate Azure CLI commands using natural language right in your
-preferred terminal environment. For more information, see
-[Use Microsoft Copilot in Azure with AI Shell][10].
-
 ## Docker container image
 
 Beginning with Azure CLI version 2.67.0, to be released on November 19, 2024, the default Docker
@@ -170,7 +151,6 @@ find code examples in the A to Z indexes.
 [07]: ./release-notes-azure-cli.md#february-06-2024
 [08]: ./run-azure-cli-docker.md
 [09]: /azure/cloud-shell/quickstart?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&tabs=azurecli
-[10]: /azure/copilot/ai-shell-overview
 [11]: /cli/azure/account
 [12]: /cli/azure/account/subscription
 [13]: /cli/azure/authenticate-azure-cli#sign-in-with-web-account-manager-wam
@@ -179,7 +159,6 @@ find code examples in the A to Z indexes.
 [16]: cheat-sheet-onboarding.md
 [17]: https://aka.ms/MicrosoftCopilotforAzureDocs
 [18]: https://aka.ms/MSCopilotforAzurePreviewRequest
-[19]: https://techcommunity.microsoft.com/blog/azuretoolsblog/azure-cli-and-azure-powershell-ignite-2024-announcement/4304204
 [20]: https://techcommunity.microsoft.com/t5/azure-tools-blog/azure-command-line-tools-ignite-2023-announcement/ba-p/3984502
 [21]: install-azure-cli-windows.md
 [22]: reference-docs-index.md
