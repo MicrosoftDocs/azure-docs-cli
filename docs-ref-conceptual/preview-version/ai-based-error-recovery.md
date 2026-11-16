@@ -1,7 +1,7 @@
 ---
 title: AI-based error recovery in Azure CLI (preview)
 description: Learn how AI-based error recovery in the Azure CLI preview analyzes command failures, identifies likely root causes, and provides guided troubleshooting steps.
-ms.date: 10/27/2026
+ms.date: 11/16/2026
 ---
 
 # AI-based error recovery in Azure CLI (preview)
@@ -34,27 +34,37 @@ The goal is to reduce debugging time, improve command success rates, and provide
 
 ## Enable or disable AI-based error recovery
 
-AI-based error recovery is disabled by default.
+AI-based error recovery is off by default. The `agent.recovery.trigger` setting controls when it runs:
 
-Enable the feature:
+- `off` (default): AI-based error recovery doesn't run.
+- `manual`: Azure CLI saves each failed command. Run `az troubleshoot recover` to analyze the most recent failure.
+- `auto`: AI-based error recovery runs automatically whenever an `az` command fails.
+
+Run recovery automatically after every failure:
 
 ```azurecli
-az config set --key agent.enabled --value true
+az config set --key agent.recovery.trigger --value auto
 ```
 
-Disable the feature:
+Run recovery only when you request it:
 
 ```azurecli
-az config set --key agent.enabled --value false
+az config set --key agent.recovery.trigger --value manual
+```
+
+Turn off the feature:
+
+```azurecli
+az config set --key agent.recovery.trigger --value off
 ```
 
 View the current setting:
 
 ```azurecli
-az config get --key agent.enabled
+az config get --key agent.recovery.trigger
 ```
 
-After you enable the feature, AI-based error recovery runs automatically whenever an `az` command fails. You don't need to specify a per-command option.
+For a walkthrough of each mode, see [Recover from command failures with AI troubleshooting](how-to-command-recovery.md).
 
 ## Configure the AI provider
 
@@ -78,19 +88,21 @@ az config set --key agent.provider --value github
 
 ## Choose the interaction style
 
-By default, AI-based error recovery uses a one-shot experience that generates a recovery plan and then exits.
+By default, AI-based error recovery uses a one-shot experience that generates a recovery plan and then exits. The `agent.recovery.style` setting controls the style.
 
 To use a multi-turn interactive session that remains open until you type `exit`, run:
 
 ```azurecli
-az config set --key agent.sessionStyle --value interactive
+az config set --key agent.recovery.style --value interactive
 ```
 
 To return to the default one-shot experience:
 
 ```azurecli
-az config set --key agent.sessionStyle --value oneshot
+az config set --key agent.recovery.style --value oneshot
 ```
+
+To use a different style for one recovery without changing the setting, run `az troubleshoot recover --style interactive`.
 
 ## Frequently asked questions
 
@@ -132,10 +144,10 @@ In some cases, the AI can query Azure APIs to suggest valid alternatives, such a
 
 No. AI-based error recovery is disabled by default.
 
-To enable the feature, run:
+To run it automatically after every failure, run:
 
 ```azurecli
-az config set --key agent.enabled --value true
+az config set --key agent.recovery.trigger --value auto
 ```
 
 ### Does it require authentication?
