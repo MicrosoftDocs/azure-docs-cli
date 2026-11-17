@@ -1,7 +1,7 @@
 ---
 title: Get started with the next-generation Azure CLI (preview)
 description: Learn the core concepts, supported environments, authentication model, current limitations, and coexistence guidance for the next-generation Azure CLI, available in preview.
-ms.date: 10/27/2026
+ms.date: 11/17/2026
 ai-usage: ai-assisted
 ---
 
@@ -90,7 +90,7 @@ The next-generation Azure CLI supports modern, cross-platform environments.
 
 ### Supported shells
 
-- PowerShell 7 or later
+- PowerShell 7.6 or later
 - Bash
 - Zsh
 

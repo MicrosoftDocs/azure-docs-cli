@@ -1,7 +1,7 @@
 ---
 title: Install the Azure CLI public preview
 description: Learn how to install the Azure CLI public preview.
-ms.date: 11/16/2026
+ms.date: 11/17/2026
 ---
 
 # Install the Azure CLI public preview
@@ -21,7 +21,7 @@ The installer downloads the latest release from the public [GitHub Releases](htt
 **Prerequisites:**
 
 - **Linux / macOS / WSL:** Bash, `curl`, `tar`, and standard system text utilities.
-- **Windows:** PowerShell 7+.
+- **Windows:** PowerShell 7.6 or later.
 
 **Linux / macOS / WSL:**
 
@@ -29,7 +29,7 @@ The installer downloads the latest release from the public [GitHub Releases](htt
 curl -fsSL https://raw.githubusercontent.com/Azure/azclips/main/install/azcli-install.sh | bash
 ```
 
-**Windows (PowerShell 7+):**
+**Windows (PowerShell 7.6 or later):**
 
 ```powershell
 irm https://raw.githubusercontent.com/Azure/azclips/main/install/azcli-install.ps1 -ErrorAction Stop | iex

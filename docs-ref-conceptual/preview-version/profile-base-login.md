@@ -2,7 +2,7 @@
 title: Manage sign-in profiles in Azure CLI (preview)
 description: Learn how to use named profiles in the Azure CLI preview to save sign-in context, switch between accounts and subscriptions, and run individual commands against a specific profile.
 ms.topic: concept-article
-ms.date: 11/16/2026
+ms.date: 11/17/2026
 ---
 
 # Manage sign-in profiles in Azure CLI (preview)
@@ -132,7 +132,7 @@ If you remove the active profile, no profile is active until you set one with `a
 
 ## Display the active profile in your prompt
 
-To keep track of which profile is active, you can display the active profile name in your shell prompt. Azure CLI writes the active profile name to an `active-profile` file in its local data directory.
+To keep track of which profile is active, you can display the active profile name in your shell prompt. Azure CLI writes the active profile name to an `active-profile` file in the `.azclips` folder in your home directory, or in the folder that the `AZCLIPS_HOME` environment variable specifies. Azure PowerShell uses the same file.
 
 ### Bash
 
@@ -140,7 +140,7 @@ Add the following to your `~/.bashrc` to append the active profile to your promp
 
 ```bash
 azclips_profile() {
-  local f="${XDG_DATA_HOME:-$HOME/.local/share}/.azclips/active-profile"
+  local f="${AZCLIPS_HOME:-$HOME/.azclips}/active-profile"
   [ -f "$f" ] && printf '@%s' "$(cat "$f")"
 }
 PS1='\u@\h \w $(azclips_profile)\$ '
@@ -152,15 +152,14 @@ If you use [Starship](https://starship.rs/), add a custom module to your `~/.con
 
 ```toml
 [custom.profile]
-command = 'cat "${XDG_DATA_HOME:-$HOME/.local/share}/.azclips/active-profile"'
+command = 'cat "${AZCLIPS_HOME:-$HOME/.azclips}/active-profile"'
 symbol = '@'
-when = 'test -f "${XDG_DATA_HOME:-$HOME/.local/share}/.azclips/active-profile"'
+when = 'test -f "${AZCLIPS_HOME:-$HOME/.azclips}/active-profile"'
 description = 'Name of the active Azure CLI profile'
 ```
 
 > [!NOTE]
-> Azure CLI stores the active profile pointer at `{LocalApplicationData}/.azclips/active-profile`.
-> On Linux, `{LocalApplicationData}` is typically `${XDG_DATA_HOME:-$HOME/.local/share}`.
+> The active profile file is `$HOME/.azclips/active-profile` on Linux and macOS, and `%USERPROFILE%\.azclips\active-profile` on Windows. If you set `AZCLIPS_HOME`, the file is `$AZCLIPS_HOME/active-profile`.
 
 ## Next steps
 

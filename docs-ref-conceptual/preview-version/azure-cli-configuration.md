@@ -1,7 +1,7 @@
 ---
 title: Configuration management
 description: Learn how to manage Azure CLI preview configuration settings, including keys, environment variables, and file locations.
-ms.date: 11/16/2026
+ms.date: 11/17/2026
 ---
 
 # Configuration management
@@ -77,15 +77,10 @@ az config get --key core
 #   http.maxRetriesFor429 = 5
 
 # Retrieve a subsection as JSON
-az config get --key core.logging --json
+az config get --key core.logging --output json
 
-# Example output:
-# {
-#   "level": "warn"
-# }
-
-# Retrieve a section as nested JSON
-az config get --key core --json
+# Retrieve a section as JSON
+az config get --key core --output json
 ```
 
 ### Set a configuration value
@@ -110,7 +105,7 @@ az config list
 az config list --all
 
 # Output as JSON
-az config list --all --json
+az config list --all --output json
 ```
 
 ### Delete a configuration value
