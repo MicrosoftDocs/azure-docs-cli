@@ -1,7 +1,7 @@
 ---
 title: AI-based error recovery in Azure CLI (preview)
 description: Learn how AI-based error recovery in the Azure CLI preview analyzes command failures, identifies likely root causes, and provides guided troubleshooting steps.
-ms.date: 10/27/2026
+ms.date: 11/16/2026
 ---
 
 # AI-based error recovery in Azure CLI (preview)
@@ -31,6 +31,12 @@ The goal is to reduce debugging time, improve command success rates, and provide
 > [!NOTE]
 > AI-based error recovery is currently available only for Azure CLI (`az`) commands. Azure
 > PowerShell workflows aren't supported during the preview.
+
+## Watch an AI troubleshooting demo
+
+Watch this demo to see how to use automatic and manual error recovery to diagnose failed commands, then turn the feature off. Review AI suggestions before you run them.
+
+> [!VIDEO https://learn-video.azurefd.net/vod/player?id=d57d5383-3ffa-4d39-8628-43668a0f6849]
 
 ## Enable or disable AI-based error recovery
 
