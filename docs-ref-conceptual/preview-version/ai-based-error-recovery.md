@@ -72,30 +72,6 @@ az config get --key agent.recovery.trigger
 
 For a walkthrough of each mode, see [Recover from command failures with AI troubleshooting](how-to-command-recovery.md).
 
-## Errors that skip automatic recovery
-
-Whether automatic recovery runs depends on the type of error, not on the command that failed. The same command can fail in different ways, and only some failures start recovery. For example, `az login` without a subscription or tenant ID starts recovery, but `az login --profile <name>` with a profile that doesn't exist doesn't.
-
-These errors skip recovery, and the CLI shows the original error:
-
-- Usage errors (`UsageError`): unknown, conflicting, or missing arguments. When a required argument is missing, the command help is also shown.
-- Not signed in (`NotSignedIn`): the command needs a sign-in or subscription that isn't available.
-- Profile not found (`ProfileNotFound`).
-- Command not found (`CommandNotFound`, `VerbNotFound`). For an incomplete command group, the CLI shows the group's help instead.
-- Extension not installed (`ExtensionNotFound`).
-- Extension management errors: conflicts (`VerbConflict`, `LeafConflict`), feed unavailable (`FeedUnavailable`), pinned version violation (`PinViolation`), incompatible version (`CompatibilityViolation`), registry errors (`RegistryConcurrency`, `RegistryInvalid`), and removal failure (`ExtensionRemoveFailed`).
-- Errors from `az troubleshoot` itself, such as recovery turned off (`AgentDisabled`) or no failure to recover (`NoFailureHistory`).
-
-These errors start recovery when `agent.recovery.trigger` is `auto`:
-
-- Invalid input (`InvalidInput`): a malformed or out-of-range value. Most `az login` failures fall here, such as a missing subscription or tenant ID, or no access to the subscription.
-- Network or HTTP failures, and other unexpected errors.
-
-These categories can change between releases as errors are reclassified.
-
-### Recover from a skipped error
-
-When `agent.recovery.trigger` is `manual` or `auto`, skipped errors are still saved to failure history. Run `az troubleshoot recover` to start recovery for the latest failure in this terminal.
 ## Configure the AI provider
 
 By default, AI-based error recovery uses Microsoft's built-in AI provider.
