@@ -5,7 +5,7 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.service: azure-cli
 ms.topic: tutorial
-ms.date: 11/03/2026
+ms.date: 11/16/2026
 ms.custom: devx-track-azurecli
 ai-usage: ai-assisted
 ---
@@ -99,7 +99,7 @@ Each command returns the new resource with `"provisioningState": "Succeeded"`. T
 
 ```bash
 ssh-keygen -t ed25519 -f "$key" -C "azclips-$run"
-az vm create --subscription-id "$sub" --resource-group "$rg" --name "$vm" --location "$location" --size Standard_D2s_v3 --image "$image" --admin-username "$admin" --ssh-key-values "$key.pub" --network-interface-name "$vm-nic" --virtual-network-name "$vm-vnet" --address-prefixes 10.0.0.0/16 --subnet-names app --subnet-address-prefixes 10.0.2.0/24 --nsg "$nsg_id" --public-ip-address "$pip"
+az vm create --subscription-id "$sub" --resource-group "$rg" --name "$vm" --location "$location" --size Standard_D2s_v3 --image "$image" --admin-username "$admin" --ssh-key-values "$key.pub" --virtual-network-name "$vm-vnet" --address-prefixes 10.0.0.0/16 --subnet-names app --subnet-address-prefixes 10.0.2.0/24 --nsg "$nsg_id" --public-ip-address "$pip"
 az vm show --subscription-id "$sub" --resource-group "$rg" --name "$vm"
 ```
 
@@ -107,7 +107,7 @@ az vm show --subscription-id "$sub" --resource-group "$rg" --name "$vm"
 
 ```powershell
 ssh-keygen -t ed25519 -f $key -C "azclips-$run"
-az vm create @scope --name $vm --location $location --size Standard_D2s_v3 --image $image --admin-username $admin --ssh-key-values "$key.pub" --network-interface-name "$vm-nic" --virtual-network-name "$vm-vnet" --address-prefixes 10.0.0.0/16 --subnet-names app --subnet-address-prefixes 10.0.2.0/24 --nsg $nsgId --public-ip-address $pip
+az vm create @scope --name $vm --location $location --size Standard_D2s_v3 --image $image --admin-username $admin --ssh-key-values "$key.pub" --virtual-network-name "$vm-vnet" --address-prefixes 10.0.0.0/16 --subnet-names app --subnet-address-prefixes 10.0.2.0/24 --nsg $nsgId --public-ip-address $pip
 az vm show @scope --name $vm
 ```
 
