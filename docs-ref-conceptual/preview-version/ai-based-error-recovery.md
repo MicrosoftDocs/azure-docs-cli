@@ -34,31 +34,38 @@ The goal is to reduce debugging time, improve command success rates, and provide
 
 ## Enable or disable AI-based error recovery
 
-AI-based error recovery is disabled by default.
-
-Enable the feature:
+AI-based error recovery is off by default. To turn it on, run:
 
 ```azurecli
-az config set --key agent.enabled --value true
+az config set --key agent.recovery.trigger --value manual
 ```
 
-Disable the feature:
+The CLI then saves each failed command. After a command fails, run:
 
 ```azurecli
-az config set --key agent.enabled --value false
+az troubleshoot recover
 ```
 
-View the current setting:
+Recovery analyzes the latest failure in this terminal. If no failure is saved, the command fails with `NoFailureHistory`.
+
+If you want recovery to start right after a failure, without running `az troubleshoot recover`, set the trigger to `auto` instead. Some errors skip automatic recovery; see the next section.
 
 ```azurecli
-az config get --key agent.enabled
+az config set --key agent.recovery.trigger --value auto
 ```
 
-After you enable the feature, AI-based error recovery runs automatically whenever an `az` command fails. You don't need to specify a per-command option.
+To turn off the feature and clear saved failure history, run:
+
+```azurecli
+az config set --key agent.recovery.trigger --value off
+```
+
+> [!NOTE]
+> `agent.recovery.trigger` replaces the earlier `agent.enabled` setting, which is no longer read.
 
 ## Errors that skip automatic recovery
 
-Whether automatic recovery runs depends on the type of error, not on the command that failed. The same command can fail in different ways, and only some failures start recovery. For example, `az login` without a subscription or tenant ID starts recovery, but `az login --profile <name>` with a profile that doesn't exist doesn't.
+This section applies only when `agent.recovery.trigger` is `auto`. Whether automatic recovery runs depends on the type of error, not on the command that failed. The same command can fail in different ways, and only some failures start recovery. For example, `az login` without a subscription or tenant ID starts recovery, but `az login --profile <name>` with a profile that doesn't exist doesn't.
 
 These errors skip recovery, and the CLI shows the original error:
 
@@ -80,6 +87,7 @@ These categories can change between releases as errors are reclassified.
 ### Recover from a skipped error
 
 When `agent.recovery.trigger` is `manual` or `auto`, skipped errors are still saved to failure history. Run `az troubleshoot recover` to start recovery for the latest failure in this terminal.
+
 ## Configure the AI provider
 
 By default, AI-based error recovery uses Microsoft's built-in AI provider.
@@ -107,13 +115,13 @@ By default, AI-based error recovery uses a one-shot experience that generates a 
 To use a multi-turn interactive session that remains open until you type `exit`, run:
 
 ```azurecli
-az config set --key agent.sessionStyle --value interactive
+az config set --key agent.recovery.style --value interactive
 ```
 
 To return to the default one-shot experience:
 
 ```azurecli
-az config set --key agent.sessionStyle --value oneshot
+az config set --key agent.recovery.style --value oneshot
 ```
 
 ## Frequently asked questions
@@ -154,12 +162,12 @@ In some cases, the AI can query Azure APIs to suggest valid alternatives, such a
 
 ### Is the feature enabled by default?
 
-No. AI-based error recovery is disabled by default.
+No. AI-based error recovery is off by default.
 
 To enable the feature, run:
 
 ```azurecli
-az config set --key agent.enabled --value true
+az config set --key agent.recovery.trigger --value manual
 ```
 
 ### Does it require authentication?
