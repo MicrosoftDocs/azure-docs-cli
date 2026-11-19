@@ -1,7 +1,7 @@
 ---
 title: Install Azure CLI public preview extensions
 description: Learn how to install add-on extensions for the Azure CLI public preview.
-ms.date: 11/16/2026
+ms.date: 11/17/2026
 ---
 
 # Install Azure CLI public preview extensions
@@ -67,7 +67,7 @@ done
 az extension list
 ```
 
-### Windows (PowerShell 7+)
+### Windows (PowerShell 7.6 or later)
 
 Requires `tar` for extraction. Run each command only after the previous one succeeds:
 

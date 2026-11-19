@@ -17,6 +17,14 @@ The next-generation Azure CLI, available in preview, builds on this experience w
 > [!NOTE]
 > The next-generation Azure CLI is in preview. Not all Azure CLI and Azure PowerShell scenarios are available, and features might change between releases. For supported environments and current limitations, see [Get started with the next-generation Azure CLI (preview)][01].
 
+## Watch an end-to-end demo
+
+Watch this walkthrough to see the next-generation Azure CLI in action.
+
+This end-to-end demo shows how profiles let you switch between subscriptions and tenants without signing in again. It shows how tab completion and the redesigned help lead you to the right command and parameters. It also shows how AI-based error recovery explains a failed command and suggests a corrected one that runs successfully.
+
+> [!VIDEO https://learn-video.azurefd.net/vod/player?id=36ffb31f-fa06-45ef-80d8-debf9a297b41]
+
 ## Azure CLI versions
 
 The Azure CLI preview documentation covers the next-generation Azure CLI, including preview-specific installation, authentication, and configuration guidance.
