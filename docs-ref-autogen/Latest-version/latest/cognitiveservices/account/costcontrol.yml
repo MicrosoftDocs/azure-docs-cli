@@ -38,8 +38,14 @@ directCommands:
                                                     [--time-period]
   examples:
   - summary: |-
-      Create or replace an account cost budget
-    syntax: az cognitiveservices account costcontrol create --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --if-none-match * --grouping "[{name:agent,type:AdditionalInfoKey}]" --category Cost --amount 1000 --time-grain Monthly --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{and:[{additionalInfo:{name:project,operator:In,values:[production]}},{additionalInfo:{name:agent,operator:In,values:[customer-support,order-assistant]}},{additionalInfo:{name:deployment,operator:In,values:[customer-support-model]}}]}" --notifications "{usageAlert:{eventGridConnectionId:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,thresholdType:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stopRequests:{type:Block,thresholdType:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
+      Cap the whole Foundry resource at $1000 a month and block at 100%
+    syntax: az cognitiveservices account costcontrol create --resource-group foundry-resource-group --account-name foundry-account --cost-control-name monthly-cap --category Cost --amount 1000 --time-grain Monthly --time-period "{start-date:'2026-12-01T00:00:00Z',end-date:'2027-12-01T00:00:00Z'}" --provider-properties "{actions:{block-at-100:{type:Block,threshold-type:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
+  - summary: |-
+      Cap at $1000 a month, alert at 80% but do not block
+    syntax: az cognitiveservices account costcontrol create --resource-group foundry-resource-group --account-name foundry-account --cost-control-name monthly-cap --category Cost --amount 1000 --time-grain Monthly --time-period "{start-date:'2026-12-01T00:00:00Z',end-date:'2027-12-01T00:00:00Z'}" --notifications "{usage-alert:{event-grid-connection-id:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,threshold-type:Percentage,threshold:80,enabled:true,operator:GreaterThanOrEqualTo}}"
+  - summary: |-
+      Example using full settings (filters, grouping, alert and block)
+    syntax: az cognitiveservices account costcontrol create --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --if-none-match * --grouping "[{name:agent,type:AdditionalInfoKey}]" --category Cost --amount 1000 --time-grain Monthly --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{and:[{additional-info:{name:project,operator:In,values:[production]}},{additional-info:{name:agent,operator:In,values:[customer-support,order-assistant]}},{additional-info:{name:deployment,operator:In,values:[customer-support-model]}}]}" --notifications "{usage-alert:{event-grid-connection-id:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,threshold-type:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stop-requests:{type:Block,threshold-type:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
   requiredParameters:
   - isRequired: true
     name: --account-name
@@ -155,8 +161,11 @@ directCommands:
                                                     [--yes]
   examples:
   - summary: |-
-      Delete a budget conditionally
-    syntax: az cognitiveservices account costcontrol delete --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --if-match "00000000-0000-0000-0000-000000000001"
+      Delete a budget
+    syntax: az cognitiveservices account costcontrol delete --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents
+  - summary: |-
+      Delete a budget if the account entity tag matches the given one. Note the required forward slash before the quotation marks around the entity tag.
+    syntax: az cognitiveservices account costcontrol delete --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --if-match \"c6d292d2-521f-4f7f-ab38-1be7e4a56e9e.additional-info\"
   optionalParameters:
   - name: --account-name
     summary: |-
@@ -454,8 +463,20 @@ directCommands:
                                                     [--time-period]
   examples:
   - summary: |-
-      Create or replace an account cost budget
-    syntax: az cognitiveservices account costcontrol update --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --if-none-match * --grouping "[{name:agent,type:AdditionalInfoKey}]" --category Cost --amount 1000 --time-grain Monthly --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{and:[{additionalInfo:{name:project,operator:In,values:[production]}},{additionalInfo:{name:agent,operator:In,values:[customer-support,order-assistant]}},{additionalInfo:{name:deployment,operator:In,values:[customer-support-model]}}]}" --notifications "{usageAlert:{eventGridConnectionId:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,thresholdType:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stopRequests:{type:Block,thresholdType:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
+      Update the account's cap to $1500 per the previously set period
+    syntax: az cognitiveservices account costcontrol update --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --amount 1500
+  - summary: |-
+      Update the account's cap to $1500 per the previously set period, if the account entity tag matches the given one. Note the required forward slash before the quotation marks around the entity tag.
+    syntax: az cognitiveservices account costcontrol update --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --amount 1500 --if-match \"bb926e0d-880b-4d60-8d59-9a341fa826a2.additional-info\"
+  - summary: |-
+      Update the account's budget end date
+    syntax: az cognitiveservices account costcontrol update --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --set properties.timePeriod.endDate="2028-12-01T00:00:00Z"
+  - summary: |-
+      Update the account's budget notification threshold to 90%
+    syntax: az cognitiveservices account costcontrol update --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --set properties.notifications.usageAlert.threshold=90
+  - summary: |-
+      Example using full settings (filters, grouping, alert and block)
+    syntax: az cognitiveservices account costcontrol update --resource-group foundry-resource-group --account-name foundry-account --cost-control-name production-agents --grouping "[{name:agent,type:AdditionalInfoKey}]" --category Cost --amount 1000 --time-grain Monthly --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{and:[{additional-info:{name:project,operator:In,values:[production]}},{additional-info:{name:agent,operator:In,values:[customer-support,order-assistant]}},{additional-info:{name:deployment,operator:In,values:[customer-support-model]}}]}" --notifications "{usage-alert:{event-grid-connection-id:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,threshold-type:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stop-requests:{type:Block,threshold-type:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
   optionalParameters:
   - name: --account-name
     summary: |-

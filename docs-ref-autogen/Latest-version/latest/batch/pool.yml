@@ -9,7 +9,7 @@ directCommands:
 - uid: az_batch_pool_create
   name: az batch pool create
   summary: |-
-    Create a Batch pool in an account. When creating a pool, choose arguments from either Cloud Services Configuration or Virtual Machine Configuration.
+    Create a Batch pool in an account.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
@@ -64,8 +64,11 @@ directCommands:
                          [--vm-size]
   examples:
   - summary: |-
-      Create a Batch pool in an account. When creating a pool, choose arguments from either Cloud Services Configuration or Virtual Machine Configuration.
-    syntax: az batch pool create --json-file batch-pool-create.json --account-name clibatch --account-key BatchAccountKey
+      Create a Batch pool from a JSON file.
+    syntax: az batch pool create --json-file batch-pool-create.json --account-name clibatch --account-key BatchAccountKey --account-endpoint https://clibatch.eastus.batch.azure.com
+  - summary: |-
+      Create a Batch pool of two Ubuntu 24.04 compute nodes.
+    syntax: az batch pool create --id mypool --vm-size Standard_D4ds_v5 --target-dedicated-nodes 2 --image canonical:ubuntu-24_04-lts:server --node-agent-sku-id "batch.node.ubuntu 24.04" --account-name clibatch --account-key BatchAccountKey --account-endpoint https://clibatch.eastus.batch.azure.com
   optionalParameters:
   - name: --accelerated-networking
     acceptedValues: false, true
@@ -154,7 +157,7 @@ directCommands:
     groupName: Pool Arguments
   - name: --image
     summary: |-
-      OS image reference. This can be either 'publisher:offer:sku[:version]' format, or a fully qualified ARM image id of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}'. If 'publisher:offer:sku[:version]' format, version is optional and if omitted latest will be used. Valid values can be retrieved via 'az batch pool supported-images list'. For example: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'.
+      OS image reference. This can be either 'publisher:offer:sku[:version]' format, or the ARM resource identifier of an Azure Compute Gallery image of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}[/versions/{versionId}]'. If 'publisher:offer:sku[:version]' format, version is optional and if omitted latest will be used. Valid values can be retrieved via 'az batch pool supported-images list'. For example: 'canonical:ubuntu-24_04-lts:server'.
     groupName: 'Pool: Virtual Machine Configuration Arguments'
   - name: --json-file
     summary: |-
@@ -906,5 +909,5 @@ commands:
 - az_batch_pool_usage-metrics
 - az_batch_pool_usage-metrics_list
 metadata:
-  ms.date: 03/04/2026
+  ms.date: 11/19/2026
   description: Manage Batch pools.

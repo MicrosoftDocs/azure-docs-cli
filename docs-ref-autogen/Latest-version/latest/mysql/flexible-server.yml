@@ -301,7 +301,7 @@ directCommands:
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
     groupName: Authentication Arguments
   - name: --admin-user -u
-    defaultValue: morbidauk7
+    defaultValue: shybobcat2
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
     groupName: Authentication Arguments
@@ -943,6 +943,99 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Increase logging verbosity. Use --debug for full debug logs.
+- uid: az_mysql_flexible-server_rename
+  name: az mysql flexible-server rename
+  summary: |-
+    Submit a request to rename an existing MySQL flexible server.
+  description: |-
+    This preview operation requires rename support to be enabled by the service. It renames the existing server within the same subscription, resource group, and location; it does not create a replacement server. The server's resource ID and fully qualified domain name change. Update connection strings and references to the old resource ID, including infrastructure-as-code state such as Terraform state, after completion. Do not assume the old endpoint remains available or that the operation has no downtime. For a primary or replica, verify replication and dependent resource references after the rename. Availability and restrictions for replication topologies, high availability, and networking are service-controlled. Return immediately after submission without polling for completion. Output contains statusCode (the initial HTTP status), content (the initial response body as text), and azureAsyncOperation (the Azure-AsyncOperation response header, or null if absent). The same output is returned with --no-wait. Acceptance does not mean the rename has completed. Poll the returned URL using az rest --method get --url URL until status is Succeeded, Failed, or Canceled. After Succeeded, verify the destination server and replicas. If the service omits the operation URL, inspect the destination server before considering the rename complete. If the command is interrupted, check the operation and destination server before retrying.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/mysql/_help.py
+  syntax: >-
+    az mysql flexible-server rename --new-name
+                                    [--acquire-policy-token]
+                                    [--change-reference]
+                                    [--ids]
+                                    [--name]
+                                    [--no-wait]
+                                    [--resource-group]
+                                    [--subscription]
+                                    [--yes]
+  examples:
+  - summary: |-
+      Submit a rename and return the initial HTTP response and operation URL.
+    syntax: az mysql flexible-server rename --resource-group testGroup --name oldserver --new-name newserver
+  - summary: |-
+      Submit a rename without prompting for confirmation, using the optional compatibility flag.
+    syntax: az mysql flexible-server rename --resource-group testGroup --name oldserver --new-name newserver --no-wait --yes
+  - summary: |-
+      Rename a server identified by its resource ID.
+    syntax: az mysql flexible-server rename --ids /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testGroup/providers/Microsoft.DBforMySQL/flexibleServers/oldserver --new-name newserver
+  requiredParameters:
+  - isRequired: true
+    name: --new-name
+    summary: |-
+      New name for the existing server. The subscription, resource group, and location do not change.
+  optionalParameters:
+  - name: --acquire-policy-token
+    summary: |-
+      Acquiring an Azure Policy token automatically for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --change-reference
+    summary: |-
+      The related change reference ID for this resource operation.
+    groupName: Global Policy Arguments
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    groupName: Resource Id Arguments
+  - name: --name -n
+    summary: |-
+      Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    groupName: Resource Id Arguments
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Accepted for compatibility. Rename always returns the initial response without waiting for completion.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    groupName: Resource Id Arguments
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    groupName: Resource Id Arguments
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+  globalParameters:
+  - name: --debug
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity to show all debug logs.
+  - name: --help -h
+    summary: |-
+      Show this help message and exit.
+  - name: --only-show-errors
+    defaultValue: "False"
+    summary: |-
+      Only show errors, suppressing warnings.
+  - name: --output -o
+    defaultValue: json
+    acceptedValues: json, jsonc, none, table, tsv, yaml, yamlc
+    summary: |-
+      Output format.
+  - name: --query
+    summary: |-
+      JMESPath query string. See http://jmespath.org/ for more information and examples.
+  - name: --verbose
+    defaultValue: "False"
+    summary: |-
+      Increase logging verbosity. Use --debug for full debug logs.
 - uid: az_mysql_flexible-server_restart
   name: az mysql flexible-server restart
   summary: |-
@@ -1137,7 +1230,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     groupName: Resource Id Arguments
   - name: --restore-time
-    defaultValue: 2026-11-19T11:15:11+00:00
+    defaultValue: 2026-11-19T23:12:11+00:00
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --sku-name
@@ -1977,6 +2070,7 @@ commands:
 - az_mysql_flexible-server_parameter_set
 - az_mysql_flexible-server_parameter_set-batch
 - az_mysql_flexible-server_parameter_show
+- az_mysql_flexible-server_rename
 - az_mysql_flexible-server_replica
 - az_mysql_flexible-server_replica_create
 - az_mysql_flexible-server_replica_list
