@@ -1,13 +1,96 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 11/17/2026
+ms.date: 12/01/2026
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## December 01, 2026
+
+Version 2.94.0
+
+### ACR
+
+* `az acr login`: Validate `--suffix` before constructing the registry endpoint
+* `az acr create`, `az acr update`, `az acr login`: Remove the `--regional-endpoints`/`--endpoint` preview designation now that the feature is generally available
+* `az acr connected-registry create`: Fix garbage collection default to serialize as a JSON boolean
+
+### AKS
+
+* `az aks get-credentials`, `az aks check-acr`: Fix kubelogin executable lookup
+* `az aks browse`, `az aks check-acr`: Use trusted kubectl executable paths
+* `az aks install-cli`, `az aks install-desktop`: Resolve external tools safely and avoid shell invocation
+* `az aks get-credentials`: Fix automatic kubelogin conversion for custom kubeconfig paths
+
+### App Service
+
+* `az appservice plan managed-instance instance connect`: Use secure executable invocation
+
+### ARM
+
+* `az bicep`: Support configuration-based compiler version pinning with inherited configuration
+
+### Batch
+
+* `az batch task create`: Allow `=` in `--environment-settings` values
+* `az batch pool create`: Allow `=` in `--metadata` and `--start-task-environment-settings` values
+* `az batch task file download`, `az batch node file download`: Fix `AttributeError` when `--destination` is an existing folder
+* `az batch pool create`: Update help for `--image` and remove Cloud Services Configuration text
+* `az batch pool supported-images list`: Add examples
+* `az batch task file show`, `az batch node file show`: Fix `AttributeError` on every call
+* `az batch account identity assign`, `az batch account identity remove`: Fix public network access being turned on
+* `az batch`: Fix duration options such as `--max-wall-clock-time` losing years and months
+
+### Cognitive Services
+
+* `az cognitiveservices account costcontrol` and `az cognitiveservices account project costcontrol`: Add examples
+* `az cognitiveservices account create`: Refine BYO AKS preflight and provisioning
+
+### Compute
+
+* `az vm list-skus`: Filter SKUs by location on the server to avoid downloading all regions
+* `az vm/vmss create`: Allow uppercase characters in Linux admin usernames
+
+### Container app
+
+* [BREAKING CHANGE] `az containerapp env create`: Change the default value of `--logs-destination` from `log-analytics` to `azure-monitor`
+* `az containerapp`: Update to API version 2026-07-01
+
+### MySQL
+
+* `az mysql flexible-server rename`: Add server rename support
+
+### NetAppFiles
+
+* `az netappfiles volume create`: Add ldap-server-type option
+* `az netappfiles volume create`: Add smb-oplocks option to support enabling and disabling oplocks on SMB shares
+* `az netappfiles volume update`: Add smb-oplocks option to support enabling and disabling oplocks on SMB shares
+* `az netappfiles cache create`: Add smb-oplocks option to support enabling and disabling oplocks on SMB shares
+* `az netappfiles cache update`: Add smb-oplocks option to support enabling and disabling oplocks on SMB shares
+
+### Network
+
+* `az network authentication-policy`: Add command group to support authentication policy
+
+### Search
+
+* `az search service create/update`: Add support for API version 2026-11-01
+* `az search service create/update`: `--encryption-with-cmk service-level-encryption-key` is not yet available in API version 2026-11-01; using it now raises a clear error instead of being silently accepted
+
+### SQL
+
+* `az sql db audit-policy update/show`, `az sql server audit-policy update/show`: Add `--required-fields` to configure selective-fields auditing with Azure Monitor targets
+
+### Storage
+
+* `az storage`: Validate that storage account names are a single hostname label before building service endpoints
+* `az storage file download-batch`: Ensure downloaded files stay within the destination directory
+* `az storage blob download-batch`, `az storage blob upload-batch`, `az storage blob delete-batch`, `az storage file download-batch`, `az storage file upload-batch`: Give a clear error when a storage URL is not a recognized account URL for the current cloud
+* `az storage blob copy start`, `az storage blob incremental-copy start`, `az storage file copy start`: Validate source account names
 
 ## November 17, 2026
 
