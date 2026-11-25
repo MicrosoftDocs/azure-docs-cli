@@ -21,24 +21,29 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az horizondb cluster pool firewall-rule create --cluster-name
+                                                   --end-ip-address
                                                    --firewall-rule-name --name
                                                    --pool-name
                                                    --resource-group
+                                                   --start-ip-address
                                                    [--acquire-policy-token]
                                                    [--change-reference]
                                                    [--description]
-                                                   [--end-ip-address]
                                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                   [--start-ip-address]
   examples:
   - summary: |-
-      Create or replace a firewall rule on a HorizonDB pool
-    syntax: az horizondb cluster pool firewall-rule create --resource-group example-resource-group --cluster-name example-cluster --pool-name example-pool-01 --firewall-rule-name example-firewall-rule-01 --start-ip-address 10.0.0.1 --end-ip-address 10.0.0.254 --description Allow access from the corporate network
+      Create a firewall rule on a HorizonDB pool
+    syntax: az horizondb cluster pool firewall-rule create --resource-group example-resource-group --cluster-name example-cluster --pool-name example-pool-01 --firewall-rule-name example-firewall-rule-01 --start-ip-address 10.0.0.1 --end-ip-address 10.0.0.254 --description "Allow access from the corporate network"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
     summary: |-
       The name of the HorizonDB cluster.
+  - isRequired: true
+    name: --end-ip-address
+    summary: |-
+      The end IPv4 address of the firewall rule in dotted-decimal notation. This address must be numerically greater than or equal to startIpAddress.
+    groupName: Properties Arguments
   - isRequired: true
     name: --firewall-rule-name --name -n
     summary: |-
@@ -51,6 +56,11 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --start-ip-address
+    summary: |-
+      The start IPv4 address of the firewall rule in dotted-decimal notation.
+    groupName: Properties Arguments
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
@@ -64,18 +74,10 @@ directCommands:
     summary: |-
       The description of the HorizonDB firewall rule. The maximum length is 1024 characters.
     groupName: Properties Arguments
-  - name: --end-ip-address
-    summary: |-
-      The end IPv4 address of the firewall rule in dotted-decimal notation. This address must be numerically greater than or equal to startIpAddress.
-    groupName: Properties Arguments
   - name: --no-wait
     acceptedValues: 0, 1, f, false, n, no, t, true, y, yes
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --start-ip-address
-    summary: |-
-      The start IPv4 address of the firewall rule in dotted-decimal notation.
-    groupName: Properties Arguments
   globalParameters:
   - name: --debug
     defaultValue: "False"
@@ -350,7 +352,7 @@ directCommands:
   examples:
   - summary: |-
       Update a firewall rule on a HorizonDB pool
-    syntax: az horizon-db cluster pool firewall-rule update --resource-group example-resource-group --cluster-name example-cluster --pool-name example-pool-01 --firewall-rule-name example-firewall-rule-01 --start-ip-address 10.0.0.1 --end-ip-address 10.0.0.254 --description Allow access from the corporate network
+    syntax: az horizondb cluster pool firewall-rule update --resource-group example-resource-group --cluster-name example-cluster --pool-name example-pool-01 --firewall-rule-name example-firewall-rule-01 --end-ip-address 10.0.0.254 --description "Allow access from the corporate network"
   optionalParameters:
   - name: --acquire-policy-token
     summary: |-
