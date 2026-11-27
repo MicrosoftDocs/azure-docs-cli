@@ -11,9 +11,9 @@ directCommands:
 - uid: az_cognitiveservices_account_project_costcontrol_create
   name: az cognitiveservices account project costcontrol create
   summary: |-
-    Create a Foundry project-owned const control.
+    Create a Foundry project-owned cost control.
   description: |-
-    Create a Foundry project-owned const control. The definition may contain at most one notification, including disabled notifications, and one Block action. Exceeding either limit returns HTTP 400 without persisting the request.
+    Create a Foundry project-owned cost control. The definition may contain at most one notification, including disabled notifications, and one Block action. Exceeding either limit returns HTTP 400 without persisting the request.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az cognitiveservices account project costcontrol' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -39,8 +39,11 @@ directCommands:
                                                             [--time-period]
   examples:
   - summary: |-
-      Create or replace a project token budget
-    syntax: az cognitiveservices account project costcontrol create --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --if-none-match * --category Tokens --amount 1000000 --time-grain Daily --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{additionalInfo:{name:tokenType,operator:In,values:[input,output]}}" --notifications "{usageAlert:{eventGridConnectionId:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,thresholdType:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stopRequests:{type:Block,thresholdType:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
+      Cap at 2M tokens a day, alert when reaching 80% and block at 100%
+    syntax: az cognitiveservices account project costcontrol create --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --if-none-match * --category Tokens --amount 2000000 --time-grain Daily --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{additional-info:{name:tokenType,operator:In,values:[input,output]}}" --notifications "{usageAlert:{eventGridConnectionId:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,thresholdType:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stopRequests:{type:Block,thresholdType:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
+  - summary: |-
+      Example using full settings (filters, alert and block)
+    syntax: az cognitiveservices account project costcontrol create --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --if-none-match * --category Tokens --amount 1000000 --time-grain Daily --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{additional-info:{name:tokenType,operator:In,values:[input,output]}}" --notifications "{usage-alert:{event-grid-connection-id:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,threshold-type:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stop-requests:{type:Block,threshold-type:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
   requiredParameters:
   - isRequired: true
     name: --account-name
@@ -161,8 +164,11 @@ directCommands:
                                                             [--yes]
   examples:
   - summary: |-
-      Delete a budget conditionally
-    syntax: az cognitiveservices account project costcontrol delete --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --if-match "00000000-0000-0000-0000-000000000001"
+      Delete a budget
+    syntax: az cognitiveservices account project costcontrol delete --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget
+  - summary: |-
+      Delete a budget if the project entity tag matches the given one. Note the required forward slash before the quotation marks around the entity tag.
+    syntax: az cognitiveservices account project costcontrol delete --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --if-match \"bb926e0d-880b-4d60-8d59-9a341fa826a2.additional-info\"
   optionalParameters:
   - name: --account-name
     summary: |-
@@ -446,7 +452,7 @@ directCommands:
 - uid: az_cognitiveservices_account_project_costcontrol_update
   name: az cognitiveservices account project costcontrol update
   summary: |-
-    Updates a Foundry project-owned const control.
+    Updates a Foundry project-owned cost control.
   description: |-
     Updates a Foundry project cost control. Omitting properties preserves all existing cost control properties; setting properties to null or an empty object ({}) clears them all. A non-empty properties object updates selected fields, preserving omitted fields; a successful update that leaves the cost control unchanged retains its entity tag. The complete merged result may contain at most one notification, including disabled notifications, and one Block action. Exceeding either limit returns HTTP 400 without changing the stored definition.
   status: Preview
@@ -480,8 +486,14 @@ directCommands:
                                                             [--time-period]
   examples:
   - summary: |-
-      Create or replace a project token budget
-    syntax: az cognitiveservices account project costcontrol update --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --if-none-match * --category Tokens --amount 1000000 --time-grain Daily --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{additionalInfo:{name:tokenType,operator:In,values:[input,output]}}" --notifications "{usageAlert:{eventGridConnectionId:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,thresholdType:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stopRequests:{type:Block,thresholdType:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
+      Update alert threshold to 90%
+    syntax: az cognitiveservices account project costcontrol update --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --set properties.notifications.usageAlert.threshold=90
+  - summary: |-
+      Update alert threshold to 90%, if the project entity tag matches the given one. Note the required forward slash before the quotation marks around the entity tag.
+    syntax: az cognitiveservices account project costcontrol update --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --if-match \"bb926e0d-880b-4d60-8d59-9a341fa826a2.additional-info\" --set properties.notifications.usageAlert.threshold=90
+  - summary: |-
+      Example using full settings (filters, alert and block)
+    syntax: az cognitiveservices account project costcontrol update --resource-group foundry-resource-group --account-name foundry-account --project-name production --cost-control-name project-token-budget --category Tokens --amount 1000000 --time-grain Daily --time-period "{start-date:'2026-11-15T00:00:00Z',end-date:'2027-11-15T00:00:00Z'}" --filter "{additional-info:{name:tokenType,operator:In,values:[input,output]}}" --notifications "{usage-alert:{event-grid-connection-id:/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/foundry-resource-group/providers/Microsoft.CognitiveServices/accounts/foundry-account/connections/budget-alerts,threshold-type:Percentage,threshold:80,enabled:True,operator:GreaterThanOrEqualTo}}" --provider-properties "{actions:{stop-requests:{type:Block,threshold-type:Percentage,threshold:100,operator:GreaterThanOrEqualTo}}}"
   optionalParameters:
   - name: --account-name
     summary: |-
