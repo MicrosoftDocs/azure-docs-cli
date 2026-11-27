@@ -1,7 +1,7 @@
 ---
 title: Azure CLI upcoming breaking changes | Microsoft Docs
 description: Learn about upcoming breaking changes to Azure CLI command groups, references, and parameters.
-ms.date: 11/10/2026
+ms.date: 11/27/2026
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -31,6 +31,32 @@ The breaking changes listed in this section are planned for the next major relea
 - Learn how to find all Helm charts stored in a Helm repository here: `az acr helm list`. If the Helm chart you are using is listed then it is stored in a legacy Helm repository and is at risk of deletion.
 - For more information on managing and deploying applications for Kubernetes, see https://aka.ms/acr/helm.
 
+## batch
+
+### `batch pool usage-metrics list`
+
+[Link to batch pool usage-metrics reference group](/cli/azure/batch/pool/usage-metrics)
+
+- This command has been deprecated and will be removed in 2.100.0 (June 2027). The Azure Batch service retired the pool usage metrics API on September 30, 2024, so this command always returns an error. For more information, see https://github.com/Azure/Batch/issues/140.
+
+### `batch pool resize`
+
+[Link to batch pool reference group](/cli/azure/batch/pool)
+
+- The value 'retaineddata' of '--node-deallocation-option' has been deprecated and will be removed in 2.100.0 (June 2027), because Azure Batch API version 2026-10-01 removes it. Upload task data to Azure Storage in your task and use 'taskcompletion' instead.
+
+### `batch node reboot`
+
+[Link to batch node reference group](/cli/azure/batch/node)
+
+- The value 'retaineddata' of '--node-reboot-option' has been deprecated and will be removed in 2.100.0 (June 2027), because Azure Batch API version 2026-10-01 removes it. Upload task data to Azure Storage in your task and use 'taskcompletion' instead.
+
+### `batch node delete`
+
+[Link to batch node reference group](/cli/azure/batch/node)
+
+- The value 'retaineddata' of '--node-deallocation-option' has been deprecated and will be removed in 2.100.0 (June 2027), because Azure Batch API version 2026-10-01 removes it. Upload task data to Azure Storage in your task and use 'taskcompletion' instead.
+
 ## cognitiveservices
 
 ### `cognitiveservices agent`
@@ -46,14 +72,6 @@ The breaking changes listed in this section are planned for the next major relea
 [Link to compute-recommender reference group](/cli/azure/compute-recommender)
 
 - 'compute-recommender spot-placement-recommender' has been deprecated and will be removed in next breaking change release(2.100.0) scheduled for Jun 2027. Use 'az compute-recommender spot-placement-score' instead.
-
-## containerapp
-
-### `containerapp env create`
-
-[Link to containerapp env reference group](/cli/azure/containerapp/env)
-
-- The default value of '--logs-destination' will be changed to 'azure-monitor' from 'log-analytics' in 2.93.0. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli/pull/34228.
 
 ## servicefabric
 
@@ -99,152 +117,13 @@ The breaking changes listed in this section are planned for the next major relea
 - Migrate blueprint definitions to Template Specs and assignments to Azure Deployment Stacks (recommended).
 - Migration guidance: https://aka.ms/AzureBlueprintsRetirement
 
-## azext_containerapp
+## azext_fleet
 
-### `containerapp env create`
+### `fleet clustermeshprofile`
 
-[Link to containerapp env reference group](/cli/azure/containerapp/env)
+[Link to fleet clustermeshprofile reference group](/cli/azure/fleet/clustermeshprofile)
 
-- The default value of '--logs-destination' will be changed to 'azure-monitor' from 'log-analytics' in 2.93.0. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli/pull/34228.
-- The default value of '--logs-destination' will be changed to 'azure-monitor' from 'log-analytics' in a future release. To know more about the Breaking Change, please visit https://github.com/Azure/azure-cli-extensions/pull/10473.
-
-## azext_managednetworkfabric
-
-### `networkfabric device reboot`
-
-[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
-
-- '--network-device-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric device refresh-configuration`
-
-[Link to networkfabric device reference group](/cli/azure/networkfabric/device)
-
-- 'networkfabric device refresh-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric device refresh-config' instead.
-
-### `networkfabric fabric commit-batch-status`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric fabric commit-configuration`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- 'networkfabric fabric commit-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric commit-config' instead.
-
-### `networkfabric fabric discard-commit-batch`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric fabric lock-fabric`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric fabric resync-certificate`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric fabric resync-password`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric fabric rotate-certificate`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric fabric rotate-password`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- '--network-fabric-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric fabric validate-configuration`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- 'networkfabric fabric validate-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric validate-config' instead.
-
-### `networkfabric fabric view-device-configuration`
-
-[Link to networkfabric fabric reference group](/cli/azure/networkfabric/fabric)
-
-- 'networkfabric fabric view-device-configuration' has been deprecated and will be removed in 10.0.x. Use 'networkfabric fabric view-device-config' instead.
-
-### `networkfabric bootstrapinterface list`
-
-[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
-
-- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
-
-### `networkfabric bootstrapinterface show`
-
-[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
-
-- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
-
-### `networkfabric bootstrapinterface wait`
-
-[Link to networkfabric bootstrapinterface reference group](/cli/azure/networkfabric/bootstrapinterface)
-
-- '--network-bootstrap-device-name' has been deprecated and will be removed in 10.0.x. Use '--bootstrap-device' instead.
-
-### `networkfabric tap resync`
-
-[Link to networkfabric tap reference group](/cli/azure/networkfabric/tap)
-
-- '--network-tap-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric networkmonitor create`
-
-[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
-
-- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric networkmonitor delete`
-
-[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
-
-- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric networkmonitor show`
-
-[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
-
-- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric networkmonitor update`
-
-[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
-
-- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-
-### `networkfabric networkmonitor wait`
-
-[Link to networkfabric networkmonitor reference group](/cli/azure/networkfabric/networkmonitor)
-
-- '-n' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
-- '--network-monitor-name' has been deprecated and will be removed in 10.0.x. Use '--resource-name' instead.
+- 'fleet clustermeshprofile' has been deprecated and will be removed in a future release. Use 'fleet network cross-cluster' instead.
 
 ## azext_redisenterprise
 
